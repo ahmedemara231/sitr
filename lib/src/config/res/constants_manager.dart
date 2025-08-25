@@ -3,11 +3,11 @@ part of 'config_imports.dart';
 final GetIt injector = GetIt.instance;
 
 class ConstantManager {
-  static const String bundleId = 'com.flutter.app_name';
-  static const String appName = 'Flutter_base';
-  static const String fontFamily = 'IBM';
+  static const String bundleId = 'com.aait.flutter.sitr';
+  static const String appName = 'sitr';
+  static const String fontFamily = '';
   static const String token = 'token';
-  static const String projectName = 'Flutter_base';
+  static const String projectName = 'sitr';
   static const int splashTimer = 3000;
   static const String baseUrl = '';
   static const int paginationFirstPage = 1;

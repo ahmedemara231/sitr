@@ -2,7 +2,7 @@ part of 'config_imports.dart';
 
 class AppColors {
   static const Color main = Color(0xFF1B8354);
-  static const Color primary = Color(0xFF161616);
+  static const Color primary = Color(0xFFA66D09);
   static const Color secondary = Color(0xFF666666);
   static const Color third = Color(0xFF7EA259);
   static const Color forth = Color(0xFF007889);
