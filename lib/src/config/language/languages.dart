@@ -35,6 +35,11 @@ enum Languages {
     return language.locale.languageCode;
   }
 
+  static Languages get deviceLocale {
+    return EasyLocalization.of(Go.navigatorKey.currentContext!)?.locale.languageCode == 'en'?
+    Languages.english : Languages.arabic;
+  }
+
   static Languages get currentLanguage {
     final currentLocale =
         EasyLocalization.of(Go.navigatorKey.currentContext!)!.locale;

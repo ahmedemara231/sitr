@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../config/res/config_imports.dart';
  
 extension PaddingExtension on Widget {
+  Widget defaultScreenPadding() {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+      child: this,
+    );
+  }
+
   Widget padding(EdgeInsetsGeometry padding) {
     return Padding(
       padding: padding,

@@ -35,3 +35,8 @@ class ConstantManager {
   static const int rateCount = 5;
   static const double minRateCount = 1;
 }
+
+class CacheConstant{
+  static const String onBoardingSubmission = "onBoardingSubmission";
+  static const String isLoggedIn = "isLoggedIn";
+}

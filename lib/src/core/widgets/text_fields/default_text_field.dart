@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../config/res/config_imports.dart';
-import '../../extensions/text_style_extensions.dart';
+import '../app_text.dart';
 
-
+enum TitleStatus {withTitle, withoutTitle}
 class DefaultTextField extends StatefulWidget {
+  final TitleStatus withTitle;
   final String? title;
   final bool secure;
   final TextInputType inputType;
@@ -35,7 +36,7 @@ class DefaultTextField extends StatefulWidget {
   final void Function(String?)? onChanged;
   final bool closeWhenTapOutSide;
   final TextStyle? style;
-  final void Function()? onEditingComplete;
+  final String? upperTitle;
 
   const DefaultTextField({
     super.key,
@@ -49,7 +50,6 @@ class DefaultTextField extends StatefulWidget {
     this.closeWhenTapOutSide = true,
     this.hasBorderColor = true,
     this.validator,
-    this.onEditingComplete,
     this.label,
     this.onSubmitted,
     this.isPassword = false,
@@ -69,7 +69,41 @@ class DefaultTextField extends StatefulWidget {
     this.maxLines,
     this.onChanged,
     this.style,
-  });
+  }) : upperTitle = null, withTitle = TitleStatus.withoutTitle;
+
+  const DefaultTextField.withTitle({
+    super.key,
+    this.title,
+    this.secure = false,
+    this.inputType = TextInputType.text,
+    this.borderColor,
+    this.onTap,
+    this.controller,
+    this.contentPadding,
+    this.closeWhenTapOutSide = true,
+    this.hasBorderColor = true,
+    this.validator,
+    this.label,
+    this.onSubmitted,
+    this.isPassword = false,
+    this.fillColor,
+    this.inputFormatters,
+    this.prefixIcon,
+    this.prefixWidget,
+    this.maxLength,
+    this.filled = true,
+    this.readOnly = false,
+    this.textAlign = TextAlign.start,
+    this.action = TextInputAction.next,
+    this.focusNode,
+    this.autoFocus = false,
+    this.suffixText,
+    this.suffixIcon,
+    this.maxLines,
+    this.onChanged,
+    this.style,
+    required this.upperTitle
+  }) : withTitle = TitleStatus.withTitle;
 
   @override
   State<DefaultTextField> createState() => _DefaultTextFieldState();
@@ -89,96 +123,100 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
   @override
   Widget build(BuildContext context) {
     final bool isLabel = widget.label != null;
-    return TextFormField(
-      controller: widget.controller,
-      onChanged: widget.onChanged,
-      inputFormatters: widget.inputFormatters,
-      obscureText: widget.isPassword == true ? _isSecure : widget.secure,
-      obscuringCharacter: '*',
-      onTap: widget.onTap,
-      onTapOutside: (event) {
-        if (widget.closeWhenTapOutSide == true) {
-          FocusScope.of(context).unfocus();
-        }
-      },
-      keyboardType: widget.inputType,
-      autofillHints: _getAutoFillHints(widget.inputType),
-      validator: widget.validator,
-      maxLength: widget.maxLength,
-      readOnly: widget.onTap != null ? true : widget.readOnly,
-      textAlign: widget.textAlign!,
-      maxLines: widget.inputType == TextInputType.multiline
-          ? widget.maxLines ?? 7
-          : 1,
-      style: widget.style,
-      onFieldSubmitted: widget.onSubmitted,
-      textInputAction: widget.action,
-      enableSuggestions: true,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      autocorrect: true,
-      autofocus: widget.autoFocus,
-      focusNode: widget.autoFocus == true ? widget.focusNode : null,
-      cursorColor: AppColors.secondary,
-      onEditingComplete: widget.onEditingComplete,
-      decoration: InputDecoration(
-        isDense: true,
-        errorMaxLines: 2,
-        contentPadding: widget.contentPadding,
-        counterText: ConstantManager.emptyText,
-        filled: widget.filled,
-        suffixText: widget.suffixText,
-        prefixIcon: widget.isPassword == true
-            ? const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [Icon(Icons.visibility)],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 5.h,
+      children: [
+        if(widget.withTitle == TitleStatus.withTitle)
+          AppText(widget.upperTitle!, fontWeight: FontWeight.w500),
+
+        TextFormField(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          controller: widget.controller,
+          onChanged: widget.onChanged,
+          inputFormatters: widget.inputFormatters,
+          obscureText: widget.isPassword == true ? _isSecure : widget.secure,
+          onTap: widget.onTap,
+          onTapOutside: (event) {
+            if (widget.closeWhenTapOutSide == true) {
+              FocusScope.of(context).unfocus();
+            }
+          },
+          keyboardType: widget.inputType,
+          autofillHints: _getAutoFillHints(widget.inputType),
+          validator: widget.validator,
+          maxLength: widget.maxLength,
+          readOnly: widget.readOnly,
+          textAlign: widget.textAlign!,
+          maxLines: widget.inputType == TextInputType.multiline
+              ? widget.maxLines ?? 7
+              : 1,
+          style: widget.style,
+          onFieldSubmitted: widget.onSubmitted,
+          textInputAction: widget.action,
+          enableSuggestions: false,
+          autocorrect: false,
+          autofocus: widget.autoFocus,
+          focusNode: widget.autoFocus == true ? widget.focusNode : null,
+          cursorColor: AppColors.primary,
+          decoration: InputDecoration(
+            isDense: true,
+            contentPadding: widget.contentPadding,
+            counterText: ConstantManager.emptyText,
+            filled: widget.filled,
+            suffixText: widget.suffixText,
+            prefixIcon: widget.isPassword == true
+                ? const Icon(Icons.lock_outline, color: Colors.grey)
+                : widget.prefixIcon,
+            suffixIcon: widget.isPassword == true
+                ? IconButton(
+              onPressed: () {
+                setState(() {
+                  _isSecure = !_isSecure;
+                });
+              },
+              icon: Icon(
+                _isSecure
+                    ? Icons.visibility_outlined
+                    : Icons.visibility_off_outlined,
+                color: Colors.grey,
+              ),
+            )
+                : widget.suffixIcon,
+            prefix: widget.prefixWidget,
+            fillColor: widget.fillColor ?? Colors.white,
+            hintText: widget.title,
+            label: isLabel ? Text(widget.label!) : null,
+            labelStyle: isLabel ? const TextStyle(color: AppColors.primary) : null,
+            hintStyle: TextStyle(
+              fontSize: 13,
+              color: Colors.grey[600],
+              fontWeight: FontWeight.w300,
+              fontFamily: ConstantManager.fontFamily,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(AppCircular.r12),
+              borderSide: widget.hasBorderColor == true
+                  ? BorderSide(
+                color: widget.borderColor ?? AppColors.border,
               )
-            : widget.prefixIcon,
-        suffixIcon: widget.isPassword == true
-            ? IconButton(
-                onPressed: () {
-                  setState(() {
-                    _isSecure = !_isSecure;
-                  });
-                },
-                icon: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _isSecure ?const Icon(Icons.visibility) :const Icon(Icons.visibility),
-                  ],
-                ),
-              )
-            : widget.suffixIcon,
-        prefix: widget.prefixWidget,
-        errorStyle: const TextStyle().setErrorColor.s10.regular,
-        fillColor: widget.fillColor ?? Colors.white,
-        hintText: widget.title,
-        label: isLabel ? Text(widget.label!) : null,
-        labelStyle:
-            isLabel ? const TextStyle().setSecondryColor.s12.medium : null,
-        hintStyle: const TextStyle().setHintColor.s13.regular,
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppCircular.r8),
-          borderSide: widget.hasBorderColor == true
-              ? BorderSide(
-                  color: widget.borderColor ?? AppColors.border,
-                )
-              : BorderSide.none,
+                  : BorderSide.none,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(AppCircular.r10),
+              borderSide: const BorderSide(color: AppColors.primary),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(AppCircular.r10),
+              borderSide: const BorderSide(color: Colors.red),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(AppCircular.r10),
+              borderSide: const BorderSide(color: Colors.red),
+            ),
+          ),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppCircular.r8),
-          borderSide: const BorderSide(color: AppColors.white),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppCircular.r8),
-          borderSide: const BorderSide(color: Colors.red),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppCircular.r8),
-          borderSide: const BorderSide(color: Colors.red),
-        ),
-      ),
+      ],
     );
   }
 }
