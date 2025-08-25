@@ -1,4 +1,4 @@
-package com.example.appp
+package com.aait.flutter.sitr
 
 import io.flutter.embedding.android.FlutterActivity
 

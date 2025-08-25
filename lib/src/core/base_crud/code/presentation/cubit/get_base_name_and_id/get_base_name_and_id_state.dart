@@ -11,7 +11,7 @@ class GetBaseEntityState<T extends BaseEntity> extends Equatable {
     Async<List<T>>? data,
   }) {
     return GetBaseEntityState(
-      dataState: data ?? this.dataState,
+      dataState: data ?? dataState,
     );
   }
 
