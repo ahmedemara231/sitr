@@ -18,6 +18,7 @@
   "visitor_text": "Visitor",
   "exception_error": "Something went wrong",
   "excpetion_error_desc": "Something went wrong",
+  "select_the_language": "select the language",
   "contact_us": "Contact Us",
   "cancel": "Cancel",
   "photo_library": "Photo Library",
@@ -31,5 +32,16 @@
   "search": "Search",
   "filed_validation": "Please enter",
   "scrip_injection_validate": "Invalid characters found",
-  "please": "Please Select"
+  "please": "Please Select",
+  "login": "Login",
+  "sign_in_as_visitor": "Sign in as visitor",
+  "please_enter_phone_number": "please enter phone number",
+  "please_enter_your_mobile_number_to_register_or_skip_to_register_and_view_some_application_data": "Please Enter Your Mobile Number To Register Or Skip To Register And View Some Application Data",
+  "do_not_have_an_account": "Do not have an account",
+  "new_registeration": "New Registeration",
+  "skip": "Skip",
+  "next": "Next",
+  "start": "Start",
+  "select_the_language_from_the_available_languages": "select The Language From The Available Languages",
+  "confirm": "Confirm"
 }

@@ -18,6 +18,7 @@
   "visitor_text": "زائر",
   "exception_error": "حدث خطأ ما",
   "excpetion_error_desc": "حدث خطأ ما",
+  "select_the_language": "اختر اللغة",
   "contact_us": "اتصل بنا",
   "cancel": "الغاء",
   "photo_library": "مكتبة الصور",
@@ -31,5 +32,16 @@
   "search": "بحث",
   "filed_validation": "الرجاء إدخال",
   "scrip_injection_validate": "النص يحتوي على أحرف غير مسموح بها",
-  "please": "الرجاء اختيار "
+  "please": "الرجاء اختيار ",
+  "login": "تسجيل الدخول",
+  "sign_in_as_visitor": "تسجيل الدخول كا زائر",
+  "please_enter_phone_number": "من فضلك ادخل رقم الجوال",
+  "please_enter_your_mobile_number_to_register_or_skip_to_register_and_view_some_application_data": "من فضلك قم بادخال رقم الجوال للتسجيل او عمل تخطي للتسجيل والاطلاع علي بعض بيانات التطبيق",
+  "do_not_have_an_account": "ليس لديك حساب",
+  "new_registeration": "تسجيل جديد",
+  "skip": "تخطي",
+  "next": "التالي",
+  "start": "بدأ",
+  "select_the_language_from_the_available_languages": "اختر اللغة من اللغات المتاحة",
+  "confirm": "تأكيد"
 }

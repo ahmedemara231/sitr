@@ -12,8 +12,8 @@ import 'core/shared/user_cubit/user_cubit.dart' show UserCubit;
 import 'core/widgets/offline_widget.dart';
 import 'features/settings/splash/imports/view_imports.dart';
 
-class App extends StatelessWidget {
-  const App({super.key});
+class Sitr extends StatelessWidget {
+  const Sitr({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,6 @@ class App extends StatelessWidget {
             supportedLocales: context.supportedLocales,
             locale: context.locale,
             navigatorKey: Go.navigatorKey,
-            onGenerateRoute: RouterGenerator.getRoute,
             home: const SplashScreen(),
             navigatorObservers: [AppNavigationObserver()],
             theme: AppTheme.light,

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
+import '../../core/extensions/padding_extension.dart';
+import '../../core/helpers/cache_service.dart';
+import '../../core/navigation/navigator.dart';
 import '../../core/widgets/buttons/default_button.dart';
 import '../auth/presentation/screens/login.dart';
 import 'models/screen_model.dart';
+import 'widgets/views.dart';
 
 class OnBoardingView extends StatelessWidget {
 

@@ -58,6 +58,9 @@ abstract class LocaleKeys {
   static const String _excpetionErrorDesc = 'excpetion_error_desc';
   static String get excpetionErrorDesc => _excpetionErrorDesc.tr();
 
+  static const String _selectTheLanguage = 'select_the_language';
+  static String get selectTheLanguage => _selectTheLanguage.tr();
+
   static const String _contactUs = 'contact_us';
   static String get contactUs => _contactUs.tr();
 
@@ -99,5 +102,38 @@ abstract class LocaleKeys {
 
   static const String _please = 'please';
   static String get please => _please.tr();
+
+  static const String _login = 'login';
+  static String get login => _login.tr();
+
+  static const String _signInAsVisitor = 'sign_in_as_visitor';
+  static String get signInAsVisitor => _signInAsVisitor.tr();
+
+  static const String _pleaseEnterPhoneNumber = 'please_enter_phone_number';
+  static String get pleaseEnterPhoneNumber => _pleaseEnterPhoneNumber.tr();
+
+  static const String _pleaseEnterYourMobileNumberToRegisterOrSkipToRegisterAndViewSomeApplicationData = 'please_enter_your_mobile_number_to_register_or_skip_to_register_and_view_some_application_data';
+  static String get pleaseEnterYourMobileNumberToRegisterOrSkipToRegisterAndViewSomeApplicationData => _pleaseEnterYourMobileNumberToRegisterOrSkipToRegisterAndViewSomeApplicationData.tr();
+
+  static const String _doNotHaveAnAccount = 'do_not_have_an_account';
+  static String get doNotHaveAnAccount => _doNotHaveAnAccount.tr();
+
+  static const String _newRegisteration = 'new_registeration';
+  static String get newRegisteration => _newRegisteration.tr();
+
+  static const String _skip = 'skip';
+  static String get skip => _skip.tr();
+
+  static const String _next = 'next';
+  static String get next => _next.tr();
+
+  static const String _start = 'start';
+  static String get start => _start.tr();
+
+  static const String _selectTheLanguageFromTheAvailableLanguages = 'select_the_language_from_the_available_languages';
+  static String get selectTheLanguageFromTheAvailableLanguages => _selectTheLanguageFromTheAvailableLanguages.tr();
+
+  static const String _confirm = 'confirm';
+  static String get confirm => _confirm.tr();
 
 }

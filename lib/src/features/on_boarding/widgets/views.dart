@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../config/language/languages.dart';
+import '../../../config/language/locale_keys.g.dart';
 import '../../../config/res/config_imports.dart';
 import '../../../core/extensions/context_extension.dart';
 import '../../../core/extensions/padding_extension.dart';

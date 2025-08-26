@@ -8,6 +8,7 @@ import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/widgets/app_logo_widget.dart';
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../../../core/widgets/app_text.dart';
+import '../../../../core/widgets/buttons/custom_animated_button.dart';
 import '../../../../core/widgets/buttons/default_button.dart';
 import '../../../../core/widgets/buttons/loading_button.dart';
 import '../../../../core/widgets/lang_icon.dart';
@@ -54,7 +55,7 @@ class LoginScreen extends StatelessWidget {
               borderRadius: 40.r,
               height: 50.h,
               onTap: () async {},
-              btnKey: null,
+              btnKey: GlobalKey<CustomButtonState>(),
             ),
             const DoNotHaveAccountWidget(),
             DefaultButton(

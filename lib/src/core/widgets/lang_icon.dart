@@ -3,7 +3,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-//
 import '../../../generated/assets.dart';
 import '../../config/language/languages.dart';
 import '../../config/language/locale_keys.g.dart';
@@ -12,6 +11,7 @@ import '../extensions/context_extension.dart';
 import '../extensions/padding_extension.dart';
 import '../navigation/navigator.dart';
 import 'app_text.dart';
+import 'buttons/custom_animated_button.dart';
 import 'buttons/loading_button.dart';
 import 'default_bottom_sheet.dart';
 
@@ -38,9 +38,7 @@ class LangIcon extends StatelessWidget {
 
 class _LangSheet extends StatelessWidget {
   final FutureOr<void> Function(Languages selectedLang) onSelectLang;
-  const _LangSheet({super.key,
-    required this.onSelectLang
-  });
+  const _LangSheet({required this.onSelectLang});
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +91,7 @@ class _SelectLangWidgetState extends State<SelectLangWidget> {
                   decoration: BoxDecoration(
                       border: Border.all(
                           color: language == languages[index].wholeLang ?
-                          AppColors.primary : AppColors.transparent
+                          AppColors.primary : Colors.transparent
                       ),
                       borderRadius: BorderRadius.circular(30.r)
                   ),
@@ -116,7 +114,7 @@ class _SelectLangWidgetState extends State<SelectLangWidget> {
                   Languages.setLocale(language);
                   await widget.onSelectLang(language);
                   Go.back();
-                }, btnKey: null,
+                }, btnKey: GlobalKey<CustomButtonState>(),
             )
           ],
         )

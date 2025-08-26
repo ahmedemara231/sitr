@@ -18,6 +18,7 @@
     "visitorText #$ Visitor": "زائر",
     "exceptionError #$ Something went wrong": "حدث خطأ ما",
     "excpetionErrorDesc #$ Something went wrong": "حدث خطأ ما",
+    "select the language" : "اختر اللغة",
     "contact_us #$ Contact Us": "اتصل بنا",
     "cancel #$ Cancel": "الغاء",
     "PhotoLibrary #$ Photo Library": "مكتبة الصور",
@@ -32,6 +33,16 @@
     "filedValidation#$Please enter":"الرجاء إدخال",
     "scripInjectionValidate#$Invalid characters found": "النص يحتوي على أحرف غير مسموح بها",
     "please#$Please Select ":"الرجاء اختيار ",
-    "_____________________________________Login___________________________________": ""
-
+    "_____________________________________Login___________________________________": "",
+    "Login" : "تسجيل الدخول",
+    "Sign in as visitor" : "تسجيل الدخول كا زائر",
+    "please enter phone number" : "من فضلك ادخل رقم الجوال",
+    "Please Enter Your Mobile Number To Register Or Skip To Register And View Some Application Data" : "من فضلك قم بادخال رقم الجوال للتسجيل او عمل تخطي للتسجيل والاطلاع علي بعض بيانات التطبيق",
+    "Do not have an account" : "ليس لديك حساب",
+    "New Registeration" : "تسجيل جديد",
+    "Skip" : "تخطي",
+    "Next" : "التالي",
+    "Start" : "بدأ",
+    "select The Language From The Available Languages" : "اختر اللغة من اللغات المتاحة",
+    "Confirm" : "تأكيد"
 }

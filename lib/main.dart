@@ -64,7 +64,7 @@ void main() async {
       path: 'assets/translations',
       saveLocale: true,
       fallbackLocale: const Locale('ar'),
-      child: const App(),
+      child: const Sitr(),
     ),
   );
 }
