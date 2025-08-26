@@ -1,4 +1,7 @@
+import '../../helpers/gender_enum.dart';
+
 class UserModel {
+  final Gender gender;
   final String id;
   final String image;
   final String fullName;
@@ -10,6 +13,7 @@ class UserModel {
   final String? token;
 
   UserModel({
+    required this.gender,
     required this.id,
     required this.image,
     required this.fullName,
@@ -22,6 +26,7 @@ class UserModel {
   });
 
   factory UserModel.initial() => UserModel(
+    gender: Gender.male,
         id: '',
         image: '',
         fullName: '',
@@ -34,6 +39,7 @@ class UserModel {
       );
 
   UserModel copyWith({
+    Gender? gender,
     String? id,
     String? image,
     String? fullName,
@@ -45,6 +51,7 @@ class UserModel {
     String? token,
   }) {
     return UserModel(
+      gender: gender ?? this.gender,
       id: id ?? this.id,
       image: image ?? this.image,
       fullName: fullName ?? this.fullName,
@@ -58,6 +65,7 @@ class UserModel {
   }
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+    gender: json['gender'],
         id: json['id'],
         image: json['image'],
         fullName: json['fullName'],
@@ -70,6 +78,7 @@ class UserModel {
       );
 
   Map<String, dynamic> toJson() => {
+        'gender': gender.name,
         'id': id,
         'image': image,
         'fullName': fullName,

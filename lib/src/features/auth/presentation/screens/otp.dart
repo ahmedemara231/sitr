@@ -4,16 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/widgets/text.dart';
 import 'package:pinput/pinput.dart';
+import '../../../../config/language/languages.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/context_extension.dart';
-import '../../../../core/extensions/padding_extension.dart';
+import '../../../../core/extensions/object.dart';
 import '../../../../core/extensions/sized_box_helper.dart';
+import '../../../../core/helpers/gender_enum.dart';
 import '../../../../core/helpers/helpers.dart';
 import '../../../../core/helpers/validators.dart';
+import '../../../../core/shared/models/user_model.dart';
 import '../../../../core/widgets/app_logo_widget.dart';
 import '../../../../core/widgets/auth_scaffold.dart';
 import '../../../../core/widgets/buttons/app_loading_button.dart';
+import '../../../../core/widgets/icon_widget.dart';
+import '../../../../core/widgets/lang_icon.dart';
 
 class OtpScreen extends StatelessWidget {
 
