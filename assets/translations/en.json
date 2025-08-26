@@ -44,5 +44,10 @@
   "next": "Next",
   "start": "Start",
   "select_the_language_from_the_available_languages": "select The Language From The Available Languages",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+  "otp_code": "Otp Code",
+  "please_enter_the_activation_code_sent_to_your_mobile_number": "Please enter the activation code sent to your mobile number",
+  "remaining_time": "remaining time",
+  "activation_code": "Activation code",
+  "resend_code": "resend code"
 }

@@ -33,6 +33,7 @@
     "filedValidation#$Please enter":"الرجاء إدخال",
     "scripInjectionValidate#$Invalid characters found": "النص يحتوي على أحرف غير مسموح بها",
     "please#$Please Select ":"الرجاء اختيار ",
+
     "_____________________________________Login___________________________________": "",
     "Login" : "تسجيل الدخول",
     "Phone Number" : "رقم الجوال",
@@ -45,5 +46,13 @@
     "Next" : "التالي",
     "Start" : "بدأ",
     "select The Language From The Available Languages" : "اختر اللغة من اللغات المتاحة",
-    "Confirm" : "تأكيد"
+    "Confirm" : "تأكيد",
+
+    "_____________________________________Otp___________________________________": "",
+    "Otp Code" : "كود التحقق",
+    "Please enter the activation code sent to your mobile number" : "من فضلك قم بادخال كود التفعيل المرسل علي رقم الجوال",
+    "remaining time" : "الوقت المتبقي",
+    "Activation code" : "كود التفعيل",
+    "resend code" : "اعادة الارسال"
+
 }

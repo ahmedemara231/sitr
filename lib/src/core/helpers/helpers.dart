@@ -13,6 +13,15 @@ import '../navigation/navigator.dart';
 import '../widgets/custom_loading.dart';
 
 class Helpers {
+
+  static Alignment get getAlignment{
+    if(Languages.currentLanguage == Languages.arabic){
+      return Alignment.topRight;
+    }else{
+      return Alignment.topLeft;
+    }
+  }
+
   static Future<File?> getImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);

@@ -139,4 +139,19 @@ abstract class LocaleKeys {
   static const String _confirm = 'confirm';
   static String get confirm => _confirm.tr();
 
+  static const String _otpCode = 'otp_code';
+  static String get otpCode => _otpCode.tr();
+
+  static const String _pleaseEnterTheActivationCodeSentToYourMobileNumber = 'please_enter_the_activation_code_sent_to_your_mobile_number';
+  static String get pleaseEnterTheActivationCodeSentToYourMobileNumber => _pleaseEnterTheActivationCodeSentToYourMobileNumber.tr();
+
+  static const String _remainingTime = 'remaining_time';
+  static String get remainingTime => _remainingTime.tr();
+
+  static const String _activationCode = 'activation_code';
+  static String get activationCode => _activationCode.tr();
+
+  static const String _resendCode = 'resend_code';
+  static String get resendCode => _resendCode.tr();
+
 }

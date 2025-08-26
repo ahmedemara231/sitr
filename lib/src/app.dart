@@ -10,6 +10,7 @@ import 'core/navigation/route_generator.dart';
 import 'core/shared/route_observer.dart';
 import 'core/shared/user_cubit/user_cubit.dart' show UserCubit;
 import 'core/widgets/offline_widget.dart';
+import 'features/auth/presentation/screens/otp.dart';
 import 'features/settings/splash/imports/view_imports.dart';
 import 'features/splash/splash_screen.dart';
 
@@ -32,7 +33,7 @@ class Sitr extends StatelessWidget {
             supportedLocales: context.supportedLocales,
             locale: context.locale,
             navigatorKey: Go.navigatorKey,
-            home: const SplashScreen(),
+            home: OtpScreen(title: '', onConfirmCode: (BuildContext context, String code) {  }, onResendCodePress: (BuildContext context) {  },),
             navigatorObservers: [AppNavigationObserver()],
             theme: AppTheme.light,
             builder: (context, child) {

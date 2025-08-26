@@ -33,8 +33,11 @@ class LoginScreen extends StatelessWidget {
                 const AppLogoWidget(),
               ],
             ),
-            AppText(LocaleKeys.login, fontWeight: FontWeight.w500, fontSize: 16.sp),
-            AppText(LocaleKeys.pleaseEnterYourMobileNumberToRegisterOrSkipToRegisterAndViewSomeApplicationData),
+            AppText(LocaleKeys.login, fontWeight: FontWeight.w500, fontSize: 22.sp),
+            AppText(
+                LocaleKeys.pleaseEnterYourMobileNumberToRegisterOrSkipToRegisterAndViewSomeApplicationData,
+                textAlign: TextAlign.center,
+                fontSize: 16.sp),
           ],
         ),
       ),

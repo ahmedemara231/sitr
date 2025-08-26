@@ -44,5 +44,10 @@
   "next": "التالي",
   "start": "بدأ",
   "select_the_language_from_the_available_languages": "اختر اللغة من اللغات المتاحة",
-  "confirm": "تأكيد"
+  "confirm": "تأكيد",
+  "otp_code": "كود التحقق",
+  "please_enter_the_activation_code_sent_to_your_mobile_number": "من فضلك قم بادخال كود التفعيل المرسل علي رقم الجوال",
+  "remaining_time": "الوقت المتبقي",
+  "activation_code": "كود التفعيل",
+  "resend_code": "اعادة الارسال"
 }
