@@ -63,6 +63,7 @@ void main() async {
       supportedLocales: Languages.suppoerLocales,
       path: 'assets/translations',
       saveLocale: true,
+      startLocale: const Locale('ar'),
       fallbackLocale: const Locale('ar'),
       child: const Sitr(),
     ),

@@ -15,14 +15,13 @@ class DoNotHaveAccountWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       spacing: 5.w,
       children: [
-        AppText(LocaleKeys.doNotHaveAnAccount, color: Colors.grey, fontSize: 12.sp,),
+        AppText(LocaleKeys.doNotHaveAnAccount, color: Colors.grey),
         TextButton(
             onPressed: () {},
             child: AppText(
                 LocaleKeys.newRegisteration,
                 color: AppColors.primary,
-                fontWeight: FontWeight.bold,
-                fontSize: 12.sp
+                fontWeight: FontWeight.w500,
             )
         ),
       ],

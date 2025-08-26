@@ -19,9 +19,9 @@ class OnBoardingView extends StatelessWidget {
   final totalNumber = 3;
   final ValueNotifier<int> currentIndex = ValueNotifier(0);
   final List<ScreenModel> screens = [
-    ScreenModel(backgroundImage: Assets.imagesAppLogo, firstText: 'firstText1', secondText: 'secondText1'),
-    ScreenModel(backgroundImage: Assets.imagesArrowDown, firstText: 'firstText2', secondText: 'secondText2'),
-    ScreenModel(backgroundImage: Assets.imagesAuthBackground, firstText: 'firstText3', secondText: 'secondText3', isLast: true),
+    ScreenModel(backgroundImage: Assets.imagesBoardingFirst, firstText: 'firstText1', secondText: 'secondText1'),
+    ScreenModel(backgroundImage: Assets.imagesBoardingSecond, firstText: 'firstText2', secondText: 'secondText2'),
+    ScreenModel(backgroundImage: Assets.imagesBoardingThird, firstText: 'firstText3', secondText: 'secondText3', isLast: true),
   ];
 
   @override
@@ -45,6 +45,7 @@ class OnBoardingView extends StatelessWidget {
                 )
             ),
             DefaultButton(
+              color: AppColors.primary,
               borderRadius: BorderRadius.circular(40.r),
                 onTap: () {
                   if(value == totalNumber - 1){

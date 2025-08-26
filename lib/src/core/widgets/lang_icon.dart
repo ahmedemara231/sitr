@@ -11,6 +11,7 @@ import '../extensions/context_extension.dart';
 import '../extensions/padding_extension.dart';
 import '../navigation/navigator.dart';
 import 'app_text.dart';
+import 'buttons/app_loading_button.dart';
 import 'buttons/custom_animated_button.dart';
 import 'buttons/loading_button.dart';
 import 'default_bottom_sheet.dart';
@@ -105,16 +106,13 @@ class _SelectLangWidgetState extends State<SelectLangWidget> {
                 ),
               ),),
             ),
-            LoadingButton(
+            AppLoadingButton(
                 title: LocaleKeys.confirm,
-                borderRadius: 40.r,
-                height: 45.h,
-                fontSize: 12.sp,
-                onTap: () async{
+                asyncCall: () async{
                   Languages.setLocale(language);
                   await widget.onSelectLang(language);
                   Go.back();
-                }, btnKey: GlobalKey<CustomButtonState>(),
+                },
             )
           ],
         )

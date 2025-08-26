@@ -5,7 +5,7 @@ final GetIt injector = GetIt.instance;
 class ConstantManager {
   static const String bundleId = 'com.aait.flutter.sitr';
   static const String appName = 'sitr';
-  static const String fontFamily = '';
+  static const String fontFamily = 'Tajawal';
   static const String token = 'token';
   static const String projectName = 'sitr';
   static const int splashTimer = 3000;
@@ -34,9 +34,19 @@ class ConstantManager {
   static const double cardElevation = 1;
   static const int rateCount = 5;
   static const double minRateCount = 1;
+  static BorderRadius buttonBorderRadius = BorderRadius.circular(40.r);
+  static double buttonBorderRadiusNumber = 40.r;
 }
 
 class CacheConstant{
   static const String onBoardingSubmission = "onBoardingSubmission";
   static const String isLoggedIn = "isLoggedIn";
+}
+
+class Styles{
+  static TextStyle bold16 = TextStyle(
+    fontSize: 16.sp,
+    fontWeight: FontWeight.bold,
+    fontFamily: ConstantManager.fontFamily
+  );
 }

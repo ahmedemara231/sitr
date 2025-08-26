@@ -16,7 +16,7 @@ class AppColors {
   static const Color buttonColor = Color(0xFF1B8354);
   static const Color buttonText = Color(0xffFFFFFF);
   static const Color error = Color(0xFFD92D20);
-  static const Color scaffoldBackground = Color(0xffF9FAFB);
+  static const Color scaffoldBackground = Color(0xffF7F4F3);
   static const Color yellow = Color(0xffFDB022);
 
   static const Color grey = Color(0xFF5B5B5B);

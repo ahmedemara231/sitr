@@ -17,7 +17,6 @@ class DefaultButton extends StatelessWidget {
   final double? height;
   final double? elevation;
   final bool? disabled;
-  final String? fontFamily;
   final FontWeight? fontWeight;
   final Widget? customChild;
   final bool isFitted;
@@ -32,7 +31,6 @@ class DefaultButton extends StatelessWidget {
     this.borderRadius,
     this.margin,
     this.borderColor,
-    this.fontFamily,
     this.fontSize,
     this.width,
     this.height,
@@ -47,7 +45,7 @@ class DefaultButton extends StatelessWidget {
         style: TextStyle(
           color: textColor ?? AppColors.buttonText,
           fontSize: fontSize ?? FontSize.s13,
-          fontFamily: fontFamily,
+          fontFamily: ConstantManager.fontFamily,
           fontWeight: fontWeight ?? FontWeightManager.medium,
         ),
       );
@@ -63,13 +61,13 @@ class DefaultButton extends StatelessWidget {
           splashFactory: InkRipple.splashFactory,
           surfaceTintColor: color ?? AppColors.buttonColor,
           foregroundColor: color ?? AppColors.buttonColor,
-          backgroundColor: color ?? AppColors.buttonColor,
+          backgroundColor: color ?? AppColors.primary,
           shape: RoundedRectangleBorder(
             borderRadius:
                 borderRadius ?? BorderRadius.circular(AppCircular.r5),
             side: borderColor != null
                 ? BorderSide(
-                    color: borderColor ?? AppColors.buttonColor,
+                    color: borderColor ?? Colors.grey[200]!,
                     width: .5,
                   )
                 : BorderSide.none,

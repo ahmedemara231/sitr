@@ -11,6 +11,7 @@ import 'core/shared/route_observer.dart';
 import 'core/shared/user_cubit/user_cubit.dart' show UserCubit;
 import 'core/widgets/offline_widget.dart';
 import 'features/settings/splash/imports/view_imports.dart';
+import 'features/splash/splash_screen.dart';
 
 class Sitr extends StatelessWidget {
   const Sitr({super.key});

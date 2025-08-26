@@ -128,7 +128,7 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
       spacing: 5.h,
       children: [
         if(widget.withTitle == TitleStatus.withTitle)
-          AppText(widget.upperTitle!, fontWeight: FontWeight.w500),
+          AppText(widget.upperTitle!, fontWeight: FontWeight.bold),
 
         TextFormField(
           autovalidateMode: AutovalidateMode.onUserInteraction,

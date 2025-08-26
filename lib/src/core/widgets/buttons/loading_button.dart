@@ -5,7 +5,7 @@ import '../../extensions/context_extension.dart';
 import '../../extensions/text_style_extensions.dart';
 import 'custom_animated_button.dart';
 
-class LoadingButton extends StatelessWidget {
+class CustomAnimatedButton extends StatelessWidget {
   final GlobalKey<CustomButtonState> btnKey;
   final String title;
   final Function() onTap;
@@ -19,9 +19,9 @@ class LoadingButton extends StatelessWidget {
   final double? fontSize;
   final String? fontFamily;
   final FontWeight? fontWeight;
-  final BorderSide borderSide;
+  final BorderSide? borderSide;
 
-  const LoadingButton({
+  const CustomAnimatedButton({
     super.key,
     required this.title,
     required this.onTap,
@@ -49,10 +49,10 @@ class LoadingButton extends StatelessWidget {
         width: width ?? context.width,
         minWidth: AppSize.sW50,
         height: height ?? AppSize.sH44,
-        color: color ?? AppColors.buttonColor,
+        color: color ?? AppColors.primary,
         borderRadius: borderRadius ?? AppCircular.r5,
         disabledColor: color ?? AppColors.buttonColor,
-        borderSide: borderSide,
+        borderSide: borderSide?? BorderSide.none,
         loader: Container(
           padding: EdgeInsets.all(AppPadding.pH10),
           child: SpinKitFoldingCube(
@@ -62,7 +62,12 @@ class LoadingButton extends StatelessWidget {
         ),
         child: Text(
           title,
-          style: const TextStyle().setWhiteColor.s15.medium,
+          style: TextStyle(
+            fontFamily: ConstantManager.fontFamily,
+            fontSize: fontSize,
+            color: textColor?? Colors.white,
+            fontWeight: fontWeight
+          ),
         ),
       ),
     );
