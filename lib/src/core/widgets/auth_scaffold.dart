@@ -48,7 +48,14 @@ class ScreenChildren extends StatelessWidget {
             color: AppColors.whiteGreyColor,
             child: upperWidget!.paddingAll(20.r)
         ),
-        body,
+        Container(
+            height: context.height * .7,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(22.r)),
+            ),
+            child: body.defaultScreenPadding()
+        ),
       ],
     );
   }

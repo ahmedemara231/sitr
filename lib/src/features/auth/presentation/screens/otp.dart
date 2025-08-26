@@ -81,12 +81,12 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
   }
 
   final PinTheme? defaultPinTheme = PinTheme(
-      width: 50.w,
+      width: 55.w,
       height: 50.h,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(color: Colors.transparent),
-          color: Colors.grey[200]
+          color: Colors.grey[100]
       )
   );
 
@@ -116,15 +116,16 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
             Align(
               alignment: Helpers.getAlignment,
               child: AppText(
-                LocaleKeys.otpCode,
+                LocaleKeys.activationCode,
                 fontSize: 12.sp,
-                color: Colors.grey,
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
               ),
             ),
             Form(
               key: _formKey,
               child: Pinput(
-                separatorBuilder: (n) => 30.szW,
+                separatorBuilder: (n) => 20.szW,
                 defaultPinTheme: defaultPinTheme,
                 controller: pinCont,
                 onChanged: (val) => code = val,
@@ -167,7 +168,7 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
                 onTimerEnds: (context) => setState(() => _canResend = true)
             ),
           ],
-        ).defaultScreenPadding()
+        )
     );
   }
 }
