@@ -16,11 +16,11 @@ extension Check on Gender{
 class GenderHelper{
 
   static bool get isAuthenticated{
-    return currentGender != Gender.unauthenticated;
+    return !currentGender.isUnauthenticated;
   }
 
   static Gender get currentGender{
-    // return (UserModel.fromJson(jsonDecode(CacheStorage.read('user')))).gender;
+    return (UserModel.fromJson(jsonDecode(CacheStorage.read('user')))).gender;
     return Gender.male;
   }
 
