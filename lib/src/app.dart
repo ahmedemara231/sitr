@@ -12,6 +12,7 @@ import 'core/shared/user_cubit/user_cubit.dart' show UserCubit;
 import 'core/widgets/offline_widget.dart';
 import 'features/auth/presentation/screens/login.dart';
 import 'features/auth/presentation/screens/otp.dart';
+import 'features/auth/presentation/screens/sign_up.dart';
 import 'features/settings/splash/imports/view_imports.dart';
 import 'features/splash/splash_screen.dart';
 

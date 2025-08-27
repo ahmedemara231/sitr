@@ -49,5 +49,20 @@
   "please_enter_the_activation_code_sent_to_your_mobile_number": "من فضلك قم بادخال كود التفعيل المرسل علي رقم الجوال",
   "remaining_time": "الوقت المتبقي",
   "activation_code": "كود التفعيل",
-  "resend_code": "اعادة الارسال"
+  "resend_code": "اعادة الارسال",
+  "male": "ذكر",
+  "female": "انثي",
+  "parent": "ولي امر",
+  "please_enter_the_following_information_to_create_a_new_account": "من فضلك قم بادخال البيانات التالية حتي تتمكن من انشاء حساب جديد",
+  "create_account": "انشاء حساب",
+  "profile_picture": "الصورة الشخصية",
+  "age": "العمر",
+  "identify_number": "رقم الهوية",
+  "code": "الكود",
+  "please_enter_your_profile_picture": "يرجي ادخال الصورة الشخصية",
+  "please_enter_your_name": "يرجي ادخال الاسم",
+  "please_enter_your_phone": "يرجي ادخال رقم الجوال",
+  "please_enter_your_age": "يرجي ادخال العمر",
+  "please_enter_your_identify_number": "يرجي ادخال رقم الهوية",
+  "please_enter_your_code": "يرجي ادخال الكود"
 }

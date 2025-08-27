@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../config/res/config_imports.dart';
 import '../extensions/context_extension.dart';
 import '../extensions/padding_extension.dart';
-import 'app_text.dart';
 
 enum UpperView{appBar, upperWidget}
 class AuthScaffold extends StatelessWidget {
@@ -13,7 +12,7 @@ class AuthScaffold extends StatelessWidget {
   const AuthScaffold({
     super.key,
     required this.body,
-    this.upperWidget
+    this.upperWidget,
   });
 
   @override
@@ -33,15 +32,15 @@ class AuthScaffold extends StatelessWidget {
 class ScreenChildren extends StatelessWidget {
   final Widget? upperWidget;
   final Widget body;
+
   const ScreenChildren({super.key,
     required this.body,
-    this.upperWidget
+    this.upperWidget,
   });
 
   @override
   Widget build(BuildContext context) {
     return ListView(
-      shrinkWrap: true,
       children: [
         Container(
             width: context.width,
@@ -49,7 +48,6 @@ class ScreenChildren extends StatelessWidget {
             child: upperWidget!.paddingAll(20.r)
         ),
         Container(
-            height: context.height * .7,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.vertical(top: Radius.circular(22.r)),

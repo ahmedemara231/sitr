@@ -53,6 +53,22 @@
     "Please enter the activation code sent to your mobile number" : "من فضلك قم بادخال كود التفعيل المرسل علي رقم الجوال",
     "remaining time" : "الوقت المتبقي",
     "Activation code" : "كود التفعيل",
-    "resend code" : "اعادة الارسال"
+    "resend code" : "اعادة الارسال",
+    "male" : "ذكر",
+    "female" : "انثي",
+    "parent" : "ولي امر",
+    "Please enter the following information to create a new account" : "من فضلك قم بادخال البيانات التالية حتي تتمكن من انشاء حساب جديد",
+    "Create Account" : "انشاء حساب",
+    "profile picture" : "الصورة الشخصية",
+    "Age" : "العمر",
+    "Identify number" : "رقم الهوية",
+    "Code" : "الكود",
+    "please enter your profile picture" : "يرجي ادخال الصورة الشخصية",
+    "please enter your name" : "يرجي ادخال الاسم",
+    "please enter your phone" : "يرجي ادخال رقم الجوال",
+    "please enter your age" : "يرجي ادخال العمر",
+    "please enter your identify number" : "يرجي ادخال رقم الهوية",
+    "please enter your code" : "يرجي ادخال الكود"
+
 
 }

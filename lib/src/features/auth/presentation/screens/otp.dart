@@ -4,21 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/widgets/text.dart';
 import 'package:pinput/pinput.dart';
-import '../../../../config/language/languages.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/context_extension.dart';
-import '../../../../core/extensions/object.dart';
 import '../../../../core/extensions/sized_box_helper.dart';
-import '../../../../core/helpers/gender_enum.dart';
 import '../../../../core/helpers/helpers.dart';
 import '../../../../core/helpers/validators.dart';
-import '../../../../core/shared/models/user_model.dart';
 import '../../../../core/widgets/app_logo_widget.dart';
 import '../../../../core/widgets/auth_scaffold.dart';
 import '../../../../core/widgets/buttons/app_loading_button.dart';
-import '../../../../core/widgets/icon_widget.dart';
-import '../../../../core/widgets/lang_icon.dart';
+import '../widgets/otp_static_texts.dart';
 
 class OtpScreen extends StatelessWidget {
 
@@ -105,74 +100,73 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
           height: context.height * .2,
           child: Column(
             spacing: 12.h,
-            children: [
-              const AppLogoWidget(),
-              AppText(LocaleKeys.otpCode, fontWeight: FontWeight.w500, fontSize: 22.sp),
-              AppText(
-                  LocaleKeys.pleaseEnterTheActivationCodeSentToYourMobileNumber,
-                  textAlign: TextAlign.center,
-                  fontSize: 16.sp),
+            children: const [
+              AppLogoWidget(),
+              OtpStaticTexts(),
             ],
           ),
         ),
-        body: Column(
-          spacing: 5.h,
-          children: [
-            Align(
-              alignment: Helpers.getAlignment,
-              child: AppText(
-                LocaleKeys.activationCode,
-                fontSize: 12.sp,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Form(
-              key: _formKey,
-              child: Pinput(
-                separatorBuilder: (n) => 20.szW,
-                defaultPinTheme: defaultPinTheme,
-                controller: pinCont,
-                onChanged: (val) => code = val,
-                validator: Validators.validateEmpty,
-              ),
-            ),
-            16.szH,
-
-            AppLoadingButton(
-              title: LocaleKeys.confirm,
-              asyncCall: () async{
-                if (_formKey.currentState!.validate()) {
-                  await widget.onConfirmCode.call(context, code);
-                }
-              },
-            ),
-
-            EasyTimerCount.builder(
-                controller: _timeCont,
-                duration: const EasyTime(minutes: 1),
-                builder: (time) => Row(
-                  spacing: 5.w,
-                  children: [
-                    AppText(LocaleKeys.remainingTime, color: Colors.grey),
-                    AppText(time, fontWeight: FontWeight.w500,),
-                    TextButton(
-                        onPressed: _canResend? () {
-                          widget.onResendCodePress.call(context);
-                          _timeCont.restart();
-                          setState(() => _canResend = false);
-                        } : null,
-                        child: AppText(
-                          LocaleKeys.resendCode,
-                          color: _canResend? AppColors.primary : Colors.grey,
-                        )
-                    ),
-                  ],
+        body: SizedBox(
+          height: context.height * .7,
+          child: Column(
+            spacing: 5.h,
+            children: [
+              Align(
+                alignment: Helpers.getAlignment,
+                child: AppText(
+                  LocaleKeys.activationCode,
+                  fontSize: 12.sp,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
                 ),
-                onTimerStarts: (context) async {},
-                onTimerEnds: (context) => setState(() => _canResend = true)
-            ),
-          ],
+              ),
+              Form(
+                key: _formKey,
+                child: Pinput(
+                  separatorBuilder: (n) => 20.szW,
+                  defaultPinTheme: defaultPinTheme,
+                  controller: pinCont,
+                  onChanged: (val) => code = val,
+                  validator: Validators.validateEmpty,
+                ),
+              ),
+              16.szH,
+
+              AppLoadingButton(
+                title: LocaleKeys.confirm,
+                asyncCall: () async{
+                  if (_formKey.currentState!.validate()) {
+                    await widget.onConfirmCode.call(context, code);
+                  }
+                },
+              ),
+
+              EasyTimerCount.builder(
+                  controller: _timeCont,
+                  duration: const EasyTime(minutes: 1),
+                  builder: (time) => Row(
+                    spacing: 5.w,
+                    children: [
+                      AppText(LocaleKeys.remainingTime, color: Colors.grey),
+                      AppText(time, fontWeight: FontWeight.w500,),
+                      TextButton(
+                          onPressed: _canResend? () {
+                            widget.onResendCodePress.call(context);
+                            _timeCont.restart();
+                            setState(() => _canResend = false);
+                          } : null,
+                          child: AppText(
+                            LocaleKeys.resendCode,
+                            color: _canResend? AppColors.primary : Colors.grey,
+                          )
+                      ),
+                    ],
+                  ),
+                  onTimerStarts: (context) async {},
+                  onTimerEnds: (context) => setState(() => _canResend = true)
+              ),
+            ],
+          ),
         )
     );
   }

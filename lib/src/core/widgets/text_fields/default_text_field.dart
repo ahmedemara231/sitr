@@ -6,6 +6,7 @@ import '../app_text.dart';
 
 enum TitleStatus {withTitle, withoutTitle}
 class DefaultTextField extends StatefulWidget {
+  final double? borderRadius;
   final TitleStatus withTitle;
   final String? title;
   final bool secure;
@@ -41,6 +42,7 @@ class DefaultTextField extends StatefulWidget {
   const DefaultTextField({
     super.key,
     this.title,
+    this.borderRadius,
     this.secure = false,
     this.inputType = TextInputType.text,
     this.borderColor,
@@ -74,6 +76,7 @@ class DefaultTextField extends StatefulWidget {
   const DefaultTextField.withTitle({
     super.key,
     this.title,
+    this.borderRadius,
     this.secure = false,
     this.inputType = TextInputType.text,
     this.borderColor,
@@ -128,7 +131,7 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
       spacing: 5.h,
       children: [
         if(widget.withTitle == TitleStatus.withTitle)
-          AppText(widget.upperTitle!, fontWeight: FontWeight.bold),
+          AppText(widget.upperTitle!, fontWeight: FontWeight.bold, fontSize: 11.sp),
 
         TextFormField(
           autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -195,7 +198,7 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
               fontFamily: ConstantManager.fontFamily,
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(AppCircular.r12),
+              borderRadius: BorderRadius.circular(widget.borderRadius?? AppCircular.r12),
               borderSide: widget.hasBorderColor == true
                   ? BorderSide(
                 color: widget.borderColor ?? AppColors.border,

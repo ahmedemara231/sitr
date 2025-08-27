@@ -38,30 +38,33 @@ class LoginScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: Column(
-        spacing: 7.h,
-        children: [
-          DefaultTextField.withTitle(
-            upperTitle: LocaleKeys.phoneNumber,
-            inputType: TextInputType.phone,
-            title: LocaleKeys.pleaseEnterPhoneNumber,
-            fillColor: Colors.grey[50],
-          ),
-          AppLoadingButton(
-            title: LocaleKeys.login,
-            asyncCall: () async {},
-          ),
-          const DoNotHaveAccountWidget(),
-          DefaultButton(
-            borderRadius: ConstantManager.buttonBorderRadius,
-            color: AppColors.thirdColor,
-            title: LocaleKeys.signInAsVisitor,
-            textColor: AppColors.primary,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.bold,
-            onTap: (){},
-          )
-        ],
+      body: SizedBox(
+        height: context.height * .7,
+        child: Column(
+          spacing: 7.h,
+          children: [
+            DefaultTextField.withTitle(
+              upperTitle: LocaleKeys.phoneNumber,
+              inputType: TextInputType.phone,
+              title: LocaleKeys.pleaseEnterPhoneNumber,
+              fillColor: Colors.grey[50],
+            ),
+            AppLoadingButton(
+              title: LocaleKeys.login,
+              asyncCall: () async {},
+            ),
+            const DoNotHaveAccountWidget(),
+            DefaultButton(
+              borderRadius: ConstantManager.buttonBorderRadius,
+              color: AppColors.thirdColor,
+              title: LocaleKeys.signInAsVisitor,
+              textColor: AppColors.primary,
+              fontSize: 12.sp,
+              fontWeight: FontWeight.bold,
+              onTap: (){},
+            )
+          ],
+        ),
       ),
     );
   }

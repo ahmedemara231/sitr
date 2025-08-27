@@ -49,5 +49,20 @@
   "please_enter_the_activation_code_sent_to_your_mobile_number": "Please enter the activation code sent to your mobile number",
   "remaining_time": "remaining time",
   "activation_code": "Activation code",
-  "resend_code": "resend code"
+  "resend_code": "resend code",
+  "male": "male",
+  "female": "female",
+  "parent": "parent",
+  "please_enter_the_following_information_to_create_a_new_account": "Please enter the following information to create a new account",
+  "create_account": "Create Account",
+  "profile_picture": "profile picture",
+  "age": "Age",
+  "identify_number": "Identify number",
+  "code": "Code",
+  "please_enter_your_profile_picture": "please enter your profile picture",
+  "please_enter_your_name": "please enter your name",
+  "please_enter_your_phone": "please enter your phone",
+  "please_enter_your_age": "please enter your age",
+  "please_enter_your_identify_number": "please enter your identify number",
+  "please_enter_your_code": "please enter your code"
 }

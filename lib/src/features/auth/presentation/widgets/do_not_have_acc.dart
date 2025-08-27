@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
+import '../../../../core/navigation/navigator.dart';
 import '../../../../core/widgets/app_text.dart';
+import '../screens/sign_up.dart';
 
 class DoNotHaveAccountWidget extends StatelessWidget {
   const DoNotHaveAccountWidget({super.key});
@@ -15,13 +17,14 @@ class DoNotHaveAccountWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       spacing: 5.w,
       children: [
-        AppText(LocaleKeys.doNotHaveAnAccount, color: Colors.grey),
+        AppText(LocaleKeys.doNotHaveAnAccount, color: Colors.grey, fontSize: 12.sp,),
         TextButton(
-            onPressed: () {},
+            onPressed: () => Go.to(const SignUpScreen()),
             child: AppText(
-                LocaleKeys.newRegisteration,
-                color: AppColors.primary,
-                fontWeight: FontWeight.w500,
+              LocaleKeys.newRegisteration,
+              color: AppColors.primary,
+              fontWeight: FontWeight.w500,
+              fontSize: 12.sp,
             )
         ),
       ],

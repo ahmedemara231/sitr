@@ -11,11 +11,11 @@ class LoginStaticTexts extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AppText(LocaleKeys.login, fontWeight: FontWeight.w500, fontSize: 22.sp),
+        AppText(LocaleKeys.login, fontWeight: FontWeight.w500, fontSize: 16.sp),
         AppText(
             LocaleKeys.pleaseEnterYourMobileNumberToRegisterOrSkipToRegisterAndViewSomeApplicationData,
             textAlign: TextAlign.center,
-            fontSize: 16.sp
+            fontSize: 12.sp
         ),
       ],
     );

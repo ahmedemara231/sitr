@@ -154,4 +154,49 @@ abstract class LocaleKeys {
   static const String _resendCode = 'resend_code';
   static String get resendCode => _resendCode.tr();
 
+  static const String _male = 'male';
+  static String get male => _male.tr();
+
+  static const String _female = 'female';
+  static String get female => _female.tr();
+
+  static const String _parent = 'parent';
+  static String get parent => _parent.tr();
+
+  static const String _pleaseEnterTheFollowingInformationToCreateANewAccount = 'please_enter_the_following_information_to_create_a_new_account';
+  static String get pleaseEnterTheFollowingInformationToCreateANewAccount => _pleaseEnterTheFollowingInformationToCreateANewAccount.tr();
+
+  static const String _createAccount = 'create_account';
+  static String get createAccount => _createAccount.tr();
+
+  static const String _profilePicture = 'profile_picture';
+  static String get profilePicture => _profilePicture.tr();
+
+  static const String _age = 'age';
+  static String get age => _age.tr();
+
+  static const String _identifyNumber = 'identify_number';
+  static String get identifyNumber => _identifyNumber.tr();
+
+  static const String _code = 'code';
+  static String get code => _code.tr();
+
+  static const String _pleaseEnterYourProfilePicture = 'please_enter_your_profile_picture';
+  static String get pleaseEnterYourProfilePicture => _pleaseEnterYourProfilePicture.tr();
+
+  static const String _pleaseEnterYourName = 'please_enter_your_name';
+  static String get pleaseEnterYourName => _pleaseEnterYourName.tr();
+
+  static const String _pleaseEnterYourPhone = 'please_enter_your_phone';
+  static String get pleaseEnterYourPhone => _pleaseEnterYourPhone.tr();
+
+  static const String _pleaseEnterYourAge = 'please_enter_your_age';
+  static String get pleaseEnterYourAge => _pleaseEnterYourAge.tr();
+
+  static const String _pleaseEnterYourIdentifyNumber = 'please_enter_your_identify_number';
+  static String get pleaseEnterYourIdentifyNumber => _pleaseEnterYourIdentifyNumber.tr();
+
+  static const String _pleaseEnterYourCode = 'please_enter_your_code';
+  static String get pleaseEnterYourCode => _pleaseEnterYourCode.tr();
+
 }
