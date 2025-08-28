@@ -8,9 +8,13 @@ import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/buttons/default_button.dart';
 import '../../../../core/widgets/svg_pic.dart';
+import '../packages_screen.dart';
 
 class PackageWidget extends StatelessWidget {
-  const PackageWidget({super.key});
+  final ScreenType type;
+  const PackageWidget({super.key,
+    required this.type,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -48,13 +52,16 @@ class PackageWidget extends StatelessWidget {
                 width: context.width * .5,
                 height: 40.h,
                 child: DefaultButton(
-                  color: Colors.amber,
-                  title: LocaleKeys.subscribeToPackage,
+                  color: AppColors.white,
+                  title: type == ScreenType.view?
+                  LocaleKeys.subscribeToPackage :
+                  LocaleKeys.renewPackage,
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w400,
                   borderRadius: ConstantManager.buttonBorderRadius,
                   borderColor: AppColors.primary,
                   textColor: AppColors.primary,
+                  onTap: (){},
                 ),
               )
             ],

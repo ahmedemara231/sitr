@@ -211,4 +211,7 @@ abstract class LocaleKeys {
   static const String _price = 'price';
   static String get price => _price.tr();
 
+  static const String _renewPackage = 'renew_package';
+  static String get renewPackage => _renewPackage.tr();
+
 }

@@ -6,8 +6,13 @@ import '../../../core/widgets/app_text.dart';
 import '../../../core/widgets/scaffolds/app_scaffold.dart';
 import 'widgets/package_widget.dart';
 
+enum ScreenType{view, subscribe}
+
 class PackagesScreen extends StatelessWidget {
-  const PackagesScreen({super.key});
+  final ScreenType type;
+
+  const PackagesScreen.view({super.key}) : type = ScreenType.view;
+  const PackagesScreen.subscribe({super.key}) : type = ScreenType.subscribe;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,7 @@ class PackagesScreen extends StatelessWidget {
             ListView.separated(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) => const PackageWidget(),
+                itemBuilder: (context, index) => PackageWidget(type: type),
                 separatorBuilder:  (context, index) => 5.szH,
                 itemCount: 3
             ),

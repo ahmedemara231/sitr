@@ -68,5 +68,6 @@
   "packages": "Packages",
   "in_order_to_register_other_data_you_must_subscribe_to_one_of_the_available_packages": "In order to register other data you must subscribe to one of the available packages",
   "subscribe_to_package": "Subscribe to package",
-  "price": "Price"
+  "price": "Price",
+  "renew_package": "Renew package"
 }
