@@ -5,6 +5,7 @@ import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/padding_extension.dart';
+import '../../../../core/helpers/validators.dart';
 import '../../../../core/widgets/app_logo_widget.dart';
 import '../../../../core/widgets/auth_scaffold.dart';
 import '../../../../core/widgets/app_text.dart';
@@ -15,8 +16,28 @@ import '../../../../core/widgets/text_fields/default_text_field.dart';
 import '../widgets/do_not_have_acc.dart';
 import '../widgets/login_static_texts.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final formKey = GlobalKey<FormState>();
+
+  late TextEditingController _phoneCont;
+  @override
+  void initState() {
+    _phoneCont = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _phoneCont.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +64,16 @@ class LoginScreen extends StatelessWidget {
         child: Column(
           spacing: 7.h,
           children: [
-            DefaultTextField.withTitle(
-              upperTitle: LocaleKeys.phoneNumber,
-              inputType: TextInputType.phone,
-              title: LocaleKeys.pleaseEnterPhoneNumber,
-              fillColor: Colors.grey[50],
+            Form(
+              key: formKey,
+              child: DefaultTextField.withTitle(
+                upperTitle: LocaleKeys.phoneNumber,
+                inputType: TextInputType.phone,
+                title: LocaleKeys.pleaseEnterPhoneNumber,
+                fillColor: Colors.grey[50],
+                validator: Validators.validatePhone,
+                controller: _phoneCont,
+              ),
             ),
             AppLoadingButton(
               title: LocaleKeys.login,
@@ -61,7 +87,11 @@ class LoginScreen extends StatelessWidget {
               textColor: AppColors.primary,
               fontSize: 12.sp,
               fontWeight: FontWeight.bold,
-              onTap: (){},
+              onTap: (){
+                if(formKey.currentState!.validate()){
+
+                }
+              },
             )
           ],
         ),

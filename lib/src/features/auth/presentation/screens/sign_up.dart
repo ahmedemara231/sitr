@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagify/widgets/text.dart';
 import '../../../../../generated/assets.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/sized_box_helper.dart';
+import '../../../../core/helpers/validators.dart';
 import '../../../../core/widgets/app_logo_widget.dart';
 import '../../../../core/widgets/auth_scaffold.dart';
 import '../../../../core/widgets/buttons/default_button.dart';
@@ -49,6 +49,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return AuthScaffold(
@@ -68,50 +69,67 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ],
           ),
         ),
-        body: ListView(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          children: [
-            ChooseGenderWidget(onSelectGender: (selectedGender) {}),
-            10.szH,
-            SignUpTextField(
+        body: Form(
+          key: formKey,
+          child: ListView(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
+              ChooseGenderWidget(onSelectGender: (selectedGender) {}),
+              10.szH,
+              SignUpTextField(
                 upperTitle: LocaleKeys.profilePicture,
                 title: LocaleKeys.pleaseEnterYourProfilePicture,
                 suffixIconPath: Assets.svgCamera,
-                controller: TextEditingController()
-            ),
-            SignUpTextField(
+                controller: TextEditingController(),
+                validator: Validators.validateEmpty,
+              ),
+              SignUpTextField(
                 upperTitle: LocaleKeys.name,
                 title: LocaleKeys.pleaseEnterYourName,
-                controller: _nameCont
-            ),
-            SignUpTextField(
+                controller: _nameCont,
+                validator: Validators.validateEmpty,
+              ),
+              SignUpTextField(
                 upperTitle: LocaleKeys.phoneNumber,
                 title: LocaleKeys.pleaseEnterPhoneNumber,
-                controller: _phoneCont
-            ),
-            SignUpTextField(
-                upperTitle: LocaleKeys.age,
-                title: LocaleKeys.pleaseEnterYourAge,
-                controller: _ageCont
-            ),
-            SignUpTextField(
-                upperTitle: LocaleKeys.identifyNumber,
-                title: LocaleKeys.pleaseEnterYourIdentifyNumber,
-                controller: _identifyNumberCont
-            ),
-            SignUpTextField(
-                upperTitle: LocaleKeys.code,
-                title: LocaleKeys.pleaseEnterYourCode,
-                controller: _codeCont
-            ),
-            10.szH,
-            DefaultButton(
-              borderRadius: ConstantManager.buttonBorderRadius,
-              title: LocaleKeys.confirm,
-              onTap: (){},
-            ),
-          ],
+                controller: _phoneCont,
+                validator: Validators.validatePhone,
+                inputType: TextInputType.number,
+              ),
+              SignUpTextField(
+                  upperTitle: LocaleKeys.age,
+                  title: LocaleKeys.pleaseEnterYourAge,
+                  controller: _ageCont,
+                inputType: TextInputType.number,
+                validator: Validators.validateEmpty,
+              ),
+              SignUpTextField(
+                  upperTitle: LocaleKeys.identifyNumber,
+                  title: LocaleKeys.pleaseEnterYourIdentifyNumber,
+                  controller: _identifyNumberCont,
+                inputType: TextInputType.number,
+                validator: Validators.validateEmpty,
+              ),
+              SignUpTextField(
+                  upperTitle: LocaleKeys.code,
+                  title: LocaleKeys.pleaseEnterYourCode,
+                  controller: _codeCont,
+                inputType: TextInputType.number,
+                validator: Validators.validateEmpty,
+              ),
+              10.szH,
+              DefaultButton(
+                borderRadius: ConstantManager.buttonBorderRadius,
+                title: LocaleKeys.confirm,
+                onTap: () {
+                  if(formKey.currentState!.validate()){
+
+                  }
+                },
+              ),
+            ],
+          ),
         )
     );
   }

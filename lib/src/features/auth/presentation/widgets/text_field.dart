@@ -11,12 +11,17 @@ class SignUpTextField extends StatefulWidget {
   final String title;
   final String? suffixIconPath;
   final TextEditingController controller;
+  final String? Function(String?)? validator;
+  final TextInputType? inputType;
+
 
   const SignUpTextField({super.key,
     required this.upperTitle,
     required this.title,
     required this.controller,
-    this.suffixIconPath
+    this.suffixIconPath,
+    this.validator,
+    this.inputType
   });
 
   @override
@@ -35,6 +40,8 @@ class _SignUpTextFieldState extends State<SignUpTextField> {
       fillColor: Colors.grey[50],
       borderRadius: ConstantManager.buttonBorderRadiusNumber,
       controller: widget.controller,
+      validator: widget.validator,
+      inputType: widget.inputType?? TextInputType.text,
     ).paddingSymmetric(vertical: 5.h);
   }
 }
