@@ -7,7 +7,7 @@ import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/sized_box_helper.dart';
 import '../../../../core/helpers/validators.dart';
 import '../../../../core/widgets/app_logo_widget.dart';
-import '../../../../core/widgets/auth_scaffold.dart';
+import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
 import '../../../../core/widgets/buttons/default_button.dart';
 import '../../../../core/widgets/lang_icon.dart';
 import '../widgets/choose_gender.dart';

@@ -11,7 +11,7 @@ import '../../../../core/extensions/sized_box_helper.dart';
 import '../../../../core/helpers/helpers.dart';
 import '../../../../core/helpers/validators.dart';
 import '../../../../core/widgets/app_logo_widget.dart';
-import '../../../../core/widgets/auth_scaffold.dart';
+import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
 import '../../../../core/widgets/buttons/app_loading_button.dart';
 import '../widgets/otp_static_texts.dart';
 

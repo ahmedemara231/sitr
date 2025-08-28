@@ -199,4 +199,16 @@ abstract class LocaleKeys {
   static const String _pleaseEnterYourCode = 'please_enter_your_code';
   static String get pleaseEnterYourCode => _pleaseEnterYourCode.tr();
 
+  static const String _packages = 'packages';
+  static String get packages => _packages.tr();
+
+  static const String _inOrderToRegisterOtherDataYouMustSubscribeToOneOfTheAvailablePackages = 'in_order_to_register_other_data_you_must_subscribe_to_one_of_the_available_packages';
+  static String get inOrderToRegisterOtherDataYouMustSubscribeToOneOfTheAvailablePackages => _inOrderToRegisterOtherDataYouMustSubscribeToOneOfTheAvailablePackages.tr();
+
+  static const String _subscribeToPackage = 'subscribe_to_package';
+  static String get subscribeToPackage => _subscribeToPackage.tr();
+
+  static const String _price = 'price';
+  static String get price => _price.tr();
+
 }

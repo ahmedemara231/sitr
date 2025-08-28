@@ -68,7 +68,7 @@ class DefaultButton extends StatelessWidget {
             side: borderColor != null
                 ? BorderSide(
                     color: borderColor ?? Colors.grey[200]!,
-                    width: .5,
+                    width: 1,
                   )
                 : BorderSide.none,
           ),

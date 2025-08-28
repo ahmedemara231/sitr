@@ -68,7 +68,10 @@
     "please enter your phone" : "يرجي ادخال رقم الجوال",
     "please enter your age" : "يرجي ادخال العمر",
     "please enter your identify number" : "يرجي ادخال رقم الهوية",
-    "please enter your code" : "يرجي ادخال الكود"
-
+    "please enter your code" : "يرجي ادخال الكود",
+    "Packages" : "الباقات",
+    "In order to register other data you must subscribe to one of the available packages" : "لكي تتمكني من تسجيل البيانات الاخري يجب عليكي الاشتراك في وحدة من الباقات المتاحه",
+    "Subscribe to package" : "اشتراك في الباقة",
+    "Price" : "المبلغ"
 
 }

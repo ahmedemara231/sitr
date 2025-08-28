@@ -12,8 +12,6 @@ import '../extensions/padding_extension.dart';
 import '../navigation/navigator.dart';
 import 'app_text.dart';
 import 'buttons/app_loading_button.dart';
-import 'buttons/custom_animated_button.dart';
-import 'buttons/loading_button.dart';
 import 'default_bottom_sheet.dart';
 
 class LangIcon extends StatelessWidget {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../features/settings/splash/imports/view_imports.dart';
 import '../../features/splash/splash_screen.dart';
 import 'named_routes.dart';
 import 'page_router/imports_page_router_builder.dart';

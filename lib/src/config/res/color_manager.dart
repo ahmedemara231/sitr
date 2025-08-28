@@ -7,6 +7,7 @@ class AppColors {
   static const Color thirdColor = Color(0xFFFFFAF0);
   static const Color forth = Color(0xFF007889);
   static const Color whiteGreyColor = Color(0xFFF7F4F3);
+  static const Color whiteGreyColorProMax = Color(0xFFFBFBFB);
   static const Color infoColor = Color(0xFF384250);
   static const Color white = Color(0xffFFFFFF);
   static const Color black = Color(0xFF1F201F);

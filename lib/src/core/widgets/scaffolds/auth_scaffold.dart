@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../config/res/config_imports.dart';
-import '../extensions/context_extension.dart';
-import '../extensions/padding_extension.dart';
+import '../../../config/res/config_imports.dart';
+import '../../extensions/context_extension.dart';
+import '../../extensions/padding_extension.dart';
 
 enum UpperView{appBar, upperWidget}
 class AuthScaffold extends StatelessWidget {
@@ -48,6 +48,8 @@ class ScreenChildren extends StatelessWidget {
             child: upperWidget!.paddingAll(20.r)
         ),
         Container(
+          width: context.width,
+            height: context.height,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.vertical(top: Radius.circular(22.r)),

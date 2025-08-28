@@ -31,6 +31,7 @@ class Assets {
   static const String svgCamera = 'assets/svg/camera.svg';
   static const String svgLangIcon = 'assets/svg/lang_icon.svg';
   static const String svgLogo = 'assets/svg/logo.svg';
+  static const String svgPackageIcon = 'assets/svg/package_icon.svg';
   static const String svgSAFlag = 'assets/svg/SA_flag.svg';
   static const String svgUSAFlag = 'assets/svg/USA_flag.svg';
   static const String svgUploadImage = 'assets/svg/upload-image.svg';
