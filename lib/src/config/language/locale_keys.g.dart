@@ -238,4 +238,85 @@ abstract class LocaleKeys {
   static const String _completeProfile = 'complete_profile';
   static String get completeProfile => _completeProfile.tr();
 
+  static const String _nickname = 'nickname';
+  static String get nickname => _nickname.tr();
+
+  static const String _maritalStatus = 'marital_status';
+  static String get maritalStatus => _maritalStatus.tr();
+
+  static const String _tall = 'tall';
+  static String get tall => _tall.tr();
+
+  static const String _weight = 'weight';
+  static String get weight => _weight.tr();
+
+  static const String _currentJob = 'current_job';
+  static String get currentJob => _currentJob.tr();
+
+  static const String _quickBrief = 'quick_brief';
+  static String get quickBrief => _quickBrief.tr();
+
+  static const String _childrenExists = 'children_exists';
+  static String get childrenExists => _childrenExists.tr();
+
+  static const String _childrenNumber = 'children_number';
+  static String get childrenNumber => _childrenNumber.tr();
+
+  static const String _nursery = 'nursery';
+  static String get nursery => _nursery.tr();
+
+  static const String _wantToHaveChildren = 'want_to_have_children';
+  static String get wantToHaveChildren => _wantToHaveChildren.tr();
+
+  static const String _thingsIAbsolutelyDoNotAcceptOrWant = 'things_i_absolutely_do_not_accept_or_want';
+  static String get thingsIAbsolutelyDoNotAcceptOrWant => _thingsIAbsolutelyDoNotAcceptOrWant.tr();
+
+  static const String _dowry = 'dowry';
+  static String get dowry => _dowry.tr();
+
+  static const String _typeOfWeddingParty = 'type_of_wedding_party';
+  static String get typeOfWeddingParty => _typeOfWeddingParty.tr();
+
+  static const String _city = 'city';
+  static String get city => _city.tr();
+
+  static const String _educationalQualification = 'educational_qualification';
+  static String get educationalQualification => _educationalQualification.tr();
+
+  static const String _areYouPray = 'are_you_pray';
+  static String get areYouPray => _areYouPray.tr();
+
+  static const String _diseasesIfExists = 'diseases_if_exists';
+  static String get diseasesIfExists => _diseasesIfExists.tr();
+
+  static const String _whereDoYouAcceptToLiveAfterMarriage = 'where_do_you_accept_to_live_after_marriage';
+  static String get whereDoYouAcceptToLiveAfterMarriage => _whereDoYouAcceptToLiveAfterMarriage.tr();
+
+  static const String _inChatYouPrefer = 'in_chat_you_prefer';
+  static String get inChatYouPrefer => _inChatYouPrefer.tr();
+
+  static const String _areYouSmoke = 'are_you_smoke';
+  static String get areYouSmoke => _areYouSmoke.tr();
+
+  static const String _doYouAcceptPolygamy = 'do_you_accept_polygamy';
+  static String get doYouAcceptPolygamy => _doYouAcceptPolygamy.tr();
+
+  static const String _doYouBelongToATribe = 'do_you_belong_to_a_tribe';
+  static String get doYouBelongToATribe => _doYouBelongToATribe.tr();
+
+  static const String _skinColor = 'skin_color';
+  static String get skinColor => _skinColor.tr();
+
+  static const String _areYouWaringHijab = 'are_you_waring_hijab';
+  static String get areYouWaringHijab => _areYouWaringHijab.tr();
+
+  static const String _degreeOfCommitment = 'degree_of_commitment';
+  static String get degreeOfCommitment => _degreeOfCommitment.tr();
+
+  static const String _parentName = 'parent_name';
+  static String get parentName => _parentName.tr();
+
+  static const String _kinship = 'kinship';
+  static String get kinship => _kinship.tr();
+
 }
