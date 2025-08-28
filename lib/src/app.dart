@@ -34,7 +34,7 @@ class Sitr extends StatelessWidget {
             supportedLocales: context.supportedLocales,
             locale: context.locale,
             navigatorKey: Go.navigatorKey,
-            home: const PackagesScreen.view(),
+            home: const SignUpScreen(),
             // home: OtpScreen(title: '', onConfirmCode: (BuildContext context, String code) {  }, onResendCodePress: (BuildContext context) {  },),
             navigatorObservers: [AppNavigationObserver()],
             theme: AppTheme.light,

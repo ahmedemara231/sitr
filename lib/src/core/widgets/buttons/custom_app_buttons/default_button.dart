@@ -1,0 +1,38 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../../config/res/config_imports.dart';
+import '../default_button.dart';
+
+enum ShapeType{withBorderColor, withBackGroundColor}
+class AppDefaultButton extends StatelessWidget {
+  final ShapeType shapeType;
+  final String title;
+  final FutureOr<void> Function() onTap;
+  const AppDefaultButton.withBorderColor({super.key,
+    required this.title,
+    required this.onTap
+  }) : shapeType = ShapeType.withBorderColor;
+  const AppDefaultButton.withBackGroundColor({super.key,
+    required this.title,
+    required this.onTap
+  }) : shapeType = ShapeType.withBackGroundColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultButton(
+      color: shapeType == ShapeType.withBorderColor?
+      AppColors.white : AppColors.primary,
+      title: title,
+      fontSize: 16.sp,
+      fontWeight: FontWeight.w400,
+      borderRadius: ConstantManager.buttonBorderRadius,
+      borderColor: AppColors.primary,
+      textColor: shapeType == ShapeType.withBorderColor?
+      AppColors.primary : AppColors.white,
+      onTap: onTap,
+    );
+  }
+}

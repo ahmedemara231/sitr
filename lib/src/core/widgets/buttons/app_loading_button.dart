@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../config/res/config_imports.dart';
-import '../loading_button.dart';
+import 'custom_app_buttons/loading_button.dart';
 
 class AppLoadingButton extends StatelessWidget {
   final Future<void> Function() asyncCall;

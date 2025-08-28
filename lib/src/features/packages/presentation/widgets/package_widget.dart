@@ -6,6 +6,7 @@ import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/widgets/app_text.dart';
+import '../../../../core/widgets/buttons/custom_app_buttons/default_button.dart';
 import '../../../../core/widgets/buttons/default_button.dart';
 import '../../../../core/widgets/svg_pic.dart';
 import '../packages_screen.dart';
@@ -51,17 +52,10 @@ class PackageWidget extends StatelessWidget {
               SizedBox(
                 width: context.width * .5,
                 height: 40.h,
-                child: DefaultButton(
-                  color: AppColors.white,
-                  title: type == ScreenType.view?
-                  LocaleKeys.subscribeToPackage :
-                  LocaleKeys.renewPackage,
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w400,
-                  borderRadius: ConstantManager.buttonBorderRadius,
-                  borderColor: AppColors.primary,
-                  textColor: AppColors.primary,
-                  onTap: (){},
+                child: AppDefaultButton.withBorderColor(
+                    title: type == ScreenType.view?
+                    LocaleKeys.subscribeToPackage : LocaleKeys.renewPackage,
+                    onTap: (){}
                 ),
               )
             ],

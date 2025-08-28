@@ -7,6 +7,7 @@ import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/sized_box_helper.dart';
 import '../../../../core/helpers/validators.dart';
 import '../../../../core/widgets/app_logo_widget.dart';
+import '../../../../core/widgets/buttons/custom_app_buttons/default_button.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
 import '../../../../core/widgets/buttons/default_button.dart';
 import '../../../../core/widgets/lang_icon.dart';
@@ -119,15 +120,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 validator: Validators.validateEmpty,
               ),
               10.szH,
-              DefaultButton(
-                borderRadius: ConstantManager.buttonBorderRadius,
-                title: LocaleKeys.confirm,
-                onTap: () {
-                  if(formKey.currentState!.validate()){
+              AppDefaultButton.withBackGroundColor(
+                  title: LocaleKeys.confirm,
+                  onTap: (){
+                    if(formKey.currentState!.validate()){
 
+                    }
                   }
-                },
-              ),
+              )
             ],
           ),
         )

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'buttons/custom_animated_button.dart';
-import 'buttons/loading_button.dart';
+import '../custom_animated_button.dart';
+import '../loading_button.dart';
 
 class LoadingButton extends StatefulWidget {
   final Future<void> Function() asyncCall;
