@@ -10,6 +10,7 @@ import '../../../../core/widgets/buttons/custom_app_buttons/default_button.dart'
 import '../../../../core/widgets/buttons/default_button.dart';
 import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/sheets/payment_sheet.dart';
+import '../../../../core/widgets/sheets/success_sheet.dart';
 import '../../../../core/widgets/svg_pic.dart';
 import '../packages_screen.dart';
 
@@ -58,7 +59,14 @@ class PackageWidget extends StatelessWidget {
                     title: type == ScreenType.view?
                     LocaleKeys.subscribeToPackage : LocaleKeys.renewPackage,
                     onTap: () => showDefaultBottomSheet(
-                        child: PaymentSheet(onPay: () async {},)
+                        child: PaymentSheet(
+                          onPay: () async {
+                            // TODO: payment
+                            showDefaultBottomSheet(
+                                child: const SuccessSheet()
+                            );
+                          }
+                        )
                     )
                 ),
               )

@@ -229,4 +229,13 @@ abstract class LocaleKeys {
   static const String _pay = 'pay';
   static String get pay => _pay.tr();
 
+  static const String _paymentSucceeded = 'payment_succeeded';
+  static String get paymentSucceeded => _paymentSucceeded.tr();
+
+  static const String _youCanNowCompleteYourProfile = 'you_can_now_complete_your_profile';
+  static String get youCanNowCompleteYourProfile => _youCanNowCompleteYourProfile.tr();
+
+  static const String _completeProfile = 'complete_profile';
+  static String get completeProfile => _completeProfile.tr();
+
 }

@@ -78,6 +78,9 @@
     "swear" : "القسم",
     "Package payment value": "قيمة دفع الباقة",
     "Choose a suitable payment method from the available ones" : "قم باختيار وسيلة دفع مناسبة من الوسائل المتاحة",
-    "Pay" : "دفع"
+    "Pay" : "دفع",
+    "payment succeeded" : "تم الدفع بنجاح",
+    "you can now complete your profile" : "يمكن الان من استكمال بيانات التسجيل",
+    "Complete profile" : "استكمال البيانات"
 
 }

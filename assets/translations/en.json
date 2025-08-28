@@ -74,5 +74,8 @@
   "swear": "swear",
   "package_payment_value": "Package payment value",
   "choose_a_suitable_payment_method_from_the_available_ones": "Choose a suitable payment method from the available ones",
-  "pay": "Pay"
+  "pay": "Pay",
+  "payment_succeeded": "payment succeeded",
+  "you_can_now_complete_your_profile": "you can now complete your profile",
+  "complete_profile": "Complete profile"
 }
