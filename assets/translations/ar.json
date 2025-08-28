@@ -69,5 +69,10 @@
   "in_order_to_register_other_data_you_must_subscribe_to_one_of_the_available_packages": "لكي تتمكني من تسجيل البيانات الاخري يجب عليكي الاشتراك في وحدة من الباقات المتاحه",
   "subscribe_to_package": "اشتراك في الباقة",
   "price": "المبلغ",
-  "renew_package": "تجديد الباقة"
+  "renew_package": "تجديد الباقة",
+  "agree": "الموافقة",
+  "swear": "القسم",
+  "package_payment_value": "قيمة دفع الباقة",
+  "choose_a_suitable_payment_method_from_the_available_ones": "قم باختيار وسيلة دفع مناسبة من الوسائل المتاحة",
+  "pay": "دفع"
 }

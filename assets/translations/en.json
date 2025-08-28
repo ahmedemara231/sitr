@@ -69,5 +69,10 @@
   "in_order_to_register_other_data_you_must_subscribe_to_one_of_the_available_packages": "In order to register other data you must subscribe to one of the available packages",
   "subscribe_to_package": "Subscribe to package",
   "price": "Price",
-  "renew_package": "Renew package"
+  "renew_package": "Renew package",
+  "agree": "Agree",
+  "swear": "swear",
+  "package_payment_value": "Package payment value",
+  "choose_a_suitable_payment_method_from_the_available_ones": "Choose a suitable payment method from the available ones",
+  "pay": "Pay"
 }

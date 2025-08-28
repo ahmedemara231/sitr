@@ -214,4 +214,19 @@ abstract class LocaleKeys {
   static const String _renewPackage = 'renew_package';
   static String get renewPackage => _renewPackage.tr();
 
+  static const String _agree = 'agree';
+  static String get agree => _agree.tr();
+
+  static const String _swear = 'swear';
+  static String get swear => _swear.tr();
+
+  static const String _packagePaymentValue = 'package_payment_value';
+  static String get packagePaymentValue => _packagePaymentValue.tr();
+
+  static const String _chooseASuitablePaymentMethodFromTheAvailableOnes = 'choose_a_suitable_payment_method_from_the_available_ones';
+  static String get chooseASuitablePaymentMethodFromTheAvailableOnes => _chooseASuitablePaymentMethodFromTheAvailableOnes.tr();
+
+  static const String _pay = 'pay';
+  static String get pay => _pay.tr();
+
 }

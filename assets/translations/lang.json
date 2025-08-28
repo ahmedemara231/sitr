@@ -73,6 +73,11 @@
     "In order to register other data you must subscribe to one of the available packages" : "لكي تتمكني من تسجيل البيانات الاخري يجب عليكي الاشتراك في وحدة من الباقات المتاحه",
     "Subscribe to package" : "اشتراك في الباقة",
     "Price" : "المبلغ",
-    "Renew package" : "تجديد الباقة"
+    "Renew package" : "تجديد الباقة",
+    "Agree" : "الموافقة",
+    "swear" : "القسم",
+    "Package payment value": "قيمة دفع الباقة",
+    "Choose a suitable payment method from the available ones" : "قم باختيار وسيلة دفع مناسبة من الوسائل المتاحة",
+    "Pay" : "دفع"
 
 }

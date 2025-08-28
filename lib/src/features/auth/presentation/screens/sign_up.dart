@@ -6,11 +6,15 @@ import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/sized_box_helper.dart';
 import '../../../../core/helpers/validators.dart';
+import '../../../../core/navigation/navigator.dart';
 import '../../../../core/widgets/app_logo_widget.dart';
 import '../../../../core/widgets/buttons/custom_app_buttons/default_button.dart';
+import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
 import '../../../../core/widgets/buttons/default_button.dart';
 import '../../../../core/widgets/lang_icon.dart';
+import '../../../../core/widgets/sheets/small.dart';
+import '../../../packages/presentation/packages_screen.dart';
 import '../widgets/choose_gender.dart';
 import '../widgets/sign_up_static_texts.dart';
 import '../widgets/text_field.dart';
@@ -83,19 +87,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 title: LocaleKeys.pleaseEnterYourProfilePicture,
                 suffixIconPath: Assets.svgCamera,
                 controller: TextEditingController(),
-                validator: Validators.validateEmpty,
+                // validator: Validators.validateEmpty,
               ),
               SignUpTextField(
                 upperTitle: LocaleKeys.name,
                 title: LocaleKeys.pleaseEnterYourName,
                 controller: _nameCont,
-                validator: Validators.validateEmpty,
+                // validator: Validators.validateEmpty,
               ),
               SignUpTextField(
                 upperTitle: LocaleKeys.phoneNumber,
                 title: LocaleKeys.pleaseEnterPhoneNumber,
                 controller: _phoneCont,
-                validator: Validators.validatePhone,
+                // validator: Validators.validatePhone,
                 inputType: TextInputType.number,
               ),
               SignUpTextField(
@@ -103,28 +107,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   title: LocaleKeys.pleaseEnterYourAge,
                   controller: _ageCont,
                 inputType: TextInputType.number,
-                validator: Validators.validateEmpty,
+                // validator: Validators.validateEmpty,
               ),
               SignUpTextField(
                   upperTitle: LocaleKeys.identifyNumber,
                   title: LocaleKeys.pleaseEnterYourIdentifyNumber,
                   controller: _identifyNumberCont,
                 inputType: TextInputType.number,
-                validator: Validators.validateEmpty,
+                // validator: Validators.validateEmpty,
               ),
               SignUpTextField(
                   upperTitle: LocaleKeys.code,
                   title: LocaleKeys.pleaseEnterYourCode,
                   controller: _codeCont,
                 inputType: TextInputType.number,
-                validator: Validators.validateEmpty,
+                // validator: Validators.validateEmpty,
               ),
               10.szH,
               AppDefaultButton.withBackGroundColor(
                   title: LocaleKeys.confirm,
                   onTap: (){
                     if(formKey.currentState!.validate()){
-
+                      Go.to(const PackagesScreen.view());
                     }
                   }
               )
