@@ -53,27 +53,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return AuthScaffold(
-        upperWidget: SizedBox(
-          height: context.height * .2,
-          child: Column(
-            spacing: 12.h,
-            children: [
-              Row(
-                spacing: context.width / 8,
-                children: [
-                  LangIcon(onSelectLang: (lang){}),
-                  const AppLogoWidget(),
-                ],
-              ),
-              const SignUpStaticTexts()
-            ],
-          ),
+        upperWidget: Column(
+          spacing: 12.h,
+          children: [
+            Row(
+              spacing: context.width / 8,
+              children: [
+                LangIcon(onSelectLang: (lang){}),
+                const AppLogoWidget(),
+              ],
+            ),
+            const SignUpStaticTexts()
+          ],
         ),
         body: Form(
           key: formKey,
-          child: ListView(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
+          child: Column(
             children: [
               ChooseGenderWidget(onSelectGender: (selectedGender) {}),
               10.szH,

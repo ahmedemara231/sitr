@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:easy_timer_count/easy_timer_count.dart';
+import 'package:easy_timer_count/helpers/time.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/widgets/text.dart';
@@ -96,15 +97,12 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
   @override
   Widget build(BuildContext context) {
     return AuthScaffold(
-        upperWidget: SizedBox(
-          height: context.height * .2,
-          child: Column(
-            spacing: 12.h,
-            children: const [
-              AppLogoWidget(),
-              OtpStaticTexts(),
-            ],
-          ),
+        upperWidget: Column(
+          spacing: 12.h,
+          children: const [
+            AppLogoWidget(),
+            OtpStaticTexts(),
+          ],
         ),
         body: SizedBox(
           height: context.height * .7,

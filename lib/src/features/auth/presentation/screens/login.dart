@@ -41,21 +41,18 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     context.locale;
     return AuthScaffold(
-      upperWidget: SizedBox(
-        height: context.height * .2,
-        child: Column(
-          spacing: 12.h,
-          children: [
-            Row(
-              spacing: context.width / 8,
-              children: [
-                LangIcon(onSelectLang: (lang){}),
-                const AppLogoWidget(),
-              ],
-            ),
-            const LoginStaticTexts()
-          ],
-        ),
+      upperWidget: Column(
+        spacing: 12.h,
+        children: [
+          Row(
+            spacing: context.width / 8,
+            children: [
+              LangIcon(onSelectLang: (lang){}),
+              const AppLogoWidget(),
+            ],
+          ),
+          const LoginStaticTexts()
+        ],
       ),
       body: SizedBox(
         height: context.height * .7,

@@ -316,7 +316,88 @@ abstract class LocaleKeys {
   static const String _parentName = 'parent_name';
   static String get parentName => _parentName.tr();
 
+  static const String _pleaseEnterName = 'please_enter_name';
+  static String get pleaseEnterName => _pleaseEnterName.tr();
+
+  static const String _parentNumber = 'parent_number';
+  static String get parentNumber => _parentNumber.tr();
+
+  static const String _optional = 'optional';
+  static String get optional => _optional.tr();
+
   static const String _kinship = 'kinship';
   static String get kinship => _kinship.tr();
+
+  static const String _pleaseEnterTheKinship = 'please_enter_the_kinship';
+  static String get pleaseEnterTheKinship => _pleaseEnterTheKinship.tr();
+
+  static const String _pleaseEnterTheStatus = 'please_enter_the_status';
+  static String get pleaseEnterTheStatus => _pleaseEnterTheStatus.tr();
+
+  static const String _pleaseEnterTheTall = 'please_enter_the_tall';
+  static String get pleaseEnterTheTall => _pleaseEnterTheTall.tr();
+
+  static const String _pleaseEnterTheWeight = 'please_enter_the_weight';
+  static String get pleaseEnterTheWeight => _pleaseEnterTheWeight.tr();
+
+  static const String _pleaseEnterTheCurrentJob = 'please_enter_the_current_job';
+  static String get pleaseEnterTheCurrentJob => _pleaseEnterTheCurrentJob.tr();
+
+  static const String _pleaseEnterTheBrief = 'please_enter_the_brief';
+  static String get pleaseEnterTheBrief => _pleaseEnterTheBrief.tr();
+
+  static const String _yes = 'yes';
+  static String get yes => _yes.tr();
+
+  static const String _no = 'no';
+  static String get no => _no.tr();
+
+  static const String _pleaseEnterTheNumber = 'please_enter_the_number';
+  static String get pleaseEnterTheNumber => _pleaseEnterTheNumber.tr();
+
+  static const String _mother = 'mother';
+  static String get mother => _mother.tr();
+
+  static const String _father = 'father';
+  static String get father => _father.tr();
+
+  static const String _pleaseEnterTheThings = 'please_enter_the_things';
+  static String get pleaseEnterTheThings => _pleaseEnterTheThings.tr();
+
+  static const String _pleaseEnterTheType = 'please_enter_the_type';
+  static String get pleaseEnterTheType => _pleaseEnterTheType.tr();
+
+  static const String _pleaseEnterTheCity = 'please_enter_the_city';
+  static String get pleaseEnterTheCity => _pleaseEnterTheCity.tr();
+
+  static const String _pleaseEnterTheEducationalQualification = 'please_enter_the_educational_qualification';
+  static String get pleaseEnterTheEducationalQualification => _pleaseEnterTheEducationalQualification.tr();
+
+  static const String _pleaseEnterTheDiseases = 'please_enter_the_diseases';
+  static String get pleaseEnterTheDiseases => _pleaseEnterTheDiseases.tr();
+
+  static const String _pleaseEnterHome = 'please_enter_home';
+  static String get pleaseEnterHome => _pleaseEnterHome.tr();
+
+  static const String _pleaseEnterSkinColor = 'please_enter_skin_color';
+  static String get pleaseEnterSkinColor => _pleaseEnterSkinColor.tr();
+
+  static const String _pleaseEnterRelation = 'please_enter_relation';
+  static String get pleaseEnterRelation => _pleaseEnterRelation.tr();
+
+  static const String _pleaseEnterLevel = 'please_enter_level';
+  static String get pleaseEnterLevel => _pleaseEnterLevel.tr();
+
+  static const String _english = 'english';
+  static String get english => _english.tr();
+
+  static const String _arabic = 'arabic';
+  static String get arabic => _arabic.tr();
+
+  static const String _from = 'from';
+  static String get from => _from.tr();
+
+  static const String _to = 'to';
+  static String get to => _to.tr();
 
 }
