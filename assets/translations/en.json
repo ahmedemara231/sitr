@@ -132,5 +132,7 @@
   "arabic": "Arabic",
   "from": "from",
   "to": "to",
-  "confirm_code": "Confirm code"
+  "confirm_code": "Confirm code",
+  "unable_to_access_photos_please_open_it": "Unable to access photos please open it",
+  "unable_to_access_camera_please_open_it": "Unable to access camera please open it"
 }

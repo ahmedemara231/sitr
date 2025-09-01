@@ -137,6 +137,8 @@
     "Arabic" : "اللغة العربية",
     "from" : "من",
     "to" : "الي",
-    "Confirm code" : "كود التفعيل"
+    "Confirm code" : "كود التفعيل",
+    "Unable to access photos please open it" : "لا يمكن الوصول للصور الرجاء فتح خاصية الصور",
+    "Unable to access camera please open it" : "لا يمكن الوصول للكاميرا الرجاء فتح خاصية الكاميرا"
 
 }

@@ -13,6 +13,8 @@ class SignUpTextField extends StatefulWidget {
   final TextEditingController controller;
   final String? Function(String?)? validator;
   final TextInputType? inputType;
+  final bool readOnly;
+  final void Function()? onTap;
 
 
   const SignUpTextField({super.key,
@@ -21,7 +23,9 @@ class SignUpTextField extends StatefulWidget {
     required this.controller,
     this.suffixIconPath,
     this.validator,
-    this.inputType
+    this.inputType,
+    this.readOnly = false,
+    this.onTap
   });
 
   @override
@@ -33,6 +37,8 @@ class _SignUpTextFieldState extends State<SignUpTextField> {
   @override
   Widget build(BuildContext context) {
     return DefaultTextField.withTitle(
+      onTap: widget.onTap,
+      readOnly: widget.readOnly,
       upperTitle: widget.upperTitle,
       title: widget.title,
       suffixIcon: widget.suffixIconPath.isNotNull?

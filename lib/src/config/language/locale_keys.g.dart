@@ -403,4 +403,10 @@ abstract class LocaleKeys {
   static const String _confirmCode = 'confirm_code';
   static String get confirmCode => _confirmCode.tr();
 
+  static const String _unableToAccessPhotosPleaseOpenIt = 'unable_to_access_photos_please_open_it';
+  static String get unableToAccessPhotosPleaseOpenIt => _unableToAccessPhotosPleaseOpenIt.tr();
+
+  static const String _unableToAccessCameraPleaseOpenIt = 'unable_to_access_camera_please_open_it';
+  static String get unableToAccessCameraPleaseOpenIt => _unableToAccessCameraPleaseOpenIt.tr();
+
 }

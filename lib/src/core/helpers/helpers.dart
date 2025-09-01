@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:easy_timer_count/extensions/null_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../config/language/languages.dart';
@@ -16,6 +16,8 @@ import '../navigation/navigator.dart';
 import '../shared/base_state.dart';
 import '../widgets/custom_loading.dart';
 import '../widgets/custom_messages.dart';
+import 'permission_handler/handler.dart';
+import 'permission_handler/model.dart';
 
 class Helpers {
 
@@ -93,6 +95,20 @@ class Helpers {
     );
   }
 
+  static Future<void> checkPermission(Permission permission,{
+    required FutureOr<void> Function(Permission permission)? onGranted,
+    required FutureOr<void> Function(Permission permission)? onDenied,
+  })async{
+    await PermissionHandler().checkPermission(
+        permissionManagerModel: PermissionModel(
+          permissions: [permission],
+          onGranted: onGranted,
+          onDenied: onDenied,
+          onDeniedForever: onDenied,
+        )
+    );
+  }
+  
   static Future<File?> getImageFromCameraOrDevice() async {
     final ImagePicker picker = ImagePicker();
     File? image;
@@ -106,24 +122,36 @@ class Helpers {
                   leading: const Icon(Icons.photo_library),
                   title: Text(LocaleKeys.photoLibrary),
                   onTap: () async {
-                    final currentImage =
-                        await picker.pickImage(source: ImageSource.gallery);
-                    if (currentImage != null) {
-                      image = File(currentImage.path);
-                    }
-                    Go.back();
+                    checkPermission(
+                        Permission.photos,
+                        onGranted: (permission) async{
+                          final currentImage =
+                              await picker.pickImage(source: ImageSource.gallery);
+                          if (currentImage != null) {
+                            image = File(currentImage.path);
+                          }
+                          Go.back();
+                        },
+                        onDenied: (permission) => MessageUtils.showSnackBar(LocaleKeys.unableToAccessPhotosPleaseOpenIt)
+                    );
                   },
                 ),
                 ListTile(
                   leading: const Icon(Icons.photo_camera),
                   title: Text(LocaleKeys.camera),
                   onTap: () async {
-                    final currentImage =
-                        await picker.pickImage(source: ImageSource.camera);
-                    if (currentImage != null) {
-                      image = File(currentImage.path);
-                    }
-                    Go.back();
+                    checkPermission(
+                        Permission.camera,
+                        onGranted: (permission) async{
+                          final currentImage =
+                              await picker.pickImage(source: ImageSource.camera);
+                          if (currentImage != null) {
+                            image = File(currentImage.path);
+                          }
+                          Go.back();
+                        },
+                        onDenied: (permission) => MessageUtils.showSnackBar(LocaleKeys.unableToAccessCameraPleaseOpenIt)
+                    );
                   },
                 ),
               ],
