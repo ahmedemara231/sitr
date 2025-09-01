@@ -100,11 +100,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   title: LocaleKeys.login,
                   asyncCall: (ctx) async {
                     if(formKey.currentState!.validate()){
-                      await ctx.read<LoginCubit>().login(LoginBody(
-                          phone: _phoneCont.text,
-                          countryCode: '+966',
-                          iso: 'SA'
-                      ));
+                      await ctx.read<LoginCubit>().login(
+                          LoginBody(phone: _phoneCont.text)
+                      );
                     }
                   },
                 ),

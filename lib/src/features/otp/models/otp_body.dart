@@ -1,5 +1,5 @@
 import '../../../config/language/languages.dart';
-import '../../../core/notification/notification_service.dart';
+import '../../auth/models/auth_body_static_data.dart';
 
 class OtpBody{
   final String phone;
@@ -10,13 +10,9 @@ class OtpBody{
     required this.code,
   });
 
-  Map<String, dynamic> toJson() => {
-    'iso' : 'SA',
-    'country_code' : '+966',
-    'device_type' : 'ios',
-    'device_id' : NotificationService.deviceToken,
+  Map<String, dynamic> toJson() => AuthBodyStaticData().toJson()..addAll({
     'lang' : Languages.currentLanguage.languageCode,
     'phone' : phone,
     'code' : code
-  };
+  });
 }
