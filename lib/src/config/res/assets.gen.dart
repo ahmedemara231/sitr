@@ -1,3 +1,5 @@
+// dart format width=80
+
 /// GENERATED CODE - DO NOT MODIFY BY HAND
 /// *****************************************************
 ///  FlutterGen
@@ -5,46 +7,13 @@
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
-// ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
+// ignore_for_file: deprecated_member_use,directives_ordering,implicit_dynamic_list_literal,unnecessary_import
 
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart' as _svg;
 import 'package:lottie/lottie.dart' as _lottie;
-
-class $AssetsFontsGen {
-  const $AssetsFontsGen();
-
-  /// File path: assets/fonts/IBM_Bold.ttf
-  String get iBMBold => 'assets/fonts/IBM_Bold.ttf';
-
-  /// File path: assets/fonts/IBM_ExtraLight.ttf
-  String get iBMExtraLight => 'assets/fonts/IBM_ExtraLight.ttf';
-
-  /// File path: assets/fonts/IBM_Light.ttf
-  String get iBMLight => 'assets/fonts/IBM_Light.ttf';
-
-  /// File path: assets/fonts/IBM_Medium.ttf
-  String get iBMMedium => 'assets/fonts/IBM_Medium.ttf';
-
-  /// File path: assets/fonts/IBM_Regular.ttf
-  String get iBMRegular => 'assets/fonts/IBM_Regular.ttf';
-
-  /// File path: assets/fonts/IBM_SemiBold.ttf
-  String get iBMSemiBold => 'assets/fonts/IBM_SemiBold.ttf';
-
-  /// File path: assets/fonts/IBM_Thin.ttf
-  String get iBMThin => 'assets/fonts/IBM_Thin.ttf';
-
-  /// List of all assets
-  List<String> get values => [
-    iBMBold,
-    iBMExtraLight,
-    iBMLight,
-    iBMMedium,
-    iBMRegular,
-    iBMSemiBold,
-    iBMThin,
-  ];
-}
+import 'package:vector_graphics/vector_graphics.dart' as _vg;
 
 class $AssetsLottieGen {
   const $AssetsLottieGen();
@@ -67,6 +36,49 @@ class $AssetsLottieGen {
 
 class $AssetsSvgGen {
   const $AssetsSvgGen();
+
+  /// File path: assets/svg/SA_flag.svg
+  SvgGenImage get sAFlag => const SvgGenImage('assets/svg/SA_flag.svg');
+
+  /// File path: assets/svg/USA_flag.svg
+  SvgGenImage get uSAFlag => const SvgGenImage('assets/svg/USA_flag.svg');
+
+  /// File path: assets/svg/app_logo.svg
+  SvgGenImage get appLogo => const SvgGenImage('assets/svg/app_logo.svg');
+
+  /// File path: assets/svg/camera.svg
+  SvgGenImage get camera => const SvgGenImage('assets/svg/camera.svg');
+
+  /// File path: assets/svg/lang_icon.svg
+  SvgGenImage get langIcon => const SvgGenImage('assets/svg/lang_icon.svg');
+
+  /// File path: assets/svg/logo.svg
+  SvgGenImage get logo => const SvgGenImage('assets/svg/logo.svg');
+
+  /// File path: assets/svg/online_payment.svg
+  SvgGenImage get onlinePayment =>
+      const SvgGenImage('assets/svg/online_payment.svg');
+
+  /// File path: assets/svg/package_icon.svg
+  SvgGenImage get packageIcon =>
+      const SvgGenImage('assets/svg/package_icon.svg');
+
+  /// File path: assets/svg/upload-image.svg
+  SvgGenImage get uploadImage =>
+      const SvgGenImage('assets/svg/upload-image.svg');
+
+  /// List of all assets
+  List<SvgGenImage> get values => [
+        sAFlag,
+        uSAFlag,
+        appLogo,
+        camera,
+        langIcon,
+        logo,
+        onlinePayment,
+        packageIcon,
+        uploadImage
+      ];
 }
 
 class $AssetsTranslationsGen {
@@ -109,13 +121,8 @@ class $AssetsLottieDataGen {
       const LottieGenImage('assets/lottie/data/not_found_2.json');
 
   /// List of all assets
-  List<LottieGenImage> get values => [
-    emptyBox,
-    emptyCart,
-    noData,
-    notFound1,
-    notFound2,
-  ];
+  List<LottieGenImage> get values =>
+      [emptyBox, emptyCart, noData, notFound1, notFound2];
 }
 
 class $AssetsLottieErrorGen {
@@ -146,14 +153,8 @@ class $AssetsLottieErrorGen {
       const LottieGenImage('assets/lottie/error/error_4.json');
 
   /// List of all assets
-  List<LottieGenImage> get values => [
-    apiError,
-    error,
-    error1,
-    error2,
-    error3,
-    error4,
-  ];
+  List<LottieGenImage> get values =>
+      [apiError, error, error1, error2, error3, error4];
 }
 
 class $AssetsLottieLoadingGen {
@@ -212,14 +213,95 @@ class $AssetsLottieSuccessGen {
 class AppAssets {
   const AppAssets._();
 
-  static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsLottieGen lottie = $AssetsLottieGen();
   static const $AssetsSvgGen svg = $AssetsSvgGen();
   static const $AssetsTranslationsGen translations = $AssetsTranslationsGen();
 }
 
+class SvgGenImage {
+  const SvgGenImage(
+    this._assetName, {
+    this.size,
+    this.flavors = const {},
+  }) : _isVecFormat = false;
+
+  const SvgGenImage.vec(
+    this._assetName, {
+    this.size,
+    this.flavors = const {},
+  }) : _isVecFormat = true;
+
+  final String _assetName;
+  final Size? size;
+  final Set<String> flavors;
+  final bool _isVecFormat;
+
+  _svg.SvgPicture svg({
+    Key? key,
+    bool matchTextDirection = false,
+    AssetBundle? bundle,
+    String? package,
+    double? width,
+    double? height,
+    BoxFit fit = BoxFit.contain,
+    AlignmentGeometry alignment = Alignment.center,
+    bool allowDrawingOutsideViewBox = false,
+    WidgetBuilder? placeholderBuilder,
+    String? semanticsLabel,
+    bool excludeFromSemantics = false,
+    _svg.SvgTheme? theme,
+    _svg.ColorMapper? colorMapper,
+    ColorFilter? colorFilter,
+    Clip clipBehavior = Clip.hardEdge,
+    @deprecated Color? color,
+    @deprecated BlendMode colorBlendMode = BlendMode.srcIn,
+    @deprecated bool cacheColorFilter = false,
+  }) {
+    final _svg.BytesLoader loader;
+    if (_isVecFormat) {
+      loader = _vg.AssetBytesLoader(
+        _assetName,
+        assetBundle: bundle,
+        packageName: package,
+      );
+    } else {
+      loader = _svg.SvgAssetLoader(
+        _assetName,
+        assetBundle: bundle,
+        packageName: package,
+        theme: theme,
+        colorMapper: colorMapper,
+      );
+    }
+    return _svg.SvgPicture(
+      loader,
+      key: key,
+      matchTextDirection: matchTextDirection,
+      width: width,
+      height: height,
+      fit: fit,
+      alignment: alignment,
+      allowDrawingOutsideViewBox: allowDrawingOutsideViewBox,
+      placeholderBuilder: placeholderBuilder,
+      semanticsLabel: semanticsLabel,
+      excludeFromSemantics: excludeFromSemantics,
+      colorFilter: colorFilter ??
+          (color == null ? null : ColorFilter.mode(color, colorBlendMode)),
+      clipBehavior: clipBehavior,
+      cacheColorFilter: cacheColorFilter,
+    );
+  }
+
+  String get path => _assetName;
+
+  String get keyName => _assetName;
+}
+
 class LottieGenImage {
-  const LottieGenImage(this._assetName, {this.flavors = const {}});
+  const LottieGenImage(
+    this._assetName, {
+    this.flavors = const {},
+  });
 
   final String _assetName;
   final Set<String> flavors;
@@ -236,8 +318,11 @@ class LottieGenImage {
     _lottie.LottieImageProviderFactory? imageProviderFactory,
     Key? key,
     AssetBundle? bundle,
-    Widget Function(BuildContext, Widget, _lottie.LottieComposition?)?
-    frameBuilder,
+    Widget Function(
+      BuildContext,
+      Widget,
+      _lottie.LottieComposition?,
+    )? frameBuilder,
     ImageErrorWidgetBuilder? errorBuilder,
     double? width,
     double? height,

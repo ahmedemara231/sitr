@@ -132,7 +132,7 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
 
               AppLoadingButton(
                 title: LocaleKeys.confirm,
-                asyncCall: () async{
+                asyncCall: (context) async{
                   if (_formKey.currentState!.validate()) {
                     await widget.onConfirmCode.call(context, code);
                   }

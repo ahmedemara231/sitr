@@ -43,6 +43,7 @@ dependencies:
 
 #--------------------- UI & Animations -----------------------
   flutter_spinkit: ^5.1.0
+  easy_loading_button: ^0.4.0
   flutter_svg: ^2.1.0
   lottie: ^3.1.2
   skeletonizer: ^2.1.0+1
@@ -80,6 +81,7 @@ dev_dependencies:
   json_serializable: ^6.8.0
   flutter_gen_runner: null
   flutter_lints: ^6.0.0
+  injectable_generator: null
   flutter_test:
     sdk: flutter
 

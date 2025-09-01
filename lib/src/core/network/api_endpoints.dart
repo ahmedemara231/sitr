@@ -20,7 +20,8 @@ class ApiConstants {
 
 
   
-
+  // auth
+  static const String login = 'login';
 
 
 

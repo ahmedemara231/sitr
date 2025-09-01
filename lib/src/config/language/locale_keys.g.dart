@@ -400,4 +400,7 @@ abstract class LocaleKeys {
   static const String _to = 'to';
   static String get to => _to.tr();
 
+  static const String _confirmCode = 'confirm_code';
+  static String get confirmCode => _confirmCode.tr();
+
 }

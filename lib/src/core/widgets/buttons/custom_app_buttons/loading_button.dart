@@ -1,70 +1,60 @@
+import 'package:easy_loading_button/easy_loading_button.dart';
 import 'package:flutter/material.dart';
+import 'package:pagify/widgets/text.dart';
 
-import '../custom_animated_button.dart';
-import '../loading_button.dart';
+import '../../../../config/res/config_imports.dart';
 
-class LoadingButton extends StatefulWidget {
-  final Future<void> Function() asyncCall;
-  final String title;
-  final Color? textColor;
-  final Color? color;
-  final Color? borderColor;
-  final double? borderRadius;
-  final EdgeInsets? margin;
-  final double? width;
-  final double? height;
-  final double? fontSize;
-  final FontWeight? fontWeight;
-  final BorderSide? borderSide;
+class LoadingButton extends StatelessWidget {
+  final Future<void> Function(BuildContext context) call;
+  final Color btnColor;
+  final double borderRadius;
+  final double height;
+  final double width;
+  final double contentGap;
+  final Widget loadingWidget;
+  final Widget idleWidget;
 
-  const LoadingButton({super.key,
-    required this.asyncCall,
-    required this.title,
-    this.textColor,
-    this.color,
-    this.borderSide,
-    this.borderRadius,
-    this.margin,
-    this.borderColor,
-    this.fontSize,
-    this.width,
-    this.height,
-    this.fontWeight,
+  LoadingButton({super.key,
+    required this.call,
+    this.btnColor = AppColors.primary,
+    this.borderRadius = 0.0,
+    this.height = 40,
+    this.width = double.infinity,
+    this.contentGap = 12,
+    this.idleWidget = const AppText('Confirm'),
+    this.loadingWidget = const CircularProgressIndicator(
+      color: Colors.white,
+    )
   });
 
-  @override
-  State<LoadingButton> createState() => _LoadingButtonState();
-}
-
-class _LoadingButtonState extends State<LoadingButton> {
-
-  late GlobalKey<CustomButtonState> btnKey;
-
-  @override
-  void initState() {
-     btnKey = GlobalKey<CustomButtonState>();
-    super.initState();
+  EasyButtonState _easyButtonState = EasyButtonState.idle;
+  Future<void> asyncCall(BuildContext context)async{
+    try {
+      _easyButtonState = EasyButtonState.loading;
+      await call(context);
+      _easyButtonState = EasyButtonState.idle;
+    } finally {
+      _easyButtonState = EasyButtonState.idle;
+    }
   }
+
   @override
   Widget build(BuildContext context) {
-    return CustomAnimatedButton(
-      title: widget.title,
-      onTap: ()async{
-        btnKey.currentState!.animateReverse();
-        await widget.asyncCall.call();
-        btnKey.currentState!.animateForward();
-      },
-      btnKey: btnKey,
-      color: widget.color,
-      textColor: widget.textColor,
-      borderSide: widget.borderSide,
-      borderRadius: widget.borderRadius,
-      margin: widget.margin,
-      borderColor: widget.borderColor,
-      fontSize: widget.fontSize,
-      width: widget.width,
-      height: widget.height,
-      fontWeight: widget.fontWeight,
+    return EasyButton(
+        state: _easyButtonState,
+        buttonColor: btnColor,
+        borderRadius: borderRadius,
+        contentGap: contentGap,
+        height: height,
+        width: width,
+        useWidthAnimation: true,
+        useEqualLoadingStateWidgetDimension: true,
+        onPressed: () => asyncCall(context),
+        idleStateWidget: idleWidget,
+        loadingStateWidget: SizedBox.square(
+            dimension: 20,
+            child: loadingWidget
+        )
     );
   }
 }

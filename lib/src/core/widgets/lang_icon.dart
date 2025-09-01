@@ -106,7 +106,7 @@ class _SelectLangWidgetState extends State<SelectLangWidget> {
             ),
             AppLoadingButton(
                 title: LocaleKeys.confirm,
-                asyncCall: () async{
+                asyncCall: (context) async{
                   Languages.setLocale(language);
                   await widget.onSelectLang(language);
                   Go.back();

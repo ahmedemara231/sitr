@@ -24,7 +24,7 @@ enum HttpRequestType {
   const HttpRequestType({required this.requestMethod});
 }
 
-class CrudBaseParmas<T> {
+class CrudBaseParmas<T>  {
   final String api;
   final HttpRequestType httpRequestType;
   final Map<String, dynamic>? body;

@@ -74,12 +74,14 @@ class _RadioBottomSheetState<T> extends State<RadioBottomSheet<T>> {
                       onChanged: _changeValue,
                     ),
                     LoadingButton(
-                      title: widget.btnTitle?? LocaleKeys.confirm,
-                      asyncCall: () async => groupValue == null? null :
-                      await widget.onSubmit(groupValue!),
+                      idleWidget: AppText(
+                          widget.btnTitle?? LocaleKeys.confirm,
+                        color: groupValue == null?
+                        Colors.grey[300] : widget.btnColor ?? AppColors.primary,
+                      ),
                       height: widget.btnHeight?? 40.h,
-                      color: groupValue == null?
-                      Colors.grey[300] : widget.btnColor ?? AppColors.primary,
+                      call: (BuildContext context) async => groupValue == null? null :
+                      await widget.onSubmit(groupValue!),
                     ),
                   ],
                 ),

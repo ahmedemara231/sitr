@@ -9,7 +9,7 @@ class ConstantManager {
   static const String token = 'token';
   static const String projectName = 'sitr';
   static const int splashTimer = 3000;
-  static const String baseUrl = '';
+  static const String baseUrl = 'https://str-sa.com/api/v1/';
   static const int paginationFirstPage = 1;
   static const int paginationPageSize = 10;
   static const String emptyText = '';
