@@ -1,6 +1,3 @@
-import '../../../config/language/locale_keys.g.dart';
-import '../../helpers/user_type_enum.dart';
-
 class UserModel {
   UserModel({
     this.id,
@@ -104,7 +101,7 @@ class UserModel {
   String? token;
   String? nickName;
   MaritalStatus? maritalStatus;
-  int? height;
+  double? height;
   double? weight;
   String? currentJob;
   String? bio;
@@ -148,7 +145,7 @@ class UserModel {
     String? token,
     String? nickName,
     MaritalStatus? maritalStatus,
-    int? height,
+    double? height,
     double? weight,
     String? currentJob,
     String? bio,
