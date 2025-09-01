@@ -95,25 +95,25 @@ class DioService implements NetworkService {
         switch (error.response!.statusCode) {
           case HttpStatus.badRequest:
             throw BadRequestException(
-              error.response?.data['title'] ?? LocaleKeys.badRequest,
+              error.response?.data['message'] ?? LocaleKeys.badRequest,
             );
           case HttpStatus.unauthorized:
             throw UnauthorizedException(
-              error.response?.data['title'] ?? LocaleKeys.unauthorized,
+              error.response?.data['message'] ?? LocaleKeys.unauthorized,
             );
           case HttpStatus.locked:
             throw BlockedException(
-              error.response?.data['title'] ?? LocaleKeys.unauthorized,
+              error.response?.data['message'] ?? LocaleKeys.unauthorized,
             );
           case HttpStatus.notFound:
             throw NotFoundException(LocaleKeys.notFound);
           case HttpStatus.conflict:
             throw ConflictException(
-              error.response?.data['title'] ?? LocaleKeys.serverError,
+              error.response?.data['message'] ?? LocaleKeys.serverError,
             );
           case HttpStatus.internalServerError:
             throw InternalServerErrorException(
-              error.response?.data['title'] ?? LocaleKeys.serverError,
+              error.response?.data['message'] ?? LocaleKeys.serverError,
             );
           default:
             throw ServerException(LocaleKeys.serverError);
@@ -122,11 +122,11 @@ class DioService implements NetworkService {
         throw ServerException(LocaleKeys.intenetWeakness);
       case DioExceptionType.unknown:
         throw ServerException(
-          error.response?.data['title'] ?? LocaleKeys.exceptionError,
+          error.response?.data['message'] ?? LocaleKeys.exceptionError,
         );
       default:
         throw ServerException(
-          error.response?.data['title'] ?? LocaleKeys.exceptionError,
+          error.response?.data['message'] ?? LocaleKeys.exceptionError,
         );
     }
   }
