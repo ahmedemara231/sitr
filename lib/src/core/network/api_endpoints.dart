@@ -22,8 +22,11 @@ class ApiConstants {
   
   // auth
   static const String login = 'login';
-
-
+  static const String activate = 'activate';
+  static const String register = 'register';
+  static const String completeRegister = 'complete-registration';
+  static const String checkCodeAfterLogin = 'check-code';
+  static const String resendCode = 'resend-code';
 
   
 

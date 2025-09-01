@@ -16,11 +16,12 @@ import '../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../core/widgets/buttons/default_button.dart';
 import '../../../../core/widgets/lang_icon.dart';
 import '../../../../core/widgets/text_fields/default_text_field.dart';
-import '../../domain/models/login_body.dart';
+import '../../../otp/presentation/cubits/otp_cubit.dart';
+import '../../models/login_body.dart';
 import '../cubits/login_cubit.dart';
 import '../widgets/do_not_have_acc.dart';
 import '../widgets/login_static_texts.dart';
-import 'otp.dart';
+import '../../../otp/presentation/otp.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -83,10 +84,11 @@ class _LoginScreenState extends State<LoginScreen> {
               BlocListener<LoginCubit, AsyncState>(
                 listener: (context, state) => Helpers.manageBlocListener(
                   state.status,
-                  onSuccess: () { Go.to(OtpScreen(
+                  onSuccess: () {
+                    Go.to(OtpScreen(
                       title: LocaleKeys.confirmCode,
-                      onConfirmCode: (context, code){},
-                      onResendCodePress: (context) {}
+                      phone: _phoneCont.text,
+                      otpType: OtpType.afterLogin,
                   ));
                   MessageUtils.showSnackBar(
                     'دخل الكود يا ادهم يا ظالم',

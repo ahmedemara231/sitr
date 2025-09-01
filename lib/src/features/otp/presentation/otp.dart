@@ -2,55 +2,76 @@ import 'dart:async';
 import 'package:easy_timer_count/easy_timer_count.dart';
 import 'package:easy_timer_count/helpers/time.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/widgets/text.dart';
 import 'package:pinput/pinput.dart';
-import '../../../../config/language/locale_keys.g.dart';
-import '../../../../config/res/config_imports.dart';
-import '../../../../core/extensions/context_extension.dart';
-import '../../../../core/extensions/sized_box_helper.dart';
-import '../../../../core/helpers/helpers.dart';
-import '../../../../core/helpers/validators.dart';
-import '../../../../core/widgets/app_logo_widget.dart';
-import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
-import '../../../../core/widgets/buttons/app_loading_button.dart';
-import '../widgets/otp_static_texts.dart';
+import '../../../config/language/locale_keys.g.dart';
+import '../../../config/res/config_imports.dart';
+import '../../../core/extensions/context_extension.dart';
+import '../../../core/extensions/sized_box_helper.dart';
+import '../../../core/helpers/helpers.dart';
+import '../../../core/helpers/validators.dart';
+import '../../../core/widgets/app_logo_widget.dart';
+import '../../../core/widgets/scaffolds/auth_scaffold.dart';
+import '../../../core/widgets/buttons/app_loading_button.dart';
+import '../models/otp_body.dart';
+import '../models/resend_code_body.dart';
+import 'cubits/otp_cubit.dart';
+import 'cubits/resend_code_cubit.dart';
+import 'widgets/otp_static_texts.dart';
 
 class OtpScreen extends StatelessWidget {
 
+  final OtpType otpType;
+  final String phone;
   final String title;
   final FutureOr<void> Function(BuildContext context)? onEnterScreen;
-  final FutureOr<void> Function(BuildContext context, String code) onConfirmCode;
-  final FutureOr<void> Function(BuildContext context) onResendCodePress;
+  // final FutureOr<void> Function(BuildContext context, String code) onConfirmCode;
+  // final FutureOr<void> Function(BuildContext context) onResendCodePress;
 
   const OtpScreen({super.key,
+    required this.otpType,
+    required this.phone,
     required this.title,
     this.onEnterScreen,
-    required this.onConfirmCode,
-    required this.onResendCodePress
+    // required this.onConfirmCode,
+    // required this.onResendCodePress
   });
 
   @override
   Widget build(BuildContext context) {
-    return OtpScreenBody(
-      title: title,
-      onEnterScreen: onEnterScreen,
-      onConfirmCode: onConfirmCode,
-      onResendCodePress: onResendCodePress,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => OtpCubit()),
+        BlocProvider(create: (context) => ResendCodeCubit()),
+      ],
+      child: OtpScreenBody(
+        otpType: otpType,
+        phone: phone,
+        title: title,
+        onEnterScreen: onEnterScreen,
+        // onConfirmCode: onConfirmCode,
+        // onResendCodePress: onResendCodePress,
+      ),
     );
   }
 }
 
 class OtpScreenBody extends StatefulWidget {
+  final OtpType otpType;
+  final String phone;
   final String title;
   final FutureOr<void> Function(BuildContext context)? onEnterScreen;
-  final FutureOr<void> Function(BuildContext context, String code) onConfirmCode;
-  final FutureOr<void> Function(BuildContext context) onResendCodePress;
+  // final FutureOr<void> Function(BuildContext context, String code) onConfirmCode;
+  // final FutureOr<void> Function(BuildContext context) onResendCodePress;
   const OtpScreenBody({super.key,
+    required this.otpType,
+    required this.phone,
     required this.title,
     this.onEnterScreen,
-    required this.onConfirmCode,
-    required this.onResendCodePress
+    // required this.onConfirmCode,
+    // required this.onResendCodePress
   });
 
   @override
@@ -69,11 +90,6 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
     super.initState();
   }
 
-  @override
-  void didChangeDependencies() {
-    widget.onEnterScreen?.call(context);
-    super.didChangeDependencies();
-  }
   @override
   void dispose() {
     pinCont.dispose();
@@ -134,7 +150,9 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
                 title: LocaleKeys.confirm,
                 asyncCall: (context) async{
                   if (_formKey.currentState!.validate()) {
-                    await widget.onConfirmCode.call(context, code);
+                    await context.read<OtpCubit>().sendOtp(
+                        body: OtpBody(phone: widget.phone, code: code)
+                    );
                   }
                 },
               ),
@@ -143,13 +161,14 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
                   controller: _timeCont,
                   duration: const EasyTime(minutes: 1),
                   builder: (time) => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     spacing: 5.w,
                     children: [
                       AppText(LocaleKeys.remainingTime, color: Colors.grey),
                       AppText(time, fontWeight: FontWeight.w500,),
                       TextButton(
                           onPressed: _canResend? () {
-                            widget.onResendCodePress.call(context);
+                            context.read<ResendCodeCubit>().resendOtp(body: ResendCodeBody(phone: widget.phone));
                             _timeCont.restart();
                             setState(() => _canResend = false);
                           } : null,
@@ -160,7 +179,7 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
                       ),
                     ],
                   ),
-                  onTimerStarts: (context) async {},
+                  onTimerStarts: (context) async => widget.onEnterScreen?.call(context),
                   onTimerEnds: (context) => setState(() => _canResend = true)
               ),
             ],

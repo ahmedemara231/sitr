@@ -6,6 +6,7 @@ import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../error/exceptions.dart';
 import '../shared/base_model.dart';
+import 'configuration_interceptor.dart';
 import 'extensions.dart';
 import 'log_interceptor.dart';
 import 'network_request.dart';
@@ -36,7 +37,10 @@ class DioService implements NetworkService {
       ..options.responseType = ResponseType.json;
 
     if (kDebugMode) {
-      _dio.interceptors.add(LoggerInterceptor());
+      _dio.interceptors.addAll([
+        LoggerInterceptor(),
+        ConfigurationInterceptor(),
+      ]);
     }
   }
 

@@ -1,4 +1,4 @@
-import '../../../../core/notification/notification_service.dart';
+import '../../../core/notification/notification_service.dart';
 
 class LoginBody{
   final String phone;

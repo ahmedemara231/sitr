@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/padding_extension.dart';
-import '../../../../core/helpers/gender_enum.dart';
+import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/widgets/buttons/custom_app_buttons/default_button.dart';
 
 class ChooseGenderWidget extends StatefulWidget {
-  final Function(Gender selectedGender) onSelectGender;
+  final Function(UserType selectedGender) onSelectGender;
 
   const ChooseGenderWidget({super.key,
     required this.onSelectGender,
@@ -18,10 +18,10 @@ class ChooseGenderWidget extends StatefulWidget {
 }
 
 class _ChooseGenderWidgetState extends State<ChooseGenderWidget> {
-  final List<Gender> genders = [
-    Gender.male,
-    Gender.female,
-    Gender.parent,
+  final List<UserType> genders = [
+    UserType.male,
+    UserType.female,
+    UserType.parent,
   ];
 
   int currentIndex = 0;
