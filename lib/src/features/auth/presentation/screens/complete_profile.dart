@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../config/language/locale_keys.g.dart';
-import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/sized_box_helper.dart';
-import '../../../../core/widgets/app_logo_widget.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/buttons/custom_app_buttons/default_button.dart';
-import '../../../../core/widgets/lang_icon.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
-import '../widgets/dowry_widget.dart';
-import '../widgets/drop_down_text_field.dart';
-import '../widgets/radio_widget.dart';
-import '../widgets/sign_up_static_texts.dart';
-import '../widgets/text_field.dart';
+import '../widgets/shared/text_field.dart';
+import '../widgets/sign_up/dowry_widget.dart';
+import '../widgets/sign_up/drop_down_text_field.dart';
+import '../widgets/sign_up/radio_widget.dart';
+import '../widgets/sign_up/sign_up_upper_widget.dart';
 
 enum Answer{yes, no}
 enum Nursery{father, mother}
@@ -86,19 +83,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return AuthScaffold(
-        upperWidget: Column(
-          spacing: 12.h,
-          children: [
-            Row(
-              spacing: context.width / 8,
-              children: [
-                LangIcon(onSelectLang: (lang){}),
-                const AppLogoWidget(),
-              ],
-            ),
-            const SignUpStaticTexts()
-          ],
-        ),
+        upperWidget: const SignUpUpperWidget(),
         body: Form(
           key: formKey,
           child: Column(

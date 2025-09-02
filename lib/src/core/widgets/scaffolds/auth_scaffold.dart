@@ -6,13 +6,13 @@ import '../../extensions/padding_extension.dart';
 
 enum UpperView{appBar, upperWidget}
 class AuthScaffold extends StatelessWidget {
-  final Widget? upperWidget;
+  final Widget upperWidget;
   final Widget body;
 
   const AuthScaffold({
     super.key,
     required this.body,
-    this.upperWidget,
+    required this.upperWidget,
   });
 
   @override
@@ -30,12 +30,12 @@ class AuthScaffold extends StatelessWidget {
 }
 
 class ScreenChildren extends StatelessWidget {
-  final Widget? upperWidget;
+  final Widget upperWidget;
   final Widget body;
 
   const ScreenChildren({super.key,
     required this.body,
-    this.upperWidget,
+    required this.upperWidget,
   });
 
   @override

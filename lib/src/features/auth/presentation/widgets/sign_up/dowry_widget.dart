@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../config/language/locale_keys.g.dart';
-import '../../../../core/widgets/app_text.dart';
-import '../../../../core/widgets/text_fields/default_text_field.dart';
+import '../../../../../config/language/locale_keys.g.dart';
+import '../../../../../core/widgets/app_text.dart';
+import '../../../../../core/widgets/text_fields/default_text_field.dart';
 
 class DowryWidget extends StatefulWidget {
   final void Function(String from, String to) onSelect;

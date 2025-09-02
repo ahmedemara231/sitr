@@ -1,11 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../config/language/locale_keys.g.dart';
-import '../../../../config/res/config_imports.dart';
-import '../../../../core/navigation/navigator.dart';
-import '../../../../core/widgets/app_text.dart';
-import '../screens/sign_up.dart';
+import '../../../../../config/language/locale_keys.g.dart';
+import '../../../../../config/res/config_imports.dart';
+import '../../../../../core/navigation/navigator.dart';
+import '../../../../../core/widgets/app_text.dart';
+import '../../screens/sign_up.dart';
 
 class DoNotHaveAccountWidget extends StatelessWidget {
   const DoNotHaveAccountWidget({super.key});

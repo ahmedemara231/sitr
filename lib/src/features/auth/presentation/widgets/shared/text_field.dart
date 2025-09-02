@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../config/res/config_imports.dart';
-import '../../../../core/extensions/object.dart';
-import '../../../../core/extensions/padding_extension.dart';
-import '../../../../core/widgets/svg_pic.dart';
-import '../../../../core/widgets/text_fields/default_text_field.dart';
+import '../../../../../config/res/config_imports.dart';
+import '../../../../../core/extensions/object.dart';
+import '../../../../../core/extensions/padding_extension.dart';
+import '../../../../../core/widgets/svg_pic.dart';
+import '../../../../../core/widgets/text_fields/default_text_field.dart';
 
 class SignUpTextField extends StatefulWidget {
   final String upperTitle;

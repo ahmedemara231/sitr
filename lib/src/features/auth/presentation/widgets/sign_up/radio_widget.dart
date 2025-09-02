@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/widgets/text.dart';
-import '../../../../config/res/config_imports.dart';
-import '../../../../core/extensions/padding_extension.dart';
+import '../../../../../config/res/config_imports.dart';
+import '../../../../../core/extensions/padding_extension.dart';
 
 // T is the dataType
 class RadioWidget<T> extends StatefulWidget {

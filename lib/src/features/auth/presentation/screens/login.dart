@@ -19,8 +19,8 @@ import '../../../otp/models/otp_body.dart';
 import '../../../otp/presentation/cubits/otp_cubit.dart';
 import '../../models/login_body.dart';
 import '../cubits/login_cubit.dart';
-import '../widgets/do_not_have_acc.dart';
-import '../widgets/login_static_texts.dart';
+import '../widgets/login/do_not_have_acc.dart';
+import '../widgets/login/login_static_texts.dart';
 import '../../../otp/presentation/otp.dart';
 
 class LoginScreen extends StatefulWidget {

@@ -10,6 +10,7 @@ import 'core/shared/route_observer.dart';
 import 'core/shared/user_cubit/user_cubit.dart' show UserCubit;
 import 'core/widgets/offline_widget.dart';
 import 'features/auth/presentation/screens/complete_profile.dart';
+import 'features/auth/presentation/screens/enter_child_data.dart';
 import 'features/auth/presentation/screens/login.dart';
 import 'features/otp/presentation/otp.dart';
 import 'features/auth/presentation/screens/sign_up.dart';
@@ -36,7 +37,7 @@ class Sitr extends StatelessWidget {
             supportedLocales: context.supportedLocales,
             locale: context.locale,
             navigatorKey: Go.navigatorKey,
-            home: const SplashScreen(),
+            home: const EnterChildDataScreen(),
             // home: const PackagesScreen.view(),
             // home: OtpScreen(title: '', onConfirmCode: (BuildContext context, String code) {  }, onResendCodePress: (BuildContext context) {  },),
             navigatorObservers: [AppNavigationObserver()],

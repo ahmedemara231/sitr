@@ -6,26 +6,24 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../generated/assets.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
-import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/sized_box_helper.dart';
 import '../../../../core/helpers/helpers.dart';
 import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
-import '../../../../core/widgets/app_logo_widget.dart';
 import '../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
-import '../../../../core/widgets/lang_icon.dart';
 import '../../../otp/models/otp_body.dart';
 import '../../../otp/presentation/cubits/otp_cubit.dart';
 import '../../../otp/presentation/otp.dart';
 import '../../../packages/presentation/packages_screen.dart';
 import '../../models/sign_up_body.dart';
 import '../cubits/sign_up_cubit.dart';
-import '../widgets/choose_gender.dart';
-import '../widgets/drop_down_text_field.dart';
-import '../widgets/sign_up_static_texts.dart';
-import '../widgets/text_field.dart';
+import '../widgets/shared/choose_gender.dart';
+import '../widgets/shared/text_field.dart';
+import '../widgets/sign_up/drop_down_text_field.dart';
+import '../widgets/sign_up/sign_up_upper_widget.dart';
+import 'enter_child_data.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -74,25 +72,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return BlocProvider(
       create: (context) => SignUpCubit(),
       child: AuthScaffold(
-          upperWidget: Column(
-            spacing: 12.h,
-            children: [
-              Row(
-                spacing: context.width / 8,
-                children: [
-                  LangIcon(onSelectLang: (lang){}),
-                  const AppLogoWidget(),
-                ],
-              ),
-              const SignUpStaticTexts()
-            ],
-          ),
+          upperWidget: const SignUpUpperWidget(),
           body: Form(
             key: formKey,
             child: Column(
               children: [
                 ChooseGenderWidget(
-                    onSelectGender: (selectedGender) => setState(() => type = selectedGender)
+                  onSelectGender: (selectedGender) => setState(() => type = selectedGender),
+                  genders: const [
+                    UserType.male,
+                    UserType.female,
+                    UserType.parent,
+                  ],
                 ),
                 10.szH,
                 SignUpTextField(
@@ -173,7 +164,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 BlocListener<SignUpCubit, AsyncState>(
                   listener: (context, state) => Helpers.manageBlocListener(
                     state.status,
-                    onSuccess: () => Go.to(BlocProvider(
+                    onSuccess: () => type.isParent?
+                    Go.to(const EnterChildDataScreen()) :
+                    Go.to(BlocProvider(
                       create: (context) => OtpCubit(),
                       child: OtpScreen(
                         title: LocaleKeys.activationCode,

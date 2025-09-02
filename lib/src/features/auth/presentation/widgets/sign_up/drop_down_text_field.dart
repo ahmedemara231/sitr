@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/widgets/text.dart';
-import '../../../../../generated/assets.dart';
-import '../../../../config/language/locale_keys.g.dart';
-import '../../../../config/res/config_imports.dart';
-import '../../../../core/widgets/svg_pic.dart';
+import '../../../../../../generated/assets.dart';
+import '../../../../../config/language/locale_keys.g.dart';
+import '../../../../../config/res/config_imports.dart';
+import '../../../../../core/widgets/svg_pic.dart';
 
 class DropDownTextField extends StatelessWidget {
   final String title;
