@@ -4,6 +4,7 @@ import 'package:pagify/helpers/data_and_pagination_data.dart';
 import 'package:pagify/helpers/errors.dart';
 import 'package:pagify/pagify.dart';
 import '../../../config/language/locale_keys.g.dart';
+import '../../../core/widgets/app_pagify.dart';
 import '../../../core/widgets/app_text.dart';
 import '../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../models/package.dart';
@@ -27,17 +28,11 @@ class PackagesScreen extends StatelessWidget {
           body: Column(
             children: [
               AppText(LocaleKeys.inOrderToRegisterOtherDataYouMustSubscribeToOneOfTheAvailablePackages, textAlign: TextAlign.center,),
-              Pagify<(List<Package>, PaginationData), Package>.listView(
-                  controller: PagifyController(),
+
+              AppPagify<Package>(
                   asyncCall: (ctx, page) async => await ctx.read<GetPackagesCubit>().getPackages(),
-                  mapper: (response) => PagifyData(
-                      data: response.$1,
-                      paginationData: response.$2
-                  ),
-                  errorMapper: PagifyErrorMapper(
-                    errorWhenDio: (e) => e.response?.data['msg']
-                  ),
-                  itemBuilder: (ctx, data, index, element) => PackageWidget(type: type)
+                  itemBuilder: (ctx, data, index, element) => PackageWidget(type: type),
+                  pagifyController: PagifyController()
               )
             ],
           )

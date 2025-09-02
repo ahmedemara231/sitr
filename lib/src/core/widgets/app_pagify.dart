@@ -1,0 +1,90 @@
+import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:pagify/helpers/data_and_pagination_data.dart';
+import 'package:pagify/helpers/errors.dart';
+import 'package:pagify/pagify.dart';
+import 'package:pagify/widgets/text.dart';
+import '../../../generated/assets.dart';
+import '../../config/language/locale_keys.g.dart';
+import 'custom_loading.dart';
+
+enum Ranking{listView, gridView}
+class AppPagify<T> extends StatefulWidget {
+  final Ranking rankingType;
+  final Future<(List<T>, PaginationData)> Function(BuildContext context, int page) asyncCall;
+  final Widget Function(BuildContext context, List<T> data, int index, T element) itemBuilder;
+  final PagifyController<T> pagifyController;
+  const AppPagify({super.key,
+    required this.asyncCall,
+    required this.itemBuilder,
+    required this.pagifyController,
+    this.rankingType = Ranking.listView
+  });
+
+  @override
+  State<AppPagify<T>> createState() => _AppPagifyState<T>();
+}
+
+class _AppPagifyState<T> extends State<AppPagify<T>> {
+
+  @override
+  void dispose() {
+    widget.pagifyController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if(widget.rankingType == Ranking.listView){
+      return Pagify<(List<T>, PaginationData), T>.listView(
+          key: widget.key,
+          shrinkWrap: true,
+          emptyListView: Column(
+            children: [
+              Lottie.asset(Assets.dataEmptyBox),
+              AppText(LocaleKeys.notFound)
+            ],
+          ),
+          controller: widget.pagifyController,
+          asyncCall: widget.asyncCall,
+          loadingBuilder: CustomLoading.showLoadingView(),
+          mapper: (data) => PagifyData(
+              data: data.$1,
+              paginationData: PaginationData(
+                  perPage: data.$2.perPage,
+                  totalPages: data.$2.totalPages
+              )
+          ),
+          errorMapper: PagifyErrorMapper(
+              errorWhenDio: (error) => error.response?.data['msg']
+          ),
+          itemBuilder: widget.itemBuilder
+      );
+
+    }else{
+      return Pagify<(List<T>, PaginationData), T>.gridView(
+          key: widget.key,
+          controller: widget.pagifyController,
+          asyncCall: widget.asyncCall,
+          emptyListView: Column(
+            children: [
+              Lottie.asset(Assets.dataEmptyBox),
+              AppText(LocaleKeys.notFound)
+            ],
+          ),
+          loadingBuilder: CustomLoading.showLoadingView(),
+          mapper: (data) => PagifyData(
+              data: data.$1,
+              paginationData: PaginationData(
+                  perPage: data.$2.perPage,
+                  totalPages: data.$2.totalPages
+              )
+          ),
+          errorMapper: PagifyErrorMapper(
+              errorWhenDio: (error) => error.response?.data['msg']
+          ),
+          itemBuilder: widget.itemBuilder
+      );
+    }
+  }
+}
