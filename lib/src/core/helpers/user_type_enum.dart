@@ -14,6 +14,18 @@ extension Check on UserType{
   bool get isUnauthenticated => this == UserType.unauthenticated;
 }
 
+// extension UserTypeHelper on UserType{
+//   getUserModelBasedUserType(){
+//     if(isMale){
+//
+//     }else if(isFemale){
+//
+//     }else{
+//
+//     }
+//   }
+// }
+
 extension Parse on String{
   UserType toUserType(){
     if(contains(LocaleKeys.male)){

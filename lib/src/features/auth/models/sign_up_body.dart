@@ -26,6 +26,6 @@ class SignUpBody{
     'identity_number' : identityNumber,
     'avatar' : image,
     'gender' : gender,
-    // 'type' : ''
+    'type' : 'individual'
   });
 }

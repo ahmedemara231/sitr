@@ -8,6 +8,7 @@ import 'package:pagify/widgets/text.dart';
 import 'package:pinput/pinput.dart';
 import '../../../config/language/locale_keys.g.dart';
 import '../../../config/res/config_imports.dart';
+import '../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../core/extensions/context_extension.dart';
 import '../../../core/extensions/sized_box_helper.dart';
 import '../../../core/helpers/helpers.dart';
@@ -41,11 +42,8 @@ class OtpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => OtpCubit()),
-        BlocProvider(create: (context) => ResendCodeCubit()),
-      ],
+    return BlocProvider(
+      create: (context) => ResendCodeCubit(),
       child: OtpScreenBody(
         otpType: otpType,
         phone: phone,
@@ -115,9 +113,9 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
     return AuthScaffold(
         upperWidget: Column(
           spacing: 12.h,
-          children: const [
-            AppLogoWidget(),
-            OtpStaticTexts(),
+          children: [
+            const AppLogoWidget(),
+            OtpStaticTexts(phone: widget.phone),
           ],
         ),
         body: SizedBox(
@@ -151,7 +149,8 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
                 asyncCall: (context) async{
                   if (_formKey.currentState!.validate()) {
                     await context.read<OtpCubit>().sendOtp(
-                        body: OtpBody(phone: widget.phone, code: code)
+                      type: widget.otpType,
+                      body: OtpBody(phone: widget.phone, code: code),
                     );
                   }
                 },
@@ -166,16 +165,21 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
                     children: [
                       AppText(LocaleKeys.remainingTime, color: Colors.grey),
                       AppText(time, fontWeight: FontWeight.w500,),
-                      TextButton(
-                          onPressed: _canResend? () {
-                            context.read<ResendCodeCubit>().resendOtp(body: ResendCodeBody(phone: widget.phone));
-                            _timeCont.restart();
-                            setState(() => _canResend = false);
-                          } : null,
-                          child: AppText(
-                            LocaleKeys.resendCode,
-                            color: _canResend? AppColors.primary : Colors.grey,
-                          )
+                      BlocListener<ResendCodeCubit, AsyncState>(
+                        listener: (context, state) => Helpers.manageBlocListener(
+                          state.status,
+                        ),
+                        child: TextButton(
+                            onPressed: _canResend? () {
+                              context.read<ResendCodeCubit>().resendOtp(body: ResendCodeBody(phone: widget.phone));
+                              _timeCont.restart();
+                              setState(() => _canResend = false);
+                            } : null,
+                            child: AppText(
+                              LocaleKeys.resendCode,
+                              color: _canResend? AppColors.primary : Colors.grey,
+                            )
+                        ),
                       ),
                     ],
                   ),

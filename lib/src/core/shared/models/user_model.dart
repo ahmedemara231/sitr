@@ -66,12 +66,14 @@ class UserModel {
     bio = json['bio'];
     hasChildren = json['has_children'];
     numOfChildren = json['num_of_children'];
-    childCustody = json['child_custody'] != null ? ChildCustody.fromJson(json['child_custody']) : null;
+    childCustody = null;
+    // childCustody = json['child_custody'] != null ? ChildCustody.fromJson(json['child_custody']) : null;
     wantChildren = json['want_children'];
     prohibitedThings = json['prohibited_things'];
     dowryMin = json['dowry_min'];
     dowryMax = json['dowry_max'];
-    weddingType = json['wedding_type'] != null ? WeddingType.fromJson(json['wedding_type']) : null;
+    weddingType = null;
+    // weddingType = json['wedding_type'] != null ? WeddingType.fromJson(json['wedding_type']) : null;
     cityId = json['city_id'] != null ? CityId.fromJson(json['city_id']) : null;
     educationLevel = json['education_level'];
     isPrayer = json['is_prayer'];
@@ -79,8 +81,10 @@ class UserModel {
     chatLang = json['chat_lang'];
     isSmoker = json['is_smoker'];
     tribeAffiliation = json['tribe_affiliation'];
-    skinColor = json['skin_color'] != null ? SkinColor.fromJson(json['skin_color']) : null;
-    religiousCommitment = json['religious_commitment'] != null ? ReligiousCommitment.fromJson(json['religious_commitment']) : null;
+    skinColor = null;
+    // skinColor = json['skin_color'] != null ? SkinColor.fromJson(json['skin_color']) : null;
+    religiousCommitment = null;
+    // religiousCommitment = json['religious_commitment'] != null ? ReligiousCommitment.fromJson(json['religious_commitment']) : null;
     views = json['views'];
   }
   int? id;

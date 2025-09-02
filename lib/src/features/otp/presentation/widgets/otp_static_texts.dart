@@ -5,7 +5,10 @@ import 'package:pagify/widgets/text.dart';
 import '../../../../config/language/locale_keys.g.dart';
 
 class OtpStaticTexts extends StatelessWidget {
-  const OtpStaticTexts({super.key});
+  final String phone;
+  const OtpStaticTexts({super.key,
+    required this.phone
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +16,7 @@ class OtpStaticTexts extends StatelessWidget {
       children: [
         AppText(LocaleKeys.otpCode, fontWeight: FontWeight.w500, fontSize: 16.sp),
         AppText(
-            LocaleKeys.pleaseEnterTheActivationCodeSentToYourMobileNumber,
+            '${LocaleKeys.pleaseEnterTheActivationCodeSentToYourMobileNumber} $phone',
             textAlign: TextAlign.center,
             fontSize: 12.sp
         ),

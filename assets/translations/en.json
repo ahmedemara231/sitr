@@ -36,7 +36,6 @@
   "login": "Login",
   "phone_number": "Phone Number",
   "sign_in_as_visitor": "Sign in as visitor",
-  "please_enter_phone_number": "please enter phone number",
   "please_enter_your_mobile_number_to_register_or_skip_to_register_and_view_some_application_data": "Please Enter Your Mobile Number To Register Or Skip To Register And View Some Application Data",
   "do_not_have_an_account": "Do not have an account",
   "new_registeration": "New Registeration",
@@ -63,7 +62,6 @@
   "please_enter_your_name": "please enter your name",
   "please_enter_your_phone": "please enter your phone",
   "please_enter_your_age": "please enter your age",
-  "please_enter_your_identify_number": "please enter your identify number",
   "please_enter_your_code": "please enter your code",
   "packages": "Packages",
   "in_order_to_register_other_data_you_must_subscribe_to_one_of_the_available_packages": "In order to register other data you must subscribe to one of the available packages",
@@ -134,5 +132,12 @@
   "to": "to",
   "confirm_code": "Confirm code",
   "unable_to_access_photos_please_open_it": "Unable to access photos please open it",
-  "unable_to_access_camera_please_open_it": "Unable to access camera please open it"
+  "unable_to_access_camera_please_open_it": "Unable to access camera please open it",
+  "relationship": "Relationship",
+  "email": "email",
+  "please_enter_the_relationship": "please enter the relationship",
+  "please_enter_the_email": "please enter the email",
+  "children_number": "children number",
+  "gender": "Gender",
+  "please_enter_the_gender": "please enter the gender"
 }

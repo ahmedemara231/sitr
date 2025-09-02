@@ -36,7 +36,6 @@
   "login": "تسجيل الدخول",
   "phone_number": "رقم الجوال",
   "sign_in_as_visitor": "الدخول كازائر",
-  "please_enter_phone_number": "يرجي ادخال الرقم",
   "please_enter_your_mobile_number_to_register_or_skip_to_register_and_view_some_application_data": "من فضلك قم بادخال رقم الجوال للتسجيل او عمل تخطي للتسجيل والاطلاع علي بعض بيانات التطبيق",
   "do_not_have_an_account": "ليس لديك حساب",
   "new_registeration": "تسجيل جديد",
@@ -63,7 +62,6 @@
   "please_enter_your_name": "يرجي ادخال الاسم",
   "please_enter_your_phone": "يرجي ادخال رقم الجوال",
   "please_enter_your_age": "يرجي ادخال العمر",
-  "please_enter_your_identify_number": "يرجي ادخال رقم الهوية",
   "please_enter_your_code": "يرجي ادخال الكود",
   "packages": "الباقات",
   "in_order_to_register_other_data_you_must_subscribe_to_one_of_the_available_packages": "لكي تتمكني من تسجيل البيانات الاخري يجب عليكي الاشتراك في وحدة من الباقات المتاحه",
@@ -134,5 +132,12 @@
   "to": "الي",
   "confirm_code": "كود التفعيل",
   "unable_to_access_photos_please_open_it": "لا يمكن الوصول للصور الرجاء فتح خاصية الصور",
-  "unable_to_access_camera_please_open_it": "لا يمكن الوصول للكاميرا الرجاء فتح خاصية الكاميرا"
+  "unable_to_access_camera_please_open_it": "لا يمكن الوصول للكاميرا الرجاء فتح خاصية الكاميرا",
+  "relationship": "الصلة",
+  "email": "البريد الالكتروني",
+  "please_enter_the_relationship": "يرجي ادخال الصلة",
+  "please_enter_the_email": "يرجي ادخال البريد",
+  "children_number": "عدد الابناء",
+  "gender": "الجنس",
+  "please_enter_the_gender": "يرجي تحديد الجنس"
 }

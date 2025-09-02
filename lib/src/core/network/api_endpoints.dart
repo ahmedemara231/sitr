@@ -28,7 +28,11 @@ class ApiConstants {
   static const String checkCodeAfterLogin = 'check-code';
   static const String resendCode = 'resend-code';
 
-  
+  // packages
+  static const String getPackages = 'packages/individual';
+  static const String subscribePackage = 'subscribe-package';
+  static const String renewPackage = 'renew-package';
+  static const String getMyPackage = 'my-package';
 
   
 }

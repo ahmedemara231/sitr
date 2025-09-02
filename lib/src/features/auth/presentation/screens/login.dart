@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: DefaultTextField.withTitle(
                   upperTitle: LocaleKeys.phoneNumber,
                   inputType: TextInputType.phone,
-                  title: LocaleKeys.pleaseEnterPhoneNumber,
+                  title: LocaleKeys.pleaseEnterTheNumber,
                   fillColor: Colors.grey[50],
                   validator: Validators.validatePhone,
                   controller: _phoneCont,

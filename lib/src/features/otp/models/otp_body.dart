@@ -15,6 +15,7 @@ class OtpBody{
     'lang' : Languages.currentLanguage.languageCode,
     'phone' : phone,
     'code' : code,
-    'device_id' : NotificationService.deviceToken
+    'device_id' : '1111'
+    // 'device_id' : NotificationService.deviceToken
   });
 }

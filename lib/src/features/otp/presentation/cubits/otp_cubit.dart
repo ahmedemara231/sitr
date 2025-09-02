@@ -8,17 +8,23 @@ enum OtpType{afterLogin, afterRegister}
 class OtpCubit extends AsyncCubit<UserModel>{
   OtpCubit() : super(UserModel.initial());
 
-  Future<void> sendOtp({required OtpBody body}) async {
+  Future<void> sendOtp({
+    required OtpType type,
+    required OtpBody body,
+}) async {
     await executeAsync(
         operation: () => baseCrudUseCase.call(
           CrudBaseParmas(
-              api: ApiConstants.checkCodeAfterLogin,
-              httpRequestType: HttpRequestType.post,
+              api: type == OtpType.afterLogin?
+              ApiConstants.checkCodeAfterLogin :
+              ApiConstants.activate,
+              httpRequestType: type == OtpType.afterLogin?
+              HttpRequestType.post : HttpRequestType.patch,
               body: body.toJson(),
               mapper: (json) => UserModel.fromJson(json)
           ),
         ),
-      successEmitter: (data) => setSuccess(data: data),
+      successEmitter: (data) => setSuccess(data: data)
     );
   }
 }

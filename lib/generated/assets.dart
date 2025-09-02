@@ -28,6 +28,7 @@ class Assets {
   static const String successSuccess = 'assets/lottie/success/success.json';
   static const String successSuccessfullOrder = 'assets/lottie/success/successfull_order.json';
   static const String svgAppLogo = 'assets/svg/app_logo.svg';
+  static const String svgArrowDown = 'assets/svg/arrow_down.svg';
   static const String svgCamera = 'assets/svg/camera.svg';
   static const String svgLangIcon = 'assets/svg/lang_icon.svg';
   static const String svgLogo = 'assets/svg/logo.svg';

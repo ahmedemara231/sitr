@@ -38,7 +38,6 @@
     "Login" : "تسجيل الدخول",
     "Phone Number" : "رقم الجوال",
     "Sign in as visitor" : "الدخول كازائر",
-    "please enter phone number" : "يرجي ادخال الرقم",
     "Please Enter Your Mobile Number To Register Or Skip To Register And View Some Application Data" : "من فضلك قم بادخال رقم الجوال للتسجيل او عمل تخطي للتسجيل والاطلاع علي بعض بيانات التطبيق",
     "Do not have an account" : "ليس لديك حساب",
     "New Registeration" : "تسجيل جديد",
@@ -68,7 +67,6 @@
     "please enter your name" : "يرجي ادخال الاسم",
     "please enter your phone" : "يرجي ادخال رقم الجوال",
     "please enter your age" : "يرجي ادخال العمر",
-    "please enter your identify number" : "يرجي ادخال رقم الهوية",
     "please enter your code" : "يرجي ادخال الكود",
     "Packages" : "الباقات",
     "In order to register other data you must subscribe to one of the available packages" : "لكي تتمكني من تسجيل البيانات الاخري يجب عليكي الاشتراك في وحدة من الباقات المتاحه",
@@ -139,6 +137,13 @@
     "to" : "الي",
     "Confirm code" : "كود التفعيل",
     "Unable to access photos please open it" : "لا يمكن الوصول للصور الرجاء فتح خاصية الصور",
-    "Unable to access camera please open it" : "لا يمكن الوصول للكاميرا الرجاء فتح خاصية الكاميرا"
+    "Unable to access camera please open it" : "لا يمكن الوصول للكاميرا الرجاء فتح خاصية الكاميرا",
+    "Relationship" : "الصلة",
+    "email" : "البريد الالكتروني",
+    "please enter the relationship" : "يرجي ادخال الصلة",
+    "please enter the email" : "يرجي ادخال البريد",
+    "children number" : "عدد الابناء",
+    "Gender" : "الجنس",
+    "please enter the gender" : "يرجي تحديد الجنس"
 
 }

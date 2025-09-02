@@ -112,9 +112,6 @@ abstract class LocaleKeys {
   static const String _signInAsVisitor = 'sign_in_as_visitor';
   static String get signInAsVisitor => _signInAsVisitor.tr();
 
-  static const String _pleaseEnterPhoneNumber = 'please_enter_phone_number';
-  static String get pleaseEnterPhoneNumber => _pleaseEnterPhoneNumber.tr();
-
   static const String _pleaseEnterYourMobileNumberToRegisterOrSkipToRegisterAndViewSomeApplicationData = 'please_enter_your_mobile_number_to_register_or_skip_to_register_and_view_some_application_data';
   static String get pleaseEnterYourMobileNumberToRegisterOrSkipToRegisterAndViewSomeApplicationData => _pleaseEnterYourMobileNumberToRegisterOrSkipToRegisterAndViewSomeApplicationData.tr();
 
@@ -192,9 +189,6 @@ abstract class LocaleKeys {
 
   static const String _pleaseEnterYourAge = 'please_enter_your_age';
   static String get pleaseEnterYourAge => _pleaseEnterYourAge.tr();
-
-  static const String _pleaseEnterYourIdentifyNumber = 'please_enter_your_identify_number';
-  static String get pleaseEnterYourIdentifyNumber => _pleaseEnterYourIdentifyNumber.tr();
 
   static const String _pleaseEnterYourCode = 'please_enter_your_code';
   static String get pleaseEnterYourCode => _pleaseEnterYourCode.tr();
@@ -408,5 +402,23 @@ abstract class LocaleKeys {
 
   static const String _unableToAccessCameraPleaseOpenIt = 'unable_to_access_camera_please_open_it';
   static String get unableToAccessCameraPleaseOpenIt => _unableToAccessCameraPleaseOpenIt.tr();
+
+  static const String _relationship = 'relationship';
+  static String get relationship => _relationship.tr();
+
+  static const String _email = 'email';
+  static String get email => _email.tr();
+
+  static const String _pleaseEnterTheRelationship = 'please_enter_the_relationship';
+  static String get pleaseEnterTheRelationship => _pleaseEnterTheRelationship.tr();
+
+  static const String _pleaseEnterTheEmail = 'please_enter_the_email';
+  static String get pleaseEnterTheEmail => _pleaseEnterTheEmail.tr();
+
+  static const String _gender = 'gender';
+  static String get gender => _gender.tr();
+
+  static const String _pleaseEnterTheGender = 'please_enter_the_gender';
+  static String get pleaseEnterTheGender => _pleaseEnterTheGender.tr();
 
 }

@@ -19,6 +19,7 @@ class AppScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: PreferredSize(
           preferredSize: Size(context.width, 60.h),
           child: AppBar(
@@ -45,10 +46,7 @@ class AppScaffold extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          width: context.width,
-          height: context.height,
           decoration: BoxDecoration(
-            color: Colors.white,
             borderRadius: BorderRadius.circular(16.r)
           ),
           child: body.defaultScreenPadding(),

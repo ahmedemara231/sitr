@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:easy_timer_count/extensions/null_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,15 +11,19 @@ import '../../../../core/extensions/sized_box_helper.dart';
 import '../../../../core/helpers/helpers.dart';
 import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/navigation/navigator.dart';
+import '../../../../core/shared/models/user_model.dart';
+import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../core/widgets/app_logo_widget.dart';
 import '../../../../core/widgets/buttons/app_loading_button.dart';
-import '../../../../core/widgets/buttons/custom_app_buttons/default_button.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
 import '../../../../core/widgets/lang_icon.dart';
+import '../../../otp/presentation/cubits/otp_cubit.dart';
+import '../../../otp/presentation/otp.dart';
 import '../../../packages/presentation/packages_screen.dart';
 import '../../models/sign_up_body.dart';
 import '../cubits/sign_up_cubit.dart';
 import '../widgets/choose_gender.dart';
+import '../widgets/drop_down_text_field.dart';
 import '../widgets/sign_up_static_texts.dart';
 import '../widgets/text_field.dart';
 
@@ -38,6 +41,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   late TextEditingController _ageCont;
   late TextEditingController _identifyNumberCont;
   late TextEditingController _codeCont;
+  late TextEditingController _emailCont;
 
   @override
   void initState() {
@@ -46,6 +50,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _ageCont = TextEditingController();
     _identifyNumberCont = TextEditingController();
     _codeCont = TextEditingController();
+    _emailCont = TextEditingController();
     super.initState();
   }
 
@@ -56,6 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _ageCont.dispose();
     _identifyNumberCont.dispose();
     _codeCont.dispose();
+    _emailCont.dispose();
     super.dispose();
   }
 
@@ -85,7 +91,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             key: formKey,
             child: Column(
               children: [
-                ChooseGenderWidget(onSelectGender: (selectedGender) => type = selectedGender),
+                ChooseGenderWidget(
+                    onSelectGender: (selectedGender) => setState(() => type = selectedGender)
+                ),
                 10.szH,
                 SignUpTextField(
                   readOnly: true,
@@ -115,25 +123,44 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 SignUpTextField(
                   upperTitle: LocaleKeys.phoneNumber,
-                  title: LocaleKeys.pleaseEnterPhoneNumber,
+                  title: LocaleKeys.pleaseEnterTheNumber,
                   controller: _phoneCont,
                   // validator: Validators.validatePhone,
                   inputType: TextInputType.number,
                 ),
-                SignUpTextField(
+
+                if(type.isParent)
+                  SignUpTextField(
+                    upperTitle: LocaleKeys.email,
+                    title: LocaleKeys.pleaseEnterTheEmail,
+                    controller: _ageCont,
+                    inputType: TextInputType.emailAddress,
+                    // validator: Validators.validateEmpty,
+                  )
+                else
+                  SignUpTextField(
                     upperTitle: LocaleKeys.age,
                     title: LocaleKeys.pleaseEnterYourAge,
                     controller: _ageCont,
-                  inputType: TextInputType.number,
-                  // validator: Validators.validateEmpty,
-                ),
+                    inputType: TextInputType.number,
+                    // validator: Validators.validateEmpty,
+                  ),
+
                 SignUpTextField(
                     upperTitle: LocaleKeys.identifyNumber,
-                    title: LocaleKeys.pleaseEnterYourIdentifyNumber,
+                    title: LocaleKeys.pleaseEnterTheNumber,
                     controller: _identifyNumberCont,
                   inputType: TextInputType.number,
                   // validator: Validators.validateEmpty,
                 ),
+
+                if(type.isParent)
+                  ...[
+                    DropDownTextField(title: LocaleKeys.pleaseEnterYourCode),
+                    DropDownTextField(title: LocaleKeys.childrenNumber),
+                    DropDownTextField(title: LocaleKeys.gender),
+                  ],
+                
                 SignUpTextField(
                     upperTitle: LocaleKeys.code,
                     title: LocaleKeys.pleaseEnterYourCode,
@@ -141,11 +168,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   inputType: TextInputType.number,
                   // validator: Validators.validateEmpty,
                 ),
+
                 10.szH,
                 BlocListener<SignUpCubit, AsyncState>(
                   listener: (context, state) => Helpers.manageBlocListener(
                     state.status,
-                    onSuccess: () => Go.to(const PackagesScreen.view())
+                    onSuccess: () => Go.to(BlocProvider(
+                      create: (context) => OtpCubit(),
+                      child: BlocListener<OtpCubit, AsyncState<UserModel>>(
+                          listener: (context, state) => Helpers.manageBlocListener(
+                              state.status,
+                              onSuccess: ()async {
+                                await UserCubit.instance.setUserLoggedIn(user: state.data, token: state.data.token?? '');
+                                Go.to(const PackagesScreen.view());
+                              }
+                          ),
+                        child: OtpScreen(
+                            otpType: OtpType.afterRegister,
+                            phone: _phoneCont.text,
+                            title: LocaleKeys.activationCode
+                        ),
+                      ),
+                    ))
                   ),
                   child: AppLoadingButton(
                     asyncCall: (ctx) async{
