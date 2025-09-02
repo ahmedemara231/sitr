@@ -10,12 +10,12 @@ import '../../../../core/helpers/helpers.dart';
 import '../../../../core/helpers/validators.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/widgets/app_logo_widget.dart';
-import '../../../../core/widgets/custom_messages.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
 import '../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../core/widgets/buttons/default_button.dart';
 import '../../../../core/widgets/lang_icon.dart';
 import '../../../../core/widgets/text_fields/default_text_field.dart';
+import '../../../otp/models/otp_body.dart';
 import '../../../otp/presentation/cubits/otp_cubit.dart';
 import '../../models/login_body.dart';
 import '../cubits/login_cubit.dart';
@@ -85,16 +85,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 listener: (context, state) => Helpers.manageBlocListener(
                   state.status,
                   onSuccess: () {
-                    Go.to(OtpScreen(
-                      title: LocaleKeys.confirmCode,
-                      phone: _phoneCont.text,
-                      otpType: OtpType.afterLogin,
-                  ));
-                  MessageUtils.showSnackBar(
-                    'دخل الكود يا ادهم يا ظالم',
-                    // backgroundColor: AppColors.primary,
-                  );
-                  }
+                    Go.to(BlocProvider(
+                      create: (context) => OtpCubit(),
+                      child: OtpScreen(
+                        title: LocaleKeys.confirmCode,
+                        phone: _phoneCont.text,
+                        onConfirmCode: (ctx, code) => ctx.read<OtpCubit>().sendOtp(
+                          // onSuccess: () => ,
+                          type: OtpType.afterLogin,
+                          body: OtpBody(phone: _phoneCont.text, code: code),
+                        ),
+                      ),
+                    ));
+                 }
                 ),
                 child: AppLoadingButton(
                   title: LocaleKeys.login,

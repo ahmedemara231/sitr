@@ -16,27 +16,23 @@ import '../../../core/helpers/validators.dart';
 import '../../../core/widgets/app_logo_widget.dart';
 import '../../../core/widgets/scaffolds/auth_scaffold.dart';
 import '../../../core/widgets/buttons/app_loading_button.dart';
-import '../models/otp_body.dart';
 import '../models/resend_code_body.dart';
-import 'cubits/otp_cubit.dart';
 import 'cubits/resend_code_cubit.dart';
 import 'widgets/otp_static_texts.dart';
 
 class OtpScreen extends StatelessWidget {
 
-  final OtpType otpType;
   final String phone;
   final String title;
   final FutureOr<void> Function(BuildContext context)? onEnterScreen;
-  // final FutureOr<void> Function(BuildContext context, String code) onConfirmCode;
+  final FutureOr<void> Function(BuildContext context, String code) onConfirmCode;
   // final FutureOr<void> Function(BuildContext context) onResendCodePress;
 
   const OtpScreen({super.key,
-    required this.otpType,
     required this.phone,
     required this.title,
     this.onEnterScreen,
-    // required this.onConfirmCode,
+    required this.onConfirmCode,
     // required this.onResendCodePress
   });
 
@@ -45,11 +41,10 @@ class OtpScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => ResendCodeCubit(),
       child: OtpScreenBody(
-        otpType: otpType,
         phone: phone,
         title: title,
         onEnterScreen: onEnterScreen,
-        // onConfirmCode: onConfirmCode,
+        onConfirmCode: onConfirmCode,
         // onResendCodePress: onResendCodePress,
       ),
     );
@@ -57,18 +52,16 @@ class OtpScreen extends StatelessWidget {
 }
 
 class OtpScreenBody extends StatefulWidget {
-  final OtpType otpType;
   final String phone;
   final String title;
   final FutureOr<void> Function(BuildContext context)? onEnterScreen;
-  // final FutureOr<void> Function(BuildContext context, String code) onConfirmCode;
+  final FutureOr<void> Function(BuildContext context, String code) onConfirmCode;
   // final FutureOr<void> Function(BuildContext context) onResendCodePress;
   const OtpScreenBody({super.key,
-    required this.otpType,
     required this.phone,
     required this.title,
     this.onEnterScreen,
-    // required this.onConfirmCode,
+    required this.onConfirmCode,
     // required this.onResendCodePress
   });
 
@@ -148,10 +141,7 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
                 title: LocaleKeys.confirm,
                 asyncCall: (context) async{
                   if (_formKey.currentState!.validate()) {
-                    await context.read<OtpCubit>().sendOtp(
-                      type: widget.otpType,
-                      body: OtpBody(phone: widget.phone, code: code),
-                    );
+                    await widget.onConfirmCode.call(context, code);
                   }
                 },
               ),

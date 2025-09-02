@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/network/api_endpoints.dart';
@@ -11,6 +13,7 @@ class OtpCubit extends AsyncCubit<UserModel>{
   Future<void> sendOtp({
     required OtpType type,
     required OtpBody body,
+    FutureOr<void> Function(UserModel data)? onSuccess,
 }) async {
     await executeAsync(
         operation: () => baseCrudUseCase.call(
@@ -24,7 +27,10 @@ class OtpCubit extends AsyncCubit<UserModel>{
               mapper: (json) => UserModel.fromJson(json)
           ),
         ),
-      successEmitter: (data) => setSuccess(data: data)
+      successEmitter: (data) {
+        setSuccess(data: data);
+        onSuccess?.call(data);
+      }
     );
   }
 }

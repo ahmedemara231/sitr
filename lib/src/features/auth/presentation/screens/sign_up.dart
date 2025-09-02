@@ -11,12 +11,12 @@ import '../../../../core/extensions/sized_box_helper.dart';
 import '../../../../core/helpers/helpers.dart';
 import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/navigation/navigator.dart';
-import '../../../../core/shared/models/user_model.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../core/widgets/app_logo_widget.dart';
 import '../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
 import '../../../../core/widgets/lang_icon.dart';
+import '../../../otp/models/otp_body.dart';
 import '../../../otp/presentation/cubits/otp_cubit.dart';
 import '../../../otp/presentation/otp.dart';
 import '../../../packages/presentation/packages_screen.dart';
@@ -175,18 +175,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     state.status,
                     onSuccess: () => Go.to(BlocProvider(
                       create: (context) => OtpCubit(),
-                      child: BlocListener<OtpCubit, AsyncState<UserModel>>(
-                          listener: (context, state) => Helpers.manageBlocListener(
-                              state.status,
-                              onSuccess: ()async {
-                                await UserCubit.instance.setUserLoggedIn(user: state.data, token: state.data.token?? '');
-                                Go.to(const PackagesScreen.view());
-                              }
-                          ),
-                        child: OtpScreen(
-                            otpType: OtpType.afterRegister,
-                            phone: _phoneCont.text,
-                            title: LocaleKeys.activationCode
+                      child: OtpScreen(
+                        title: LocaleKeys.activationCode,
+                        phone: _phoneCont.text,
+                        onConfirmCode: (ctx, code) => ctx.read<OtpCubit>().sendOtp(
+                          type: OtpType.afterRegister,
+                          body: OtpBody(phone: _phoneCont.text, code: code),
+                          onSuccess: (data) async{
+                            await UserCubit.instance.setUserLoggedIn(user: data, token: data.token?? '');
+                            Go.to(const PackagesScreen.view());
+                          }
                         ),
                       ),
                     ))
