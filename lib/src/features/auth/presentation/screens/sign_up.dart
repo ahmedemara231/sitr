@@ -10,6 +10,7 @@ import '../../../../core/extensions/sized_box_helper.dart';
 import '../../../../core/helpers/helpers.dart';
 import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/navigation/navigator.dart';
+import '../../../../core/shared/models/user_model.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
@@ -22,8 +23,9 @@ import '../cubits/sign_up_cubit.dart';
 import '../widgets/shared/choose_gender.dart';
 import '../widgets/shared/text_field.dart';
 import '../widgets/sign_up/drop_down_text_field.dart';
+import '../widgets/sign_up/image_widget.dart';
 import '../widgets/sign_up/sign_up_upper_widget.dart';
-import 'enter_child_data.dart';
+import 'enter_male_female_child_data.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -65,7 +67,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   final formKey = GlobalKey<FormState>();
   UserType type = UserType.male;
-  ValueNotifier<File?> image = ValueNotifier(null);
+  File? image;
 
   @override
   Widget build(BuildContext context) {
@@ -86,25 +88,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ],
                 ),
                 10.szH,
-                SignUpTextField(
-                  readOnly: true,
-                  onTap: () async{
-                    final selectedImage = await Helpers.getImageFromCameraOrDevice();
-                    image.value = selectedImage;
-                  },
-                  upperTitle: LocaleKeys.profilePicture,
-                  title: LocaleKeys.pleaseEnterYourProfilePicture,
-                  suffixIconPath: Assets.svgCamera,
-                  controller: TextEditingController(),
-                  // validator: Validators.validateEmpty,
-                ),
-                ValueListenableBuilder(
-                    valueListenable: image,
-                    builder: (context, value, child) => value.isNotNull? CircleAvatar(
-                      radius: 50.sp,
-                      backgroundImage: FileImage(value!),
-                    ) : const SizedBox.shrink()
-                ),
+                SignUpImageWidget(onSelectImage: (img) => image = img),
 
                 SignUpTextField(
                   upperTitle: LocaleKeys.name,
@@ -120,22 +104,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   inputType: TextInputType.number,
                 ),
 
-                if(type.isParent)
-                  SignUpTextField(
-                    upperTitle: LocaleKeys.email,
-                    title: LocaleKeys.pleaseEnterTheEmail,
-                    controller: _ageCont,
-                    inputType: TextInputType.emailAddress,
-                    // validator: Validators.validateEmpty,
-                  )
-                else
-                  SignUpTextField(
-                    upperTitle: LocaleKeys.age,
-                    title: LocaleKeys.pleaseEnterYourAge,
-                    controller: _ageCont,
-                    inputType: TextInputType.number,
-                    // validator: Validators.validateEmpty,
-                  ),
+                GenderHelper.drowWidget(
+                    drow: (current) => current.isParent?
+                    SignUpTextField(
+                      upperTitle: LocaleKeys.email,
+                      title: LocaleKeys.pleaseEnterTheEmail,
+                      controller: _ageCont,
+                      inputType: TextInputType.emailAddress,
+                      // validator: Validators.validateEmpty,
+                    ) : SignUpTextField(
+                      upperTitle: LocaleKeys.age,
+                      title: LocaleKeys.pleaseEnterYourAge,
+                      controller: _ageCont,
+                      inputType: TextInputType.number,
+                      // validator: Validators.validateEmpty,
+                    ),
+                ),
 
                 SignUpTextField(
                     upperTitle: LocaleKeys.identifyNumber,
@@ -165,7 +149,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   listener: (context, state) => Helpers.manageBlocListener(
                     state.status,
                     onSuccess: () => type.isParent?
-                    Go.to(const EnterChildDataScreen()) :
+                    Go.to(const EnterMaleOrFemaleOrChildDataScreen.signUpAsParent()) :
                     Go.to(BlocProvider(
                       create: (context) => OtpCubit(),
                       child: OtpScreen(
@@ -191,7 +175,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 phone: _phoneCont.text,
                                 age: _ageCont.text,
                                 identityNumber: _identifyNumberCont.text,
-                                image: image.value,
+                                image: image,
                                 gender: type.name
                             )
                         );

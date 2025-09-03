@@ -62,9 +62,9 @@ class PackageWidget extends StatelessWidget {
                         child: PaymentSheet(
                           onPay: () async {
                             // TODO: payment
-                            showDefaultBottomSheet(
-                                child: const SuccessSheet()
-                            );
+                            // showDefaultBottomSheet(
+                            //     child: const SuccessSheet()
+                            // );
                           }
                         )
                     )

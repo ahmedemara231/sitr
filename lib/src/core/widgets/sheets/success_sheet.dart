@@ -4,12 +4,16 @@ import 'package:lottie/lottie.dart';
 import 'package:pagify/widgets/text.dart';
 import '../../../../generated/assets.dart';
 import '../../../config/language/locale_keys.g.dart';
-import '../../../features/auth/presentation/screens/complete_profile.dart';
+import '../../../features/auth/presentation/screens/enter_male_female_child_data.dart';
+import '../../helpers/user_type_enum.dart';
 import '../../navigation/navigator.dart';
 import '../buttons/custom_app_buttons/default_button.dart';
 
 class SuccessSheet extends StatelessWidget {
-  const SuccessSheet({super.key});
+  final UserType type;
+  const SuccessSheet({super.key,
+    required this.type
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +25,9 @@ class SuccessSheet extends StatelessWidget {
         AppText(LocaleKeys.youCanNowCompleteYourProfile),
         AppDefaultButton.withBackGroundColor(
             title: LocaleKeys.completeProfile,
-            onTap: () => Go.to(const CompleteProfileScreen())
+            onTap: () => Go.to(
+                EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(type: type)
+            )
         )
       ],
     );

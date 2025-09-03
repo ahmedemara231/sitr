@@ -421,4 +421,10 @@ abstract class LocaleKeys {
   static const String _pleaseEnterTheGender = 'please_enter_the_gender';
   static String get pleaseEnterTheGender => _pleaseEnterTheGender.tr();
 
+  static const String _conditionsAndTerms = 'conditions_and_terms';
+  static String get conditionsAndTerms => _conditionsAndTerms.tr();
+
+  static const String _iHaveReadAndAccept = 'i_have_read_and_accept';
+  static String get iHaveReadAndAccept => _iHaveReadAndAccept.tr();
+
 }

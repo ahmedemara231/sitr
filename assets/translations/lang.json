@@ -144,6 +144,7 @@
     "please enter the email" : "يرجي ادخال البريد",
     "children number" : "عدد الابناء",
     "Gender" : "الجنس",
-    "please enter the gender" : "يرجي تحديد الجنس"
-
+    "please enter the gender" : "يرجي تحديد الجنس",
+    "conditions and terms" : "الشروط والاحكام",
+    "i have read and accept" : "قرأت ووافقت علي"
 }
