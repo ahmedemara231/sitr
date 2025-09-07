@@ -71,7 +71,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => SignUpCubit(),
-      child: AuthScaffold(
+      child: CenterCardScaffold(
           upperWidget: const SignUpUpperWidget(),
           body: Form(
             key: formKey,

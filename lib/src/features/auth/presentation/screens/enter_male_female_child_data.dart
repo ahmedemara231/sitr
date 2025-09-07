@@ -82,7 +82,7 @@ class _EnterMaleOrFemaleOrChildDataScreenState extends State<EnterMaleOrFemaleOr
 
   @override
   Widget build(BuildContext context) {
-    return AuthScaffold(
+    return CenterCardScaffold(
         upperWidget: const SignUpUpperWidget(),
         body: Column(
           spacing: 10.h,

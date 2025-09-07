@@ -103,7 +103,7 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
   String code = '';
   @override
   Widget build(BuildContext context) {
-    return AuthScaffold(
+    return CenterCardScaffold(
         upperWidget: Column(
           spacing: 12.h,
           children: [

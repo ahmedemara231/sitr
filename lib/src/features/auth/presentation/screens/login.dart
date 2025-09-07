@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
     context.locale;
     return BlocProvider(
       create: (context) => LoginCubit(),
-      child: AuthScaffold(
+      child: CenterCardScaffold(
         upperWidget: Column(
           spacing: 12.h,
           children: [

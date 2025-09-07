@@ -26,22 +26,7 @@ class AppScaffold extends StatelessWidget {
             backgroundColor: AppColors.whiteGreyColor,
             centerTitle: true,
             title: AppText(appBarTitle, fontWeight: FontWeight.bold, fontSize: 16.sp, color: Colors.black,),
-            leading: SizedBox(
-              width: 50,
-              height: 50,
-              child: FittedBox(
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle
-                  ),
-                  child: IconButton(
-                      onPressed: () => Go.back(),
-                      icon: const Icon(Icons.arrow_back_ios_sharp, color: Colors.black, size: 14)
-                  ),
-                ).paddingAll(12.r),
-              ),
-            ),
+            leading: const AppBackButton(),
           )
       ),
       body: SingleChildScrollView(
@@ -51,6 +36,30 @@ class AppScaffold extends StatelessWidget {
           ),
           child: body.defaultScreenPadding(),
         ),
+      ),
+    );
+  }
+}
+
+class AppBackButton extends StatelessWidget {
+  const AppBackButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 50,
+      height: 50,
+      child: FittedBox(
+        child: Container(
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle
+          ),
+          child: IconButton(
+              onPressed: () => Go.back(),
+              icon: const Icon(Icons.arrow_back_ios_sharp, color: Colors.black, size: 14)
+          ),
+        ).paddingAll(12.r),
       ),
     );
   }
