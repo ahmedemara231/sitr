@@ -114,6 +114,7 @@
   "please_enter_the_brief": "please enter the brief",
   "yes": "yes",
   "no": "no",
+  "already_have_an_account": "Already have an account",
   "please_enter_the_number": "please enter the number",
   "mother": "mother",
   "father": "father",
@@ -141,5 +142,7 @@
   "gender": "Gender",
   "please_enter_the_gender": "please enter the gender",
   "conditions_and_terms": "conditions and terms",
-  "i_have_read_and_accept": "i have read and accept"
+  "i_have_read_and_accept": "i have read and accept",
+  "profile": "profile",
+  "save_changes": "Save changes"
 }

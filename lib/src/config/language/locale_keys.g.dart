@@ -346,6 +346,9 @@ abstract class LocaleKeys {
   static const String _no = 'no';
   static String get no => _no.tr();
 
+  static const String _alreadyHaveAnAccount = 'already_have_an_account';
+  static String get alreadyHaveAnAccount => _alreadyHaveAnAccount.tr();
+
   static const String _pleaseEnterTheNumber = 'please_enter_the_number';
   static String get pleaseEnterTheNumber => _pleaseEnterTheNumber.tr();
 
@@ -426,5 +429,11 @@ abstract class LocaleKeys {
 
   static const String _iHaveReadAndAccept = 'i_have_read_and_accept';
   static String get iHaveReadAndAccept => _iHaveReadAndAccept.tr();
+
+  static const String _profile = 'profile';
+  static String get profile => _profile.tr();
+
+  static const String _saveChanges = 'save_changes';
+  static String get saveChanges => _saveChanges.tr();
 
 }

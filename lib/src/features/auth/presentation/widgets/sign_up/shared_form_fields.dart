@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagify/widgets/text.dart';
 import '../../../../../config/language/locale_keys.g.dart';
+import '../../../../../core/widgets/app_text.dart';
 import '../../../models/shared_form_fields_model.dart';
-import '../../screens/complete_profile.dart';
 import '../shared/text_field.dart';
 import 'dowry_widget.dart';
 import 'drop_down_text_field.dart';

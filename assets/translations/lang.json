@@ -119,6 +119,7 @@
     "please enter the brief" : "يرجي ادخال النبذة",
     "yes" : "نعم",
     "no" : "لا",
+    "Already have an account" : "لديك حساب بالفعل",
     "please enter the number" : "يرجي ادخال الرقم",
     "mother" : "الام",
     "father" : "الاب",
@@ -146,5 +147,7 @@
     "Gender" : "الجنس",
     "please enter the gender" : "يرجي تحديد الجنس",
     "conditions and terms" : "الشروط والاحكام",
-    "i have read and accept" : "قرأت ووافقت علي"
+    "i have read and accept" : "قرأت ووافقت علي",
+    "profile" : "الملف الشخصي",
+    "Save changes" : "حفظ التغييرات"
 }

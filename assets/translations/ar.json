@@ -114,6 +114,7 @@
   "please_enter_the_brief": "يرجي ادخال النبذة",
   "yes": "نعم",
   "no": "لا",
+  "already_have_an_account": "لديك حساب بالفعل",
   "please_enter_the_number": "يرجي ادخال الرقم",
   "mother": "الام",
   "father": "الاب",
@@ -141,5 +142,7 @@
   "gender": "الجنس",
   "please_enter_the_gender": "يرجي تحديد الجنس",
   "conditions_and_terms": "الشروط والاحكام",
-  "i_have_read_and_accept": "قرأت ووافقت علي"
+  "i_have_read_and_accept": "قرأت ووافقت علي",
+  "profile": "الملف الشخصي",
+  "save_changes": "حفظ التغييرات"
 }

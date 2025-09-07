@@ -9,11 +9,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  #  google_generative_ai: ^0.4.7
+  flutter_ai_toolkit: ^0.10.0
+  firebase_ai: ^3.2.0
+
 #--------------------- Networks & Firebase -----------------------
   dio: ^5.7.0
   firebase_core: ^4.0.0
   firebase_messaging: ^16.0.0
   flutter_local_notifications: ^19.4.0
+
 
 #--------------------- Localization & Internationalization -----------------------
   intl: 0.20.2

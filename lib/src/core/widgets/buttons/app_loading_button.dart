@@ -17,10 +17,10 @@ class AppLoadingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return LoadingButton(
       borderRadius: ConstantManager.buttonBorderRadiusNumber,
-      height: 40.h,
+      height: 45.h,
       idleWidget: AppText(
         title,
-        fontSize: 16.sp,
+        fontSize: 14.sp,
         fontWeight: FontWeight.bold,
         color: Colors.white,
       ),

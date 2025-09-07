@@ -1,11 +1,25 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../config/language/locale_keys.g.dart';
+import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/extensions/object.dart';
+import '../../../../core/helpers/helpers.dart';
 import '../../../../core/helpers/user_type_enum.dart';
+import '../../../../core/navigation/navigator.dart';
+import '../../../../core/shared/user_cubit/user_cubit.dart';
+import '../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
+import '../../../otp/models/otp_body.dart';
+import '../../../otp/presentation/cubits/otp_cubit.dart';
+import '../../../otp/presentation/otp.dart';
+import '../../models/sign_up_body.dart';
+import '../cubits/sign_up_cubit.dart';
 import '../widgets/shared/choose_gender.dart';
 import '../widgets/shared/text_field.dart';
+import '../widgets/sign_up/already_have_acc.dart';
 import '../widgets/sign_up/conditions_terms_acceptance.dart';
 import '../widgets/sign_up/drop_down_text_field.dart';
 import '../widgets/sign_up/image_widget.dart';
@@ -39,6 +53,7 @@ class _EnterMaleOrFemaleOrChildDataScreenState extends State<EnterMaleOrFemaleOr
   late TextEditingController _parentNameCont;
   late TextEditingController _parentNumberCont;
 
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -136,7 +151,48 @@ class _EnterMaleOrFemaleOrChildDataScreenState extends State<EnterMaleOrFemaleOr
                   ]),
               ),
 
-            const ConditionsTermsAcceptance()
+            const ConditionsTermsAcceptance(),
+            BlocListener<SignUpCubit, AsyncState>(
+              listener: (context, state) => Helpers.manageBlocListener(
+                  state.status,
+                  onSuccess: () => 
+                  Go.to(BlocProvider(
+                    create: (context) => OtpCubit(),
+                    child: OtpScreen(
+                      title: LocaleKeys.activationCode,
+                      phone: _phoneCont.text,
+                      onConfirmCode: (ctx, code) => ctx.read<OtpCubit>().sendOtp(
+                          type: OtpType.afterRegister,
+                          body: OtpBody(phone: _phoneCont.text, code: code),
+                          onSuccess: (data) async{
+                            await UserCubit.instance.setUserLoggedIn(user: data, token: data.token?? '');
+                          }
+                      ),
+                    ),
+                  ))
+              ),
+              child: AppLoadingButton(
+                asyncCall: (ctx) async{
+                  if(_formKey.currentState!.validate()){
+                    await ctx.read<SignUpCubit>().signUp(
+                        SignUpBody(
+                            name: _nameCont.text,
+                            phone: _phoneCont.text,
+                            age: _ageCont.text,
+                            identityNumber: _identifyNumberCont.text,
+                            image: File('path'),
+                            gender: type.name
+                        )
+                    );
+                  }
+                },
+                title: LocaleKeys.confirm,
+              ),
+            ),
+
+
+            if(widget.from == ComesFrom.signUpAsPartner)
+              const AlreadyHaveAccWidget()
           ],
         )
     );
