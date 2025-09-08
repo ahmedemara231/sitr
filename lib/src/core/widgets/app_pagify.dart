@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pagify/helpers/data_and_pagination_data.dart';
 import 'package:pagify/helpers/errors.dart';
@@ -79,6 +80,13 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
                   perPage: data.$2.perPage,
                   totalPages: data.$2.totalPages
               )
+          ),
+          errorBuilder: (e) => Column(
+            spacing: 10.h,
+            children: [
+              // Lottie.asset(Assets.errorApiError),
+              AppText('${LocaleKeys.exceptionError} ${e.msg}')
+            ],
           ),
           errorMapper: PagifyErrorMapper(
               errorWhenDio: (error) => error.response?.data['msg']

@@ -80,6 +80,7 @@ class _SelectLangWidgetState extends State<SelectLangWidget> {
         AppText(LocaleKeys.selectTheLanguageFromTheAvailableLanguages, fontSize: 12.sp),
 
         Column(
+          spacing: 10.h,
           children: [
             Column(
               children: List.generate(languages.length, (index) => InkWell(

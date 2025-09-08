@@ -6,14 +6,68 @@ import '../../../config/language/locale_keys.g.dart';
 import '../../../config/res/config_imports.dart';
 import '../../extensions/padding_extension.dart';
 import '../app_text.dart';
+import '../buttons/app_loading_button.dart';
 import '../buttons/custom_app_buttons/default_button.dart';
+import '../buttons/custom_app_buttons/loading_button.dart';
 import '../svg_pic.dart';
 
-class PaymentSheet extends StatelessWidget {
-  final Future<void> Function() onPay;
+enum PaymentMethod {
+  online(0, Assets.svgOnlinePayment);
+
+  final int id;
+  final String image;
+  const PaymentMethod(this.id, this.image);
+}
+
+extension GetPayMethod on int{
+  PaymentMethod get getPaymentMethod{
+    switch(this){
+      case 0:
+        return PaymentMethod.online;
+      default:
+        return PaymentMethod.online;
+    }
+  }
+}
+
+extension GetPayMethodAsString on PaymentMethod{
+  String get getPaymentMethodAsString{
+    switch(this){
+      case PaymentMethod.online:
+        return LocaleKeys.onlinePayment;
+
+      // default:
+      //   return '';
+    }
+  }
+}
+
+class PaymentSheet extends StatefulWidget {
+  final Future<void> Function(BuildContext context, PaymentMethod paymentMethod) onPay;
   const PaymentSheet({super.key,
     required this.onPay
   });
+
+  @override
+  State<PaymentSheet> createState() => _PaymentSheetState();
+}
+
+class _PaymentSheetState extends State<PaymentSheet> {
+  int currentIndex = 0;
+  PaymentMethod paymentMethod = PaymentMethod.online;
+  void _changeIndex(int newIndex){
+    setState(() => currentIndex = newIndex);
+    paymentMethod = newIndex.getPaymentMethod;
+  }
+
+  // final List paymentMethodCards = [
+  //   Column(
+  //     children: [
+  //       const SvgPic(assetName: Assets.svgOnlinePayment).paddingAll(20),
+  //       AppText(LocaleKeys.onlinePayment, fontWeight: FontWeight.bold,)
+  //     ],
+  //   ),
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -22,19 +76,52 @@ class PaymentSheet extends StatelessWidget {
       children: [
         AppText(LocaleKeys.packagePaymentValue, fontSize: 16.sp, fontWeight: FontWeight.bold),
         AppText(LocaleKeys.chooseASuitablePaymentMethodFromTheAvailableOnes),
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12.r),
-            border: Border.all(color: AppColors.primary)
-          ),
-          child: Center(
-            child: const SvgPic(assetName: Assets.svgOnlinePayment).paddingAll(20),
+        Column(
+          spacing: 7.h,
+          children: List.generate(
+              PaymentMethod.values.length,
+                  (index) => InkWell(
+                    onTap: () => _changeIndex(index),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.r),
+                          border: Border.all(
+                            width: currentIndex == index? 1 : .2,
+                              color: currentIndex == index ?
+                              AppColors.primary : Colors.grey
+                          )
+                      ),
+                      child: Center(
+                        child: _PackageCard(paymentMethod: PaymentMethod.values[index]).paddingAll(12.r),
+                      ),
+                    ),
+                  ),
           ),
         ),
-        AppDefaultButton.withBackGroundColor(
-            title: LocaleKeys.pay,
-            onTap: ()async => await onPay.call()
-        )
+        AppLoadingButton(
+          asyncCall: (context)async => await widget.onPay.call(context, paymentMethod),
+          title: LocaleKeys.pay,
+        ),
+      ],
+    );
+  }
+}
+
+class _PackageCard extends StatelessWidget {
+  final PaymentMethod paymentMethod;
+  const _PackageCard({super.key,
+    required this.paymentMethod
+  });
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      spacing: 10.h,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SvgPic(assetName: paymentMethod.image),
+        AppText(paymentMethod.getPaymentMethodAsString, fontWeight: FontWeight.bold,)
       ],
     );
   }

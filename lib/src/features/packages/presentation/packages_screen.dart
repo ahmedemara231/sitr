@@ -31,7 +31,10 @@ class PackagesScreen extends StatelessWidget {
 
               AppPagify<Package>(
                   asyncCall: (ctx, page) async => await ctx.read<GetPackagesCubit>().getPackages(),
-                  itemBuilder: (ctx, data, index, element) => PackageWidget(type: type),
+                  itemBuilder: (ctx, data, index, element) => PackageWidget(
+                    type: type,
+                    package: element,
+                  ),
                   pagifyController: PagifyController()
               )
             ],

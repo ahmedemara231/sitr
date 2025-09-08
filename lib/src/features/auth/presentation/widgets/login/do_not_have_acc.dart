@@ -15,7 +15,6 @@ class DoNotHaveAccountWidget extends StatelessWidget {
     context.locale;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      spacing: 5.w,
       children: [
         AppText(LocaleKeys.doNotHaveAnAccount, color: Colors.grey, fontSize: 12.sp,),
         TextButton(

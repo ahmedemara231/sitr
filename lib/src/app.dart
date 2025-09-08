@@ -47,7 +47,7 @@ class Sitr extends StatelessWidget {
             supportedLocales: context.supportedLocales,
             locale: context.locale,
             navigatorKey: Go.navigatorKey,
-            home: const EditProfileScreen(),
+            home: const SplashScreen(),
             // home: const EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(type: UserType.female),
             // home: const PackagesScreen.view(),
             // home: OtpScreen(title: '', onConfirmCode: (BuildContext context, String code) {  }, onResendCodePress: (BuildContext context) {  },),

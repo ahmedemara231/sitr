@@ -436,4 +436,13 @@ abstract class LocaleKeys {
   static const String _saveChanges = 'save_changes';
   static String get saveChanges => _saveChanges.tr();
 
+  static const String _day = 'day';
+  static String get day => _day.tr();
+
+  static const String _sR = 's_r';
+  static String get sR => _sR.tr();
+
+  static const String _onlinePayment = 'online_payment';
+  static String get onlinePayment => _onlinePayment.tr();
+
 }

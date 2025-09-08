@@ -20,7 +20,7 @@ class Package{
   factory Package.fromJson(Map<String, dynamic> json) => Package(
     json['id'],
     json['name'],
-    json['type']['key'],
+    PackageType.fromJson(json['type']),
     json['image'],
     json['duration'],
     json['price'],
@@ -28,18 +28,16 @@ class Package{
 }
 
 class PackageType{
-  final String key;
   final String value;
   final String title;
 
-  PackageType(this.key, this.value, this.title);
+  PackageType(this.value, this.title);
 
   factory PackageType.initial() => PackageType(
-    '','',''
+    '',''
   );
 
   factory PackageType.fromJson(Map<String, dynamic> json) => PackageType(
-    json['key'],
     json['value'],
     json['title'],
   );

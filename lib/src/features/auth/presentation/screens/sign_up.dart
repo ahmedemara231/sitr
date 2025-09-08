@@ -40,6 +40,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   late TextEditingController _identifyNumberCont;
   late TextEditingController _codeCont;
   late TextEditingController _emailCont;
+  late TextEditingController _childrenNumberCont;
+
 
   @override
   void initState() {
@@ -49,6 +51,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _identifyNumberCont = TextEditingController();
     _codeCont = TextEditingController();
     _emailCont = TextEditingController();
+    _childrenNumberCont = TextEditingController();
     super.initState();
   }
 
@@ -60,6 +63,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _identifyNumberCont.dispose();
     _codeCont.dispose();
     _emailCont.dispose();
+    _childrenNumberCont.dispose();
     super.dispose();
   }
 
@@ -104,7 +108,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
 
                 GenderHelper.drowWidget(
-                    drow: (current) => current.isParent?
+                    drow: (current) => type.isParent?
                     SignUpTextField(
                       upperTitle: LocaleKeys.email,
                       title: LocaleKeys.pleaseEnterTheEmail,
@@ -130,8 +134,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                 if(type.isParent)
                   ...[
-                    DropDownTextField(title: LocaleKeys.pleaseEnterYourCode),
-                    DropDownTextField(title: LocaleKeys.childrenNumber),
+                    DropDownTextField(title: LocaleKeys.kinship),
+                    SignUpTextField(
+                      upperTitle: LocaleKeys.childrenNumber,
+                      title: LocaleKeys.pleaseEnterTheNumber,
+                      controller: _childrenNumberCont,
+                      inputType: TextInputType.number,
+                      // validator: Validators.validateEmpty,
+                    ),
                     DropDownTextField(title: LocaleKeys.gender),
                   ],
                 
