@@ -31,7 +31,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   void initState() {
-    type = GenderHelper.currentGender;
+    type = UserTypeHelper.currentGender;
     _nameCont = TextEditingController();
     _phoneCont = TextEditingController();
     _identifyNumberCont = TextEditingController();
@@ -76,8 +76,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       // validator: Validators.validateEmpty,
                     ),
                   ])..insertAll(23, [
-                    DropDownTextField(title: LocaleKeys.areYouWaringHijab),
-                    DropDownTextField(title: LocaleKeys.degreeOfCommitment),
+                    DropDownTextField(title: LocaleKeys.areYouWaringHijab, onChanged: (val){}),
+                    DropDownTextField(title: LocaleKeys.degreeOfCommitment, onChanged: (val){}),
                     SignUpTextField(
                       upperTitle: LocaleKeys.parentName,
                       title: LocaleKeys.pleaseEnterName,

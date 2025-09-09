@@ -30,7 +30,7 @@ extension Parse on String{
   }
 }
 
-class GenderHelper{
+class UserTypeHelper{
 
   static bool get isAuthenticated{
     return !currentGender.isUnauthenticated;

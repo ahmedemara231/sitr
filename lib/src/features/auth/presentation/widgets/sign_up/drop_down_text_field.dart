@@ -7,8 +7,10 @@ import '../../../../../core/widgets/svg_pic.dart';
 
 class DropDownTextField extends StatelessWidget {
   final String title;
+  final void Function(String? val)? onChanged;
   const DropDownTextField({super.key,
-    required this.title
+    required this.title,
+    required this.onChanged
   });
 
   @override
@@ -42,7 +44,7 @@ class DropDownTextField extends StatelessWidget {
             value: index.toString(),
             child: Text(index.toString()),
           ),),
-          onChanged: (val) {},
+          onChanged: onChanged
         ),
       ],
     );

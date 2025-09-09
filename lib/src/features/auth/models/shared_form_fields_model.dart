@@ -6,23 +6,23 @@ import 'dowry.dart';
 class SharedFormFieldModel{
   final String nickName;
   final String maritalStatus;
-  final double? tall;
-  final double? weight;
+  final String? tall;
+  final String? weight;
   final String? currentJob;
   final String? quickBrief;
   final Answer? childrenExists;
-  final int? childrenNumber;
-  final String? nursery;
-  final bool? wantToHaveChildren;
+  final String? childrenNumber;
+  final Nursery? nursery;
+  final Answer? wantToHaveChildren;
   final String? thingsIAcceptOrWant;
   final String? typeOfWeddingParty;
   final String? city;
   final String? educationalQualification;
-  final bool? pray;
+  final Answer? pray;
   final String? diseasesIfExists;
   final Languages? inChatYouPrefer;
-  final bool? smoke;
-  final bool? belongToATribe;
+  final Answer? smoke;
+  final Answer? belongToATribe;
   final String? skinColor;
 
   factory SharedFormFieldModel.initial() => SharedFormFieldModel(
@@ -46,6 +46,50 @@ class SharedFormFieldModel{
     smoke: null,
     belongToATribe: null,
     skinColor: null,
+  );
+
+  SharedFormFieldModel copyWith({
+    String? nickName,
+    String? maritalStatus,
+    String? tall,
+    String? weight,
+    String? currentJob,
+    String? quickBrief,
+    Answer? childrenExists,
+    String? childrenNumber,
+    Nursery? nursery,
+    Answer? wantToHaveChildren,
+    String? thingsIAcceptOrWant,
+    String? typeOfWeddingParty,
+    String? city,
+    String? educationalQualification,
+    Answer? pray,
+    String? diseasesIfExists,
+    Languages? inChatYouPrefer,
+    Answer? smoke,
+    Answer? belongToATribe,
+    String? skinColor,
+}) => SharedFormFieldModel(
+    nickName: nickName ?? this.nickName,
+    maritalStatus: maritalStatus ?? this.maritalStatus,
+    tall: tall ?? this.tall,
+    weight: weight ?? this.weight,
+    currentJob: currentJob ?? this.currentJob,
+    quickBrief: quickBrief ?? this.quickBrief,
+    childrenExists: childrenExists ?? this.childrenExists,
+    childrenNumber: childrenNumber ?? this.childrenNumber,
+    nursery: nursery ?? this.nursery,
+    wantToHaveChildren: wantToHaveChildren ?? this.wantToHaveChildren,
+    thingsIAcceptOrWant: thingsIAcceptOrWant ?? this.thingsIAcceptOrWant,
+    typeOfWeddingParty: typeOfWeddingParty ?? this.typeOfWeddingParty,
+    city: city ?? this.city,
+    educationalQualification: educationalQualification ?? this.educationalQualification,
+    pray: pray ?? this.pray,
+    diseasesIfExists: diseasesIfExists ?? this.diseasesIfExists,
+    inChatYouPrefer: inChatYouPrefer ?? this.inChatYouPrefer,
+    smoke: smoke ?? this.smoke,
+    belongToATribe: belongToATribe ?? this.belongToATribe,
+    skinColor: skinColor ?? this.skinColor,
   );
 
   SharedFormFieldModel({
@@ -102,7 +146,7 @@ class MaleFields extends SharedFormFieldModel{
     required super.inChatYouPrefer,
     required super.smoke,
     required super.belongToATribe,
-    required super.skinColor
+    required super.skinColor,
   });
 }
 
@@ -142,6 +186,6 @@ class FemaleFields extends SharedFormFieldModel{
     required super.inChatYouPrefer,
     required super.smoke,
     required super.belongToATribe,
-    required super.skinColor
+    required super.skinColor,
   });
 }

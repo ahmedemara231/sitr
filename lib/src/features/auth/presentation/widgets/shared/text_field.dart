@@ -15,6 +15,7 @@ class SignUpTextField extends StatefulWidget {
   final TextInputType? inputType;
   final bool readOnly;
   final void Function()? onTap;
+  final void Function(String?)? onChanged;
 
 
   const SignUpTextField({super.key,
@@ -25,7 +26,8 @@ class SignUpTextField extends StatefulWidget {
     this.validator,
     this.inputType,
     this.readOnly = false,
-    this.onTap
+    this.onTap,
+    this.onChanged
   });
 
   @override
@@ -37,6 +39,7 @@ class _SignUpTextFieldState extends State<SignUpTextField> {
   @override
   Widget build(BuildContext context) {
     return DefaultTextField.withTitle(
+      onChanged: widget.onChanged,
       onTap: widget.onTap,
       readOnly: widget.readOnly,
       upperTitle: widget.upperTitle,

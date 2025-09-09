@@ -107,7 +107,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   inputType: TextInputType.number,
                 ),
 
-                GenderHelper.drowWidget(
+                UserTypeHelper.drowWidget(
                     drow: (current) => type.isParent?
                     SignUpTextField(
                       upperTitle: LocaleKeys.email,
@@ -134,7 +134,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                 if(type.isParent)
                   ...[
-                    DropDownTextField(title: LocaleKeys.kinship),
+                    DropDownTextField(title: LocaleKeys.kinship, onChanged: (val){}),
                     SignUpTextField(
                       upperTitle: LocaleKeys.childrenNumber,
                       title: LocaleKeys.pleaseEnterTheNumber,
@@ -142,7 +142,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       inputType: TextInputType.number,
                       // validator: Validators.validateEmpty,
                     ),
-                    DropDownTextField(title: LocaleKeys.gender),
+                    DropDownTextField(title: LocaleKeys.gender, onChanged: (val){}),
                   ],
                 
                 SignUpTextField(

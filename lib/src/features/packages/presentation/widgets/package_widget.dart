@@ -73,7 +73,7 @@ class PackageWidget extends StatelessWidget {
                                   packageId: package.id.toString(),
                                   paymentMethod: paymentMethod.name,
                                   onSuccess: () => showDefaultBottomSheet(
-                                      child: SuccessSheet(type: GenderHelper.currentGender)
+                                      child: SuccessSheet(type: UserTypeHelper.currentGender)
                                   )
                                 )
                               )
