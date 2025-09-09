@@ -8,6 +8,7 @@ class SubscribePackageCubit extends AsyncCubit{
   Future<void> subscribePackage({
     required String packageId,
     required String paymentMethod,
+    void Function()? onSuccess
   })async{
     setLoading();
     await executeAsync(
@@ -22,8 +23,7 @@ class SubscribePackageCubit extends AsyncCubit{
                 mapper: (data) => ''
             )
         ),
-
-        successEmitter: (data) => setSuccess(data: data)
+        successEmitter: (data) => onSuccess?.call()
     );
   }
 

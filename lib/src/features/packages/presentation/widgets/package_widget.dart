@@ -6,10 +6,12 @@ import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/padding_extension.dart';
+import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/buttons/custom_app_buttons/default_button.dart';
 import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/sheets/payment_sheet.dart';
+import '../../../../core/widgets/sheets/success_sheet.dart';
 import '../../../../core/widgets/svg_pic.dart';
 import '../../models/package.dart';
 import '../cubits/subscribe_to_package.dart';
@@ -68,8 +70,11 @@ class PackageWidget extends StatelessWidget {
                           onTap: () => showDefaultBottomSheet(
                               child: PaymentSheet(
                                 onPay: (ctx, paymentMethod) async => context.read<SubscribePackageCubit>().subscribePackage(
-                                    packageId: package.id.toString(),
-                                    paymentMethod: paymentMethod.name
+                                  packageId: package.id.toString(),
+                                  paymentMethod: paymentMethod.name,
+                                  onSuccess: () => showDefaultBottomSheet(
+                                      child: SuccessSheet(type: GenderHelper.currentGender)
+                                  )
                                 )
                               )
                           )

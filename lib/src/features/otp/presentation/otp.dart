@@ -151,9 +151,9 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
                   duration: const EasyTime(minutes: 1),
                   builder: (time) => Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    spacing: 5.w,
                     children: [
                       AppText(LocaleKeys.remainingTime, color: Colors.grey),
+                      5.szW,
                       AppText(time, fontWeight: FontWeight.w500,),
                       BlocListener<ResendCodeCubit, AsyncState>(
                         listener: (context, state) => Helpers.manageBlocListener(

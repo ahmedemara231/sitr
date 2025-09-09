@@ -7,6 +7,7 @@ import '../../../config/language/locale_keys.g.dart';
 import '../../../features/auth/presentation/screens/enter_male_female_child_data.dart';
 import '../../helpers/user_type_enum.dart';
 import '../../navigation/navigator.dart';
+import '../app_bottom_sheet.dart';
 import '../buttons/custom_app_buttons/default_button.dart';
 
 class SuccessSheet extends StatelessWidget {
@@ -20,13 +21,17 @@ class SuccessSheet extends StatelessWidget {
     return Column(
       spacing: 12.h,
       children: [
-        Lottie.asset(Assets.successDone),
-        AppText(LocaleKeys.paymentSucceeded, fontSize: 16.sp, fontWeight: FontWeight.bold),
-        AppText(LocaleKeys.youCanNowCompleteYourProfile),
-        AppDefaultButton.withBackGroundColor(
-            title: LocaleKeys.completeProfile,
-            onTap: () => Go.to(
+        AppBottomSheet.small(
+            asyncCall: (context) => Go.to(
                 EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(type: type)
+            ),
+            btnTitle: LocaleKeys.completeProfile,
+            upperWidget: Column(
+              children: [
+                Lottie.asset(Assets.successDone),
+                AppText(LocaleKeys.paymentSucceeded, fontSize: 16.sp, fontWeight: FontWeight.bold),
+                AppText(LocaleKeys.youCanNowCompleteYourProfile),
+              ],
             )
         )
       ],

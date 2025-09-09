@@ -468,11 +468,13 @@ class AdminApprovalStatus {
 class Gender {
   Gender({
     this.value,
-    this.title,});
+    this.title,
+  });
+
 
   Gender.fromJson(dynamic json) {
-    value = json['value'];
-    title = json['title'];
+    value = json['value']; // en
+    title = json['title']; // ar
   }
   String? value;
   String? title;

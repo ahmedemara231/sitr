@@ -21,7 +21,7 @@ class GetPackagesCubit extends AsyncCubit<(List<Package>, PaginationData)>{
                 totalPages: json['pagination']['total_pages']
             ),
             ),
-        )
+        ),
     )).getOrThrow();
   }
 }

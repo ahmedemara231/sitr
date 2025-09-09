@@ -67,7 +67,9 @@ class ConfigurationInterceptor extends Interceptor {
       case 'exception':
         return HttpStatus.internalServerError;
       case 'needActive':
+      case 'notApproved':
         return HttpStatus.forbidden;
+
       default:
         return null;
     }

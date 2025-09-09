@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import '../../config/language/locale_keys.g.dart';
@@ -14,24 +15,13 @@ extension Check on UserType{
   bool get isUnauthenticated => this == UserType.unauthenticated;
 }
 
-// extension UserTypeHelper on UserType{
-//   getUserModelBasedUserType(){
-//     if(isMale){
-//
-//     }else if(isFemale){
-//
-//     }else{
-//
-//     }
-//   }
-// }
-
 extension Parse on String{
   UserType toUserType(){
-    if(contains(LocaleKeys.male)){
+    log(this);
+    if(this == LocaleKeys.male){
       return UserType.male;
 
-    }else if(contains(LocaleKeys.female)){
+    }else if(this == LocaleKeys.female){
       return UserType.female;
 
     }else{
