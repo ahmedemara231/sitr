@@ -1,14 +1,17 @@
+import 'dart:convert';
+
+import '../../../helpers/cache_service.dart';
+import '../../../helpers/user_type_enum.dart';
+import 'female_model.dart';
+import 'male_model.dart';
+
 class UserModel {
   UserModel({
     this.id,
     this.name,
-    this.parentId,
     this.type,
     this.gender,
-    this.avatar,
-    this.phone,
     this.countryCode,
-    this.fullPhone,
     this.identityNumber,
     this.age,
     this.isActive,
@@ -27,8 +30,6 @@ class UserModel {
     this.childCustody,
     this.wantChildren,
     this.prohibitedThings,
-    this.dowryMin,
-    this.dowryMax,
     this.weddingType,
     this.cityId,
     this.educationLevel,
@@ -39,63 +40,38 @@ class UserModel {
     this.tribeAffiliation,
     this.skinColor,
     this.religiousCommitment,
-    this.views,});
+    this.views
+  });
 
-  UserModel.fromJson(dynamic json) {
-    id = json['id'];
-    name = json['name'];
-    parentId = json['parent_id'];
-    type = json['type'] != null ? Type.fromJson(json['type']) : null;
-    gender = json['gender'] != null ? Gender.fromJson(json['gender']) : null;
-    avatar = json['avatar'];
-    phone = json['phone'];
-    countryCode = json['country_code'];
-    fullPhone = json['full_phone'];
-    identityNumber = json['identity_number'];
-    age = json['age'];
-    isActive = json['is_active'];
-    isBlocked = json['is_blocked'];
-    adminApprovalStatus = json['admin_approval_status'] != null ? AdminApprovalStatus.fromJson(json['admin_approval_status']) : null;
-    completeRegistration = json['complete_registration'];
-    token = json['token'];
-    nickName = json['nick_name'];
-    maritalStatus = json['marital_status'] != null ? MaritalStatus.fromJson(json['marital_status']) : null;
-    height = json['height'];
-    weight = json['weight'];
-    currentJob = json['current_job'];
-    bio = json['bio'];
-    hasChildren = json['has_children'];
-    numOfChildren = json['num_of_children'];
-    childCustody = null;
-    childCustody = json['child_custody'] != null ? ChildCustody.fromJson(json['child_custody']) : null;
-    wantChildren = json['want_children'];
-    prohibitedThings = json['prohibited_things'];
-    dowryMin = json['dowry_min'];
-    dowryMax = json['dowry_max'];
-    weddingType = null;
-    weddingType = json['wedding_type'] != null ? WeddingType.fromJson(json['wedding_type']) : null;
-    cityId = json['city_id'] != null ? CityId.fromJson(json['city_id']) : null;
-    educationLevel = json['education_level'];
-    isPrayer = json['is_prayer'];
-    healthConditions = json['health_conditions'];
-    chatLang = json['chat_lang'];
-    isSmoker = json['is_smoker'];
-    tribeAffiliation = json['tribe_affiliation'];
-    skinColor = null;
-    skinColor = json['skin_color'] != null ? SkinColor.fromJson(json['skin_color']) : null;
-    religiousCommitment = null;
-    religiousCommitment = json['religious_commitment'] != null ? ReligiousCommitment.fromJson(json['religious_commitment']) : null;
-    views = json['views'];
+  static UserModel get currentUser{
+    return (UserModel.fromJson(
+        jsonDecode(CacheStorage.read('user'))));
   }
+
+  static bool get isMale{
+    return currentUser is MaleModel;
+  }
+
+  static bool get isFemale{
+    return currentUser is FemaleModel;
+  }
+
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    final user = json['gender']['title'].toString().toUserType();
+    if(user.isMale){
+      return MaleModel.fromJson(json);
+    }else {
+      return FemaleModel.fromJson(json);
+    }
+  }
+
   int? id;
   String? name;
-  dynamic parentId;
+  String? phone;
+  String? avatar;
   Type? type;
   Gender? gender;
-  String? avatar;
-  String? phone;
   String? countryCode;
-  String? fullPhone;
   String? identityNumber;
   int? age;
   bool? isActive;
@@ -114,8 +90,6 @@ class UserModel {
   ChildCustody? childCustody;
   bool? wantChildren;
   String? prohibitedThings;
-  int? dowryMin;
-  int? dowryMax;
   WeddingType? weddingType;
   CityId? cityId;
   String? educationLevel;
@@ -130,105 +104,17 @@ class UserModel {
 
   factory UserModel.initial() => UserModel();
 
-  UserModel copyWith({
-    int? id,
-    String? name,
-    dynamic parentId,
-    Type? type,
-    Gender? gender,
-    String? avatar,
-    String? phone,
-    String? countryCode,
-    String? fullPhone,
-    String? identityNumber,
-    int? age,
-    bool? isActive,
-    bool? isBlocked,
-    AdminApprovalStatus? adminApprovalStatus,
-    String? completeRegistration,
-    String? token,
-    String? nickName,
-    MaritalStatus? maritalStatus,
-    double? height,
-    double? weight,
-    String? currentJob,
-    String? bio,
-    bool? hasChildren,
-    int? numOfChildren,
-    ChildCustody? childCustody,
-    bool? wantChildren,
-    String? prohibitedThings,
-    int? dowryMin,
-    int? dowryMax,
-    WeddingType? weddingType,
-    CityId? cityId,
-    String? educationLevel,
-    bool? isPrayer,
-    String? healthConditions,
-    String? chatLang,
-    bool? isSmoker,
-    bool? tribeAffiliation,
-    SkinColor? skinColor,
-    ReligiousCommitment? religiousCommitment,
-    int? views,
-  }) => UserModel(
-    id: id ?? this.id,
-    name: name ?? this.name,
-    parentId: parentId ?? this.parentId,
-    type: type ?? this.type,
-    gender: gender ?? this.gender,
-    avatar: avatar ?? this.avatar,
-    phone: phone ?? this.phone,
-    countryCode: countryCode ?? this.countryCode,
-    fullPhone: fullPhone ?? this.fullPhone,
-    identityNumber: identityNumber ?? this.identityNumber,
-    age: age ?? this.age,
-    isActive: isActive ?? this.isActive,
-    isBlocked: isBlocked ?? this.isBlocked,
-    adminApprovalStatus: adminApprovalStatus ?? this.adminApprovalStatus,
-    completeRegistration: completeRegistration ?? this.completeRegistration,
-    token: token ?? this.token,
-    nickName: nickName ?? this.nickName,
-    maritalStatus: maritalStatus ?? this.maritalStatus,
-    height: height ?? this.height,
-    weight: weight ?? this.weight,
-    currentJob: currentJob ?? this.currentJob,
-    bio: bio ?? this.bio,
-    hasChildren: hasChildren ?? this.hasChildren,
-    numOfChildren: numOfChildren ?? this.numOfChildren,
-    childCustody: childCustody ?? this.childCustody,
-    wantChildren: wantChildren ?? this.wantChildren,
-    prohibitedThings: prohibitedThings ?? this.prohibitedThings,
-    dowryMin: dowryMin ?? this.dowryMin,
-    dowryMax: dowryMax ?? this.dowryMax,
-    weddingType: weddingType ?? this.weddingType,
-    cityId: cityId ?? this.cityId,
-    educationLevel: educationLevel ?? this.educationLevel,
-    isPrayer: isPrayer ?? this.isPrayer,
-    healthConditions: healthConditions ?? this.healthConditions,
-    chatLang: chatLang ?? this.chatLang,
-    isSmoker: isSmoker ?? this.isSmoker,
-    tribeAffiliation: tribeAffiliation ?? this.tribeAffiliation,
-    skinColor: skinColor ?? this.skinColor,
-    religiousCommitment: religiousCommitment ?? this.religiousCommitment,
-    views: views ?? this.views,
-  );
-
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
     map['name'] = name;
-    map['parent_id'] = parentId;
     if (type != null) {
       map['type'] = type?.toJson();
     }
     if (gender != null) {
       map['gender'] = gender?.toJson();
     }
-    map['avatar'] = avatar;
-    map['phone'] = phone;
     map['country_code'] = countryCode;
-    map['full_phone'] = fullPhone;
     map['identity_number'] = identityNumber;
     map['age'] = age;
     map['is_active'] = isActive;
@@ -253,8 +139,6 @@ class UserModel {
     }
     map['want_children'] = wantChildren;
     map['prohibited_things'] = prohibitedThings;
-    map['dowry_min'] = dowryMin;
-    map['dowry_max'] = dowryMax;
     if (weddingType != null) {
       map['wedding_type'] = weddingType?.toJson();
     }
@@ -446,8 +330,8 @@ class AdminApprovalStatus {
     this.title,});
 
   AdminApprovalStatus.fromJson(dynamic json) {
-    value = json['value'];
-    title = json['title'];
+    value = json['value']?? '';
+    title = json['title']?? '';
   }
   String? value;
   String? title;

@@ -8,13 +8,9 @@ import '../../../features/auth/presentation/screens/enter_male_female_child_data
 import '../../helpers/user_type_enum.dart';
 import '../../navigation/navigator.dart';
 import '../app_bottom_sheet.dart';
-import '../buttons/custom_app_buttons/default_button.dart';
 
 class SuccessSheet extends StatelessWidget {
-  final UserType type;
-  const SuccessSheet({super.key,
-    required this.type
-  });
+  const SuccessSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +19,7 @@ class SuccessSheet extends StatelessWidget {
       children: [
         AppBottomSheet.small(
             asyncCall: (context) => Go.to(
-                EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(type: type)
+                EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(type: UserTypeHelper.currentType)
             ),
             btnTitle: LocaleKeys.completeProfile,
             upperWidget: Column(

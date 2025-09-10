@@ -1,7 +1,7 @@
-import 'dart:io';
 import '../../../config/language/languages.dart';
-import '../presentation/widgets/sign_up/shared_form_fields.dart';
-import 'dowry.dart';
+import '../../../core/extensions/enum.dart';
+import '../presentation/enums/answer.dart';
+import '../presentation/enums/nursery.dart';
 
 class SharedFormFieldModel{
   final String nickName;
@@ -24,6 +24,60 @@ class SharedFormFieldModel{
   final Answer? smoke;
   final Answer? belongToATribe;
   final String? skinColor;
+
+  //   //   return {
+//   //     "nick_name": nickName,
+//   //     "marital_status": maritalStatus,
+//   //     "height": height,
+//   //     "weight": weight,
+//   //     "current_job": currentJob,
+//   //     "bio": bio,
+//   //     "has_children": hasChildren?.name.tr(),
+//   //     "num_of_children": numOfChildren,
+//   //     "child_custody": childCustody,
+//   //     "want_children": wantChildren?.name.tr(),
+//   //     "prohibited_things": prohibitedThings,
+//   //     "dowry_min": dowryMin,
+//   //     "dowry_max": dowryMax,
+//   //     "wedding_type": weddingType,
+//   //     "city_id": city,
+//   //     "education_level": educationLevel,
+//   //     "is_prayer": isPrayer?.name.tr(),
+//   //     "health_conditions": healthConditions,
+//   //     "chat_lang": chatLang,
+//   //     "is_smoker": isSmoker?.name.tr(),
+//   //     "tribe_affiliation": tribeAffiliation?.name.tr(),
+//   //     "skin_color": skinColor,
+//   //     "religious_commitment": religiousCommitment,
+//   //     "preferred_residence_after_marriage": preferredResidenceAfterMarriage,
+//   //     "hijab": hijabWearing,
+//   //     "accepts_polygamy": acceptsPolygamy?.name.tr(),
+//   //     "parent_name": parentName,
+//   //     "parent_relation_id": parentRelationId,
+//   //     "parent_phone": parentPhone,
+
+  Map<String, dynamic> toJson() => {
+    "nick_name": nickName,
+    "marital_status": maritalStatus,
+    "tall": tall,
+    "weight": weight,
+    "current_job": currentJob,
+    "bio": quickBrief,
+    "has_children": childrenExists?.translate,
+    "num_of_children": childrenNumber,
+    "child_custody": nursery?.translate,
+    "want_children": wantToHaveChildren?.translate,
+    "prohibited_things": thingsIAcceptOrWant,
+    "wedding_type": typeOfWeddingParty,
+    "city_id": city,
+    "education_level": educationalQualification,
+    "is_prayer": pray?.translate,
+    "health_conditions": diseasesIfExists,
+    "chat_lang": inChatYouPrefer?.translate,
+    "is_smoker": smoke?.translate,
+    "tribe_affiliation": belongToATribe?.translate,
+    "skin_color": skinColor,
+  };
 
   factory SharedFormFieldModel.initial() => SharedFormFieldModel(
     nickName: "",
@@ -116,76 +170,76 @@ class SharedFormFieldModel{
   });
 }
 
-class MaleFields extends SharedFormFieldModel{
-  final File? image;
-  final String? phone;
-  final int identifyNumber;
-  final int age;
-
-  MaleFields({
-    required this.image,
-    required this.phone,
-    required this.identifyNumber,
-    required this.age,
-    required super.nickName,
-    required super.maritalStatus,
-    required super.tall,
-    required super.weight,
-    required super.currentJob,
-    required super.quickBrief,
-    required super.childrenExists,
-    required super.childrenNumber,
-    required super.nursery,
-    required super.wantToHaveChildren,
-    required super.thingsIAcceptOrWant,
-    required super.typeOfWeddingParty,
-    required super.city,
-    required super.educationalQualification,
-    required super.pray,
-    required super.diseasesIfExists,
-    required super.inChatYouPrefer,
-    required super.smoke,
-    required super.belongToATribe,
-    required super.skinColor,
-  });
-}
-
-class FemaleFields extends SharedFormFieldModel{
-  final String? whereDoYouAcceptToLiveAfterMarriage;
-  final bool? acceptPolygamy;
-  final bool waerHijab;
-  final String degreeOfCommitment;
-  final String? parentName;
-  final String? parentNumber;
-  final Dowry? dowry;
-
-  FemaleFields({
-    required this.whereDoYouAcceptToLiveAfterMarriage,
-    required this.acceptPolygamy,
-    required this.waerHijab,
-    required this.degreeOfCommitment,
-    required this.parentName,
-    required this.parentNumber,
-    required this.dowry,
-    required super.nickName,
-    required super.maritalStatus,
-    required super.tall,
-    required super.weight,
-    required super.currentJob,
-    required super.quickBrief,
-    required super.childrenExists,
-    required super.childrenNumber,
-    required super.nursery,
-    required super.wantToHaveChildren,
-    required super.thingsIAcceptOrWant,
-    required super.typeOfWeddingParty,
-    required super.city,
-    required super.educationalQualification,
-    required super.pray,
-    required super.diseasesIfExists,
-    required super.inChatYouPrefer,
-    required super.smoke,
-    required super.belongToATribe,
-    required super.skinColor,
-  });
-}
+// class MaleFields extends SharedFormFieldModel{
+//   final File? image;
+//   final String? phone;
+//   final int identifyNumber;
+//   final int age;
+//
+//   MaleFields({
+//     required this.image,
+//     required this.phone,
+//     required this.identifyNumber,
+//     required this.age,
+//     required super.nickName,
+//     required super.maritalStatus,
+//     required super.tall,
+//     required super.weight,
+//     required super.currentJob,
+//     required super.quickBrief,
+//     required super.childrenExists,
+//     required super.childrenNumber,
+//     required super.nursery,
+//     required super.wantToHaveChildren,
+//     required super.thingsIAcceptOrWant,
+//     required super.typeOfWeddingParty,
+//     required super.city,
+//     required super.educationalQualification,
+//     required super.pray,
+//     required super.diseasesIfExists,
+//     required super.inChatYouPrefer,
+//     required super.smoke,
+//     required super.belongToATribe,
+//     required super.skinColor,
+//   });
+// }
+//
+// class FemaleFields extends SharedFormFieldModel{
+//   final String? whereDoYouAcceptToLiveAfterMarriage;
+//   final bool? acceptPolygamy;
+//   final bool waerHijab;
+//   final String degreeOfCommitment;
+//   final String? parentName;
+//   final String? parentNumber;
+//   final Dowry? dowry;
+//
+//   FemaleFields({
+//     required this.whereDoYouAcceptToLiveAfterMarriage,
+//     required this.acceptPolygamy,
+//     required this.waerHijab,
+//     required this.degreeOfCommitment,
+//     required this.parentName,
+//     required this.parentNumber,
+//     required this.dowry,
+//     required super.nickName,
+//     required super.maritalStatus,
+//     required super.tall,
+//     required super.weight,
+//     required super.currentJob,
+//     required super.quickBrief,
+//     required super.childrenExists,
+//     required super.childrenNumber,
+//     required super.nursery,
+//     required super.wantToHaveChildren,
+//     required super.thingsIAcceptOrWant,
+//     required super.typeOfWeddingParty,
+//     required super.city,
+//     required super.educationalQualification,
+//     required super.pray,
+//     required super.diseasesIfExists,
+//     required super.inChatYouPrefer,
+//     required super.smoke,
+//     required super.belongToATribe,
+//     required super.skinColor,
+//   });
+// }

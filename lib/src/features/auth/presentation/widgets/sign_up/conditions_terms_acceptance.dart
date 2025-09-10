@@ -11,7 +11,6 @@ class ConditionsTermsAcceptance extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      spacing: 5.w,
       children: [
         AppText(LocaleKeys.iHaveReadAndAccept, fontSize: 12.sp, color: Colors.grey),
         TextButton(

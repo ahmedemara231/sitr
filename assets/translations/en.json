@@ -147,5 +147,8 @@
   "save_changes": "Save changes",
   "day": "Day",
   "s_r": "SR",
-  "online_payment": "Online payment"
+  "online_payment": "Online payment",
+  "still_loading": "Still loading",
+  "please_wait": "please wait",
+  "the_loading_is_ends_soon": "the loading is ends soon"
 }

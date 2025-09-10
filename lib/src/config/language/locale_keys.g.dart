@@ -445,4 +445,13 @@ abstract class LocaleKeys {
   static const String _onlinePayment = 'online_payment';
   static String get onlinePayment => _onlinePayment.tr();
 
+  static const String _stillLoading = 'still_loading';
+  static String get stillLoading => _stillLoading.tr();
+
+  static const String _pleaseWait = 'please_wait';
+  static String get pleaseWait => _pleaseWait.tr();
+
+  static const String _theLoadingIsEndsSoon = 'the_loading_is_ends_soon';
+  static String get theLoadingIsEndsSoon => _theLoadingIsEndsSoon.tr();
+
 }

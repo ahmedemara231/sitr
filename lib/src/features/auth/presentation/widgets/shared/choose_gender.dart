@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/res/config_imports.dart';
+import '../../../../../core/extensions/enum.dart';
 import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
 import '../../../../../core/widgets/buttons/custom_app_buttons/default_button.dart';
@@ -31,7 +32,7 @@ class _ChooseGenderWidgetState extends State<ChooseGenderWidget> {
           (index) => Expanded(
             child: AppDefaultButton.withBackGroundColor(
               textColor: currentIndex == index? AppColors.white : AppColors.primary,
-              title: widget.genders[index].name.tr(),
+              title: widget.genders[index].translate,
               backgroundColor: currentIndex == index? AppColors.primary : Colors.white,
               onTap: () {
                 setState(() => currentIndex = index);

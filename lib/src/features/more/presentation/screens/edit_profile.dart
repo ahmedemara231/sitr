@@ -4,6 +4,7 @@ import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
+import '../../../auth/models/shared_form_fields_model.dart';
 import '../../../auth/presentation/widgets/shared/text_field.dart';
 import '../../../auth/presentation/widgets/sign_up/drop_down_text_field.dart';
 import '../../../auth/presentation/widgets/sign_up/shared_form_fields.dart';
@@ -31,7 +32,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   void initState() {
-    type = UserTypeHelper.currentGender;
+    type = UserTypeHelper.currentType!;
     _nameCont = TextEditingController();
     _phoneCont = TextEditingController();
     _identifyNumberCont = TextEditingController();
@@ -67,6 +68,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
               if(type.isFemale)
                 SharedFormFields(
+                  sharedFormFieldModel: SharedFormFieldModel.initial(),
                   onFinished: (data){},
                   onInitData: (List<Widget> children) => children..insertAll(18, [
                     SignUpTextField(
@@ -94,6 +96,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 )
               else
                 SharedFormFields(
+                  sharedFormFieldModel: SharedFormFieldModel.initial(),
                   onFinished: (data){},
                   onInitData: (List<Widget> children) => children
                     ..insertAll(2, [

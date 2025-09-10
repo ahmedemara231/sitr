@@ -6,7 +6,7 @@ import '../../../config/res/config_imports.dart';
 import '../../helpers/cache_service.dart';
 import '../../network/log_interceptor.dart';
 import '../../network/network_service.dart';
-import '../models/user_model.dart';
+import '../models/user_models/user_model.dart';
 part 'user_state.dart';
 part 'user_utils.dart';
 

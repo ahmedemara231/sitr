@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import '../../config/language/locale_keys.g.dart';
 import 'cache_service.dart';
-import '../shared/models/user_model.dart';
+import '../shared/models/user_models/user_model.dart';
 
 enum UserType{male, female, parent, unauthenticated}
 
@@ -12,7 +12,7 @@ extension Check on UserType{
   bool get isMale => this == UserType.male;
   bool get isFemale => this == UserType.female;
   bool get isParent => this == UserType.parent;
-  bool get isUnauthenticated => this == UserType.unauthenticated;
+  bool get isAuthenticated => this != UserType.unauthenticated;
 }
 
 extension Parse on String{
@@ -24,8 +24,11 @@ extension Parse on String{
     }else if(this == LocaleKeys.female){
       return UserType.female;
 
-    }else{
+    }else if(this == LocaleKeys.parent){
       return UserType.parent;
+
+    }else{
+      return UserType.unauthenticated;
     }
   }
 }
@@ -33,17 +36,15 @@ extension Parse on String{
 class UserTypeHelper{
 
   static bool get isAuthenticated{
-    return !currentGender.isUnauthenticated;
+    return currentType?.isAuthenticated ?? false;
   }
 
-  static UserType get currentGender{
+  static UserType? get currentType{
     return (UserModel.fromJson(
         jsonDecode(CacheStorage.read('user'))))
         .gender!
         .title!
         .toUserType();
-
-    // return Gender.male;
   }
 
   static FutureOr<void> make({
@@ -52,7 +53,7 @@ class UserTypeHelper{
     FutureOr<void> Function()? onParent,
     FutureOr<void> Function()? onGuest,
 }){
-    switch(currentGender){
+    switch(currentType){
       case UserType.male:
         return onMale?.call();
 
@@ -69,8 +70,8 @@ class UserTypeHelper{
 
 
   static Widget drowWidget({
-    required Widget Function(UserType currentGender) drow,
+    required Widget Function(UserType? current) drow,
   }){
-    return drow.call(currentGender);
+    return drow.call(currentType);
   }
 }

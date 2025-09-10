@@ -147,5 +147,8 @@
   "save_changes": "حفظ التغييرات",
   "day": "يوم",
   "s_r": "رس",
-  "online_payment": "دفع اونلاين"
+  "online_payment": "دفع اونلاين",
+  "still_loading": "لازال التحميل مفعلا",
+  "please_wait": "من فضلك انتظر",
+  "the_loading_is_ends_soon": "سينتهي التحميل قريبا"
 }

@@ -107,22 +107,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   inputType: TextInputType.number,
                 ),
 
-                UserTypeHelper.drowWidget(
-                    drow: (current) => type.isParent?
-                    SignUpTextField(
-                      upperTitle: LocaleKeys.email,
-                      title: LocaleKeys.pleaseEnterTheEmail,
-                      controller: _ageCont,
-                      inputType: TextInputType.emailAddress,
-                      // validator: Validators.validateEmpty,
-                    ) : SignUpTextField(
-                      upperTitle: LocaleKeys.age,
-                      title: LocaleKeys.pleaseEnterYourAge,
-                      controller: _ageCont,
-                      inputType: TextInputType.number,
-                      // validator: Validators.validateEmpty,
-                    ),
-                ),
+                if(type.isParent)
+                  SignUpTextField(
+                    upperTitle: LocaleKeys.email,
+                    title: LocaleKeys.pleaseEnterTheEmail,
+                    controller: _ageCont,
+                    inputType: TextInputType.emailAddress,
+                    // validator: Validators.validateEmpty,
+                  )
+                else
+                  SignUpTextField(
+                    upperTitle: LocaleKeys.age,
+                    title: LocaleKeys.pleaseEnterYourAge,
+                    controller: _ageCont,
+                    inputType: TextInputType.number,
+                    // validator: Validators.validateEmpty,
+                  ),
 
                 SignUpTextField(
                     upperTitle: LocaleKeys.identifyNumber,
@@ -158,7 +158,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   listener: (context, state) => Helpers.manageBlocListener(
                     state.status,
                     onSuccess: () => type.isParent?
-                    Go.to(const EnterMaleOrFemaleOrChildDataScreen.signUpAsParent()) :
+                    Go.to( EnterMaleOrFemaleOrChildDataScreen.signUpAsParent()) :
                     Go.to(BlocProvider(
                       create: (context) => OtpCubit(),
                       child: OtpScreen(
