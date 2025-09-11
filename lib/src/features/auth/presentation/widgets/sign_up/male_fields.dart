@@ -121,14 +121,14 @@ class _MaleFieldsState extends State<MaleFields> {
                   upperTitle: LocaleKeys.identifyNumber,
                   title: LocaleKeys.pleaseEnterTheNumber,
                   controller: _identifyNumberCont,
-                  onChanged: (val) => asMaleParentCompleteProfileBody.copyWith(identifyNumber: val),
+                  onChanged: (val) => _listenToData(asMaleParentCompleteProfileBody.copyWith(identifyNumber: val)),
                   // validator: Validators.validateEmpty,
                 ),
                 SignUpTextField(
                   upperTitle: LocaleKeys.age,
                   title: LocaleKeys.pleaseEnterYourAge,
                   controller: _ageCont,
-                  onChanged: (val) => asMaleParentCompleteProfileBody.copyWith(age: val),
+                  onChanged: (val) => _listenToData(asMaleParentCompleteProfileBody.copyWith(age: val)),
                   // validator: Validators.validateEmpty,
                 ),
               ]

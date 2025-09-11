@@ -3,6 +3,7 @@ import 'package:pagify/widgets/text.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
 import '../../../models/complete_profile/female.dart';
+import '../../../models/dowry.dart';
 import '../../../models/shared_form_fields_model.dart';
 import '../../enums/answer.dart';
 import '../shared/text_field.dart';
@@ -74,6 +75,20 @@ class _FemaleFieldsState extends State<FemaleFields> {
     super.dispose();
   }
 
+  void _listenToData(SharedFormFieldModel updatedModel) {
+    sharedFormFieldModel = updatedModel;
+    widget.onFinishFemaleData.call(sharedFormFieldModel);
+  }
+
+
+  FemaleCompleteProfileBody get asFemaleCompleteProfileBody{
+    return sharedFormFieldModel as FemaleCompleteProfileBody;
+  }
+
+  FemaleParentCompleteProfileBody get asFemaleParentCompleteProfileBody{
+    return sharedFormFieldModel as FemaleParentCompleteProfileBody;
+  }
+
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -86,27 +101,35 @@ class _FemaleFieldsState extends State<FemaleFields> {
           onFinished: (data) => sharedFormFieldModel = data.copyWith(),
           onInitData: (List<Widget> children) => children..insertAll(11, [
             DowryWidget(onSelect: (from, to) {
-              _dowryMinCont.text = from;
-              _dowryMaxCont.text = to;
+              _listenToData(asFemaleCompleteProfileBody.copyWith(dowry: Dowry(from: from, to: to)));
+              // _dowryMinCont.text = from;
+              // _dowryMaxCont.text = to;
             }),
           ])..insert(15,
             SignUpTextField(
               upperTitle: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage,
               title: LocaleKeys.pleaseEnterTheNumber,
               controller: _liveAfterMarryCont,
+              onChanged: (value) => _listenToData(asFemaleCompleteProfileBody.copyWith(liveAfterMarry: _liveAfterMarryCont.text)),
               // validator: Validators.validateEmpty,
             ),
           )..insert(18,
             RadioWidget<Answer>(
                 title: LocaleKeys.doYouAcceptPolygamy,
-                onSubmit: (result) => acceptsPolygamy = result,
+                onSubmit: (result) {
+                  acceptsPolygamy = result;
+                  _listenToData(asFemaleCompleteProfileBody.copyWith(doYouAcceptPolygamy: acceptsPolygamy));
+                },
                 values: Answer.values,
                 titles: [AppText(LocaleKeys.yes), AppText(LocaleKeys.no)]
             ),
           )..insertAll(21, [
             RadioWidget<Answer>(
                 title: LocaleKeys.areYouWaringHijab,
-                onSubmit: (result) => setState(() => wearingHijab = result),
+                onSubmit: (result) {
+                  setState(() => wearingHijab = result);
+                  _listenToData(asFemaleCompleteProfileBody.copyWith(wearingHijab: wearingHijab));
+                },
                 values: Answer.values,
                 titles: [AppText(LocaleKeys.yes), AppText(LocaleKeys.no)]
             ),
@@ -115,25 +138,30 @@ class _FemaleFieldsState extends State<FemaleFields> {
             if(wearingHijab?.isYes?? false)
               DropDownTextField(
                   title: LocaleKeys.degreeOfCommitment,
-                  onChanged: (val) => degreeOfCommitment = val ?? ''
+                  onChanged: (value) => _listenToData(asFemaleCompleteProfileBody.copyWith(degreeOfCommitment: value)),
+                  // onChanged: (val) => degreeOfCommitment = val ?? ''
               ),
 
             SignUpTextField(
               upperTitle: LocaleKeys.parentName,
               title: LocaleKeys.pleaseEnterName,
               controller: _parentNameCont,
+              onChanged: (value) => _listenToData(asFemaleCompleteProfileBody.copyWith(parentName: _parentNameCont.text)),
+
               // validator: Validators.validateEmpty,
             ),
             SignUpTextField(
               upperTitle: LocaleKeys.parentNumber,
               title: LocaleKeys.pleaseEnterTheNumber,
               controller: _parentNumberCont,
+              onChanged: (value) => _listenToData(asFemaleCompleteProfileBody.copyWith(parentNumber: _parentNumberCont.text)),
               // validator: Validators.validateEmpty,
             ),
             SignUpTextField(
               upperTitle: LocaleKeys.kinship,
               title: LocaleKeys.pleaseEnterTheKinship,
               controller: _kinshipCont,
+              onChanged: (value) => _listenToData(asFemaleCompleteProfileBody.copyWith(kinship: _kinshipCont.text)),
               // validator: Validators.validateEmpty,
             ),
           ]),
@@ -154,6 +182,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
               upperTitle: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage,
               title: LocaleKeys.pleaseEnterTheNumber,
               controller: _liveAfterMarryCont,
+              onChanged: (value) => _listenToData(asFemaleParentCompleteProfileBody.copyWith(liveAfterMarry: _liveAfterMarryCont.text)),
               // validator: Validators.validateEmpty,
             ),
           ])..insertAll(17, [

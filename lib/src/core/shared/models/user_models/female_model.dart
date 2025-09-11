@@ -4,7 +4,7 @@ import 'user_model.dart';
 
 class FemaleModel extends UserModel{
   final Dowry dowry;
-  final String degreeOfCommitment;
+  final String? degreeOfCommitment;
   final Parent parent;
 
   FemaleModel({
@@ -48,42 +48,42 @@ class FemaleModel extends UserModel{
   });
 
   factory FemaleModel.fromJson(Map<String, dynamic> json) => FemaleModel(
-      dowry: Dowry.fromJson(json['dowry']),
+      dowry: Dowry(from: json['dowry_min']??'', to: json['dowry_max']??''),
       degreeOfCommitment: json['degreeOfCommitment'],
-      parent: Parent.fromJson(json['parent']),
+      parent: Parent(phone: json['guardian_phone'], name: json['guardian_name'], kinship: json['guardian_relation']),
       name: json['name'],
       age: json['age'],
       gender: Gender.fromJson(json['gender']),
       id: json['id'],
-      type: json['type'],
-      countryCode: json['countryCode'],
-      identityNumber: json['identityNumber'],
-      isActive: json['isActive'],
-      isBlocked: json['isBlocked'],
-      adminApprovalStatus: AdminApprovalStatus.fromJson(json['adminApprovalStatus']),
-      completeRegistration: json['completeRegistration'],
+      type: Type.fromJson(json['type']),
+      countryCode: json['country_code'],
+      identityNumber: json['identity_number'],
+      isActive: json['is_active'],
+      isBlocked: json['is_blocked'],
+      adminApprovalStatus: AdminApprovalStatus.fromJson(json['admin_approval_status']),
+      completeRegistration: json['complete_registration'],
       token: json['token'],
-      nickName: json['nickName'],
-      maritalStatus: json['maritalStatus'],
+      nickName: json['nick_name'],
+      maritalStatus: json['marital_status'],
       height: json['height'],
       weight: json['weight'],
-      currentJob: json['currentJob'],
+      currentJob: json['current_job'],
       bio: json['bio'],
-      hasChildren: json['hasChildren'],
-      numOfChildren: json['numOfChildren'],
-      childCustody: json['childCustody'],
-      wantChildren: json['wantChildren'],
-      prohibitedThings: json['prohibitedThings'],
-      weddingType: json['weddingType'],
-      cityId: json['cityId'],
-      educationLevel: json['educationLevel'],
-      isPrayer: json['isPrayer'],
-      healthConditions: json['healthConditions'],
-      chatLang: json['chatLang'],
-      isSmoker: json['isSmoker'],
-      tribeAffiliation: json['tribeAffiliation'],
-      skinColor: json['skinColor'],
-      religiousCommitment: json['religiousCommitment'],
+      hasChildren: json['has_children'],
+      numOfChildren: json['num_of_children'],
+      childCustody: json['child_custody'],
+      wantChildren: json['want_children'],
+      prohibitedThings: json['prohibited_things'],
+      weddingType: json['wedding_type'],
+      cityId: json['city_id'],
+      educationLevel: json['education_level'],
+      isPrayer: json['is_prayer'],
+      healthConditions: json['health_conditions'],
+      chatLang: json['chat_lang'],
+      isSmoker: json['is_smoker'],
+      tribeAffiliation: json['tribe_affiliation'],
+      skinColor: json['skin_color'],
+      religiousCommitment: json['religious_commitment'],
       views: json['views']
   );
 }

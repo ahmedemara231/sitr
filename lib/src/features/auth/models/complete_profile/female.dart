@@ -79,6 +79,42 @@ class FemaleCompleteProfileBody extends SharedFormFieldModel{
   );
 
   @override
+  SharedFormFieldModel copyWith({
+    Dowry? dowry,
+    String? liveAfterMarry, Answer? doYouAcceptPolygamy, Answer? wearingHijab, String? degreeOfCommitment, String? parentName, String? parentNumber, String? kinship,
+    String? nickName, String? maritalStatus, String? tall, String? weight, String? currentJob, String? quickBrief, Answer? childrenExists, String? childrenNumber, Nursery? nursery, Answer? wantToHaveChildren, String? thingsIAcceptOrWant, String? typeOfWeddingParty, String? city, String? educationalQualification, Answer? pray, String? diseasesIfExists, Languages? inChatYouPrefer, Answer? smoke, Answer? belongToATribe, String? skinColor}) => FemaleCompleteProfileBody(
+
+    nickName: nickName ?? this.nickName,
+    maritalStatus: maritalStatus ?? this.maritalStatus,
+    tall: tall ?? this.tall,
+    weight: weight ?? this.weight,
+    currentJob: currentJob ?? this.currentJob,
+    quickBrief: quickBrief ?? this.quickBrief,
+    childrenExists: childrenExists ?? this.childrenExists,
+    childrenNumber: childrenNumber ?? this.childrenNumber,
+    nursery: nursery ?? this.nursery,
+    wantToHaveChildren: wantToHaveChildren ?? this.wantToHaveChildren,
+    thingsIAcceptOrWant: thingsIAcceptOrWant ?? this.thingsIAcceptOrWant,
+    typeOfWeddingParty: typeOfWeddingParty ?? this.typeOfWeddingParty,
+    city: city ?? this.city,
+    educationalQualification: educationalQualification ?? this.educationalQualification,
+    pray: pray ?? this.pray,
+    diseasesIfExists: diseasesIfExists ?? this.diseasesIfExists,
+    inChatYouPrefer: inChatYouPrefer ?? this.inChatYouPrefer,
+    smoke: smoke ?? this.smoke,
+    belongToATribe: belongToATribe ?? this.belongToATribe,
+    skinColor: skinColor ?? this.skinColor,
+    dowry: dowry?? this.dowry,
+    liveAfterMarry: liveAfterMarry ?? this.liveAfterMarry,
+    doYouAcceptPolygamy: doYouAcceptPolygamy ?? this.doYouAcceptPolygamy,
+    wearingHijab: wearingHijab ?? this.wearingHijab,
+    degreeOfCommitment: degreeOfCommitment ?? this.degreeOfCommitment,
+    parentName: parentName ?? this.parentName,
+    parentNumber: parentNumber ?? this.parentNumber,
+    kinship: kinship ?? this.kinship,
+  );
+
+  @override
   Map<String, dynamic> toJson() {
     return super.toJson()..addAll({
       'dowry_min' : dowry.from,
@@ -133,6 +169,43 @@ class FemaleParentCompleteProfileBody extends SharedFormFieldModel{
     required super.belongToATribe,
     required super.skinColor
   });
+
+  @override
+  SharedFormFieldModel copyWith({
+    Dowry? dowry,
+    String? name,
+    String? liveAfterMarry, Answer? doYouAcceptPolygamy, Answer? wearingHijab, String? degreeOfCommitment, String? parentName, String? parentNumber,
+    String? nickName, String? maritalStatus, String? tall, String? weight, String? currentJob, String? quickBrief, Answer? childrenExists, String? childrenNumber, Nursery? nursery, Answer? wantToHaveChildren, String? thingsIAcceptOrWant, String? typeOfWeddingParty, String? city, String? educationalQualification, Answer? pray, String? diseasesIfExists, Languages? inChatYouPrefer, Answer? smoke, Answer? belongToATribe, String? skinColor}) => FemaleParentCompleteProfileBody(
+
+    name: name ?? this.name,
+    nickName: nickName ?? this.nickName,
+    maritalStatus: maritalStatus ?? this.maritalStatus,
+    tall: tall ?? this.tall,
+    weight: weight ?? this.weight,
+    currentJob: currentJob ?? this.currentJob,
+    quickBrief: quickBrief ?? this.quickBrief,
+    childrenExists: childrenExists ?? this.childrenExists,
+    childrenNumber: childrenNumber ?? this.childrenNumber,
+    nursery: nursery ?? this.nursery,
+    wantToHaveChildren: wantToHaveChildren ?? this.wantToHaveChildren,
+    thingsIAcceptOrWant: thingsIAcceptOrWant ?? this.thingsIAcceptOrWant,
+    typeOfWeddingParty: typeOfWeddingParty ?? this.typeOfWeddingParty,
+    city: city ?? this.city,
+    educationalQualification: educationalQualification ?? this.educationalQualification,
+    pray: pray ?? this.pray,
+    diseasesIfExists: diseasesIfExists ?? this.diseasesIfExists,
+    inChatYouPrefer: inChatYouPrefer ?? this.inChatYouPrefer,
+    smoke: smoke ?? this.smoke,
+    belongToATribe: belongToATribe ?? this.belongToATribe,
+    skinColor: skinColor ?? this.skinColor,
+    dowry: dowry?? this.dowry,
+    liveAfterMarry: liveAfterMarry ?? this.liveAfterMarry,
+    doYouAcceptPolygamy: doYouAcceptPolygamy ?? this.doYouAcceptPolygamy,
+    wearingHijab: wearingHijab ?? this.wearingHijab,
+    degreeOfCommitment: degreeOfCommitment ?? this.degreeOfCommitment,
+    parentName: parentName ?? this.parentName,
+    parentNumber: parentNumber ?? this.parentNumber,
+  );
 
   factory FemaleParentCompleteProfileBody.initial() => FemaleParentCompleteProfileBody(
     nickName: '',

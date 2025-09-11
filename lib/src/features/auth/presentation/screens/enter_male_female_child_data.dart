@@ -31,10 +31,15 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
   }) : from = ComesFrom.signUpAsParent, type = null, secondaryType = UserType.parent;
 
 
-  final ValueNotifier<UserType> _mainType = ValueNotifier(UserType.male);
+  late ValueNotifier<UserType> _mainType;
+  void _init(){
+    _mainType = ValueNotifier(type ?? UserType.male);
+  }
+
+  late SharedFormFieldModel sharedFormFieldModel;
   @override
   Widget build(BuildContext context) {
-    late SharedFormFieldModel sharedFormFieldModel;
+    _init();
     return CenterCardScaffold(
         upperWidget: const SignUpUpperWidget(),
         body: BlocProvider(
@@ -55,7 +60,10 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
                   valueListenable: _mainType,
                   builder: (context, value, child) => value.isFemale? FemaleFields(
                       secondaryUserType: secondaryType,
-                      onFinishFemaleData: (data){}
+                      onFinishFemaleData: (data) {
+                        sharedFormFieldModel = data.copyWith();
+                        log('enterrrrrrr');
+                      }
                   ) : MaleFields(
                       secondaryType: secondaryType,
                       onFinishMaleData: (data) => sharedFormFieldModel = data.copyWith()
