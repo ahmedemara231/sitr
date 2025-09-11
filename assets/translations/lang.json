@@ -155,5 +155,12 @@
     "Online payment" : "دفع اونلاين",
     "Still loading" : "لازال التحميل مفعلا",
     "please wait" : "من فضلك انتظر",
-    "the loading is ends soon" : "سينتهي التحميل قريبا"
+    "the loading is ends soon" : "سينتهي التحميل قريبا",
+    "choose from here" : "اختر من هنا",
+    "please enter the degree of commitment" : "يرجي ادخال درجة الاتزام",
+    "please enter the skin color" : "يرجي ادخال اللون",
+    "please enter the wedding party" : "يرجي ادخال نوع حفلة الزفاف",
+    "sister" : "اخت",
+    "brother" : "اخ"
+
 }

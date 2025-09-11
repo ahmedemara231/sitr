@@ -35,16 +35,16 @@ extension Parse on String{
 
 class UserTypeHelper{
 
-  static bool get isAuthenticated{
-    return currentType?.isAuthenticated ?? false;
-  }
-
   static UserType? get currentType{
     return (UserModel.fromJson(
         jsonDecode(CacheStorage.read('user'))))
         .gender!
         .title!
         .toUserType();
+  }
+
+  static bool get isAuthenticated{
+    return currentType?.isAuthenticated ?? false;
   }
 
   static FutureOr<void> make({

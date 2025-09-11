@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/language/languages.dart';
 import '../../../../../config/language/locale_keys.g.dart';
+import '../../../../../core/extensions/enum.dart';
+import '../../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../models/shared_form_fields_model.dart';
 import '../../enums/answer.dart';
 import '../../enums/nursery.dart';
+import '../../enums/skin.dart';
+import '../../enums/wedding_party_type.dart';
 import '../shared/text_field.dart';
 import 'drop_down_text_field.dart';
 import 'radio_widget.dart';
@@ -211,11 +215,15 @@ class _SharedFormFieldsState extends State<SharedFormFields>
       ),
 
       DropDownTextField(
+        hint: LocaleKeys.pleaseEnterTheWeddingParty,
+        values: WeddingPartyType.values.map((e) => e.translate).toList(),
         title: LocaleKeys.typeOfWeddingParty,
         onChanged: (val) => _listenToData(model.copyWith(typeOfWeddingParty: val)),
       ),
 
       DropDownTextField(
+        hint: LocaleKeys.pleaseEnterTheCity,
+        values: const ['any'],
         title: LocaleKeys.city,
         onChanged: (val) => _listenToData(model.copyWith(city: val)),
       ),
@@ -264,6 +272,8 @@ class _SharedFormFieldsState extends State<SharedFormFields>
       ),
 
       DropDownTextField(
+        hint: LocaleKeys.pleaseEnterSkinColor,
+        values: Skin.values.map((e) => e.translate).toList(),
         title: LocaleKeys.skinColor,
         onChanged: (val) => _listenToData(model.copyWith(skinColor: val)),
       ),

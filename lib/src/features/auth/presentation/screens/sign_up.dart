@@ -1,14 +1,17 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import '../../../../core/extensions/enum.dart';
 import '../../../../core/extensions/sized_box_helper.dart';
 import '../../../../core/helpers/helpers.dart';
 import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
+import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
 import '../../../otp/models/otp_body.dart';
@@ -33,7 +36,6 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-
   late TextEditingController _nameCont;
   late TextEditingController _phoneCont;
   late TextEditingController _ageCont;
@@ -41,7 +43,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   late TextEditingController _codeCont;
   late TextEditingController _emailCont;
   late TextEditingController _childrenNumberCont;
-
+  late String kinship;
+  late String childGender;
 
   @override
   void initState() {
@@ -71,6 +74,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
   UserType type = UserType.male;
   File? image;
 
+  late SignUpBody signUpBody;
+  void _initSignupBody(UserType newType){
+    if(newType.isParent){
+      signUpBody = ParentSignUp.initial();
+
+    }else{
+      signUpBody = MaleAndFemaleSignUp.initial();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -82,8 +95,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Column(
               spacing: 10.h,
               children: [
+                // FakeFillerAction(
+                //   fields: {_nameCont: FieldType.name},
+                // ),
                 ChooseGenderWidget(
-                  onSelectGender: (selectedGender) => setState(() => type = selectedGender),
+                  onSelectGender: (selectedGender) {
+                    _initSignupBody(selectedGender);
+                    setState(() => type = selectedGender);
+                  },
                   genders: const [
                     UserType.male,
                     UserType.female,
@@ -91,8 +110,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ],
                 ),
                 10.szH,
-                SignUpImageWidget(onSelectImage: (img) => image = img),
 
+                SignUpImageWidget(onSelectImage: (img) => image = img),
                 SignUpTextField(
                   upperTitle: LocaleKeys.name,
                   title: LocaleKeys.pleaseEnterYourName,
@@ -106,12 +125,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   // validator: Validators.validatePhone,
                   inputType: TextInputType.number,
                 ),
-
-                if(type.isParent)
+                if (type.isParent)
                   SignUpTextField(
                     upperTitle: LocaleKeys.email,
                     title: LocaleKeys.pleaseEnterTheEmail,
-                    controller: _ageCont,
+                    controller: _emailCont,
                     inputType: TextInputType.emailAddress,
                     // validator: Validators.validateEmpty,
                   )
@@ -123,81 +141,103 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     inputType: TextInputType.number,
                     // validator: Validators.validateEmpty,
                   ),
-
                 SignUpTextField(
-                    upperTitle: LocaleKeys.identifyNumber,
+                  upperTitle: LocaleKeys.identifyNumber,
+                  title: LocaleKeys.pleaseEnterTheNumber,
+                  controller: _identifyNumberCont,
+                  inputType: TextInputType.number,
+                  // validator: Validators.validateEmpty,
+                ),
+                if (type.isParent) ...[
+                  DropDownTextField(
+                    hint: LocaleKeys.pleaseEnterTheKinship,
+                    values: const ['Father', 'Mother', 'Brother', 'Sister'],
+                      title: LocaleKeys.kinship, onChanged: (val) => kinship = val?? ''),
+                  SignUpTextField(
+                    upperTitle: LocaleKeys.childrenNumber,
                     title: LocaleKeys.pleaseEnterTheNumber,
-                    controller: _identifyNumberCont,
-                  inputType: TextInputType.number,
-                  // validator: Validators.validateEmpty,
-                ),
-
-                if(type.isParent)
-                  ...[
-                    DropDownTextField(title: LocaleKeys.kinship, onChanged: (val){}),
-                    SignUpTextField(
-                      upperTitle: LocaleKeys.childrenNumber,
-                      title: LocaleKeys.pleaseEnterTheNumber,
-                      controller: _childrenNumberCont,
-                      inputType: TextInputType.number,
-                      // validator: Validators.validateEmpty,
-                    ),
-                    DropDownTextField(title: LocaleKeys.gender, onChanged: (val){}),
-                  ],
-                
+                    controller: _childrenNumberCont,
+                    inputType: TextInputType.number,
+                    // validator: Validators.validateEmpty,
+                  ),
+                  DropDownTextField(
+                      hint: LocaleKeys.pleaseEnterTheGender,
+                      values: [UserType.male.translate, UserType.female.translate],
+                      title: LocaleKeys.gender, onChanged: (val) => childGender = val?? ''
+                  ),
+                ],
                 SignUpTextField(
-                    upperTitle: LocaleKeys.code,
-                    title: LocaleKeys.pleaseEnterYourCode,
-                    controller: _codeCont,
+                  upperTitle: LocaleKeys.code,
+                  title: LocaleKeys.pleaseEnterYourCode,
+                  controller: _codeCont,
                   inputType: TextInputType.number,
                   // validator: Validators.validateEmpty,
                 ),
-
                 10.szH,
                 BlocListener<SignUpCubit, AsyncState>(
                   listener: (context, state) => Helpers.manageBlocListener(
-                    state.status,
-                    onSuccess: () => type.isParent?
-                    Go.to( EnterMaleOrFemaleOrChildDataScreen.signUpAsParent()) :
-                    Go.to(BlocProvider(
-                      create: (context) => OtpCubit(),
-                      child: OtpScreen(
-                        title: LocaleKeys.activationCode,
-                        phone: _phoneCont.text,
-                        onConfirmCode: (ctx, code) => ctx.read<OtpCubit>().sendOtp(
-                          type: OtpType.afterRegister,
-                          body: OtpBody(phone: _phoneCont.text, code: code),
-                          onSuccess: (data) async{
-                            await UserCubit.instance.setUserLoggedIn(user: data, token: data.token?? '');
-                            Go.to(const PackagesScreen.view());
-                          }
-                        ),
-                      ),
-                    ))
-                  ),
-                  child: AppLoadingButton(
-                    asyncCall: (ctx) async{
-                      if(formKey.currentState!.validate()){
-                        await ctx.read<SignUpCubit>().signUp(
-                            SignUpBody(
-                                name: _nameCont.text,
+                      state.status,
+                      onSuccess: () => type.isParent
+                          ? Go.to(EnterMaleOrFemaleOrChildDataScreen
+                              .signUpAsParent())
+                          : Go.to(BlocProvider(
+                              create: (context) => OtpCubit(),
+                              child: OtpScreen(
+                                title: LocaleKeys.activationCode,
                                 phone: _phoneCont.text,
-                                age: _ageCont.text,
-                                identityNumber: _identifyNumberCont.text,
-                                image: image,
-                                gender: type.name
-                            )
-                        );
+                                onConfirmCode: (ctx, code) => ctx
+                                    .read<OtpCubit>()
+                                    .sendOtp(
+                                        type: OtpType.afterRegister,
+                                        body: OtpBody(
+                                            phone: _phoneCont.text, code: code),
+                                        onSuccess: (data) async {
+                                          await UserCubit.instance
+                                              .setUserLoggedIn(
+                                                  user: data,
+                                                  token: data.token ?? '');
+                                          Go.to(const PackagesScreen.view());
+                                        }),
+                              ),
+                            ))),
+                  child: AppLoadingButton(
+                    asyncCall: (ctx) async {
+                      if (formKey.currentState!.validate()) {
+                        if(signUpBody is MaleAndFemaleSignUp){
+                          signUpBody = MaleAndFemaleSignUp(
+                              age: _ageCont.text,
+                              name: _nameCont.text,
+                              phone: _phoneCont.text,
+                              identityNumber: _identifyNumberCont.text,
+                              image: image,
+                              gender: type.translate,
+                              code: _codeCont.text
+                          );
+                        }else{
+                          signUpBody = ParentSignUp(
+                              email: _emailCont.text,
+                              kinship: kinship,
+                              childrenNumber: _childrenNumberCont.text,
+                              childGender: childGender,
+                              name: _nameCont.text,
+                              phone: _phoneCont.text,
+                              identityNumber: _identifyNumberCont.text,
+                              image: image,
+                              gender: childGender,
+                              code: _codeCont.text
+                          );
+                        }
+
+                        await ctx.read<SignUpCubit>().signUp(signUpBody);
                       }
                     },
-                      title: LocaleKeys.confirm,
+                    title: LocaleKeys.confirm,
                   ),
                 ),
                 const AlreadyHaveAccWidget()
               ],
             ),
-          )
-      ),
+          )),
     );
   }
 }

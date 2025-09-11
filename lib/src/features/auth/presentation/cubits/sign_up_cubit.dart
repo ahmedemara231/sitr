@@ -19,12 +19,6 @@ class SignUpCubit extends AsyncCubit{
                 body: body.toJson(),
                 mapper: (json) => null
             )
-        )..openTimer(
-            onTimerChanged: (time) => time == 15?
-            MessageUtils.showSnackBar(
-              LocaleKeys.stillLoading,
-
-            ) : null
         )
     );
   }

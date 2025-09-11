@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import '../../../../config/language/locale_keys.g.dart';
 import '../../../helpers/cache_service.dart';
 import '../../../helpers/user_type_enum.dart';
 import 'female_model.dart';
@@ -39,7 +40,6 @@ class UserModel {
     this.isSmoker,
     this.tribeAffiliation,
     this.skinColor,
-    this.religiousCommitment,
     this.views
   });
 
@@ -57,11 +57,39 @@ class UserModel {
   }
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
+    final isParent = json['type']['title'] == LocaleKeys.parent;
     final user = json['gender']['title'].toString().toUserType();
+
+    if(isParent){
+     return _manageGenderWhenParent(user: user, json: json);
+
+    }else{
+      return _manageGender(user: user, json: json);
+    }
+
+  }
+
+  static UserModel _manageGenderWhenParent({required UserType user, required Map<String, dynamic> json}){
+    if(user.isMale){
+      return ParentWithMaleChildModel.fromJson(json);
+
+    }else if(user.isFemale){
+      return ParentWithFemaleChildModel.fromJson(json);
+
+    }else{
+      return UserModel.initial();
+    }
+  }
+
+  static UserModel _manageGender({required UserType user, required Map<String, dynamic> json}){
     if(user.isMale){
       return MaleModel.fromJson(json);
-    }else {
+
+    }else if(user.isFemale){
       return FemaleModel.fromJson(json);
+
+    }else{
+      return UserModel.initial();
     }
   }
 

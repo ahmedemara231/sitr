@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pagify/widgets/text.dart';
 import '../../../../../config/language/locale_keys.g.dart';
+import '../../../../../core/extensions/enum.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
 import '../../../models/complete_profile/female.dart';
 import '../../../models/dowry.dart';
 import '../../../models/shared_form_fields_model.dart';
 import '../../enums/answer.dart';
+import '../../enums/hijab_and_commitment.dart';
 import '../shared/text_field.dart';
 import 'dowry_widget.dart';
 import 'drop_down_text_field.dart';
@@ -137,6 +139,8 @@ class _FemaleFieldsState extends State<FemaleFields> {
             // DropDownTextField(title: LocaleKeys.areYouWaringHijab, onChanged: (val) => wearingHijab = val??''),
             if(wearingHijab?.isYes?? false)
               DropDownTextField(
+                hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
+                values: Commitment.values.map((e) => e.translate).toList(),
                   title: LocaleKeys.degreeOfCommitment,
                   onChanged: (value) => _listenToData(asFemaleCompleteProfileBody.copyWith(degreeOfCommitment: value)),
                   // onChanged: (val) => degreeOfCommitment = val ?? ''
@@ -174,9 +178,11 @@ class _FemaleFieldsState extends State<FemaleFields> {
           onFinished: (data) => sharedFormFieldModel = data.copyWith(),
           onInitData: (List<Widget> children) => children..insertAll(11, [
             DowryWidget(onSelect: (from, to) {
-              _dowryMinCont.text = from;
-              _dowryMaxCont.text = to;
+              _listenToData(asFemaleParentCompleteProfileBody.copyWith(dowry: Dowry(from: from, to: to)));
+              // _dowryMinCont.text = from;
+              // _dowryMaxCont.text = to;
             }),
+
           ])..insertAll(15, [
             SignUpTextField(
               upperTitle: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage,
@@ -188,7 +194,10 @@ class _FemaleFieldsState extends State<FemaleFields> {
           ])..insertAll(17, [
             RadioWidget<Answer>(
                 title: LocaleKeys.doYouAcceptPolygamy,
-                onSubmit: (result) => acceptsPolygamy = result,
+                onSubmit: (result) {
+                  acceptsPolygamy = result;
+                  _listenToData(asFemaleParentCompleteProfileBody.copyWith(doYouAcceptPolygamy: acceptsPolygamy));
+                },
                 values: Answer.values,
                 titles: [AppText(LocaleKeys.yes), AppText(LocaleKeys.no)]
             ),
@@ -197,18 +206,28 @@ class _FemaleFieldsState extends State<FemaleFields> {
 
             RadioWidget<Answer>(
                 title: LocaleKeys.areYouWaringHijab,
-                onSubmit: (result) => setState(() => wearingHijab = result),
+                onSubmit: (result) => setState(() {
+                  wearingHijab = result;
+                  _listenToData(asFemaleParentCompleteProfileBody.copyWith(wearingHijab: wearingHijab));
+                }),
                 values: Answer.values,
                 titles: [AppText(LocaleKeys.yes), AppText(LocaleKeys.no)]
             ),
 
             // DropDownTextField(title: LocaleKeys.areYouWaringHijab, onChanged: (val) => wearingHijab = val??''),
             if(wearingHijab?.isYes?? false)
-              DropDownTextField(title: LocaleKeys.degreeOfCommitment, onChanged: (val) => degreeOfCommitment = val ?? ''),
+              DropDownTextField(
+                hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
+                  values: Commitment.values.map((e) => e.translate).toList(),
+                  title: LocaleKeys.degreeOfCommitment,
+                  onChanged: (val) =>
+                      _listenToData(asFemaleParentCompleteProfileBody.copyWith(degreeOfCommitment: val))
+              ),
           ])..insert(0, SignUpTextField(
             upperTitle: LocaleKeys.name,
             title: LocaleKeys.pleaseEnterName,
             controller: _nameCont,
+            onChanged: (val) => _listenToData(asFemaleParentCompleteProfileBody.copyWith(name: _nameCont.text)),
             // validator: Validators.validateEmpty,
           ),),
         );

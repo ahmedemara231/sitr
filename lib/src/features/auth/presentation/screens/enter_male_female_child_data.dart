@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:auto_fill_flutter/autofill_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,27 +17,33 @@ import '../widgets/sign_up/female_fields.dart';
 import '../widgets/sign_up/male_fields.dart';
 import '../widgets/sign_up/sign_up_upper_widget.dart';
 
-enum ComesFrom{signUpAsPartner, signUpAsParent}
+enum ComesFrom { signUpAsPartner, signUpAsParent }
+
 class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
   final ComesFrom from;
   final UserType? type;
   final UserType? secondaryType;
+
   EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner({
     super.key,
     required this.type,
-}) : from = ComesFrom.signUpAsPartner, secondaryType = null;
+  })  : from = ComesFrom.signUpAsPartner,
+        secondaryType = null;
 
   EnterMaleOrFemaleOrChildDataScreen.signUpAsParent({
     super.key,
-  }) : from = ComesFrom.signUpAsParent, type = null, secondaryType = UserType.parent;
-
+  })  : from = ComesFrom.signUpAsParent,
+        type = null,
+        secondaryType = UserType.parent;
 
   late ValueNotifier<UserType> _mainType;
-  void _init(){
+
+  void _init() {
     _mainType = ValueNotifier(type ?? UserType.male);
   }
 
   late SharedFormFieldModel sharedFormFieldModel;
+
   @override
   Widget build(BuildContext context) {
     _init();
@@ -47,9 +54,10 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
           child: Column(
             spacing: 10.h,
             children: [
-              if(type.isNull)
+              if (type.isNull)
                 ChooseGenderWidget(
-                  onSelectGender: (selectedGender) => _mainType.value = selectedGender,
+                  onSelectGender: (selectedGender) =>
+                      _mainType.value = selectedGender,
                   genders: const [
                     UserType.male,
                     UserType.female,
@@ -57,46 +65,44 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
                 ),
 
               ValueListenableBuilder(
-                  valueListenable: _mainType,
-                  builder: (context, value, child) => value.isFemale? FemaleFields(
-                      secondaryUserType: secondaryType,
-                      onFinishFemaleData: (data) {
-                        sharedFormFieldModel = data.copyWith();
-                        log('enterrrrrrr');
-                      }
-                  ) : MaleFields(
-                      secondaryType: secondaryType,
-                      onFinishMaleData: (data) => sharedFormFieldModel = data.copyWith()
-                  ),
+                valueListenable: _mainType,
+                builder: (context, value, child) => value.isFemale
+                    ? FemaleFields(
+                        secondaryUserType: secondaryType,
+                        onFinishFemaleData: (data) {
+                          sharedFormFieldModel = data.copyWith();
+                          log('enterrrrrrr');
+                        })
+                    : MaleFields(
+                        secondaryType: secondaryType,
+                        onFinishMaleData: (data) =>
+                            sharedFormFieldModel = data.copyWith()),
               ),
-
 
               const ConditionsTermsAcceptance(),
-              Builder(
-                builder: (ctx) {
-                  return DefaultButton(
-                    onTap: () async{
-                      log('sdsdsdsdsd');
-                        await ctx.read<CompleteProfileCubit>().completeProfile(sharedFormFieldModel);
+              Builder(builder: (ctx) {
+                return DefaultButton(
+                  onTap: () async {
+                    await ctx
+                        .read<CompleteProfileCubit>()
+                        .completeProfile(sharedFormFieldModel);
 
-                      // if(_formKey.currentState!.validate()){
-                      //   final CompleteProfileModel model = CompleteProfileModel(
-                      //     sharedFormFieldModel: sharedFormFieldModel,
-                      //     dowryMin: _dowryMinCont.text,
-                      //     dowryMax: _dowryMaxCont.text,
-                      //     parentName: _parentNameCont.text,
-                      //     parentRelationId: _kinshipCont.text,
-                      //     parentPhone: _parentNumberCont.text,
-                      //     liveAfterMarry: _liveAfterMarryCont.text,
-                      //   );
-                      //
-                      //   await ctx.read<CompleteProfileCubit>().completeProfile(model);
-                      // }
-
-                    },
-                  );
-                }
-              ),
+                    // if(_formKey.currentState!.validate()){
+                    //   final CompleteProfileModel model = CompleteProfileModel(
+                    //     sharedFormFieldModel: sharedFormFieldModel,
+                    //     dowryMin: _dowryMinCont.text,
+                    //     dowryMax: _dowryMaxCont.text,
+                    //     parentName: _parentNameCont.text,
+                    //     parentRelationId: _kinshipCont.text,
+                    //     parentPhone: _parentNumberCont.text,
+                    //     liveAfterMarry: _liveAfterMarryCont.text,
+                    //   );
+                    //
+                    //   await ctx.read<CompleteProfileCubit>().completeProfile(model);
+                    // }
+                  },
+                );
+              }),
               // AppLoadingButton(
               //   asyncCall: (ctx) async{
               //     if(_formKey.currentState!.validate()){
@@ -137,11 +143,10 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
               //   },
               //   title: LocaleKeys.confirm,
               // ),
-              if(from == ComesFrom.signUpAsPartner)
+              if (from == ComesFrom.signUpAsPartner)
                 const AlreadyHaveAccWidget()
             ],
           ),
-        )
-    );
+        ));
   }
 }

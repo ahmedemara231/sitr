@@ -13,6 +13,7 @@ class OtpCubit extends AsyncCubit<UserModel>{
   Future<void> sendOtp({
     required OtpType type,
     required OtpBody body,
+
     FutureOr<void> Function(UserModel data)? onSuccess,
 }) async {
     await executeAsync(

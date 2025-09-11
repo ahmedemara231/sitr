@@ -454,4 +454,22 @@ abstract class LocaleKeys {
   static const String _theLoadingIsEndsSoon = 'the_loading_is_ends_soon';
   static String get theLoadingIsEndsSoon => _theLoadingIsEndsSoon.tr();
 
+  static const String _chooseFromHere = 'choose_from_here';
+  static String get chooseFromHere => _chooseFromHere.tr();
+
+  static const String _pleaseEnterTheDegreeOfCommitment = 'please_enter_the_degree_of_commitment';
+  static String get pleaseEnterTheDegreeOfCommitment => _pleaseEnterTheDegreeOfCommitment.tr();
+
+  static const String _pleaseEnterTheSkinColor = 'please_enter_the_skin_color';
+  static String get pleaseEnterTheSkinColor => _pleaseEnterTheSkinColor.tr();
+
+  static const String _pleaseEnterTheWeddingParty = 'please_enter_the_wedding_party';
+  static String get pleaseEnterTheWeddingParty => _pleaseEnterTheWeddingParty.tr();
+
+  static const String _sister = 'sister';
+  static String get sister => _sister.tr();
+
+  static const String _brother = 'brother';
+  static String get brother => _brother.tr();
+
 }
