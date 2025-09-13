@@ -378,15 +378,18 @@ class AdminApprovalStatus {
 }
 
 class Gender {
+  UserType? userType;
+
   Gender({
     this.value,
     this.title,
+    this.userType,
   });
-
 
   Gender.fromJson(dynamic json) {
     value = json['value']; // en
-    title = json['title']; // ar
+    title = json['title']; // ar,
+    userType = (json['title'] as String).toUserType();
   }
   String? value;
   String? title;

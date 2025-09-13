@@ -160,7 +160,24 @@
     "please enter the degree of commitment" : "يرجي ادخال درجة الاتزام",
     "please enter the skin color" : "يرجي ادخال اللون",
     "please enter the wedding party" : "يرجي ادخال نوع حفلة الزفاف",
-    "sister" : "اخت",
-    "brother" : "اخ"
-
+    "party": "حفلة",
+    "simple event": "مناسبة بسيطة",
+    "family celebration": "احتفال عائلي",
+    "white": "أبيض",
+    "light Brown": "قمحي فاتح",
+    "brown": "قمحي",
+    "black": "أسود",
+    "dark black": "أسود داكن",
+    "single": "أعزب",
+    "married": "متزوج",
+    "divorced": "مطلّق",
+    "widowed": "أرمل",
+    "hijab": "حجاب",
+    "niqab": "نقاب",
+    "face cover": "غطاء وجه",
+    "burqa": "برقع",
+    "none": "بدون",
+    "strict": "صارم",
+    "moderate": "معتدل",
+    "openMinded": "منفتح"
 }

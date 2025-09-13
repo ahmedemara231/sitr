@@ -6,7 +6,7 @@ import '../../config/res/config_imports.dart';
 import '../../core/helpers/cache_service.dart';
 import '../../core/navigation/navigator.dart';
 import '../../core/notification/notification_service.dart';
-import '../auth/presentation/screens/login.dart';
+import '../auth/imports.dart';
 import '../on_boarding/screen.dart';
 
 class SplashScreen extends StatefulWidget {

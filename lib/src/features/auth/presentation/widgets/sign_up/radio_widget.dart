@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/res/config_imports.dart';
-import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/widgets/app_text.dart';
 
 // T is the dataType

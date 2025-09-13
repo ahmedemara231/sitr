@@ -1,5 +1,4 @@
 import '../../../config/language/languages.dart';
-import '../../../core/notification/notification_service.dart';
 import '../../auth/models/auth_body_static_data.dart';
 
 class OtpBody{

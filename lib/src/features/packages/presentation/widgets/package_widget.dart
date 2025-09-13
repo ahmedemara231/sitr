@@ -6,7 +6,6 @@ import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/padding_extension.dart';
-import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/buttons/custom_app_buttons/default_button.dart';
 import '../../../../core/widgets/default_bottom_sheet.dart';

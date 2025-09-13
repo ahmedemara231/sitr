@@ -1,7 +1,7 @@
 enum Hijab{
   hijab,
   niqab,
-  face_cover,
+  faceCover,
   burqa,
   none,
 }

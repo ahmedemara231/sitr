@@ -1,0 +1,55 @@
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pagify/widgets/text.dart' show AppText;
+
+import '../../config/language/locale_keys.g.dart';
+import '../../config/res/config_imports.dart';
+import '../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import '../../core/extensions/context_extension.dart';
+import '../../core/extensions/enum.dart';
+import '../../core/extensions/object.dart';
+import '../../core/extensions/sized_box_helper.dart';
+import '../../core/helpers/helpers.dart';
+import '../../core/helpers/user_type_enum.dart';
+import '../../core/helpers/validators.dart';
+import '../../core/navigation/navigator.dart';
+import '../../core/shared/user_cubit/user_cubit.dart';
+import '../../core/widgets/app_logo_widget.dart';
+import '../../core/widgets/buttons/app_loading_button.dart';
+import '../../core/widgets/buttons/default_button.dart';
+import '../../core/widgets/lang_icon.dart';
+import '../../core/widgets/scaffolds/auth_scaffold.dart';
+import '../../core/widgets/text_fields/default_text_field.dart' show DefaultTextField;
+import '../otp/models/otp_body.dart';
+import '../otp/presentation/cubits/otp_cubit.dart';
+import '../otp/presentation/otp.dart';
+import '../packages/presentation/packages_screen.dart';
+import 'models/kinship.dart';
+import 'models/login_body.dart';
+import 'models/shared_form_fields_model.dart';
+import 'models/sign_up_body.dart';
+import 'presentation/cubits/complete_profile_cubit.dart';
+import 'presentation/cubits/login_cubit.dart';
+import 'presentation/cubits/sign_up_cubit.dart';
+import 'presentation/data/auth_data.dart' show AuthData;
+import 'presentation/widgets/login/do_not_have_acc.dart';
+import 'presentation/widgets/login/login_static_texts.dart';
+import 'presentation/widgets/shared/choose_gender.dart';
+import 'presentation/widgets/shared/text_field.dart';
+import 'presentation/widgets/sign_up/already_have_acc.dart';
+import 'presentation/widgets/sign_up/conditions_terms_acceptance.dart';
+import 'presentation/widgets/sign_up/drop_down_text_field.dart';
+import 'presentation/widgets/sign_up/female_fields.dart';
+import 'presentation/widgets/sign_up/image_widget.dart';
+import 'presentation/widgets/sign_up/male_fields.dart';
+import 'presentation/widgets/sign_up/sign_up_upper_widget.dart';
+
+import 'package:easy_localization/easy_localization.dart';
+
+
+
+part 'presentation/screens/sign_up.dart';
+part 'presentation/screens/login.dart';
+part 'presentation/screens/enter_male_female_child_data.dart';

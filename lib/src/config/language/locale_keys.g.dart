@@ -466,10 +466,64 @@ abstract class LocaleKeys {
   static const String _pleaseEnterTheWeddingParty = 'please_enter_the_wedding_party';
   static String get pleaseEnterTheWeddingParty => _pleaseEnterTheWeddingParty.tr();
 
-  static const String _sister = 'sister';
-  static String get sister => _sister.tr();
+  static const String _party = 'party';
+  static String get party => _party.tr();
 
-  static const String _brother = 'brother';
-  static String get brother => _brother.tr();
+  static const String _simpleEvent = 'simple_event';
+  static String get simpleEvent => _simpleEvent.tr();
+
+  static const String _familyCelebration = 'family_celebration';
+  static String get familyCelebration => _familyCelebration.tr();
+
+  static const String _white = 'white';
+  static String get white => _white.tr();
+
+  static const String _lightBrown = 'light_brown';
+  static String get lightBrown => _lightBrown.tr();
+
+  static const String _brown = 'brown';
+  static String get brown => _brown.tr();
+
+  static const String _black = 'black';
+  static String get black => _black.tr();
+
+  static const String _darkBlack = 'dark_black';
+  static String get darkBlack => _darkBlack.tr();
+
+  static const String _single = 'single';
+  static String get single => _single.tr();
+
+  static const String _married = 'married';
+  static String get married => _married.tr();
+
+  static const String _divorced = 'divorced';
+  static String get divorced => _divorced.tr();
+
+  static const String _widowed = 'widowed';
+  static String get widowed => _widowed.tr();
+
+  static const String _hijab = 'hijab';
+  static String get hijab => _hijab.tr();
+
+  static const String _niqab = 'niqab';
+  static String get niqab => _niqab.tr();
+
+  static const String _faceCover = 'face_cover';
+  static String get faceCover => _faceCover.tr();
+
+  static const String _burqa = 'burqa';
+  static String get burqa => _burqa.tr();
+
+  static const String _none = 'none';
+  static String get none => _none.tr();
+
+  static const String _strict = 'strict';
+  static String get strict => _strict.tr();
+
+  static const String _moderate = 'moderate';
+  static String get moderate => _moderate.tr();
+
+  static const String _openMinded = 'open_minded';
+  static String get openMinded => _openMinded.tr();
 
 }

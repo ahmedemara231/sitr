@@ -1,27 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../config/language/locale_keys.g.dart';
-import '../../../../config/res/config_imports.dart';
-import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
-import '../../../../core/extensions/context_extension.dart';
-import '../../../../core/helpers/helpers.dart';
-import '../../../../core/helpers/validators.dart';
-import '../../../../core/navigation/navigator.dart';
-import '../../../../core/widgets/app_logo_widget.dart';
-import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
-import '../../../../core/widgets/buttons/app_loading_button.dart';
-import '../../../../core/widgets/buttons/default_button.dart';
-import '../../../../core/widgets/lang_icon.dart';
-import '../../../../core/widgets/text_fields/default_text_field.dart';
-import '../../../otp/models/otp_body.dart';
-import '../../../otp/presentation/cubits/otp_cubit.dart';
-import '../../models/login_body.dart';
-import '../cubits/login_cubit.dart';
-import '../widgets/login/do_not_have_acc.dart';
-import '../widgets/login/login_static_texts.dart';
-import '../../../otp/presentation/otp.dart';
+part of '../../imports.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

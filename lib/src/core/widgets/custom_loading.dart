@@ -9,7 +9,7 @@ class CustomLoading {
     return Center(
       child: SpinKitCircle(
         color: AppColors.main,
-        size: AppSize.sH50,
+        size: AppSize.sH25,
       ),
     );
   }

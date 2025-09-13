@@ -138,7 +138,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
 
             // DropDownTextField(title: LocaleKeys.areYouWaringHijab, onChanged: (val) => wearingHijab = val??''),
             if(wearingHijab?.isYes?? false)
-              DropDownTextField(
+              DropDownTextField<String>(
                 hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
                 values: Commitment.values.map((e) => e.translate).toList(),
                   title: LocaleKeys.degreeOfCommitment,
@@ -216,7 +216,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
 
             // DropDownTextField(title: LocaleKeys.areYouWaringHijab, onChanged: (val) => wearingHijab = val??''),
             if(wearingHijab?.isYes?? false)
-              DropDownTextField(
+              DropDownTextField<String>(
                 hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
                   values: Commitment.values.map((e) => e.translate).toList(),
                   title: LocaleKeys.degreeOfCommitment,

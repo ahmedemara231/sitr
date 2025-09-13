@@ -4,7 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:pagify/widgets/text.dart';
 import '../../../../generated/assets.dart';
 import '../../../config/language/locale_keys.g.dart';
-import '../../../features/auth/presentation/screens/enter_male_female_child_data.dart';
+import '../../../features/auth/imports.dart' show EnterMaleOrFemaleOrChildDataScreen;
 import '../../helpers/user_type_enum.dart';
 import '../../navigation/navigator.dart';
 import '../app_bottom_sheet.dart';

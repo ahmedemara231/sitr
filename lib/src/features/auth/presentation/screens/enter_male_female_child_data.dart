@@ -1,21 +1,4 @@
-import 'dart:developer';
-
-import 'package:auto_fill_flutter/autofill_helper.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/extensions/object.dart';
-import '../../../../core/helpers/user_type_enum.dart';
-import '../../../../core/widgets/buttons/default_button.dart';
-import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
-import '../../models/shared_form_fields_model.dart';
-import '../cubits/complete_profile_cubit.dart';
-import '../widgets/shared/choose_gender.dart';
-import '../widgets/sign_up/already_have_acc.dart';
-import '../widgets/sign_up/conditions_terms_acceptance.dart';
-import '../widgets/sign_up/female_fields.dart';
-import '../widgets/sign_up/male_fields.dart';
-import '../widgets/sign_up/sign_up_upper_widget.dart';
+part of '../../imports.dart';
 
 enum ComesFrom { signUpAsPartner, signUpAsParent }
 
@@ -71,7 +54,6 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
                         secondaryUserType: secondaryType,
                         onFinishFemaleData: (data) {
                           sharedFormFieldModel = data.copyWith();
-                          log('enterrrrrrr');
                         })
                     : MaleFields(
                         secondaryType: secondaryType,
