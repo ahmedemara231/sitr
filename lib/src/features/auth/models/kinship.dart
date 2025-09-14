@@ -11,4 +11,9 @@ class Kinship{
       id: json['id'],
       value: json['name']
   );
+
+  Map<String, dynamic> toJson() => {
+    'id' : id,
+    'name' : value,
+  };
 }

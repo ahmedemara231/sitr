@@ -61,7 +61,7 @@ class MaleAndFemaleSignUp extends SignUpBody{
 
 class ParentSignUp extends SignUpBody{
   final String email;
-  final String kinship;
+  final int kinship;
   final String childrenNumber;
   final String childGender;
   ParentSignUp({
@@ -79,7 +79,7 @@ class ParentSignUp extends SignUpBody{
 
   factory ParentSignUp.initial() => ParentSignUp(
       email: '',
-      kinship: '',
+      kinship: 0,
       childrenNumber: '',
       childGender: '',
       name: '',
@@ -93,8 +93,8 @@ class ParentSignUp extends SignUpBody{
   Map<String, dynamic> toJson() {
     return super.toJson()..addAll({
       'email' : email,
-      'children_number' : childrenNumber,
-      'kinship' : kinship,
+      'num_of_children' : childrenNumber,
+      'relation_id' : kinship,
       'type' : 'parent'
     });
   }

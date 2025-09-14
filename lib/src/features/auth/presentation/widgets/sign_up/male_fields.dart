@@ -110,6 +110,7 @@ class _MaleFieldsState extends State<MaleFields> {
                 upperTitle: LocaleKeys.phoneNumber,
                 title: LocaleKeys.pleaseEnterTheNumber,
                 controller: _phoneCont,
+                inputType: TextInputType.phone,
                 onChanged: (val) => _listenToData(asMaleParentCompleteProfileBody.copyWith(name: val)),
                 // validator: Validators.validateEmpty,
               ),

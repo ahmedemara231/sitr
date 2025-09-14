@@ -36,11 +36,13 @@ extension Parse on String{
 class UserTypeHelper{
 
   static UserType? get currentType{
-    return (UserModel.fromJson(
-        jsonDecode(CacheStorage.read('user'))))
-        .gender!
-        .title!
-        .toUserType();
+    final UserModel user = (UserModel.fromJson(
+        jsonDecode(CacheStorage.read('user'))));
+
+    log('user.gender ${user.gender?.toJson()}');
+    log('user.gender ${user.runtimeType}');
+
+    return user.gender!.title!.toUserType();
   }
 
   static bool get isAuthenticated{

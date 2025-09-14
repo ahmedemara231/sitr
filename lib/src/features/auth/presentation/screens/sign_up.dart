@@ -20,9 +20,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   late TextEditingController _femaleIdentifyNumberCont;
   late TextEditingController _femaleCodeCont;
 
+
+  late TextEditingController _parentNameCont;
+  late TextEditingController _parentPhoneCont;
+  late TextEditingController _parentIdentifyNumberCont;
+  late TextEditingController _parentCodeCont;
+
   late TextEditingController _emailCont;
   late TextEditingController _childrenNumberCont;
-  late String kinship;
+  late Kinship kinship;
   late String childGender;
 
   @override
@@ -39,6 +45,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _femaleAgeCont = TextEditingController();
     _femaleIdentifyNumberCont = TextEditingController();
     _femaleCodeCont = TextEditingController();
+
+    _parentNameCont = TextEditingController();
+    _parentPhoneCont = TextEditingController();
+    _parentIdentifyNumberCont = TextEditingController();
+    _parentCodeCont = TextEditingController();
 
     _emailCont = TextEditingController();
     _childrenNumberCont = TextEditingController();
@@ -58,6 +69,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _femaleAgeCont.dispose();
     _femaleIdentifyNumberCont.dispose();
     _femaleCodeCont.dispose();
+
+    _parentNameCont.dispose();
+    _parentPhoneCont.dispose();
+    _parentIdentifyNumberCont.dispose();
+    _parentCodeCont.dispose();
 
     _emailCont.dispose();
     _childrenNumberCont.dispose();
@@ -81,6 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController _getContBasedUserType({
     required TextEditingController whenMale,
     required TextEditingController whenFemale,
+    TextEditingController? whenParent,
   }) {
     switch (type) {
       case UserType.male:
@@ -88,6 +105,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
       case UserType.female:
         return whenFemale;
+
+      case UserType.parent:
+        return whenParent?? TextEditingController();
 
       default:
         return TextEditingController();
@@ -122,13 +142,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 SignUpTextField(
                   upperTitle: LocaleKeys.name,
                   title: LocaleKeys.pleaseEnterYourName,
-                  controller: _getContBasedUserType(whenMale: _maleNameCont, whenFemale: _femaleNameCont),
+                  controller: _getContBasedUserType(whenMale: _maleNameCont, whenFemale: _femaleNameCont, whenParent: _parentNameCont),
                   // validator: Validators.validateEmpty,
                 ),
                 SignUpTextField(
                   upperTitle: LocaleKeys.phoneNumber,
                   title: LocaleKeys.pleaseEnterTheNumber,
-                  controller: _getContBasedUserType(whenMale: _malePhoneCont, whenFemale: _femalePhoneCont),
+                  controller: _getContBasedUserType(whenMale: _malePhoneCont, whenFemale: _femalePhoneCont, whenParent: _parentPhoneCont),
                   // validator: Validators.validatePhone,
                   inputType: TextInputType.number,
                 ),
@@ -153,7 +173,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 SignUpTextField(
                   upperTitle: LocaleKeys.identifyNumber,
                   title: LocaleKeys.pleaseEnterTheNumber,
-                  controller: _getContBasedUserType(whenMale: _maleIdentifyNumberCont, whenFemale: _femaleIdentifyNumberCont),
+                  controller: _getContBasedUserType(whenMale: _maleIdentifyNumberCont, whenFemale: _femaleIdentifyNumberCont, whenParent: _parentIdentifyNumberCont),
                   inputType: TextInputType.number,
                   // validator: Validators.validateEmpty,
                 ),
@@ -163,7 +183,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       hint: LocaleKeys.pleaseEnterTheKinship,
                       request: (ctx) async => AuthData.getKinships(),
                       itemBuilder: (val) => AppText(val.value),
-                      title: LocaleKeys.kinship, onChanged: (val) => kinship = val?.value?? ''
+                      title: LocaleKeys.kinship, onChanged: (val) => kinship = val!
                   ),
                   SignUpTextField(
                     upperTitle: LocaleKeys.childrenNumber,
@@ -181,7 +201,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 SignUpTextField(
                   upperTitle: LocaleKeys.code,
                   title: LocaleKeys.pleaseEnterYourCode,
-                  controller: _getContBasedUserType(whenMale: _maleCodeCont, whenFemale: _femaleCodeCont),
+                  controller: _getContBasedUserType(whenMale: _maleCodeCont, whenFemale: _femaleCodeCont, whenParent: _parentCodeCont),
                   inputType: TextInputType.number,
                   // validator: Validators.validateEmpty,
                 ),
@@ -189,29 +209,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 BlocListener<SignUpCubit, AsyncState>(
                   listener: (context, state) => Helpers.manageBlocListener(
                       state.status,
-                      onSuccess: () => type.isParent
-                          ? Go.to(EnterMaleOrFemaleOrChildDataScreen
-                              .signUpAsParent())
-                          : Go.to(BlocProvider(
+                      onSuccess: () => Go.to(BlocProvider(
                               create: (context) => OtpCubit(),
                               child: OtpScreen(
                                 title: LocaleKeys.activationCode,
-                                phone: _malePhoneCont.text,
-                                onConfirmCode: (ctx, code) => ctx
-                                    .read<OtpCubit>()
-                                    .sendOtp(
-                                        type: OtpType.afterRegister,
-                                        body: OtpBody(
-                                            phone: _malePhoneCont.text, code: code),
-                                        onSuccess: (data) async {
-                                          await UserCubit.instance
-                                              .setUserLoggedIn(
+                                phone: _getContBasedUserType(whenMale: _malePhoneCont, whenFemale: _femalePhoneCont, whenParent: _parentPhoneCont).text,
+                                onConfirmCode: (ctx, code) => ctx.read<OtpCubit>().sendOtp(
+                                    type: OtpType.afterRegister,
+                                    body: OtpBody(
+                                        phone: _getContBasedUserType(whenMale: _malePhoneCont, whenFemale: _femalePhoneCont, whenParent: _parentPhoneCont).text,
+                                        code: code
+                                    ),
+                                    onSuccess: (data) async {
+                                      log('the runType is ${data.runtimeType}');
+
+                                          await UserCubit.instance.setUserLoggedIn(
                                                   user: data,
-                                                  token: data.token ?? '');
+                                                  token: data.token ?? ''
+                                          );
                                           Go.to(const PackagesScreen.view());
-                                        }),
+                                        },
+                                ),
                               ),
-                            ))),
+                            ))
+                  ),
                   child: AppLoadingButton(
                     asyncCall: (ctx) async {
                       if (formKey.currentState!.validate()) {
@@ -222,22 +243,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               phone: _malePhoneCont.text,
                               identityNumber: _maleIdentifyNumberCont.text,
                               image: image,
-                              gender: type.translate,
+                              gender: type.name,
                               code: _maleCodeCont.text
                           );
 
                         }else{
                           signUpBody = ParentSignUp(
                               email: _emailCont.text,
-                              kinship: kinship,
+                              kinship: kinship.id,
                               childrenNumber: _childrenNumberCont.text,
                               childGender: childGender,
-                              name: _maleNameCont.text,
-                              phone: _malePhoneCont.text,
-                              identityNumber: _maleIdentifyNumberCont.text,
+                              name: _parentNameCont.text,
+                              phone: _parentPhoneCont.text,
+                              identityNumber: _parentIdentifyNumberCont.text,
                               image: image,
-                              gender: childGender,
-                              code: _maleCodeCont.text
+                              gender: childGender.toUserType().name,
+                              code: _parentCodeCont.text
                           );
                         }
 

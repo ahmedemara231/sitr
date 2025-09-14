@@ -69,62 +69,9 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
                         .read<CompleteProfileCubit>()
                         .completeProfile(sharedFormFieldModel);
 
-                    // if(_formKey.currentState!.validate()){
-                    //   final CompleteProfileModel model = CompleteProfileModel(
-                    //     sharedFormFieldModel: sharedFormFieldModel,
-                    //     dowryMin: _dowryMinCont.text,
-                    //     dowryMax: _dowryMaxCont.text,
-                    //     parentName: _parentNameCont.text,
-                    //     parentRelationId: _kinshipCont.text,
-                    //     parentPhone: _parentNumberCont.text,
-                    //     liveAfterMarry: _liveAfterMarryCont.text,
-                    //   );
-                    //
-                    //   await ctx.read<CompleteProfileCubit>().completeProfile(model);
-                    // }
                   },
                 );
               }),
-              // AppLoadingButton(
-              //   asyncCall: (ctx) async{
-              //     if(_formKey.currentState!.validate()){
-              //       final CompleteProfileModel model = CompleteProfileModel(
-              //           nickName: sharedFormFieldModel.nickName,
-              //           maritalStatus: sharedFormFieldModel.maritalStatus,
-              //           height: sharedFormFieldModel.tall,
-              //           weight: sharedFormFieldModel.weight,
-              //           currentJob: sharedFormFieldModel.currentJob,
-              //           bio: sharedFormFieldModel.quickBrief,  // drop down
-              //           hasChildren: sharedFormFieldModel.childrenExists,
-              //           numOfChildren: sharedFormFieldModel.childrenNumber,
-              //           childCustody: sharedFormFieldModel.nursery?.name,  // drop down
-              //           wantChildren: sharedFormFieldModel.wantToHaveChildren,
-              //           prohibitedThings: sharedFormFieldModel.thingsIAcceptOrWant,
-              //           dowryMin: _dowryMinCont.text,
-              //           dowryMax: _dowryMaxCont.text,
-              //           weddingType: sharedFormFieldModel.typeOfWeddingParty,
-              //           city: sharedFormFieldModel.city,
-              //           educationLevel: sharedFormFieldModel.educationalQualification,
-              //           isPrayer: sharedFormFieldModel.pray,
-              //           healthConditions: sharedFormFieldModel.diseasesIfExists,
-              //           chatLang: sharedFormFieldModel.inChatYouPrefer?.title,
-              //           isSmoker: sharedFormFieldModel.smoke,
-              //           tribeAffiliation: sharedFormFieldModel.belongToATribe,
-              //           skinColor: sharedFormFieldModel.skinColor,
-              //           religiousCommitment: degreeOfCommitment,
-              //           preferredResidenceAfterMarriage: _liveAfterMarryCont.text,
-              //           hijabWearing: wearingHijab, // answer
-              //           acceptsPolygamy: acceptsPolygamy,
-              //           parentName: _parentNameCont.text,
-              //           parentRelationId: _kinshipCont.text,
-              //           parentPhone: _parentNumberCont.text,
-              //       );
-              //
-              //       ctx.read<CompleteProfileCubit>().completeProfile(sharedFormFieldModel);
-              //     }
-              //   },
-              //   title: LocaleKeys.confirm,
-              // ),
               if (from == ComesFrom.signUpAsPartner)
                 const AlreadyHaveAccWidget()
             ],
