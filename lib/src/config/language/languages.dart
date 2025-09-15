@@ -20,6 +20,7 @@ enum Languages {
   static List<Locale> get suppoerLocales =>
       Languages.values.map((e) => e.locale).toList();
 
+
   static List<String> get titles =>
       Languages.values.map((e) => e.title).toList();
 

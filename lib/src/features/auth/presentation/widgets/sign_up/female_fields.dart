@@ -1,9 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:pagify/widgets/text.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/extensions/enum.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
-import '../../../models/complete_profile/female.dart';
+import '../../../models/complete_profile/female_body.dart';
 import '../../../models/dowry.dart';
 import '../../../models/shared_form_fields_model.dart';
 import '../../enums/answer.dart';
@@ -103,7 +105,10 @@ class _FemaleFieldsState extends State<FemaleFields> {
           onFinished: (data) => sharedFormFieldModel = data.copyWith(),
           onInitData: (List<Widget> children) => children..insertAll(11, [
             DowryWidget(onSelect: (from, to) {
-              _listenToData(asFemaleCompleteProfileBody.copyWith(dowry: Dowry(from: from, to: to)));
+              log('message: $from');
+              _listenToData(asFemaleCompleteProfileBody.copyWith(
+                  dowry: Dowry(from: from, to: to)
+              ));
               // _dowryMinCont.text = from;
               // _dowryMaxCont.text = to;
             }),
@@ -120,7 +125,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 title: LocaleKeys.doYouAcceptPolygamy,
                 onSubmit: (result) {
                   acceptsPolygamy = result;
-                  _listenToData(asFemaleCompleteProfileBody.copyWith(doYouAcceptPolygamy: acceptsPolygamy));
+                  _listenToData(asFemaleCompleteProfileBody.copyWith(doYouAcceptPolygamy: acceptsPolygamy.toBool));
                 },
                 values: Answer.values,
                 titles: [AppText(LocaleKeys.yes), AppText(LocaleKeys.no)]
@@ -130,7 +135,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 title: LocaleKeys.areYouWaringHijab,
                 onSubmit: (result) {
                   setState(() => wearingHijab = result);
-                  _listenToData(asFemaleCompleteProfileBody.copyWith(wearingHijab: wearingHijab));
+                  _listenToData(asFemaleCompleteProfileBody.copyWith(wearingHijab: wearingHijab.toBool));
                 },
                 values: Answer.values,
                 titles: [AppText(LocaleKeys.yes), AppText(LocaleKeys.no)]
@@ -138,11 +143,12 @@ class _FemaleFieldsState extends State<FemaleFields> {
 
             // DropDownTextField(title: LocaleKeys.areYouWaringHijab, onChanged: (val) => wearingHijab = val??''),
             if(wearingHijab?.isYes?? false)
-              DropDownTextField<String>(
+              DropDownTextField<Commitment>(
                 hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
-                values: Commitment.values.map((e) => e.translate).toList(),
+                values: Commitment.values,
                   title: LocaleKeys.degreeOfCommitment,
-                  onChanged: (value) => _listenToData(asFemaleCompleteProfileBody.copyWith(degreeOfCommitment: value)),
+                  itemBuilder: (v) => AppText(v.translate),
+                  onChanged: (value) => _listenToData(asFemaleCompleteProfileBody.copyWith(degreeOfCommitment: value?.name)),
                   // onChanged: (val) => degreeOfCommitment = val ?? ''
               ),
 
@@ -158,6 +164,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
               upperTitle: LocaleKeys.parentNumber,
               title: LocaleKeys.pleaseEnterTheNumber,
               controller: _parentNumberCont,
+              inputType: TextInputType.phone,
               onChanged: (value) => _listenToData(asFemaleCompleteProfileBody.copyWith(parentNumber: _parentNumberCont.text)),
               // validator: Validators.validateEmpty,
             ),
@@ -188,6 +195,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
               upperTitle: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage,
               title: LocaleKeys.pleaseEnterTheNumber,
               controller: _liveAfterMarryCont,
+              inputType: TextInputType.phone,
               onChanged: (value) => _listenToData(asFemaleParentCompleteProfileBody.copyWith(liveAfterMarry: _liveAfterMarryCont.text)),
               // validator: Validators.validateEmpty,
             ),
@@ -196,7 +204,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 title: LocaleKeys.doYouAcceptPolygamy,
                 onSubmit: (result) {
                   acceptsPolygamy = result;
-                  _listenToData(asFemaleParentCompleteProfileBody.copyWith(doYouAcceptPolygamy: acceptsPolygamy));
+                  _listenToData(asFemaleParentCompleteProfileBody.copyWith(doYouAcceptPolygamy: acceptsPolygamy.toBool));
                 },
                 values: Answer.values,
                 titles: [AppText(LocaleKeys.yes), AppText(LocaleKeys.no)]
@@ -208,7 +216,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 title: LocaleKeys.areYouWaringHijab,
                 onSubmit: (result) => setState(() {
                   wearingHijab = result;
-                  _listenToData(asFemaleParentCompleteProfileBody.copyWith(wearingHijab: wearingHijab));
+                  _listenToData(asFemaleParentCompleteProfileBody.copyWith(wearingHijab: wearingHijab.toBool));
                 }),
                 values: Answer.values,
                 titles: [AppText(LocaleKeys.yes), AppText(LocaleKeys.no)]

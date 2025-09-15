@@ -331,6 +331,13 @@
             </list>
           </value>
         </entry>
+        <entry key="easy_debounce">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/easy_debounce-2.0.3/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="easy_loading_button">
           <value>
             <list>
@@ -1893,6 +1900,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/dio_web_adapter-2.1.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/dotted_border-3.1.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/dropdown_search-6.0.2/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/easy_debounce-2.0.3/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/easy_loading_button-0.4.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/easy_localization-3.0.8/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/easy_logger-0.0.2/lib" />

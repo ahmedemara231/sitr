@@ -8,6 +8,7 @@ import '../../../models/city.dart';
 import '../../../models/shared_form_fields_model.dart';
 import '../../data/auth_data.dart';
 import '../../enums/answer.dart';
+import '../../enums/maritial_status.dart';
 import '../../enums/nursery.dart';
 import '../../enums/skin.dart';
 import '../../enums/wedding_party_type.dart';
@@ -135,13 +136,15 @@ class _SharedFormFieldsState extends State<SharedFormFields>
         onChanged: (val) => _listenToData(model.copyWith(nickName: val)),
         // validator: Validators.validateEmpty,
       ),
-      SignUpTextField(
-        upperTitle: LocaleKeys.maritalStatus,
-        title: LocaleKeys.pleaseEnterTheStatus,
-        controller: _statusCont.value,
-        onChanged: (val) => _listenToData(model.copyWith(maritalStatus: val)),
-        // validator: Validators.validatePhone,
+
+      DropDownTextField<MaritalStatus>(
+        title: LocaleKeys.maritalStatus,
+        hint: LocaleKeys.pleaseEnterTheStatus,
+        values: MaritalStatus.values,
+        itemBuilder: (v) => AppText(v.translate),
+        onChanged: (val) => _listenToData(model.copyWith(maritalStatus: val?.name)),
       ),
+
       SignUpTextField(
         upperTitle: LocaleKeys.tall,
         title: LocaleKeys.pleaseEnterTheTall,
@@ -178,11 +181,11 @@ class _SharedFormFieldsState extends State<SharedFormFields>
       RadioWidget<Answer>(
           title: LocaleKeys.childrenExists,
           onSubmit: (result) =>
-              setState(() => _listenToData(model.copyWith(childrenExists: result))),
+              setState(() => _listenToData(model.copyWith(childrenExists: result.toBool))),
           values: Answer.values,
           titles: [AppText(LocaleKeys.yes), AppText(LocaleKeys.no)]
       ),
-      if(model.childrenExists?.isYes?? false)
+      if(model.childrenExists?? false)
         ...[
           SignUpTextField(
             upperTitle: LocaleKeys.childrenNumber,
@@ -200,9 +203,10 @@ class _SharedFormFieldsState extends State<SharedFormFields>
               titles: [AppText(LocaleKeys.father), AppText(LocaleKeys.mother)]
           ),
         ],
+
       RadioWidget<Answer>(
           title: LocaleKeys.wantToHaveChildren,
-          onSubmit: (result) => _listenToData(model.copyWith(wantToHaveChildren: result)),
+          onSubmit: (result) => _listenToData(model.copyWith(wantToHaveChildren: result.toBool)),
           values: Answer.values,
           titles: [AppText(LocaleKeys.yes), AppText(LocaleKeys.no)]
       ),
@@ -215,17 +219,18 @@ class _SharedFormFieldsState extends State<SharedFormFields>
         // validator: Validators.validateEmpty,
       ),
 
-      DropDownTextField<String>(
+      DropDownTextField<WeddingPartyType>(
         hint: LocaleKeys.pleaseEnterTheWeddingParty,
-        values: WeddingPartyType.values.map((e) => e.translate).toList(),
+        values: WeddingPartyType.values,
         title: LocaleKeys.typeOfWeddingParty,
-        onChanged: (val) => _listenToData(model.copyWith(typeOfWeddingParty: val)),
+        itemBuilder: (v) => AppText(v.translate),
+        onChanged: (val) => _listenToData(model.copyWith(typeOfWeddingParty: val?.name)),
       ),
 
         DropDownTextField<City>.withApiRequest(
           hint: LocaleKeys.pleaseEnterTheCity,
           title: LocaleKeys.city,
-          onChanged: (val) => _listenToData(model.copyWith(city: val?.name)),
+          onChanged: (val) => _listenToData(model.copyWith(cityId: val?.id)),
           request: (BuildContext ctx) async => await AuthData.getCities(),
           itemBuilder: (city) => AppText(city.name),
         ),
@@ -240,7 +245,7 @@ class _SharedFormFieldsState extends State<SharedFormFields>
 
       RadioWidget<Answer>(
           title: LocaleKeys.areYouPray,
-          onSubmit: (result) => _listenToData(model.copyWith(pray: result)),
+          onSubmit: (result) => _listenToData(model.copyWith(pray: result.toBool)),
           values: Answer.values,
           titles: [AppText(LocaleKeys.yes), AppText(LocaleKeys.no)]
       ),
@@ -255,29 +260,30 @@ class _SharedFormFieldsState extends State<SharedFormFields>
 
       RadioWidget<Languages>(
           title: LocaleKeys.inChatYouPrefer,
-          onSubmit: (result) => _listenToData(model.copyWith(inChatYouPrefer: result)),
+          onSubmit: (result) => _listenToData(model.copyWith(inChatYouPrefer: result.languageCode)),
           values: Languages.values,
           titles: [AppText(LocaleKeys.english), AppText(LocaleKeys.arabic)]
       ),
       RadioWidget<Answer>(
           title: LocaleKeys.areYouSmoke,
-          onSubmit: (result) => _listenToData(model.copyWith(smoke: result)),
+          onSubmit: (result) => _listenToData(model.copyWith(smoke: result.toBool)),
           values: Answer.values,
           titles: [AppText(LocaleKeys.yes), AppText(LocaleKeys.no)]
       ),
 
       RadioWidget<Answer>(
           title: LocaleKeys.doYouBelongToATribe,
-          onSubmit: (result) => _listenToData(model.copyWith(belongToATribe: result)),
+          onSubmit: (result) => _listenToData(model.copyWith(belongToATribe: result.toBool)),
           values: Answer.values,
           titles: [AppText(LocaleKeys.yes), AppText(LocaleKeys.no)]
       ),
 
-      DropDownTextField<String>(
+      DropDownTextField<Skin>(
         hint: LocaleKeys.pleaseEnterSkinColor,
-        values: Skin.values.map((e) => e.translate).toList(),
+        values: Skin.values,
+        itemBuilder: (v) => AppText(v.translate),
         title: LocaleKeys.skinColor,
-        onChanged: (val) => _listenToData(model.copyWith(skinColor: val)),
+        onChanged: (val) => _listenToData(model.copyWith(skinColor: val?.name)),
       ),
     ];
 

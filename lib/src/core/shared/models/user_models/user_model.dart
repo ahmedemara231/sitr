@@ -301,20 +301,20 @@ class WeddingType {
 
 }
 
-class MaritalStatus {
-  MaritalStatus({
+class MaritalStatusModel {
+  MaritalStatusModel({
     this.value,
     this.title,});
 
-  MaritalStatus.fromJson(dynamic json) {
+  MaritalStatusModel.fromJson(dynamic json) {
     value = json['value'];
     title = json['title'];
   }
   String? value;
   String? title;
-  MaritalStatus copyWith({  String? value,
+  MaritalStatusModel copyWith({  String? value,
     String? title,
-  }) => MaritalStatus(  value: value ?? this.value,
+  }) => MaritalStatusModel(  value: value ?? this.value,
     title: title ?? this.title,
   );
   Map<String, dynamic> toJson() {

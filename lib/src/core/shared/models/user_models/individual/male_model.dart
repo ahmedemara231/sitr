@@ -87,7 +87,7 @@ class MaleModel extends IndividualUserModel {
       completeRegistration: json['complete_registration'],
 
       maritalStatus: (json['marital_status'] as String?).isNull? null :
-      MaritalStatus.fromJson(json['marital_status']),
+      MaritalStatusModel.fromJson(json['marital_status']),
 
       weddingType: (json['wedding_type'] as String?).isNull? null :
       WeddingType.fromJson(json['wedding_type']),

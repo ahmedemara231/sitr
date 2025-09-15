@@ -238,13 +238,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       if (formKey.currentState!.validate()) {
                         if(signUpBody is MaleAndFemaleSignUp){
                           signUpBody = MaleAndFemaleSignUp(
-                              age: _maleAgeCont.text,
-                              name: _maleNameCont.text,
-                              phone: _malePhoneCont.text,
-                              identityNumber: _maleIdentifyNumberCont.text,
-                              image: image,
-                              gender: type.name,
-                              code: _maleCodeCont.text
+                            age: _getContBasedUserType(whenMale: _maleAgeCont, whenFemale: _femaleAgeCont).text,
+                            name: _getContBasedUserType(whenMale: _maleNameCont, whenFemale: _femaleNameCont).text,
+                            phone: _getContBasedUserType(whenMale: _malePhoneCont, whenFemale: _femalePhoneCont).text,
+                            identityNumber: _getContBasedUserType(whenMale: _maleIdentifyNumberCont, whenFemale: _femaleIdentifyNumberCont).text,
+                            code: _getContBasedUserType(whenMale: _maleCodeCont, whenFemale: _femaleCodeCont).text,
+                            image: image,
+                            gender: type.name,
                           );
 
                         }else{

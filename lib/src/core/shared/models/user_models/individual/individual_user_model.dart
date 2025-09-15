@@ -2,7 +2,7 @@ import '../user_model.dart';
 
 class IndividualUserModel extends UserModel {
   final String? nickName;
-  final MaritalStatus? maritalStatus;
+  final MaritalStatusModel? maritalStatus;
   final int? height;
   final int? weight;
   final String? currentJob;
@@ -71,7 +71,7 @@ class IndividualUserModel extends UserModel {
 
   factory IndividualUserModel.initial() => IndividualUserModel(
     nickName: '',
-    maritalStatus: MaritalStatus(),
+    maritalStatus: MaritalStatusModel(),
     height: 0,
     weight: 0,
     currentJob: '',
@@ -174,7 +174,7 @@ class IndividualUserModel extends UserModel {
   @override
   UserModel copyWith({
       String? nickName,
-      MaritalStatus? maritalStatus,
+      MaritalStatusModel? maritalStatus,
       int? height,
       int? weight,
       String? currentJob,

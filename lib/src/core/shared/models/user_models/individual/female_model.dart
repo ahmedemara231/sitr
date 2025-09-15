@@ -81,7 +81,7 @@ class FemaleModel extends IndividualUserModel {
       completeRegistration: json['complete_registration'],
 
       maritalStatus: (json['marital_status'] as String?).isNull? null :
-      MaritalStatus.fromJson(json['marital_status']),
+      MaritalStatusModel.fromJson(json['marital_status']),
 
       weddingType: (json['wedding_type'] as String?).isNull? null :
       WeddingType.fromJson(json['wedding_type']),
@@ -98,8 +98,8 @@ class FemaleModel extends IndividualUserModel {
       id: json['id'],
       name: json['name'],
       parentId: json['parent_id'],
-      type: json['type'],
-      gender: json['gender'],
+      type: Type.fromJson(json['type']),
+      gender: Gender.fromJson(json['gender']),
       avatar: json['avatar'],
       phone: json['phone'],
       countryCode: json['country_code'],
@@ -164,7 +164,7 @@ class FemaleModel extends IndividualUserModel {
     String? guardianPhone,
     String? guardianCountryCode,
     String? guardianRelation,
-    String? nickName, MaritalStatus? maritalStatus, int? height, int? weight, String? currentJob, String? bio, bool? hasChildren, int? numOfChildren, ChildCustody? childCustody, bool? wantChildren, String? prohibitedThings, int? dowryMin, int? dowryMax, WeddingType? weddingType, CityModel? cityId, String? educationLevel, bool? isPrayer, String? healthConditions, String? chatLang, bool? isSmoker, String? tribeAffiliation, String? skinColor, ReligiousCommitment? religiousCommitment, int? views, int? id, String? name, int? parentId, Type? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, AdminApprovalStatus? adminApprovalStatus, String? completeRegistration, String? token}) {
+    String? nickName, MaritalStatusModel? maritalStatus, int? height, int? weight, String? currentJob, String? bio, bool? hasChildren, int? numOfChildren, ChildCustody? childCustody, bool? wantChildren, String? prohibitedThings, int? dowryMin, int? dowryMax, WeddingType? weddingType, CityModel? cityId, String? educationLevel, bool? isPrayer, String? healthConditions, String? chatLang, bool? isSmoker, String? tribeAffiliation, String? skinColor, ReligiousCommitment? religiousCommitment, int? views, int? id, String? name, int? parentId, Type? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, AdminApprovalStatus? adminApprovalStatus, String? completeRegistration, String? token}) {
 
     return FemaleModel(
       id: id ?? this.id,

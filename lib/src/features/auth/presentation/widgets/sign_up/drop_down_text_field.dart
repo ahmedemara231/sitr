@@ -91,7 +91,7 @@ class _DropDownTextFieldState<T> extends State<DropDownTextField<T>> {
             items: widget.values?.map((T value) {
               return DropdownMenuItem<T>(
                 value: value,
-                child: AppText(value.toString()),
+                child: widget.itemBuilder?.call(value)?? AppText(value.toString()),
               );
             }).toList(),
             onChanged: widget.onChanged,

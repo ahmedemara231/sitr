@@ -65,6 +65,7 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
               Builder(builder: (ctx) {
                 return DefaultButton(
                   onTap: () async {
+                    // log('message : ${sharedFormFieldModel.toJson()}');
                     await ctx
                         .read<CompleteProfileCubit>()
                         .completeProfile(sharedFormFieldModel);
