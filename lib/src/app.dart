@@ -18,8 +18,14 @@ import 'core/widgets/app_text.dart';
 import 'core/widgets/offline_widget.dart';
 import 'features/auth/presentation/screens/enter_male_female_child_data.dart';
 import 'features/auth/presentation/screens/login.dart';
+import 'features/more/presentation/screens/complaint_and_suggestion/complaints_and_suggestions_screen.dart';
+import 'features/more/presentation/screens/consultant/consultant_screen.dart';
+import 'features/more/presentation/screens/contact_us/contact_us_screen.dart';
 import 'features/more/presentation/screens/edit_profile.dart';
 import 'features/more/presentation/screens/profile.dart';
+import 'features/more/presentation/screens/success_partners/success_partners_screen.dart';
+import 'features/more/presentation/screens/terms_andcondition_and_about_us/terms_andcondition_and_about_us.dart';
+import 'features/more/presentation/screens/wallet/wallet_screen.dart';
 import 'features/otp/presentation/otp.dart';
 import 'features/auth/presentation/screens/sign_up.dart';
 import 'features/packages/presentation/packages_screen.dart';
@@ -48,8 +54,9 @@ class Sitr extends StatelessWidget {
             locale: context.locale,
             navigatorKey: Go.navigatorKey,
             restorationScopeId: 'app',
+            home:  const ContactUsScreen(),
             // home: const SplashScreen(),
-            home: EnterMaleOrFemaleOrChildDataScreen.signUpAsParent(),
+            // home: EnterMaleOrFemaleOrChildDataScreen.signUpAsParent(),
             // home: EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(type: UserType.female),
             // home: const PackagesScreen.view(),
             // home: OtpScreen(title: '', onConfirmCode: (BuildContext context, String code) {  }, onResendCodePress: (BuildContext context) {  },),

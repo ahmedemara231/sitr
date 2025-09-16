@@ -38,7 +38,7 @@ class DropDownTextField extends StatelessWidget {
               borderSide: BorderSide(color: Colors.grey[300]!, width: 0),
             ),
           ),
-          initialValue: '1',
+          // initialValue: '1',
           // initialValue: LocaleKeys.pleaseEnterTheType,
           items: List.generate(3, (index) => DropdownMenuItem(
             value: index.toString(),

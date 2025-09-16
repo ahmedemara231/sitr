@@ -10,14 +10,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/core/extensions/align_helper.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/core/widgets/custom_app_bar.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/complaint_and_suggestion/add_complaint_and_suggestion.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/complaint_and_suggestion/complaint_details_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/complaint_and_suggestion/complaints_and_suggestions_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/complaint_and_suggestion/widgets/complaints_and_suggestions_item.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/consultant/consultant_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/contact_us/contact_us_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/success_partners/success_partners_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/terms_andcondition_and_about_us/terms_andcondition_and_about_us.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/wallet/wallet_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/translations/ar.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/ar.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/translations/lang.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/lang.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/generated/assets.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/generated/assets.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/app.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/female_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/female_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/parent.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/parent.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/models/complete_profile/female.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/models/complete_profile/female.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/screens/enter_male_female_child_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/screens/enter_male_female_child_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/female_fields.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/female_fields.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/male_fields.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/male_fields.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/config/language/locale_keys.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/config/language/locale_keys.g.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/config/res/color_manager.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/config/res/color_manager.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/helpers/lancher_helper.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/helpers/lancher_helper.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/app_text.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/app_text.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/drop_down_text_field.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/drop_down_text_field.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +91,9 @@
   &quot;associatedIndex&quot;: 3
 }</component>
   <component name="ProjectId" id="31mSlsQ169kD8NqxRRZBNV5XPRy" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1" />
     <panes>
@@ -83,27 +106,27 @@
     <option name="foldersAlwaysOnTop" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Flutter.main.dart.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;auth&quot;,
-    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/aaita/Desktop/apps/crud_sitr/sitr/lib/src/features/packages/presentation/cubits&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;flutter.settings&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Flutter.main.dart.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "more",
+    "io.flutter.reload.alreadyRun": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/mac/StudioProjects/sitr",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "show.migrate.to.gradle.popup": "false"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib/src/features/packages/presentation/cubits" />
@@ -113,11 +136,11 @@
       <recent name="$PROJECT_DIR$/lib/src/core/extensions" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets/svg" />
+      <recent name="$PROJECT_DIR$/assets/images" />
       <recent name="$PROJECT_DIR$/lib/src/features/auth/models/complete_profile" />
       <recent name="$PROJECT_DIR$/lib/src/core/shared/models/user_models" />
       <recent name="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/shared" />
-      <recent name="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/login" />
-      <recent name="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up" />
     </key>
   </component>
   <component name="TaskManager">

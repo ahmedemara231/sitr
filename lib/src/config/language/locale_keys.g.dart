@@ -454,4 +454,130 @@ abstract class LocaleKeys {
   static const String _theLoadingIsEndsSoon = 'the_loading_is_ends_soon';
   static String get theLoadingIsEndsSoon => _theLoadingIsEndsSoon.tr();
 
+  static const String _wallet = 'wallet';
+  static String get wallet => _wallet.tr();
+
+  static const String _yourCurrentBalance = 'your_current_balance';
+  static String get yourCurrentBalance => _yourCurrentBalance.tr();
+
+  static const String _rechargeWallet = 'recharge_wallet';
+  static String get rechargeWallet => _rechargeWallet.tr();
+
+  static const String _settings = 'settings';
+  static String get settings => _settings.tr();
+
+  static const String _changeMobileNumber = 'change_mobile_number';
+  static String get changeMobileNumber => _changeMobileNumber.tr();
+
+  static const String _notifications = 'notifications';
+  static String get notifications => _notifications.tr();
+
+  static const String _deleteAccount = 'delete_account';
+  static String get deleteAccount => _deleteAccount.tr();
+
+  static const String _myPackage = 'my_package';
+  static String get myPackage => _myPackage.tr();
+
+  static const String _amount = 'amount';
+  static String get amount => _amount.tr();
+
+  static const String _riyal = 'riyal';
+  static String get riyal => _riyal.tr();
+
+  static const String _consultants = 'consultants';
+  static String get consultants => _consultants.tr();
+
+  static const String _successPartners = 'success_partners';
+  static String get successPartners => _successPartners.tr();
+
+  static const String _complaintsAndSuggestions = 'complaints_and_suggestions';
+  static String get complaintsAndSuggestions => _complaintsAndSuggestions.tr();
+
+  static const String _complaintNumber = 'complaint_number';
+  static String get complaintNumber => _complaintNumber.tr();
+
+  static const String _inProgress = 'in_progress';
+  static String get inProgress => _inProgress.tr();
+
+  static const String _replied = 'replied';
+  static String get replied => _replied.tr();
+
+  static const String _attachNewComplaint = 'attach_new_complaint';
+  static String get attachNewComplaint => _attachNewComplaint.tr();
+
+  static const String _complaintDetails = 'complaint_details';
+  static String get complaintDetails => _complaintDetails.tr();
+
+  static const String _complaintImages = 'complaint_images';
+  static String get complaintImages => _complaintImages.tr();
+
+  static const String _pleaseAttachImages = 'please_attach_images';
+  static String get pleaseAttachImages => _pleaseAttachImages.tr();
+
+  static const String _complaintText = 'complaint_text';
+  static String get complaintText => _complaintText.tr();
+
+  static const String _send = 'send';
+  static String get send => _send.tr();
+
+  static const String _complaintDetailsView = 'complaint_details_view';
+  static String get complaintDetailsView => _complaintDetailsView.tr();
+
+  static const String _verificationCode = 'verification_code';
+  static String get verificationCode => _verificationCode.tr();
+
+  static const String _pleaseEnterTheVerificationCodeSentTo = 'please_enter_the_verification_code_sent_to';
+  static String get pleaseEnterTheVerificationCodeSentTo => _pleaseEnterTheVerificationCodeSentTo.tr();
+
+  static const String _resend = 'resend';
+  static String get resend => _resend.tr();
+
+  static const String _pleaseEnterANewMobileNumber = 'please_enter_a_new_mobile_number';
+  static String get pleaseEnterANewMobileNumber => _pleaseEnterANewMobileNumber.tr();
+
+  static const String _enterANewMobileNumberToChangeYourCurrentOne = 'enter_a_new_mobile_number_to_change_your_current_one';
+  static String get enterANewMobileNumberToChangeYourCurrentOne => _enterANewMobileNumberToChangeYourCurrentOne.tr();
+
+  static const String _changesSavedSuccessfully = 'changes_saved_successfully';
+  static String get changesSavedSuccessfully => _changesSavedSuccessfully.tr();
+
+  static const String _blockedCustomers = 'blocked_customers';
+  static String get blockedCustomers => _blockedCustomers.tr();
+
+  static const String _unblock = 'unblock';
+  static String get unblock => _unblock.tr();
+
+  static const String _back = 'back';
+  static String get back => _back.tr();
+
+  static const String _areYouSureYouWantToUnblock = 'are_you_sure_you_want_to_unblock';
+  static String get areYouSureYouWantToUnblock => _areYouSureYouWantToUnblock.tr();
+
+  static const String _cancelOrder = 'cancel_order';
+  static String get cancelOrder => _cancelOrder.tr();
+
+  static const String _aboutUs = 'about_us';
+  static String get aboutUs => _aboutUs.tr();
+
+  static const String _termsAndConditions = 'terms_and_conditions';
+  static String get termsAndConditions => _termsAndConditions.tr();
+
+  static const String _areYouSureYouWantToDeleteYourAccount = 'are_you_sure_you_want_to_delete_your_account';
+  static String get areYouSureYouWantToDeleteYourAccount => _areYouSureYouWantToDeleteYourAccount.tr();
+
+  static const String _deletingWillRemoveAllYourData = 'deleting_will_remove_all_your_data';
+  static String get deletingWillRemoveAllYourData => _deletingWillRemoveAllYourData.tr();
+
+  static const String _messageText = 'message_text';
+  static String get messageText => _messageText.tr();
+
+  static const String _youCanContactUsThroughTheFollowingChannels = 'you_can_contact_us_through_the_following_channels';
+  static String get youCanContactUsThroughTheFollowingChannels => _youCanContactUsThroughTheFollowingChannels.tr();
+
+  static const String _weWillReplyToYouAsSoonAsPossible = 'we_will_reply_to_you_as_soon_as_possible';
+  static String get weWillReplyToYouAsSoonAsPossible => _weWillReplyToYouAsSoonAsPossible.tr();
+
+  static const String _pleaseAttachText = 'please_attach_text';
+  static String get pleaseAttachText => _pleaseAttachText.tr();
+
 }

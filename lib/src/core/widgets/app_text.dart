@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../config/res/config_imports.dart';
 
@@ -32,7 +33,7 @@ class AppText extends StatelessWidget {
       maxLines: maxLines,
       style: TextStyle(
         color: color,
-        fontSize: fontSize ?? FontSize.s14,
+        fontSize: fontSize?.sp ?? FontSize.s14.sp,
         fontWeight: fontWeight,
         height: height,
         fontFamily: ConstantManager.fontFamily

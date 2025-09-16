@@ -1,6 +1,6 @@
 part of 'config_imports.dart';
 
-class AppColors {
+abstract class AppColors {
   static const Color main = Color(0xFF1B8354);
   static const Color primary = Color(0xFFA66D09);
   static const Color secondary = Color(0xFF666666);
@@ -22,6 +22,11 @@ class AppColors {
 
   static const Color grey = Color(0xFF5B5B5B);
   static const Color shadow = Color(0xFF5B5B5B);
+  static const Color darkGray = Color(0xff3A3A3A);
+  static const Color veryLightGray = Color(0xff3A3A3A);
+  static const Color mediumGray = Color(0xff727272);
+  static const Color textBlack = Color(0xff272727);
+  static const Color darkGay = Color(0xff525252);
 }
 
 class AppColorsWithDarkMode {

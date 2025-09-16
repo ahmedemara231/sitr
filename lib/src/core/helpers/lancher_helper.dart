@@ -14,17 +14,25 @@ class LauncherHelper {
     await launchUrl(Uri.parse(url));
   }
 
-  static void launchWhatsApp(String phone) async {
-    final String message = 'مرحبا بك';
-    if (phone.startsWith('00966')) {
-      phone = phone.substring(5);
+  static Future<void> launchWhatsApp(String phone) async {
+    // Normalize input
+    if (phone.startsWith('+')) {
+      phone = phone.substring(1);
+    } else if (phone.startsWith('00')) {
+      phone = phone.substring(2);
     }
-    final whatsAppNativeApp = Platform.isIOS
-        ? 'https://wa.me/$phone?text=$message'
-        : 'whatsapp://send?phone=$phone&text=$message';
-    debugPrint(whatsAppNativeApp);
-    if (await canLaunchUrl(Uri.parse(whatsAppNativeApp))) {
-      await launchUrl(Uri.parse(whatsAppNativeApp));
+
+    final String message = Uri.encodeComponent('مرحبا بك'); // ✅ encode Arabic text
+
+    final Uri nativeUrl = Uri.parse("whatsapp://send?phone=$phone&text=$message");
+    final Uri webUrl = Uri.parse("https://wa.me/$phone?text=$message");
+
+    debugPrint("Trying WhatsApp URL: $nativeUrl");
+
+    if (await canLaunchUrl(nativeUrl)) {
+      await launchUrl(nativeUrl, mode: LaunchMode.externalApplication);
+    } else if (await canLaunchUrl(webUrl)) {
+      await launchUrl(webUrl, mode: LaunchMode.externalApplication);
     } else {
       throw LocaleKeys.exceptionError;
     }
@@ -91,7 +99,7 @@ class LauncherHelper {
     }
   }
 
-  void launchFacebook(String userName) async {
+  static void launchFacebook(String userName) async {
     final Uri nativeUrl = Uri.parse(
         'fb://facewebmodal/f?href=https://www.facebook.com/$userName');
     final Uri webUrl = Uri.parse('https://www.facebook.com/$userName');
