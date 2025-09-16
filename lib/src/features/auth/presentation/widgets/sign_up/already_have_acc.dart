@@ -5,7 +5,8 @@ import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/navigation/navigator.dart';
 import '../../../../../core/widgets/app_text.dart';
-import '../../screens/login.dart';
+import '../../../imports.dart';
+
 
 class AlreadyHaveAccWidget extends StatelessWidget {
   const AlreadyHaveAccWidget({super.key});

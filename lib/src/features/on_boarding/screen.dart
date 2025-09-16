@@ -7,7 +7,7 @@ import '../../core/extensions/padding_extension.dart';
 import '../../core/helpers/cache_service.dart';
 import '../../core/navigation/navigator.dart';
 import '../../core/widgets/buttons/default_button.dart';
-import '../auth/presentation/screens/login.dart';
+import '../auth/imports.dart';
 import 'models/screen_model.dart';
 import 'widgets/views.dart';
 

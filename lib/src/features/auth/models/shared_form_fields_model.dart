@@ -1,6 +1,3 @@
-import '../../../config/language/languages.dart';
-import '../../../core/extensions/enum.dart';
-import '../presentation/enums/answer.dart';
 import '../presentation/enums/nursery.dart';
 
 class SharedFormFieldModel{
@@ -10,72 +7,41 @@ class SharedFormFieldModel{
   final String? weight;
   final String? currentJob;
   final String? quickBrief;
-  final Answer? childrenExists;
+  final bool? childrenExists;
   final String? childrenNumber;
   final Nursery? nursery;
-  final Answer? wantToHaveChildren;
+  final bool? wantToHaveChildren;
   final String? thingsIAcceptOrWant;
   final String? typeOfWeddingParty;
-  final String? city;
+  final int? cityId;
   final String? educationalQualification;
-  final Answer? pray;
+  final bool? pray;
   final String? diseasesIfExists;
-  final Languages? inChatYouPrefer;
-  final Answer? smoke;
-  final Answer? belongToATribe;
+  final String? inChatYouPrefer;
+  final bool? smoke;
+  final bool? belongToATribe;
   final String? skinColor;
-
-  //   //   return {
-//   //     "nick_name": nickName,
-//   //     "marital_status": maritalStatus,
-//   //     "height": height,
-//   //     "weight": weight,
-//   //     "current_job": currentJob,
-//   //     "bio": bio,
-//   //     "has_children": hasChildren?.name.tr(),
-//   //     "num_of_children": numOfChildren,
-//   //     "child_custody": childCustody,
-//   //     "want_children": wantChildren?.name.tr(),
-//   //     "prohibited_things": prohibitedThings,
-//   //     "dowry_min": dowryMin,
-//   //     "dowry_max": dowryMax,
-//   //     "wedding_type": weddingType,
-//   //     "city_id": city,
-//   //     "education_level": educationLevel,
-//   //     "is_prayer": isPrayer?.name.tr(),
-//   //     "health_conditions": healthConditions,
-//   //     "chat_lang": chatLang,
-//   //     "is_smoker": isSmoker?.name.tr(),
-//   //     "tribe_affiliation": tribeAffiliation?.name.tr(),
-//   //     "skin_color": skinColor,
-//   //     "religious_commitment": religiousCommitment,
-//   //     "preferred_residence_after_marriage": preferredResidenceAfterMarriage,
-//   //     "hijab": hijabWearing,
-//   //     "accepts_polygamy": acceptsPolygamy?.name.tr(),
-//   //     "parent_name": parentName,
-//   //     "parent_relation_id": parentRelationId,
-//   //     "parent_phone": parentPhone,
 
   Map<String, dynamic> toJson() => {
     "nick_name": nickName,
     "marital_status": maritalStatus,
-    "tall": tall,
+    "height": tall,
     "weight": weight,
     "current_job": currentJob,
     "bio": quickBrief,
-    "has_children": childrenExists?.translate,
+    "has_children": childrenExists,
     "num_of_children": childrenNumber,
-    "child_custody": nursery?.translate,
-    "want_children": wantToHaveChildren?.translate,
+    "child_custody": nursery?.name,
+    "want_children": wantToHaveChildren,
     "prohibited_things": thingsIAcceptOrWant,
     "wedding_type": typeOfWeddingParty,
-    "city_id": city,
+    "city_id": cityId,
     "education_level": educationalQualification,
-    "is_prayer": pray?.translate,
+    "is_prayer": pray,
     "health_conditions": diseasesIfExists,
-    "chat_lang": inChatYouPrefer?.translate,
-    "is_smoker": smoke?.translate,
-    "tribe_affiliation": belongToATribe?.translate,
+    "chat_lang": inChatYouPrefer,
+    "is_smoker": smoke,
+    "tribe_affiliation": belongToATribe,
     "skin_color": skinColor,
   };
 
@@ -92,10 +58,10 @@ class SharedFormFieldModel{
     wantToHaveChildren: null,
     thingsIAcceptOrWant: null,
     typeOfWeddingParty: null,
-    city: null,
+    cityId: null,
     educationalQualification: null,
     pray: null,
-    diseasesIfExists: null,
+    diseasesIfExists: 'null',
     inChatYouPrefer: null,
     smoke: null,
     belongToATribe: null,
@@ -109,21 +75,21 @@ class SharedFormFieldModel{
     String? weight,
     String? currentJob,
     String? quickBrief,
-    Answer? childrenExists,
+    bool? childrenExists,
     String? childrenNumber,
     Nursery? nursery,
-    Answer? wantToHaveChildren,
+    bool? wantToHaveChildren,
     String? thingsIAcceptOrWant,
     String? typeOfWeddingParty,
-    String? city,
+    int? cityId,
     String? educationalQualification,
-    Answer? pray,
+    bool? pray,
     String? diseasesIfExists,
-    Languages? inChatYouPrefer,
-    Answer? smoke,
-    Answer? belongToATribe,
+    String? inChatYouPrefer,
+    bool? smoke,
+    bool? belongToATribe,
     String? skinColor,
-}) => SharedFormFieldModel(
+  }) => SharedFormFieldModel(
     nickName: nickName ?? this.nickName,
     maritalStatus: maritalStatus ?? this.maritalStatus,
     tall: tall ?? this.tall,
@@ -136,7 +102,7 @@ class SharedFormFieldModel{
     wantToHaveChildren: wantToHaveChildren ?? this.wantToHaveChildren,
     thingsIAcceptOrWant: thingsIAcceptOrWant ?? this.thingsIAcceptOrWant,
     typeOfWeddingParty: typeOfWeddingParty ?? this.typeOfWeddingParty,
-    city: city ?? this.city,
+    cityId: cityId ?? this.cityId,
     educationalQualification: educationalQualification ?? this.educationalQualification,
     pray: pray ?? this.pray,
     diseasesIfExists: diseasesIfExists ?? this.diseasesIfExists,
@@ -159,7 +125,7 @@ class SharedFormFieldModel{
     required this.wantToHaveChildren,
     required this.thingsIAcceptOrWant,
     required this.typeOfWeddingParty,
-    required this.city,
+    required this.cityId,
     required this.educationalQualification,
     required this.pray,
     required this.diseasesIfExists,
@@ -169,77 +135,3 @@ class SharedFormFieldModel{
     required this.skinColor,
   });
 }
-
-// class MaleFields extends SharedFormFieldModel{
-//   final File? image;
-//   final String? phone;
-//   final int identifyNumber;
-//   final int age;
-//
-//   MaleFields({
-//     required this.image,
-//     required this.phone,
-//     required this.identifyNumber,
-//     required this.age,
-//     required super.nickName,
-//     required super.maritalStatus,
-//     required super.tall,
-//     required super.weight,
-//     required super.currentJob,
-//     required super.quickBrief,
-//     required super.childrenExists,
-//     required super.childrenNumber,
-//     required super.nursery,
-//     required super.wantToHaveChildren,
-//     required super.thingsIAcceptOrWant,
-//     required super.typeOfWeddingParty,
-//     required super.city,
-//     required super.educationalQualification,
-//     required super.pray,
-//     required super.diseasesIfExists,
-//     required super.inChatYouPrefer,
-//     required super.smoke,
-//     required super.belongToATribe,
-//     required super.skinColor,
-//   });
-// }
-//
-// class FemaleFields extends SharedFormFieldModel{
-//   final String? whereDoYouAcceptToLiveAfterMarriage;
-//   final bool? acceptPolygamy;
-//   final bool waerHijab;
-//   final String degreeOfCommitment;
-//   final String? parentName;
-//   final String? parentNumber;
-//   final Dowry? dowry;
-//
-//   FemaleFields({
-//     required this.whereDoYouAcceptToLiveAfterMarriage,
-//     required this.acceptPolygamy,
-//     required this.waerHijab,
-//     required this.degreeOfCommitment,
-//     required this.parentName,
-//     required this.parentNumber,
-//     required this.dowry,
-//     required super.nickName,
-//     required super.maritalStatus,
-//     required super.tall,
-//     required super.weight,
-//     required super.currentJob,
-//     required super.quickBrief,
-//     required super.childrenExists,
-//     required super.childrenNumber,
-//     required super.nursery,
-//     required super.wantToHaveChildren,
-//     required super.thingsIAcceptOrWant,
-//     required super.typeOfWeddingParty,
-//     required super.city,
-//     required super.educationalQualification,
-//     required super.pray,
-//     required super.diseasesIfExists,
-//     required super.inChatYouPrefer,
-//     required super.smoke,
-//     required super.belongToATribe,
-//     required super.skinColor,
-//   });
-// }

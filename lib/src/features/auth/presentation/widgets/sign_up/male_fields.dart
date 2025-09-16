@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
-import '../../../models/complete_profile/male.dart';
+import '../../../models/complete_profile/male_body.dart';
 import '../../../models/shared_form_fields_model.dart';
 import '../shared/text_field.dart';
 import 'image_widget.dart';
@@ -81,14 +81,14 @@ class _MaleFieldsState extends State<MaleFields> {
       case null:
         return SharedFormFields(
           sharedFormFieldModel: sharedFormFieldModel,
-          restorationId: 'male_fields',
+          restorationId: UserType.male.name,
           onFinished: (data) => _listenToData(data.copyWith()),
         );
 
       default:
         return SharedFormFields(
           sharedFormFieldModel: sharedFormFieldModel,
-          restorationId: 'male_fields',
+          restorationId: UserType.male.name,
           onFinished: (data) => sharedFormFieldModel = data.copyWith(),
           onInitData: (List<Widget> children) => children..insert(
             0,
@@ -110,6 +110,7 @@ class _MaleFieldsState extends State<MaleFields> {
                 upperTitle: LocaleKeys.phoneNumber,
                 title: LocaleKeys.pleaseEnterTheNumber,
                 controller: _phoneCont,
+                inputType: TextInputType.phone,
                 onChanged: (val) => _listenToData(asMaleParentCompleteProfileBody.copyWith(name: val)),
                 // validator: Validators.validateEmpty,
               ),

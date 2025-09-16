@@ -1,6 +1,4 @@
 import '../../../../config/language/languages.dart';
-import '../../../../core/extensions/enum.dart';
-import '../../presentation/enums/answer.dart';
 import '../../presentation/enums/nursery.dart';
 import '../dowry.dart';
 import '../shared_form_fields_model.dart';
@@ -8,8 +6,8 @@ import '../shared_form_fields_model.dart';
 class FemaleCompleteProfileBody extends SharedFormFieldModel{
   final Dowry dowry;
   final String liveAfterMarry;
-  final Answer doYouAcceptPolygamy;
-  final Answer wearingHijab;
+  final bool? doYouAcceptPolygamy;
+  final bool? wearingHijab;
   final String degreeOfCommitment;
   final String parentName;
   final String parentNumber;
@@ -37,7 +35,7 @@ class FemaleCompleteProfileBody extends SharedFormFieldModel{
     required super.wantToHaveChildren,
     required super.thingsIAcceptOrWant,
     required super.typeOfWeddingParty,
-    required super.city,
+    required super.cityId,
     required super.educationalQualification,
     required super.pray,
     required super.diseasesIfExists,
@@ -54,24 +52,24 @@ class FemaleCompleteProfileBody extends SharedFormFieldModel{
     weight: '',
     currentJob: '',
     quickBrief: '',
-    childrenExists: Answer.yes,
+    childrenExists: null,
     childrenNumber: '',
     nursery: Nursery.father,
-    wantToHaveChildren: Answer.yes,
+    wantToHaveChildren: null,
     thingsIAcceptOrWant: '',
     typeOfWeddingParty: '',
-    city: '',
+    cityId: 0,
     educationalQualification: '',
-    pray: Answer.yes,
+    pray: null,
     diseasesIfExists: '',
-    inChatYouPrefer: Languages.arabic,
-    smoke: Answer.yes,
-    belongToATribe: Answer.yes,
+    inChatYouPrefer: Languages.arabic.languageCode,
+    smoke: null,
+    belongToATribe: null,
     skinColor: '',
     dowry: Dowry(from: 'from', to: 'to'),
     liveAfterMarry: '',
-    doYouAcceptPolygamy: Answer.yes,
-    wearingHijab: Answer.yes,
+    doYouAcceptPolygamy: null,
+    wearingHijab: null,
     degreeOfCommitment: '',
     parentName: '',
     parentNumber: '',
@@ -81,8 +79,8 @@ class FemaleCompleteProfileBody extends SharedFormFieldModel{
   @override
   SharedFormFieldModel copyWith({
     Dowry? dowry,
-    String? liveAfterMarry, Answer? doYouAcceptPolygamy, Answer? wearingHijab, String? degreeOfCommitment, String? parentName, String? parentNumber, String? kinship,
-    String? nickName, String? maritalStatus, String? tall, String? weight, String? currentJob, String? quickBrief, Answer? childrenExists, String? childrenNumber, Nursery? nursery, Answer? wantToHaveChildren, String? thingsIAcceptOrWant, String? typeOfWeddingParty, String? city, String? educationalQualification, Answer? pray, String? diseasesIfExists, Languages? inChatYouPrefer, Answer? smoke, Answer? belongToATribe, String? skinColor}) => FemaleCompleteProfileBody(
+    String? liveAfterMarry, bool? doYouAcceptPolygamy, bool? wearingHijab, String? degreeOfCommitment, String? parentName, String? parentNumber, String? kinship,
+    String? nickName, String? maritalStatus, String? tall, String? weight, String? currentJob, String? quickBrief, bool? childrenExists, String? childrenNumber, Nursery? nursery, bool? wantToHaveChildren, String? thingsIAcceptOrWant, String? typeOfWeddingParty, int? cityId, String? educationalQualification, bool? pray, String? diseasesIfExists, String? inChatYouPrefer, bool? smoke, bool? belongToATribe, String? skinColor}) => FemaleCompleteProfileBody(
 
     nickName: nickName ?? this.nickName,
     maritalStatus: maritalStatus ?? this.maritalStatus,
@@ -96,7 +94,7 @@ class FemaleCompleteProfileBody extends SharedFormFieldModel{
     wantToHaveChildren: wantToHaveChildren ?? this.wantToHaveChildren,
     thingsIAcceptOrWant: thingsIAcceptOrWant ?? this.thingsIAcceptOrWant,
     typeOfWeddingParty: typeOfWeddingParty ?? this.typeOfWeddingParty,
-    city: city ?? this.city,
+    cityId: cityId ?? this.cityId,
     educationalQualification: educationalQualification ?? this.educationalQualification,
     pray: pray ?? this.pray,
     diseasesIfExists: diseasesIfExists ?? this.diseasesIfExists,
@@ -120,10 +118,12 @@ class FemaleCompleteProfileBody extends SharedFormFieldModel{
       'dowry_min' : dowry.from,
       'dowry_max' : dowry.to,
       'preferred_residence_after_marriage' : liveAfterMarry,
-      'accepts_polygamy' : doYouAcceptPolygamy.translate,
+      'accepts_polygamy' : doYouAcceptPolygamy,
       'guardian_name' : parentName,
       'guardian_phone' : parentNumber,
       'guardian_relation_id' : kinship,
+      'hijab' : wearingHijab,
+      'religious_commitment' : degreeOfCommitment
     });
   }
 }
@@ -132,8 +132,8 @@ class FemaleParentCompleteProfileBody extends SharedFormFieldModel{
   final String name;
   final Dowry dowry;
   final String liveAfterMarry;
-  final Answer doYouAcceptPolygamy;
-  final Answer wearingHijab;
+  final bool? doYouAcceptPolygamy;
+  final bool? wearingHijab;
   final String degreeOfCommitment;
   final String parentName;
   final String parentNumber;
@@ -160,7 +160,7 @@ class FemaleParentCompleteProfileBody extends SharedFormFieldModel{
     required super.wantToHaveChildren,
     required super.thingsIAcceptOrWant,
     required super.typeOfWeddingParty,
-    required super.city,
+    required super.cityId,
     required super.educationalQualification,
     required super.pray,
     required super.diseasesIfExists,
@@ -174,8 +174,8 @@ class FemaleParentCompleteProfileBody extends SharedFormFieldModel{
   SharedFormFieldModel copyWith({
     Dowry? dowry,
     String? name,
-    String? liveAfterMarry, Answer? doYouAcceptPolygamy, Answer? wearingHijab, String? degreeOfCommitment, String? parentName, String? parentNumber,
-    String? nickName, String? maritalStatus, String? tall, String? weight, String? currentJob, String? quickBrief, Answer? childrenExists, String? childrenNumber, Nursery? nursery, Answer? wantToHaveChildren, String? thingsIAcceptOrWant, String? typeOfWeddingParty, String? city, String? educationalQualification, Answer? pray, String? diseasesIfExists, Languages? inChatYouPrefer, Answer? smoke, Answer? belongToATribe, String? skinColor}) => FemaleParentCompleteProfileBody(
+    String? liveAfterMarry, bool? doYouAcceptPolygamy, bool? wearingHijab, String? degreeOfCommitment, String? parentName, String? parentNumber,
+    String? nickName, String? maritalStatus, String? tall, String? weight, String? currentJob, String? quickBrief, bool? childrenExists, String? childrenNumber, Nursery? nursery, bool? wantToHaveChildren, String? thingsIAcceptOrWant, String? typeOfWeddingParty, int? cityId, String? educationalQualification, bool? pray, String? diseasesIfExists, String? inChatYouPrefer, bool? smoke, bool? belongToATribe, String? skinColor}) => FemaleParentCompleteProfileBody(
 
     name: name ?? this.name,
     nickName: nickName ?? this.nickName,
@@ -190,7 +190,7 @@ class FemaleParentCompleteProfileBody extends SharedFormFieldModel{
     wantToHaveChildren: wantToHaveChildren ?? this.wantToHaveChildren,
     thingsIAcceptOrWant: thingsIAcceptOrWant ?? this.thingsIAcceptOrWant,
     typeOfWeddingParty: typeOfWeddingParty ?? this.typeOfWeddingParty,
-    city: city ?? this.city,
+    cityId: cityId ?? this.cityId,
     educationalQualification: educationalQualification ?? this.educationalQualification,
     pray: pray ?? this.pray,
     diseasesIfExists: diseasesIfExists ?? this.diseasesIfExists,
@@ -214,24 +214,24 @@ class FemaleParentCompleteProfileBody extends SharedFormFieldModel{
     weight: '',
     currentJob: '',
     quickBrief: '',
-    childrenExists: Answer.yes,
+    childrenExists: null,
     childrenNumber: '',
     nursery: Nursery.father,
-    wantToHaveChildren: Answer.yes,
+    wantToHaveChildren: null,
     thingsIAcceptOrWant: '',
     typeOfWeddingParty: '',
-    city: '',
+    cityId: 0,
     educationalQualification: '',
-    pray: Answer.yes,
+    pray: null,
     diseasesIfExists: '',
-    inChatYouPrefer: Languages.arabic,
-    smoke: Answer.yes,
-    belongToATribe: Answer.yes,
+    inChatYouPrefer: Languages.arabic.languageCode,
+    smoke: null,
+    belongToATribe: null,
     skinColor: '',
     dowry: Dowry(from: 'from', to: 'to'),
     liveAfterMarry: '',
-    doYouAcceptPolygamy: Answer.yes,
-    wearingHijab: Answer.yes,
+    doYouAcceptPolygamy: null,
+    wearingHijab: null,
     degreeOfCommitment: '',
     parentName: '',
     parentNumber: '',
@@ -244,11 +244,12 @@ class FemaleParentCompleteProfileBody extends SharedFormFieldModel{
       'dowry_min' : dowry.from,
       'dowry_max' : dowry.to,
       'preferred_residence_after_marriage' : liveAfterMarry,
-      'accepts_polygamy' : doYouAcceptPolygamy.translate,
+      'accepts_polygamy' : doYouAcceptPolygamy,
       'guardian_name' : parentName,
       'guardian_phone' : parentNumber,
-      'name' : name
+      'name' : name,
+      'hijab' : wearingHijab,
+      'religious_commitment' : degreeOfCommitment
     });
   }
-
 }

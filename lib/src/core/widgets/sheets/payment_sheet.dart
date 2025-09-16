@@ -7,8 +7,6 @@ import '../../../config/res/config_imports.dart';
 import '../../extensions/padding_extension.dart';
 import '../app_text.dart';
 import '../buttons/app_loading_button.dart';
-import '../buttons/custom_app_buttons/default_button.dart';
-import '../buttons/custom_app_buttons/loading_button.dart';
 import '../svg_pic.dart';
 
 enum PaymentMethod {

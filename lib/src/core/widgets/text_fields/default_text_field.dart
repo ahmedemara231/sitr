@@ -1,3 +1,4 @@
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -123,6 +124,13 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
     super.initState();
   }
 
+  void _debounce(String val){
+    EasyDebounce.debounce(
+        'debouncer',
+        const Duration(milliseconds: 300),
+            () => widget.onChanged?.call(val)
+    );
+  }
   @override
   Widget build(BuildContext context) {
     final bool isLabel = widget.label != null;
@@ -136,7 +144,7 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
         TextFormField(
           autovalidateMode: AutovalidateMode.onUserInteraction,
           controller: widget.controller,
-          onChanged: widget.onChanged,
+          onChanged: _debounce,
           inputFormatters: widget.inputFormatters,
           obscureText: widget.isPassword == true ? _isSecure : widget.secure,
           onTap: widget.onTap,
