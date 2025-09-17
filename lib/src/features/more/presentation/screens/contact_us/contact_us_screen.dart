@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/widgets/text.dart';
 import '../../../../../../generated/assets.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
+import '../../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../../core/extensions/align_helper.dart';
 import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/extensions/sized_box_helper.dart';
@@ -13,62 +15,88 @@ import '../../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../../core/widgets/custom_app_bar.dart' show customAppBar;
 import '../../../../../core/widgets/icon_widget.dart';
 import '../../../../../core/widgets/text_fields/default_text_field.dart';
+import '../../cubit/contact_us_cubit/contact_us_cubit.dart';
 
 class ContactUsScreen extends StatelessWidget {
-  const ContactUsScreen({super.key});
+  ContactUsScreen({super.key});
 
+  final TextEditingController controllerMessage = TextEditingController();
+  var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: customAppBar(appBarTitle: LocaleKeys.contactUs),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AppText(
-            LocaleKeys.messageText,
-            color: AppColors.textBlack,
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w700,
-          ),
-          8.szH,
-          DefaultTextField(
-            title: LocaleKeys.pleaseAttachText,
-            fillColor: AppColors.whiteGreyColorProMax,
-            borderColor: Colors.transparent,
-            maxLines: 9,
-            inputType: TextInputType.multiline,
-            validator: (value) => Validators.validateEmpty(value),
-          ),
-          27.szH,
-          AppText(
-            LocaleKeys.youCanContactUsThroughTheFollowingChannels,
-            color: AppColors.textBlack,
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w700,
-          ).centerWidget,
-          20.szH,
-          Wrap(
-            runSpacing: 15.0.h,
-            children: List.generate(
-              iconPath.length,
+    return BlocProvider(
+      create: (context) => ContactUsCubit(),
+      child: Scaffold(
+        backgroundColor: AppColors.whiteScaffoldBackground,
+
+        appBar: customAppBar(appBarTitle: LocaleKeys.contactUs),
+        body: Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AppText(
+                LocaleKeys.messageText,
+                color: AppColors.textBlack,
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w700,
+              ),
+              8.szH,
+              DefaultTextField(
+                controller: controllerMessage,
+                title: LocaleKeys.pleaseAttachText,
+                fillColor: AppColors.whiteGreyColorProMax,
+                borderColor: Colors.transparent,
+                maxLines: 9,
+                inputType: TextInputType.multiline,
+                validator: (value) => Validators.validateEmpty(value),
+              ),
+              27.szH,
+              AppText(
+                LocaleKeys.youCanContactUsThroughTheFollowingChannels,
+                color: AppColors.textBlack,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w700,
+              ).centerWidget,
+              20.szH,
+              Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                runSpacing: 15.0.h,
+                children: List.generate(
+                  iconPath.length,
                   (index) => Padding(
-                padding: EdgeInsets.only(right: 12.w),
-                child: GestureDetector(
-                  onTap: actions[index],
-                  child: IconWidget(
-                    icon: iconPath[index],
-                    width: 40.w,
-                    height: 40.h,
+                    padding: EdgeInsets.only(right: 12.w),
+                    child: GestureDetector(
+                      onTap: actions[index],
+                      child: IconWidget(
+                        icon: iconPath[index],
+                        width: 40.w,
+                        height: 40.h,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
-        ],
-      ).paddingAll(16.r),
-      bottomNavigationBar: AppLoadingButton(
-          asyncCall: (context) async {}, title: LocaleKeys.send)
-          .paddingAll(16.r),    );
+            ],
+          ).paddingAll(16.r),
+        ),
+        bottomNavigationBar: BlocBuilder<ContactUsCubit, AsyncState>(
+          builder: (context, state) {
+            return AppLoadingButton(
+                asyncCall: (context) async {
+                  if(!formKey.currentState!.validate())return;
+                  await context.read<ContactUsCubit>().contactUs(
+                      name: 'name',
+                      countryCode: '+966',
+                      iso: "sa",
+                      phone: "500500500",
+                      message: controllerMessage.text);
+                },
+                title: LocaleKeys.send);
+          },
+        ).paddingAll(16.r),
+      ),
+    );
   }
 }
 
@@ -82,12 +110,11 @@ List<String> iconPath = [
   Assets.svgTiktok,
 ];
 List<VoidCallback> actions = [
-      () => LauncherHelper.launchFacebook('khalid.gamal.9615'),
-      () => LauncherHelper.launchWhatsApp('966500500500'),
-      () => LauncherHelper.launchSnapchat('userName'),
-      () => LauncherHelper.callPhone( phone: '966500500500'),
-      () => LauncherHelper.launchInstagram('flutter.dev'),
-      () => LauncherHelper.launchTwitter('userName'),
-      () => LauncherHelper.launchTikTok('userName'),
-
+  () => LauncherHelper.launchFacebook('khalid.gamal.9615'),
+  () => LauncherHelper.launchWhatsApp('966500500500'),
+  () => LauncherHelper.launchSnapchat('userName'),
+  () => LauncherHelper.callPhone(phone: '966500500500'),
+  () => LauncherHelper.launchInstagram('flutter.dev'),
+  () => LauncherHelper.launchTwitter('userName'),
+  () => LauncherHelper.launchTikTok('userName'),
 ];

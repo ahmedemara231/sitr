@@ -7,18 +7,19 @@ import '../../../../../../config/res/config_imports.dart';
 import '../../../../../../core/extensions/sized_box_helper.dart';
 import '../../../../../../core/navigation/navigator.dart';
 import '../../../../../../core/widgets/icon_widget.dart';
+import '../../../models/complaint_model.dart';
 import '../complaint_details_screen.dart';
 
 class ComplaintsAndSuggestionsItem extends StatelessWidget {
   const ComplaintsAndSuggestionsItem({
-    super.key,
+    super.key, required this.complaintModel,
   });
-
+final ComplaintModel complaintModel;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Go.to(const ComplaintDetailsScreen());
+        Go.to( ComplaintDetailsScreen(complaintId: complaintModel.id??0,));
 
       },
       child: Container(
@@ -30,8 +31,8 @@ class ComplaintsAndSuggestionsItem extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Image.asset(
-              Assets.imagesComplaint,
+            IconWidget(
+             icon: complaintModel.image??'',
               height: 100,
               width: 100,
             ),
@@ -41,7 +42,7 @@ class ComplaintsAndSuggestionsItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AppText(
-                    '${LocaleKeys.complaintNumber}: 5214',
+                    '${LocaleKeys.complaintNumber}: ${complaintModel.number??''}',
                     color: Colors.black,
                     fontWeight: FontWeight.w500,
                     fontSize: 16,
@@ -51,14 +52,14 @@ class ComplaintsAndSuggestionsItem extends StatelessWidget {
                     children: [
                       const IconWidget(icon: Assets.svgCalendar),
                       5.szW,
-                      const AppText(
-                        '2/9/2025',
+                       AppText(
+                        complaintModel.createdAt??'',
                         color: AppColors.primary,
                         fontWeight: FontWeight.w400,
                       ),
                       const Spacer(),
                       AppText(
-                        LocaleKeys.inProgress,
+                        complaintModel.status?.title??'',
                         color: AppColors.mediumGray,
                         fontWeight: FontWeight.w400,
                         fontSize: 12,

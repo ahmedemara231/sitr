@@ -205,9 +205,6 @@ abstract class LocaleKeys {
   static const String _price = 'price';
   static String get price => _price.tr();
 
-  static const String _renewPackage = 'renew_package';
-  static String get renewPackage => _renewPackage.tr();
-
   static const String _agree = 'agree';
   static String get agree => _agree.tr();
 
@@ -451,9 +448,6 @@ abstract class LocaleKeys {
   static const String _pleaseWait = 'please_wait';
   static String get pleaseWait => _pleaseWait.tr();
 
-  static const String _theLoadingIsEndsSoon = 'the_loading_is_ends_soon';
-  static String get theLoadingIsEndsSoon => _theLoadingIsEndsSoon.tr();
-
   static const String _wallet = 'wallet';
   static String get wallet => _wallet.tr();
 
@@ -466,9 +460,6 @@ abstract class LocaleKeys {
   static const String _settings = 'settings';
   static String get settings => _settings.tr();
 
-  static const String _changeMobileNumber = 'change_mobile_number';
-  static String get changeMobileNumber => _changeMobileNumber.tr();
-
   static const String _notifications = 'notifications';
   static String get notifications => _notifications.tr();
 
@@ -477,6 +468,9 @@ abstract class LocaleKeys {
 
   static const String _myPackage = 'my_package';
   static String get myPackage => _myPackage.tr();
+
+  static const String _renewPackage = 'renew_package';
+  static String get renewPackage => _renewPackage.tr();
 
   static const String _amount = 'amount';
   static String get amount => _amount.tr();
@@ -522,6 +516,9 @@ abstract class LocaleKeys {
 
   static const String _complaintDetailsView = 'complaint_details_view';
   static String get complaintDetailsView => _complaintDetailsView.tr();
+
+  static const String _changeMobileNumber = 'change_mobile_number';
+  static String get changeMobileNumber => _changeMobileNumber.tr();
 
   static const String _verificationCode = 'verification_code';
   static String get verificationCode => _verificationCode.tr();
@@ -579,6 +576,9 @@ abstract class LocaleKeys {
 
   static const String _pleaseAttachText = 'please_attach_text';
   static String get pleaseAttachText => _pleaseAttachText.tr();
+
+  static const String _theLoadingIsEndsSoon = 'the_loading_is_ends_soon';
+  static String get theLoadingIsEndsSoon => _theLoadingIsEndsSoon.tr();
 
   static const String _chooseFromHere = 'choose_from_here';
   static String get chooseFromHere => _chooseFromHere.tr();
@@ -651,5 +651,17 @@ abstract class LocaleKeys {
 
   static const String _openMinded = 'open_minded';
   static String get openMinded => _openMinded.tr();
+
+  static const String _successDone = 'success_done';
+  static String get successDone => _successDone.tr();
+
+  static const String _home = 'home';
+  static String get home => _home.tr();
+
+  static const String _chats = 'chats';
+  static String get chats => _chats.tr();
+
+  static const String _more = 'more';
+  static String get more => _more.tr();
 
 }

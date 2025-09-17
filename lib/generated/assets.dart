@@ -2,6 +2,7 @@
 class Assets {
   Assets._();
 
+  static const String assetsSvgPackageIcon = 'assets/svg/package_icon.svg';
   static const String dataEmptyBox = 'assets/lottie/data/empty_box.json';
   static const String dataEmptyCart = 'assets/lottie/data/empty_cart.json';
   static const String dataNoData = 'assets/lottie/data/no_data.json';
@@ -17,6 +18,7 @@ class Assets {
   static const String imagesArrowDown = 'assets/images/arrow_down.png';
   static const String imagesAttachComplaintImage = 'assets/images/attachComplaintImage.png';
   static const String imagesAuthBackground = 'assets/images/auth_background.png';
+  static const String imagesBlockuser = 'assets/images/blockuser.png';
   static const String imagesBoardingFirst = 'assets/images/boarding_first.png';
   static const String imagesBoardingSecond = 'assets/images/boarding_second.png';
   static const String imagesBoardingThird = 'assets/images/boarding_third.png';
@@ -34,13 +36,17 @@ class Assets {
   static const String svgArrowDown = 'assets/svg/arrow_down.svg';
   static const String svgCalendar = 'assets/svg/Calendar.svg';
   static const String svgCamera = 'assets/svg/camera.svg';
+  static const String svgChatsIcon = 'assets/svg/chatsIcon.svg';
   static const String svgContactPhone = 'assets/svg/contactPhone.svg';
   static const String svgFacebook = 'assets/svg/facebook.svg';
+  static const String svgHomeIcon = 'assets/svg/homeIcon.svg';
   static const String svgInstgram = 'assets/svg/instgram.svg';
   static const String svgLangIcon = 'assets/svg/lang_icon.svg';
   static const String svgLogo = 'assets/svg/logo.svg';
+  static const String svgMoreIcon = 'assets/svg/moreIcon.svg';
+  static const String svgNotificationIcon = 'assets/svg/notificationIcon.svg';
   static const String svgOnlinePayment = 'assets/svg/online_payment.svg';
-  static const String svgPackageIcon = 'assets/svg/package_icon.svg';
+  static const String svgPackageIcon = 'assets/svg/packageIcon.svg';
   static const String svgPhoneIcon = 'assets/svg/phoneIcon.svg';
   static const String svgSAFlag = 'assets/svg/SA_flag.svg';
   static const String svgSnapchat = 'assets/svg/snapchat.svg';

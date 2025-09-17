@@ -40,5 +40,58 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+
+	<!-- ✅ Add your custom URL schemes here -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<!-- WhatsApp -->
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>whatsapp</string>
+				<string>wa.me</string>
+			</array>
+		</dict>
+
+		<!-- Facebook -->
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb</string>
+			</array>
+		</dict>
+
+		<!-- Instagram -->
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>instagram</string>
+			</array>
+		</dict>
+
+		<!-- Twitter -->
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>twitter</string>
+			</array>
+		</dict>
+
+		<!-- Snapchat -->
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>snapchat</string>
+			</array>
+		</dict>
+
+		<!-- TikTok -->
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>snssdk1180</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

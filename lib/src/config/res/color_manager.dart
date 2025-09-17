@@ -18,6 +18,7 @@ abstract class AppColors {
   static const Color buttonText = Color(0xffFFFFFF);
   static const Color error = Color(0xFFD92D20);
   static const Color scaffoldBackground = Color(0xffF7F4F3);
+  static const Color whiteScaffoldBackground = Color(0xffFCFCFC);
   static const Color yellow = Color(0xffFDB022);
 
   static const Color grey = Color(0xFF5B5B5B);
@@ -27,6 +28,8 @@ abstract class AppColors {
   static const Color mediumGray = Color(0xff727272);
   static const Color textBlack = Color(0xff272727);
   static const Color darkGay = Color(0xff525252);
+  static const Color redColor = Color(0xffF54242);
+  static const Color unSelectedLabelColor = Color(0xffF54242);
 }
 
 class AppColorsWithDarkMode {

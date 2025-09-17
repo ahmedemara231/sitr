@@ -112,6 +112,8 @@ class _UploadImageWidgetState extends State<UploadImageWidget> {
                             onTap: () {
                               imageValue.value =
                                   List.from(imageValue.value..removeAt(index));
+                              _notifyUpload(imageValue.value.whereType<File>().toList());
+
                             },
                             child: Container(
                               decoration: const BoxDecoration(

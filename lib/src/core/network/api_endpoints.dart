@@ -24,6 +24,16 @@ class ApiConstants {
   
   // auth
   static const String login = 'login';
+  static const String showWallet = 'show-wallet';
+  static const String complaintDetails = 'complaints-show/';
+  static const String successPartners = 'partners';
+  static const String blockUser = 'user-blocks';
+  static const String unBlockUser = 'user-blocks/';
+  static const String addComplaint = 'new-complaint';
+  static const String marriageConsultants = 'marriage-consultants';
+  static const String complaints = 'complaints';
+  static const String chargeWallet = 'charge-wallet';
+  static const String contactStore = 'contact-us-store';
   static const String activate = 'activate';
   static const String register = 'register';
   static const String completeRegister = 'complete-registration';

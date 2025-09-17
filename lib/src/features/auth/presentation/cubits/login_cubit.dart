@@ -7,7 +7,6 @@ class LoginCubit extends AsyncCubit{
   LoginCubit() : super('');
 
   Future<void> login(LoginBody body)async{
-    setLoading();
     await executeAsync(
         operation: () async => await baseCrudUseCase.call(
             CrudBaseParmas(
@@ -18,7 +17,6 @@ class LoginCubit extends AsyncCubit{
             )
         ),
 
-      successEmitter: (data) => setSuccess(data: data)
     );
   }
 
