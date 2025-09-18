@@ -12,8 +12,7 @@ import '../../models/complaint_model.dart';
 
 class FetchComplaintCubit extends AsyncCubit<List<ComplaintModel>>{
   FetchComplaintCubit():super([]){
-    injector<NetworkService>()
-        .setToken('Bearer 138|iKDgQ2TE1R0m4DQIOkD6NtMd6LFVnMv9Q3aS0NCk');
+
     listenController();
   }
 

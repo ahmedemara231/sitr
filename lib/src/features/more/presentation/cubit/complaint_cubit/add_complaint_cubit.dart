@@ -11,10 +11,7 @@ import '../../../../../core/network/network_service.dart';
 import '../../../../../core/widgets/custom_messages.dart';
 
 class AddComplaintCubit extends AsyncCubit<bool> {
-  AddComplaintCubit() : super(false) {
-    injector<NetworkService>()
-        .setToken('Bearer 138|iKDgQ2TE1R0m4DQIOkD6NtMd6LFVnMv9Q3aS0NCk');
-  }
+  AddComplaintCubit() : super(false) ;
 
   Future<void> addComplaint({
     required String title,

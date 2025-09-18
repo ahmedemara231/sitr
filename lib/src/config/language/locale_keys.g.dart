@@ -454,6 +454,12 @@ abstract class LocaleKeys {
   static const String _yourCurrentBalance = 'your_current_balance';
   static String get yourCurrentBalance => _yourCurrentBalance.tr();
 
+  static const String _balance = 'balance';
+  static String get balance => _balance.tr();
+
+  static const String _myBalance = 'my_balance';
+  static String get myBalance => _myBalance.tr();
+
   static const String _rechargeWallet = 'recharge_wallet';
   static String get rechargeWallet => _rechargeWallet.tr();
 
@@ -475,8 +481,8 @@ abstract class LocaleKeys {
   static const String _amount = 'amount';
   static String get amount => _amount.tr();
 
-  static const String _riyal = 'riyal';
-  static String get riyal => _riyal.tr();
+  static const String _sar = 'sar';
+  static String get sar => _sar.tr();
 
   static const String _consultants = 'consultants';
   static String get consultants => _consultants.tr();

@@ -6,10 +6,7 @@ import '../../../../../core/network/network_service.dart';
 import '../../models/block_user_model.dart';
 
 class UnBlockUserCubit extends AsyncCubit{
-  UnBlockUserCubit():super(false){
-    injector<NetworkService>()
-        .setToken('Bearer 138|iKDgQ2TE1R0m4DQIOkD6NtMd6LFVnMv9Q3aS0NCk');
-  }
+  UnBlockUserCubit():super(false);
   Future<void> unblockUser({required int userId,required  Function(dynamic) function  })async{
     await executeAsync(
         operation: () async => await baseCrudUseCase

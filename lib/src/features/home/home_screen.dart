@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
           final cubit = context.read<HomeCubit>();
           return Scaffold(
             backgroundColor: AppColors.whiteScaffoldBackground,
-            body: cubit.screens[cubit.currentIndex],
+            body: SafeArea(child: cubit.screens[cubit.currentIndex]),
             bottomNavigationBar: PopScope(
               onPopInvokedWithResult: (bool didPop, dynamic result) {
                 if (cubit.currentIndex != 0) {
@@ -41,26 +41,18 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                     child: BottomNavigationBar(
-                      onTap: (index) => cubit.changeBottomNavIndex(index),
-                      // special for label color
-                      currentIndex: cubit.currentIndex,
+                      type: BottomNavigationBarType.fixed,
                       selectedItemColor: AppColors.primary,
-unselectedFontSize: 20,
-                      unselectedIconTheme:const IconThemeData(
-                        color: Colors.red
-                      ) ,
                       unselectedItemColor: AppColors.unSelectedLabelColor,
                       selectedLabelStyle: TextStyle(
                         fontSize: 13.sp,
                         fontWeight: FontWeight.w500,
                       ),
                       unselectedLabelStyle: TextStyle(
-                          fontSize: 13.sp,
-                          color:
-                        AppColors.unSelectedLabelColor,
-                          fontWeight: FontWeight.w500,),
-
-
+                        fontSize: 13.sp,
+                        fontWeight: FontWeight.w500,),
+                      currentIndex: cubit.currentIndex,
+                      onTap: (index) => cubit.changeBottomNavIndex(index),
                       items: [
                         BottomNavigationBarItem(
                           icon: IconWidget(
@@ -112,14 +104,14 @@ unselectedFontSize: 20,
                   ),
                   PositionedDirectional(
                     start: (cubit.currentIndex == 0
-                        ? 18.w
+                        ? 10.w
                         : cubit.currentIndex == 1
-                            ? 86.w
+                            ? 80.w
                             : cubit.currentIndex == 2
                                 ? 152.w
                                 : cubit.currentIndex == 3
-                                    ? 220.w
-                                    : 280.w),
+                                    ? 228.w
+                                    : 298.w),
                     child: Container(
                       width: (MediaQuery.of(context).size.width / 5) - 15.w,
                       height: 3.w,

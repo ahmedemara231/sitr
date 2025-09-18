@@ -3,6 +3,7 @@ part of 'config_imports.dart';
 abstract class AppColors {
   static const Color main = Color(0xFF1B8354);
   static const Color primary = Color(0xFFA66D09);
+  static const Color darkGoldenRod = Color(0xFFB47200);
   static const Color secondary = Color(0xFF666666);
   static const Color thirdColor = Color(0xFFFFFAF0);
   static const Color forth = Color(0xFF007889);
@@ -20,6 +21,7 @@ abstract class AppColors {
   static const Color scaffoldBackground = Color(0xffF7F4F3);
   static const Color whiteScaffoldBackground = Color(0xffFCFCFC);
   static const Color yellow = Color(0xffFDB022);
+  static const Color offWhite = Color(0xffFFFAF1);
 
   static const Color grey = Color(0xFF5B5B5B);
   static const Color shadow = Color(0xFF5B5B5B);
@@ -29,7 +31,7 @@ abstract class AppColors {
   static const Color textBlack = Color(0xff272727);
   static const Color darkGay = Color(0xff525252);
   static const Color redColor = Color(0xffF54242);
-  static const Color unSelectedLabelColor = Color(0xffF54242);
+  static const Color unSelectedLabelColor = Color(0xff4F4F4F);
 }
 
 class AppColorsWithDarkMode {

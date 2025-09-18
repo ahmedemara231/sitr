@@ -12,7 +12,6 @@ import '../../models/consultant_model.dart';
 
 class ConsultantCubit extends AsyncCubit<List<ConsultantModel>> {
   ConsultantCubit() : super([]){
-    injector<NetworkService>().setToken('Bearer 138|iKDgQ2TE1R0m4DQIOkD6NtMd6LFVnMv9Q3aS0NCk');
     listenController();
   }
 

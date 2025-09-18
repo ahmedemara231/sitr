@@ -1,3 +1,6 @@
+
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +17,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   void changeBottomNavIndex(int index) {
     currentIndex = index;
+    log(currentIndex.toString());
     emit(ChangeBottomNavIndex());
   }
 
@@ -21,7 +25,7 @@ class HomeCubit extends Cubit<HomeState> {
     Container(),
     Container(),
     Container(),
-    Container(),
+    Container(color: Colors.red,),
     const MoreScreen(),
   ];
 }
