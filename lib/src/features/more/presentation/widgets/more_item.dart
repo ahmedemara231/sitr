@@ -19,9 +19,9 @@ final MorItemModel moreItemModel;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap:moreItemModel.onTap,
+      onTap: moreItemModel.onTap,
       child: Container(
-          padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 16.w),
+          padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 16.w),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(50.r),
@@ -29,18 +29,21 @@ final MorItemModel moreItemModel;
           child: Row(
             children: [
                CustomIconInsideContainer(
-                icon:moreItemModel. icon,
+                icon: moreItemModel.icon,
                 backgroundColor: AppColors.offWhite,
               ),
               10.szW,
               AppText(
                 moreItemModel.label,
-                fontSize: 14.sp,
+                fontSize: 12.sp,
                 fontWeight: FontWeight.w500,
                 color: Colors.black,
               ),
               const Spacer(),
-              const IconWidget(icon: Assets.svgArrowLeftIcon)
+              const SizedBox.square(
+                  dimension: 16,
+                  child: IconWidget(icon: Assets.svgArrowLeftIcon)
+              )
             ],
           )),
     );

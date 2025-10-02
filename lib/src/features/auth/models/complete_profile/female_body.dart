@@ -1,17 +1,16 @@
 import '../../../../config/language/languages.dart';
 import '../../presentation/data/enums_data.dart';
-import '../../presentation/enums/nursery.dart';
 import '../dowry.dart';
 import '../shared_form_fields_model.dart';
 
 class FemaleCompleteProfileBody extends SharedFormFieldModel {
   final String liveAfterMarry;
   final bool? doYouAcceptPolygamy;
-  final bool? wearingHijab;
+  final String? wearingHijab;
   final String degreeOfCommitment;
   final String parentName;
   final String parentNumber;
-  final String kinship;
+  final int kinship;
 
   FemaleCompleteProfileBody(
       {required this.liveAfterMarry,
@@ -71,7 +70,7 @@ class FemaleCompleteProfileBody extends SharedFormFieldModel {
         degreeOfCommitment: '',
         parentName: '',
         parentNumber: '',
-        kinship: '',
+        kinship: 0,
       );
 
   @override
@@ -79,11 +78,11 @@ class FemaleCompleteProfileBody extends SharedFormFieldModel {
           {Dowry? dowry,
           String? liveAfterMarry,
           bool? doYouAcceptPolygamy,
-          bool? wearingHijab,
+          String? wearingHijab,
           String? degreeOfCommitment,
           String? parentName,
           String? parentNumber,
-          String? kinship,
+          int? kinship,
           String? nickName,
           String? maritalStatus,
           String? tall,
@@ -146,7 +145,7 @@ class FemaleCompleteProfileBody extends SharedFormFieldModel {
       'guardian_name': parentName,
       'guardian_phone': parentNumber,
       'guardian_relation_id': kinship,
-      'hijab': wearingHijab,
+      'hijab': wearingHijab.toString(),
       'religious_commitment': degreeOfCommitment,
     };
   }

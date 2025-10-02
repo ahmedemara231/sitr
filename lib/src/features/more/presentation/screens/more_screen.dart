@@ -5,6 +5,7 @@ import '../../../../../generated/assets.dart' show Assets;
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/assets.gen.dart';
 import '../../../../config/res/config_imports.dart';
+import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/extensions/sized_box_helper.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/network/network_service.dart';
@@ -39,18 +40,23 @@ class _MoreScreenState extends State<MoreScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const MoreTabAppBar(),
-        Expanded(
-          child: ListView.separated(
-              itemBuilder: (context, index) => MoreItem(
-                    moreItemModel: moreItemsList[index],
-                  ),
-              separatorBuilder: (context, index) => 10.szH,
-              itemCount: moreItemsList.length),
-        ),
-      ],
+    return Scaffold(
+      backgroundColor: AppColors.whiteGreyColor,
+      body: Column(
+        children: [
+          const MoreTabAppBar(),
+          Expanded(
+            child: ListView.separated(
+                padding: EdgeInsets.zero,
+                itemBuilder: (context, index) => MoreItem(
+                  moreItemModel: moreItemsList[index],
+                ),
+                separatorBuilder: (context, index) => 10.szH,
+                itemCount: moreItemsList.length
+            ).defaultScreenPadding(),
+          ),
+        ],
+      ),
     );
   }
 }

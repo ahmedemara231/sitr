@@ -24,6 +24,7 @@ import 'features/more/presentation/screens/complaint_and_suggestion/complaints_a
 import 'features/more/presentation/screens/consultant/consultant_screen.dart';
 import 'features/more/presentation/screens/contact_us/contact_us_screen.dart';
 import 'features/more/presentation/screens/edit_profile.dart';
+import 'features/more/presentation/screens/more_screen.dart';
 import 'features/more/presentation/screens/profile.dart';
 import 'features/more/presentation/screens/success_partners/success_partners_screen.dart';
 import 'features/more/presentation/screens/terms_andcondition_and_about_us/terms_andcondition_and_about_us.dart';
@@ -56,8 +57,8 @@ class Sitr extends StatelessWidget {
             navigatorKey: Go.navigatorKey,
             restorationScopeId: 'app',
             // home:   const HomeScreen(),
-            // home: const SplashScreen(),
-            home: EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(type: UserType.female),
+            home: const SplashScreen(),
+            // home: EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(type: UserType.female),
             // home: EnterMaleOrFemaleOrChildDataScreen.signUpAsParent(),
             // home: const PackagesScreen.view(),
             // home: OtpScreen(title: '', onConfirmCode: (BuildContext context, String code) {  }, onResendCodePress: (BuildContext context) {  },),

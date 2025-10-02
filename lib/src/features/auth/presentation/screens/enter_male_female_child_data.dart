@@ -54,7 +54,6 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
                         onFinishFemaleData: (data) {
                           log('data in big screen ${data.toJson()}');
                           sharedFormFieldModel = data;
-                          log(sharedFormFieldModel.toJson().toString());
                         })
                     : MaleFields(
                         secondaryType: secondaryType,

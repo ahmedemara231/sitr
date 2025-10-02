@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:pagify/widgets/text.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/extensions/enum.dart';
+import '../../../../../core/extensions/object.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
 import '../../../models/complete_profile/female_body.dart';
+import '../../../models/kinship.dart';
 import '../../../models/shared_form_fields_model.dart';
+import '../../data/auth_data.dart';
 import '../../data/enums_data.dart';
 import '../../enums/answer.dart';
 import '../shared/text_field.dart';
@@ -46,7 +49,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
   late TextEditingController _parentNumberCont;
   late TextEditingController _kinshipCont;
 
-  final ValueNotifier<Answer?> wearingHijab = ValueNotifier(null);
+  final ValueNotifier<String?> wearingHijab = ValueNotifier(null);
   Answer? acceptsPolygamy;
   String? degreeOfCommitment;
 
@@ -88,7 +91,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
   final _formKey = GlobalKey<FormState>();
 
   void _wearingHijabListener(){
-    if(wearingHijab.value.isNo){
+    if(wearingHijab.value.isNull || wearingHijab.value!.isEmpty){
       degreeOfCommitment = null;
       _listenToData(asFemaleCompleteProfileBody.copyWith(degreeOfCommitment: null));
     }
@@ -126,26 +129,26 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 titleBuilder: (i) => AppText(Answer.values[i].translate),
               ),
             )..insertAll(21, [
-              RadioWidget<Answer>(
-                  title: LocaleKeys.areYouWaringHijab,
-                  onSubmit: (result) {
-                    wearingHijab.value = result;
-                    _listenToData(asFemaleCompleteProfileBody.copyWith(wearingHijab: wearingHijab.value.toBool));
-                  },
-                  values: Answer.values,
-                titleBuilder: (i) => AppText(Answer.values[i].translate),
-              ),
-
-              ValueListenableBuilder(
-                    valueListenable: wearingHijab,
-                    builder: (context, value, child) => value.isYes? DropDownTextField<TitleValueShape>(
-                      hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
-                      values: EnumsData.religiousCommitment.data,
-                      title: LocaleKeys.degreeOfCommitment,
-                      itemBuilder: (v) => AppText(v.title.tr()),
-                      onChanged: (value) => _listenToData(asFemaleCompleteProfileBody.copyWith(degreeOfCommitment: value?.value)),
-                    ) : const SizedBox.shrink(),
-                ),
+            DropDownTextField<TitleValueShape>(
+              hint: LocaleKeys.areYouWaringHijab,
+              values: EnumsData.hijab.data,
+              title: LocaleKeys.areYouWaringHijab,
+              itemBuilder: (v) => AppText(v.title.tr()),
+              onChanged: (value) {
+                wearingHijab.value = value?.value;
+                _listenToData(asFemaleCompleteProfileBody.copyWith(wearingHijab: wearingHijab.value));
+              },
+            ),
+            ValueListenableBuilder(
+              valueListenable: wearingHijab,
+              builder: (context, value, child) => value?.isNotEmpty?? false? DropDownTextField<TitleValueShape>(
+                hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
+                values: EnumsData.religiousCommitment.data,
+                title: LocaleKeys.degreeOfCommitment,
+                itemBuilder: (v) => AppText(v.title.tr()),
+                onChanged: (value) => _listenToData(asFemaleCompleteProfileBody.copyWith(degreeOfCommitment: value?.value)),
+              ) : const SizedBox.shrink(),
+            ),
 
               SignUpTextField(
                 upperTitle: LocaleKeys.parentName,
@@ -163,13 +166,14 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 onChanged: (value) => _listenToData(asFemaleCompleteProfileBody.copyWith(parentNumber: _parentNumberCont.text)),
                 // validator: Validators.validateEmpty,
               ),
-              SignUpTextField(
-                upperTitle: LocaleKeys.kinship,
-                title: LocaleKeys.pleaseEnterTheKinship,
-                controller: _kinshipCont,
-                onChanged: (value) => _listenToData(asFemaleCompleteProfileBody.copyWith(kinship: _kinshipCont.text)),
-                // validator: Validators.validateEmpty,
-              ),
+
+            DropDownTextField<Kinship>.withApiRequest(
+              hint: LocaleKeys.kinship,
+              title: LocaleKeys.kinship,
+              itemBuilder: (v) => AppText(v.value),
+              onChanged: (value) => _listenToData(asFemaleCompleteProfileBody.copyWith(kinship: value?.id?? 0)),
+              request: (BuildContext ctx) async => await AuthData.getKinships()
+            ),
             ]),
         );
 
@@ -200,19 +204,19 @@ class _FemaleFieldsState extends State<FemaleFields> {
               ),
             ])
             ..insertAll(21, [
-              RadioWidget<Answer>(
-                  title: LocaleKeys.areYouWaringHijab,
-                  onSubmit: (result) {
-                    wearingHijab.value = result;
-                    _listenToData(asFemaleParentCompleteProfileBody.copyWith(wearingHijab: wearingHijab.value.toBool));
-                  },
-                  values: Answer.values,
-                titleBuilder: (i) => AppText(Answer.values[i].translate),
+              DropDownTextField<TitleValueShape>(
+                hint: LocaleKeys.areYouWaringHijab,
+                values: EnumsData.hijab.data,
+                title: LocaleKeys.areYouWaringHijab,
+                itemBuilder: (v) => AppText(v.title.tr()),
+                onChanged: (value) {
+                  wearingHijab.value = value?.value;
+                  _listenToData(asFemaleCompleteProfileBody.copyWith(wearingHijab: wearingHijab.value));
+                },
               ),
-
               ValueListenableBuilder(
                 valueListenable: wearingHijab,
-                builder: (context, value, child) => value.isYes? DropDownTextField<TitleValueShape>(
+                builder: (context, value, child) => value?.isNotEmpty?? false? DropDownTextField<TitleValueShape>(
                   hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
                   values: EnumsData.religiousCommitment.data,
                   title: LocaleKeys.degreeOfCommitment,

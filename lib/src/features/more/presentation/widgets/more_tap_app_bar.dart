@@ -37,7 +37,7 @@ class MoreTabAppBar extends StatelessWidget {
                 },
                 child: Container(
                   alignment: Alignment.center,
-                  height: 86.h,
+                  height: 80.h,
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   decoration: BoxDecoration(
                     color: AppColors.darkGoldenRod,
@@ -92,7 +92,7 @@ class MoreTabAppBar extends StatelessWidget {
           ),
           Container(
             alignment: Alignment.center,
-            height: 129.5.h,
+            height: 130.h,
             width: double.infinity,
             decoration: BoxDecoration(
                 color: AppColors.whiteGreyColor,
@@ -100,22 +100,25 @@ class MoreTabAppBar extends StatelessWidget {
                     bottomLeft: Radius.circular(15.r),
                     bottomRight: Radius.circular(15.r))),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Expanded(
-                  child: AppText(
-                    LocaleKeys.more,
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.textBlack,
-                  ).centerWidget,
-                ),
-                const CustomIconInsideContainer(
-                  icon: Assets.svgSettingIcon,
-                ),
-                8.szW,
-                const CustomIconInsideContainer(
-                  icon: Assets.svgLogOutIcon,
+                AppText(
+                  LocaleKeys.more,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.textBlack,
+                ).centerWidget,
+                55.szW,
+                Row(
+                  children: [
+                    const CustomIconInsideContainer(
+                      icon: Assets.svgSettingIcon,
+                    ),
+                    8.szW,
+                    const CustomIconInsideContainer(
+                      icon: Assets.svgLogOutIcon,
+                    ),
+                  ],
                 ),
                 16.szW,
               ],

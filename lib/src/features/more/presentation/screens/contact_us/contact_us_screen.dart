@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagify/widgets/text.dart';
 import '../../../../../../generated/assets.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
@@ -11,6 +10,7 @@ import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/extensions/sized_box_helper.dart';
 import '../../../../../core/helpers/lancher_helper.dart';
 import '../../../../../core/helpers/validators.dart';
+import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../../core/widgets/custom_app_bar.dart' show customAppBar;
 import '../../../../../core/widgets/icon_widget.dart';
@@ -28,7 +28,6 @@ class ContactUsScreen extends StatelessWidget {
       create: (context) => ContactUsCubit(),
       child: Scaffold(
         backgroundColor: AppColors.whiteScaffoldBackground,
-
         appBar: customAppBar(appBarTitle: LocaleKeys.contactUs),
         body: Form(
           key: formKey,
@@ -55,23 +54,24 @@ class ContactUsScreen extends StatelessWidget {
               AppText(
                 LocaleKeys.youCanContactUsThroughTheFollowingChannels,
                 color: AppColors.textBlack,
-                fontSize: 14.sp,
+                fontSize: 12.sp,
                 fontWeight: FontWeight.w700,
               ).centerWidget,
               20.szH,
-              Wrap(
-                alignment: WrapAlignment.spaceBetween,
-                runSpacing: 15.0.h,
-                children: List.generate(
-                  iconPath.length,
-                  (index) => Padding(
-                    padding: EdgeInsets.only(right: 12.w),
-                    child: GestureDetector(
-                      onTap: actions[index],
-                      child: IconWidget(
-                        icon: iconPath[index],
-                        width: 40.w,
-                        height: 40.h,
+              FittedBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: List.generate(
+                    iconPath.length,
+                    (index) => Padding(
+                      padding: EdgeInsets.only(right: 12.w),
+                      child: GestureDetector(
+                        onTap: actions[index],
+                        child: IconWidget(
+                          icon: iconPath[index],
+                          width: 30.w,
+                          height: 30.h,
+                        ),
                       ),
                     ),
                   ),
