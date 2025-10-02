@@ -79,17 +79,17 @@ class _MaleFieldsState extends State<MaleFields> {
   Widget build(BuildContext context) {
     switch(widget.secondaryType){
       case null:
-        return SharedFormFields(
-          sharedFormFieldModel: sharedFormFieldModel,
+        return SharedFormFields<MaleCompleteProfileBody>(
+          // sharedFormFieldModel: sharedFormFieldModel,
           restorationId: UserType.male.name,
           onFinished: (data) => _listenToData(data.copyWith()),
         );
 
       default:
-        return SharedFormFields(
-          sharedFormFieldModel: sharedFormFieldModel,
+        return SharedFormFields<MaleParentCompleteProfileBody>(
+          // sharedFormFieldModel: sharedFormFieldModel,
           restorationId: UserType.male.name,
-          onFinished: (data) => sharedFormFieldModel = data.copyWith(),
+          onFinished: (data) => _listenToData(data.copyWith()),
           onInitData: (List<Widget> children) => children..insert(
             0,
             SignUpTextField(

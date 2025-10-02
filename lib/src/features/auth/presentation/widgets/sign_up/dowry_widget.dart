@@ -48,6 +48,7 @@ class _DowryWidgetState extends State<DowryWidget> {
             Expanded(
               child: DefaultTextField(
                 title: LocaleKeys.from,
+                inputType: TextInputType.number,
                 controller: _fromController,
                 onChanged: (v) => onChanged(),
               ),
@@ -55,6 +56,7 @@ class _DowryWidgetState extends State<DowryWidget> {
             Expanded(
               child: DefaultTextField(
                 title: LocaleKeys.to,
+                inputType: TextInputType.number,
                 controller: _toController,
                 onChanged: (v) => onChanged(),
               ),

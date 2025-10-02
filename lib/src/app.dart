@@ -55,10 +55,9 @@ class Sitr extends StatelessWidget {
             locale: context.locale,
             navigatorKey: Go.navigatorKey,
             restorationScopeId: 'app',
-            home:   const HomeScreen(),
+            // home:   const HomeScreen(),
             // home: const SplashScreen(),
-            // home: const PackagesScreen.view(),
-            // home: EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(type: UserType.female),
+            home: EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(type: UserType.female),
             // home: EnterMaleOrFemaleOrChildDataScreen.signUpAsParent(),
             // home: const PackagesScreen.view(),
             // home: OtpScreen(title: '', onConfirmCode: (BuildContext context, String code) {  }, onResendCodePress: (BuildContext context) {  },),
@@ -74,62 +73,3 @@ class Sitr extends StatelessWidget {
     );
   }
 }
-
-
-// class PathProviderTest extends StatelessWidget {
-//   const PathProviderTest({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Center(
-//         child: TextButton(
-//             onPressed: () async{
-//               final path = await getApplicationDocumentsDirectory();
-//               log('Directory path: ${path.path}');
-//
-//               final filePath = join(path.path, 'counter2.txt');
-//               log('Full file path: $filePath');
-//
-//               final file = File(filePath);
-//               await file.writeAsString('counter : 1');
-//               log('File written successfully');
-//             },
-//             child: const AppText('get path', fontSize: 60,)
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-//
-// class ChatScreen extends StatelessWidget {
-//   const ChatScreen({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: LlmChatView(
-//         style: LlmChatViewStyle.defaultStyle(),
-//         // suggestions: [],
-//         // speechToText: ,
-//
-//         //     Stream<String> Function(
-//         //     String prompt, {
-//         //   required Iterable<Attachment> attachments,
-//         // });
-//         //   messageSender: (prompt, {attachments}) => ,
-//         enableVoiceNotes: true,
-//         enableAttachments: true,
-//         responseBuilder: (context, msg) => AppText(msg, color: Colors.amber, fontSize: 16.sp),
-//         errorMessage: '',
-//         welcomeMessage: 'hola',
-//         onCancelCallback: (context) {},
-//         onErrorCallback: (context, e) => log('e is ${e.toString()}'),
-//         provider: FirebaseProvider( // use FirebaseProvider and googleAI()
-//           model: FirebaseAI.googleAI().generativeModel(model: 'gemini-2.0-flash'),
-//         ),
-//       ),
-//     );
-//   }
-// }

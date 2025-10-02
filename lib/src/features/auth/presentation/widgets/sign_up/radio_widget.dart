@@ -7,18 +7,19 @@ import '../../../../../core/widgets/app_text.dart';
 // T is the dataType
 class RadioWidget<T> extends StatefulWidget {
   final List<T> values;
-  final List<Widget> titles;
+  final Widget Function(int index) titleBuilder;
   final String title;
   final FutureOr<void> Function(T val) onSubmit;
   final T? initialValue;
 
-  const RadioWidget({super.key,
+  RadioWidget({super.key,
     required this.title,
     required this.onSubmit,
     required this.values,
-    required this.titles,
+    required this.titleBuilder,
     this.initialValue,
-  }) : assert(values.length == titles.length);
+  });
+  // : assert(values.length == titles.length);
 
   @override
   State<RadioWidget<T>> createState() => _RadioWidgetState<T>();
@@ -53,14 +54,14 @@ class _RadioWidgetState<T> extends State<RadioWidget<T>> {
               children: List.generate(
                 widget.values.length,
                     (index) => index != widget.values.length -1? _RadioItem<T?>(
-                  title: widget.titles[index],
+                  title: widget.titleBuilder.call(index),
                   value: widget.values[index],
                   groupValue: groupValue,
                   onChanged: _changeValue,
                 ) : Column(
                   children: [
                     _RadioItem<T?>(
-                      title: widget.titles[index],
+                      title: widget.titleBuilder.call(index),
                       value: widget.values[index],
                       groupValue: groupValue,
                       onChanged: _changeValue,

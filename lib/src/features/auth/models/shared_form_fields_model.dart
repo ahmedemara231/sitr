@@ -1,7 +1,8 @@
-import '../presentation/enums/nursery.dart';
+import 'dowry.dart';
 
 class SharedFormFieldModel{
   final String nickName;
+  final Dowry dowry;
   final String maritalStatus;
   final String? tall;
   final String? weight;
@@ -9,7 +10,7 @@ class SharedFormFieldModel{
   final String? quickBrief;
   final bool? childrenExists;
   final String? childrenNumber;
-  final Nursery? nursery;
+  final String? nursery;
   final bool? wantToHaveChildren;
   final String? thingsIAcceptOrWant;
   final String? typeOfWeddingParty;
@@ -23,6 +24,8 @@ class SharedFormFieldModel{
   final String? skinColor;
 
   Map<String, dynamic> toJson() => {
+    'dowry_min' : dowry.from,
+    'dowry_max' : dowry.to,
     "nick_name": nickName,
     "marital_status": maritalStatus,
     "height": tall,
@@ -31,7 +34,7 @@ class SharedFormFieldModel{
     "bio": quickBrief,
     "has_children": childrenExists,
     "num_of_children": childrenNumber,
-    "child_custody": nursery?.name,
+    "child_custody": nursery,
     "want_children": wantToHaveChildren,
     "prohibited_things": thingsIAcceptOrWant,
     "wedding_type": typeOfWeddingParty,
@@ -46,6 +49,7 @@ class SharedFormFieldModel{
   };
 
   factory SharedFormFieldModel.initial() => SharedFormFieldModel(
+    dowry: Dowry(from: 'from', to: 'to'),
     nickName: "",
     maritalStatus: "",
     tall: null,
@@ -69,6 +73,7 @@ class SharedFormFieldModel{
   );
 
   SharedFormFieldModel copyWith({
+    Dowry? dowry,
     String? nickName,
     String? maritalStatus,
     String? tall,
@@ -77,7 +82,7 @@ class SharedFormFieldModel{
     String? quickBrief,
     bool? childrenExists,
     String? childrenNumber,
-    Nursery? nursery,
+    String? nursery,
     bool? wantToHaveChildren,
     String? thingsIAcceptOrWant,
     String? typeOfWeddingParty,
@@ -90,6 +95,7 @@ class SharedFormFieldModel{
     bool? belongToATribe,
     String? skinColor,
   }) => SharedFormFieldModel(
+    dowry: dowry ?? this.dowry,
     nickName: nickName ?? this.nickName,
     maritalStatus: maritalStatus ?? this.maritalStatus,
     tall: tall ?? this.tall,
@@ -112,7 +118,35 @@ class SharedFormFieldModel{
     skinColor: skinColor ?? this.skinColor,
   );
 
+  SharedFormFieldModel merge(SharedFormFieldModel other) {
+    return copyWith(
+      nickName: other.nickName ?? nickName,
+      maritalStatus: other.maritalStatus ?? maritalStatus,
+      tall: other.tall ?? tall,
+      weight: other.weight ?? weight,
+      currentJob: other.currentJob ?? currentJob,
+      quickBrief: other.quickBrief ?? quickBrief,
+      childrenExists: other.childrenExists ?? childrenExists,
+      childrenNumber: other.childrenNumber ?? childrenNumber,
+      nursery: other.nursery ?? nursery,
+      wantToHaveChildren: other.wantToHaveChildren ?? wantToHaveChildren,
+      thingsIAcceptOrWant: other.thingsIAcceptOrWant ?? thingsIAcceptOrWant,
+      dowry: other.dowry ?? dowry,
+      typeOfWeddingParty: other.typeOfWeddingParty ?? typeOfWeddingParty,
+      cityId: other.cityId ?? cityId,
+      educationalQualification:
+      other.educationalQualification ?? educationalQualification,
+      pray: other.pray ?? pray,
+      diseasesIfExists: other.diseasesIfExists ?? diseasesIfExists,
+      inChatYouPrefer: other.inChatYouPrefer ?? inChatYouPrefer,
+      smoke: other.smoke ?? smoke,
+      belongToATribe: other.belongToATribe ?? belongToATribe,
+      skinColor: other.skinColor ?? skinColor,
+    );
+  }
+
   SharedFormFieldModel({
+    required this.dowry,
     required this.nickName,
     required this.maritalStatus,
     required this.tall,

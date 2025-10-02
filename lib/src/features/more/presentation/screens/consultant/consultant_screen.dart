@@ -41,8 +41,7 @@ class ConsultantScreen extends StatelessWidget {
                 }
 
                 return
-
-                  ConsultantItem(consultantModel: state.data[index],);
+                  ConsultantItem(consultantModel: state.data[index]);
               },
               separatorBuilder: (context, index) => 10.szH,
               itemCount:  state.data.length+1,);

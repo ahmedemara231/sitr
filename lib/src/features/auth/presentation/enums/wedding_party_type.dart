@@ -1,5 +1,5 @@
-enum WeddingPartyType{
-  party,
-  simpleEvent,
-  familyCelebration
-}
+// enum WeddingPartyType{
+//   party,
+//   simpleEvent,
+//   familyCelebration
+// }

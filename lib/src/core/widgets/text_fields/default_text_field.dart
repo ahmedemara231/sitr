@@ -125,11 +125,12 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
   }
 
   void _debounce(String val){
-    EasyDebounce.debounce(
-        'debouncer',
-        const Duration(milliseconds: 300),
-            () => widget.onChanged?.call(val)
-    );
+    // EasyDebounce.debounce(
+    //     'debouncer',
+    //     const Duration(milliseconds: 250),
+    //         () => widget.onChanged?.call(val)
+    // );
+    widget.onChanged?.call(val);
   }
   @override
   Widget build(BuildContext context) {

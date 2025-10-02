@@ -1,10 +1,13 @@
 import 'dart:io';
 import '../../../../config/language/languages.dart';
+import '../../presentation/data/enums_data.dart';
 import '../../presentation/enums/nursery.dart';
+import '../dowry.dart';
 import '../shared_form_fields_model.dart';
 
 class MaleCompleteProfileBody extends SharedFormFieldModel{
   MaleCompleteProfileBody({
+    required super.dowry,
     required super.nickName,
     required super.maritalStatus,
     required super.tall,
@@ -27,7 +30,7 @@ class MaleCompleteProfileBody extends SharedFormFieldModel{
     required super.skinColor
   });
 
-  factory MaleCompleteProfileBody.initial() => MaleCompleteProfileBody(nickName: 'nickName', maritalStatus: 'maritalStatus', tall: 'tall', weight: 'weight', currentJob: 'currentJob', quickBrief: 'quickBrief', childrenExists: null, childrenNumber: 'childrenNumber', nursery: Nursery.father, wantToHaveChildren: null, thingsIAcceptOrWant: 'thingsIAcceptOrWant', typeOfWeddingParty: 'typeOfWeddingParty', cityId: 0, educationalQualification: 'educationalQualification', pray: null, diseasesIfExists: 'diseasesIfExists', inChatYouPrefer: Languages.arabic.languageCode, smoke: null, belongToATribe: null, skinColor: 'skinColor');
+  factory MaleCompleteProfileBody.initial() => MaleCompleteProfileBody(dowry: Dowry(from: 'from', to: 'to'), nickName: 'nickName', maritalStatus: 'maritalStatus', tall: 'tall', weight: 'weight', currentJob: 'currentJob', quickBrief: 'quickBrief', childrenExists: null, childrenNumber: 'childrenNumber', nursery: EnumsData.childCustody.data.first.value, wantToHaveChildren: null, thingsIAcceptOrWant: 'thingsIAcceptOrWant', typeOfWeddingParty: 'typeOfWeddingParty', cityId: 0, educationalQualification: 'educationalQualification', pray: null, diseasesIfExists: 'diseasesIfExists', inChatYouPrefer: Languages.arabic.languageCode, smoke: null, belongToATribe: null, skinColor: 'skinColor');
 }
 
 class MaleParentCompleteProfileBody extends SharedFormFieldModel{
@@ -44,6 +47,7 @@ class MaleParentCompleteProfileBody extends SharedFormFieldModel{
     required this.age,
     required this.image,
 
+    required super.dowry,
     required super.nickName,
     required super.maritalStatus,
     required super.tall,
@@ -66,7 +70,7 @@ class MaleParentCompleteProfileBody extends SharedFormFieldModel{
     required super.skinColor
   });
 
-  factory MaleParentCompleteProfileBody.initial() => MaleParentCompleteProfileBody(nickName: 'nickName', maritalStatus: 'maritalStatus', tall: 'tall', weight: 'weight', currentJob: 'currentJob', quickBrief: 'quickBrief', childrenExists: null, childrenNumber: 'childrenNumber', nursery: Nursery.father, wantToHaveChildren: null, thingsIAcceptOrWant: 'thingsIAcceptOrWant', typeOfWeddingParty: 'typeOfWeddingParty', cityId: 0, educationalQualification: 'educationalQualification', pray: null, diseasesIfExists: 'diseasesIfExists', inChatYouPrefer: Languages.arabic.languageCode, smoke: null, belongToATribe: null, skinColor: 'skinColor', name: '', phone: '', identifyNumber: '', age: '', image: null);
+  factory MaleParentCompleteProfileBody.initial() => MaleParentCompleteProfileBody(dowry: Dowry(from: 'from', to: 'to'), nickName: 'nickName', maritalStatus: 'maritalStatus', tall: 'tall', weight: 'weight', currentJob: 'currentJob', quickBrief: 'quickBrief', childrenExists: null, childrenNumber: 'childrenNumber', nursery: EnumsData.childCustody.data.first.value, wantToHaveChildren: null, thingsIAcceptOrWant: 'thingsIAcceptOrWant', typeOfWeddingParty: 'typeOfWeddingParty', cityId: 0, educationalQualification: 'educationalQualification', pray: null, diseasesIfExists: 'diseasesIfExists', inChatYouPrefer: Languages.arabic.languageCode, smoke: null, belongToATribe: null, skinColor: 'skinColor', name: '', phone: '', identifyNumber: '', age: '', image: null);
 
   @override
   SharedFormFieldModel copyWith({
@@ -75,7 +79,8 @@ class MaleParentCompleteProfileBody extends SharedFormFieldModel{
     String? identifyNumber,
     String? age,
     File? image,
-    String? nickName, String? maritalStatus, String? tall, String? weight, String? currentJob, String? quickBrief, bool? childrenExists, String? childrenNumber, Nursery? nursery, bool? wantToHaveChildren, String? thingsIAcceptOrWant, String? typeOfWeddingParty, int? cityId, String? educationalQualification, bool? pray, String? diseasesIfExists, String? inChatYouPrefer, bool? smoke, bool? belongToATribe, String? skinColor}) {
+    Dowry? dowry,
+    String? nickName, String? maritalStatus, String? tall, String? weight, String? currentJob, String? quickBrief, bool? childrenExists, String? childrenNumber, String? nursery, bool? wantToHaveChildren, String? thingsIAcceptOrWant, String? typeOfWeddingParty, int? cityId, String? educationalQualification, bool? pray, String? diseasesIfExists, String? inChatYouPrefer, bool? smoke, bool? belongToATribe, String? skinColor}) {
     return MaleParentCompleteProfileBody(
       name: name ?? this.name,
       phone: phone ?? this.phone,
@@ -83,6 +88,7 @@ class MaleParentCompleteProfileBody extends SharedFormFieldModel{
       age: age ?? this.age,
       image: image ?? this.image,
 
+      dowry: dowry?? this.dowry,
       nickName: nickName ?? this.nickName,
       maritalStatus: maritalStatus ?? this.maritalStatus,
       tall: tall ?? this.tall,

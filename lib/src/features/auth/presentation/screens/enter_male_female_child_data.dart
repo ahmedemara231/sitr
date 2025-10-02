@@ -25,7 +25,7 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
     _mainType = ValueNotifier(type ?? UserType.male);
   }
 
-  late SharedFormFieldModel sharedFormFieldModel;
+  SharedFormFieldModel sharedFormFieldModel = SharedFormFieldModel.initial();
 
   @override
   Widget build(BuildContext context) {
@@ -46,30 +46,28 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
                     UserType.female,
                   ],
                 ),
-
               ValueListenableBuilder(
                 valueListenable: _mainType,
                 builder: (context, value, child) => value.isFemale
                     ? FemaleFields(
                         secondaryUserType: secondaryType,
                         onFinishFemaleData: (data) {
-                          sharedFormFieldModel = data.copyWith();
+                          log('data in big screen ${data.toJson()}');
+                          sharedFormFieldModel = data;
+                          log(sharedFormFieldModel.toJson().toString());
                         })
                     : MaleFields(
                         secondaryType: secondaryType,
-                        onFinishMaleData: (data) =>
-                            sharedFormFieldModel = data.copyWith()),
+                        onFinishMaleData: (data) => sharedFormFieldModel = data),
               ),
-
               const ConditionsTermsAcceptance(),
               Builder(builder: (ctx) {
                 return DefaultButton(
                   onTap: () async {
-                    // log('message : ${sharedFormFieldModel.toJson()}');
+                    log('message : ${sharedFormFieldModel.toJson()}');
                     await ctx
                         .read<CompleteProfileCubit>()
                         .completeProfile(sharedFormFieldModel);
-
                   },
                 );
               }),
