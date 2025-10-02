@@ -7,6 +7,7 @@ import '../../../../../../config/res/config_imports.dart';
 import '../../../../../../core/extensions/sized_box_helper.dart';
 import '../../../../../../core/navigation/navigator.dart';
 import '../../../../../../core/widgets/icon_widget.dart';
+import '../../../../../../core/widgets/svg_pic.dart';
 import '../../../models/complaint_model.dart';
 import '../complaint_details_screen.dart';
 
@@ -20,7 +21,6 @@ final ComplaintModel complaintModel;
     return GestureDetector(
       onTap: (){
         Go.to( ComplaintDetailsScreen(complaintId: complaintModel.id??0,));
-
       },
       child: Container(
         padding: EdgeInsets.all(12.r),
@@ -31,10 +31,21 @@ final ComplaintModel complaintModel;
         ),
         child: Row(
           children: [
-            IconWidget(
-             icon: complaintModel.image??'',
-              height: 100,
-              width: 100,
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  width: 50.w,
+                  height: 50.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.r),
+                    color: AppColors.whiteGreyColor,
+                  ),
+                ),
+                SizedBox.square(
+                    dimension: 40.sp,
+                    child: const SvgPic(assetName: Assets.svgAppLogo)),
+              ],
             ),
             11.szW,
             Expanded(
@@ -50,7 +61,7 @@ final ComplaintModel complaintModel;
                   11.szH,
                   Row(
                     children: [
-                      const IconWidget(icon: Assets.svgCalendar),
+                      const SvgPic(assetName: Assets.svgCalendar),
                       5.szW,
                        AppText(
                         complaintModel.createdAt??'',

@@ -9,15 +9,18 @@ import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/extensions/sized_box_helper.dart';
 import '../../../../../core/helpers/status_builder.dart';
 import '../../../../../core/helpers/validators.dart';
+import '../../../../../core/navigation/navigator.dart';
 import '../../../../../core/widgets/app_bottom_sheet.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../../core/widgets/custom_app_bar.dart';
 import '../../../../../core/widgets/icon_widget.dart';
+import '../../../../../core/widgets/image_widgets/cached_image.dart';
 import '../../../../../core/widgets/image_widgets/upload_image.dart';
 import '../../../../../core/widgets/text_fields/default_text_field.dart';
 import '../../cubit/complaint_cubit/complaint_details_cubit.dart';
 import '../../models/complaint_details_model.dart';
+import 'image_view.dart';
 
 class ComplaintDetailsScreen extends StatelessWidget {
   const ComplaintDetailsScreen({super.key, required this.complaintId});
@@ -31,7 +34,6 @@ class ComplaintDetailsScreen extends StatelessWidget {
           ComplaintDetailsCubit()..fetchComplaintDetails(complaintId),
       child: Scaffold(
         backgroundColor: AppColors.whiteScaffoldBackground,
-
         appBar: customAppBar(appBarTitle: LocaleKeys.complaintDetails),
         body: BlocBuilder<ComplaintDetailsCubit,
             AsyncState<ComplaintDetailsModel?>>(
@@ -50,16 +52,24 @@ class ComplaintDetailsScreen extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                         ),
                         8.szH,
-                        Wrap(
-                          spacing: 6.0.w,
-                          runSpacing: 8.0.h,
-                          children: List.generate(
-                            data?.images.length ?? 0,
-                            (index) => (IconWidget(
-                              icon: data?.images[index],
-                              width: 60.w,
-                              height: 60.h,
-                            )),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            spacing: 10.w,
+                            children: List.generate(
+                              data?.images.length ?? 0,
+                                  (index) =>
+                                     InkWell(
+                                       onTap: () => Go.to(ImageViewScreen(url: data?.images[index].image ?? '')),
+                                       child: CachedImage(
+                                           height: 70,
+                                           width: 70,
+                                           borderRadius: BorderRadius.circular(10.r),
+                                           url: data?.images[index].image ?? ''
+                                       ),
+                                     ),
+
+                            ),
                           ),
                         ),
                         17.szH,

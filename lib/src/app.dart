@@ -57,7 +57,7 @@ class Sitr extends StatelessWidget {
             navigatorKey: Go.navigatorKey,
             restorationScopeId: 'app',
             // home:   const HomeScreen(),
-            home: const SplashScreen(),
+            home: const MoreScreen(),
             // home: EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(type: UserType.female),
             // home: EnterMaleOrFemaleOrChildDataScreen.signUpAsParent(),
             // home: const PackagesScreen.view(),

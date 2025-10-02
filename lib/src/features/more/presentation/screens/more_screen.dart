@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../../generated/assets.dart' show Assets;
 import '../../../../config/language/locale_keys.g.dart';
-import '../../../../config/res/assets.gen.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/padding_extension.dart';
-import '../../../../core/extensions/sized_box_helper.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/network/network_service.dart';
-import '../../../../core/widgets/app_text.dart';
-import '../../../../core/widgets/icon_widget.dart';
 import '../cubit/terms_condition_and_about_cubit/terms_condition_and_about_cubit.dart';
-import '../widgets/custom_icon_inside_container.dart';
 import '../widgets/more_item.dart';
 import '../widgets/more_tap_app_bar.dart';
 import 'blocked_user_screen/blocked_user_screen.dart';
@@ -42,20 +36,21 @@ class _MoreScreenState extends State<MoreScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.whiteGreyColor,
-      body: Column(
-        children: [
-          const MoreTabAppBar(),
-          Expanded(
-            child: ListView.separated(
-                padding: EdgeInsets.zero,
-                itemBuilder: (context, index) => MoreItem(
-                  moreItemModel: moreItemsList[index],
-                ),
-                separatorBuilder: (context, index) => 10.szH,
-                itemCount: moreItemsList.length
-            ).defaultScreenPadding(),
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const MoreTabAppBar(),
+            Column(
+              spacing: 10.h,
+              children: List.generate(
+                  moreItemsList.length,
+                      (index) => MoreItem(
+                moreItemModel: moreItemsList[index],
+              )
+              ),
+            ).defaultScreenPadding()
+          ],
+        ),
       ),
     );
   }
