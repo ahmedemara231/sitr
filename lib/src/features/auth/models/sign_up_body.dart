@@ -19,6 +19,15 @@ class SignUpBody{
     required this.code,
   });
 
+  SignUpBody merge(SignUpBody other) => copyWith(
+    image: other.image,
+    name: other.name,
+    phone: other.phone,
+    identityNumber: other.identityNumber,
+    gender: other.gender,
+    code: other.code,
+  );
+
   Map<String, dynamic> toJson() => AuthBodyStaticData().toJson()..addAll({
     'name' : name,
     'phone' : phone,
@@ -27,6 +36,24 @@ class SignUpBody{
     'avatar' : image,
     'gender' : gender,
   });
+
+  SignUpBody copyWith({
+    File? image,
+    String? name,
+    String? phone,
+    String? identityNumber,
+    String? gender,
+    String? code,
+  }) => SignUpBody(
+    image: image ?? this.image,
+    name: name ?? this.name,
+    phone: phone ?? this.phone,
+    identityNumber: identityNumber ?? this.identityNumber,
+    gender: gender ?? this.gender,
+    code: code ?? this.code,
+  );
+
+  factory SignUpBody.initial() => SignUpBody(name: 'name', phone: 'phone', identityNumber: 'identityNumber', gender: 'gender', code: 'code', image: null);
 }
 
 class MaleAndFemaleSignUp extends SignUpBody{
@@ -41,6 +68,41 @@ class MaleAndFemaleSignUp extends SignUpBody{
     required super.code
   });
 
+
+  @override
+  MaleAndFemaleSignUp merge(SignUpBody other) {
+    return copyWith(
+      image: other.image,
+      name: other.name,
+      phone: other.phone,
+      identityNumber: other.identityNumber,
+      gender: other.gender,
+      code: other.code,
+      age: (other as MaleAndFemaleSignUp).age
+    );
+  }
+
+  @override
+  MaleAndFemaleSignUp copyWith({
+    String? age,
+    File? image,
+    String? name,
+    String? phone,
+    String? identityNumber,
+    String? gender,
+    String? code
+  }) {
+    return MaleAndFemaleSignUp(
+      image: image ?? this.image,
+      name: name ?? this.name,
+      phone: phone ?? this.phone,
+      identityNumber: identityNumber ?? this.identityNumber,
+      gender: gender ?? this.gender,
+      code: code ?? this.code,
+      age: age ?? this.age,
+    );
+  }
+
   factory MaleAndFemaleSignUp.initial() => MaleAndFemaleSignUp(
     age: '',
     name: '',
@@ -50,6 +112,7 @@ class MaleAndFemaleSignUp extends SignUpBody{
     gender: '',
     code: ''
   );
+
   @override
   Map<String, dynamic> toJson() {
     return super.toJson()..addAll({
@@ -63,12 +126,12 @@ class ParentSignUp extends SignUpBody{
   final String email;
   final int kinship;
   final String childrenNumber;
-  final String childGender;
+  // final String childGender;
   ParentSignUp({
     required this.email,
     required this.kinship,
     required this.childrenNumber,
-    required this.childGender,
+    // required this.childGender,
     required super.name,
     required super.phone,
     required super.identityNumber,
@@ -77,11 +140,38 @@ class ParentSignUp extends SignUpBody{
     required super.code
   });
 
+  @override
+  ParentSignUp copyWith({
+    String? email,
+    int? kinship,
+    String? childrenNumber,
+    // String? childGender,
+    File? image,
+    String? name,
+    String? phone,
+    String? identityNumber,
+    String? gender,
+    String? code
+  }) {
+    return ParentSignUp(
+      image: image ?? this.image,
+      name: name ?? this.name,
+      phone: phone ?? this.phone,
+      identityNumber: identityNumber ?? this.identityNumber,
+      gender: gender ?? this.gender,
+      code: code ?? this.code,
+      email: email ?? this.email,
+      kinship: kinship?? this.kinship,
+      childrenNumber: childrenNumber?? this.childrenNumber,
+      // childGender: childGender?? this.childGender,
+    );
+  }
+
   factory ParentSignUp.initial() => ParentSignUp(
       email: '',
       kinship: 0,
       childrenNumber: '',
-      childGender: '',
+      // childGender: '',
       name: '',
       phone: '',
       identityNumber: '',
@@ -89,6 +179,23 @@ class ParentSignUp extends SignUpBody{
       gender: '',
       code: ''
   );
+
+  @override
+  ParentSignUp merge(SignUpBody other) {
+    return copyWith(
+      image: other.image,
+      name: other.name,
+      phone: other.phone,
+      identityNumber: other.identityNumber,
+      gender: other.gender,
+      code: other.code,
+      email: (other as ParentSignUp).email,
+      kinship: other.kinship,
+      childrenNumber: other.childrenNumber,
+      // childGender: other.childGender,
+    );
+  }
+
   @override
   Map<String, dynamic> toJson() {
     return super.toJson()..addAll({

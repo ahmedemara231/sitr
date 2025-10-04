@@ -1,0 +1,219 @@
+part of '../../../imports.dart';
+
+class SignUpFields extends StatefulWidget {
+
+  final UserType type;
+  final Future<void> Function(SignUpBody body) onFinish;
+  const SignUpFields({super.key,
+    required this.type,
+    required this.onFinish,
+  });
+
+  @override
+  State<SignUpFields> createState() => _SignUpFieldsState();
+}
+
+class _SignUpFieldsState extends State<SignUpFields> {
+
+  late TextEditingController _maleNameCont;
+  late TextEditingController _malePhoneCont;
+  late TextEditingController _maleAgeCont;
+  late TextEditingController _maleIdentifyNumberCont;
+  late TextEditingController _maleCodeCont;
+
+  late TextEditingController _femaleNameCont;
+  late TextEditingController _femalePhoneCont;
+  late TextEditingController _femaleAgeCont;
+  late TextEditingController _femaleIdentifyNumberCont;
+  late TextEditingController _femaleCodeCont;
+
+
+  late TextEditingController _parentNameCont;
+  late TextEditingController _parentPhoneCont;
+  late TextEditingController _parentIdentifyNumberCont;
+  late TextEditingController _parentCodeCont;
+
+  late TextEditingController _emailCont;
+  late TextEditingController _childrenNumberCont;
+
+  @override
+  void initState() {
+    _initSignupBody(widget.type);
+    _maleNameCont = TextEditingController();
+    _malePhoneCont = TextEditingController();
+    _maleAgeCont = TextEditingController();
+    _maleIdentifyNumberCont = TextEditingController();
+    _maleCodeCont = TextEditingController();
+
+    _femaleNameCont = TextEditingController();
+    _femalePhoneCont = TextEditingController();
+    _femaleAgeCont = TextEditingController();
+    _femaleIdentifyNumberCont = TextEditingController();
+    _femaleCodeCont = TextEditingController();
+
+    _parentNameCont = TextEditingController();
+    _parentPhoneCont = TextEditingController();
+    _parentIdentifyNumberCont = TextEditingController();
+    _parentCodeCont = TextEditingController();
+
+    _emailCont = TextEditingController();
+    _childrenNumberCont = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant SignUpFields oldWidget) {
+    _initSignupBody(widget.type);
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void dispose() {
+    _maleNameCont.dispose();
+    _malePhoneCont.dispose();
+    _maleAgeCont.dispose();
+    _maleIdentifyNumberCont.dispose();
+    _maleCodeCont.dispose();
+
+    _femaleNameCont.dispose();
+    _femalePhoneCont.dispose();
+    _femaleAgeCont.dispose();
+    _femaleIdentifyNumberCont.dispose();
+    _femaleCodeCont.dispose();
+
+    _parentNameCont.dispose();
+    _parentPhoneCont.dispose();
+    _parentIdentifyNumberCont.dispose();
+    _parentCodeCont.dispose();
+
+    _emailCont.dispose();
+    _childrenNumberCont.dispose();
+    super.dispose();
+  }
+
+  File? image;
+
+  late SignUpBody signUpBody;
+  void _initSignupBody(UserType newType){
+    if(newType.isParent){
+      signUpBody = ParentSignUp.initial();
+
+    }else{
+      signUpBody = MaleAndFemaleSignUp.initial();
+    }
+    if(widget.type.isIndividual){
+      _listenToData(signUpBody.copyWith(gender: widget.type.name));
+    }
+  }
+
+  TextEditingController _getContBasedUserType({
+    required TextEditingController whenMale,
+    required TextEditingController whenFemale,
+    TextEditingController? whenParent,
+  }) {
+    switch (widget.type) {
+      case UserType.male:
+        return whenMale;
+
+      case UserType.female:
+        return whenFemale;
+
+      case UserType.parent:
+        return whenParent?? TextEditingController();
+
+      default:
+        return TextEditingController();
+    }
+  }
+
+  void _listenToData(SignUpBody body){
+    signUpBody = body;
+    widget.onFinish.call(signUpBody);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SignUpImageWidget(onSelectImage: (img) => _listenToData(signUpBody.copyWith(image: img))),
+        SignUpTextField(
+          upperTitle: LocaleKeys.name,
+          title: LocaleKeys.pleaseEnterYourName,
+          onChanged: (val) => _listenToData(signUpBody.copyWith(name: val)),
+          controller: _getContBasedUserType(whenMale: _maleNameCont, whenFemale: _femaleNameCont, whenParent: _parentNameCont),
+          // validator: Validators.validateEmpty,
+        ),
+        SignUpTextField(
+          upperTitle: LocaleKeys.phoneNumber,
+          title: LocaleKeys.pleaseEnterTheNumber,
+          controller: _getContBasedUserType(whenMale: _malePhoneCont, whenFemale: _femalePhoneCont, whenParent: _parentPhoneCont),
+          onChanged: (val) => _listenToData(signUpBody.copyWith(phone: val)),
+          // validator: Validators.validatePhone,
+          inputType: TextInputType.number,
+        ),
+
+        if (widget.type.isParent)
+          SignUpTextField(
+            upperTitle: LocaleKeys.email,
+            title: LocaleKeys.pleaseEnterTheEmail,
+            controller: _emailCont,
+            onChanged: (val) => _listenToData((signUpBody as ParentSignUp).copyWith(email: val)),
+            inputType: TextInputType.emailAddress,
+            // validator: Validators.validateEmpty,
+          )
+        else
+          SignUpTextField(
+            upperTitle: LocaleKeys.age,
+            title: LocaleKeys.pleaseEnterYourAge,
+            onChanged: (val) => _listenToData((signUpBody as MaleAndFemaleSignUp).copyWith(age: val)),
+            controller: _getContBasedUserType(whenMale: _maleAgeCont, whenFemale: _femaleAgeCont),
+            inputType: TextInputType.number,
+            // validator: Validators.validateEmpty,
+          ),
+
+        SignUpTextField(
+          upperTitle: LocaleKeys.identifyNumber,
+          title: LocaleKeys.pleaseEnterTheNumber,
+          controller: _getContBasedUserType(whenMale: _maleIdentifyNumberCont, whenFemale: _femaleIdentifyNumberCont, whenParent: _parentIdentifyNumberCont),
+          onChanged: (val) => _listenToData(signUpBody.copyWith(identityNumber: val)),
+          inputType: TextInputType.number,
+          // validator: Validators.validateEmpty,
+        ),
+
+        if (widget.type.isParent) ...[
+          DropDownTextField<Kinship>.withApiRequest(
+              hint: LocaleKeys.pleaseEnterTheKinship,
+              request: (ctx) async => AuthData.getKinships(),
+              itemBuilder: (val) => AppText(val.value),
+              title: LocaleKeys.kinship,
+            onChanged: (val) => _listenToData((signUpBody as ParentSignUp).copyWith(kinship: val?.id)),
+          ),
+          SignUpTextField(
+            upperTitle: LocaleKeys.childrenNumber,
+            title: LocaleKeys.pleaseEnterTheNumber,
+            controller: _childrenNumberCont,
+            inputType: TextInputType.number,
+            onChanged: (val) => _listenToData((signUpBody as ParentSignUp).copyWith(childrenNumber: val)),
+            // validator: Validators.validateEmpty,
+          ),
+          DropDownTextField<UserType>(
+              hint: LocaleKeys.pleaseEnterTheGender,
+              values: const [UserType.male, UserType.female],
+              title: LocaleKeys.gender,
+              itemBuilder: (v) => AppText(v.translate),
+              onChanged: (val) => _listenToData((signUpBody as ParentSignUp).copyWith(gender: val?.name)),
+          ),
+        ],
+
+        SignUpTextField(
+          upperTitle: LocaleKeys.code,
+          title: LocaleKeys.pleaseEnterYourCode,
+          onChanged: (val) => _listenToData(signUpBody.copyWith(code: val)),
+          controller: _getContBasedUserType(whenMale: _maleCodeCont, whenFemale: _femaleCodeCont, whenParent: _parentCodeCont),
+          inputType: TextInputType.number,
+          // validator: Validators.validateEmpty,
+        ),
+      ],
+    );
+  }
+}

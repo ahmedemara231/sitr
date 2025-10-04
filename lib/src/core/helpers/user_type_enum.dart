@@ -11,6 +11,7 @@ enum UserType{male, female, parent, unauthenticated}
 extension Check on UserType{
   bool get isMale => this == UserType.male;
   bool get isFemale => this == UserType.female;
+  bool get isIndividual => this == UserType.male || this == UserType.female;
   bool get isParent => this == UserType.parent;
   bool get isAuthenticated => this != UserType.unauthenticated;
 }
