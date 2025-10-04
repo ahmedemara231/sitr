@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
-
 import '../../../../../core/extensions/align_helper.dart';
 import '../../../../../core/extensions/context_extension.dart';
 import '../../../../../core/widgets/image_widgets/cached_image.dart';

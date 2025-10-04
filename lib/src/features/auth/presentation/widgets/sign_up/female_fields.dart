@@ -180,14 +180,13 @@ class _FemaleFieldsState extends State<FemaleFields> {
       default:
         return SharedFormFields<FemaleParentCompleteProfileBody>(
           restorationId: 'female_fields',
-          onFinished: (data) => _listenToData(data.copyWith()),
+          onFinished: (data) => _listenToData(asFemaleParentCompleteProfileBody.merge(data.copyWith())),
           onInitData: (List<Widget> children) => children
             ..insertAll(15, [
               SignUpTextField(
                 upperTitle: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage,
                 title: LocaleKeys.pleaseEnterTheNumber,
                 controller: _liveAfterMarryCont,
-                inputType: TextInputType.phone,
                 onChanged: (value) => _listenToData(asFemaleParentCompleteProfileBody.copyWith(liveAfterMarry: _liveAfterMarryCont.text)),
                 // validator: Validators.validateEmpty,
               ),
@@ -211,7 +210,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 itemBuilder: (v) => AppText(v.title.tr()),
                 onChanged: (value) {
                   wearingHijab.value = value?.value;
-                  _listenToData(asFemaleCompleteProfileBody.copyWith(wearingHijab: wearingHijab.value));
+                  _listenToData(asFemaleParentCompleteProfileBody.copyWith(wearingHijab: wearingHijab.value));
                 },
               ),
               ValueListenableBuilder(
@@ -221,7 +220,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                   values: EnumsData.religiousCommitment.data,
                   title: LocaleKeys.degreeOfCommitment,
                   itemBuilder: (v) => AppText(v.title.tr()),
-                  onChanged: (value) => _listenToData(asFemaleCompleteProfileBody.copyWith(degreeOfCommitment: value?.value)),
+                  onChanged: (value) => _listenToData(asFemaleParentCompleteProfileBody.copyWith(degreeOfCommitment: value?.value)),
                 ) : const SizedBox.shrink(),
               ),
             ])

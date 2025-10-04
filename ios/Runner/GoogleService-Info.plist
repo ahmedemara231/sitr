@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyCzLqZ5nlWyhYATtJOZoUel9NVBHWUJ1Uc</string>
+	<string>AIzaSyBnCWcDUno5DfS3QvreL8mH6WGd_PfohCA</string>
 	<key>GCM_SENDER_ID</key>
-	<string>360564435132</string>
+	<string>1012921206611</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.aait.flutter.sitr</string>
+	<string>com.aait.flutter.satr</string>
 	<key>PROJECT_ID</key>
-	<string>sitr-b99dd</string>
+	<string>satr-e500f</string>
 	<key>STORAGE_BUCKET</key>
-	<string>sitr-b99dd.firebasestorage.app</string>
+	<string>satr-e500f.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:360564435132:ios:a5167e9a3f5e82c7c7c8b9</string>
+	<string>1:1012921206611:ios:01fe3e51c4af42039443a6</string>
 </dict>
 </plist>

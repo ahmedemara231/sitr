@@ -19,6 +19,8 @@ class SuccessSheet extends StatelessWidget {
       children: [
         AppBottomSheet.small(
             asyncCall: (context) => Go.to(
+                UserTypeHelper.currentType!.isParent?
+                const EnterMaleOrFemaleOrChildDataScreen.signUpAsParent() :
                 EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(type: UserTypeHelper.currentType)
             ),
             btnTitle: LocaleKeys.completeProfile,

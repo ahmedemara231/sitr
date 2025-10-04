@@ -37,6 +37,7 @@ class ApiConstants {
   static const String activate = 'activate';
   static const String register = 'register';
   static const String completeRegister = 'complete-registration';
+  static const String addChild = 'add-child';
   static const String checkCodeAfterLogin = 'check-code';
   static const String resendCode = 'resend-code';
 
