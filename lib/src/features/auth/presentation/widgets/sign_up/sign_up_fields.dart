@@ -165,8 +165,8 @@ class _SignUpFieldsState extends State<SignUpFields> {
             ),
           ),
 
-          Offstage(
-            offstage: !widget.type.isIndividual,
+        Visibility(
+          visible: widget.type.isIndividual,
             child: SignUpTextField(
               upperTitle: LocaleKeys.age,
               title: LocaleKeys.pleaseEnterYourAge,

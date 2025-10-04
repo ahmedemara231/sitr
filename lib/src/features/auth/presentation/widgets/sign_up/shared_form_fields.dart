@@ -118,7 +118,7 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
         upperTitle: LocaleKeys.nickname,
         title: LocaleKeys.pleaseEnterYourName,
         controller: _nickNameCont,
-        onChanged: (val) => _listenToData(model.copyWith(nickName: val) as T),
+        onChanged: (val) => _listenToData(model.copyWith(nickName: val)),
         // validator: Validators.validateEmpty,
       ),
       DropDownTextField<TitleValueShape>(
@@ -127,14 +127,14 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
         values: EnumsData.maritalStatus.data,
         itemBuilder: (v) => AppText(v.title.tr()),
         onChanged: (val) =>
-            _listenToData(model.copyWith(maritalStatus: val?.value) as T),
+            _listenToData(model.copyWith(maritalStatus: val?.value)),
       ),
       SignUpTextField(
         upperTitle: LocaleKeys.tall,
         title: LocaleKeys.pleaseEnterTheTall,
         controller: _tallCont,
         inputType: TextInputType.number,
-        onChanged: (val) => _listenToData(model.copyWith(tall: val) as T),
+        onChanged: (val) => _listenToData(model.copyWith(tall: val)),
         // validator: Validators.validateEmpty,
       ),
       SignUpTextField(
@@ -142,14 +142,14 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
         title: LocaleKeys.pleaseEnterTheWeight,
         controller: _weightCont,
         inputType: TextInputType.number,
-        onChanged: (val) => _listenToData(model.copyWith(weight: val) as T),
+        onChanged: (val) => _listenToData(model.copyWith(weight: val)),
         // validator: Validators.validateEmpty,
       ),
       SignUpTextField(
         upperTitle: LocaleKeys.currentJob,
         title: LocaleKeys.pleaseEnterTheCurrentJob,
         controller: _currentJobCont,
-        onChanged: (val) => _listenToData(model.copyWith(currentJob: val) as T),
+        onChanged: (val) => _listenToData(model.copyWith(currentJob: val)),
         // validator: Validators.validateEmpty,
       ),
       SignUpTextField(
@@ -157,14 +157,14 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
         title: LocaleKeys.pleaseEnterTheBrief,
         controller: _briefCont,
         inputType: TextInputType.multiline,
-        onChanged: (val) => _listenToData(model.copyWith(quickBrief: val) as T),
+        onChanged: (val) => _listenToData(model.copyWith(quickBrief: val)),
         // validator: Validators.validateEmpty,
       ),
       RadioWidget<Answer>(
           title: LocaleKeys.childrenExists,
           onSubmit: (result) {
             childrenExits.value = result;
-            _listenToData(model.copyWith(childrenExists: result.toBool) as T);
+            _listenToData(model.copyWith(childrenExists: result.toBool));
           },
           values: Answer.values,
           titleBuilder: (i) => AppText(Answer.values[i].translate),
@@ -179,12 +179,12 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
                  controller: _childrenNumberCont,
                  inputType: TextInputType.number,
                  onChanged: (val) =>
-                     _listenToData(model.copyWith(childrenNumber: val) as T),
+                     _listenToData(model.copyWith(childrenNumber: val)),
                  // validator: Validators.validateEmpty,
                ),
                RadioWidget<TitleValueShape>(
                  title: LocaleKeys.nursery,
-                 onSubmit: (result) => _listenToData(model.copyWith(nursery: result.value) as T),
+                 onSubmit: (result) => _listenToData(model.copyWith(nursery: result.value)),
                  values: EnumsData.childCustody.data,
                  titleBuilder: (i) => AppText(EnumsData.childCustody.data[i].title.tr()),
                    // titles: (i) => [AppText(LocaleKeys.father), AppText(LocaleKeys.mother)]),
@@ -196,7 +196,7 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
       RadioWidget<Answer>(
           title: LocaleKeys.wantToHaveChildren,
           onSubmit: (result) =>
-              _listenToData(model.copyWith(wantToHaveChildren: result.toBool) as T),
+              _listenToData(model.copyWith(wantToHaveChildren: result.toBool)),
           values: Answer.values,
           titleBuilder: (i) => AppText(Answer.values[i].translate),
       ),
@@ -205,11 +205,11 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
         title: LocaleKeys.pleaseEnterTheThings,
         controller: _thingsCont,
         onChanged: (val) =>
-            _listenToData(model.copyWith(thingsIAcceptOrWant: val) as T),
+            _listenToData(model.copyWith(thingsIAcceptOrWant: val)),
         // validator: Validators.validateEmpty,
       ),
       DowryWidget(onSelect: (from, to) {
-        _listenToData(model.copyWith(dowry: Dowry(from: from, to: to)) as T);
+        _listenToData(model.copyWith(dowry: Dowry(from: from, to: to)));
       }),
 
       DropDownTextField<TitleValueShape>(
@@ -218,12 +218,12 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
         title: LocaleKeys.typeOfWeddingParty,
         itemBuilder: (v) => AppText(v.title.tr()),
         onChanged: (val) =>
-            _listenToData(model.copyWith(typeOfWeddingParty: val?.value) as T),
+            _listenToData(model.copyWith(typeOfWeddingParty: val?.value)),
       ),
       DropDownTextField<City>.withApiRequest(
         hint: LocaleKeys.pleaseEnterTheCity,
         title: LocaleKeys.city,
-        onChanged: (val) => _listenToData(model.copyWith(cityId: val?.id) as T),
+        onChanged: (val) => _listenToData(model.copyWith(cityId: val?.id)),
         request: (BuildContext ctx) async => await AuthData.getCities(),
         itemBuilder: (city) => AppText(city.name),
       ),
@@ -232,13 +232,13 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
         title: LocaleKeys.pleaseEnterTheEducationalQualification,
         controller: _educationalQualificationCont,
         onChanged: (val) =>
-            _listenToData(model.copyWith(educationalQualification: val) as T),
+            _listenToData(model.copyWith(educationalQualification: val)),
         // validator: Validators.validateEmpty,
       ),
       RadioWidget<Answer>(
           title: LocaleKeys.areYouPray,
           onSubmit: (result) =>
-              _listenToData(model.copyWith(pray: result.toBool) as T),
+              _listenToData(model.copyWith(pray: result.toBool)),
           values: Answer.values,
         titleBuilder: (i) => AppText(Answer.values[i].translate),
       ),
@@ -247,27 +247,27 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
         title: LocaleKeys.pleaseEnterTheDiseases,
         controller: _diseasesCont,
         onChanged: (val) =>
-            _listenToData(model.copyWith(diseasesIfExists: val) as T),
+            _listenToData(model.copyWith(diseasesIfExists: val)),
         // validator: Validators.validateEmpty,
       ),
       RadioWidget<Languages>(
           title: LocaleKeys.inChatYouPrefer,
           onSubmit: (result) => _listenToData(
-              model.copyWith(inChatYouPrefer: result.languageCode) as T),
+              model.copyWith(inChatYouPrefer: result.languageCode)),
           values: Languages.values,
           titleBuilder: (i) => AppText(Languages.values[i].translate),
       ),
       RadioWidget<Answer>(
           title: LocaleKeys.areYouSmoke,
           onSubmit: (result) =>
-              _listenToData(model.copyWith(smoke: result.toBool) as T),
+              _listenToData(model.copyWith(smoke: result.toBool)),
           values: Answer.values,
           titleBuilder: (i) => AppText(Answer.values[i].translate),
       ),
       RadioWidget<Answer>(
           title: LocaleKeys.doYouBelongToATribe,
           onSubmit: (result) =>
-              _listenToData(model.copyWith(belongToATribe: result.toBool) as T),
+              _listenToData(model.copyWith(belongToATribe: result.toBool)),
           values: Answer.values,
         titleBuilder: (i) => AppText(Answer.values[i].translate),
       ),
@@ -276,7 +276,7 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
         values: EnumsData.skinColors.data,
         itemBuilder: (v) => AppText(v.title.tr()),
         title: LocaleKeys.skinColor,
-        onChanged: (val) => _listenToData(model.copyWith(skinColor: val?.value) as T),
+        onChanged: (val) => _listenToData(model.copyWith(skinColor: val?.value)),
       ),
     ];
 

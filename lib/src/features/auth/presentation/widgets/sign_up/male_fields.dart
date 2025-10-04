@@ -58,9 +58,7 @@ class _MaleFieldsState extends State<MaleFields> {
     _ageCont.dispose();
     super.dispose();
   }
-
-  final _formKey = GlobalKey<FormState>();
-
+  
   void _listenToData(SharedFormFieldModel updatedModel) {
     sharedFormFieldModel = updatedModel;
     widget.onFinishMaleData.call(sharedFormFieldModel);
@@ -80,16 +78,14 @@ class _MaleFieldsState extends State<MaleFields> {
     switch(widget.secondaryType){
       case null:
         return SharedFormFields<MaleCompleteProfileBody>(
-          // sharedFormFieldModel: sharedFormFieldModel,
           restorationId: UserType.male.name,
-          onFinished: (data) => _listenToData(data.copyWith()),
+          onFinished: (data) => _listenToData(data),
         );
 
       default:
         return SharedFormFields<MaleParentCompleteProfileBody>(
-          // sharedFormFieldModel: sharedFormFieldModel,
           restorationId: UserType.male.name,
-          onFinished: (data) => _listenToData(data.copyWith()),
+          onFinished: (data) => _listenToData(asMaleParentCompleteProfileBody.merge(data.copyWith())),
           onInitData: (List<Widget> children) => children..insert(
             0,
             SignUpTextField(
@@ -111,7 +107,7 @@ class _MaleFieldsState extends State<MaleFields> {
                 title: LocaleKeys.pleaseEnterTheNumber,
                 controller: _phoneCont,
                 inputType: TextInputType.phone,
-                onChanged: (val) => _listenToData(asMaleParentCompleteProfileBody.copyWith(name: val)),
+                onChanged: (val) => _listenToData(asMaleParentCompleteProfileBody.copyWith(phone: val)),
                 // validator: Validators.validateEmpty,
               ),
             ],
@@ -122,12 +118,14 @@ class _MaleFieldsState extends State<MaleFields> {
                   upperTitle: LocaleKeys.identifyNumber,
                   title: LocaleKeys.pleaseEnterTheNumber,
                   controller: _identifyNumberCont,
+                  inputType: TextInputType.number,
                   onChanged: (val) => _listenToData(asMaleParentCompleteProfileBody.copyWith(identifyNumber: val)),
                   // validator: Validators.validateEmpty,
                 ),
                 SignUpTextField(
                   upperTitle: LocaleKeys.age,
                   title: LocaleKeys.pleaseEnterYourAge,
+                  inputType: TextInputType.number,
                   controller: _ageCont,
                   onChanged: (val) => _listenToData(asMaleParentCompleteProfileBody.copyWith(age: val)),
                   // validator: Validators.validateEmpty,
