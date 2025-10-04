@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:pagify/widgets/text.dart';
 import '../../../../../config/language/locale_keys.g.dart';
@@ -48,6 +47,9 @@ class _FemaleFieldsState extends State<FemaleFields> {
   late TextEditingController _parentNameCont;
   late TextEditingController _parentNumberCont;
   late TextEditingController _kinshipCont;
+  late TextEditingController _phoneCont;
+  late TextEditingController _identifyNumberCont;
+  late TextEditingController _ageCont;
 
   final ValueNotifier<String?> wearingHijab = ValueNotifier(null);
   Answer? acceptsPolygamy;
@@ -62,6 +64,9 @@ class _FemaleFieldsState extends State<FemaleFields> {
     _parentNameCont = TextEditingController();
     _parentNumberCont = TextEditingController();
     _kinshipCont = TextEditingController();
+    _phoneCont = TextEditingController();
+    _identifyNumberCont = TextEditingController();
+    _ageCont = TextEditingController();
     super.initState();
   }
 
@@ -72,6 +77,9 @@ class _FemaleFieldsState extends State<FemaleFields> {
     _parentNameCont.dispose();
     _parentNumberCont.dispose();
     _kinshipCont.dispose();
+    _phoneCont.dispose();
+    _identifyNumberCont.dispose();
+    _ageCont.dispose();
     super.dispose();
   }
 
@@ -133,7 +141,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
               hint: LocaleKeys.areYouWaringHijab,
               values: EnumsData.hijab.data,
               title: LocaleKeys.areYouWaringHijab,
-              itemBuilder: (v) => AppText(v.title.tr()),
+              itemBuilder: (v) => AppText(v.title),
               onChanged: (value) {
                 wearingHijab.value = value?.value;
                 _listenToData(asFemaleCompleteProfileBody.copyWith(wearingHijab: wearingHijab.value));
@@ -145,7 +153,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
                 values: EnumsData.religiousCommitment.data,
                 title: LocaleKeys.degreeOfCommitment,
-                itemBuilder: (v) => AppText(v.title.tr()),
+                itemBuilder: (v) => AppText(v.title),
                 onChanged: (value) => _listenToData(asFemaleCompleteProfileBody.copyWith(degreeOfCommitment: value?.value)),
               ) : const SizedBox.shrink(),
             ),
@@ -181,7 +189,33 @@ class _FemaleFieldsState extends State<FemaleFields> {
         return SharedFormFields<FemaleParentCompleteProfileBody>(
           restorationId: 'female_fields',
           onFinished: (data) => _listenToData(asFemaleParentCompleteProfileBody.merge(data.copyWith())),
-          onInitData: (List<Widget> children) => children
+          onInitData: (List<Widget> children) => children..insert(2, 
+            SignUpTextField(
+              upperTitle: LocaleKeys.phoneNumber,
+              title: LocaleKeys.pleaseEnterTheNumber,
+              controller: _phoneCont,
+              onChanged: (value) => _listenToData(asFemaleParentCompleteProfileBody.copyWith(phone: _phoneCont.text)),
+              // validator: Validators.validatePhone,
+              inputType: TextInputType.number,
+            ),
+          )..insertAll(6, [
+            SignUpTextField(
+              upperTitle: LocaleKeys.age,
+              title: LocaleKeys.pleaseEnterYourAge,
+              onChanged: (value) => _listenToData(asFemaleParentCompleteProfileBody.copyWith(age: _ageCont.text)),
+              controller: _ageCont,
+              inputType: TextInputType.number,
+              // validator: Validators.validateEmpty,
+            ),
+            SignUpTextField(
+              upperTitle: LocaleKeys.identifyNumber,
+              title: LocaleKeys.pleaseEnterTheNumber,
+              controller: _identifyNumberCont,
+              onChanged: (value) => _listenToData(asFemaleParentCompleteProfileBody.copyWith(identifyNumber: _identifyNumberCont.text)),
+              inputType: TextInputType.number,
+              // validator: Validators.validateEmpty,
+            ),
+          ])
             ..insertAll(15, [
               SignUpTextField(
                 upperTitle: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage,
@@ -207,7 +241,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 hint: LocaleKeys.areYouWaringHijab,
                 values: EnumsData.hijab.data,
                 title: LocaleKeys.areYouWaringHijab,
-                itemBuilder: (v) => AppText(v.title.tr()),
+                itemBuilder: (v) => AppText(v.title),
                 onChanged: (value) {
                   wearingHijab.value = value?.value;
                   _listenToData(asFemaleParentCompleteProfileBody.copyWith(wearingHijab: wearingHijab.value));
@@ -219,7 +253,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                   hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
                   values: EnumsData.religiousCommitment.data,
                   title: LocaleKeys.degreeOfCommitment,
-                  itemBuilder: (v) => AppText(v.title.tr()),
+                  itemBuilder: (v) => AppText(v.title),
                   onChanged: (value) => _listenToData(asFemaleParentCompleteProfileBody.copyWith(degreeOfCommitment: value?.value)),
                 ) : const SizedBox.shrink(),
               ),

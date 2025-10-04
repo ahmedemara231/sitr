@@ -101,6 +101,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
     }else{
       signUpBody = MaleAndFemaleSignUp.initial();
     }
+
     if(widget.type.isIndividual){
       _listenToData(signUpBody.copyWith(gender: widget.type.name));
     }
@@ -152,23 +153,28 @@ class _SignUpFieldsState extends State<SignUpFields> {
           inputType: TextInputType.number,
         ),
 
-        if (widget.type.isParent)
-          SignUpTextField(
-            upperTitle: LocaleKeys.email,
-            title: LocaleKeys.pleaseEnterTheEmail,
-            controller: _emailCont,
-            onChanged: (val) => _listenToData((signUpBody as ParentSignUp).copyWith(email: val)),
-            inputType: TextInputType.emailAddress,
-            // validator: Validators.validateEmpty,
-          )
-        else
-          SignUpTextField(
-            upperTitle: LocaleKeys.age,
-            title: LocaleKeys.pleaseEnterYourAge,
-            onChanged: (val) => _listenToData((signUpBody as MaleAndFemaleSignUp).copyWith(age: val)),
-            controller: _getContBasedUserType(whenMale: _maleAgeCont, whenFemale: _femaleAgeCont),
-            inputType: TextInputType.number,
-            // validator: Validators.validateEmpty,
+          Visibility(
+            visible: widget.type.isParent,
+            child: SignUpTextField(
+              upperTitle: LocaleKeys.email,
+              title: LocaleKeys.pleaseEnterTheEmail,
+              controller: _emailCont,
+              onChanged: (val) => _listenToData((signUpBody as ParentSignUp).copyWith(email: val)),
+              inputType: TextInputType.emailAddress,
+              // validator: Validators.validateEmpty,
+            ),
+          ),
+
+          Offstage(
+            offstage: !widget.type.isIndividual,
+            child: SignUpTextField(
+              upperTitle: LocaleKeys.age,
+              title: LocaleKeys.pleaseEnterYourAge,
+              onChanged: (val) => _listenToData((signUpBody as MaleAndFemaleSignUp).copyWith(age: val)),
+              controller: _getContBasedUserType(whenMale: _maleAgeCont, whenFemale: _femaleAgeCont),
+              inputType: TextInputType.number,
+              // validator: Validators.validateEmpty,
+            ),
           ),
 
         SignUpTextField(

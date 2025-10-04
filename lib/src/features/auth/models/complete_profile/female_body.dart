@@ -158,19 +158,22 @@ class FemaleParentCompleteProfileBody extends SharedFormFieldModel {
   final bool? doYouAcceptPolygamy;
   final String? wearingHijab;
   final String degreeOfCommitment;
-  final MaleAndFemaleSignUp signUpBody;
+
+  final String phone;
+  final String identifyNumber;
+  final String age;
 
   FemaleParentCompleteProfileBody({
     required this.name,
-    required this.signUpBody,
+    required this.phone,
+    required this.identifyNumber,
+    required this.age,
 
       required this.liveAfterMarry,
       required this.wearingHijab,
       required this.doYouAcceptPolygamy,
       required this.degreeOfCommitment,
 
-      // required this.parentName,
-      // required this.parentNumber,
       required super.dowry,
       required super.nickName,
       required super.maritalStatus,
@@ -194,39 +197,45 @@ class FemaleParentCompleteProfileBody extends SharedFormFieldModel {
       required super.skinColor});
 
   @override
-  SharedFormFieldModel copyWith(
-          {Dowry? dowry,
-            MaleAndFemaleSignUp? signUpBody,
-          String? name,
-          String? liveAfterMarry,
-          bool? doYouAcceptPolygamy,
-          String? wearingHijab,
-          String? degreeOfCommitment,
-          String? parentName,
-          String? parentNumber,
-          String? nickName,
-          String? maritalStatus,
-          String? tall,
-          String? weight,
-          String? currentJob,
-          String? quickBrief,
-          bool? childrenExists,
-          String? childrenNumber,
-          String? nursery,
-          bool? wantToHaveChildren,
-          String? thingsIAcceptOrWant,
-          String? typeOfWeddingParty,
-          int? cityId,
-          String? educationalQualification,
-          bool? pray,
-          String? diseasesIfExists,
-          String? inChatYouPrefer,
-          bool? smoke,
-          bool? belongToATribe,
-          String? skinColor}) =>
-      FemaleParentCompleteProfileBody(
-        signUpBody: signUpBody ?? this.signUpBody,
-        name: name ?? this.name,
+  SharedFormFieldModel copyWith({
+    Dowry? dowry,
+    MaleAndFemaleSignUp? signUpBody,
+    String? name,
+    String? phone,
+    String? identifyNumber,
+    String? age,
+    String? liveAfterMarry,
+    bool? doYouAcceptPolygamy,
+    String? wearingHijab,
+    String? degreeOfCommitment,
+    String? parentName,
+    String? parentNumber,
+    String? nickName,
+    String? maritalStatus,
+    String? tall,
+    String? weight,
+    String? currentJob,
+    String? quickBrief,
+    bool? childrenExists,
+    String? childrenNumber,
+    String? nursery,
+    bool? wantToHaveChildren,
+    String? thingsIAcceptOrWant,
+    String? typeOfWeddingParty,
+    int? cityId,
+    String? educationalQualification,
+    bool? pray,
+    String? diseasesIfExists,
+    String? inChatYouPrefer,
+    bool? smoke,
+    bool? belongToATribe,
+    String? skinColor
+  }) => FemaleParentCompleteProfileBody(
+     name: name ?? this.name,
+
+        phone: phone ?? this.phone,
+        identifyNumber: identifyNumber ?? this.identifyNumber,
+        age: age ?? this.age,
         nickName: nickName ?? this.nickName,
         maritalStatus: maritalStatus ?? this.maritalStatus,
         tall: tall ?? this.tall,
@@ -253,13 +262,13 @@ class FemaleParentCompleteProfileBody extends SharedFormFieldModel {
         doYouAcceptPolygamy: doYouAcceptPolygamy ?? this.doYouAcceptPolygamy,
         wearingHijab: wearingHijab ?? this.wearingHijab,
         degreeOfCommitment: degreeOfCommitment ?? this.degreeOfCommitment,
-        // parentName: parentName ?? this.parentName,
-        // parentNumber: parentNumber ?? this.parentNumber,
       );
 
   factory FemaleParentCompleteProfileBody.initial() =>
       FemaleParentCompleteProfileBody(
-          signUpBody: MaleAndFemaleSignUp.initial(),
+          phone: '',
+          identifyNumber: '',
+          age: '',
           nickName: '',
           maritalStatus: '',
           tall: '',
@@ -290,17 +299,21 @@ class FemaleParentCompleteProfileBody extends SharedFormFieldModel {
           name: ''
       );
 
-  Map<String, dynamic> get signUpJsonData => signUpBody.toJson();
   @override
   Map<String, dynamic> toJson() {
-    return super.toJson()..addAll(signUpJsonData)
+    return super.toJson()
       ..addAll({
+        'identity_number' : identifyNumber,
+        'age' : age,
         'gender' : 'female',
-        'phone' : '500500500',
         'preferred_residence_after_marriage': liveAfterMarry,
         'accepts_polygamy': doYouAcceptPolygamy,
-        // 'guardian_name': parentName,
-        // 'guardian_phone': parentNumber,
+        'phone' : phone,
+
+        // 'guardian_name': 'parentName',
+        // 'guardian_phone': 500500500,
+        // 'guardian_relation_id': 1,
+
         'name': name,
         'hijab': wearingHijab,
         'religious_commitment': degreeOfCommitment
