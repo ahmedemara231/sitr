@@ -29,6 +29,7 @@ import 'features/more/presentation/screens/profile.dart';
 import 'features/more/presentation/screens/success_partners/success_partners_screen.dart';
 import 'features/more/presentation/screens/terms_andcondition_and_about_us/terms_andcondition_and_about_us.dart';
 import 'features/more/presentation/screens/wallet/wallet_screen.dart';
+import 'features/on_boarding/screen.dart';
 import 'features/otp/presentation/otp.dart';
 import 'features/packages/presentation/packages_screen.dart';
 import 'features/settings/splash/imports/view_imports.dart';
@@ -56,7 +57,7 @@ class Sitr extends StatelessWidget {
             locale: context.locale,
             navigatorKey: Go.navigatorKey,
             restorationScopeId: 'app',
-            // home:   const HomeScreen(),
+            // home: const HomeScreen(),
             home: const SplashScreen(),
             // home: const EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(type: UserType.female),
             // home: const EnterMaleOrFemaleOrChildDataScreen.signUpAsParent(),

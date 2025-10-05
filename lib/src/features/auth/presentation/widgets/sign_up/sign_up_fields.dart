@@ -38,7 +38,6 @@ class _SignUpFieldsState extends State<SignUpFields> {
 
   @override
   void initState() {
-    _initSignupBody(widget.type);
     _maleNameCont = TextEditingController();
     _malePhoneCont = TextEditingController();
     _maleAgeCont = TextEditingController();
@@ -58,6 +57,8 @@ class _SignUpFieldsState extends State<SignUpFields> {
 
     _emailCont = TextEditingController();
     _childrenNumberCont = TextEditingController();
+
+    _initSignupBody(widget.type);
     super.initState();
   }
 
@@ -96,7 +97,9 @@ class _SignUpFieldsState extends State<SignUpFields> {
   late SignUpBody signUpBody;
   void _initSignupBody(UserType newType){
     if(newType.isParent){
-      signUpBody = ParentSignUp.initial();
+      log('here');
+      _parentCodeCont.text = '_parentNameCont.text';
+      signUpBody = ParentSignUp.initial().copyWith(name: _parentCodeCont.text);
 
     }else{
       signUpBody = MaleAndFemaleSignUp.initial();

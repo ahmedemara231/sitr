@@ -1,4 +1,5 @@
 import 'dart:convert';
+import '../../../extensions/object.dart';
 import '../../../helpers/cache_service.dart';
 import '../../../helpers/user_type_enum.dart';
 import 'individual/female_model.dart';
@@ -58,25 +59,6 @@ class UserModel {
     }else{
       return UserModel.initial();
     }
-
-    // return UserModel(
-    //   id: json['id'],
-    //   name: json['name'],
-    //   parentId: json['parent_id'],
-    //   type: json['type'],
-    //   gender: json['gender'],
-    //   avatar: json['avatar'],
-    //   phone: json['phone'],
-    //   countryCode: json['country_code'],
-    //   fullPhone: json['full_phone'],
-    //   identityNumber: json['identity_number'],
-    //   age: json['age'],
-    //   isActive: json['is_active'],
-    //   isBlocked: json['is_blocked'],
-    //   adminApprovalStatus: json['admin_approval_status'],
-    //   completeRegistration: json['complete_registration'],
-    //   token: json['token'],
-    // );
   }
 
   static bool get isMale{
@@ -93,6 +75,10 @@ class UserModel {
 
   static bool get isIndividual{
     return currentUser is! ParentModel;
+  }
+
+  static bool get isAuthenticated{
+    return currentUser.isNotNull;
   }
 
   static UserModel get currentUser{

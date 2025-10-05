@@ -29,6 +29,7 @@ class OnBoardingScreen extends StatelessWidget {
       children: [
         Container(
           height: context.height,
+            width: context.width,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [

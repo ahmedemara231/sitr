@@ -1,10 +1,13 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:pagify/widgets/text.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
 import '../../../models/complete_profile/male_body.dart';
 import '../../../models/shared_form_fields_model.dart';
+import '../../data/enums_data.dart';
 import '../shared/text_field.dart';
+import 'drop_down_text_field.dart';
 import 'image_widget.dart';
 import 'shared_form_fields.dart';
 
@@ -65,9 +68,9 @@ class _MaleFieldsState extends State<MaleFields> {
   }
 
 
-  // MaleCompleteProfileBody get asMaleCompleteProfileBody{
-  //   return sharedFormFieldModel as MaleCompleteProfileBody;
-  // }
+  MaleCompleteProfileBody get asMaleCompleteProfileBody{
+    return sharedFormFieldModel as MaleCompleteProfileBody;
+  }
 
   MaleParentCompleteProfileBody get asMaleParentCompleteProfileBody{
     return sharedFormFieldModel as MaleParentCompleteProfileBody;
@@ -80,6 +83,16 @@ class _MaleFieldsState extends State<MaleFields> {
         return SharedFormFields<MaleCompleteProfileBody>(
           restorationId: UserType.male.name,
           onFinished: (data) => _listenToData(data),
+          onInitData: (data) => data..insert(
+            20,
+            DropDownTextField<TitleValueShape>(
+              hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
+              values: EnumsData.religiousCommitment.data,
+              title: LocaleKeys.degreeOfCommitment,
+              itemBuilder: (v) => AppText(v.title),
+              onChanged: (value) => _listenToData(asMaleCompleteProfileBody.copyWith(degreeOfCommitment: value?.value)),
+            ),
+          ),
         );
 
       default:
@@ -131,6 +144,15 @@ class _MaleFieldsState extends State<MaleFields> {
                   // validator: Validators.validateEmpty,
                 ),
               ]
+          )..insert(
+              20,
+            DropDownTextField<TitleValueShape>(
+              hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
+              values: EnumsData.religiousCommitment.data,
+              title: LocaleKeys.degreeOfCommitment,
+              itemBuilder: (v) => AppText(v.title),
+              onChanged: (value) => _listenToData(asMaleParentCompleteProfileBody.copyWith(degreeOfCommitment: value?.value)),
+            ),
           ),
         );
     }

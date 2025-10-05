@@ -174,8 +174,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 onChanged: (value) => _listenToData(asFemaleCompleteProfileBody.copyWith(parentNumber: _parentNumberCont.text)),
                 // validator: Validators.validateEmpty,
               ),
-
-            DropDownTextField<Kinship>.withApiRequest(
+              DropDownTextField<Kinship>.withApiRequest(
               hint: LocaleKeys.kinship,
               title: LocaleKeys.kinship,
               itemBuilder: (v) => AppText(v.value),
@@ -256,6 +255,30 @@ class _FemaleFieldsState extends State<FemaleFields> {
                   itemBuilder: (v) => AppText(v.title),
                   onChanged: (value) => _listenToData(asFemaleParentCompleteProfileBody.copyWith(degreeOfCommitment: value?.value)),
                 ) : const SizedBox.shrink(),
+              ),
+
+              SignUpTextField(
+                upperTitle: LocaleKeys.parentName,
+                title: LocaleKeys.pleaseEnterName,
+                controller: _parentNameCont,
+                onChanged: (value) => _listenToData(asFemaleParentCompleteProfileBody.copyWith(parentName: _parentNameCont.text)),
+
+                // validator: Validators.validateEmpty,
+              ),
+              SignUpTextField(
+                upperTitle: LocaleKeys.parentNumber,
+                title: LocaleKeys.pleaseEnterTheNumber,
+                controller: _parentNumberCont,
+                inputType: TextInputType.phone,
+                onChanged: (value) => _listenToData(asFemaleParentCompleteProfileBody.copyWith(parentNumber: _parentNumberCont.text)),
+                // validator: Validators.validateEmpty,
+              ),
+              DropDownTextField<Kinship>.withApiRequest(
+                  hint: LocaleKeys.kinship,
+                  title: LocaleKeys.kinship,
+                  itemBuilder: (v) => AppText(v.value),
+                  onChanged: (value) => _listenToData(asFemaleParentCompleteProfileBody.copyWith(kinship: value?.id?? 0)),
+                  request: (BuildContext ctx) async => await AuthData.getKinships()
               ),
             ])
             ..insert(

@@ -67,7 +67,9 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
   }
 
   void _listenToData(SharedFormFieldModel updatedModel) {
-    model = model.merge(updatedModel) as T;
+    model = updatedModel as T;
+
+    // model = model.merge(updatedModel) as T;
     widget.onFinished.call(model);
   }
 

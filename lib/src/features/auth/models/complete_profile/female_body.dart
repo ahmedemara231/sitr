@@ -163,6 +163,10 @@ class FemaleParentCompleteProfileBody extends SharedFormFieldModel {
   final String identifyNumber;
   final String age;
 
+  final String parentName;
+  final String parentNumber;
+  final int kinship;
+
   FemaleParentCompleteProfileBody({
     required this.name,
     required this.phone,
@@ -173,6 +177,9 @@ class FemaleParentCompleteProfileBody extends SharedFormFieldModel {
       required this.wearingHijab,
       required this.doYouAcceptPolygamy,
       required this.degreeOfCommitment,
+      required this.parentName,
+      required this.parentNumber,
+      required this.kinship,
 
       required super.dowry,
       required super.nickName,
@@ -194,10 +201,12 @@ class FemaleParentCompleteProfileBody extends SharedFormFieldModel {
       required super.inChatYouPrefer,
       required super.smoke,
       required super.belongToATribe,
-      required super.skinColor});
+      required super.skinColor
+  });
 
   @override
   SharedFormFieldModel copyWith({
+    int? kinship,
     Dowry? dowry,
     MaleAndFemaleSignUp? signUpBody,
     String? name,
@@ -229,10 +238,12 @@ class FemaleParentCompleteProfileBody extends SharedFormFieldModel {
     String? inChatYouPrefer,
     bool? smoke,
     bool? belongToATribe,
-    String? skinColor
+    String? skinColor,
   }) => FemaleParentCompleteProfileBody(
-     name: name ?? this.name,
-
+        name: name ?? this.name,
+        parentName: parentName??this.parentName,
+        parentNumber: parentNumber??this.parentNumber,
+        kinship: kinship??this.kinship,
         phone: phone ?? this.phone,
         identifyNumber: identifyNumber ?? this.identifyNumber,
         age: age ?? this.age,
@@ -294,8 +305,9 @@ class FemaleParentCompleteProfileBody extends SharedFormFieldModel {
           doYouAcceptPolygamy: null,
           wearingHijab: null,
           degreeOfCommitment: '',
-          // parentName: '',
-          // parentNumber: '',
+          parentName: '',
+          parentNumber: '',
+          kinship: 0,
           name: ''
       );
 
@@ -310,9 +322,9 @@ class FemaleParentCompleteProfileBody extends SharedFormFieldModel {
         'accepts_polygamy': doYouAcceptPolygamy,
         'phone' : phone,
 
-        // 'guardian_name': 'parentName',
-        // 'guardian_phone': 500500500,
-        // 'guardian_relation_id': 1,
+        'guardian_name': parentName,
+        'guardian_phone': parentNumber,
+        'guardian_relation_id': kinship,
 
         'name': name,
         'hijab': wearingHijab,

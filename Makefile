@@ -1,18 +1,30 @@
-setup:
+# Makefile
+
+# Clean Flutter build and get packages
+clean:
 	flutter clean && flutter pub get
 
-build:
-	flutter build apk --release
+# Run the app on a connected device
+run:
+	flutter run
 
-test:
-	flutter test
+# Build APK
+apk:
+	flutter build apk
 
-format:
-	dart format .
+# Build iOS (for macOS users with Xcode)
+ios:
+	flutter build ios
 
-runner:
-	flutter pub run build_runner build --delete-conflicting-outputs
+# Upgrade Flutter packages
+upgrade:
+	flutter pub upgrade
 
-tr:
+handlePods:
+	cd ios && pod install && pod update && cd ..
+
+openXcode:
+	open ios/Runner.xcworkspace
+
+translations:
 	dart run generate/strings/main.dart
-
