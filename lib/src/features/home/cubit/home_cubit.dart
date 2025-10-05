@@ -1,14 +1,11 @@
-
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../main_screen/presentation/screens/view.dart';
 import '../../more/presentation/screens/more_screen.dart';
-
-
-
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
@@ -21,11 +18,11 @@ class HomeCubit extends Cubit<HomeState> {
     emit(ChangeBottomNavIndex());
   }
 
-  List<Widget> screens =   [
+  List<Widget> screens = [
+    const MainView(),
     Container(),
     Container(),
-    Container(),
-    Container(color: Colors.red,),
+    Container(color: Colors.red),
     const MoreScreen(),
   ];
 }

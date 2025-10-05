@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
+import '../../core/network/network_service.dart';
 import '../../core/widgets/icon_widget.dart';
 import 'cubit/home_cubit.dart';
 
@@ -12,6 +13,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    injector<NetworkService>().setToken('Bearer 163|HHo3wbY3XYokTkKKl8AdDxHFzgjbKzsiVDYL0EOl');
     return BlocProvider(
       create: (context) => HomeCubit(),
       child: BlocBuilder<HomeCubit, HomeState>(
