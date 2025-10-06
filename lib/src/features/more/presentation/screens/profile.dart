@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/context_extension.dart';
+import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
@@ -36,6 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return CenterCardScaffold.withCenteredCard(
+      cardProperties: CardProperties(color: Colors.white),
         upperWidget: SizedBox(
           height: context.height / 5,
           child: Stack(
@@ -60,7 +62,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const AppText('texttexttext', color: AppColors.primary),
             const AppText('texttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttexttext'),
           ],
-        )
+        ).paddingAll(12.r)
     );
   }
 }

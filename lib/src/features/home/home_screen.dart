@@ -42,66 +42,70 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    child: BottomNavigationBar(
-                      type: BottomNavigationBarType.fixed,
-                      selectedItemColor: AppColors.primary,
-                      unselectedItemColor: AppColors.unSelectedLabelColor,
-                      selectedLabelStyle: TextStyle(
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.w500,
+                    child: SizedBox(
+                      height: 80.h,
+                      child: BottomNavigationBar(
+                        backgroundColor: Colors.white,
+                        type: BottomNavigationBarType.fixed,
+                        selectedItemColor: AppColors.primary,
+                        unselectedItemColor: AppColors.unSelectedLabelColor,
+                        selectedLabelStyle: TextStyle(
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        unselectedLabelStyle: TextStyle(
+                          fontSize: 13.sp,
+                          fontWeight: FontWeight.w500,),
+                        currentIndex: cubit.currentIndex,
+                        onTap: (index) => cubit.changeBottomNavIndex(index),
+                        items: [
+                          BottomNavigationBarItem(
+                            icon: IconWidget(
+                              icon: Assets.svgHomeIcon,
+                              color: cubit.currentIndex == 0
+                                  ? AppColors.primary
+                                  : null,
+                            ),
+                            label: LocaleKeys.home,
+                          ),
+                          BottomNavigationBarItem(
+                            icon: IconWidget(
+                              icon: Assets.svgNotificationIcon,
+                              color: cubit.currentIndex == 1
+                                  ? AppColors.primary
+                                  : null,
+                            ),
+                            label: LocaleKeys.notifications,
+                          ),
+                          BottomNavigationBarItem(
+                            icon: IconWidget(
+                              icon: Assets.svgChatsIcon,
+                              color: cubit.currentIndex == 2
+                                  ? AppColors.primary
+                                  : null,
+                            ),
+                            label: LocaleKeys.chats,
+                          ),
+                          BottomNavigationBarItem(
+                            icon: IconWidget(
+                              icon: Assets.svgPackageIcon,
+                              color: cubit.currentIndex == 3
+                                  ? AppColors.primary
+                                  : null,
+                            ),
+                            label: LocaleKeys.packages,
+                          ),
+                          BottomNavigationBarItem(
+                            icon: IconWidget(
+                              icon: Assets.svgMoreIcon,
+                              color: cubit.currentIndex == 4
+                                  ? AppColors.primary
+                                  : null,
+                            ),
+                            label: LocaleKeys.more,
+                          ),
+                        ],
                       ),
-                      unselectedLabelStyle: TextStyle(
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.w500,),
-                      currentIndex: cubit.currentIndex,
-                      onTap: (index) => cubit.changeBottomNavIndex(index),
-                      items: [
-                        BottomNavigationBarItem(
-                          icon: IconWidget(
-                            icon: Assets.svgHomeIcon,
-                            color: cubit.currentIndex == 0
-                                ? AppColors.primary
-                                : null,
-                          ),
-                          label: LocaleKeys.home,
-                        ),
-                        BottomNavigationBarItem(
-                          icon: IconWidget(
-                            icon: Assets.svgNotificationIcon,
-                            color: cubit.currentIndex == 1
-                                ? AppColors.primary
-                                : null,
-                          ),
-                          label: LocaleKeys.notifications,
-                        ),
-                        BottomNavigationBarItem(
-                          icon: IconWidget(
-                            icon: Assets.svgChatsIcon,
-                            color: cubit.currentIndex == 2
-                                ? AppColors.primary
-                                : null,
-                          ),
-                          label: LocaleKeys.chats,
-                        ),
-                        BottomNavigationBarItem(
-                          icon: IconWidget(
-                            icon: Assets.svgPackageIcon,
-                            color: cubit.currentIndex == 3
-                                ? AppColors.primary
-                                : null,
-                          ),
-                          label: LocaleKeys.packages,
-                        ),
-                        BottomNavigationBarItem(
-                          icon: IconWidget(
-                            icon: Assets.svgMoreIcon,
-                            color: cubit.currentIndex == 4
-                                ? AppColors.primary
-                                : null,
-                          ),
-                          label: LocaleKeys.more,
-                        ),
-                      ],
                     ),
                   ),
                   PositionedDirectional(

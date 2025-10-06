@@ -5,23 +5,34 @@ import '../../extensions/context_extension.dart';
 import '../../extensions/object.dart';
 import '../../extensions/padding_extension.dart';
 
+class CardProperties{
+  final Color? color;
+  CardProperties({this.color});
+}
+
 enum UpperView{appBar, upperWidget}
 class CenterCardScaffold extends StatelessWidget {
+  final CardProperties? cardProperties;
   final Widget upperWidget;
   final Widget body;
   final Widget? centerCardBody;
+  final double? bodyTopPadding;
+  final double? cardTopPadding;
 
   const CenterCardScaffold({
     super.key,
     required this.body,
     required this.upperWidget,
-  }) : centerCardBody = null;
+  }) : centerCardBody = null, cardProperties = null, bodyTopPadding = null, cardTopPadding = null;
 
   const CenterCardScaffold.withCenteredCard({
     super.key,
     required this.upperWidget,
     required this.body,
-    required this.centerCardBody
+    required this.centerCardBody,
+    this.cardProperties,
+    this.bodyTopPadding,
+    this.cardTopPadding,
 });
   @override
   Widget build(BuildContext context) {
@@ -32,6 +43,8 @@ class CenterCardScaffold extends StatelessWidget {
           upperWidget: upperWidget,
           body: body,
           centerCardBody: centerCardBody,
+          topPadding: bodyTopPadding,
+          cardTopPadding: cardTopPadding,
         ),
       ),
     );
@@ -42,11 +55,17 @@ class ScreenChildren extends StatelessWidget {
   final Widget upperWidget;
   final Widget body;
   final Widget? centerCardBody;
+  final CardProperties? cardProperties;
+  final double? topPadding;
+  final double? cardTopPadding;
 
   const ScreenChildren({super.key,
     required this.body,
     required this.upperWidget,
-    this.centerCardBody
+    this.centerCardBody,
+    this.cardProperties,
+    this.topPadding,
+    this.cardTopPadding
   });
 
   @override
@@ -69,22 +88,20 @@ class ScreenChildren extends StatelessWidget {
                       borderRadius: BorderRadius.vertical(top: Radius.circular(22.r)),
                     ),
                     child: centerCardBody.isNotNull?
-                    body.defaultScreenPadding().paddingTop(100.h) :
+                    body.defaultScreenPadding().paddingTop(topPadding ?? 100.h) :
                     body.defaultScreenPadding()
                 ),
               ],
             ),
 
             if(centerCardBody.isNotNull)
-              Card(
-                color: Colors.white,
-                child: Container(
-                  decoration: BoxDecoration(
+              Container(
+                decoration: BoxDecoration(
+                    color: cardProperties?.color,
                     borderRadius: BorderRadius.circular(12.r)
-                  ),
-                  child: centerCardBody!.paddingAll(12.r)
                 ),
-              ).paddingTop(100.h).paddingSymmetric(horizontal: 12.w)
+                child: centerCardBody
+              ).paddingTop(cardTopPadding ?? 100.h).paddingSymmetric(horizontal: 12.w)
           ],
         )
       ],

@@ -5,7 +5,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../../config/res/config_imports.dart';
 
-
 class CachedImage extends StatelessWidget {
   final String url;
   final BoxFit? fit;

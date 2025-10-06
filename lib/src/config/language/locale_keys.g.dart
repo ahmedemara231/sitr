@@ -670,4 +670,10 @@ abstract class LocaleKeys {
   static const String _more = 'more';
   static String get more => _more.tr();
 
+  static const String _searchForLifePartner = 'search_for_life_partner';
+  static String get searchForLifePartner => _searchForLifePartner.tr();
+
+  static const String _mediatorsAndServices = 'mediators_and_services';
+  static String get mediatorsAndServices => _mediatorsAndServices.tr();
+
 }

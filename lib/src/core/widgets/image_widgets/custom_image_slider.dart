@@ -94,8 +94,8 @@ class _ImageSliderState extends State<ImageSlider> {
                     final isActive = index == value;
                     return AnimatedContainer(
                       duration: const Duration(milliseconds: 300),
-                      width: isActive ? AppSize.sW20 : AppSize.sW4,
-                      height: AppSize.sH4,
+                      width: AppSize.sH6,
+                      height: AppSize.sH6,
                       margin: EdgeInsets.symmetric(horizontal: AppMargin.mW2),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(AppCircular.r20),

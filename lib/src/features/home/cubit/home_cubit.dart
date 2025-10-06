@@ -19,7 +19,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   List<Widget> screens = [
-    const MainView(),
+    MainView(),
     Container(),
     Container(),
     Container(color: Colors.red),
