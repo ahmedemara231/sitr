@@ -679,4 +679,10 @@ abstract class LocaleKeys {
   static const String _parents = 'parents';
   static String get parents => _parents.tr();
 
+  static const String _startChat = 'start_chat';
+  static String get startChat => _startChat.tr();
+
+  static const String _subscribe = 'subscribe';
+  static String get subscribe => _subscribe.tr();
+
 }

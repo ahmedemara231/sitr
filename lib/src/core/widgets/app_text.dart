@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../config/res/config_imports.dart';
 
 class AppText extends StatelessWidget {
+  final bool withIcon;
   final String text;
   final Color? color;
   final double? fontSize;
@@ -13,31 +14,69 @@ class AppText extends StatelessWidget {
   final int? maxLines;
   final double? height;
   const AppText(
-    this.text, {
+      this.text, {
+        super.key, this.icon,
+        this.color, this.withIcon = false,
+        this.fontSize,
+        this.fontWeight = FontWeight.normal,
+        this.overflow,
+        this.textAlign = TextAlign.start,
+        this.maxLines,
+        this.height,
+      });
+
+  final Widget? icon;
+  const AppText.withIcon({
     super.key,
+    required this.icon,
+    required this.text,
+    this.withIcon = true,
     this.color,
     this.fontSize,
     this.fontWeight = FontWeight.normal,
-    this.overflow,
     this.textAlign = TextAlign.start,
+    this.overflow,
     this.maxLines,
-    this.height,
+    this.height
   });
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      textAlign: textAlign,
-      overflow: overflow,
-      maxLines: maxLines,
-      style: TextStyle(
-        color: color,
-        fontSize: fontSize?.sp ?? FontSize.s14.sp,
-        fontWeight: fontWeight,
-        height: height,
-        fontFamily: ConstantManager.fontFamily
-      ),
-    );
+    switch(withIcon){
+      case true:
+        return Row(
+          spacing: 5.w,
+          children: [
+            icon!,
+            Text(
+              text,
+              textAlign: textAlign,
+              overflow: overflow,
+              maxLines: maxLines,
+              style: TextStyle(
+                color: color,
+                fontSize: fontSize ?? FontSize.s16,
+                fontWeight: fontWeight,
+                height: height,
+              ),
+            ),
+          ],
+        );
+      default:
+        return Text(
+          text,
+          textAlign: textAlign,
+          overflow: overflow,
+          maxLines: maxLines,
+          style: TextStyle(
+            color: color,
+            fontSize: fontSize ?? FontSize.s16,
+            fontWeight: fontWeight,
+            height: height,
+            fontFamily: ConstantManager.fontFamily
+          ),
+        );
+    }
+
   }
 }

@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 
 import '../../../main_screen/presentation/screens/view.dart';
 import '../../../more/presentation/screens/more_screen.dart';
+import '../../../notifications/presentation/pages/noitifcations_screen.dart';
+import '../../../packages/presentation/packages_screen.dart';
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
@@ -20,9 +22,9 @@ class HomeCubit extends Cubit<HomeState> {
 
   List<Widget> screens = [
     MainView(),
+    const NotificationsScreen(),
     Container(),
-    Container(),
-    Container(color: Colors.red),
+    const PackagesScreen.view(),
     const MoreScreen(),
   ];
 }

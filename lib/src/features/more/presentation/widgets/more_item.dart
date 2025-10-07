@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../generated/assets.dart' show Assets;
-import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/sized_box_helper.dart';
 import '../../../../core/widgets/app_text.dart';

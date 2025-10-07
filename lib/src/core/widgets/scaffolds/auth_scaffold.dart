@@ -19,12 +19,14 @@ class CenterCardScaffold extends StatelessWidget {
   final double? bodyTopPadding;
   final double? cardTopPadding;
   final Color? bodyColor;
+  final EdgeInsetsGeometry? upperWidgetPadding;
 
   const CenterCardScaffold({
     super.key,
     required this.body,
     required this.upperWidget,
-    this.bodyColor
+    this.bodyColor,
+    this.upperWidgetPadding
   }) : centerCardBody = null, cardProperties = null, bodyTopPadding = null, cardTopPadding = null;
 
   const CenterCardScaffold.withCenteredCard({
@@ -35,7 +37,8 @@ class CenterCardScaffold extends StatelessWidget {
     this.cardProperties,
     this.bodyTopPadding,
     this.cardTopPadding,
-    this.bodyColor
+    this.bodyColor,
+    this.upperWidgetPadding
 });
   @override
   Widget build(BuildContext context) {
@@ -43,6 +46,7 @@ class CenterCardScaffold extends StatelessWidget {
       backgroundColor: AppColors.scaffoldBackground,
       body: SafeArea(
         child: ScreenChildren(
+          upperWidgetPadding: upperWidgetPadding,
           cardProperties: cardProperties,
           bodyColor: bodyColor,
           upperWidget: upperWidget,
@@ -64,7 +68,7 @@ class ScreenChildren extends StatelessWidget {
   final double? topPadding;
   final double? cardTopPadding;
   final Color? bodyColor;
-
+  final EdgeInsetsGeometry? upperWidgetPadding;
   const ScreenChildren({super.key,
     required this.body,
     required this.upperWidget,
@@ -72,7 +76,8 @@ class ScreenChildren extends StatelessWidget {
     this.cardProperties,
     this.topPadding,
     this.cardTopPadding,
-    required this.bodyColor
+    required this.bodyColor,
+    required this.upperWidgetPadding
   });
 
   @override
@@ -86,7 +91,10 @@ class ScreenChildren extends StatelessWidget {
                 Container(
                     width: context.width,
                     color: AppColors.whiteGreyColor,
-                    child: upperWidget.paddingAll(20.r)
+                    child: Padding(
+                      padding: upperWidgetPadding?? EdgeInsets.zero,
+                      child: upperWidget,
+                    )
                 ),
                 Container(
                     width: context.width,
@@ -95,7 +103,7 @@ class ScreenChildren extends StatelessWidget {
                       borderRadius: BorderRadius.vertical(top: Radius.circular(22.r)),
                     ),
                     child: centerCardBody.isNotNull?
-                    body.defaultScreenPadding().paddingTop(topPadding ?? 100.h) :
+                    body.defaultScreenPadding().paddingTop(topPadding ?? 40.h) :
                     body.defaultScreenPadding()
                 ),
               ],

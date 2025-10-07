@@ -56,6 +56,7 @@ class MainView extends StatelessWidget {
                 ],
               ),
           ),
+          upperWidgetPadding: const EdgeInsets.all(20),
           centerCardBody: StatusBuilder(
                 data: state,
                 onSuccess: (data, context) => ImageSlider(
