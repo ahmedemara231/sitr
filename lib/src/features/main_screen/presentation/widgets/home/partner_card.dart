@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../generated/assets.dart';
-import '../../../../config/res/config_imports.dart';
-import '../../../../core/extensions/sized_box_helper.dart';
-import '../../../../core/widgets/image_widgets/cached_image.dart';
-import '../../../../core/widgets/svg_pic.dart';
+import '../../../../../../generated/assets.dart';
+import '../../../../../config/res/config_imports.dart';
+import '../../../../../core/extensions/sized_box_helper.dart';
+import '../../../../../core/widgets/svg_pic.dart';
 import 'home_image.dart';
 
 class PartnerCard extends StatelessWidget {

@@ -51,6 +51,7 @@ class ApiConstants {
   static const String getMyPackage = 'my-package';
   static const String relations = 'relations';
   static const String cities = 'cities';
+  static const String getPartnerInfo = 'opportunity-profile/';
 
   
 }

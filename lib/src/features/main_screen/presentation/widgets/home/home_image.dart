@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/widgets/image_widgets/cached_image.dart';
+import '../../../../../core/widgets/image_widgets/cached_image.dart';
 
 class HomeImage extends StatelessWidget {
   final String url;

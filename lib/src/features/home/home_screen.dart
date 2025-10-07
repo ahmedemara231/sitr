@@ -6,7 +6,7 @@ import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../../core/network/network_service.dart';
 import '../../core/widgets/icon_widget.dart';
-import 'cubit/home_cubit.dart';
+import 'cubits/home_cubit/home_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

@@ -5,16 +5,18 @@ import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/helpers/status_builder.dart';
+import '../../../../core/navigation/navigator.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/image_widgets/custom_image_slider.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
 import '../../data/models/home_model.dart';
 import '../cubits/home_cubit.dart';
-import '../widgets/filter_icon.dart';
-import '../widgets/mariage_consultant.dart';
-import '../widgets/parent_card.dart';
-import '../widgets/partner_card.dart';
-import '../widgets/under_slider_widget.dart';
+import '../widgets/home/filter_icon.dart';
+import '../widgets/home/mariage_consultant.dart';
+import '../widgets/home/parent_card.dart';
+import '../widgets/home/partner_card.dart';
+import '../widgets/home/under_slider_widget.dart';
+import 'partner_details.dart';
 
 class MainView extends StatelessWidget {
   MainView({super.key});
@@ -73,7 +75,7 @@ class MainView extends StatelessWidget {
                 builder: (context, value, child) => value == Options.first? UnderSliderWidget(
                   fontWeight: FontWeight.w500,
                   onSelectOption: (selectedOption) => secondSelection.value = selectedOption,
-                  titles: [LocaleKeys.female, LocaleKeys.parent],
+                  titles: [LocaleKeys.female, LocaleKeys.parents],
                   fontSize: 12.sp,
                   secondSlider: true,
                 ) : const SizedBox.shrink(),
@@ -92,22 +94,28 @@ class MainView extends StatelessWidget {
                               final opportunity = state.data.opportunities?.female?[i];
                               final parent = state.data.opportunities?.parent?[i];
                               if(secondValue == Options.first){
-                                return PartnerCard(
-                                  name: opportunity?.name ?? '',
-                                  imageUrl: opportunity?.avatar ?? '',
-                                  weight: opportunity?.weight.toString()??'',
-                                  age: opportunity?.age ??0,
-                                  height: opportunity?.height ?? 0,
-                                  maritalStatus: opportunity?.type?.title ?? '',
-                                  location: opportunity?.city ?? '',
+                                return InkWell(
+                                  onTap: () => Go.to(PartnerDetails(id: opportunity?.id ?? 0)),
+                                  child: PartnerCard(
+                                    name: opportunity?.name ?? '',
+                                    imageUrl: opportunity?.avatar ?? '',
+                                    weight: opportunity?.weight.toString()??'',
+                                    age: opportunity?.age ??0,
+                                    height: opportunity?.height ?? 0,
+                                    maritalStatus: opportunity?.type?.title ?? '',
+                                    location: opportunity?.city ?? '',
+                                  ),
                                 );
 
                               }else{
-                                return ParentCard(
-                                    parentImage: parent?.avatar ??'',
-                                    name: parent?.name ??'',
-                                    kinship: parent?.relation?.name??'',
-                                    childrenNumber: parent?.numOfChildren??0
+                                return InkWell(
+                                  // onTap: () => Go.to(ParentDetails()),
+                                  child: ParentCard(
+                                      parentImage: parent?.avatar ??'',
+                                      name: parent?.name ??'',
+                                      kinship: parent?.relation?.name??'',
+                                      childrenNumber: parent?.numOfChildren??0
+                                  ),
                                 );
                               }
                             }

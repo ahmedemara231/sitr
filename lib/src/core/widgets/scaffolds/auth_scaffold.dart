@@ -18,11 +18,13 @@ class CenterCardScaffold extends StatelessWidget {
   final Widget? centerCardBody;
   final double? bodyTopPadding;
   final double? cardTopPadding;
+  final Color? bodyColor;
 
   const CenterCardScaffold({
     super.key,
     required this.body,
     required this.upperWidget,
+    this.bodyColor
   }) : centerCardBody = null, cardProperties = null, bodyTopPadding = null, cardTopPadding = null;
 
   const CenterCardScaffold.withCenteredCard({
@@ -33,6 +35,7 @@ class CenterCardScaffold extends StatelessWidget {
     this.cardProperties,
     this.bodyTopPadding,
     this.cardTopPadding,
+    this.bodyColor
 });
   @override
   Widget build(BuildContext context) {
@@ -40,6 +43,8 @@ class CenterCardScaffold extends StatelessWidget {
       backgroundColor: AppColors.scaffoldBackground,
       body: SafeArea(
         child: ScreenChildren(
+          cardProperties: cardProperties,
+          bodyColor: bodyColor,
           upperWidget: upperWidget,
           body: body,
           centerCardBody: centerCardBody,
@@ -58,6 +63,7 @@ class ScreenChildren extends StatelessWidget {
   final CardProperties? cardProperties;
   final double? topPadding;
   final double? cardTopPadding;
+  final Color? bodyColor;
 
   const ScreenChildren({super.key,
     required this.body,
@@ -65,7 +71,8 @@ class ScreenChildren extends StatelessWidget {
     this.centerCardBody,
     this.cardProperties,
     this.topPadding,
-    this.cardTopPadding
+    this.cardTopPadding,
+    required this.bodyColor
   });
 
   @override
@@ -84,7 +91,7 @@ class ScreenChildren extends StatelessWidget {
                 Container(
                     width: context.width,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: bodyColor??Colors.white,
                       borderRadius: BorderRadius.vertical(top: Radius.circular(22.r)),
                     ),
                     child: centerCardBody.isNotNull?
@@ -97,7 +104,7 @@ class ScreenChildren extends StatelessWidget {
             if(centerCardBody.isNotNull)
               Container(
                 decoration: BoxDecoration(
-                    color: cardProperties?.color,
+                    color: cardProperties?.color??Colors.white,
                     borderRadius: BorderRadius.circular(12.r)
                 ),
                 child: centerCardBody

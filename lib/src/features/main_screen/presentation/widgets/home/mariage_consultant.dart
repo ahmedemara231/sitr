@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../generated/assets.dart' show Assets;
-import '../../../../config/res/config_imports.dart';
-import '../../../../core/extensions/sized_box_helper.dart';
-import '../../../../core/widgets/app_text.dart';
-import '../../../../core/widgets/image_widgets/cached_image.dart';
-import '../../../../core/widgets/svg_pic.dart';
-import 'home_image.dart';
+import '../../../../../../generated/assets.dart' show Assets;
+import '../../../../../config/res/config_imports.dart';
+import '../../../../../core/extensions/sized_box_helper.dart';
+import '../../../../../core/widgets/app_text.dart';
+import '../../../../../core/widgets/svg_pic.dart';
+import 'home_image.dart' show HomeImage;
 
 class MarriageConsultantCard extends StatelessWidget {
   final String name;

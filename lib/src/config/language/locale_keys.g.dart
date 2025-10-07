@@ -676,4 +676,7 @@ abstract class LocaleKeys {
   static const String _mediatorsAndServices = 'mediators_and_services';
   static String get mediatorsAndServices => _mediatorsAndServices.tr();
 
+  static const String _parents = 'parents';
+  static String get parents => _parents.tr();
+
 }
