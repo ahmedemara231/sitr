@@ -27,5 +27,5 @@ class HomeCubit extends Cubit<HomeState> {
     const PackagesScreen.view(),
     const MoreScreen(),
   ];
-  //
+
 }
