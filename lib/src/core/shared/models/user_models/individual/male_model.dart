@@ -86,19 +86,19 @@ class MaleModel extends IndividualUserModel {
       adminApprovalStatus: AdminApprovalStatus.fromJson(json['admin_approval_status']),
       completeRegistration: json['complete_registration'],
 
-      maritalStatus: (json['marital_status'] as String?).isNull? null :
+      maritalStatus: (json['marital_status'] as Object).isNull? null :
       MaritalStatusModel.fromJson(json['marital_status']),
 
-      weddingType: (json['wedding_type'] as String?).isNull? null :
+      weddingType: (json['wedding_type'] as Object).isNull? null :
       WeddingType.fromJson(json['wedding_type']),
 
-      cityId: (json['city_id'] as String?).isNull? null :
+      cityId: (json['city_id'] as Object).isNull? null :
       CityModel.fromJson(json['city_id']),
 
-      religiousCommitment: (json['religious_commitment'] as String?).isNull? null :
+      religiousCommitment: (json['religious_commitment'] as Object).isNull? null :
       ReligiousCommitment.fromJson(json['religious_commitment']),
 
-      childCustody: (json['child_custody'] as String?).isNull? null :
+      childCustody: (json['child_custody'] as Object).isNull? null :
       ChildCustody.fromJson(json['child_custody']),
 
       educationLevel: json['education_level'],

@@ -6,6 +6,8 @@ import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/network/network_service.dart';
+import '../../../../core/widgets/view_profile_widget.dart';
+import '../cubit/get_profile.dart';
 import '../cubit/terms_condition_and_about_cubit/terms_condition_and_about_cubit.dart';
 import '../widgets/more_item.dart';
 import '../widgets/more_tap_app_bar.dart';
@@ -25,10 +27,9 @@ class MoreScreen extends StatefulWidget {
 class _MoreScreenState extends State<MoreScreen> {
   @override
   initState() {
-
     //  remove this line when integrate auth
     injector<NetworkService>()
-        .setToken('Bearer 138|iKDgQ2TE1R0m4DQIOkD6NtMd6LFVnMv9Q3aS0NCk');
+        .setToken('Bearer 145|qjG9asgeoAZcqWJgRUzzj734XAw60PciGrxiInD4');
     super.initState();
   }
 
@@ -72,7 +73,7 @@ List<MorItemModel> moreItemsList = [
   MorItemModel(
     icon: Assets.svgUser,
     label: LocaleKeys.profile,
-    onTap: () {},
+    onTap: () => Go.to(ViewProfileWidget.profile(cubit: GetProfileCubit())),
   ),
   MorItemModel(
     icon: Assets.svgPackageIcon,

@@ -80,7 +80,7 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
 
                   PartnerInfoModel(leading: Assets.svgHome, title: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage, subTitle: user.preferredResidenceAfterMarriage),
                 ],
-              PartnerInfoModel(leading: Assets.svgTribe, title: LocaleKeys.doYouBelongToATribe, subTitle: user.tribeAffiliation),
+              PartnerInfoModel(leading: Assets.svgTribe, title: LocaleKeys.doYouBelongToATribe, subTitle: user.tribeAffiliation.toString()),
 
               PartnerInfoModel(leading: Assets.svgHospital, title: LocaleKeys.diseasesIfExists, subTitle: user.healthConditions),
               PartnerInfoModel(leading: Assets.svgTranslation, title: LocaleKeys.inChatYouPrefer, subTitle: user.chatLang),
@@ -124,38 +124,42 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
         centerCardBody: BlocBuilder<T, AsyncState<UserModel>>(
           builder: (context, state) => StatusBuilder(
             data: state,
-            onSuccess: (data, context) => Column(
-              spacing: 10.h,
-              children: [
-                if(_type.isPartnerProfile)
-                  Row(
-                    children: [
-                      AppText(state.data.name??'', fontWeight: FontWeight.bold),
-                      const Spacer(),
-                      CircleAvatar(
-                        radius: 15.sp,
-                        backgroundImage: NetworkImage(state.data.avatar??''),
-                      ),
-                      10.szW,
-                      AppText(state.data.parentId.toString()),
-                    ],
-                  )
-                else
-                  Column(
-                    children: [
-                      AppText(state.data.name??'', fontWeight: FontWeight.bold),
-                      AppText(
-                        '${LocaleKeys.numberOfProfileVisits}: ${(state.data as IndividualUserModel).views}',
-                        fontSize: 10.sp,
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.bold,
-                      )
-                    ],
-                  ),
-                
-                AppText((state.data as IndividualUserModel).bio??'', textAlign: TextAlign.center),
-              ],
-            ).paddingAll(12.r),
+            onSuccess: (data, context) => SizedBox(
+              width: context.width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 10.h,
+                children: [
+                  if(_type.isPartnerProfile)
+                    Row(
+                      children: [
+                        AppText(state.data.name??'', fontWeight: FontWeight.bold),
+                        const Spacer(),
+                        CircleAvatar(
+                          radius: 15.sp,
+                          backgroundImage: NetworkImage(state.data.avatar??''),
+                        ),
+                        10.szW,
+                        AppText(state.data.parentId.toString()),
+                      ],
+                    )
+                  else
+                    Column(
+                      children: [
+                        AppText(state.data.name??'', fontWeight: FontWeight.bold),
+                        AppText(
+                          '${LocaleKeys.numberOfProfileVisits}: ${(state.data as IndividualUserModel).views}',
+                          fontSize: 10.sp,
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.bold,
+                        )
+                      ],
+                    ),
+
+                  AppText((state.data as IndividualUserModel).bio??'', textAlign: TextAlign.center),
+                ],
+              ).paddingAll(12.r),
+            ),
           ),
         ),
 

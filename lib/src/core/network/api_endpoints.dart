@@ -53,6 +53,7 @@ class ApiConstants {
   static const String cities = 'cities';
   static const String getPartnerInfo = 'opportunity-profile/';
   static const String getNotifications = 'notifications';
+  static const String profile = 'profile';
 
   
 }

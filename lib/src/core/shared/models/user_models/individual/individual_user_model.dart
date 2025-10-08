@@ -3,8 +3,8 @@ import '../user_model.dart';
 class IndividualUserModel extends UserModel {
   final String? nickName;
   final MaritalStatusModel? maritalStatus;
-  final int? height;
-  final int? weight;
+  final num? height;
+  final num? weight;
   final String? currentJob;
   final String? bio;
   final bool? hasChildren;
@@ -21,7 +21,7 @@ class IndividualUserModel extends UserModel {
   final String? healthConditions;
   final String? chatLang;
   final bool? isSmoker;
-  final String? tribeAffiliation;
+  final bool? tribeAffiliation;
   final String? skinColor;
   final ReligiousCommitment? religiousCommitment;
   final int? views;
@@ -90,7 +90,7 @@ class IndividualUserModel extends UserModel {
     healthConditions: '',
     chatLang: '',
     isSmoker: false,
-    tribeAffiliation: '',
+    tribeAffiliation: false,
     skinColor: '',
     religiousCommitment: ReligiousCommitment(),
     views: 0,
@@ -193,7 +193,7 @@ class IndividualUserModel extends UserModel {
       String? healthConditions,
       String? chatLang,
       bool? isSmoker,
-      String? tribeAffiliation,
+      bool? tribeAffiliation,
       String? skinColor,
       ReligiousCommitment? religiousCommitment,
       int? views,
