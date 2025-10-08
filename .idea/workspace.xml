@@ -9,30 +9,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="fix more">
-      <change afterPath="$PROJECT_DIR$/assets/svg/profile_phone.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/widgets/app_bar_actions.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/features/packages/presentation/screens/subscription_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/translations/ar.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/ar.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/en.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/translations/lang.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/lang.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/generated/assets.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/generated/assets.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/config/language/locale_keys.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/config/language/locale_keys.g.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/view_profile_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/view_profile_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/parent_details.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/parent_details.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/notifications/data/models/notification_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/notifications/data/models/notification_model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/notifications/data/notification_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/notifications/data/notification_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/notifications/presentation/pages/noitifcations_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/notifications/presentation/pages/noitifcations_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/notifications/presentation/widgets/notification_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/notifications/presentation/widgets/notification_card.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/packages/presentation/cubits/subscribe_to_package.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/packages/presentation/cubits/subscribe_to_package.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/packages/presentation/widgets/package_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/packages/presentation/widgets/package_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
-    </list>
+    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="feat: Implement subscription payment webview and profile updates&#10;&#10;This commit introduces several new features and enhancements:&#10;&#10;-   **Subscription Payment Flow**:&#10;    -   Adds `webview_flutter` to handle payment processing.&#10;    -   Creates a new `SubscriptionScreen` to display the payment webview.&#10;    -   Updates `SubscribePackageCubit` to receive and pass a redirect URL.&#10;    -   Modifies the `PackageWidget` to navigate to the `SubscriptionScreen` with the payment URL upon a successful subscription attempt.&#10;&#10;-   **Profile Screen Enhancements**:&#10;    -   Refactors the profile/parent details app bar into a reusable `ProfileAppBarActions` widget.&#10;    -   Adds the user's phone number and the number of profile visits to the user's own profile view.&#10;    -   Introduces a new `profile_phone` icon.&#10;&#10;-   **Notifications**:&#10;    -   Enables navigation when a notification card is tapped.&#10;    -   Correctly displays the creation time on notification cards.&#10;    -   Adjusts the layout of the notifications screen.&#10;&#10;-   **Localization**:&#10;    -   Adds new translation keys for &quot;Number of profile visits&quot; in English and Arabic." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -191,7 +168,15 @@
       <option name="project" value="LOCAL" />
       <updated>1759580287160</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="feat: Implement subscription payment webview and profile updates&#10;&#10;This commit introduces several new features and enhancements:&#10;&#10;-   **Subscription Payment Flow**:&#10;    -   Adds `webview_flutter` to handle payment processing.&#10;    -   Creates a new `SubscriptionScreen` to display the payment webview.&#10;    -   Updates `SubscribePackageCubit` to receive and pass a redirect URL.&#10;    -   Modifies the `PackageWidget` to navigate to the `SubscriptionScreen` with the payment URL upon a successful subscription attempt.&#10;&#10;-   **Profile Screen Enhancements**:&#10;    -   Refactors the profile/parent details app bar into a reusable `ProfileAppBarActions` widget.&#10;    -   Adds the user's phone number and the number of profile visits to the user's own profile view.&#10;    -   Introduces a new `profile_phone` icon.&#10;&#10;-   **Notifications**:&#10;    -   Enables navigation when a notification card is tapped.&#10;    -   Correctly displays the creation time on notification cards.&#10;    -   Adjusts the layout of the notifications screen.&#10;&#10;-   **Localization**:&#10;    -   Adds new translation keys for &quot;Number of profile visits&quot; in English and Arabic.">
+      <option name="closed" value="true" />
+      <created>1759920794300</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1759920794300</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -215,7 +200,8 @@
     <MESSAGE value="finish more screens ui" />
     <MESSAGE value="fix auth" />
     <MESSAGE value="fix more" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix more" />
+    <MESSAGE value="feat: Implement subscription payment webview and profile updates&#10;&#10;This commit introduces several new features and enhancements:&#10;&#10;-   **Subscription Payment Flow**:&#10;    -   Adds `webview_flutter` to handle payment processing.&#10;    -   Creates a new `SubscriptionScreen` to display the payment webview.&#10;    -   Updates `SubscribePackageCubit` to receive and pass a redirect URL.&#10;    -   Modifies the `PackageWidget` to navigate to the `SubscriptionScreen` with the payment URL upon a successful subscription attempt.&#10;&#10;-   **Profile Screen Enhancements**:&#10;    -   Refactors the profile/parent details app bar into a reusable `ProfileAppBarActions` widget.&#10;    -   Adds the user's phone number and the number of profile visits to the user's own profile view.&#10;    -   Introduces a new `profile_phone` icon.&#10;&#10;-   **Notifications**:&#10;    -   Enables navigation when a notification card is tapped.&#10;    -   Correctly displays the creation time on notification cards.&#10;    -   Adjusts the layout of the notifications screen.&#10;&#10;-   **Localization**:&#10;    -   Adds new translation keys for &quot;Number of profile visits&quot; in English and Arabic." />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Implement subscription payment webview and profile updates&#10;&#10;This commit introduces several new features and enhancements:&#10;&#10;-   **Subscription Payment Flow**:&#10;    -   Adds `webview_flutter` to handle payment processing.&#10;    -   Creates a new `SubscriptionScreen` to display the payment webview.&#10;    -   Updates `SubscribePackageCubit` to receive and pass a redirect URL.&#10;    -   Modifies the `PackageWidget` to navigate to the `SubscriptionScreen` with the payment URL upon a successful subscription attempt.&#10;&#10;-   **Profile Screen Enhancements**:&#10;    -   Refactors the profile/parent details app bar into a reusable `ProfileAppBarActions` widget.&#10;    -   Adds the user's phone number and the number of profile visits to the user's own profile view.&#10;    -   Introduces a new `profile_phone` icon.&#10;&#10;-   **Notifications**:&#10;    -   Enables navigation when a notification card is tapped.&#10;    -   Correctly displays the creation time on notification cards.&#10;    -   Adjusts the layout of the notifications screen.&#10;&#10;-   **Localization**:&#10;    -   Adds new translation keys for &quot;Number of profile visits&quot; in English and Arabic." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
