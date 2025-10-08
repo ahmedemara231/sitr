@@ -1,5 +1,4 @@
 import 'package:pagify/helpers/data_and_pagination_data.dart';
-
 import '../../../config/res/config_imports.dart';
 import '../../../core/network/api_endpoints.dart';
 import '../../../core/network/network_request.dart';

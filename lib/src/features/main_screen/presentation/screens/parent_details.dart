@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../generated/assets.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/extensions/context_extension.dart';
-import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/widgets/image_widgets/cached_image.dart';
-import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
-import '../../../../core/widgets/svg_pic.dart';
 import '../cubits/get_parent_info_cubit.dart';
-import '../widgets/partner_info/partner_app_bar_icons.dart';
+import '../widgets/app_bar_actions.dart';
 
 class ParentDetailsScreen extends StatelessWidget {
   const ParentDetailsScreen({super.key});
@@ -40,27 +36,8 @@ class ParentDetailsScreen extends StatelessWidget {
                         colors: [Colors.black38, Colors.black26])
                 ),
               ),
-              Row(
-                children: [
-                  const AppBackButton(),
-                  const Spacer(),
-                  IconButton(
-                      onPressed: () {},
-                      icon: const PartnerAppBarIcons(
-                          icon: Icon(Icons.flag, color: Colors.white)
-                      )
-                  ),
-                  IconButton(
-                      onPressed: () {},
-                      icon: PartnerAppBarIcons(
-                          icon: const SvgPic(
-                              assetName: Assets.svgBlockUser,
-                              color: Colors.white
-                          ).paddingAll(10)
-                      )
-                  ),
-                ],
-              ).paddingSymmetric(horizontal: 10.w),
+
+              ProfileAppBarActions(onBlock: (context){}, onReport: (context){}),
             ],
           ),
         ),

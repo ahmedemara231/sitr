@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagify/widgets/text.dart';
 import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../../features/main_screen/data/models/partner_info_model.dart';
+import '../../features/main_screen/presentation/widgets/app_bar_actions.dart';
 import '../../features/main_screen/presentation/widgets/partner_info/info_widget.dart';
-import '../../features/main_screen/presentation/widgets/partner_info/partner_app_bar_icons.dart';
 import '../base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../extensions/context_extension.dart';
 import '../extensions/padding_extension.dart';
@@ -18,13 +17,18 @@ import '../shared/convert_user_model_to_data_list_cubit.dart';
 import '../shared/models/user_models/individual/female_model.dart';
 import '../shared/models/user_models/individual/individual_user_model.dart';
 import '../shared/models/user_models/user_model.dart';
+import 'app_text.dart' show AppText;
 import 'buttons/custom_app_buttons/loading_button.dart';
 import 'image_widgets/cached_image.dart';
-import 'scaffolds/app_scaffold.dart';
 import 'scaffolds/auth_scaffold.dart';
-import 'svg_pic.dart';
 
 enum _ProfileType{profile, partnerProfile}
+
+extension TypeCheck on _ProfileType{
+  bool get isProfile => this == _ProfileType.profile;
+  bool get isPartnerProfile => this == _ProfileType.partnerProfile;
+}
+
 class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
   final _ProfileType _type;
   final T cubit;
@@ -82,6 +86,9 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
               PartnerInfoModel(leading: Assets.svgTranslation, title: LocaleKeys.inChatYouPrefer, subTitle: user.chatLang),
 
               PartnerInfoModel(leading: Assets.svgRecycing, title: LocaleKeys.thingsIAbsolutelyDoNotAcceptOrWant, subTitle: user.prohibitedThings),
+
+              if(_type.isProfile)
+                PartnerInfoModel(leading: Assets.svgProfilePhone, title: LocaleKeys.phoneNumber, subTitle: user.phone),
             ];
           }
       ),
@@ -107,27 +114,8 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
                         colors: [Colors.black38, Colors.black26])
                 ),
               ),
-              Row(
-                children: [
-                  const AppBackButton(),
-                  const Spacer(),
-                  IconButton(
-                      onPressed: () {},
-                      icon: const PartnerAppBarIcons(
-                          icon: Icon(Icons.flag, color: Colors.white)
-                      )
-                  ),
-                  IconButton(
-                      onPressed: () {},
-                      icon: PartnerAppBarIcons(
-                          icon: const SvgPic(
-                              assetName: Assets.svgBlockUser,
-                              color: Colors.white
-                          ).paddingAll(10)
-                      )
-                  ),
-                ],
-              ).paddingSymmetric(horizontal: 10.w),
+
+              ProfileAppBarActions(onBlock: (context){}, onReport: (context){}),
             ],
           ),
         ),
@@ -139,18 +127,32 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
             onSuccess: (data, context) => Column(
               spacing: 10.h,
               children: [
-                Row(
-                  children: [
-                    AppText(state.data.name??'', fontWeight: FontWeight.bold),
-                    const Spacer(),
-                    CircleAvatar(
-                      radius: 15.sp,
-                      backgroundImage: NetworkImage(state.data.avatar??''),
-                    ),
-                    10.szW,
-                    AppText(state.data.parentId.toString()),
-                  ],
-                ),
+                if(_type.isPartnerProfile)
+                  Row(
+                    children: [
+                      AppText(state.data.name??'', fontWeight: FontWeight.bold),
+                      const Spacer(),
+                      CircleAvatar(
+                        radius: 15.sp,
+                        backgroundImage: NetworkImage(state.data.avatar??''),
+                      ),
+                      10.szW,
+                      AppText(state.data.parentId.toString()),
+                    ],
+                  )
+                else
+                  Column(
+                    children: [
+                      AppText(state.data.name??'', fontWeight: FontWeight.bold),
+                      AppText(
+                        '${LocaleKeys.numberOfProfileVisits}: ${(state.data as IndividualUserModel).views}',
+                        fontSize: 10.sp,
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.bold,
+                      )
+                    ],
+                  ),
+                
                 AppText((state.data as IndividualUserModel).bio??'', textAlign: TextAlign.center),
               ],
             ).paddingAll(12.r),
@@ -178,7 +180,7 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
                   ),
                 ),
               ),
-              if(_type == _ProfileType.partnerProfile)
+              if(_type.isPartnerProfile)
                 LoadingButton(
                 height: 40.h,
                 call: (context) async{},

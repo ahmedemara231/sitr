@@ -5,6 +5,7 @@ import 'package:pagify/widgets/text.dart';
 
 import '../../../../../generated/assets.dart' show Assets;
 import '../../../../config/res/config_imports.dart';
+import '../../../../core/notification/notification_service.dart';
 import '../../data/models/notification_model.dart';
 
 class NotificationCard extends StatefulWidget {
@@ -21,8 +22,8 @@ class _NotificationCardState extends State<NotificationCard> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // widget.notificationModel.type.type.navigation
-        //     .navigate(data: widget.notificationModel.data.toJson());
+        widget.notificationModel.type.type.navigation
+            .navigate(data: widget.notificationModel.data.toJson());
       },
       child: Container(
         padding: EdgeInsets.all(10.w),
@@ -48,7 +49,7 @@ class _NotificationCardState extends State<NotificationCard> {
             const Spacer(),
             Column(
               children: [
-                AppText('منذ 4دقايق', fontSize: 10.sp, color: Colors.grey),
+                AppText(widget.notificationModel.createdAt, fontSize: 10.sp, color: Colors.grey),
                 IconButton(
                     onPressed: () async {},
                   icon: const Icon(Icons.delete),

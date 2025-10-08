@@ -6,6 +6,7 @@ import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/padding_extension.dart';
+import '../../../../core/navigation/navigator.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/buttons/custom_app_buttons/default_button.dart';
 import '../../../../core/widgets/default_bottom_sheet.dart';
@@ -15,6 +16,7 @@ import '../../../../core/widgets/svg_pic.dart';
 import '../../models/package.dart';
 import '../cubits/subscribe_to_package.dart';
 import '../packages_screen.dart';
+import '../screens/subscription_screen.dart';
 
 class PackageWidget extends StatelessWidget {
   final Package package;
@@ -71,9 +73,10 @@ class PackageWidget extends StatelessWidget {
                                 onPay: (ctx, paymentMethod) async => context.read<SubscribePackageCubit>().subscribePackage(
                                   packageId: package.id.toString(),
                                   paymentMethod: paymentMethod.name,
-                                  onSuccess: () => showDefaultBottomSheet(
-                                      child: const SuccessSheet()
-                                  )
+                                  onSuccess: (url) => Go.to(SubscriptionScreen(
+                                      initialUrl: url,
+                                    title: type == ScreenType.view?
+                                    LocaleKeys.subscribeToPackage : LocaleKeys.renewPackage,                                  ))
                                 )
                               )
                           )

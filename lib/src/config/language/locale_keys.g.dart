@@ -652,6 +652,9 @@ abstract class LocaleKeys {
   static const String _strict = 'strict';
   static String get strict => _strict.tr();
 
+  static const String _numberOfProfileVisits = 'number_of_profile_visits';
+  static String get numberOfProfileVisits => _numberOfProfileVisits.tr();
+
   static const String _moderate = 'moderate';
   static String get moderate => _moderate.tr();
 

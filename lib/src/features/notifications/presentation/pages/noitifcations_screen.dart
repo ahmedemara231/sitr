@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/pagify.dart';
 
 import '../../../../config/language/locale_keys.g.dart';
+import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/widgets/app_pagify.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../data/notification_data.dart';
@@ -26,14 +27,11 @@ class NotificationBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppScaffold(
       appBarTitle: LocaleKeys.notifications,
-      body: Padding(
-        padding: EdgeInsets.all(16.0.w),
-        child: AppPagify(
-            asyncCall: (context, page) => NotificationsData.getNotifications(page),
-            itemBuilder: (context, data, index, element) => NotificationCard(notificationModel: element),
-            pagifyController: PagifyController()
-        )
-      ),
+      body: AppPagify(
+          asyncCall: (context, page) => NotificationsData.getNotifications(page),
+          itemBuilder: (context, data, index, element) => NotificationCard(notificationModel: element),
+          pagifyController: PagifyController()
+      ).defaultScreenPadding(),
     );
   }
 }
