@@ -22,24 +22,24 @@ import 'buttons/custom_app_buttons/loading_button.dart';
 import 'image_widgets/cached_image.dart';
 import 'scaffolds/auth_scaffold.dart';
 
-enum _ProfileType{profile, partnerProfile}
+enum ProfileType{profile, partnerProfile}
 
-extension TypeCheck on _ProfileType{
-  bool get isProfile => this == _ProfileType.profile;
-  bool get isPartnerProfile => this == _ProfileType.partnerProfile;
+extension TypeCheck on ProfileType{
+  bool get isProfile => this == ProfileType.profile;
+  bool get isPartnerProfile => this == ProfileType.partnerProfile;
 }
 
 class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
-  final _ProfileType _type;
+  final ProfileType _type;
   final T cubit;
 
   const ViewProfileWidget.profile({super.key,
     required this.cubit,
-  }) : _type = _ProfileType.profile;
+  }) : _type = ProfileType.profile;
 
   const ViewProfileWidget.viewPartner({super.key,
     required this.cubit,
-  }) : _type = _ProfileType.partnerProfile;
+  }) : _type = ProfileType.partnerProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +115,10 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
                 ),
               ),
 
-              ProfileAppBarActions(onBlock: (context){}, onReport: (context){}),
+              if(_type.isProfile)
+                const ProfileAppBarActions.withBackButtonOnly()
+              else
+                ProfileAppBarActions(onBlock: (context){}, onReport: (context){}),
             ],
           ),
         ),
