@@ -9,22 +9,31 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="feat(auth): Prevent gender selection during sign-up and enable debouncing&#10;&#10;This commit enhances the user experience during the sign-up process by preventing interactions while an operation is in progress and improving text field performance.&#10;&#10;- **feat(auth):** Disable the gender selection widget (`ChooseGenderWidget`) while the sign-up process is running. A message is now displayed if the user attempts to change the gender during this time.&#10;- **refactor(auth):** Remove the unused `SignUpFactory` class to clean up the codebase.&#10;- **fix(auth):** Correctly initialize and update the `signUpBody` with user input from the form fields.&#10;- **fix(ui):** Enable debouncing on `DefaultTextField` to optimize performance by reducing the frequency of `onChanged` calls.&#10;- **chore:** Minor cleanup, including removing an empty line in `GetParentInfoCubit` and setting the `SplashScreen` as the initial route.">
+    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="feat(auth): Refactor dropdowns and fix parent sign-up&#10;&#10;This commit refactors the `DropDownTextField` to improve its state management and API data fetching logic. It is now a `StatelessWidget` that uses a `ValueNotifier` to handle loading states, preventing unnecessary rebuilds.&#10;&#10;Additionally, this addresses a bug in the parent sign-up flow where the selected `gender` and `kinship` values were not being correctly stored or passed in the `signUpBody`. The state is now correctly managed, and the `initialValue` is set for the dropdowns.&#10;&#10;Other changes include:&#10;- Removing unused `merge` methods from the `SignUpBody` models.&#10;- Adding padding to the `Login`, `OTP`, and `SignUp` screen headers for better UI consistency.&#10;- Adding a new translation for handling in-progress sign-up actions.">
+      <change afterPath="$PROJECT_DIR$/lib/src/core/widgets/custom_drop_down/custom_drop_down.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/core/widgets/custom_drop_down/test.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/translations/ar.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/ar.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/en.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/config/language/locale_keys.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/config/language/locale_keys.g.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/app.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/config/language/languages.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/config/language/languages.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/app_pagify.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/app_pagify.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/buttons/custom_app_buttons/loading_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/buttons/custom_app_buttons/loading_button.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/radio_bottom_sheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/radio_bottom_sheet.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/sheets/success_sheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/sheets/success_sheet.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/features/auth/imports.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/imports.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/models/sign_up_body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/models/sign_up_body.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/screens/login.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/screens/login.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/login/login_static_texts.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/login/login_static_texts.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/drop_down_text_field.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/drop_down_text_field.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/sign_up_fields.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/sign_up_fields.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/sign_up_upper_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/sign_up_upper_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/home/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/home/home_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/otp/presentation/cubits/otp_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/otp/presentation/cubits/otp_cubit.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/female_fields.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/female_fields.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/male_fields.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/male_fields.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/sign_up_static_texts.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/sign_up_static_texts.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/blocked_user_screen/widgets/blocked_user_item.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/blocked_user_screen/widgets/blocked_user_item.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/complaint_and_suggestion/widgets/complaints_and_suggestions_item.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/complaint_and_suggestion/widgets/complaints_and_suggestions_item.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/consultant/widgets/consultant_item.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/consultant/widgets/consultant_item.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/notifications/presentation/widgets/notification_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/notifications/presentation/widgets/notification_card.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/features/otp/presentation/otp.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/otp/presentation/otp.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/packages/presentation/screens/subscription_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/packages/presentation/screens/subscription_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/splash/splash_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/splash/splash_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/otp/presentation/widgets/otp_static_texts.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/otp/presentation/widgets/otp_static_texts.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,27 +108,27 @@
     <option name="foldersAlwaysOnTop" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Flutter.main.dart.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;home&quot;,
-    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/aaita/Desktop/apps/crud_sitr/sitr/assets/svg&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Flutter.main.dart.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "home",
+    "io.flutter.reload.alreadyRun": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/aaita/Desktop/apps/crud_sitr/sitr/assets/svg",
+    "settings.editor.selected.configurable": "reference.idesettings.emmet",
+    "show.migrate.to.gradle.popup": "false"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/assets/svg" />
@@ -129,11 +138,11 @@
       <recent name="$PROJECT_DIR$/lib/src/core/helpers" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/src/core/widgets/custom_drop_down" />
       <recent name="$PROJECT_DIR$/lib/src/features/packages/presentation" />
       <recent name="$PROJECT_DIR$/lib/src/features/packages/presentation/screens" />
       <recent name="$PROJECT_DIR$/lib/src/features/home/cubits/home_cubit" />
       <recent name="$PROJECT_DIR$/lib/src/features/main_screen/presentation/widgets/home" />
-      <recent name="$PROJECT_DIR$/lib/src/features/auth/presentation/screens/sign_up" />
     </key>
   </component>
   <component name="TaskManager">
@@ -232,7 +241,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760015366928</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="feat(auth): Refactor dropdowns and fix parent sign-up&#10;&#10;This commit refactors the `DropDownTextField` to improve its state management and API data fetching logic. It is now a `StatelessWidget` that uses a `ValueNotifier` to handle loading states, preventing unnecessary rebuilds.&#10;&#10;Additionally, this addresses a bug in the parent sign-up flow where the selected `gender` and `kinship` values were not being correctly stored or passed in the `signUpBody`. The state is now correctly managed, and the `initialValue` is set for the dropdowns.&#10;&#10;Other changes include:&#10;- Removing unused `merge` methods from the `SignUpBody` models.&#10;- Adding padding to the `Login`, `OTP`, and `SignUp` screen headers for better UI consistency.&#10;- Adding a new translation for handling in-progress sign-up actions.">
+      <option name="closed" value="true" />
+      <created>1760021049414</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1760021049414</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -260,7 +277,8 @@
     <MESSAGE value="feat: Implement view profile from more screen&#10;&#10;This commit introduces the ability to view the user's own profile from the &quot;More&quot; screen.&#10;&#10;- Creates `GetProfileCubit` to fetch the current user's profile data from the new `/profile` API endpoint.&#10;- Updates the &quot;More&quot; screen to navigate to the profile view when the &quot;Profile&quot; item is tapped.&#10;- Corrects the data types for `height`, `weight`, and `tribeAffiliation` in the `IndividualUserModel`.&#10;- Fixes JSON parsing in the `MaleModel` to handle potentially null objects.&#10;- Adjusts the layout in `ViewProfileWidget` for better alignment." />
     <MESSAGE value="feat: Refactor data models and home screen logic&#10;&#10;This commit introduces a major refactoring of the data models to improve consistency and type safety, and updates the home screen to dynamically display content based on the user's gender.&#10;&#10;### Refactoring:&#10;- **feat(models):** Create a new generic `TitleValueShape` model to replace numerous redundant classes (`MaritalStatus`, `WeddingType`, `SkinColor`, etc.). This simplifies the model layer by using a single, reusable class for title-value pairs from the API.&#10;- **refactor(models):** Update `UserModel`, `IndividualUserModel`, `FemaleModel`, `MaleModel`, and `ParentModel` to use `TitleValueShape` for properties like `type`, `maritalStatus`, `adminApprovalStatus`, etc. This ensures consistent data handling across all user types.&#10;- **refactor(enums):** Modify `EnumsData` to use the new `TitleValueShape` model, removing the need for multiple abstract and concrete class definitions.&#10;- **refactor(packages):** Move the package fetching logic from `GetPackagesCubit` to a dedicated `PackagesData` service to separate data fetching from state management. The cubit is now commented out.&#10;- **fix(models):** Correct JSON parsing in `UserModel` to properly determine the user's gender and type based on the `value` field instead of the `title`.&#10;- **fix(models):** Update `HomeModel` by unifying `Male` and `Female` opportunity classes into a single `Opportunity` class to reduce code duplication.&#10;&#10;### Features &amp; Fixes:&#10;- **feat(home):** Enhance the home screen to dynamically display male or female opportunities based on the logged-in user's gender.&#10;- **fix(ui):** Adjust the `PartnerCard` layout using `FittedBox` to prevent overflow on smaller screens.&#10;- **chore(auth):** Add temporary logic to populate user data on splash screen for testing purposes." />
     <MESSAGE value="feat(auth): Prevent gender selection during sign-up and enable debouncing&#10;&#10;This commit enhances the user experience during the sign-up process by preventing interactions while an operation is in progress and improving text field performance.&#10;&#10;- **feat(auth):** Disable the gender selection widget (`ChooseGenderWidget`) while the sign-up process is running. A message is now displayed if the user attempts to change the gender during this time.&#10;- **refactor(auth):** Remove the unused `SignUpFactory` class to clean up the codebase.&#10;- **fix(auth):** Correctly initialize and update the `signUpBody` with user input from the form fields.&#10;- **fix(ui):** Enable debouncing on `DefaultTextField` to optimize performance by reducing the frequency of `onChanged` calls.&#10;- **chore:** Minor cleanup, including removing an empty line in `GetParentInfoCubit` and setting the `SplashScreen` as the initial route." />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(auth): Prevent gender selection during sign-up and enable debouncing&#10;&#10;This commit enhances the user experience during the sign-up process by preventing interactions while an operation is in progress and improving text field performance.&#10;&#10;- **feat(auth):** Disable the gender selection widget (`ChooseGenderWidget`) while the sign-up process is running. A message is now displayed if the user attempts to change the gender during this time.&#10;- **refactor(auth):** Remove the unused `SignUpFactory` class to clean up the codebase.&#10;- **fix(auth):** Correctly initialize and update the `signUpBody` with user input from the form fields.&#10;- **fix(ui):** Enable debouncing on `DefaultTextField` to optimize performance by reducing the frequency of `onChanged` calls.&#10;- **chore:** Minor cleanup, including removing an empty line in `GetParentInfoCubit` and setting the `SplashScreen` as the initial route." />
+    <MESSAGE value="feat(auth): Refactor dropdowns and fix parent sign-up&#10;&#10;This commit refactors the `DropDownTextField` to improve its state management and API data fetching logic. It is now a `StatelessWidget` that uses a `ValueNotifier` to handle loading states, preventing unnecessary rebuilds.&#10;&#10;Additionally, this addresses a bug in the parent sign-up flow where the selected `gender` and `kinship` values were not being correctly stored or passed in the `signUpBody`. The state is now correctly managed, and the `initialValue` is set for the dropdowns.&#10;&#10;Other changes include:&#10;- Removing unused `merge` methods from the `SignUpBody` models.&#10;- Adding padding to the `Login`, `OTP`, and `SignUp` screen headers for better UI consistency.&#10;- Adding a new translation for handling in-progress sign-up actions." />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(auth): Refactor dropdowns and fix parent sign-up&#10;&#10;This commit refactors the `DropDownTextField` to improve its state management and API data fetching logic. It is now a `StatelessWidget` that uses a `ValueNotifier` to handle loading states, preventing unnecessary rebuilds.&#10;&#10;Additionally, this addresses a bug in the parent sign-up flow where the selected `gender` and `kinship` values were not being correctly stored or passed in the `signUpBody`. The state is now correctly managed, and the `initialValue` is set for the dropdowns.&#10;&#10;Other changes include:&#10;- Removing unused `merge` methods from the `SignUpBody` models.&#10;- Adding padding to the `Login`, `OTP`, and `SignUp` screen headers for better UI consistency.&#10;- Adding a new translation for handling in-progress sign-up actions." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -282,7 +300,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/female_fields.dart</url>
-          <line>170</line>
+          <line>171</line>
           <option name="timeStamp" value="67" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">

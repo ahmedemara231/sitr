@@ -7,6 +7,7 @@ import 'package:pagify/pagify.dart';
 import 'package:pagify/widgets/text.dart';
 import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
+import 'app_text.dart';
 import 'custom_loading.dart';
 
 enum Ranking{listView, gridView}

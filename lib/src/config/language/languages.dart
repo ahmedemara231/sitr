@@ -41,6 +41,10 @@ enum Languages {
     Languages.english : Languages.arabic;
   }
 
+
+  static bool get currentIsArabic => currentLanguage == Languages.arabic;
+  static bool get currentIsEnglish => currentLanguage == Languages.english;
+
   static Languages get currentLanguage {
     final currentLocale =
         EasyLocalization.of(Go.navigatorKey.currentContext!)!.locale;

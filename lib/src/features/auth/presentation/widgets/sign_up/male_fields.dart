@@ -4,6 +4,7 @@ import 'package:pagify/widgets/text.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
 import '../../../../../core/shared/models/title_value_shape.dart';
+import '../../../../../core/widgets/app_text.dart';
 import '../../../models/complete_profile/male_body.dart';
 import '../../../models/shared_form_fields_model.dart';
 import '../../data/enums_data.dart';

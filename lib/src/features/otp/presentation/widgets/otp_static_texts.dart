@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/widgets/text.dart';
 
 import '../../../../config/language/locale_keys.g.dart';
+import '../../../../core/widgets/app_text.dart';
 
 class OtpStaticTexts extends StatelessWidget {
   final String phone;

@@ -5,6 +5,7 @@ import '../../../../../core/extensions/enum.dart';
 import '../../../../../core/extensions/object.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
 import '../../../../../core/shared/models/title_value_shape.dart';
+import '../../../../../core/widgets/app_text.dart';
 import '../../../models/complete_profile/female_body.dart';
 import '../../../models/kinship.dart';
 import '../../../models/shared_form_fields_model.dart';

@@ -1,3 +1,4 @@
+import 'package:dropdown_flutter/custom_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../generated/assets.dart';
@@ -8,7 +9,7 @@ import '../../../../../core/widgets/custom_loading.dart';
 import '../../../../../core/widgets/svg_pic.dart';
 import '../../enums/answer.dart';
 
-class DropDownTextField<T> extends StatelessWidget {
+class DropDownTextField<T> extends StatefulWidget {
   final Answer withApiRequest;
   final Future<List<T>> Function(BuildContext context)? request;
   final String title;
@@ -18,7 +19,7 @@ class DropDownTextField<T> extends StatelessWidget {
   final Widget Function(T value)? itemBuilder;
   final T? initialValue;
 
-  DropDownTextField({
+  const DropDownTextField({
     super.key,
     required this.title,
     required this.values,
@@ -29,7 +30,7 @@ class DropDownTextField<T> extends StatelessWidget {
   })  : withApiRequest = Answer.no,
         request = null;
 
-  DropDownTextField.withApiRequest({
+  const DropDownTextField.withApiRequest({
     super.key,
     required this.title,
     required this.onChanged,
@@ -40,24 +41,33 @@ class DropDownTextField<T> extends StatelessWidget {
   })  : withApiRequest = Answer.yes,
         values = null;
 
+  @override
+  State<DropDownTextField<T>> createState() => _DropDownTextFieldState<T>();
+}
+
+class _DropDownTextFieldState<T> extends State<DropDownTextField<T>> {
   List<T> data = [];
 
   final ValueNotifier<bool> _isLoading = ValueNotifier(false);
 
-  final GlobalKey _dropDownKey = GlobalKey();
-
   Future<void> _getDropdownData(BuildContext context) async {
     if(data.isEmpty || data.isNull){
       _isLoading.value = true;
-      data = await request!.call(context);
+      data = await widget.request!.call(context);
       _isLoading.value = false;
     }
   }
 
   void _getData(BuildContext context)async{
-    if (withApiRequest.isYes) {
+    if (widget.withApiRequest.isYes) {
       await _getDropdownData(context);
     }
+  }
+
+  @override
+  void initState() {
+    _getData(context);
+    super.initState();
   }
 
   @override
@@ -66,11 +76,11 @@ class DropDownTextField<T> extends StatelessWidget {
       spacing: 10.h,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AppText(title, fontWeight: FontWeight.bold, fontSize: 11.sp),
-        if (withApiRequest.isNo)
+        AppText(widget.title, fontWeight: FontWeight.bold, fontSize: 11.sp),
+        if (widget.withApiRequest.isNo)
           DropdownButtonFormField<T>(
-            initialValue: initialValue,
-            hint: AppText(hint, color: Colors.grey),
+            initialValue: widget.initialValue,
+            hint: AppText(widget.hint, color: Colors.grey),
             icon: const SvgPic(assetName: Assets.svgArrowDown),
             decoration: InputDecoration(
               fillColor: AppColors.whiteGreyColorProMax,
@@ -88,13 +98,13 @@ class DropDownTextField<T> extends StatelessWidget {
                 borderSide: BorderSide(color: Colors.grey[300]!, width: 0),
               ),
             ),
-            items: values?.map((T value) {
+            items: widget.values?.map((T value) {
               return DropdownMenuItem<T>(
                 value: value,
-                child: itemBuilder?.call(value)?? AppText(value.toString()),
+                child: widget.itemBuilder?.call(value)?? AppText(value.toString()),
               );
             }).toList(),
-            onChanged: onChanged,
+            onChanged: widget.onChanged,
           )
 
         else
@@ -106,9 +116,8 @@ class DropDownTextField<T> extends StatelessWidget {
                   onTap: () => _getData(context),
                   child: DropdownButtonFormField<T>(
                     isExpanded: !value,
-                    key: _dropDownKey,
-                    initialValue: initialValue,
-                    hint: AppText(hint, color: Colors.grey),
+                    initialValue: widget.initialValue,
+                    hint: AppText(widget.hint, color: Colors.grey),
                     icon: const SvgPic(assetName: Assets.svgArrowDown),
                     decoration: InputDecoration(
                       fillColor: AppColors.whiteGreyColorProMax,
@@ -130,9 +139,9 @@ class DropDownTextField<T> extends StatelessWidget {
                     items: value? List.empty() :
                     data.map((T value) => DropdownMenuItem<T>(
                       value: value,
-                      child: itemBuilder?.call(value)?? AppText(value.toString()),
+                      child: widget.itemBuilder?.call(value)?? AppText(value.toString()),
                     )).toList(),
-                    onChanged: onChanged,
+                    onChanged: widget.onChanged,
                   ),
                 ),
 

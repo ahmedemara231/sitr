@@ -6,6 +6,7 @@ import '../../../../../../config/language/locale_keys.g.dart';
 import '../../../../../../config/res/config_imports.dart';
 import '../../../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../../../core/extensions/sized_box_helper.dart';
+import '../../../../../../core/widgets/app_text.dart';
 import '../../../../../../core/widgets/buttons/default_button.dart';
 import '../../../../../../core/widgets/icon_widget.dart';
 import '../../../cubit/block_user_cubit/un_block_user_cubit.dart';

@@ -20,6 +20,7 @@ import '../../core/navigation/navigator.dart';
 import '../../core/shared/models/user_models/user_model.dart';
 import '../../core/shared/user_cubit/user_cubit.dart';
 import '../../core/widgets/app_logo_widget.dart';
+import '../../core/widgets/app_text.dart';
 import '../../core/widgets/buttons/app_loading_button.dart';
 import '../../core/widgets/buttons/default_button.dart';
 import '../../core/widgets/lang_icon.dart';

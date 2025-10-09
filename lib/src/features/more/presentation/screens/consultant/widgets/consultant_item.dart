@@ -5,6 +5,7 @@ import '../../../../../../../generated/assets.dart';
 import '../../../../../../config/res/config_imports.dart';
 import '../../../../../../core/extensions/sized_box_helper.dart';
 import '../../../../../../core/helpers/lancher_helper.dart' show LauncherHelper;
+import '../../../../../../core/widgets/app_text.dart';
 import '../../../../../../core/widgets/icon_widget.dart';
 import '../../../models/consultant_model.dart';
 

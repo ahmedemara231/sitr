@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pagify/widgets/text.dart';
 
 import '../../../../config/res/config_imports.dart';
+import '../../app_text.dart';
 
 class LoadingButton extends StatelessWidget {
   final Future<void> Function(BuildContext context) call;

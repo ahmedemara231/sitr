@@ -6,6 +6,7 @@ import 'package:pagify/widgets/text.dart';
 import '../../../../../generated/assets.dart' show Assets;
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/notification/notification_service.dart';
+import '../../../../core/widgets/app_text.dart';
 import '../../data/models/notification_model.dart';
 
 class NotificationCard extends StatefulWidget {
