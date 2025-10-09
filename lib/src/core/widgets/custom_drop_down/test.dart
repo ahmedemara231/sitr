@@ -4,7 +4,6 @@ import 'package:flutter/widget_previews.dart';
 import 'package:pagify/helpers/data_and_pagination_data.dart';
 import 'package:pagify/helpers/errors.dart';
 import 'package:pagify/pagify.dart';
-import 'package:pagify/widgets/text.dart';
 
 import '../app_text.dart';
 import 'custom_drop_down.dart';
@@ -53,9 +52,10 @@ class _CustomDropdownTestState extends State<CustomDropdownTest> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomDropDownButton<ExampleModel, String>.withSearch(
-        // onSearch: (pattern, data) => data.where(test),
-
-        onSearch: (pattern, e) => e!.contains(pattern??''),
+        buttonData: ButtonData(selectedItemWidget: (e) => AppText(e)),
+        textFieldData: TextFieldData(
+          onSearch: (pattern, e) => e!.contains(pattern??''),
+        ),
           customDropDownButtonPagifyData: CustomDropDownButtonPagifyData(
             controller: _pagifyController,
             asyncCall: (context, page)async => await _fetchData(page),
@@ -96,10 +96,7 @@ class _CustomDropdownTestState extends State<CustomDropdownTest> {
             ),
             itemBuilder: (context, data, index, element) => AppText(element, textAlign: TextAlign.start),
           ),
-        initialValue: 'test',
-        selectedItemWidget: (e) => AppText(e),
       )
     );
   }
 }
-//
