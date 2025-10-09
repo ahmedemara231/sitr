@@ -18,6 +18,7 @@ import '../widgets/home/mariage_consultant.dart';
 import '../widgets/home/parent_card.dart';
 import '../widgets/home/partner_card.dart';
 import '../widgets/home/under_slider_widget.dart';
+import 'parent_details.dart';
 import 'partner_details.dart';
 
 class MainView extends StatelessWidget {
@@ -121,7 +122,7 @@ class MainView extends StatelessWidget {
 
                               }else{
                                 return InkWell(
-                                  // onTap: () => Go.to(ParentDetails()),
+                                  // onTap: () => Go.to(const ParentDetailsScreen()),
                                   child: ParentCard(
                                       parentImage: parent?.avatar ??'',
                                       name: parent?.name ??'',
@@ -136,7 +137,6 @@ class MainView extends StatelessWidget {
                         state.data.marriageConsultants?.length ?? 0,
                             (i) {
                           final marriageConsultant = state.data.marriageConsultants?[i];
-                          final parent = state.data.opportunities?.parent?[i];
                           return MarriageConsultantCard(
                               name: marriageConsultant?.name ?? '',
                               phone: marriageConsultant?.phone ?? '',

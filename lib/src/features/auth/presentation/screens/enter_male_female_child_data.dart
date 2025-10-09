@@ -48,12 +48,15 @@ class _EnterMaleOrFemaleOrChildDataScreenState extends State<EnterMaleOrFemaleOr
             spacing: 10.h,
             children: [
               if (widget.type.isNull)
-                ChooseGenderWidget(
-                  onSelectGender: (selectedGender) => _mainType.value = selectedGender,
-                  genders: const [
-                    UserType.male,
-                    UserType.female,
-                  ],
+                BlocBuilder<CompleteProfileCubit, AsyncState<UserModel>>(
+                  builder: (context, state) => ChooseGenderWidget(
+                    canChoose: !state.isLoading,
+                    onSelectGender: (selectedGender) => _mainType.value = selectedGender,
+                    genders: const [
+                      UserType.male,
+                      UserType.female,
+                    ],
+                  ),
                 ),
 
               ValueListenableBuilder(

@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/extensions/enum.dart';
 import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
 import '../../../../../core/widgets/buttons/custom_app_buttons/default_button.dart';
+import '../../../../../core/widgets/custom_messages.dart';
 
 class ChooseGenderWidget extends StatefulWidget {
   final Function(UserType selectedGender) onSelectGender;
   final List<UserType> genders;
+  final bool canChoose;
 
   const ChooseGenderWidget({super.key,
     required this.onSelectGender,
     required this.genders,
+    required this.canChoose
   });
 
   @override
@@ -34,9 +38,13 @@ class _ChooseGenderWidgetState extends State<ChooseGenderWidget> {
               title: widget.genders[index].translate,
               backgroundColor: currentIndex == index? AppColors.primary : Colors.white,
               onTap: () {
-                setState(() => currentIndex = index);
-                widget.onSelectGender(widget.genders[index]);
-                },
+                if(widget.canChoose){
+                  setState(() => currentIndex = index);
+                  widget.onSelectGender(widget.genders[index]);
+
+                }else{
+                  MessageUtils.showSnackBar(LocaleKeys.waitUntilTheCurrentSignUpCompleted);
+                }},
             ).paddingSymmetric(horizontal: 10.w),
           )
       ),

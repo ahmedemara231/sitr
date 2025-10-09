@@ -12,7 +12,7 @@ class AppDefaultButton extends StatelessWidget {
   final Color? backgroundColor;
   final Color? textColor;
   final String title;
-  final FutureOr<void> Function() onTap;
+  final FutureOr<void> Function()? onTap;
   const AppDefaultButton.withBorderColor({super.key,
     required this.title,
     required this.onTap,

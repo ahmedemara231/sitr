@@ -2,5 +2,4 @@ import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubi
 
 class GetParentInfoCubit extends AsyncCubit{
   GetParentInfoCubit() : super(null);
-
 }

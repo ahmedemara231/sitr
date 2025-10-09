@@ -92,19 +92,53 @@ class _SignUpFieldsState extends State<SignUpFields> {
     super.dispose();
   }
 
-  File? image;
+  File? _image;
+  File? _maleImage;
+  File? _femaleImage;
+
+  // String? _gender;
+  // Kinship? _kinship;
+
+
+  File? get _getImageBasedGender{
+    if(widget.type.isMale){
+      return _maleImage;
+
+    }else if(widget.type.isFemale){
+      return _femaleImage;
+
+    }
+
+    return null;
+  }
 
   late SignUpBody signUpBody;
   void _initSignupBody(UserType newType){
     if(newType.isParent){
-      log('here');
-      _parentCodeCont.text = '_parentNameCont.text';
-      signUpBody = ParentSignUp.initial().copyWith(name: _parentCodeCont.text);
+      signUpBody = ParentSignUp.initial().copyWith(
+        image: _image,
+        name: _parentNameCont.text,
+        phone: _parentPhoneCont.text,
+        email: _emailCont.text,
+        identityNumber: _parentIdentifyNumberCont.text,
+        childrenNumber: _childrenNumberCont.text,
+        // kinship: _kinship?.id,
+        // gender: _gender,
+        code: _parentCodeCont.text,
+      );
 
     }else{
-      signUpBody = MaleAndFemaleSignUp.initial();
+      signUpBody = MaleAndFemaleSignUp.initial().copyWith(
+        image: _getImageBasedGender,
+        name: _getContBasedUserType(whenMale: _maleNameCont, whenFemale: _femaleNameCont).text,
+        phone: _getContBasedUserType(whenMale: _malePhoneCont, whenFemale: _femalePhoneCont).text,
+        age: _getContBasedUserType(whenMale: _maleAgeCont, whenFemale: _femaleAgeCont).text,
+        identityNumber: _getContBasedUserType(whenMale: _maleIdentifyNumberCont, whenFemale: _femaleIdentifyNumberCont).text,
+        code: _getContBasedUserType(whenMale: _maleCodeCont, whenFemale: _femaleCodeCont).text,
+      );
     }
 
+    _listenToData(signUpBody);
     if(widget.type.isIndividual){
       _listenToData(signUpBody.copyWith(gender: widget.type.name));
     }

@@ -21,13 +21,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
           body: Column(
             spacing: 10.h,
             children: [
-              ChooseGenderWidget(
-                onSelectGender: (selectedGender) => type.value = selectedGender,
-                genders: const [
-                  UserType.male,
-                  UserType.female,
-                  UserType.parent,
-                ],
+              BlocBuilder<SignUpCubit, AsyncState>(
+                builder: (context, state) => ChooseGenderWidget(
+                  canChoose: !state.isLoading,
+                  onSelectGender: (selectedGender) => type.value = selectedGender,
+                  genders: const [
+                    UserType.male,
+                    UserType.female,
+                    UserType.parent,
+                  ],
+                ),
               ),
               10.szH,
 
@@ -68,7 +71,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ))
                 ),
                 child: AppLoadingButton(
-                  asyncCall: (ctx) async =>  await ctx.read<SignUpCubit>().signUp(signUpBody),
+                  asyncCall: (ctx) async => await ctx.read<SignUpCubit>().signUp(signUpBody),
                   title: LocaleKeys.confirm,
                 ),
               ),
