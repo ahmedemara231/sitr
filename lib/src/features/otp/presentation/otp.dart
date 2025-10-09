@@ -10,6 +10,7 @@ import '../../../config/language/locale_keys.g.dart';
 import '../../../config/res/config_imports.dart';
 import '../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../core/extensions/context_extension.dart';
+import '../../../core/extensions/padding_extension.dart';
 import '../../../core/extensions/sized_box_helper.dart';
 import '../../../core/helpers/helpers.dart';
 import '../../../core/helpers/validators.dart';
@@ -110,7 +111,7 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
             const AppLogoWidget(),
             OtpStaticTexts(phone: widget.phone),
           ],
-        ),
+        ).paddingAll(12.r),
         body: SizedBox(
           height: context.height * .7,
           child: Column(

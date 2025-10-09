@@ -688,4 +688,7 @@ abstract class LocaleKeys {
   static const String _subscribe = 'subscribe';
   static String get subscribe => _subscribe.tr();
 
+  static const String _waitUntilTheCurrentSignUpCompleted = 'wait_until_the_current_sign_up_completed';
+  static String get waitUntilTheCurrentSignUpCompleted => _waitUntilTheCurrentSignUpCompleted.tr();
+
 }

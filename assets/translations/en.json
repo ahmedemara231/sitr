@@ -233,5 +233,6 @@
   "mediators_and_services": "mediators and services",
   "parents": "parents",
   "start_chat": "Start chat",
-  "subscribe": "Subscribe"
+  "subscribe": "Subscribe",
+  "wait_until_the_current_sign_up_completed": "wait until the current sign up completed"
 }

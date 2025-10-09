@@ -41,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             const LoginStaticTexts()
           ],
-        ),
+        ).paddingAll(12.r),
         body: SizedBox(
           height: context.height * .7,
           child: Column(
@@ -68,7 +68,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         title: LocaleKeys.confirmCode,
                         phone: _phoneCont.text,
                         onConfirmCode: (ctx, code) => ctx.read<OtpCubit>().sendOtp(
-                          // onSuccess: () => ,
                           type: OtpType.afterLogin,
                           body: OtpBody(phone: _phoneCont.text, code: code),
                         ),

@@ -233,5 +233,6 @@
   "mediators_and_services": "المستشارين وخدمات الافراح",
   "parents": "اولياء الامور",
   "start_chat": "اجراء محادثة",
-  "subscribe": "اشتراك"
+  "subscribe": "اشتراك",
+  "wait_until_the_current_sign_up_completed": "انتظر حتي تنتهي عملية التسجيل الحالية"
 }

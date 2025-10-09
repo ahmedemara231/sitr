@@ -50,7 +50,8 @@ class _SplashScreenState extends State<SplashScreen> {
       isBlocked: false,
       adminApprovalStatus: TitleValueShape.initial(),
       completeRegistration: "completed",
-      token: "Bearer 163|HHo3wbY3XYokTkKKl8AdDxHFzgjbKzsiVDYL0EOl",
+      token: "Bearer 166|WUktBilvQvagmy3p11HtZx9bKSBS6iEEqBmLXIgu",
+      // token: "Bearer 163|HHo3wbY3XYokTkKKl8AdDxHFzgjbKzsiVDYL0EOl",
       // token: "Bearer 145|qjG9asgeoAZcqWJgRUzzj734XAw60PciGrxiInD4",
       nickName: "جوجو",
       maritalStatus: TitleValueShape.fromJson({'title' : 'انثي', 'value' : 'female'}),
@@ -82,7 +83,7 @@ class _SplashScreenState extends State<SplashScreen> {
       guardianName: "عبدالله القحطاني",
       guardianPhone: "500500511",
       guardianCountryCode: "966",
-      guardianRelation: Kinship.fromJson({'id' : 1, 'name' : 'father'}),
+      guardianRelation: Kinship.fromJson(const {'id' : 1, 'name' : 'father'}),
     );
 
     UserCubit.instance.updateUser(female);

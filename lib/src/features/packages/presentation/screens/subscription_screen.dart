@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../../../core/widgets/custom_loading.dart';
+
 class SubscriptionScreen extends StatefulWidget {
   final String initialUrl;
   final String? title;
@@ -92,8 +94,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
             WebViewWidget(controller: _controller),
 
           if (_isLoading)
-            const Center(
-              child: CircularProgressIndicator(),
+             Center(
+              child: CustomLoading.showLoadingView(),
             ),
 
           if (_errorMessage != null)

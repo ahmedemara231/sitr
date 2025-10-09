@@ -13,8 +13,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    injector<NetworkService>().setToken('Bearer 163|HHo3wbY3XYokTkKKl8AdDxHFzgjbKzsiVDYL0EOl');
-    // injector<NetworkService>().setToken('Bearer 145|qjG9asgeoAZcqWJgRUzzj734XAw60PciGrxiInD4');
+    injector<NetworkService>().setToken('Bearer 166|WUktBilvQvagmy3p11HtZx9bKSBS6iEEqBmLXIgu');
     return BlocProvider(
       create: (context) => HomeCubit(),
       child: BlocBuilder<HomeCubit, HomeState>(

@@ -19,15 +19,6 @@ class SignUpBody{
     required this.code,
   });
 
-  SignUpBody merge(SignUpBody other) => copyWith(
-    image: other.image,
-    name: other.name,
-    phone: other.phone,
-    identityNumber: other.identityNumber,
-    gender: other.gender,
-    code: other.code,
-  );
-
   Map<String, dynamic> toJson() => AuthBodyStaticData().toJson()..addAll({
     'name' : name,
     'phone' : phone,
@@ -67,20 +58,6 @@ class MaleAndFemaleSignUp extends SignUpBody{
     required super.gender,
     required super.code
   });
-
-
-  @override
-  MaleAndFemaleSignUp merge(SignUpBody other) {
-    return copyWith(
-      image: other.image,
-      name: other.name,
-      phone: other.phone,
-      identityNumber: other.identityNumber,
-      gender: other.gender,
-      code: other.code,
-      age: (other as MaleAndFemaleSignUp).age
-    );
-  }
 
   @override
   MaleAndFemaleSignUp copyWith({
@@ -126,12 +103,11 @@ class ParentSignUp extends SignUpBody{
   final String email;
   final int kinship;
   final String childrenNumber;
-  // final String childGender;
+
   ParentSignUp({
     required this.email,
     required this.kinship,
     required this.childrenNumber,
-    // required this.childGender,
     required super.name,
     required super.phone,
     required super.identityNumber,
@@ -145,7 +121,6 @@ class ParentSignUp extends SignUpBody{
     String? email,
     int? kinship,
     String? childrenNumber,
-    // String? childGender,
     File? image,
     String? name,
     String? phone,
@@ -163,7 +138,6 @@ class ParentSignUp extends SignUpBody{
       email: email ?? this.email,
       kinship: kinship?? this.kinship,
       childrenNumber: childrenNumber?? this.childrenNumber,
-      // childGender: childGender?? this.childGender,
     );
   }
 
@@ -171,7 +145,6 @@ class ParentSignUp extends SignUpBody{
       email: '',
       kinship: 0,
       childrenNumber: '',
-      // childGender: '',
       name: '',
       phone: '',
       identityNumber: '',
@@ -179,22 +152,6 @@ class ParentSignUp extends SignUpBody{
       gender: '',
       code: ''
   );
-
-  @override
-  ParentSignUp merge(SignUpBody other) {
-    return copyWith(
-      image: other.image,
-      name: other.name,
-      phone: other.phone,
-      identityNumber: other.identityNumber,
-      gender: other.gender,
-      code: other.code,
-      email: (other as ParentSignUp).email,
-      kinship: other.kinship,
-      childrenNumber: other.childrenNumber,
-      // childGender: other.childGender,
-    );
-  }
 
   @override
   Map<String, dynamic> toJson() {

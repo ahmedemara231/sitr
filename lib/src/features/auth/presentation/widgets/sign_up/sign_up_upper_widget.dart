@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/extensions/context_extension.dart';
+import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/widgets/app_logo_widget.dart';
 import '../../../../../core/widgets/lang_icon.dart';
 import 'sign_up_static_texts.dart' show SignUpStaticTexts;
@@ -23,6 +24,6 @@ class SignUpUpperWidget extends StatelessWidget {
         ),
         const SignUpStaticTexts()
       ],
-    );
+    ).paddingAll(12.r);
   }
 }

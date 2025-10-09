@@ -96,8 +96,8 @@ class _SignUpFieldsState extends State<SignUpFields> {
   File? _maleImage;
   File? _femaleImage;
 
-  // String? _gender;
-  // Kinship? _kinship;
+  UserType? _gender;
+  Kinship? _kinship;
 
 
   File? get _getImageBasedGender{
@@ -122,8 +122,8 @@ class _SignUpFieldsState extends State<SignUpFields> {
         email: _emailCont.text,
         identityNumber: _parentIdentifyNumberCont.text,
         childrenNumber: _childrenNumberCont.text,
-        // kinship: _kinship?.id,
-        // gender: _gender,
+        kinship: _kinship?.id,
+        gender: _gender?.name,
         code: _parentCodeCont.text,
       );
 
@@ -225,11 +225,15 @@ class _SignUpFieldsState extends State<SignUpFields> {
 
         if (widget.type.isParent) ...[
           DropDownTextField<Kinship>.withApiRequest(
+              initialValue: _kinship,
               hint: LocaleKeys.pleaseEnterTheKinship,
               request: (ctx) async => AuthData.getKinships(),
               itemBuilder: (val) => AppText(val.value),
               title: LocaleKeys.kinship,
-            onChanged: (val) => _listenToData((signUpBody as ParentSignUp).copyWith(kinship: val?.id)),
+            onChanged: (val) {
+                _kinship = val;
+              _listenToData((signUpBody as ParentSignUp).copyWith(kinship: val?.id));
+            }
           ),
           SignUpTextField(
             upperTitle: LocaleKeys.childrenNumber,
@@ -244,7 +248,11 @@ class _SignUpFieldsState extends State<SignUpFields> {
               values: const [UserType.male, UserType.female],
               title: LocaleKeys.gender,
               itemBuilder: (v) => AppText(v.translate),
-              onChanged: (val) => _listenToData((signUpBody as ParentSignUp).copyWith(gender: val?.name)),
+              initialValue: _gender,
+              onChanged: (val) {
+                _gender = val;
+                _listenToData((signUpBody as ParentSignUp).copyWith(gender: val?.name));
+              }
           ),
         ],
 
