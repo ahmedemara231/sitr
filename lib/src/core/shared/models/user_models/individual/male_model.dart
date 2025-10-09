@@ -1,4 +1,5 @@
 import '../../../../extensions/object.dart';
+import '../../title_value_shape.dart' show TitleValueShape;
 import '../user_model.dart';
 import 'individual_user_model.dart';
 
@@ -57,7 +58,7 @@ class MaleModel extends IndividualUserModel {
       id: json['id'],
       name: json['name'],
       parentId: json['parent_id'],
-      type: Type.fromJson(json['type']),
+      type: TitleValueShape.fromJson(json['type']),
       gender: Gender.fromJson(json['gender']),
       avatar: json['avatar'],
       phone: json['phone'],
@@ -83,23 +84,23 @@ class MaleModel extends IndividualUserModel {
       dowryMin: json['dowry_min'],
       dowryMax: json['dowry_max'],
 
-      adminApprovalStatus: AdminApprovalStatus.fromJson(json['admin_approval_status']),
+      adminApprovalStatus: TitleValueShape.fromJson(json['admin_approval_status']),
       completeRegistration: json['complete_registration'],
 
-      maritalStatus: (json['marital_status'] as Object).isNull? null :
-      MaritalStatusModel.fromJson(json['marital_status']),
+      maritalStatus: (json['marital_status'] as Object?).isNull? null :
+      TitleValueShape.fromJson(json['marital_status']),
 
-      weddingType: (json['wedding_type'] as Object).isNull? null :
-      WeddingType.fromJson(json['wedding_type']),
+      weddingType: (json['wedding_type'] as Object?).isNull? null :
+      TitleValueShape.fromJson(json['wedding_type']),
 
-      cityId: (json['city_id'] as Object).isNull? null :
+      cityId: (json['city_id'] as Object?).isNull? null :
       CityModel.fromJson(json['city_id']),
 
-      religiousCommitment: (json['religious_commitment'] as Object).isNull? null :
-      ReligiousCommitment.fromJson(json['religious_commitment']),
+      religiousCommitment: (json['religious_commitment'] as Object?).isNull? null :
+      TitleValueShape.fromJson(json['religious_commitment']),
 
-      childCustody: (json['child_custody'] as Object).isNull? null :
-      ChildCustody.fromJson(json['child_custody']),
+      childCustody: (json['child_custody'] as Object?).isNull? null :
+      TitleValueShape.fromJson(json['child_custody']),
 
       educationLevel: json['education_level'],
       isPrayer: json['is_prayer'],

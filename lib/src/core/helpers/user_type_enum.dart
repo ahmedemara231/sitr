@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import '../../config/language/locale_keys.g.dart';
 import 'cache_service.dart';
 import '../shared/models/user_models/user_model.dart';
 
@@ -18,14 +16,13 @@ extension Check on UserType{
 
 extension Parse on String{
   UserType toUserType(){
-    log(this);
-    if(this == LocaleKeys.male){
+    if(this == 'male'){
       return UserType.male;
 
-    }else if(this == LocaleKeys.female){
+    }else if(this == 'female'){
       return UserType.female;
 
-    }else if(this == LocaleKeys.parent){
+    }else if(this == 'parent'){
       return UserType.parent;
 
     }else{
@@ -40,10 +37,7 @@ class UserTypeHelper{
     final UserModel user = (UserModel.fromJson(
         jsonDecode(CacheStorage.read('user'))));
 
-    log('user.gender ${user.gender?.toJson()}');
-    log('user.gender ${user.runtimeType}');
-
-    return user.gender!.title!.toUserType();
+    return user.gender!.titleValueShape?.title.toUserType();
   }
 
   static bool get isAuthenticated{

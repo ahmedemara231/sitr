@@ -1,0 +1,26 @@
+class TitleValueShape{
+  final String title;
+  final String value;
+
+  const TitleValueShape({
+    required this.title,
+    required this.value,
+  });
+
+  factory TitleValueShape.initial() => const TitleValueShape(title: 'title', value: 'value');
+
+  factory TitleValueShape.fromJson(Map<String, dynamic> json) => TitleValueShape(
+      title: json['title'],
+      value: json['value']
+  );
+
+  Map<String, dynamic> toJson() => {
+    'title' : title,
+    'value' : value,
+  };
+
+  TitleValueShape copyWith({
+    String? title,
+    String? value,
+  }) => TitleValueShape(title: title ?? this.title, value: value ?? this.value);
+}

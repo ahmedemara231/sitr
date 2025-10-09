@@ -63,54 +63,56 @@ class PartnerCard extends StatelessWidget {
                 ),
 
                 10.szH,
-                // Row 1: Weight and Location
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    _buildStatItem(
-                      value: location,
-                      icon: Assets.svgLocation,
-                      color: const Color(0xFFF57C00),
-                      backgroundColor: const Color(0xFFFFF3E0),
-                    ),
-                    const SizedBox(width: 24),
-                    _buildStatItem(
-                      value: weight,
-                      icon: Assets.svgWeight,
-                      color: const Color(0xFF9C27B0),
-                      backgroundColor: const Color(0xFFF3E5F5),
-                    ),
-                  ],
+                FittedBox(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      _buildStatItem(
+                        value: location,
+                        icon: Assets.svgLocation,
+                        color: const Color(0xFFF57C00),
+                        backgroundColor: const Color(0xFFFFF3E0),
+                      ),
+                      const SizedBox(width: 24),
+                      _buildStatItem(
+                        value: weight,
+                        icon: Assets.svgWeight,
+                        color: const Color(0xFF9C27B0),
+                        backgroundColor: const Color(0xFFF3E5F5),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 10),
 
-                // Row 2: Height and Age
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    _buildStatItem(
-                      value: maritalStatus,
-                      icon: Assets.svgMartialStatus,
-                      color: const Color(0xFFF57C00),
-                      backgroundColor: const Color(0xFFFFF3E0),
-                    ),
+                FittedBox(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      _buildStatItem(
+                        value: maritalStatus,
+                        icon: Assets.svgMartialStatus,
+                        color: const Color(0xFFF57C00),
+                        backgroundColor: const Color(0xFFFFF3E0),
+                      ),
 
-                    const SizedBox(width: 24),
-                    _buildStatItem(
-                      value: '$age سنة',
-                      icon: Assets.svgAgeIcon,
-                      color: const Color(0xFF1976D2),
-                      backgroundColor: const Color(0xFFE3F2FD),
-                    ),
+                      const SizedBox(width: 24),
+                      _buildStatItem(
+                        value: '$age سنة',
+                        icon: Assets.svgAgeIcon,
+                        color: const Color(0xFF1976D2),
+                        backgroundColor: const Color(0xFFE3F2FD),
+                      ),
 
-                    const SizedBox(width: 24),
-                    _buildStatItem(
-                      value: '$height سم',
-                      icon: Assets.svgTallIcon,
-                      color: const Color(0xFF616161),
-                      backgroundColor: const Color(0xFFF5F5F5),
-                    ),
-                  ],
+                      const SizedBox(width: 24),
+                      _buildStatItem(
+                        value: '$height سم',
+                        icon: Assets.svgTallIcon,
+                        color: const Color(0xFF616161),
+                        backgroundColor: const Color(0xFFF5F5F5),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

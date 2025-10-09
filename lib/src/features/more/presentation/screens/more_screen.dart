@@ -17,21 +17,8 @@ import 'contact_us/contact_us_screen.dart';
 import 'success_partners/success_partners_screen.dart';
 import 'terms_andcondition_and_about_us/terms_andcondition_and_about_us.dart';
 
-class MoreScreen extends StatefulWidget {
+class MoreScreen extends StatelessWidget {
   const MoreScreen({super.key});
-
-  @override
-  State<MoreScreen> createState() => _MoreScreenState();
-}
-
-class _MoreScreenState extends State<MoreScreen> {
-  @override
-  initState() {
-    //  remove this line when integrate auth
-    injector<NetworkService>()
-        .setToken('Bearer 145|qjG9asgeoAZcqWJgRUzzj734XAw60PciGrxiInD4');
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

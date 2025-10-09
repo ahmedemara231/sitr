@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/language/languages.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/extensions/enum.dart';
+import '../../../../../core/shared/models/title_value_shape.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../models/city.dart';
 import '../../../models/complete_profile/female_body.dart';

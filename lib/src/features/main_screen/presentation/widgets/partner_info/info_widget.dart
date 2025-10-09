@@ -23,7 +23,7 @@ class InfoWidget extends StatelessWidget {
         contentPadding: EdgeInsets.all(5.r),
         leading: _InfoWidgetIcon(assetName: partnerInfoModel.leading??''),
         title: AppText(partnerInfoModel.title??'', color: Colors.black87, fontSize: 10.sp),
-        subtitle: AppText(partnerInfoModel.subTitle??'', color: AppColors.primary, fontSize: 10.sp),
+        subtitle: AppText(partnerInfoModel.subTitle??'', color: AppColors.primary),
       ),
     );
   }

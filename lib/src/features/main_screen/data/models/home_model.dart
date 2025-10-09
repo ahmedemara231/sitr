@@ -1,3 +1,4 @@
+import '../../../../core/shared/models/title_value_shape.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 
 class HomeModel {
@@ -20,7 +21,8 @@ class HomeModel {
         marriageConsultants?.add(MarriageConsultants.fromJson(v));
       });
     }
-    opportunities = json['opportunities'] != null ? Opportunities.fromJson(json['opportunities']) : null;
+    opportunities = json['opportunities'] != null?
+    Opportunities.fromJson(json['opportunities']) : null;
   }
   List<Banners>? banners;
   List<MarriageConsultants>? marriageConsultants;
@@ -65,22 +67,23 @@ class Opportunities {
     if (json['male'] != null) {
       male = [];
       json['male'].forEach((v) {
-        male?.add(Male.fromJson(v));
+        male?.add(Opportunity.fromJson(v));
       });
     }
     if (json['female'] != null) {
       female = [];
       json['female'].forEach((v) {
-        female?.add(Female.fromJson(v));
+        female?.add(Opportunity.fromJson(v));
       });
     }
   }
   List<Parent>? parent;
-  List<Male>? male;
-  List<Female>? female;
-Opportunities copyWith({  List<Parent>? parent,
-  List<Male>? male,
-  List<Female>? female,
+  List<Opportunity>? male;
+  List<Opportunity>? female;
+Opportunities copyWith({
+  List<Parent>? parent,
+  List<Opportunity>? male,
+  List<Opportunity>? female,
 }) => Opportunities(  parent: parent ?? this.parent,
   male: male ?? this.male,
   female: female ?? this.female,
@@ -101,79 +104,8 @@ Opportunities copyWith({  List<Parent>? parent,
 
 }
 
-class Female {
-  Female({
-      this.id,
-      this.name,
-      this.avatar,
-      this.age,
-      this.type,
-      this.gender,
-      this.city,
-      this.height,
-      this.weight,});
-
-  Female.fromJson(dynamic json) {
-    id = json['id'];
-    name = json['name'];
-    avatar = json['avatar'];
-    age = json['age'];
-    type = json['type'] != null ? Type.fromJson(json['type']) : null;
-    gender = json['gender'] != null ? Gender.fromJson(json['gender']) : null;
-    city = json['city'];
-    height = json['height'];
-    weight = json['weight'];
-  }
-  int? id;
-  String? name;
-  String? avatar;
-  int? age;
-  Type? type;
-  Gender? gender;
-  String? city;
-  double? height;
-  double? weight;
-Female copyWith({  int? id,
-  String? name,
-  String? avatar,
-  int? age,
-  Type? type,
-  Gender? gender,
-  String? city,
-  double? height,
-  double? weight,
-}) => Female(  id: id ?? this.id,
-  name: name ?? this.name,
-  avatar: avatar ?? this.avatar,
-  age: age ?? this.age,
-  type: type ?? this.type,
-  gender: gender ?? this.gender,
-  city: city ?? this.city,
-  height: height ?? this.height,
-  weight: weight ?? this.weight,
-);
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['name'] = name;
-    map['avatar'] = avatar;
-    map['age'] = age;
-    if (type != null) {
-      map['type'] = type?.toJson();
-    }
-    if (gender != null) {
-      map['gender'] = gender?.toJson();
-    }
-    map['city'] = city;
-    map['height'] = height;
-    map['weight'] = weight;
-    return map;
-  }
-
-}
-
-class Male {
-  Male({
+class Opportunity {
+  Opportunity({
       this.id,
       this.name,
       this.avatar,
@@ -185,12 +117,12 @@ class Male {
       this.weight
     ,});
 
-  Male.fromJson(dynamic json) {
+  Opportunity.fromJson(dynamic json) {
     id = json['id'];
     name = json['name'];
     avatar = json['avatar'];
     age = json['age'];
-    type = json['type'] != null ? Type.fromJson(json['type']) : null;
+    type = json['type'] != null ? TitleValueShape.fromJson(json['type']) : null;
     gender = json['gender'] != null ? Gender.fromJson(json['gender']) : null;
     city = json['city'];
     height = json['height'];
@@ -200,21 +132,21 @@ class Male {
   String? name;
   String? avatar;
   int? age;
-  Type? type;
+  TitleValueShape? type;
   Gender? gender;
   String? city;
-  int? height;
-  int? weight;
-Male copyWith({  int? id,
+  double? height;
+  double? weight;
+Opportunity copyWith({  int? id,
   String? name,
   String? avatar,
   int? age,
-  Type? type,
+  TitleValueShape? type,
   Gender? gender,
   String? city,
-  int? height,
-  int? weight,
-}) => Male(  id: id ?? this.id,
+  double? height,
+  double? weight,
+}) => Opportunity(  id: id ?? this.id,
   name: name ?? this.name,
   avatar: avatar ?? this.avatar,
   age: age ?? this.age,
@@ -259,7 +191,7 @@ class Parent {
     id = json['id'];
     name = json['name'];
     avatar = json['avatar'];
-    type = json['type'] != null ? Type.fromJson(json['type']) : null;
+    type = json['type'] != null ? TitleValueShape.fromJson(json['type']) : null;
     gender = json['gender'] != null ? Gender.fromJson(json['gender']) : null;
     relation = json['relation'] != null ? Relation.fromJson(json['relation']) : null;
     numOfChildren = json['num_of_children'];
@@ -268,14 +200,14 @@ class Parent {
   int? id;
   String? name;
   String? avatar;
-  Type? type;
+  TitleValueShape? type;
   Gender? gender;
   Relation? relation;
   int? numOfChildren;
 Parent copyWith({  int? id,
   String? name,
   String? avatar,
-  Type? type,
+  TitleValueShape? type,
   Gender? gender,
   Relation? relation,
   int? numOfChildren,

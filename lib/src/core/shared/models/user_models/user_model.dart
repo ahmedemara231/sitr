@@ -2,6 +2,7 @@ import 'dart:convert';
 import '../../../extensions/object.dart';
 import '../../../helpers/cache_service.dart';
 import '../../../helpers/user_type_enum.dart';
+import '../title_value_shape.dart';
 import 'individual/female_model.dart';
 import 'individual/male_model.dart';
 import 'parent/parent_model.dart';
@@ -10,7 +11,7 @@ class UserModel {
   final int? id;
   final String? name;
   final int? parentId;
-  final Type? type;
+  final TitleValueShape? type;
   final Gender? gender;
   final String? avatar;
   final String? phone;
@@ -20,7 +21,7 @@ class UserModel {
   final int? age;
   final bool? isActive;
   final bool? isBlocked;
-  final AdminApprovalStatus? adminApprovalStatus;
+  final TitleValueShape? adminApprovalStatus;
   final String? completeRegistration;
   final String? token;
 
@@ -44,20 +45,26 @@ class UserModel {
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
-    final UserType user = json['gender']['title'].toString().toUserType();
-    final bool isParent = json['type']['title'].toString().toUserType().isParent;
+    final bool isParent = json['type']['value'].toString() == 'parent';
+    final UserType user = json['gender']['value'].toString().toUserType();
+
+    // log(json['gender']['value']);
+    // log(json['gender']['value'].toString().toUserType().toString());
+    // log(json.toString());
 
     if(isParent){
       return ParentModel.fromJson(json);
 
-    }else if(user.isMale){
-      return MaleModel.fromJson(json);
+    }else {
+      if(user.isMale){
+        return MaleModel.fromJson(json);
 
-    }else if(user.isFemale){
-      return FemaleModel.fromJson(json);
+      }else if(user.isFemale){
+        return FemaleModel.fromJson(json);
 
-    }else{
-      return UserModel.initial();
+      }else{
+        return UserModel.initial();
+      }
     }
   }
 
@@ -132,7 +139,7 @@ class UserModel {
     int? id,
     String? name,
     int? parentId,
-    Type? type,
+    TitleValueShape? type,
     Gender? gender,
     String? avatar,
     String? phone,
@@ -142,7 +149,7 @@ class UserModel {
     int? age,
     bool? isActive,
     bool? isBlocked,
-    AdminApprovalStatus? adminApprovalStatus,
+    TitleValueShape? adminApprovalStatus,
     String? completeRegistration,
     String? token,
   }) {
@@ -174,51 +181,31 @@ class UserModel {
   String toRawJson() => json.encode(toJson());
 }
 
-class ReligiousCommitment {
-  ReligiousCommitment({
-    this.value,
-    this.title,});
 
-  ReligiousCommitment.fromJson(dynamic json) {
-    value = json['value'];
-    title = json['title'];
+class Gender {
+  UserType? userType;
+  TitleValueShape? titleValueShape;
+
+  Gender({
+    this.titleValueShape,
+    this.userType,
+  });
+
+  Gender.fromJson(dynamic json) {
+    titleValueShape = TitleValueShape.fromJson(json);
+    userType = (json['value'] as String).toUserType();
   }
-  String? value;
-  String? title;
-  ReligiousCommitment copyWith({  String? value,
-    String? title,
-  }) => ReligiousCommitment(  value: value ?? this.value,
-    title: title ?? this.title,
+
+  Gender copyWith({
+    TitleValueShape? titleValueShape,
+  }) => Gender(
+      titleValueShape: titleValueShape ?? this.titleValueShape
   );
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['value'] = value;
-    map['title'] = title;
-    return map;
-  }
-
-}
-
-class SkinColor {
-  SkinColor({
-    this.value,
-    this.title,});
-
-  SkinColor.fromJson(dynamic json) {
-    value = json['value'];
-    title = json['title'];
-  }
-  String? value;
-  String? title;
-  SkinColor copyWith({  String? value,
-    String? title,
-  }) => SkinColor(  value: value ?? this.value,
-    title: title ?? this.title,
-  );
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['value'] = value;
-    map['title'] = title;
+    map['value'] = titleValueShape?.value;
+    map['title'] = titleValueShape?.title;
     return map;
   }
 
@@ -262,160 +249,3 @@ class CityModel {
 
 }
 
-class WeddingType {
-  WeddingType({
-    this.value,
-    this.title,});
-
-  WeddingType.fromJson(dynamic json) {
-    value = json['value'];
-    title = json['title'];
-  }
-  String? value;
-  String? title;
-  WeddingType copyWith({  String? value,
-    String? title,
-  }) => WeddingType(  value: value ?? this.value,
-    title: title ?? this.title,
-  );
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['value'] = value;
-    map['title'] = title;
-    return map;
-  }
-
-}
-
-class MaritalStatusModel {
-  MaritalStatusModel({
-    this.value,
-    this.title,});
-
-  MaritalStatusModel.fromJson(dynamic json) {
-    value = json['value'];
-    title = json['title'];
-  }
-  String? value;
-  String? title;
-  MaritalStatusModel copyWith({  String? value,
-    String? title,
-  }) => MaritalStatusModel(  value: value ?? this.value,
-    title: title ?? this.title,
-  );
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['value'] = value;
-    map['title'] = title;
-    return map;
-  }
-
-}
-class ChildCustody {
-  ChildCustody({
-    this.value,
-    this.title,});
-
-  ChildCustody.fromJson(dynamic json) {
-    value = json['value'];
-    title = json['title'];
-  }
-  String? value;
-  String? title;
-  ChildCustody copyWith({  String? value,
-    String? title,
-  }) => ChildCustody(  value: value ?? this.value,
-    title: title ?? this.title,
-  );
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['value'] = value;
-    map['title'] = title;
-    return map;
-  }
-
-}
-
-
-class AdminApprovalStatus {
-  AdminApprovalStatus({
-    this.value,
-    this.title,});
-
-  AdminApprovalStatus.fromJson(dynamic json) {
-    value = json['value']?? '';
-    title = json['title']?? '';
-  }
-  String? value;
-  String? title;
-  AdminApprovalStatus copyWith({  String? value,
-    String? title,
-  }) => AdminApprovalStatus(  value: value ?? this.value,
-    title: title ?? this.title,
-  );
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['value'] = value;
-    map['title'] = title;
-    return map;
-  }
-
-}
-
-class Gender {
-  UserType? userType;
-
-  Gender({
-    this.value,
-    this.title,
-    this.userType,
-  });
-
-  Gender.fromJson(dynamic json) {
-    value = json['value']; // en
-    title = json['title']; // ar,
-    userType = (json['title'] as String).toUserType();
-  }
-  String? value;
-  String? title;
-  Gender copyWith({
-    String? value,
-    String? title,
-  }) => Gender(
-    value: value ?? this.value,
-    title: title ?? this.title,
-  );
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['value'] = value;
-    map['title'] = title;
-    return map;
-  }
-
-}
-
-class Type {
-  Type({
-    this.value,
-    this.title,});
-
-  Type.fromJson(dynamic json) {
-    value = json['value'];
-    title = json['title'];
-  }
-  String? value;
-  String? title;
-  Type copyWith({  String? value,
-    String? title,
-  }) => Type(  value: value ?? this.value,
-    title: title ?? this.title,
-  );
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['value'] = value;
-    map['title'] = title;
-    return map;
-  }
-
-}

@@ -6,6 +6,8 @@ import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubi
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/navigation/navigator.dart';
+import '../../../../core/shared/models/user_models/user_model.dart';
+import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/image_widgets/custom_image_slider.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
@@ -31,7 +33,6 @@ class MainView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     firstSelection.addListener(firstSelectionListener);
-
     return BlocProvider(
       create: (context) => MainViewCubit()..getHomeData(),
       child: BlocBuilder<MainViewCubit, AsyncState<HomeModel>>(
@@ -48,9 +49,10 @@ class MainView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       AppText(LocaleKeys.welcome, fontSize: 12.sp),
-                      AppText('Mariam', fontWeight: FontWeight.bold, fontSize: 16.sp),
+                      AppText(UserCubit.instance.user.name??'Test', fontWeight: FontWeight.bold, fontSize: 16.sp),
                     ],
                   ),
+
                   const Spacer(),
                   const FilterButton(),
                 ],
@@ -76,7 +78,13 @@ class MainView extends StatelessWidget {
                 builder: (context, value, child) => value == Options.first? UnderSliderWidget(
                   fontWeight: FontWeight.w500,
                   onSelectOption: (selectedOption) => secondSelection.value = selectedOption,
-                  titles: [LocaleKeys.female, LocaleKeys.parents],
+                  titles: [
+                    UserModel.isMale?
+                    LocaleKeys.female :
+                    LocaleKeys.male,
+
+                    LocaleKeys.parents
+                  ],
                   fontSize: 12.sp,
                   secondSlider: true,
                 ) : const SizedBox.shrink(),
@@ -92,7 +100,10 @@ class MainView extends StatelessWidget {
                     List.generate(
                         state.data.opportunities?.female?.length ?? 0,
                             (i) {
-                              final opportunity = state.data.opportunities?.female?[i];
+                              final Opportunity? opportunity = UserModel.isMale?
+                              state.data.opportunities!.female![i] :
+                              state.data.opportunities?.male?[i];
+
                               final parent = state.data.opportunities?.parent?[i];
                               if(secondValue == Options.first){
                                 return InkWell(
@@ -101,8 +112,8 @@ class MainView extends StatelessWidget {
                                     name: opportunity?.name ?? '',
                                     imageUrl: opportunity?.avatar ?? '',
                                     weight: opportunity?.weight.toString()??'',
-                                    age: opportunity?.age ??0,
-                                    height: opportunity?.height ?? 0,
+                                    age: opportunity?.age??0,
+                                    height: opportunity?.height?? 0,
                                     maritalStatus: opportunity?.type?.title ?? '',
                                     location: opportunity?.city ?? '',
                                   ),

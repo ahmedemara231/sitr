@@ -1,4 +1,5 @@
 import '../../../../../features/auth/models/kinship.dart';
+import '../../title_value_shape.dart';
 import '../user_model.dart';
 
 class ParentModel extends UserModel {
@@ -37,7 +38,7 @@ class ParentModel extends UserModel {
       id: json['id'],
       name: json['name'],
       parentId: json['parent_id'],
-      type: Type.fromJson(json['type']),
+      type: TitleValueShape.fromJson(json['type']),
       gender: Gender.fromJson(json['type']),
       avatar: json['avatar'],
       phone: json['phone'],
@@ -47,7 +48,7 @@ class ParentModel extends UserModel {
       age: json['age'],
       isActive: json['is_active'],
       isBlocked: json['is_blocked'],
-      adminApprovalStatus: AdminApprovalStatus.fromJson(json['admin_approval_status']),
+      adminApprovalStatus: TitleValueShape.fromJson(json['admin_approval_status']),
       completeRegistration: json['complete_registration'],
       token: json['token'],
       email: json['email'],
@@ -79,7 +80,7 @@ class ParentModel extends UserModel {
     int? maleChildrenNum,
     int? femaleChildrenNum,
 
-    int? id, String? name, int? parentId, Type? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, AdminApprovalStatus? adminApprovalStatus, String? completeRegistration, String? token}) {
+    int? id, String? name, int? parentId, TitleValueShape? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) {
     return ParentModel(
       id: id ?? this.id,
       name: name ?? this.name,

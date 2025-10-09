@@ -1,20 +1,21 @@
+import '../../title_value_shape.dart';
 import '../user_model.dart';
 
 class IndividualUserModel extends UserModel {
   final String? nickName;
-  final MaritalStatusModel? maritalStatus;
+  final TitleValueShape? maritalStatus;
   final num? height;
   final num? weight;
   final String? currentJob;
   final String? bio;
   final bool? hasChildren;
   final int? numOfChildren;
-  final ChildCustody? childCustody;
+  final TitleValueShape? childCustody;
   final bool? wantChildren;
   final String? prohibitedThings;
   final int? dowryMin;
   final int? dowryMax;
-  final WeddingType? weddingType;
+  final TitleValueShape? weddingType;
   final CityModel? cityId;
   final String? educationLevel;
   final bool? isPrayer;
@@ -23,7 +24,7 @@ class IndividualUserModel extends UserModel {
   final bool? isSmoker;
   final bool? tribeAffiliation;
   final String? skinColor;
-  final ReligiousCommitment? religiousCommitment;
+  final TitleValueShape? religiousCommitment;
   final int? views;
 
   IndividualUserModel({
@@ -71,19 +72,19 @@ class IndividualUserModel extends UserModel {
 
   factory IndividualUserModel.initial() => IndividualUserModel(
     nickName: '',
-    maritalStatus: MaritalStatusModel(),
+    maritalStatus: TitleValueShape.initial(),
     height: 0,
     weight: 0,
     currentJob: '',
     bio: '',
     hasChildren: false,
     numOfChildren: 0,
-    childCustody: ChildCustody(),
+    childCustody: TitleValueShape.initial(),
     wantChildren: false,
     prohibitedThings: '',
     dowryMin: 0,
     dowryMax: 0,
-    weddingType: WeddingType(),
+    weddingType: TitleValueShape.initial(),
     cityId: CityModel(),
     educationLevel: '',
     isPrayer: false,
@@ -92,7 +93,7 @@ class IndividualUserModel extends UserModel {
     isSmoker: false,
     tribeAffiliation: false,
     skinColor: '',
-    religiousCommitment: ReligiousCommitment(),
+    religiousCommitment: TitleValueShape.initial(),
     views: 0,
   );
 
@@ -174,19 +175,19 @@ class IndividualUserModel extends UserModel {
   @override
   UserModel copyWith({
       String? nickName,
-      MaritalStatusModel? maritalStatus,
+      TitleValueShape? maritalStatus,
       int? height,
       int? weight,
       String? currentJob,
       String? bio,
       bool? hasChildren,
       int? numOfChildren,
-      ChildCustody? childCustody,
+    TitleValueShape? childCustody,
       bool? wantChildren,
       String? prohibitedThings,
       int? dowryMin,
       int? dowryMax,
-      WeddingType? weddingType,
+    TitleValueShape? weddingType,
       CityModel? cityId,
       String? educationLevel,
       bool? isPrayer,
@@ -195,27 +196,27 @@ class IndividualUserModel extends UserModel {
       bool? isSmoker,
       bool? tribeAffiliation,
       String? skinColor,
-      ReligiousCommitment? religiousCommitment,
+    TitleValueShape? religiousCommitment,
       int? views,
-    int? id, String? name, int? parentId, Type? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, AdminApprovalStatus? adminApprovalStatus, String? completeRegistration, String? token}) {
+    int? id, String? name, int? parentId, TitleValueShape? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) {
 
     return IndividualUserModel(
-        id: id,
-        name: name,
-        parentId: parentId,
-        type: type,
-        gender: gender,
-        avatar: avatar,
-        phone: phone,
-        countryCode: countryCode,
-        fullPhone: fullPhone,
-        identityNumber: identityNumber,
-        age: age,
-        isActive: isActive,
-        isBlocked: isBlocked,
-        adminApprovalStatus: adminApprovalStatus,
-        completeRegistration: completeRegistration,
-        token: token,
+        id: id?? this.id,
+        name: name?? this.name,
+        parentId: parentId?? this.parentId,
+        type: type?? this.type,
+        gender: gender??this.gender,
+        avatar: avatar??this.avatar,
+        phone: phone??this.phone,
+        countryCode: countryCode??this.countryCode,
+        fullPhone: fullPhone??this.fullPhone,
+        identityNumber: identityNumber??identityNumber,
+        age: age??this.age,
+        isActive: isActive??this.isActive,
+        isBlocked: isBlocked??this.isBlocked,
+        adminApprovalStatus: adminApprovalStatus??this.adminApprovalStatus,
+        completeRegistration: completeRegistration??this.completeRegistration,
+        token: token??this.token,
         nickName: nickName ?? this.nickName,
         maritalStatus: maritalStatus ?? this.maritalStatus,
         height: height ?? this.height,

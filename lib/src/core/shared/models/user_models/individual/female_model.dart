@@ -1,4 +1,6 @@
+import '../../../../../features/auth/models/kinship.dart';
 import '../../../../extensions/object.dart';
+import '../../title_value_shape.dart';
 import '../user_model.dart';
 import 'individual_user_model.dart';
 
@@ -10,7 +12,7 @@ class FemaleModel extends IndividualUserModel {
   final String? guardianName;
   final String? guardianPhone;
   final String? guardianCountryCode;
-  final String? guardianRelation;
+  final Kinship? guardianRelation;
 
   FemaleModel({
     super.id,
@@ -72,33 +74,33 @@ class FemaleModel extends IndividualUserModel {
     guardianName: '',
     guardianPhone: '',
     guardianCountryCode: '',
-    guardianRelation: '',
+    guardianRelation: Kinship(id: 0, value: ''),
   );
 
   factory FemaleModel.fromJson(Map<String, dynamic> json) {
     return FemaleModel(
-      adminApprovalStatus: AdminApprovalStatus.fromJson(json['admin_approval_status']),
+      adminApprovalStatus: TitleValueShape.fromJson(json['admin_approval_status']),
       completeRegistration: json['complete_registration'],
 
-      maritalStatus: (json['marital_status'] as String?).isNull? null :
-      MaritalStatusModel.fromJson(json['marital_status']),
+      maritalStatus: (json['marital_status'] as Object?).isNull? null :
+      TitleValueShape.fromJson(json['marital_status']),
 
-      weddingType: (json['wedding_type'] as String?).isNull? null :
-      WeddingType.fromJson(json['wedding_type']),
+      weddingType: (json['wedding_type'] as Object?).isNull? null :
+      TitleValueShape.fromJson(json['wedding_type']),
 
-      cityId: (json['city_id'] as String?).isNull? null :
+      cityId: (json['city_id'] as Object?).isNull? null :
       CityModel.fromJson(json['city_id']),
 
-      religiousCommitment: (json['religious_commitment'] as String?).isNull? null :
-      ReligiousCommitment.fromJson(json['religious_commitment']),
+      religiousCommitment: (json['religious_commitment'] as Object?).isNull? null :
+      TitleValueShape.fromJson(json['religious_commitment']),
 
-      childCustody: (json['child_custody'] as String?).isNull? null :
-      ChildCustody.fromJson(json['child_custody']),
+      childCustody: (json['child_custody'] as Object?).isNull? null :
+      TitleValueShape.fromJson(json['child_custody']),
 
       id: json['id'],
       name: json['name'],
       parentId: json['parent_id'],
-      type: Type.fromJson(json['type']),
+      type: TitleValueShape.fromJson(json['type']),
       gender: Gender.fromJson(json['gender']),
       avatar: json['avatar'],
       phone: json['phone'],
@@ -112,7 +114,6 @@ class FemaleModel extends IndividualUserModel {
       nickName: json['nick_name'],
       height: json['height'],
       weight: json['weight'],
-
 
       currentJob: json['current_job'],
       bio: json['bio'],
@@ -136,7 +137,7 @@ class FemaleModel extends IndividualUserModel {
       guardianName: json['guardian_name'],
       guardianPhone: json['guardian_phone'],
       guardianCountryCode: json['guardian_country_code'],
-      guardianRelation: json['guardian_relation']?['name'],
+      guardianRelation: Kinship.fromJson(json['guardian_relation'])
     );
   }
 
@@ -163,8 +164,8 @@ class FemaleModel extends IndividualUserModel {
     String? guardianName,
     String? guardianPhone,
     String? guardianCountryCode,
-    String? guardianRelation,
-    String? nickName, MaritalStatusModel? maritalStatus, int? height, int? weight, String? currentJob, String? bio, bool? hasChildren, int? numOfChildren, ChildCustody? childCustody, bool? wantChildren, String? prohibitedThings, int? dowryMin, int? dowryMax, WeddingType? weddingType, CityModel? cityId, String? educationLevel, bool? isPrayer, String? healthConditions, String? chatLang, bool? isSmoker, bool? tribeAffiliation, String? skinColor, ReligiousCommitment? religiousCommitment, int? views, int? id, String? name, int? parentId, Type? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, AdminApprovalStatus? adminApprovalStatus, String? completeRegistration, String? token}) {
+    Kinship? guardianRelation,
+    String? nickName, TitleValueShape? maritalStatus, int? height, int? weight, String? currentJob, String? bio, bool? hasChildren, int? numOfChildren, TitleValueShape? childCustody, bool? wantChildren, String? prohibitedThings, int? dowryMin, int? dowryMax, TitleValueShape? weddingType, CityModel? cityId, String? educationLevel, bool? isPrayer, String? healthConditions, String? chatLang, bool? isSmoker, bool? tribeAffiliation, String? skinColor, TitleValueShape? religiousCommitment, int? views, int? id, String? name, int? parentId, TitleValueShape? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) {
 
     return FemaleModel(
       id: id ?? this.id,
@@ -216,46 +217,4 @@ class FemaleModel extends IndividualUserModel {
       guardianRelation: guardianRelation ?? this.guardianRelation,
     );
   }
-  // @override
-  // UserModel copyWith({
-  //   String? hijab,
-  //   bool? acceptsPolygamy,
-  //   String? preferredResidenceAfterMarriage,
-  //   String? guardianName,
-  //   String? guardianPhone,
-  //   String? guardianCountryCode,
-  //   String? guardianRelation,
-  //
-  //   String? nickName, MaritalStatus? maritalStatus, int? height, int? weight, String? currentJob, String? bio, bool? hasChildren, int? numOfChildren, ChildCustody? childCustody, bool? wantChildren, String? prohibitedThings, int? dowryMin, int? dowryMax, String? weddingType, int? cityId, String? educationLevel, bool? isPrayer, String? healthConditions, String? chatLang, bool? isSmoker, String? tribeAffiliation, String? skinColor, String? religiousCommitment, int? views, int? id, String? name, int? parentId, Type? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, AdminApprovalStatus? adminApprovalStatus, String? completeRegistration, String? token}) {
-  //
-  //   return FemaleModel(
-  //     id: id ?? this.id,
-  //     name: name ?? this.name,
-  //     parentId: parentId ?? this.parentId,
-  //     type: type ?? this.type,
-  //     gender: gender ?? this.gender,
-  //     avatar: avatar ?? this.avatar,
-  //     phone: phone ?? this.phone,
-  //     countryCode: countryCode ?? this.countryCode,
-  //     fullPhone: fullPhone ?? this.fullPhone,
-  //     identityNumber: identityNumber ?? this.identityNumber,
-  //     age: age ?? this.age,
-  //     isActive: isActive ?? this.isActive,
-  //     isBlocked: isBlocked ?? this.isBlocked,
-  //     adminApprovalStatus: adminApprovalStatus ?? this.adminApprovalStatus,
-  //     completeRegistration: completeRegistration ?? this.completeRegistration,
-  //     token: token ?? this.token,
-  //     nickName: nickName ?? this.nickName,
-  //     maritalStatus: maritalStatus ?? this.maritalStatus,
-  //     height: height ?? this.height,
-  //     weight: weight ?? this.weight,
-  //     currentJob: currentJob ?? this.currentJob,
-  //     bio: bio ?? this.bio,
-  //     hasChildren: hasChildren ?? this.hasChildren,
-  //     numOfChildren: numOfChildren ?? this.numOfChildren,
-  //     childCustody: childCustody ?? this.childCustody,
-  //     wantChildren: wantChildren ?? this.wantChildren,
-  //     prohibitedThings: prohibitedThings ?? this.prohibitedThings,
-  //   );
-  // }
 }
