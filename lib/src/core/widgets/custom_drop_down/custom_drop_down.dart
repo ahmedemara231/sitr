@@ -1,136 +1,98 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagify/helpers/data_and_pagination_data.dart';
-import 'package:pagify/helpers/errors.dart';
-import 'package:pagify/helpers/status_stream.dart';
 import 'package:pagify/pagify.dart';
+import '../../extensions/context_extension.dart';
 import '../../extensions/object.dart';
 import '../../extensions/padding_extension.dart';
 import '../app_text.dart';
 import '../text_fields/default_text_field.dart';
+import 'dart:async';
+import 'package:pagify/helpers/data_and_pagination_data.dart';
+import 'package:pagify/helpers/errors.dart';
+import 'package:pagify/helpers/status_stream.dart';
 
+part 'models/main_button.dart';
+part 'models/pagify_list.dart';
+part 'models/text_field.dart';
+part 'models/values_data.dart';
 
-class ButtonData<Model>{
-  final double buttonHeight;
-  final double buttonWidth;
-  final BorderRadius? buttonBorderRadius;
-  final Color? buttonBorderColor;
-  final Color? color;
-  final EdgeInsetsGeometry? padding;
-  final String? initialValue;
-  final Widget Function(Model selectedElement) selectedItemWidget;
-  final Widget? expandedListIcon;
-  final Widget? collapsedListIcon;
-
-  ButtonData({
-    required this.selectedItemWidget,
-    this.buttonBorderColor,
-    this.buttonBorderRadius,
-    this.initialValue,
-    this.color,
-    this.padding,
-    this.buttonWidth = double.infinity,
-    this.buttonHeight = 50,
-    this.expandedListIcon,
-    this.collapsedListIcon,
-  });
-}
-
-class TextFieldData<Model>{
-  final String? title;
-  final Widget? prefixIcon;
-  final Widget? suffixIcon;
-  final double? borderRadius;
-  final Color? borderColor;
-  final EdgeInsetsGeometry? contentPadding;
-  final TextEditingController? controller;
-  final Color? fillColor;
-  final int? maxLength;
-  final TextStyle? style;
-  final bool Function(String? pattern, Model? data) onSearch;
-
-  TextFieldData({
-    required this.onSearch,
-    this.controller,
-    this.title,
-    this.prefixIcon,
-    this.suffixIcon,
-    this.borderRadius,
-    this.borderColor,
-    this.contentPadding,
-    this.fillColor,
-    this.maxLength,
-    this.style,
-  });
-}
-
-class CustomDropDownButtonPagifyData<FullResponse, Model>{
-  final PagifyController<Model> controller;
-  Future<FullResponse> Function(BuildContext context, int page) asyncCall;
-  PagifyData<Model> Function(FullResponse response) mapper;
-  PagifyErrorMapper errorMapper;
-  Widget Function(BuildContext context, List<Model> data, int index, Model element) itemBuilder;
-  EdgeInsetsGeometry padding = EdgeInsets.zero;
-  double? itemExtent;
-  FutureOr<void> Function(PagifyAsyncCallStatus)? onUpdateStatus;
+enum _DropdownType{withRequest, none}
+class SearchableDropdown<FullResponse, Model> extends StatelessWidget {
   final double? listHeight;
-  FutureOr<void> Function()? onLoading;
-  FutureOr<void> Function(BuildContext, List<dynamic>)? onSuccess;
-  FutureOr<void> Function(BuildContext, int,  PagifyException)? onError;
-
-  bool ignoreErrorBuilderWhenErrorOccursAndListIsNotEmpty;
-  bool showNoDataAlert = false;
-  Widget? loadingBuilder;
-  Widget Function(PagifyException)? errorBuilder;
-  Widget? emptyListView;
-  String? noConnectionText;
-
-  CustomDropDownButtonPagifyData({
-    required this.asyncCall,
-    required this.mapper,
-    required this.errorMapper,
-    required this.itemBuilder,
-    required this.controller,
-    this.listHeight,
-    this.padding = const EdgeInsets.all(0),
-    this.itemExtent,
-    this.onUpdateStatus,
-    this.onLoading,
-    this.onSuccess,
-    this.onError,
-    this.ignoreErrorBuilderWhenErrorOccursAndListIsNotEmpty = true,
-    this.showNoDataAlert = false,
-    this.loadingBuilder,
-    this.errorBuilder,
-  });
-}
-
-
-class CustomDropDownButton<FullResponse, Model> extends StatelessWidget {
-  final CustomDropDownButtonPagifyData<FullResponse, Model> customDropDownButtonPagifyData;
-  final TextFieldData<Model> textFieldData;
+  final _DropdownType _dropdownType;
   final ButtonData buttonData;
+  final TextFieldData<Model> textFieldData;
 
-  CustomDropDownButton.withSearch({
+  final SearchableDropdownPagifyData<FullResponse, Model>? pagifyData;
+
+  final List<Model>? values;
+  final ValuesData<Model>? valuesData;
+
+  SearchableDropdown.withApiRequest({
     super.key,
-    required this.customDropDownButtonPagifyData,
+    this.listHeight,
     required this.buttonData,
     required this.textFieldData,
-  });
+    required this.pagifyData,
+  }) : values = null,
+        valuesData = null,
+        _dropdownType = _DropdownType.withRequest;
+
+  SearchableDropdown({
+    super.key,
+    this.listHeight,
+    required this.buttonData,
+    required this.textFieldData,
+    required this.values,
+    required this.valuesData,
+  }) : pagifyData = null,
+        _dropdownType = _DropdownType.none;
+
 
   Model? selectedValue;
 
-  final ValueNotifier<bool> openPagify = ValueNotifier(false);
-  void _changePagifyVisibility() => openPagify.value = !openPagify.value;
+  void _selectNewElement(Model element){
+    selectedValue = element;
+    _changePagifyVisibility();
+  }
+
+  late List<Model> _fullValuesData;
+  late ValueNotifier<List<Model>> _localValues;
+
+  void _init(){
+    if(_dropdownType == _DropdownType.none){
+      _fullValuesData = List.from(values!);
+      _localValues = ValueNotifier(List.from(values!));
+    }
+  }
+
+  void _executeSearchLogic(String pattern) {
+    if(pattern.isEmpty){
+      _localValues.value = List.from(_fullValuesData);
+
+    }else{
+      _localValues.value = _fullValuesData.where(
+              (e) => textFieldData.onSearch.call(pattern, e)
+      ).toList();
+    }
+  }
+
+  final ValueNotifier<bool> _openDataList = ValueNotifier(false);
+  void _changePagifyVisibility() => _openDataList.value = !_openDataList.value;
+  ValueNotifier<bool> isInitialized = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
+    _init();
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         InkWell(
-          onTap: _changePagifyVisibility,
+          onTap: (){
+            isInitialized.value = true;
+            _changePagifyVisibility();
+          },
           child: Container(
             decoration: BoxDecoration(
               borderRadius: buttonData.buttonBorderRadius?? BorderRadius.circular(12),
@@ -141,7 +103,7 @@ class CustomDropDownButton<FullResponse, Model> extends StatelessWidget {
             width: buttonData.buttonWidth,
             height: buttonData.buttonHeight,
             child: ValueListenableBuilder(
-              valueListenable: openPagify,
+              valueListenable: _openDataList,
               builder: (context, val, child) => Row(
                 children: [
                   if(selectedValue.isNull)
@@ -151,12 +113,10 @@ class CustomDropDownButton<FullResponse, Model> extends StatelessWidget {
 
                   const Spacer(),
 
-                  ValueListenableBuilder(
-                      valueListenable: openPagify,
-                      builder: (context, val, child) => val?
-                      buttonData.expandedListIcon?? Icon(Icons.arrow_drop_up, color: Colors.grey[400]) :
-                      buttonData.collapsedListIcon?? Icon(Icons.arrow_drop_down, color: Colors.grey[400])
-                  )
+                  if(val)
+                    buttonData.expandedListIcon?? Icon(Icons.arrow_drop_up, color: Colors.grey[400])
+                  else
+                    buttonData.collapsedListIcon?? Icon(Icons.arrow_drop_down, color: Colors.grey[400])
                 ],
               ),
             ),
@@ -164,72 +124,212 @@ class CustomDropDownButton<FullResponse, Model> extends StatelessWidget {
         ),
 
         ValueListenableBuilder(
-            valueListenable: openPagify,
-            builder: (context, isOpen, child) => Visibility(
-              visible: isOpen,
-              maintainState: true,
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 250),
-                curve: Curves.easeInOut,
-                color: Colors.white,
-                child: Column(
-                  children: [
-                    DefaultTextField(
-                      title: textFieldData.title,
-                      prefixIcon: textFieldData.prefixIcon,
-                      suffixIcon: textFieldData.suffixIcon,
-                      borderRadius: textFieldData.borderRadius,
-                      borderColor: textFieldData.borderColor,
-                      contentPadding: textFieldData.contentPadding,
-                      controller: textFieldData.controller,
-                      fillColor: textFieldData.fillColor,
-                      maxLength: textFieldData.maxLength,
-                      style: textFieldData.style,
-                      onChanged: (v) {
-                        if(v.isNull || v!.isEmpty){
-                          customDropDownButtonPagifyData.controller.assignToFullData();
-                          return;
-                        }
+          valueListenable: isInitialized,
+          builder: (context, val, child) => val? ValueListenableBuilder(
+              valueListenable: _openDataList,
+              builder: (context, isOpen, child) => Visibility(
+                visible: isOpen,
+                maintainState: true,
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 250),
+                  curve: Curves.easeInOut,
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      DefaultTextField(
+                          title: textFieldData.title,
+                          prefixIcon: textFieldData.prefixIcon,
+                          suffixIcon: textFieldData.suffixIcon,
+                          borderRadius: textFieldData.borderRadius,
+                          borderColor: textFieldData.borderColor,
+                          contentPadding: textFieldData.contentPadding,
+                          controller: textFieldData.controller,
+                          fillColor: textFieldData.fillColor,
+                          maxLength: textFieldData.maxLength,
+                          style: textFieldData.style,
+                          onChanged: (v) {
+                            if(_dropdownType == _DropdownType.none){
+                              _executeSearchLogic(v ?? '');
+                              return;
+                            }
 
-                        customDropDownButtonPagifyData.controller.filterAndUpdate(
-                                (e) => textFieldData.onSearch.call(v, e)
-                        );
-                      }
-                    ),
-                    SizedBox(
-                      height: customDropDownButtonPagifyData.listHeight?? 250,
-                      child: Pagify<FullResponse, Model>.listView(
-                        shrinkWrap: true,
-                        controller: customDropDownButtonPagifyData.controller,
-                        asyncCall: customDropDownButtonPagifyData.asyncCall,
-                        mapper: customDropDownButtonPagifyData.mapper,
-                        errorMapper: customDropDownButtonPagifyData.errorMapper,
-                        itemBuilder: (context, data, index, element) => InkWell(
-                            onTap: () {
-                              selectedValue = element;
-                              _changePagifyVisibility();
-                            },
-                            child: customDropDownButtonPagifyData.itemBuilder(context, data, index, element)
-                        ),
-                        errorBuilder: customDropDownButtonPagifyData.errorBuilder,
-                        loadingBuilder: customDropDownButtonPagifyData.loadingBuilder,
-                        padding: customDropDownButtonPagifyData.padding,
-                        itemExtent: customDropDownButtonPagifyData.itemExtent,
-                        onUpdateStatus: customDropDownButtonPagifyData.onUpdateStatus,
-                        onLoading: customDropDownButtonPagifyData.onLoading,
-                        onSuccess: customDropDownButtonPagifyData.onSuccess,
-                        onError: customDropDownButtonPagifyData.onError,
-                        emptyListView: customDropDownButtonPagifyData.emptyListView,
-                        showNoDataAlert: true,
-                        ignoreErrorBuilderWhenErrorOccursAndListIsNotEmpty: true,
-                        noConnectionText: customDropDownButtonPagifyData.noConnectionText,
-                      ).paddingAll(10.r),
-                    ),
-                  ],
+                            if(v.isNull || v!.isEmpty){
+                              pagifyData!.controller.assignToFullData();
+                              return;
+                            }
+
+                            pagifyData!.controller.filterAndUpdate(
+                                    (e) => textFieldData.onSearch.call(v, e)
+                            );
+                          }
+                      ),
+
+                      SizedBox(
+                        height: listHeight?? 250,
+                        child: _dropdownType == _DropdownType.none?
+                        ValueListenableBuilder(
+                          valueListenable: _localValues,
+                          builder: (context, val, child) => ListView(
+                            children: List.generate(
+                              val.length,
+                                  (i) => InkWell(
+                                  onTap: () => _selectNewElement(val[i]),
+                                  child: valuesData!.itemBuilder.call(context, i, val[i])
+                              ),
+                            ),
+                          ).paddingAll(10.r),
+                        ) :
+                        Pagify<FullResponse, Model>.listView(
+                          shrinkWrap: true,
+                          controller: pagifyData!.controller,
+                          asyncCall: pagifyData!.asyncCall,
+                          mapper: pagifyData!.mapper,
+                          errorMapper: pagifyData!.errorMapper,
+                          itemBuilder: (context, data, index, element) => InkWell(
+                              onTap: () => _selectNewElement(element),
+                              child: pagifyData!.itemBuilder(context, data, index, element)
+                          ),
+                          errorBuilder: pagifyData!.errorBuilder,
+                          loadingBuilder: pagifyData!.loadingBuilder,
+                          padding: pagifyData!.padding,
+                          itemExtent: pagifyData!.itemExtent,
+                          onUpdateStatus: pagifyData!.onUpdateStatus,
+                          onLoading: pagifyData!.onLoading,
+                          onSuccess: pagifyData!.onSuccess,
+                          onError: pagifyData!.onError,
+                          emptyListView: pagifyData!.emptyListView,
+                          showNoDataAlert: true,
+                          ignoreErrorBuilderWhenErrorOccursAndListIsNotEmpty: true,
+                          noConnectionText: pagifyData!.noConnectionText,
+                        ).paddingAll(10.r),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            )
-        ),
+              )
+          ) : const SizedBox.shrink(),
+        )
+
+
+          // if(_dropdownType == _DropdownType.withRequest)
+          //   ValueListenableBuilder(
+          //     valueListenable: isInitialized,
+          //     builder: (context, val, child) => val? ValueListenableBuilder(
+          //         valueListenable: _openDataList,
+          //         builder: (context, isOpen, child) => Visibility(
+          //           visible: isOpen,
+          //           maintainState: true,
+          //           child: AnimatedContainer(
+          //             duration: const Duration(milliseconds: 250),
+          //             curve: Curves.easeInOut,
+          //             color: Colors.white,
+          //             child: Column(
+          //               children: [
+          //                 DefaultTextField(
+          //                     title: textFieldData.title,
+          //                     prefixIcon: textFieldData.prefixIcon,
+          //                     suffixIcon: textFieldData.suffixIcon,
+          //                     borderRadius: textFieldData.borderRadius,
+          //                     borderColor: textFieldData.borderColor,
+          //                     contentPadding: textFieldData.contentPadding,
+          //                     controller: textFieldData.controller,
+          //                     fillColor: textFieldData.fillColor,
+          //                     maxLength: textFieldData.maxLength,
+          //                     style: textFieldData.style,
+          //                     onChanged: (v) {
+          //                       if(v.isNull || v!.isEmpty){
+          //                         pagifyData!.controller.assignToFullData();
+          //                         return;
+          //                       }
+          //
+          //                       pagifyData!.controller.filterAndUpdate(
+          //                               (e) => textFieldData.onSearch.call(v, e)
+          //                       );
+          //                     }
+          //                 ),
+          //                 SizedBox(
+          //                   height: listHeight?? 250,
+          //                   child: Pagify<FullResponse, Model>.listView(
+          //                     shrinkWrap: true,
+          //                     controller: pagifyData!.controller,
+          //                     asyncCall: pagifyData!.asyncCall,
+          //                     mapper: pagifyData!.mapper,
+          //                     errorMapper: pagifyData!.errorMapper,
+          //                     itemBuilder: (context, data, index, element) => InkWell(
+          //                         onTap: () => _selectNewElement(element),
+          //                         child: pagifyData!.itemBuilder(context, data, index, element)
+          //                     ),
+          //                     errorBuilder: pagifyData!.errorBuilder,
+          //                     loadingBuilder: pagifyData!.loadingBuilder,
+          //                     padding: pagifyData!.padding,
+          //                     itemExtent: pagifyData!.itemExtent,
+          //                     onUpdateStatus: pagifyData!.onUpdateStatus,
+          //                     onLoading: pagifyData!.onLoading,
+          //                     onSuccess: pagifyData!.onSuccess,
+          //                     onError: pagifyData!.onError,
+          //                     emptyListView: pagifyData!.emptyListView,
+          //                     showNoDataAlert: true,
+          //                     ignoreErrorBuilderWhenErrorOccursAndListIsNotEmpty: true,
+          //                     noConnectionText: pagifyData!.noConnectionText,
+          //                   ).paddingAll(10.r),
+          //                 ),
+          //               ],
+          //             ),
+          //           ),
+          //         )
+          //     ) : const SizedBox.shrink(),
+          // )
+          // else
+          //   ValueListenableBuilder(
+          //       valueListenable: _openDataList,
+          //       builder: (context, isOpen, child) => Visibility(
+          //         visible: isOpen,
+          //         maintainState: true,
+          //         child: AnimatedContainer(
+          //           duration: const Duration(milliseconds: 250),
+          //           curve: Curves.easeInOut,
+          //           color: Colors.white,
+          //           child: Column(
+          //             children: [
+          //               DefaultTextField(
+          //                   title: textFieldData.title,
+          //                   prefixIcon: textFieldData.prefixIcon,
+          //                   suffixIcon: textFieldData.suffixIcon,
+          //                   borderRadius: textFieldData.borderRadius,
+          //                   borderColor: textFieldData.borderColor,
+          //                   contentPadding: textFieldData.contentPadding,
+          //                   controller: textFieldData.controller,
+          //                   fillColor: textFieldData.fillColor,
+          //                   maxLength: textFieldData.maxLength,
+          //                   style: textFieldData.style,
+          //                   onChanged: (v) {
+          //                     if(v.isNull || v!.isEmpty){
+          //                       pagifyData!.controller.assignToFullData();
+          //                       return;
+          //                     }
+          //
+          //                     pagifyData!.controller.filterAndUpdate(
+          //                             (e) => textFieldData.onSearch.call(v, e)
+          //                     );
+          //                   }
+          //               ),
+          //               SizedBox(
+          //                 height: listHeight?? 250,
+          //                 child: ListView(
+          //                   children: List.generate(
+          //                     values!.length,
+          //                         (i) => InkWell(
+          //                         onTap: () => _selectNewElement(values![i]),
+          //                         child: valuesData!.itemBuilder.call(context, i, values![i])
+          //                     ),
+          //                   ),
+          //                 ).paddingAll(10.r),
+          //               ),
+          //             ],
+          //           ),
+          //         ),
+          //       )
+          //   ),
       ],
     );
   }
