@@ -51,6 +51,6 @@ class _SignUpTextFieldState extends State<SignUpTextField> {
       controller: widget.controller,
       validator: widget.validator,
       inputType: widget.inputType?? TextInputType.text,
-    ).paddingSymmetric(vertical: 5.h);
+    );
   }
 }

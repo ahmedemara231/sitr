@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/helpers/data_and_pagination_data.dart';
 import 'package:pagify/helpers/errors.dart';
 import 'package:pagify/pagify.dart';
+import '../../../../generated/assets.dart';
 import '../app_text.dart';
+import '../svg_pic.dart';
 import 'custom_drop_down.dart';
 
 class ExampleModel{
@@ -62,12 +64,14 @@ class _CustomDropdownTestState extends State<CustomDropdownTest> {
                 onSearch: (pattern, e) => e!.contains(pattern??''),
               ),
               values: const ['item1', 'item2', 'item3', 'item4', 'item5', 'item6', 'item7', 'item8', 'item9', 'item10'],
-              valuesData: ValuesData(itemBuilder: (context, index, element) => AppText(element))
+              valuesData: ValuesData(itemBuilder: (context, index, element) => AppText(element)), onChanged: (String val) {  },
           ),
 
           SearchableDropdown<ExampleModel, String>.withApiRequest(
             listHeight: 250,
-            buttonData: ButtonData(selectedItemWidget: (e) => AppText(e)),
+            buttonData: ButtonData(
+              selectedItemWidget: (e) => AppText(e),
+            ),
             textFieldData: TextFieldData(
               onSearch: (pattern, e) => e!.contains(pattern??''),
             ),
@@ -109,7 +113,7 @@ class _CustomDropdownTestState extends State<CustomDropdownTest> {
 
                 ),
                 itemBuilder: (context, data, index, element) => AppText(element, textAlign: TextAlign.start),
-              ),
+              ), onChanged: (String val) {  },
           ),
         ],
       )

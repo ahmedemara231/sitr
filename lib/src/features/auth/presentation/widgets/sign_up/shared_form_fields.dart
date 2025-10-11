@@ -289,6 +289,6 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
 
   @override
   Widget build(BuildContext context) {
-    return Column(spacing: 10.h, children: children);
+    return Column(spacing: 12.h, children: children);
   }
 }

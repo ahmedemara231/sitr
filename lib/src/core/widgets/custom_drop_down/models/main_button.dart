@@ -7,7 +7,7 @@ class ButtonData<Model>{
   final Color? buttonBorderColor;
   final Color? color;
   final EdgeInsetsGeometry? padding;
-  final String? initialValue;
+  final String? hint;
   final Widget Function(Model selectedElement) selectedItemWidget;
   final Widget? expandedListIcon;
   final Widget? collapsedListIcon;
@@ -16,7 +16,7 @@ class ButtonData<Model>{
     required this.selectedItemWidget,
     this.buttonBorderColor,
     this.buttonBorderRadius,
-    this.initialValue,
+    this.hint,
     this.color,
     this.padding,
     this.buttonWidth = double.infinity,
