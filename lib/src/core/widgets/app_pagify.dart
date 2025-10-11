@@ -58,7 +58,17 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
               )
           ),
           errorMapper: PagifyErrorMapper(
-              errorWhenDio: (error) => error.response?.data['msg']
+              errorWhenDio: (e) {
+                final String? msg = e.response?.data['msg'];
+                return PagifyApiRequestException(
+                  msg ?? 'network error occur',
+                  pagifyFailure: RequestFailureData(
+                    statusCode: e.response?.statusCode,
+                    statusMsg: e.response?.statusMessage,
+                  ),
+                );
+              } // if you using Dio
+
           ),
           itemBuilder: widget.itemBuilder
       );

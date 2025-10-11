@@ -50,6 +50,8 @@ dependencies:
   multiple_result: ^5.1.0
   injectable: ^2.5.1
   pagify: ^0.2.4
+  dropinity:
+    git: https://github.com/ahmedemara231/dropinity
   wakelock_plus: ^1.3.2
 
 #--------------------- UI & Animations -----------------------

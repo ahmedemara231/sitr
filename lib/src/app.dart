@@ -15,7 +15,6 @@ import 'core/navigation/navigator.dart';
 import 'core/shared/route_observer.dart';
 import 'core/shared/user_cubit/user_cubit.dart' show UserCubit;
 import 'core/widgets/app_text.dart';
-import 'core/widgets/custom_drop_down/test.dart';
 import 'core/widgets/offline_widget.dart';
 import 'features/auth/imports.dart';
 import 'features/home/home_screen.dart';

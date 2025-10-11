@@ -1,15 +1,7 @@
-import 'dart:developer';
 import 'dart:io';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagify/helpers/data_and_pagination_data.dart';
-import 'package:pagify/helpers/errors.dart';
-import 'package:pagify/pagify.dart';
-import 'package:pagify/widgets/text.dart' show AppText;
-
-import '../../../generated/assets.dart' show Assets;
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
@@ -24,15 +16,13 @@ import '../../core/helpers/validators.dart';
 import '../../core/navigation/navigator.dart';
 import '../../core/shared/models/user_models/user_model.dart';
 import '../../core/shared/user_cubit/user_cubit.dart';
+import '../../core/widgets/app_dropinity.dart';
 import '../../core/widgets/app_logo_widget.dart';
-import '../../core/widgets/app_text.dart';
 import '../../core/widgets/buttons/app_loading_button.dart';
 import '../../core/widgets/buttons/default_button.dart';
-import '../../core/widgets/custom_drop_down/custom_drop_down.dart';
 import '../../core/widgets/lang_icon.dart';
 import '../../core/widgets/scaffolds/auth_scaffold.dart';
-import '../../core/widgets/svg_pic.dart';
-import '../../core/widgets/text_fields/default_text_field.dart' show DefaultTextField;
+import '../../core/widgets/text_fields/default_text_field.dart';
 import '../otp/models/otp_body.dart';
 import '../otp/presentation/cubits/otp_cubit.dart';
 import '../otp/presentation/otp.dart';
@@ -45,21 +35,18 @@ import 'presentation/cubits/complete_profile_cubit.dart';
 import 'presentation/cubits/login_cubit.dart';
 import 'presentation/cubits/sign_up_cubit.dart';
 import 'presentation/data/auth_data.dart' show AuthData;
-import 'presentation/data/sign_up_factory.dart';
 import 'presentation/widgets/login/do_not_have_acc.dart';
 import 'presentation/widgets/login/login_static_texts.dart';
 import 'presentation/widgets/shared/choose_gender.dart';
 import 'presentation/widgets/shared/text_field.dart';
 import 'presentation/widgets/sign_up/already_have_acc.dart';
 import 'presentation/widgets/sign_up/conditions_terms_acceptance.dart';
-import 'presentation/widgets/sign_up/drop_down_text_field.dart';
 import 'presentation/widgets/sign_up/female_fields.dart';
 import 'presentation/widgets/sign_up/image_widget.dart';
 import 'presentation/widgets/sign_up/male_fields.dart';
 import 'presentation/widgets/sign_up/sign_up_upper_widget.dart';
 
 import 'package:easy_localization/easy_localization.dart';
-
 
 
 part 'presentation/screens/sign_up.dart';

@@ -338,6 +338,13 @@
             </list>
           </value>
         </entry>
+        <entry key="dropinity">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/git/dropinity-ed234e03cc772680212896b39f29340273562ca2//lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="easy_debounce">
           <value>
             <list>
@@ -1895,6 +1902,7 @@
       </option>
     </properties>
     <CLASSES>
+      <root url="file://$USER_HOME$/.pub-cache/git/dropinity-ed234e03cc772680212896b39f29340273562ca2//lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/_fe_analyzer_shared-85.0.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/_flutterfire_internals-1.3.61/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/analyzer-7.7.1/lib" />

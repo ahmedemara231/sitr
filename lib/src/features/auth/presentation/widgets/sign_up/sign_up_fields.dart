@@ -225,77 +225,18 @@ class _SignUpFieldsState extends State<SignUpFields> {
         ),
 
         if (widget.type.isParent) ...[
-          SearchableDropdown<List<Kinship>, Kinship>.withApiRequest(
-            dropdownTitle: AppText(LocaleKeys.kinship, fontWeight: FontWeight.bold, fontSize: 11.sp),
-            buttonData: ButtonData(
-                hint: AppText(_kinship?.value?? LocaleKeys.pleaseEnterTheKinship, color: _kinship.isNull? Colors.grey : null, fontSize: 12.sp,),
-                color: Colors.grey[50],
-                buttonBorderRadius: ConstantManager.buttonBorderRadius,
-                selectedItemWidget: (e) => AppText(e.value),
-                collapsedListIcon: const SvgPic(assetName: Assets.svgArrowDown)
-            ),
-            textFieldData: TextFieldData(
-              onSearch: (pattern, e) => e!.value.contains(pattern??''),
-              suffixIcon: const Icon(Icons.search),
-              title: LocaleKeys.search,
-            ),
+          AppDropinity<List<Kinship>, Kinship>.withApiRequest(
+            hint: _kinship?.value,
+            asyncCall: (context, page) async => await AuthData.getKinships(),
+            getLabel: (e) => e.value,
+            placeHolder: LocaleKeys.pleaseEnterTheKinship,
+            title: LocaleKeys.kinship,
             onChanged: (val) {
               _kinship = val;
               _listenToData((signUpBody as ParentSignUp).copyWith(kinship: val.id));
             },
-
-            pagifyData: SearchableDropdownPagifyData(
-              controller: PagifyController(),
-              asyncCall: (context, page) async => AuthData.getKinships(),
-              mapper: (response) => PagifyData(
-                  data: response,
-                  paginationData: PaginationData(
-                    totalPages: 1,
-                    perPage: 10,
-                  )
-              ),
-              errorMapper: PagifyErrorMapper(
-                  errorWhenDio: (e) {
-                    String? msg = '';
-                    switch (e.type) {
-                      case DioExceptionType.connectionTimeout:
-                        msg = 'Connection timeout. Please try again.';
-
-                      case DioExceptionType.receiveTimeout:
-                        msg = 'Server response timeout.';
-
-                      case DioExceptionType.badResponse:
-                        msg = 'Server returned ${e.response?.statusCode}';
-
-                      default:
-                        msg = e.response?.data.toString();
-                    }
-
-                    return PagifyApiRequestException(
-                      msg ?? 'network error occur',
-                      pagifyFailure: RequestFailureData(
-                        statusCode: e.response?.statusCode,
-                        statusMsg: e.response?.statusMessage,
-                      ),
-                    );
-                  } // if you using Dio
-
-              ),
-              itemBuilder: (context, data, index, element) => AppText(element.value, textAlign: TextAlign.start).paddingBottom(5.h),
-            ),
           ),
 
-          // DropDownTextField<Kinship>.withApiRequest(
-          //     initialValue: _kinship,
-          //     hint: LocaleKeys.pleaseEnterTheKinship,
-          //     request: (ctx) async => AuthData.getKinships(),
-          //     itemBuilder: (val) => AppText(val.value),
-          //     title: LocaleKeys.kinship,
-          //   onChanged: (val) {
-          //       _kinship = val;
-          //     _listenToData((signUpBody as ParentSignUp).copyWith(kinship: val?.id));
-          //   }
-          // ),
           SignUpTextField(
             upperTitle: LocaleKeys.childrenNumber,
             title: LocaleKeys.pleaseEnterTheNumber,
@@ -305,15 +246,16 @@ class _SignUpFieldsState extends State<SignUpFields> {
             // validator: Validators.validateEmpty,
           ),
 
-          DropDownTextField<UserType>(
-              hint: LocaleKeys.pleaseEnterTheGender,
-              values: const [UserType.male, UserType.female],
+          AppDropinityLocal<UserType>(
+            listHeight: 100,
+              hint: _gender?.translate,
+              placeHolder: LocaleKeys.pleaseEnterTheGender,
               title: LocaleKeys.gender,
-              itemBuilder: (v) => AppText(v.translate),
-              initialValue: _gender,
+              values: const [UserType.male, UserType.female],
+              getLabel: (element) => element.translate,
               onChanged: (val) {
                 _gender = val;
-                _listenToData((signUpBody as ParentSignUp).copyWith(gender: val?.name));
+                _listenToData((signUpBody as ParentSignUp).copyWith(gender: val.name));
               }
           ),
         ],
