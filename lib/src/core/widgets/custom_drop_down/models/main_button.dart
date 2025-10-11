@@ -7,7 +7,7 @@ class ButtonData<Model>{
   final Color? buttonBorderColor;
   final Color? color;
   final EdgeInsetsGeometry? padding;
-  final String? hint;
+  final Widget? hint;
   final Widget Function(Model selectedElement) selectedItemWidget;
   final Widget? expandedListIcon;
   final Widget? collapsedListIcon;

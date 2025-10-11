@@ -122,7 +122,7 @@ class SearchableDropdown<FullResponse, Model> extends StatelessWidget {
                   builder: (context, val, child) => Row(
                     children: [
                       if(_selectedValue.isNull)
-                        AppText(buttonData.hint?? 'select item', color: Colors.grey)
+                        buttonData.hint?? const AppText('select item', color: Colors.grey)
                       else
                         buttonData.selectedItemWidget(_selectedValue!),
 

@@ -228,7 +228,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
           SearchableDropdown<List<Kinship>, Kinship>.withApiRequest(
             dropdownTitle: AppText(LocaleKeys.kinship, fontWeight: FontWeight.bold, fontSize: 11.sp),
             buttonData: ButtonData(
-                hint: LocaleKeys.pleaseEnterTheKinship,
+                hint: AppText(_kinship?.value?? LocaleKeys.pleaseEnterTheKinship, color: _kinship.isNull? Colors.grey : null, fontSize: 12.sp,),
                 color: Colors.grey[50],
                 buttonBorderRadius: ConstantManager.buttonBorderRadius,
                 selectedItemWidget: (e) => AppText(e.value),
