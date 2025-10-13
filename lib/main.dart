@@ -67,7 +67,10 @@ void main() async {
       saveLocale: true,
       startLocale: const Locale('ar'),
       fallbackLocale: const Locale('ar'),
-      child: const Sitr(),
+      child: const RootRestorationScope(
+          restorationId:'app',
+          child: Sitr()
+      ),
     ),
   );
 }

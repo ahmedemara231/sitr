@@ -12,9 +12,9 @@ class CompleteProfileCubit extends AsyncCubit<UserModel>{
 
   Future<void> completeProfile({
     required bool isParent,
-    required SharedFormFieldModel body
+    required SharedFormFieldModel body,
+    required void Function() onSuccess
 })async{
-    setLoading();
     await executeAsync(
         operation: () async => await baseCrudUseCase.call<UserModel>(
             CrudBaseParmas(
@@ -28,7 +28,7 @@ class CompleteProfileCubit extends AsyncCubit<UserModel>{
             )
         ),
 
-        successEmitter: (data) => setSuccess(data: data)
+        successEmitter: (data) => onSuccess.call()
     );
   }
 }

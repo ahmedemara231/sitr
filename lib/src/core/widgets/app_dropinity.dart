@@ -8,29 +8,29 @@ import 'package:pagify/pagify.dart';
 import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
-import '../extensions/object.dart';
 import '../extensions/padding_extension.dart';
 import 'app_text.dart';
 import 'svg_pic.dart';
 
 typedef AppDropinityLocal<Model> = AppDropinity<void, Model>;
-
 enum DropinityType{local, api}
 class AppDropinity<FullResponse, Model> extends StatelessWidget {
+  final DropinityController? controller;
   final double? listHeight;
   final DropinityType type;
-  final String? hint;
+  final String hint;
   final String title;
-  final String placeHolder;
+  final String? initialValue;
   final List<Model>? values;
   final FutureOr<void> Function(Model value) onChanged;
   final Future<FullResponse> Function(BuildContext context, int page)? asyncCall;
   final String Function(Model element) getLabel;
 
   const AppDropinity({super.key,
-    this.hint,
     this.listHeight,
-    required this.placeHolder,
+    this.controller,
+    this.initialValue,
+    required this.hint,
     required this.title,
     required this.values,
     required this.getLabel,
@@ -39,9 +39,10 @@ class AppDropinity<FullResponse, Model> extends StatelessWidget {
 
   const AppDropinity.withApiRequest({
     super.key,
-    this.hint,
     this.listHeight,
-    required this.placeHolder,
+    this.controller,
+    this.initialValue,
+    required this.hint,
     required this.title,
     required this.asyncCall,
     required this.getLabel,
@@ -53,10 +54,12 @@ class AppDropinity<FullResponse, Model> extends StatelessWidget {
     switch(type){
       case DropinityType.local:
         return Dropinity<void, Model>(
+          controller: controller ?? DropinityController(),
           listHeight: listHeight,
           dropdownTitle: AppText(title, fontWeight: FontWeight.bold, fontSize: 11.sp),
           buttonData: ButtonData(
-              hint: AppText(hint?? placeHolder, color: hint.isNull? Colors.grey : null, fontSize: 12.sp,),
+              hint: AppText(hint, color: Colors.grey, fontSize: 12.sp,),
+              initialValue: initialValue,
               color: Colors.grey[50],
               buttonBorderRadius: ConstantManager.buttonBorderRadius,
               selectedItemWidget: (e) => AppText(getLabel.call(e!)),
@@ -77,10 +80,12 @@ class AppDropinity<FullResponse, Model> extends StatelessWidget {
 
       default:
         return Dropinity<FullResponse, Model>.withApiRequest(
+          controller: controller ?? DropinityController(),
           listHeight: listHeight,
           dropdownTitle: AppText(title, fontWeight: FontWeight.bold, fontSize: 11.sp),
           buttonData: ButtonData(
-              hint: AppText(hint?? placeHolder, color: hint.isNull? Colors.grey : null, fontSize: 12.sp,),
+              hint: AppText(hint, color: Colors.grey, fontSize: 12.sp,),
+              initialValue: initialValue,
               color: Colors.grey[50],
               buttonBorderRadius: ConstantManager.buttonBorderRadius,
               selectedItemWidget: (e) => AppText(getLabel.call(e!)),
@@ -92,7 +97,7 @@ class AppDropinity<FullResponse, Model> extends StatelessWidget {
             title: LocaleKeys.search,
           ),
           onChanged: onChanged,
-          pagifyData: SearchableDropdownPagifyData(
+          pagifyData: DropinityPagifyData(
             controller: PagifyController(),
             asyncCall: asyncCall!,
             mapper: (response) => PagifyData(

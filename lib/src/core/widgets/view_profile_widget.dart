@@ -55,7 +55,7 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
               PartnerInfoModel(leading: Assets.svgTallIcon, title: LocaleKeys.tall, subTitle: user.height.toString()),
               PartnerInfoModel(leading: Assets.svgWeight, title: LocaleKeys.weight, subTitle: user.weight.toString()),
 
-              PartnerInfoModel(leading: Assets.svgParentIcon, title: LocaleKeys.skinColor, subTitle: user.skinColor),
+              PartnerInfoModel(leading: Assets.svgParentIcon, title: LocaleKeys.skinColor, subTitle: user.skinColor?.title),
               PartnerInfoModel(leading: Assets.svgMartialStatus, title: LocaleKeys.maritalStatus, subTitle: user.maritalStatus?.title),
 
               PartnerInfoModel(leading: Assets.svgEducationalQualification, title: LocaleKeys.educationalQualification, subTitle: user.educationLevel),

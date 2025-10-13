@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../../../core/navigation/navigator.dart';
 import '../../../../core/widgets/custom_loading.dart';
 
 class SubscriptionScreen extends StatefulWidget {
@@ -35,9 +36,16 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
-          onPageStarted: (_) {
+          onPageStarted: (url) {
             setState(() => _isLoading = true);
+            // ✅ Detect payment success or failure based on URL
+            if (url.contains('success') || url.contains('payment/success')) {
+              Go.back('success');
+            } else if (url.contains('fail') || url.contains('payment/failure')) {
+              Go.back('failed');
+            }
           },
+
           onPageFinished: (_) {
             setState(() {
               _isLoading = false;

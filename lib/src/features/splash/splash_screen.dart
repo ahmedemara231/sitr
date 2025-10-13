@@ -74,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
       chatLang: "ar",
       isSmoker: false,
       tribeAffiliation: true,
-      skinColor: "white",
+      skinColor: const TitleValueShape(title: 'title', value: 'value'),
       religiousCommitment: TitleValueShape.fromJson({'title' : 'انثي', 'value' : 'female'}),
       views: 0,
       hijab: "hijab",

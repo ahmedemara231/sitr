@@ -6,17 +6,16 @@ import '../../models/login_body.dart';
 class LoginCubit extends AsyncCubit{
   LoginCubit() : super('');
 
-  Future<void> login(LoginBody body)async{
+  Future<void> login(LoginBody body, {required void Function(String msg) onSuccess})async{
     await executeAsync(
         operation: () async => await baseCrudUseCase.call(
-            CrudBaseParmas(
+          CrudBaseParmas(
                 api: ApiConstants.login,
                 httpRequestType: HttpRequestType.post,
                 body: body.toJson(),
-                mapper: (data) => ''
-            )
+            ),
         ),
-
+      successEmitter: (data) => onSuccess.call(data as String)
     );
   }
 

@@ -70,6 +70,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         onConfirmCode: (ctx, code) => ctx.read<OtpCubit>().sendOtp(
                           type: OtpType.afterLogin,
                           body: OtpBody(phone: _phoneCont.text, code: code),
+                          onSuccess: (user) {
+                            UserCubit.instance.setUserLoggedIn(user: user, token: user.token??'');
+                            Go.offAll(const HomeScreen());
+                          }
                         ),
                       ),
                     ));
@@ -80,7 +84,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   asyncCall: (ctx) async {
                     if(formKey.currentState!.validate()){
                       await ctx.read<LoginCubit>().login(
-                          LoginBody(phone: _phoneCont.text)
+                        LoginBody(phone: _phoneCont.text),
+                        onSuccess: (msg) => MessageUtils.showSnackBar(msg)
                       );
                     }
                   },
@@ -94,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 textColor: AppColors.primary,
                 fontSize: 12.sp,
                 fontWeight: FontWeight.bold,
-                onTap: (){},
+                onTap: () => Go.offAll(const HomeScreen()),
               )
             ],
           ),

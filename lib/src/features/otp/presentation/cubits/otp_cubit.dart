@@ -12,7 +12,6 @@ class OtpCubit extends AsyncCubit<UserModel>{
   Future<void> sendOtp({
     required OtpType type,
     required OtpBody body,
-
     FutureOr<void> Function(UserModel data)? onSuccess,
 }) async {
     await executeAsync(
@@ -27,10 +26,7 @@ class OtpCubit extends AsyncCubit<UserModel>{
               mapper: (json) => UserModel.fromJson(json)
           ),
         ),
-      successEmitter: (data) {
-        setSuccess(data: data);
-        onSuccess?.call(data);
-      }
+      successEmitter: (data) =>  onSuccess?.call(data)
     );
   }
 }

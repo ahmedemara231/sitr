@@ -29,17 +29,18 @@ class CrudBaseParmas<T>  {
   final HttpRequestType httpRequestType;
   final Map<String, dynamic>? body;
   final Map<String, dynamic>? queryParameters;
-  final T Function(dynamic) mapper;
+  final T Function(dynamic)? mapper;
   final bool isFromData;
   final void Function(int, int)? onSendProgress;
-  CrudBaseParmas(
-      {required this.api,
-      required this.httpRequestType,
-      this.body,
-      this.queryParameters,
-      this.onSendProgress,
-      this.isFromData = false,
-      required this.mapper});
+  CrudBaseParmas({
+    required this.api,
+    required this.httpRequestType,
+    this.body,
+    this.queryParameters,
+    this.onSendProgress,
+    this.isFromData = false,
+    this.mapper
+  });
 
   CrudBaseParmas<T> copyWith({
     String? api,

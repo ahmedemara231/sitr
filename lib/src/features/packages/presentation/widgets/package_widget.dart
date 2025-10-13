@@ -73,10 +73,19 @@ class PackageWidget extends StatelessWidget {
                                 onPay: (ctx, paymentMethod) async => context.read<SubscribePackageCubit>().subscribePackage(
                                   packageId: package.id.toString(),
                                   paymentMethod: paymentMethod.name,
-                                  onSuccess: (url) => Go.to(SubscriptionScreen(
+                                  onSuccess: (url) async{
+                                    final result = await Go.to(SubscriptionScreen(
                                       initialUrl: url,
-                                    title: type == ScreenType.view?
-                                    LocaleKeys.subscribeToPackage : LocaleKeys.renewPackage,                                  ))
+                                      title: type == ScreenType.view?
+                                      LocaleKeys.subscribeToPackage : LocaleKeys.renewPackage,
+                                    ));
+
+                                    if(result == 'success'){
+                                      showDefaultBottomSheet(
+                                          child: const SuccessSheet()
+                                      );
+                                    }
+                                  }
                                 )
                               )
                           )

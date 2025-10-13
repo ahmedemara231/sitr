@@ -113,6 +113,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
   }
 
   late SignUpBody signUpBody;
+  final DropinityController controller = DropinityController();
   void _initSignupBody(UserType newType){
     if(newType.isParent){
       signUpBody = ParentSignUp.initial().copyWith(
@@ -226,10 +227,11 @@ class _SignUpFieldsState extends State<SignUpFields> {
 
         if (widget.type.isParent) ...[
           AppDropinity<List<Kinship>, Kinship>.withApiRequest(
-            hint: _kinship?.value,
+            controller: controller,
+            initialValue: _kinship?.value??'',
             asyncCall: (context, page) async => await AuthData.getKinships(),
             getLabel: (e) => e.value,
-            placeHolder: LocaleKeys.pleaseEnterTheKinship,
+            hint: LocaleKeys.pleaseEnterTheKinship,
             title: LocaleKeys.kinship,
             onChanged: (val) {
               _kinship = val;
@@ -248,8 +250,8 @@ class _SignUpFieldsState extends State<SignUpFields> {
 
           AppDropinityLocal<UserType>(
             listHeight: 100,
-              hint: _gender?.translate,
-              placeHolder: LocaleKeys.pleaseEnterTheGender,
+              hint: _gender?.translate ?? LocaleKeys.pleaseEnterTheGender,
+              initialValue: _gender?.name,
               title: LocaleKeys.gender,
               values: const [UserType.male, UserType.female],
               getLabel: (element) => element.translate,

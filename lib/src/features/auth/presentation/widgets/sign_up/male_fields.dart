@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:pagify/widgets/text.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
 import '../../../../../core/shared/models/title_value_shape.dart';
@@ -27,6 +26,7 @@ class MaleFields extends StatefulWidget {
 }
 
 class _MaleFieldsState extends State<MaleFields> {
+
   late SharedFormFieldModel sharedFormFieldModel;
   File? selectedImage;
 
@@ -85,15 +85,17 @@ class _MaleFieldsState extends State<MaleFields> {
         return SharedFormFields<MaleCompleteProfileBody>(
           restorationId: UserType.male.name,
           onFinished: (data) => _listenToData(data),
-          onInitData: (data) => data..insert(
+          onInitData: (data) => data..insertAll(
             20,
-            DropDownTextField<TitleValueShape>(
-              hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
-              values: EnumsData.religiousCommitment.data,
-              title: LocaleKeys.degreeOfCommitment,
-              itemBuilder: (v) => AppText(v.title),
-              onChanged: (value) => _listenToData(asMaleCompleteProfileBody.copyWith(degreeOfCommitment: value?.value)),
-            ),
+            [
+              DropDownTextField<TitleValueShape>(
+                hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
+                values: EnumsData.religiousCommitment.data,
+                title: LocaleKeys.degreeOfCommitment,
+                itemBuilder: (v) => AppText(v.title),
+                onChanged: (value) => _listenToData(asMaleCompleteProfileBody.copyWith(degreeOfCommitment: value?.value)),
+              ),
+            ]
           ),
         );
 

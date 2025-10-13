@@ -23,7 +23,7 @@ class IndividualUserModel extends UserModel {
   final String? chatLang;
   final bool? isSmoker;
   final bool? tribeAffiliation;
-  final String? skinColor;
+  final TitleValueShape? skinColor;
   final TitleValueShape? religiousCommitment;
   final int? views;
 
@@ -92,7 +92,7 @@ class IndividualUserModel extends UserModel {
     chatLang: '',
     isSmoker: false,
     tribeAffiliation: false,
-    skinColor: '',
+    skinColor: null,
     religiousCommitment: TitleValueShape.initial(),
     views: 0,
   );
@@ -195,7 +195,7 @@ class IndividualUserModel extends UserModel {
       String? chatLang,
       bool? isSmoker,
       bool? tribeAffiliation,
-      String? skinColor,
+    TitleValueShape? skinColor,
     TitleValueShape? religiousCommitment,
       int? views,
     int? id, String? name, int? parentId, TitleValueShape? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) {

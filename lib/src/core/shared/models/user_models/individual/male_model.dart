@@ -108,7 +108,7 @@ class MaleModel extends IndividualUserModel {
       chatLang: json['chat_lang'],
       isSmoker: json['is_smoker'],
       tribeAffiliation: json['tribe_affiliation'],
-      skinColor: json['skin_color'],
+      skinColor: (json['skin_color'] as Object?).isNotNull? TitleValueShape.fromJson(json['skin_color']) : null,
       views: json['views'],
     );
   }
