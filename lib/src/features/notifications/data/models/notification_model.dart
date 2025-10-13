@@ -1,6 +1,6 @@
 class NotificationModel {
   String id;
-  int type;
+  String type;
   String title;
   String body;
   NotificationData data;

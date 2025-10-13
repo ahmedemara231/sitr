@@ -55,14 +55,14 @@ class PackageWidget extends StatelessWidget {
           Row(
             spacing: 7.w,
             children: [
-              AppText(LocaleKeys.price, color: Colors.grey),
+              FittedBox(child: AppText(LocaleKeys.price, color: Colors.grey)),
               AppText('${package.price} ${LocaleKeys.sR}', fontWeight: FontWeight.bold, color: AppColors.primary,),
               const Spacer(),
               SizedBox(
                 width: context.width * .4,
                 height: 40.h,
                 child: BlocProvider(
-                  create: (context) => SubscribePackageCubit(),
+                  create: (context) => PackagesManagerCubit(),
                   child: Builder(
                     builder: (context) {
                       return AppDefaultButton.withBorderColor(
@@ -70,7 +70,7 @@ class PackageWidget extends StatelessWidget {
                           LocaleKeys.subscribeToPackage : LocaleKeys.renewPackage,
                           onTap: () => showDefaultBottomSheet(
                               child: PaymentSheet(
-                                onPay: (ctx, paymentMethod) async => context.read<SubscribePackageCubit>().subscribeOrRenewPackage(
+                                onPay: (ctx, paymentMethod) async => context.read<PackagesManagerCubit>().subscribeOrRenewPackage(
                                   packageId: package.id.toString(),
                                   type: type,
                                   paymentMethod: paymentMethod.name,

@@ -12,10 +12,12 @@ class AppDefaultButton extends StatelessWidget {
   final Color? backgroundColor;
   final Color? textColor;
   final String title;
+  final Color? borderColor;
   final FutureOr<void> Function()? onTap;
   const AppDefaultButton.withBorderColor({super.key,
     required this.title,
     required this.onTap,
+    this.borderColor,
   }) : shapeType = ShapeType.withBorderColor,
         backgroundColor = null,
         textColor = null;
@@ -25,7 +27,7 @@ class AppDefaultButton extends StatelessWidget {
     required this.onTap,
     this.backgroundColor,
     this.textColor
-  }) : shapeType = ShapeType.withBackGroundColor;
+  }) : shapeType = ShapeType.withBackGroundColor, borderColor = null;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class AppDefaultButton extends StatelessWidget {
       fontSize: 16.sp,
       fontWeight: FontWeight.w400,
       borderRadius: ConstantManager.buttonBorderRadius,
-      borderColor: AppColors.primary,
+      borderColor: borderColor?? AppColors.primary,
       textColor: shapeType == ShapeType.withBorderColor?
       AppColors.primary : textColor?? AppColors.white,
       onTap: onTap,

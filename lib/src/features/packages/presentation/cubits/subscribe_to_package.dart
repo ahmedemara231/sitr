@@ -3,8 +3,8 @@ import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubi
 import '../../../../core/network/api_endpoints.dart';
 import '../packages_screen.dart';
 
-class SubscribePackageCubit extends AsyncCubit<String>{
-  SubscribePackageCubit() : super('');
+class PackagesManagerCubit extends AsyncCubit<String>{
+  PackagesManagerCubit() : super('');
 
   Future<void> subscribeOrRenewPackage({
     required String packageId,

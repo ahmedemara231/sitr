@@ -2,15 +2,15 @@ part of 'notification_service.dart';
 
 class NotificationRoutes {
   static void navigateByType(Map<String, dynamic> data) {
-    final int id = data['id'];
-    final notifcationType = id.type;
-    notifcationType.navigation.navigate(data: data);
+    final String type = data['type'];
+    final notificationType = type.getType;
+    notificationType.navigation.navigate(data: data);
   }
 }
 
-extension GetNotificationTypeById on int {
-  NotificationType get type {
-    return NotificationType.values.firstWhere((element) => element.id == this);
+extension GetNotificationTypeById on String {
+  NotificationType get getType {
+    return NotificationType.values.firstWhere((element) => element.type == this);
   }
 }
 

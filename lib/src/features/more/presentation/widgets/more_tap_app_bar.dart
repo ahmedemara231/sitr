@@ -9,7 +9,12 @@ import '../../../../core/extensions/align_helper.dart';
 import '../../../../core/extensions/sized_box_helper.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/navigation/navigator.dart';
+import '../../../../core/shared/user_cubit/user_cubit.dart';
+import '../../../../core/widgets/app_bottom_sheet.dart';
 import '../../../../core/widgets/app_text.dart';
+import '../../../../core/widgets/default_bottom_sheet.dart';
+import '../../../auth/imports.dart';
+import '../cubit/logout_cubit.dart';
 import '../cubit/wallet_cubit/fetch_wallet_cubit.dart';
 import '../screens/wallet/wallet_screen.dart';
 import '../widgets/custom_icon_inside_container.dart';
@@ -127,8 +132,36 @@ class MoreTabAppBar extends StatelessWidget {
                       icon: Assets.svgSettingIcon,
                     ),
                     8.szW,
-                    const CustomIconInsideContainer(
-                      icon: Assets.svgLogOutIcon,
+                    InkWell(
+                      onTap: (){
+                        showDefaultBottomSheet(
+                            child: BlocProvider(
+                              create: (context) => LogoutCubit(),
+                              child: AppBottomSheet.large(
+                                  cancelBackgroundColor: AppColors.cancelColor,
+                                  asyncCall: (context) => context.read<LogoutCubit>().logout(
+                                      onSuccess: () {
+                                        Go.offAll(const LoginScreen());
+                                        UserCubit.instance.logout();
+                                      }
+                                  ),
+                                  btnTitle: LocaleKeys.confirm,
+                                  upperWidget: Column(
+                                    children: [
+                                      SizedBox.square(
+                                          dimension: 200.sp,
+                                          child: Image.asset(Assets.imagesLogoutImage)
+                                      ),
+                                      AppText(LocaleKeys.areYouSureToLogout, fontWeight: FontWeight.w500),
+                                    ],
+                                  )
+                              ),
+                            )
+                        );
+                      },
+                      child: const CustomIconInsideContainer(
+                        icon: Assets.svgLogOutIcon,
+                      ),
                     ),
                   ],
                 ),

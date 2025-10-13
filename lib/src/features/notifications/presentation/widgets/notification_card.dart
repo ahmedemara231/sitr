@@ -23,7 +23,7 @@ class _NotificationCardState extends State<NotificationCard> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        widget.notificationModel.type.type.navigation
+        widget.notificationModel.type.getType.navigation
             .navigate(data: widget.notificationModel.data.toJson());
       },
       child: Container(

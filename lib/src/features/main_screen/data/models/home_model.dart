@@ -1,3 +1,4 @@
+import '../../../../core/extensions/object.dart';
 import '../../../../core/shared/models/title_value_shape.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 
@@ -21,7 +22,7 @@ class HomeModel {
         marriageConsultants?.add(MarriageConsultants.fromJson(v));
       });
     }
-    opportunities = json['opportunities'] != null?
+    opportunities = (json['opportunities'] as Object).isNotNull?
     Opportunities.fromJson(json['opportunities']) : null;
   }
   List<Banners>? banners;

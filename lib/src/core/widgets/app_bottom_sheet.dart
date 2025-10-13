@@ -14,19 +14,19 @@ class AppBottomSheet extends StatelessWidget {
   final FutureOr<void> Function(BuildContext) asyncCall;
   final String btnTitle;
   final Widget upperWidget;
-  final Color? backgroundColor;
+  final Color? cancelBackgroundColor;
 
   const AppBottomSheet.small({super.key,
     required this.asyncCall,
     required this.btnTitle,
     required this.upperWidget,
-  }) : size = AppBottomSheetSize.small, backgroundColor = null;
+  }) : size = AppBottomSheetSize.small, cancelBackgroundColor = null;
 
   const AppBottomSheet.large({super.key,
     required this.asyncCall,
     required this.btnTitle,
     required this.upperWidget,
-    this.backgroundColor
+    this.cancelBackgroundColor
   }) : size = AppBottomSheetSize.large;
 
   @override
@@ -50,7 +50,7 @@ class AppBottomSheet extends StatelessWidget {
             else
               _AppSheetButtons(
                   asyncCall: asyncCall,
-                   backgroundColor: backgroundColor,
+                   cancelBackgroundColor: cancelBackgroundColor,
                   title: btnTitle
               )
           ],
@@ -64,12 +64,12 @@ class _AppSheetButtons extends StatelessWidget {
 
   final FutureOr<void> Function(BuildContext) asyncCall;
   final String title;
-  final Color? backgroundColor;
+  final Color? cancelBackgroundColor;
 
   const _AppSheetButtons({
     required this.asyncCall,
     required this.title,
-    this.backgroundColor
+    this.cancelBackgroundColor
   });
 
   @override
@@ -86,7 +86,7 @@ class _AppSheetButtons extends StatelessWidget {
         Expanded(
           child: AppDefaultButton.withBackGroundColor(
               title: LocaleKeys.cancel,
-              backgroundColor: backgroundColor,
+              backgroundColor: cancelBackgroundColor,
               onTap: () => Go.back()
           ),
         )

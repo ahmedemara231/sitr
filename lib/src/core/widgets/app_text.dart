@@ -70,7 +70,7 @@ class AppText extends StatelessWidget {
           maxLines: maxLines,
           style: TextStyle(
             color: color,
-            fontSize: fontSize ?? FontSize.s16,
+            fontSize: fontSize,
             fontWeight: fontWeight,
             height: height,
             fontFamily: ConstantManager.fontFamily
