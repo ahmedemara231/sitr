@@ -10,20 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="feat: Implement logout functionality and refactor notifications&#10;&#10;This commit introduces user logout functionality and refactors the notification handling logic, alongside several minor fixes and improvements.&#10;&#10;- **feat(auth):**&#10;    - Implemented logout functionality.&#10;    - Added a `LogoutCubit` to handle the API request.&#10;    - A confirmation bottom sheet with a custom image is now displayed when the user taps the logout icon in the &quot;More&quot; screen app bar.&#10;    - Upon successful logout, user data is cleared, and the user is redirected to the login screen.&#10;&#10;- **refactor(notifications):**&#10;    - Changed the notification `type` from `int` to `String` to align with the API response.&#10;    - Updated notification routing logic to parse the string `type` instead of an `id`.&#10;&#10;- **refactor(packages):**&#10;    - Renamed `SubscribePackageCubit` to `PackagesManagerCubit` for better clarity.&#10;&#10;- **fix(UI):**&#10;    - Wrapped the price text in package widgets with `FittedBox` to prevent overflow on smaller screens.&#10;    - Resolved a potential null `fontSize` issue in the `AppText` widget.&#10;    - Added a `cancelBackgroundColor` property to `AppBottomSheet` for more flexible styling.&#10;&#10;- **fix(models):**&#10;    - Added a null check for the `opportunities` field in `HomeModel` to prevent potential crashes.">
-      <change afterPath="$PROJECT_DIR$/assets/svg/notification_widget_icon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/svg/trash_icon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/setting/setting_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/cubit/change_notify_cubit.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/translations/ar.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/ar.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/en.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/translations/lang.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/lang.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/generated/assets.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/generated/assets.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/config/language/locale_keys.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/config/language/locale_keys.g.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/scaffolds/app_scaffold.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/scaffolds/app_scaffold.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/individual/female_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/individual/female_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/individual/individual_user_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/individual/individual_user_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/parent/parent_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/parent/parent_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/user_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/user_model.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/more_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/more_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/setting/setting_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/setting/setting_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/widgets/more_item.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/widgets/more_item.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/widgets/more_tap_app_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/widgets/more_tap_app_bar.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/notifications/presentation/widgets/notification_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/notifications/presentation/widgets/notification_card.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -351,7 +346,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760362437023</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="feat: Implement logout functionality and refactor notifications&#10;&#10;This commit introduces user logout functionality and refactors the notification handling logic, alongside several minor fixes and improvements.&#10;&#10;- **feat(auth):**&#10;    - Implemented logout functionality.&#10;    - Added a `LogoutCubit` to handle the API request.&#10;    - A confirmation bottom sheet with a custom image is now displayed when the user taps the logout icon in the &quot;More&quot; screen app bar.&#10;    - Upon successful logout, user data is cleared, and the user is redirected to the login screen.&#10;&#10;- **refactor(notifications):**&#10;    - Changed the notification `type` from `int` to `String` to align with the API response.&#10;    - Updated notification routing logic to parse the string `type` instead of an `id`.&#10;&#10;- **refactor(packages):**&#10;    - Renamed `SubscribePackageCubit` to `PackagesManagerCubit` for better clarity.&#10;&#10;- **fix(UI):**&#10;    - Wrapped the price text in package widgets with `FittedBox` to prevent overflow on smaller screens.&#10;    - Resolved a potential null `fontSize` issue in the `AppText` widget.&#10;    - Added a `cancelBackgroundColor` property to `AppBottomSheet` for more flexible styling.&#10;&#10;- **fix(models):**&#10;    - Added a null check for the `opportunities` field in `HomeModel` to prevent potential crashes.">
+      <option name="closed" value="true" />
+      <created>1760365312211</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1760365312211</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="ToolWindowManager">

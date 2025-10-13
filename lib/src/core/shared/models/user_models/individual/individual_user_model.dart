@@ -44,6 +44,8 @@ class IndividualUserModel extends UserModel {
     super.adminApprovalStatus,
     super.completeRegistration,
     super.token,
+    super.isNotify,
+
     this.nickName,
     this.maritalStatus,
     this.height,
@@ -99,6 +101,7 @@ class IndividualUserModel extends UserModel {
 
   factory IndividualUserModel.fromJson(Map<String, dynamic> json) {
     return IndividualUserModel(
+      isNotify: json['is_notify'],
       id: json['id'],
       name: json['name'],
       parentId: json['parent_id'],
@@ -175,6 +178,7 @@ class IndividualUserModel extends UserModel {
   @override
   UserModel copyWith({
       String? nickName,
+      bool? isNotify,
       TitleValueShape? maritalStatus,
       int? height,
       int? weight,
@@ -241,6 +245,7 @@ class IndividualUserModel extends UserModel {
         skinColor: skinColor ?? this.skinColor,
         religiousCommitment: religiousCommitment ?? this.religiousCommitment,
         views: views ?? this.views,
-      );
+      isNotify: isNotify ?? this.isNotify,
+    );
   }
 }

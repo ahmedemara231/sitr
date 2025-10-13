@@ -10,6 +10,7 @@ class ParentModel extends UserModel {
   final int? femaleChildrenNum;
 
   ParentModel({
+    super.isNotify,
     super.id,
     super.name,
     super.parentId,
@@ -74,6 +75,7 @@ class ParentModel extends UserModel {
 
   @override
   UserModel copyWith({
+    bool? isNotify,
     String? email,
     Kinship? relation,
     int? numOfChildren,
@@ -82,6 +84,7 @@ class ParentModel extends UserModel {
 
     int? id, String? name, int? parentId, TitleValueShape? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) {
     return ParentModel(
+      isNotify: isNotify ?? this.isNotify,
       id: id ?? this.id,
       name: name ?? this.name,
       parentId: parentId ?? this.parentId,

@@ -55,6 +55,8 @@ class FemaleModel extends IndividualUserModel {
     super.skinColor,
     super.religiousCommitment,
     super.views,
+    super.isNotify,
+
     this.hijab,
     this.acceptsPolygamy,
     this.preferredResidenceAfterMarriage,
@@ -97,6 +99,7 @@ class FemaleModel extends IndividualUserModel {
       childCustody: (json['child_custody'] as Object?).isNull? null :
       TitleValueShape.fromJson(json['child_custody']),
 
+      isNotify: json['is_notify'],
       id: json['id'],
       name: json['name'],
       parentId: json['parent_id'],
@@ -158,6 +161,7 @@ class FemaleModel extends IndividualUserModel {
 
   @override
   UserModel copyWith({
+    bool? isNotify,
     String? hijab,
     bool? acceptsPolygamy,
     String? preferredResidenceAfterMarriage,
@@ -168,6 +172,7 @@ class FemaleModel extends IndividualUserModel {
     String? nickName, TitleValueShape? maritalStatus, int? height, int? weight, String? currentJob, String? bio, bool? hasChildren, int? numOfChildren, TitleValueShape? childCustody, bool? wantChildren, String? prohibitedThings, int? dowryMin, int? dowryMax, TitleValueShape? weddingType, CityModel? cityId, String? educationLevel, bool? isPrayer, String? healthConditions, String? chatLang, bool? isSmoker, bool? tribeAffiliation, TitleValueShape? skinColor, TitleValueShape? religiousCommitment, int? views, int? id, String? name, int? parentId, TitleValueShape? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) {
 
     return FemaleModel(
+      isNotify: isNotify ?? this.isNotify,
       id: id ?? this.id,
       name: name ?? this.name,
       parentId: parentId ?? this.parentId,

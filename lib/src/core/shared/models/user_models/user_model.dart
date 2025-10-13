@@ -24,6 +24,7 @@ class UserModel {
   final TitleValueShape? adminApprovalStatus;
   final String? completeRegistration;
   final String? token;
+  final bool? isNotify;
 
   const UserModel({
     this.id,
@@ -42,6 +43,7 @@ class UserModel {
     this.adminApprovalStatus,
     this.completeRegistration,
     this.token,
+    this.isNotify
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -112,6 +114,7 @@ class UserModel {
     adminApprovalStatus: null,
     completeRegistration: '',
     token: '',
+    isNotify: false
   );
 
   Map<String, dynamic> toJson() {
@@ -132,6 +135,7 @@ class UserModel {
       'admin_approval_status': adminApprovalStatus,
       'complete_registration': completeRegistration,
       'token': token,
+      'is_notify': isNotify,
     };
   }
 
@@ -152,6 +156,7 @@ class UserModel {
     TitleValueShape? adminApprovalStatus,
     String? completeRegistration,
     String? token,
+    bool? isNotify,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -170,6 +175,7 @@ class UserModel {
       adminApprovalStatus: adminApprovalStatus ?? this.adminApprovalStatus,
       completeRegistration: completeRegistration ?? this.completeRegistration,
       token: token ?? this.token,
+      isNotify: isNotify ?? this.isNotify,
     );
   }
 
@@ -248,4 +254,3 @@ class CityModel {
   }
 
 }
-

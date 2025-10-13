@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../generated/assets.dart' show Assets;
@@ -48,15 +50,21 @@ class MoreScreen extends StatelessWidget {
 class MorItemModel {
   final String icon;
   final String label;
-  final void Function()? onTap;
+  final FutureOr<void> Function()? onTap;
   final bool withSwitch;
+  final FutureOr<void> Function()? onSwitch;
 
   MorItemModel({
     required this.icon,
     required this.label,
     this.onTap,
-    this.withSwitch = false
-  });
+  }) : withSwitch = false, onSwitch = null;
+
+  MorItemModel.withSwitch({
+    required this.icon,
+    required this.label,
+    required this.onSwitch,
+  }) : withSwitch = true, onTap = null;
 }
 
 List<MorItemModel> moreItemsList = [

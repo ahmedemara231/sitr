@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../generated/assets.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
-import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../widgets/more_item.dart';
 import '../more_screen.dart';
@@ -40,14 +39,15 @@ List<MorItemModel> moreItemsList = [
     label: LocaleKeys.changePhoneNumber,
     // onTap: () => Go.to(const MyPackagesScreen()),
   ),
-  MorItemModel(
+
+  MorItemModel.withSwitch(
     icon: Assets.svgNotificationIcon,
     label: LocaleKeys.notifications,
-    withSwitch: true,
-    onTap: () {
+    onSwitch: () {
       // Go.to(const SuccessPartnersScreen());
     },
   ),
+
   MorItemModel(
     icon: Assets.svgTrashIcon,
     label: LocaleKeys.deleteAccount,
