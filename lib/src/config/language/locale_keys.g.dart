@@ -691,4 +691,7 @@ abstract class LocaleKeys {
   static const String _waitUntilTheCurrentSignUpCompleted = 'wait_until_the_current_sign_up_completed';
   static String get waitUntilTheCurrentSignUpCompleted => _waitUntilTheCurrentSignUpCompleted.tr();
 
+  static const String _areYouSureToLogout = 'are_you_sure_to_logout';
+  static String get areYouSureToLogout => _areYouSureToLogout.tr();
+
 }

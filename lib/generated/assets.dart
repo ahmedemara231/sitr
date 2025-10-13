@@ -23,6 +23,7 @@ class Assets {
   static const String imagesBoardingSecond = 'assets/images/boarding_second.png';
   static const String imagesBoardingThird = 'assets/images/boarding_third.png';
   static const String imagesComplaint = 'assets/images/complaint.png';
+  static const String imagesLogoutImage = 'assets/images/logout_image.png';
   static const String imagesSuccessPartener = 'assets/images/successPartener.png';
   static const String loadingLoading = 'assets/lottie/loading/loading.json';
   static const String loadingLoading2 = 'assets/lottie/loading/loading_2.json';
@@ -58,6 +59,7 @@ class Assets {
   static const String svgLocation = 'assets/svg/location.svg';
   static const String svgLogOutIcon = 'assets/svg/logOutIcon.svg';
   static const String svgLogo = 'assets/svg/logo.svg';
+  static const String svgLogoutImage = 'assets/svg/logout_image.svg';
   static const String svgMartialStatus = 'assets/svg/martial_status.svg';
   static const String svgMoreIcon = 'assets/svg/moreIcon.svg';
   static const String svgMyPackageIcon = 'assets/svg/myPackageIcon.svg';

@@ -25,6 +25,7 @@ class ApiConstants {
   
   // auth
   static const String login = 'login';
+  static const String logout = 'sign-out';
   static const String showWallet = 'show-wallet';
   static const String complaintDetails = 'complaints-show/';
   static const String successPartners = 'partners';
@@ -53,9 +54,14 @@ class ApiConstants {
   static const String cities = 'cities';
   static const String getPartnerInfo = 'opportunity-profile/';
   static const String getNotifications = 'notifications';
+  static const String getNotificationsCount = 'count-notifications';
+  static const String deleteNotification = 'delete-notification';
+  static const String deleteAllNotification = 'delete-notifications';
   static const String profile = 'profile';
   static const String myPackage = 'my-package';
   static const String getWallet = 'show-wallet';
+  static const String deleteAccount = 'delete-account';
+  static const String switchNotify = 'switch-notify';
 
 
 }
