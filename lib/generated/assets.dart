@@ -64,6 +64,7 @@ class Assets {
   static const String svgMoreIcon = 'assets/svg/moreIcon.svg';
   static const String svgMyPackageIcon = 'assets/svg/myPackageIcon.svg';
   static const String svgNotificationIcon = 'assets/svg/notificationIcon.svg';
+  static const String svgNotificationWidgetIcon = 'assets/svg/notification_widget_icon.svg';
   static const String svgOnlinePayment = 'assets/svg/online_payment.svg';
   static const String svgPackageIcon = 'assets/svg/packageIcon.svg';
   static const String svgPackagesScreenImage = 'assets/svg/packages_screen_image.svg';
@@ -84,6 +85,7 @@ class Assets {
   static const String svgTermsAndConditionIcon = 'assets/svg/termsAndConditionIcon.svg';
   static const String svgTiktok = 'assets/svg/tiktok.svg';
   static const String svgTranslation = 'assets/svg/translation.svg';
+  static const String svgTrashIcon = 'assets/svg/trash_icon.svg';
   static const String svgTribe = 'assets/svg/tribe.svg';
   static const String svgTwiter = 'assets/svg/twiter.svg';
   static const String svgUSAFlag = 'assets/svg/USA_flag.svg';

@@ -16,6 +16,7 @@ import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../auth/imports.dart';
 import '../cubit/logout_cubit.dart';
 import '../cubit/wallet_cubit/fetch_wallet_cubit.dart';
+import '../screens/setting/setting_screen.dart';
 import '../screens/wallet/wallet_screen.dart';
 import '../widgets/custom_icon_inside_container.dart';
 
@@ -128,8 +129,13 @@ class MoreTabAppBar extends StatelessWidget {
                 55.szW,
                 Row(
                   children: [
-                    const CustomIconInsideContainer(
-                      icon: Assets.svgSettingIcon,
+                    InkWell(
+                      onTap: () {
+                        Go.to(const SettingScreen());
+                      },
+                      child: const CustomIconInsideContainer(
+                        icon: Assets.svgSettingIcon,
+                      ),
                     ),
                     8.szW,
                     InkWell(

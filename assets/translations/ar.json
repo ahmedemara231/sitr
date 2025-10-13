@@ -235,5 +235,6 @@
   "start_chat": "اجراء محادثة",
   "subscribe": "اشتراك",
   "wait_until_the_current_sign_up_completed": "انتظر حتي تنتهي عملية التسجيل الحالية",
-  "are_you_sure_to_logout": "هل انت متأكد من تسجيل الخروج"
+  "are_you_sure_to_logout": "هل انت متأكد من تسجيل الخروج",
+  "change_phone_number": "تغيير رقم الجوال"
 }

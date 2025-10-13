@@ -10,16 +10,18 @@ import '../app_text.dart';
 class AppScaffold extends StatelessWidget {
   final String appBarTitle;
   final Widget body;
+  final Color? scaffoldBackgroundColor;
 
   const AppScaffold({super.key,
     required this.appBarTitle,
-    required this.body
+    required this.body,
+    this.scaffoldBackgroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: scaffoldBackgroundColor?? Colors.white,
       appBar: PreferredSize(
           preferredSize: Size(context.width, 60.h),
           child: AppBar(

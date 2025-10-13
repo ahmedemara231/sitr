@@ -10,11 +10,11 @@ import '../widgets/custom_icon_inside_container.dart';
 
 class MoreItem extends StatelessWidget {
   const MoreItem({
-    super.key,required this.moreItemModel,
+    super.key,
+    required this.moreItemModel,
   });
 
-
-final MorItemModel moreItemModel;
+  final MorItemModel moreItemModel;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -39,9 +39,10 @@ final MorItemModel moreItemModel;
                 color: Colors.black,
               ),
               const Spacer(),
-              const SizedBox.square(
+              SizedBox.square(
                   dimension: 16,
-                  child: IconWidget(icon: Assets.svgArrowLeftIcon)
+                  child: moreItemModel.withSwitch? Switch(value: false, onChanged: (val){}) :
+                  const IconWidget(icon: Assets.svgArrowLeftIcon)
               )
             ],
           )),

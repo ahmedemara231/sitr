@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:pagify/widgets/text.dart';
 
-import '../../../../../generated/assets.dart' show Assets;
+import '../../../../../generated/assets.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/notification/notification_service.dart';
 import '../../../../core/widgets/app_text.dart';
+import '../../../../core/widgets/svg_pic.dart';
 import '../../data/models/notification_model.dart';
 
 class NotificationCard extends StatefulWidget {
@@ -29,21 +29,24 @@ class _NotificationCardState extends State<NotificationCard> {
       child: Container(
         padding: EdgeInsets.all(10.w),
         decoration: BoxDecoration(
-          color: AppColors.grey.withOpacity(.1),
+          color: AppColors.whiteGreyColorProMax,
           borderRadius: BorderRadius.circular(7.r),
         ),
         child: Row(
           children: [
-            SvgPicture.asset(Assets.svgNotificationIcon),
+            SvgPicture.asset(Assets.svgNotificationWidgetIcon),
             SizedBox(width: 10.w),
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AppText(widget.notificationModel.title),
+                  Text(widget.notificationModel.title, style: const TextStyle(fontWeight: FontWeight.w500)),
                   SizedBox(height: 7.h),
-                  AppText(widget.notificationModel.body, fontSize: 10.sp),
+                  Text(
+                    widget.notificationModel.body,
+                    style: TextStyle(fontSize: 10.sp, color: Colors.grey),
+                  )
                 ],
               ),
             ),
@@ -52,8 +55,8 @@ class _NotificationCardState extends State<NotificationCard> {
               children: [
                 AppText(widget.notificationModel.createdAt, fontSize: 10.sp, color: Colors.grey),
                 IconButton(
-                    onPressed: () async {},
-                  icon: const Icon(Icons.delete),
+                  onPressed: () async {},
+                  icon: const SvgPic(assetName: Assets.svgTrashIcon)
                 )
 
               ],

@@ -49,11 +49,13 @@ class MorItemModel {
   final String icon;
   final String label;
   final void Function()? onTap;
+  final bool withSwitch;
 
   MorItemModel({
     required this.icon,
     required this.label,
     this.onTap,
+    this.withSwitch = false
   });
 }
 
