@@ -129,7 +129,7 @@ class FemaleModel extends IndividualUserModel {
       chatLang: json['chat_lang'],
       isSmoker: json['is_smoker'],
       tribeAffiliation: json['tribe_affiliation'],
-      skinColor: json['skin_color'],
+      skinColor: TitleValueShape.fromJson(json['skin_color']),
       views: json['views'],
       hijab: json['hijab'],
       acceptsPolygamy: json['accepts_polygamy'],

@@ -148,6 +148,7 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
                     )
                   else
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         AppText(state.data.name??'', fontWeight: FontWeight.bold),
                         AppText(

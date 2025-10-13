@@ -14,6 +14,7 @@ import '../widgets/more_tap_app_bar.dart';
 import 'blocked_user_screen/blocked_user_screen.dart';
 import 'complaint_and_suggestion/complaints_and_suggestions_screen.dart';
 import 'contact_us/contact_us_screen.dart';
+import 'my_packages.dart';
 import 'success_partners/success_partners_screen.dart';
 import 'terms_andcondition_and_about_us/terms_andcondition_and_about_us.dart';
 
@@ -65,7 +66,7 @@ List<MorItemModel> moreItemsList = [
   MorItemModel(
     icon: Assets.svgPackageIcon,
     label: LocaleKeys.myPackage,
-    onTap: () {},
+    onTap: () => Go.to(const MyPackagesScreen()),
   ),
   MorItemModel(
     icon: Assets.svgSuccessPartnerIcon,

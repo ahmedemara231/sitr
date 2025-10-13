@@ -23,8 +23,7 @@ class WalletScreen extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) =>
-          FetchWalletCubit()
-            ..fetchWallet(),
+          FetchWalletCubit()..fetchWallet(),
         ),
         BlocProvider(
           create: (context) => ChargeWalletCubit(),
@@ -32,7 +31,6 @@ class WalletScreen extends StatelessWidget {
       ],
       child: Scaffold(
         backgroundColor: AppColors.whiteScaffoldBackground,
-
         appBar: customAppBar(appBarTitle: LocaleKeys.wallet),
         body: SizedBox(
           width: double.infinity,

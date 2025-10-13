@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../generated/assets.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
+import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/extensions/align_helper.dart';
 import '../../../../core/extensions/sized_box_helper.dart';
+import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/widgets/app_text.dart';
+import '../cubit/wallet_cubit/fetch_wallet_cubit.dart';
 import '../screens/wallet/wallet_screen.dart';
 import '../widgets/custom_icon_inside_container.dart';
 
@@ -60,11 +64,19 @@ class MoreTabAppBar extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                             color: AppColors.white,
                           ),
-                          AppText(
-                            '2500 ${LocaleKeys.sar}',
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.white,
+                          BlocProvider(
+                            create: (context) => FetchWalletCubit()..fetchWallet(),
+                            child: BlocBuilder<FetchWalletCubit, AsyncState<num>>(
+                                builder: (context, state) => StatusBuilder(
+                                    data: state,
+                                    onSuccess: (data, context) => AppText(
+                                      '$data ${LocaleKeys.sar}',
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.white,
+                                    ),
+                                )
+                            )
                           ),
                         ],
                       ),

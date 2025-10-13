@@ -11,10 +11,8 @@ class ChargeWalletCubit extends AsyncCubit<bool>{
   ChargeWalletCubit() : super(false);
 
   Future<void> chargeWallet(double amount)async{
-
     await executeAsync(
       operation: () async => await baseCrudUseCase.call(
-
           CrudBaseParmas(
             api: ApiConstants.chargeWallet,
             httpRequestType: HttpRequestType.post,

@@ -70,8 +70,9 @@ class PackageWidget extends StatelessWidget {
                           LocaleKeys.subscribeToPackage : LocaleKeys.renewPackage,
                           onTap: () => showDefaultBottomSheet(
                               child: PaymentSheet(
-                                onPay: (ctx, paymentMethod) async => context.read<SubscribePackageCubit>().subscribePackage(
+                                onPay: (ctx, paymentMethod) async => context.read<SubscribePackageCubit>().subscribeOrRenewPackage(
                                   packageId: package.id.toString(),
+                                  type: type,
                                   paymentMethod: paymentMethod.name,
                                   onSuccess: (url) async{
                                     final result = await Go.to(SubscriptionScreen(
