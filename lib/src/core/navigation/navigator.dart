@@ -66,15 +66,21 @@ class Go {
 //<editor-fold desc="OFF NAMED">
   // pushReplacement named
   static Future<T?> offNamed<T extends Object?, TO extends Object?>(
-    NamedRoutes namedRoute, {
+    BuildContext context, NamedRoutes namedRoute, {
     Object? arguments,
     TO? result,
   }) {
-    return _navigatorKey.currentState!.pushReplacementNamed<T, TO>(
-      namedRoute.routeName,
-      arguments: arguments,
-      result: result,
+    return Navigator.pushReplacementNamed(
+        context,
+        namedRoute.routeName,
+        arguments: arguments,
+        result: result
     );
+    // return _navigatorKey.currentState!.pushReplacementNamed<T, TO>(
+    //   namedRoute.routeName,
+    //   arguments: arguments,
+    //   result: result,
+    // );
   }
 
 //</editor-fold>

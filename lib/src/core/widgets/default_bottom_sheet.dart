@@ -9,6 +9,8 @@ Future showDefaultBottomSheet({BuildContext? context, required Widget child}) {
   return showModalBottomSheet(
     isScrollControlled: true,
     context: context ?? Go.context,
+    backgroundColor: Colors.white,
+    barrierColor: Colors.black.withOpacity(0.6),
     builder: (context) => DefaultSheetBody(
       child: child,
     ),

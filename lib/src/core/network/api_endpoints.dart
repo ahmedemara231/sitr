@@ -62,6 +62,11 @@ class ApiConstants {
   static const String getWallet = 'show-wallet';
   static const String deleteAccount = 'delete-account';
   static const String switchNotify = 'switch-notify';
+  static const String sendCodeToOldPhone = 'old-phone-send-code';
+  static const String checkCodeToOldPhone = 'old-phone-check-code';
+
+  static const String sendCodeToNewPhone = 'new-phone-send-code';
+  static const String checkCodeToNewPhone = 'new-phone-check-code';
 
 
 }

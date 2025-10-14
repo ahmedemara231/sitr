@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,8 +13,12 @@ import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../auth/imports.dart';
+import '../../../../home/home_screen.dart';
+import '../../../../otp/presentation/otp.dart';
+import '../../cubit/change_phone_manager.dart';
 import '../../cubit/delete_account.dart';
 import '../../widgets/more_item.dart';
+import '../../widgets/change_phone_sheet_body.dart';
 import '../more_screen.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -29,7 +35,100 @@ class SettingScreen extends StatelessWidget {
       MorItemModel(
         icon: Assets.svgContactPhone,
         label: LocaleKeys.changePhoneNumber,
-        // onTap: () => Go.to(const MyPackagesScreen()),
+        onTap: () => Go.to( BlocProvider(
+          create: (context) => ChangePhoneManagerCubit(),
+          child: Navigator(
+            onGenerateInitialRoutes: (navigator, initialRoute) {
+              return [
+                MaterialPageRoute(
+                  builder: (context) => OtpScreen(
+                    phone: UserCubit.instance.user.phone ?? '',
+                    title: LocaleKeys.changePhoneNumber,
+                    onEnterScreen: (context) =>
+                        context.read<ChangePhoneManagerCubit>().manage(
+                          phase: Phase.sendOld,
+                          phone: UserCubit.instance.user.phone ?? '',
+                        ),
+                    onConfirmCode: (context, code) =>
+                        context.read<ChangePhoneManagerCubit>().manage(
+                          phase: Phase.checkOld,
+                          code: code,
+                          onSuccess: (data) => showBottomSheet(
+                            context: context,
+                            builder: (c) => const ChangePhoneSheetBody(),
+                          ),
+                        ),
+                  ),
+                ),
+              ];
+            },
+            // initialRoute: '/oldPhoneOtpScreen',
+            onGenerateRoute: (setting) {
+              if(setting.name == '/oldPhoneOtpScreen'){
+                log('enter here r.runtimeType == OtpScreen');
+                return MaterialPageRoute(
+                    builder: (context) => OtpScreen(
+                      phone: UserCubit.instance.user.phone??'',
+                      title: LocaleKeys.changePhoneNumber,
+                      onEnterScreen: (context) =>
+                          context.read<ChangePhoneManagerCubit>().manage(
+                            phase: Phase.sendOld,
+                            phone: UserCubit.instance.user.phone??'',
+                          ),
+                      onConfirmCode: (context, code) => context.read<ChangePhoneManagerCubit>().manage(
+                        phase: Phase.checkOld,
+                        code: code,
+                        onSuccess: (data) => showBottomSheet(
+                            context: context,
+                            builder: (c) => const ChangePhoneSheetBody()
+                        ),
+                      ),
+                    ),
+                );
+
+              }else if(setting.name == '/ChangePhoneSheetBody'){
+                log('enter here r.runtimeType == ChangePhoneSheetBody');
+                return ModalBottomSheetRoute(
+                    builder: (context) => const ChangePhoneSheetBody(),
+                    isScrollControlled: true
+                );
+
+              }else if(setting.name == '/newPhoneOtpScreen'){
+                final args = setting.arguments as Map;
+                return MaterialPageRoute(
+                  builder: (context) => OtpScreen(
+                    phone: args['phone'],
+                    title: args['title'],
+                    onEnterScreen: args['onEnterScreen'],
+                    onConfirmCode: args['onConfirmCode']
+                  ),
+                );
+              }
+
+              return MaterialPageRoute(
+                builder: (context) => const HomeScreen()
+              );
+            },
+          ),
+
+          // child: OtpScreen(
+          //     phone: UserCubit.instance.user.phone??'',
+          //     title: LocaleKeys.changePhoneNumber,
+          //     onEnterScreen: (context) =>
+          //         context.read<ChangePhoneManagerCubit>().manage(
+          //           phase: Phase.sendOld,
+          //           phone: UserCubit.instance.user.phone??'',
+          //         ),
+          //     onConfirmCode: (context, code) => context.read<ChangePhoneManagerCubit>().manage(
+          //       phase: Phase.checkOld,
+          //       code: code,
+          //       onSuccess: (data) => showBottomSheet(
+          //           context: context,
+          //           builder: (c) => const ChangePhoneSheetBody()
+          //       ),
+          //     ),
+          // ),
+        )),
       ),
 
       MorItemModel.withSwitch(
