@@ -23,6 +23,7 @@ class Assets {
   static const String imagesBoardingSecond = 'assets/images/boarding_second.png';
   static const String imagesBoardingThird = 'assets/images/boarding_third.png';
   static const String imagesComplaint = 'assets/images/complaint.png';
+  static const String imagesDeleteIcon = 'assets/images/delete_icon.png';
   static const String imagesLogoutImage = 'assets/images/logout_image.png';
   static const String imagesSuccessPartener = 'assets/images/successPartener.png';
   static const String loadingLoading = 'assets/lottie/loading/loading.json';
@@ -46,6 +47,7 @@ class Assets {
   static const String svgConsultantPhone = 'assets/svg/consultant_phone.svg';
   static const String svgContactPhone = 'assets/svg/contactPhone.svg';
   static const String svgContactUsIcon = 'assets/svg/contactUsIcon.svg';
+  static const String svgDeleteIcon = 'assets/svg/delete_icon.svg';
   static const String svgEducationalQualification = 'assets/svg/educational_qualification.svg';
   static const String svgFacebook = 'assets/svg/facebook.svg';
   static const String svgGreyBackground = 'assets/svg/grey_background.svg';

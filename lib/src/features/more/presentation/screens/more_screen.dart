@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../generated/assets.dart' show Assets;
@@ -7,7 +6,6 @@ import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/navigation/navigator.dart';
-import '../../../../core/network/network_service.dart';
 import '../../../../core/widgets/view_profile_widget.dart';
 import '../cubit/get_profile.dart';
 import '../cubit/terms_condition_and_about_cubit/terms_condition_and_about_cubit.dart';
@@ -25,6 +23,62 @@ class MoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<MorItemModel> moreItemsList = [
+      MorItemModel(
+        icon: Assets.svgUser,
+        label: LocaleKeys.profile,
+        onTap: () => Go.to(ViewProfileWidget.profile(cubit: GetProfileCubit())),
+      ),
+      MorItemModel(
+        icon: Assets.svgPackageIcon,
+        label: LocaleKeys.myPackage,
+        onTap: () => Go.to(const MyPackagesScreen()),
+      ),
+      MorItemModel(
+        icon: Assets.svgSuccessPartnerIcon,
+        label: LocaleKeys.successPartners,
+        onTap: () {
+          Go.to(const SuccessPartnersScreen());
+        },
+      ),
+      MorItemModel(
+        icon: Assets.svgBlockUser,
+        label: LocaleKeys.blockedCustomers,
+        onTap: () {
+          Go.to(const BlockedUserScreen());
+        },
+      ),
+      MorItemModel(
+        icon: Assets.svgContactUsIcon,
+        label: LocaleKeys.contactUs,
+        onTap: () {
+          Go.to(ContactUsScreen());
+        },
+      ),
+      MorItemModel(
+        icon: Assets.svgComplaintIcon,
+        label: LocaleKeys.complaintsAndSuggestions,
+        onTap: () {
+          Go.to(const ComplaintsAndSuggestionsScreen());
+        },
+      ),
+      MorItemModel(
+        icon: Assets.svgAboutIcon,
+        label: LocaleKeys.aboutUs,
+        onTap: () {
+          Go.to(const TermsAndConditionAndAboutUs(
+              staticPageType: StaticPageType.about));
+        },
+      ),
+      MorItemModel(
+        icon: Assets.svgTermsAndConditionIcon,
+        label: LocaleKeys.termsAndConditions,
+        onTap: () {
+          Go.to(const TermsAndConditionAndAboutUs(
+              staticPageType: StaticPageType.terms));
+        },
+      ),
+    ];
     return Scaffold(
       backgroundColor: AppColors.whiteGreyColor,
       body: SingleChildScrollView(
@@ -52,74 +106,15 @@ class MorItemModel {
   final String label;
   final FutureOr<void> Function()? onTap;
   final bool withSwitch;
-  final FutureOr<void> Function()? onSwitch;
 
   MorItemModel({
     required this.icon,
     required this.label,
     this.onTap,
-  }) : withSwitch = false, onSwitch = null;
+  }) : withSwitch = false;
 
   MorItemModel.withSwitch({
     required this.icon,
     required this.label,
-    required this.onSwitch,
   }) : withSwitch = true, onTap = null;
 }
-
-List<MorItemModel> moreItemsList = [
-  MorItemModel(
-    icon: Assets.svgUser,
-    label: LocaleKeys.profile,
-    onTap: () => Go.to(ViewProfileWidget.profile(cubit: GetProfileCubit())),
-  ),
-  MorItemModel(
-    icon: Assets.svgPackageIcon,
-    label: LocaleKeys.myPackage,
-    onTap: () => Go.to(const MyPackagesScreen()),
-  ),
-  MorItemModel(
-    icon: Assets.svgSuccessPartnerIcon,
-    label: LocaleKeys.successPartners,
-    onTap: () {
-      Go.to(const SuccessPartnersScreen());
-    },
-  ),
-  MorItemModel(
-    icon: Assets.svgBlockUser,
-    label: LocaleKeys.blockedCustomers,
-    onTap: () {
-      Go.to(const BlockedUserScreen());
-    },
-  ),
-  MorItemModel(
-    icon: Assets.svgContactUsIcon,
-    label: LocaleKeys.contactUs,
-    onTap: () {
-      Go.to(ContactUsScreen());
-    },
-  ),
-  MorItemModel(
-    icon: Assets.svgComplaintIcon,
-    label: LocaleKeys.complaintsAndSuggestions,
-    onTap: () {
-      Go.to(const ComplaintsAndSuggestionsScreen());
-    },
-  ),
-  MorItemModel(
-    icon: Assets.svgAboutIcon,
-    label: LocaleKeys.aboutUs,
-    onTap: () {
-      Go.to(const TermsAndConditionAndAboutUs(
-          staticPageType: StaticPageType.about));
-    },
-  ),
-  MorItemModel(
-    icon: Assets.svgTermsAndConditionIcon,
-    label: LocaleKeys.termsAndConditions,
-    onTap: () {
-      Go.to(const TermsAndConditionAndAboutUs(
-          staticPageType: StaticPageType.terms));
-    },
-  ),
-];

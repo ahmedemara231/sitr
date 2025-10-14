@@ -697,4 +697,7 @@ abstract class LocaleKeys {
   static const String _changePhoneNumber = 'change_phone_number';
   static String get changePhoneNumber => _changePhoneNumber.tr();
 
+  static const String _canNotOpenNotificationsEnableFromSetting = 'can_not_open_notifications_enable_from_setting';
+  static String get canNotOpenNotificationsEnableFromSetting => _canNotOpenNotificationsEnableFromSetting.tr();
+
 }

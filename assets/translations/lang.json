@@ -241,5 +241,6 @@
     "Subscribe" : "اشتراك",
     "wait until the current sign up completed" : "انتظر حتي تنتهي عملية التسجيل الحالية",
     "Are you sure to logout" : "هل انت متأكد من تسجيل الخروج",
-    "change phone number" : "تغيير رقم الجوال"
+    "change phone number" : "تغيير رقم الجوال",
+    "can not open notifications enable from setting" : "لا يمكن تفعيل الاشعارات فعلها من الاعدادات"
 }

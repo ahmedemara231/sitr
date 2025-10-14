@@ -31,7 +31,11 @@ class StatusBuilder<T> extends StatelessWidget {
       return onFail?.call() ??
           CenterErrorWidget(
               message: errorMessage ?? LocaleKeys.exceptionError.tr());
-    }, );
+    },
+      onInitial: () {
+        return onSuccess(data.data, context);
+      }
+    );
   }
 }
 

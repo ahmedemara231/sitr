@@ -236,5 +236,6 @@
   "subscribe": "Subscribe",
   "wait_until_the_current_sign_up_completed": "wait until the current sign up completed",
   "are_you_sure_to_logout": "Are you sure to logout",
-  "change_phone_number": "change phone number"
+  "change_phone_number": "change phone number",
+  "can_not_open_notifications_enable_from_setting": "can not open notifications enable from setting"
 }
