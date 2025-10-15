@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import '../../../../extensions/object.dart';
 import '../../title_value_shape.dart' show TitleValueShape;
 import '../user_model.dart';
@@ -45,6 +47,7 @@ class MaleModel extends IndividualUserModel {
     super.skinColor,
     super.religiousCommitment,
     super.views,
+    super.isNotify,
   });
 
   factory MaleModel.initial() => MaleModel(
@@ -112,4 +115,136 @@ class MaleModel extends IndividualUserModel {
       views: json['views'],
     );
   }
+
+  @override
+  Map<String, dynamic> toRequestBodyJson() {
+    return super.toRequestBodyJson()..addAll({
+      'name' : name,
+      'gender' : gender?.titleValueShape?.value,
+      'age' : age,
+      'phone' : phone,
+      'identity_number' : identityNumber,
+      'avatar' : avatar.isNotNull? File(avatar!) : null,
+      'religious_commitment': religiousCommitment,
+    });
+  }
+  @override
+  MaleModel copyWith({
+    String? nickName,
+    bool? isNotify,
+    TitleValueShape? maritalStatus,
+    int? height,
+    int? weight,
+    String? currentJob,
+    String? bio,
+    bool? hasChildren,
+    int? numOfChildren,
+    TitleValueShape? childCustody,
+    bool? wantChildren,
+    String? prohibitedThings,
+    int? dowryMin,
+    int? dowryMax,
+    TitleValueShape? weddingType,
+    CityModel? cityId,
+    String? educationLevel,
+    bool? isPrayer,
+    String? healthConditions,
+    String? chatLang,
+    bool? isSmoker,
+    bool? tribeAffiliation,
+    TitleValueShape? skinColor,
+    TitleValueShape? religiousCommitment,
+    int? views,
+    int? id, String? name, int? parentId, TitleValueShape? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) {
+    return MaleModel(
+      id: id?? this.id,
+      name: name?? this.name,
+      parentId: parentId?? this.parentId,
+      type: type?? this.type,
+      gender: gender??this.gender,
+      avatar: avatar??this.avatar,
+      phone: phone??this.phone,
+      countryCode: countryCode??this.countryCode,
+      fullPhone: fullPhone??this.fullPhone,
+      identityNumber: identityNumber??identityNumber,
+      age: age??this.age,
+      isActive: isActive??this.isActive,
+      isBlocked: isBlocked??this.isBlocked,
+      adminApprovalStatus: adminApprovalStatus??this.adminApprovalStatus,
+      completeRegistration: completeRegistration??this.completeRegistration,
+      token: token??this.token,
+      nickName: nickName ?? this.nickName,
+      maritalStatus: maritalStatus ?? this.maritalStatus,
+      height: height ?? this.height,
+      weight: weight ?? this.weight,
+      currentJob: currentJob ?? this.currentJob,
+      bio: bio ?? this.bio,
+      hasChildren: hasChildren ?? this.hasChildren,
+      numOfChildren: numOfChildren ?? this.numOfChildren,
+      childCustody: childCustody ?? this.childCustody,
+      wantChildren: wantChildren ?? this.wantChildren,
+      prohibitedThings: prohibitedThings ?? this.prohibitedThings,
+      dowryMin: dowryMin ?? this.dowryMin,
+      dowryMax: dowryMax ?? this.dowryMax,
+      weddingType: weddingType ?? this.weddingType,
+      cityId: cityId ?? this.cityId,
+      educationLevel: educationLevel ?? this.educationLevel,
+      isPrayer: isPrayer ?? this.isPrayer,
+      healthConditions: healthConditions ?? this.healthConditions,
+      chatLang: chatLang ?? this.chatLang,
+      isSmoker: isSmoker ?? this.isSmoker,
+      tribeAffiliation: tribeAffiliation ?? this.tribeAffiliation,
+      skinColor: skinColor ?? this.skinColor,
+      religiousCommitment: religiousCommitment ?? this.religiousCommitment,
+      views: views ?? this.views,
+      isNotify: isNotify ?? this.isNotify,
+    );
+  }
+
+  MaleModel merge(MaleModel otherMaleModel){
+    return MaleModel(
+      id: id?? otherMaleModel.id,
+      name: name?? otherMaleModel.name,
+      parentId: parentId?? otherMaleModel.parentId,
+      type: type?? otherMaleModel.type,
+      gender: gender??otherMaleModel.gender,
+      avatar: avatar??otherMaleModel.avatar,
+      phone: phone??otherMaleModel.phone,
+      countryCode: countryCode??otherMaleModel.countryCode,
+      fullPhone: fullPhone??otherMaleModel.fullPhone,
+      identityNumber: identityNumber??identityNumber,
+      age: age??otherMaleModel.age,
+      isActive: isActive??otherMaleModel.isActive,
+      isBlocked: isBlocked??otherMaleModel.isBlocked,
+      adminApprovalStatus: adminApprovalStatus??otherMaleModel.adminApprovalStatus,
+      completeRegistration: completeRegistration??otherMaleModel.completeRegistration,
+      token: token??otherMaleModel.token,
+      nickName: nickName ?? otherMaleModel.nickName,
+      maritalStatus: maritalStatus ?? otherMaleModel.maritalStatus,
+      height: height ?? otherMaleModel.height,
+      weight: weight ?? otherMaleModel.weight,
+      currentJob: currentJob ?? otherMaleModel.currentJob,
+      bio: bio ?? otherMaleModel.bio,
+      hasChildren: hasChildren ?? otherMaleModel.hasChildren,
+      numOfChildren: numOfChildren ?? otherMaleModel.numOfChildren,
+      childCustody: childCustody ?? otherMaleModel.childCustody,
+      wantChildren: wantChildren ?? otherMaleModel.wantChildren,
+      prohibitedThings: prohibitedThings ?? otherMaleModel.prohibitedThings,
+      dowryMin: dowryMin ?? otherMaleModel.dowryMin,
+      dowryMax: dowryMax ?? otherMaleModel.dowryMax,
+      weddingType: weddingType ?? otherMaleModel.weddingType,
+      cityId: cityId ?? otherMaleModel.cityId,
+      educationLevel: educationLevel ?? otherMaleModel.educationLevel,
+      isPrayer: isPrayer ?? otherMaleModel.isPrayer,
+      healthConditions: healthConditions ?? otherMaleModel.healthConditions,
+      chatLang: chatLang ?? otherMaleModel.chatLang,
+      isSmoker: isSmoker ?? otherMaleModel.isSmoker,
+      tribeAffiliation: tribeAffiliation ?? otherMaleModel.tribeAffiliation,
+      skinColor: skinColor ?? otherMaleModel.skinColor,
+      religiousCommitment: religiousCommitment ?? otherMaleModel.religiousCommitment,
+      views: views ?? otherMaleModel.views,
+      isNotify: isNotify ?? otherMaleModel.isNotify,
+    );
+  }
+
 }

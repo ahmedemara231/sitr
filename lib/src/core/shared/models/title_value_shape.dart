@@ -7,7 +7,12 @@ class TitleValueShape{
     required this.value,
   });
 
-  factory TitleValueShape.initial() => const TitleValueShape(title: 'title', value: 'value');
+  factory TitleValueShape.initial() => const TitleValueShape(title: '', value: '');
+
+  factory TitleValueShape.fromSingleLabel(String? label) => TitleValueShape(
+      title: label ?? '',
+      value: label ?? ''
+  );
 
   factory TitleValueShape.fromJson(Map<String, dynamic> json) => TitleValueShape(
       title: json['title'],

@@ -5,12 +5,11 @@ import '../../../../../config/language/languages.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/extensions/enum.dart';
 import '../../../../../core/shared/models/title_value_shape.dart';
+import '../../../../../core/shared/models/user_models/individual/female_model.dart';
+import '../../../../../core/shared/models/user_models/individual/individual_user_model.dart';
+import '../../../../../core/shared/models/user_models/individual/male_model.dart';
+import '../../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../../core/widgets/app_text.dart';
-import '../../../models/city.dart';
-import '../../../models/complete_profile/female_body.dart';
-import '../../../models/complete_profile/male_body.dart';
-import '../../../models/dowry.dart';
-import '../../../models/shared_form_fields_model.dart';
 import '../../data/auth_data.dart';
 import '../../data/enums_data.dart';
 import '../../enums/answer.dart';
@@ -19,7 +18,7 @@ import 'dowry_widget.dart';
 import 'drop_down_text_field.dart';
 import 'radio_widget.dart';
 
-class SharedFormFields<T extends SharedFormFieldModel> extends StatefulWidget {
+class SharedFormFields<T extends IndividualUserModel> extends StatefulWidget {
   final String? restorationId;
   final void Function(T sharedFields) onFinished;
   final void Function(List<Widget> children)? onInitData;
@@ -34,7 +33,7 @@ class SharedFormFields<T extends SharedFormFieldModel> extends StatefulWidget {
   State<SharedFormFields<T>> createState() => _SharedFormFieldsState<T>();
 }
 
-class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<SharedFormFields<T>> {
+class _SharedFormFieldsState<T extends IndividualUserModel> extends State<SharedFormFields<T>> {
 
   late TextEditingController _nickNameCont;
   late TextEditingController _tallCont;
@@ -50,34 +49,26 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
   late T model;
 
   void _init() {
-    if(T == FemaleCompleteProfileBody){
-      model = FemaleCompleteProfileBody.initial() as T;
+    if(T == MaleModel){
+      model = MaleModel.initial() as T;
 
-    }else if(T == FemaleParentCompleteProfileBody){
-      model = FemaleParentCompleteProfileBody.initial() as T;
-
-    }else if (T == MaleCompleteProfileBody){
-      model = MaleCompleteProfileBody.initial() as T;
-
-    }else if (T == MaleParentCompleteProfileBody){
-      model = MaleParentCompleteProfileBody.initial() as T;
+    }else if(T == FemaleModel){
+      model = FemaleModel.initial() as T;
 
     }else{
-      model = SharedFormFieldModel.initial() as T;
+      model = IndividualUserModel.initial() as T;
     }
   }
 
-  void _listenToData(SharedFormFieldModel updatedModel) {
-    model = updatedModel as T;
-
-    // model = model.merge(updatedModel) as T;
+  void _listenToData(T updatedModel) {
+    model = updatedModel;
     widget.onFinished.call(model);
   }
 
   void _childrenExitsListener(){
     if(childrenExits.value.isNo){
       _childrenNumberCont.clear();
-      _listenToData(model.copyWith(nursery: null) as T);
+      _listenToData((model.copyWith(childCustody: null)) as T);
     }
   }
 
@@ -89,15 +80,15 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
   void initState() {
     _init();
     _listenToModelChanges();
-    _nickNameCont = TextEditingController();
-    _tallCont = TextEditingController();
-    _weightCont = TextEditingController();
-    _currentJobCont = TextEditingController();
-    _briefCont = TextEditingController();
-    _childrenNumberCont = TextEditingController();
-    _thingsCont = TextEditingController();
-    _educationalQualificationCont = TextEditingController();
-    _diseasesCont = TextEditingController();
+    _nickNameCont = TextEditingController(text: model.nickName);
+    _tallCont = TextEditingController(text: model.height.toString());
+    _weightCont = TextEditingController(text: model.weight.toString());
+    _currentJobCont = TextEditingController(text: model.currentJob);
+    _briefCont = TextEditingController(text: model.bio);
+    _childrenNumberCont = TextEditingController(text: model.numOfChildren.toString());
+    _thingsCont = TextEditingController(text: model.prohibitedThings);
+    _educationalQualificationCont = TextEditingController(text: model.educationLevel);
+    _diseasesCont = TextEditingController(text: model.healthConditions);
     super.initState();
   }
 
@@ -121,7 +112,7 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
         upperTitle: LocaleKeys.nickname,
         title: LocaleKeys.pleaseEnterYourName,
         controller: _nickNameCont,
-        onChanged: (val) => _listenToData(model.copyWith(nickName: val)),
+        onChanged: (val) => _listenToData(model.copyWith(nickName: val) as T)
         // validator: Validators.validateEmpty,
       ),
       DropDownTextField<TitleValueShape>(
@@ -130,14 +121,14 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
         values: EnumsData.maritalStatus.data,
         itemBuilder: (v) => AppText(v.title.tr()),
         onChanged: (val) =>
-            _listenToData(model.copyWith(maritalStatus: val?.value)),
+            _listenToData(model.copyWith(maritalStatus: val) as T),
       ),
       SignUpTextField(
         upperTitle: LocaleKeys.tall,
         title: LocaleKeys.pleaseEnterTheTall,
         controller: _tallCont,
         inputType: TextInputType.number,
-        onChanged: (val) => _listenToData(model.copyWith(tall: val)),
+        onChanged: (val) => _listenToData(model.copyWith(height: int.tryParse(val!)) as T),
         // validator: Validators.validateEmpty,
       ),
       SignUpTextField(
@@ -145,14 +136,14 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
         title: LocaleKeys.pleaseEnterTheWeight,
         controller: _weightCont,
         inputType: TextInputType.number,
-        onChanged: (val) => _listenToData(model.copyWith(weight: val)),
+        onChanged: (val) => _listenToData(model.copyWith(weight: int.tryParse(val!)) as T),
         // validator: Validators.validateEmpty,
       ),
       SignUpTextField(
         upperTitle: LocaleKeys.currentJob,
         title: LocaleKeys.pleaseEnterTheCurrentJob,
         controller: _currentJobCont,
-        onChanged: (val) => _listenToData(model.copyWith(currentJob: val)),
+        onChanged: (val) => _listenToData(model.copyWith(currentJob: val) as T),
         // validator: Validators.validateEmpty,
       ),
       SignUpTextField(
@@ -160,19 +151,19 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
         title: LocaleKeys.pleaseEnterTheBrief,
         controller: _briefCont,
         inputType: TextInputType.multiline,
-        onChanged: (val) => _listenToData(model.copyWith(quickBrief: val)),
+        onChanged: (val) => _listenToData(model.copyWith(bio: val) as T),
         // validator: Validators.validateEmpty,
       ),
       RadioWidget<Answer>(
           title: LocaleKeys.childrenExists,
           onSubmit: (result) {
             childrenExits.value = result;
-            _listenToData(model.copyWith(childrenExists: result.toBool));
+            _listenToData(model.copyWith(hasChildren: result.toBool) as T);
           },
           values: Answer.values,
           titleBuilder: (i) => AppText(Answer.values[i].translate),
       ),
-       ValueListenableBuilder(
+      ValueListenableBuilder(
            valueListenable: childrenExits,
            builder: (context, value, child) => value.isYes? Column(
              children: [
@@ -182,12 +173,12 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
                  controller: _childrenNumberCont,
                  inputType: TextInputType.number,
                  onChanged: (val) =>
-                     _listenToData(model.copyWith(childrenNumber: val)),
+                     _listenToData(model.copyWith(numOfChildren: int.tryParse(val!)) as T),
                  // validator: Validators.validateEmpty,
                ),
                RadioWidget<TitleValueShape>(
                  title: LocaleKeys.nursery,
-                 onSubmit: (result) => _listenToData(model.copyWith(nursery: result.value)),
+                 onSubmit: (result) => _listenToData(model.copyWith(childCustody: result) as T),
                  values: EnumsData.childCustody.data,
                  titleBuilder: (i) => AppText(EnumsData.childCustody.data[i].title.tr()),
                    // titles: (i) => [AppText(LocaleKeys.father), AppText(LocaleKeys.mother)]),
@@ -199,7 +190,7 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
       RadioWidget<Answer>(
           title: LocaleKeys.wantToHaveChildren,
           onSubmit: (result) =>
-              _listenToData(model.copyWith(wantToHaveChildren: result.toBool)),
+              _listenToData(model.copyWith(wantChildren: result.toBool) as T),
           values: Answer.values,
           titleBuilder: (i) => AppText(Answer.values[i].translate),
       ),
@@ -208,11 +199,14 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
         title: LocaleKeys.pleaseEnterTheThings,
         controller: _thingsCont,
         onChanged: (val) =>
-            _listenToData(model.copyWith(thingsIAcceptOrWant: val)),
+            _listenToData(model.copyWith(prohibitedThings: val) as T),
         // validator: Validators.validateEmpty,
       ),
       DowryWidget(onSelect: (from, to) {
-        _listenToData(model.copyWith(dowry: Dowry(from: from, to: to)));
+        _listenToData(model.copyWith(
+          dowryMin: int.tryParse(from),
+          dowryMax: int.tryParse(to),
+        ) as T);
       }),
 
       DropDownTextField<TitleValueShape>(
@@ -221,27 +215,27 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
         title: LocaleKeys.typeOfWeddingParty,
         itemBuilder: (v) => AppText(v.title.tr()),
         onChanged: (val) =>
-            _listenToData(model.copyWith(typeOfWeddingParty: val?.value)),
+            _listenToData(model.copyWith(weddingType: TitleValueShape.fromSingleLabel(val?.value)) as T),
       ),
-      DropDownTextField<City>.withApiRequest(
+      DropDownTextField<CityModel>.withApiRequest(
         hint: LocaleKeys.pleaseEnterTheCity,
         title: LocaleKeys.city,
-        onChanged: (val) => _listenToData(model.copyWith(cityId: val?.id)),
+        onChanged: (val) => _listenToData(model.copyWith(cityId: val) as T),
         request: (BuildContext ctx) async => await AuthData.getCities(),
-        itemBuilder: (city) => AppText(city.name),
+        itemBuilder: (city) => AppText(city.name ?? ''),
       ),
       SignUpTextField(
         upperTitle: LocaleKeys.educationalQualification,
         title: LocaleKeys.pleaseEnterTheEducationalQualification,
         controller: _educationalQualificationCont,
         onChanged: (val) =>
-            _listenToData(model.copyWith(educationalQualification: val)),
+            _listenToData(model.copyWith(educationLevel: val) as T),
         // validator: Validators.validateEmpty,
       ),
       RadioWidget<Answer>(
           title: LocaleKeys.areYouPray,
           onSubmit: (result) =>
-              _listenToData(model.copyWith(pray: result.toBool)),
+              _listenToData(model.copyWith(isPrayer: result.toBool) as T),
           values: Answer.values,
         titleBuilder: (i) => AppText(Answer.values[i].translate),
       ),
@@ -250,27 +244,27 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
         title: LocaleKeys.pleaseEnterTheDiseases,
         controller: _diseasesCont,
         onChanged: (val) =>
-            _listenToData(model.copyWith(diseasesIfExists: val)),
+            _listenToData(model.copyWith(healthConditions: val) as T),
         // validator: Validators.validateEmpty,
       ),
       RadioWidget<Languages>(
           title: LocaleKeys.inChatYouPrefer,
           onSubmit: (result) => _listenToData(
-              model.copyWith(inChatYouPrefer: result.languageCode)),
+              model.copyWith(chatLang: result.languageCode) as T),
           values: Languages.values,
           titleBuilder: (i) => AppText(Languages.values[i].translate),
       ),
       RadioWidget<Answer>(
           title: LocaleKeys.areYouSmoke,
           onSubmit: (result) =>
-              _listenToData(model.copyWith(smoke: result.toBool)),
+              _listenToData(model.copyWith(isSmoker: result.toBool) as T),
           values: Answer.values,
           titleBuilder: (i) => AppText(Answer.values[i].translate),
       ),
       RadioWidget<Answer>(
           title: LocaleKeys.doYouBelongToATribe,
           onSubmit: (result) =>
-              _listenToData(model.copyWith(belongToATribe: result.toBool)),
+              _listenToData(model.copyWith(tribeAffiliation: result.toBool) as T),
           values: Answer.values,
         titleBuilder: (i) => AppText(Answer.values[i].translate),
       ),
@@ -279,7 +273,7 @@ class _SharedFormFieldsState<T extends SharedFormFieldModel> extends State<Share
         values: EnumsData.skinColors.data,
         itemBuilder: (v) => AppText(v.title.tr()),
         title: LocaleKeys.skinColor,
-        onChanged: (val) => _listenToData(model.copyWith(skinColor: val?.value)),
+        onChanged: (val) => _listenToData(model.copyWith(skinColor: TitleValueShape.fromSingleLabel(val?.value)) as T),
       ),
     ];
 

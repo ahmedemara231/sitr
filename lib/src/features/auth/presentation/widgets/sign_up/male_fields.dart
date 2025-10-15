@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
 import '../../../../../core/shared/models/title_value_shape.dart';
+import '../../../../../core/shared/models/user_models/individual/individual_user_model.dart';
+import '../../../../../core/shared/models/user_models/individual/male_model.dart';
+import '../../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../../core/widgets/app_text.dart';
-import '../../../models/complete_profile/male_body.dart';
-import '../../../models/shared_form_fields_model.dart';
 import '../../data/enums_data.dart';
 import '../shared/text_field.dart';
 import 'drop_down_text_field.dart';
@@ -14,7 +15,7 @@ import 'shared_form_fields.dart';
 
 class MaleFields extends StatefulWidget {
   final UserType? secondaryType;
-  final void Function(SharedFormFieldModel data) onFinishMaleData;
+  final void Function(IndividualUserModel data) onFinishMaleData;
 
   const MaleFields({super.key,
     required this.secondaryType,
@@ -27,7 +28,7 @@ class MaleFields extends StatefulWidget {
 
 class _MaleFieldsState extends State<MaleFields> {
 
-  late SharedFormFieldModel sharedFormFieldModel;
+  late IndividualUserModel sharedFormFieldModel;
   File? selectedImage;
 
   late TextEditingController _nameCont;
@@ -35,23 +36,17 @@ class _MaleFieldsState extends State<MaleFields> {
   late TextEditingController _identifyNumberCont;
   late TextEditingController _ageCont;
 
-  void _init(){
-    switch(widget.secondaryType){
-      case null:
-        sharedFormFieldModel = MaleCompleteProfileBody.initial();
+  void _init() => sharedFormFieldModel = MaleModel.initial();
 
-      default:
-        sharedFormFieldModel = MaleParentCompleteProfileBody.initial();
-    }
-  }
+  UserModel get _currentUser => UserModel.currentUser;
 
   @override
   void initState() {
     _init();
-    _nameCont = TextEditingController();
-    _phoneCont = TextEditingController();
-    _identifyNumberCont = TextEditingController();
-    _ageCont = TextEditingController();
+    _nameCont = TextEditingController(text: _currentUser.name);
+    _phoneCont = TextEditingController(text: _currentUser.phone);
+    _identifyNumberCont = TextEditingController(text: _currentUser.identityNumber);
+    _ageCont = TextEditingController(text: _currentUser.age.toString());
     super.initState();
   }
 
@@ -64,27 +59,21 @@ class _MaleFieldsState extends State<MaleFields> {
     super.dispose();
   }
   
-  void _listenToData(SharedFormFieldModel updatedModel) {
+  void _listenToData(IndividualUserModel updatedModel) {
     sharedFormFieldModel = updatedModel;
     widget.onFinishMaleData.call(sharedFormFieldModel);
   }
 
+  MaleModel get asMaleModel => sharedFormFieldModel as MaleModel;
 
-  MaleCompleteProfileBody get asMaleCompleteProfileBody{
-    return sharedFormFieldModel as MaleCompleteProfileBody;
-  }
-
-  MaleParentCompleteProfileBody get asMaleParentCompleteProfileBody{
-    return sharedFormFieldModel as MaleParentCompleteProfileBody;
-  }
 
   @override
   Widget build(BuildContext context) {
     switch(widget.secondaryType){
       case null:
-        return SharedFormFields<MaleCompleteProfileBody>(
+        return SharedFormFields<MaleModel>(
           restorationId: UserType.male.name,
-          onFinished: (data) => _listenToData(data),
+          onFinished: (data) => _listenToData(asMaleModel.merge(data.copyWith())),
           onInitData: (data) => data..insertAll(
             20,
             [
@@ -93,23 +82,23 @@ class _MaleFieldsState extends State<MaleFields> {
                 values: EnumsData.religiousCommitment.data,
                 title: LocaleKeys.degreeOfCommitment,
                 itemBuilder: (v) => AppText(v.title),
-                onChanged: (value) => _listenToData(asMaleCompleteProfileBody.copyWith(degreeOfCommitment: value?.value)),
+                onChanged: (value) => _listenToData(asMaleModel.copyWith(religiousCommitment: TitleValueShape.fromSingleLabel(value?.value))),
               ),
             ]
           ),
         );
 
       default:
-        return SharedFormFields<MaleParentCompleteProfileBody>(
+        return SharedFormFields<MaleModel>(
           restorationId: UserType.male.name,
-          onFinished: (data) => _listenToData(asMaleParentCompleteProfileBody.merge(data.copyWith())),
+          onFinished: (data) => _listenToData(asMaleModel.merge(data.copyWith())),
           onInitData: (List<Widget> children) => children..insert(
             0,
             SignUpTextField(
               upperTitle: LocaleKeys.name,
               title: LocaleKeys.pleaseEnterName,
               controller: _nameCont,
-              onChanged: (val) => _listenToData(asMaleParentCompleteProfileBody.copyWith(name: val)),
+              onChanged: (val) => _listenToData(asMaleModel.copyWith(name: val)),
               // validator: Validators.validateEmpty,
             ),
           )..insertAll(
@@ -117,14 +106,14 @@ class _MaleFieldsState extends State<MaleFields> {
             [
               SignUpImageWidget(onSelectImage: (image) {
                 selectedImage = image;
-                _listenToData(asMaleParentCompleteProfileBody.copyWith(image: selectedImage));
+                _listenToData(asMaleModel.copyWith(avatar: selectedImage?.path));
               }),
               SignUpTextField(
                 upperTitle: LocaleKeys.phoneNumber,
                 title: LocaleKeys.pleaseEnterTheNumber,
                 controller: _phoneCont,
                 inputType: TextInputType.phone,
-                onChanged: (val) => _listenToData(asMaleParentCompleteProfileBody.copyWith(phone: val)),
+                onChanged: (val) => _listenToData(asMaleModel.copyWith(phone: val)),
                 // validator: Validators.validateEmpty,
               ),
             ],
@@ -136,7 +125,7 @@ class _MaleFieldsState extends State<MaleFields> {
                   title: LocaleKeys.pleaseEnterTheNumber,
                   controller: _identifyNumberCont,
                   inputType: TextInputType.number,
-                  onChanged: (val) => _listenToData(asMaleParentCompleteProfileBody.copyWith(identifyNumber: val)),
+                  onChanged: (val) => _listenToData(asMaleModel.copyWith(identityNumber: val)),
                   // validator: Validators.validateEmpty,
                 ),
                 SignUpTextField(
@@ -144,7 +133,7 @@ class _MaleFieldsState extends State<MaleFields> {
                   title: LocaleKeys.pleaseEnterYourAge,
                   inputType: TextInputType.number,
                   controller: _ageCont,
-                  onChanged: (val) => _listenToData(asMaleParentCompleteProfileBody.copyWith(age: val)),
+                  onChanged: (val) => _listenToData(asMaleModel.copyWith(age: int.tryParse(val!))),
                   // validator: Validators.validateEmpty,
                 ),
               ]
@@ -155,7 +144,7 @@ class _MaleFieldsState extends State<MaleFields> {
               values: EnumsData.religiousCommitment.data,
               title: LocaleKeys.degreeOfCommitment,
               itemBuilder: (v) => AppText(v.title),
-              onChanged: (value) => _listenToData(asMaleParentCompleteProfileBody.copyWith(degreeOfCommitment: value?.value)),
+              onChanged: (value) => _listenToData(asMaleModel.copyWith(religiousCommitment: TitleValueShape.fromSingleLabel(value?.value))),
             ),
           ),
         );

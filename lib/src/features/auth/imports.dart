@@ -1,3 +1,5 @@
+import 'dart:developer';
+import 'dart:developer';
 import 'dart:io';
 import 'package:dropinity/custom_drop_down/dropinity.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,7 @@ import '../../core/helpers/helpers.dart';
 import '../../core/helpers/user_type_enum.dart';
 import '../../core/helpers/validators.dart';
 import '../../core/navigation/navigator.dart';
+import '../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../core/shared/models/user_models/user_model.dart';
 import '../../core/shared/user_cubit/user_cubit.dart';
 import '../../core/widgets/app_dropinity.dart';

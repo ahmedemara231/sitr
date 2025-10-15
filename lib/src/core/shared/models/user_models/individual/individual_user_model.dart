@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import '../../../../extensions/object.dart';
 import '../../title_value_shape.dart';
 import '../user_model.dart';
 
@@ -145,6 +148,31 @@ class IndividualUserModel extends UserModel {
     );
   }
 
+  Map<String, dynamic> toRequestBodyJson() => {
+    'dowry_min' : dowryMin,
+    'dowry_max' : dowryMax,
+    "nick_name": nickName,
+    "marital_status": maritalStatus?.value,
+    "height": height,
+    "weight": weight,
+    "current_job": currentJob,
+    "bio": bio,
+    "has_children": hasChildren,
+    "num_of_children": numOfChildren,
+    "child_custody": childCustody?.value,
+    "want_children": wantChildren,
+    "prohibited_things": prohibitedThings,
+    "wedding_type": weddingType?.value,
+    "city_id": cityId,
+    "education_level": educationLevel,
+    "is_prayer": isPrayer,
+    "health_conditions": healthConditions,
+    "chat_lang": chatLang,
+    "is_smoker": isSmoker,
+    "tribe_affiliation": tribeAffiliation,
+    "skin_color": skinColor?.value,
+  };
+
   @override
   Map<String, dynamic> toJson() {
     return super.toJson()..addAll({
@@ -176,7 +204,7 @@ class IndividualUserModel extends UserModel {
   }
 
   @override
-  UserModel copyWith({
+  IndividualUserModel copyWith({
       String? nickName,
       bool? isNotify,
       TitleValueShape? maritalStatus,
@@ -203,7 +231,6 @@ class IndividualUserModel extends UserModel {
     TitleValueShape? religiousCommitment,
       int? views,
     int? id, String? name, int? parentId, TitleValueShape? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) {
-
     return IndividualUserModel(
         id: id?? this.id,
         name: name?? this.name,

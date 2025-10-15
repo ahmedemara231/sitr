@@ -36,7 +36,7 @@ class _EnterMaleOrFemaleOrChildDataScreenState extends State<EnterMaleOrFemaleOr
     _mainType = ValueNotifier(widget.type ?? UserType.male);
   }
 
-  SharedFormFieldModel sharedFormFieldModel = SharedFormFieldModel.initial();
+  IndividualUserModel sharedFormFieldModel = IndividualUserModel.initial();
 
   @override
   void initState() {
@@ -70,10 +70,17 @@ class _EnterMaleOrFemaleOrChildDataScreenState extends State<EnterMaleOrFemaleOr
                 builder: (context, value, child) => value.isFemale
                     ? FemaleFields(
                         secondaryUserType: widget.secondaryType,
-                        onFinishFemaleData: (data) => sharedFormFieldModel = data
+                        onFinishFemaleData: (data) {
+                          log('the data is ${data.toJson()}');
+                          // sharedFormFieldModel = data;
+                        }
                 ) : MaleFields(
                         secondaryType: widget.secondaryType,
-                        onFinishMaleData: (data) => sharedFormFieldModel = data
+                        onFinishMaleData: (data) {
+                          log('the data is ${data.toRequestBodyJson()}');
+                          // log('the data is ${data.toJson()}');
+                          sharedFormFieldModel = data;
+                        }
                 ),
               ),
 

@@ -2,12 +2,12 @@ import '../../../../config/res/config_imports.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/network/network_request.dart';
 import '../../../../core/network/network_service.dart';
-import '../../models/city.dart';
+import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../models/kinship.dart';
 
 class AuthData{
-  static Future<List<City>> getCities()async{
-    List<City> citiesList = [];
+  static Future<List<CityModel>> getCities()async{
+    List<CityModel> citiesList = [];
     await injector<NetworkService>().callApi(
         NetworkRequest(
             method: RequestMethod.get,
@@ -15,7 +15,7 @@ class AuthData{
         ),
         mapper: (data) {
           citiesList =  (data as List)
-              .map((e) => City.fromJson(e))
+              .map((e) => CityModel.fromJson(e))
               .toList();
         }
     );

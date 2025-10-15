@@ -79,6 +79,7 @@ class FemaleModel extends IndividualUserModel {
     guardianRelation: Kinship(id: 0, value: ''),
   );
 
+
   factory FemaleModel.fromJson(Map<String, dynamic> json) {
     return FemaleModel(
       adminApprovalStatus: TitleValueShape.fromJson(json['admin_approval_status']),
@@ -159,8 +160,61 @@ class FemaleModel extends IndividualUserModel {
     return data;
   }
 
+  FemaleModel merge(FemaleModel otherFemaleModel){
+    return FemaleModel(
+      isNotify: isNotify ?? otherFemaleModel.isNotify,
+      id: id ?? otherFemaleModel.id,
+      name: name ?? otherFemaleModel.name,
+      parentId: parentId ?? otherFemaleModel.parentId,
+      type: type ?? otherFemaleModel.type,
+      gender: gender ?? otherFemaleModel.gender,
+      avatar: avatar ?? otherFemaleModel.avatar,
+      phone: phone ?? otherFemaleModel.phone,
+      countryCode: countryCode ?? otherFemaleModel.countryCode,
+      fullPhone: fullPhone ?? otherFemaleModel.fullPhone,
+      identityNumber: identityNumber ?? otherFemaleModel.identityNumber,
+      age: age ?? otherFemaleModel.age,
+      isActive: isActive ?? otherFemaleModel.isActive,
+      isBlocked: isBlocked ?? otherFemaleModel.isBlocked,
+      adminApprovalStatus: adminApprovalStatus ?? otherFemaleModel.adminApprovalStatus,
+      completeRegistration: completeRegistration ?? otherFemaleModel.completeRegistration,
+      token: token ?? otherFemaleModel.token,
+      nickName: nickName ?? otherFemaleModel.nickName,
+      maritalStatus: maritalStatus ?? otherFemaleModel.maritalStatus,
+      height: height ?? otherFemaleModel.height,
+      weight: weight ?? otherFemaleModel.weight,
+      currentJob: currentJob ?? otherFemaleModel.currentJob,
+      bio: bio ?? otherFemaleModel.bio,
+      hasChildren: hasChildren ?? otherFemaleModel.hasChildren,
+      numOfChildren: numOfChildren ?? otherFemaleModel.numOfChildren,
+      childCustody: childCustody ?? otherFemaleModel.childCustody,
+      wantChildren: wantChildren ?? otherFemaleModel.wantChildren,
+      prohibitedThings: prohibitedThings ?? otherFemaleModel.prohibitedThings,
+      dowryMin: dowryMin ?? otherFemaleModel.dowryMin,
+      dowryMax: dowryMax ?? otherFemaleModel.dowryMax,
+      weddingType: weddingType ?? otherFemaleModel.weddingType,
+      cityId: cityId ?? otherFemaleModel.cityId,
+      educationLevel: educationLevel ?? otherFemaleModel.educationLevel,
+      isPrayer: isPrayer ?? otherFemaleModel.isPrayer,
+      healthConditions: healthConditions ?? otherFemaleModel.healthConditions,
+      chatLang: chatLang ?? otherFemaleModel.chatLang,
+      isSmoker: isSmoker ?? otherFemaleModel.isSmoker,
+      tribeAffiliation: tribeAffiliation ?? otherFemaleModel.tribeAffiliation,
+      skinColor: skinColor ?? otherFemaleModel.skinColor,
+      religiousCommitment: religiousCommitment ?? otherFemaleModel.religiousCommitment,
+      views: views ?? otherFemaleModel.views,
+      hijab: hijab ?? otherFemaleModel.hijab,
+      acceptsPolygamy: acceptsPolygamy ?? otherFemaleModel.acceptsPolygamy,
+      preferredResidenceAfterMarriage: preferredResidenceAfterMarriage ?? otherFemaleModel.preferredResidenceAfterMarriage,
+      guardianName: guardianName ?? otherFemaleModel.guardianName,
+      guardianPhone: guardianPhone ?? otherFemaleModel.guardianPhone,
+      guardianCountryCode: guardianCountryCode ?? otherFemaleModel.guardianCountryCode,
+      guardianRelation: guardianRelation ?? otherFemaleModel.guardianRelation,
+    );
+  }
+
   @override
-  UserModel copyWith({
+  FemaleModel copyWith({
     bool? isNotify,
     String? hijab,
     bool? acceptsPolygamy,
