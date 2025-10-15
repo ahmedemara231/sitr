@@ -8,7 +8,7 @@ class CustomLoading {
   static Center showLoadingView() {
     return Center(
       child: SpinKitCircle(
-        color: AppColors.main,
+        color: AppColors.primary,
         size: AppSize.sH25,
       ),
     );

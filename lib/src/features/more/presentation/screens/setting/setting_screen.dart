@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../generated/assets.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
+import '../../../../../core/navigation/named_routes.dart';
 import '../../../../../core/navigation/navigator.dart';
 import '../../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../../core/widgets/app_bottom_sheet.dart';
@@ -62,10 +63,9 @@ class SettingScreen extends StatelessWidget {
                 ),
               ];
             },
-            // initialRoute: '/oldPhoneOtpScreen',
             onGenerateRoute: (setting) {
-              if(setting.name == '/oldPhoneOtpScreen'){
-                log('enter here r.runtimeType == OtpScreen');
+              log('the route name is ${setting.name}');
+              if(setting.name == NamedRoutes.oldPhoneOtpScreen.name){
                 return MaterialPageRoute(
                     builder: (context) => OtpScreen(
                       phone: UserCubit.instance.user.phone??'',
@@ -86,14 +86,13 @@ class SettingScreen extends StatelessWidget {
                     ),
                 );
 
-              }else if(setting.name == '/ChangePhoneSheetBody'){
-                log('enter here r.runtimeType == ChangePhoneSheetBody');
+              }else if(setting.name == NamedRoutes.changePhone.name){
                 return ModalBottomSheetRoute(
                     builder: (context) => const ChangePhoneSheetBody(),
                     isScrollControlled: true
                 );
 
-              }else if(setting.name == '/newPhoneOtpScreen'){
+              }else if(setting.name == NamedRoutes.newPhoneOtpScreen.routeName){
                 final args = setting.arguments as Map;
                 return MaterialPageRoute(
                   builder: (context) => OtpScreen(
