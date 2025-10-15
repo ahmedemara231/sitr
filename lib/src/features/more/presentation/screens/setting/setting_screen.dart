@@ -31,7 +31,7 @@ class SettingScreen extends StatelessWidget {
       MorItemModel(
         icon: Assets.svgUser,
         label: LocaleKeys.profile,
-        // onTap: () => Go.to(),
+        onTap: () => Go.to(EnterMaleOrFemaleOrChildDataScreen.editProfile()),
       ),
       MorItemModel(
         icon: Assets.svgContactPhone,

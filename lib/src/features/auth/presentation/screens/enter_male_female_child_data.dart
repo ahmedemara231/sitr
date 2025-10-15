@@ -1,6 +1,6 @@
 part of '../../imports.dart';
 
-enum ComesFrom { signUpAsPartner, signUpAsParent }
+enum ComesFrom { signUpAsPartner, signUpAsParent, editProfile }
 
 class EnterMaleOrFemaleOrChildDataScreen extends StatefulWidget {
   final ComesFrom from;
@@ -9,7 +9,7 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatefulWidget {
 
   const EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner({
     super.key,
-    required this.type,
+    required this.type
   })  : from = ComesFrom.signUpAsPartner,
         secondaryType = null;
 
@@ -18,6 +18,12 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatefulWidget {
   })  : from = ComesFrom.signUpAsParent,
         type = null,
         secondaryType = UserType.parent;
+
+  EnterMaleOrFemaleOrChildDataScreen.editProfile({
+    super.key,
+  }) : type = UserModel.currentUser.gender?.userType,
+        from = ComesFrom.editProfile,
+        secondaryType = null;
 
   @override
   State<EnterMaleOrFemaleOrChildDataScreen> createState() => _EnterMaleOrFemaleOrChildDataScreenState();
