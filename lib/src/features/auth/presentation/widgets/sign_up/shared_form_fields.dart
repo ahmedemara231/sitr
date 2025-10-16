@@ -63,8 +63,9 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
     }
   }
 
-  void _listenToData(T updatedModel) {
+  void _listenToData(T updatedModel, {String? comingVal}) {
     model = updatedModel;
+    log(model.nickName.toString());
     widget.onFinished.call(model);
   }
 
@@ -84,11 +85,11 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
     _init();
     _listenToModelChanges();
     _nickNameCont = TextEditingController(text: model.nickName);
-    _tallCont = TextEditingController(text: model.height.toString());
-    _weightCont = TextEditingController(text: model.weight.toString());
+    _tallCont = TextEditingController(text: model.height);
+    _weightCont = TextEditingController(text: model.weight);
     _currentJobCont = TextEditingController(text: model.currentJob);
     _briefCont = TextEditingController(text: model.bio);
-    _childrenNumberCont = TextEditingController(text: model.numOfChildren.toString());
+    _childrenNumberCont = TextEditingController(text: model.numOfChildren);
     _thingsCont = TextEditingController(text: model.prohibitedThings);
     _educationalQualificationCont = TextEditingController(text: model.educationLevel);
     _diseasesCont = TextEditingController(text: model.healthConditions);
@@ -131,7 +132,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         title: LocaleKeys.pleaseEnterTheTall,
         controller: _tallCont,
         inputType: TextInputType.number,
-        onChanged: (val) => _listenToData(model.copyWith(height: int.tryParse(val!)) as T),
+        onChanged: (val) => _listenToData(model.copyWith(height: val) as T),
         // validator: Validators.validateEmpty,
       ),
       SignUpTextField(
@@ -139,7 +140,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         title: LocaleKeys.pleaseEnterTheWeight,
         controller: _weightCont,
         inputType: TextInputType.number,
-        onChanged: (val) => _listenToData(model.copyWith(weight: int.tryParse(val!)) as T),
+        onChanged: (val) => _listenToData(model.copyWith(weight: val) as T),
         // validator: Validators.validateEmpty,
       ),
       SignUpTextField(
@@ -176,7 +177,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
                  controller: _childrenNumberCont,
                  inputType: TextInputType.number,
                  onChanged: (val) =>
-                     _listenToData(model.copyWith(numOfChildren: int.tryParse(val!)) as T),
+                     _listenToData(model.copyWith(numOfChildren: val) as T),
                  // validator: Validators.validateEmpty,
                ),
                RadioWidget<TitleValueShape>(

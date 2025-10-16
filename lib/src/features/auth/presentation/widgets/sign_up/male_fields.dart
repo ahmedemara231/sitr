@@ -17,7 +17,8 @@ class MaleFields extends StatefulWidget {
   final UserType? secondaryType;
   final void Function(IndividualUserModel data) onFinishMaleData;
 
-  const MaleFields({super.key,
+  const MaleFields({
+    super.key,
     required this.secondaryType,
     required this.onFinishMaleData,
   });
@@ -27,7 +28,6 @@ class MaleFields extends StatefulWidget {
 }
 
 class _MaleFieldsState extends State<MaleFields> {
-
   late IndividualUserModel sharedFormFieldModel;
   File? selectedImage;
 
@@ -45,7 +45,8 @@ class _MaleFieldsState extends State<MaleFields> {
     _init();
     _nameCont = TextEditingController(text: _currentUser.name);
     _phoneCont = TextEditingController(text: _currentUser.phone);
-    _identifyNumberCont = TextEditingController(text: _currentUser.identityNumber);
+    _identifyNumberCont =
+        TextEditingController(text: _currentUser.identityNumber);
     _ageCont = TextEditingController(text: _currentUser.age.toString());
     super.initState();
   }
@@ -58,80 +59,91 @@ class _MaleFieldsState extends State<MaleFields> {
     _ageCont.dispose();
     super.dispose();
   }
-  
+
   void _listenToData(IndividualUserModel updatedModel) {
     sharedFormFieldModel = updatedModel;
     widget.onFinishMaleData.call(sharedFormFieldModel);
   }
+
   MaleModel get asMaleModel => sharedFormFieldModel as MaleModel;
   @override
   Widget build(BuildContext context) {
-    switch(widget.secondaryType){
+    switch (widget.secondaryType) {
       case null:
         return SharedFormFields<MaleModel>(
           restorationId: UserType.male.name,
-          onFinished: (data) => _listenToData(asMaleModel.merge(data.copyWith())),
+          onFinished: (data) =>
+              _listenToData(asMaleModel.merge(data.copyWith())),
         );
 
       default:
         return SharedFormFields<MaleModel>(
           restorationId: UserType.male.name,
-          onFinished: (data) => _listenToData(asMaleModel.merge(data.copyWith())),
-          onInitData: (List<Widget> children) => children..insert(
-            0,
-            SignUpTextField(
-              upperTitle: LocaleKeys.name,
-              title: LocaleKeys.pleaseEnterName,
-              controller: _nameCont,
-              onChanged: (val) => _listenToData(asMaleModel.copyWith(name: val)),
-              // validator: Validators.validateEmpty,
-            ),
-          )..insertAll(
-            2,
-            [
-              SignUpImageWidget(onSelectImage: (image) {
-                selectedImage = image;
-                _listenToData(asMaleModel.copyWith(avatar: selectedImage?.path));
-              }),
+          onFinished: (data) =>
+              _listenToData(asMaleModel.merge(data.copyWith())),
+          onInitData: (List<Widget> children) => children
+            ..insert(
+              0,
               SignUpTextField(
-                upperTitle: LocaleKeys.phoneNumber,
-                title: LocaleKeys.pleaseEnterTheNumber,
-                controller: _phoneCont,
-                inputType: TextInputType.phone,
-                onChanged: (val) => _listenToData(asMaleModel.copyWith(phone: val)),
+                upperTitle: LocaleKeys.name,
+                title: LocaleKeys.pleaseEnterName,
+                controller: _nameCont,
+                onChanged: (val) =>
+                    _listenToData(asMaleModel.copyWith(name: _nameCont.text)),
                 // validator: Validators.validateEmpty,
               ),
-            ],
-          )..insertAll(
-              7,
+            )
+            ..insertAll(
+              2,
               [
+                SignUpImageWidget(onSelectImage: (image) {
+                  selectedImage = image;
+                  _listenToData(
+                      asMaleModel.copyWith(avatar: selectedImage?.path));
+                }),
                 SignUpTextField(
-                  upperTitle: LocaleKeys.identifyNumber,
+                  upperTitle: LocaleKeys.phoneNumber,
                   title: LocaleKeys.pleaseEnterTheNumber,
-                  controller: _identifyNumberCont,
-                  inputType: TextInputType.number,
-                  onChanged: (val) => _listenToData(asMaleModel.copyWith(identityNumber: val)),
+                  controller: _phoneCont,
+                  inputType: TextInputType.phone,
+                  onChanged: (val) => _listenToData(
+                      asMaleModel.copyWith(phone: _phoneCont.text)),
                   // validator: Validators.validateEmpty,
                 ),
-                SignUpTextField(
-                  upperTitle: LocaleKeys.age,
-                  title: LocaleKeys.pleaseEnterYourAge,
-                  inputType: TextInputType.number,
-                  controller: _ageCont,
-                  onChanged: (val) => _listenToData(asMaleModel.copyWith(age: int.tryParse(val!))),
-                  // validator: Validators.validateEmpty,
-                ),
-              ]
-          )..insert(
+              ],
+            )
+            ..insertAll(7, [
+              SignUpTextField(
+                upperTitle: LocaleKeys.identifyNumber,
+                title: LocaleKeys.pleaseEnterTheNumber,
+                controller: _identifyNumberCont,
+                inputType: TextInputType.number,
+                onChanged: (val) => _listenToData(asMaleModel.copyWith(
+                    identityNumber: _identifyNumberCont.text)),
+                // validator: Validators.validateEmpty,
+              ),
+              SignUpTextField(
+                upperTitle: LocaleKeys.age,
+                title: LocaleKeys.pleaseEnterYourAge,
+                inputType: TextInputType.number,
+                controller: _ageCont,
+                onChanged: (val) => _listenToData(
+                    asMaleModel.copyWith(age: int.tryParse(_ageCont.text))),
+                // validator: Validators.validateEmpty,
+              ),
+            ])
+            ..insert(
               20,
-            DropDownTextField<TitleValueShape>(
-              hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
-              values: EnumsData.religiousCommitment.data,
-              title: LocaleKeys.degreeOfCommitment,
-              itemBuilder: (v) => AppText(v.title),
-              onChanged: (value) => _listenToData(asMaleModel.copyWith(religiousCommitment: TitleValueShape.fromSingleLabel(value?.value))),
+              DropDownTextField<TitleValueShape>(
+                hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
+                values: EnumsData.religiousCommitment.data,
+                title: LocaleKeys.degreeOfCommitment,
+                itemBuilder: (v) => AppText(v.title),
+                onChanged: (value) => _listenToData(asMaleModel.copyWith(
+                    religiousCommitment:
+                        TitleValueShape.fromSingleLabel(value?.value))),
+              ),
             ),
-          ),
         );
     }
   }

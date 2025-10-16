@@ -5,12 +5,12 @@ import '../user_model.dart';
 class IndividualUserModel extends UserModel {
   final String? nickName;
   final TitleValueShape? maritalStatus;
-  final num? height;
-  final num? weight;
+  final String? height;
+  final String? weight;
   final String? currentJob;
   final String? bio;
   final bool? hasChildren;
-  final int? numOfChildren;
+  final String? numOfChildren;
   final TitleValueShape? childCustody;
   final bool? wantChildren;
   final String? prohibitedThings;
@@ -74,12 +74,12 @@ class IndividualUserModel extends UserModel {
   factory IndividualUserModel.initial() => IndividualUserModel(
     nickName: '',
     maritalStatus: TitleValueShape.initial(),
-    height: 0,
-    weight: 0,
+    height: '',
+    weight: '',
     currentJob: '',
     bio: '',
     hasChildren: false,
-    numOfChildren: 0,
+    numOfChildren: '',
     childCustody: TitleValueShape.initial(),
     wantChildren: false,
     prohibitedThings: '',
@@ -203,12 +203,12 @@ class IndividualUserModel extends UserModel {
       String? nickName,
       bool? isNotify,
       TitleValueShape? maritalStatus,
-      int? height,
-      int? weight,
+      String? height,
+      String? weight,
       String? currentJob,
       String? bio,
       bool? hasChildren,
-      int? numOfChildren,
+      String? numOfChildren,
     TitleValueShape? childCustody,
       bool? wantChildren,
       String? prohibitedThings,

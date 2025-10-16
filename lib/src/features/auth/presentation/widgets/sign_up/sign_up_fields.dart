@@ -1,10 +1,10 @@
 part of '../../../imports.dart';
 
 class SignUpFields extends StatefulWidget {
-
   final UserType type;
   final Future<void> Function(SignUpBody body) onFinish;
-  const SignUpFields({super.key,
+  const SignUpFields({
+    super.key,
     required this.type,
     required this.onFinish,
   });
@@ -14,7 +14,6 @@ class SignUpFields extends StatefulWidget {
 }
 
 class _SignUpFieldsState extends State<SignUpFields> {
-
   late TextEditingController _maleNameCont;
   late TextEditingController _malePhoneCont;
   late TextEditingController _maleAgeCont;
@@ -26,7 +25,6 @@ class _SignUpFieldsState extends State<SignUpFields> {
   late TextEditingController _femaleAgeCont;
   late TextEditingController _femaleIdentifyNumberCont;
   late TextEditingController _femaleCodeCont;
-
 
   late TextEditingController _parentNameCont;
   late TextEditingController _parentPhoneCont;
@@ -99,14 +97,11 @@ class _SignUpFieldsState extends State<SignUpFields> {
   UserType? _gender;
   Kinship? _kinship;
 
-
-  File? get _getImageBasedGender{
-    if(widget.type.isMale){
+  File? get _getImageBasedGender {
+    if (widget.type.isMale) {
       return _maleImage;
-
-    }else if(widget.type.isFemale){
+    } else if (widget.type.isFemale) {
       return _femaleImage;
-
     }
 
     return null;
@@ -114,8 +109,8 @@ class _SignUpFieldsState extends State<SignUpFields> {
 
   late SignUpBody signUpBody;
   final DropinityController controller = DropinityController();
-  void _initSignupBody(UserType newType){
-    if(newType.isParent){
+  void _initSignupBody(UserType newType) {
+    if (newType.isParent) {
       signUpBody = ParentSignUp.initial().copyWith(
         image: _image,
         name: _parentNameCont.text,
@@ -127,20 +122,30 @@ class _SignUpFieldsState extends State<SignUpFields> {
         gender: _gender?.name,
         code: _parentCodeCont.text,
       );
-
-    }else{
+    } else {
       signUpBody = MaleAndFemaleSignUp.initial().copyWith(
         image: _getImageBasedGender,
-        name: _getContBasedUserType(whenMale: _maleNameCont, whenFemale: _femaleNameCont).text,
-        phone: _getContBasedUserType(whenMale: _malePhoneCont, whenFemale: _femalePhoneCont).text,
-        age: _getContBasedUserType(whenMale: _maleAgeCont, whenFemale: _femaleAgeCont).text,
-        identityNumber: _getContBasedUserType(whenMale: _maleIdentifyNumberCont, whenFemale: _femaleIdentifyNumberCont).text,
-        code: _getContBasedUserType(whenMale: _maleCodeCont, whenFemale: _femaleCodeCont).text,
+        name: _getContBasedUserType(
+                whenMale: _maleNameCont, whenFemale: _femaleNameCont)
+            .text,
+        phone: _getContBasedUserType(
+                whenMale: _malePhoneCont, whenFemale: _femalePhoneCont)
+            .text,
+        age: _getContBasedUserType(
+                whenMale: _maleAgeCont, whenFemale: _femaleAgeCont)
+            .text,
+        identityNumber: _getContBasedUserType(
+                whenMale: _maleIdentifyNumberCont,
+                whenFemale: _femaleIdentifyNumberCont)
+            .text,
+        code: _getContBasedUserType(
+                whenMale: _maleCodeCont, whenFemale: _femaleCodeCont)
+            .text,
       );
     }
 
     _listenToData(signUpBody);
-    if(widget.type.isIndividual){
+    if (widget.type.isIndividual) {
       _listenToData(signUpBody.copyWith(gender: widget.type.name));
     }
   }
@@ -158,14 +163,14 @@ class _SignUpFieldsState extends State<SignUpFields> {
         return whenFemale;
 
       case UserType.parent:
-        return whenParent?? TextEditingController();
+        return whenParent ?? TextEditingController();
 
       default:
         return TextEditingController();
     }
   }
 
-  void _listenToData(SignUpBody body){
+  void _listenToData(SignUpBody body) {
     signUpBody = body;
     widget.onFinish.call(signUpBody);
   }
@@ -175,81 +180,109 @@ class _SignUpFieldsState extends State<SignUpFields> {
     return Column(
       spacing: 12.h,
       children: [
-        SignUpImageWidget(onSelectImage: (img) => _listenToData(signUpBody.copyWith(image: img))),
+        SignUpImageWidget(
+            onSelectImage: (img) =>
+                _listenToData(signUpBody.copyWith(image: img))),
         SignUpTextField(
           upperTitle: LocaleKeys.name,
           title: LocaleKeys.pleaseEnterYourName,
-          onChanged: (val) => _listenToData(signUpBody.copyWith(name: val)),
-          controller: _getContBasedUserType(whenMale: _maleNameCont, whenFemale: _femaleNameCont, whenParent: _parentNameCont),
+          onChanged: (val) => _listenToData(signUpBody.copyWith(
+              name: _getContBasedUserType(
+                      whenMale: _maleNameCont,
+                      whenFemale: _femaleNameCont,
+                      whenParent: _parentNameCont)
+                  .text)),
+          controller: _getContBasedUserType(
+              whenMale: _maleNameCont,
+              whenFemale: _femaleNameCont,
+              whenParent: _parentNameCont),
           // validator: Validators.validateEmpty,
         ),
         SignUpTextField(
           upperTitle: LocaleKeys.phoneNumber,
           title: LocaleKeys.pleaseEnterTheNumber,
-          controller: _getContBasedUserType(whenMale: _malePhoneCont, whenFemale: _femalePhoneCont, whenParent: _parentPhoneCont),
-          onChanged: (val) => _listenToData(signUpBody.copyWith(phone: val)),
+          controller: _getContBasedUserType(
+              whenMale: _malePhoneCont,
+              whenFemale: _femalePhoneCont,
+              whenParent: _parentPhoneCont),
+          onChanged: (val) => _listenToData(signUpBody.copyWith(
+              phone: _getContBasedUserType(
+                      whenMale: _malePhoneCont,
+                      whenFemale: _femalePhoneCont,
+                      whenParent: _parentPhoneCont)
+                  .text)),
           // validator: Validators.validatePhone,
           inputType: TextInputType.number,
         ),
-
-          Visibility(
-            visible: widget.type.isParent,
-            child: SignUpTextField(
-              upperTitle: LocaleKeys.email,
-              title: LocaleKeys.pleaseEnterTheEmail,
-              controller: _emailCont,
-              onChanged: (val) => _listenToData((signUpBody as ParentSignUp).copyWith(email: val)),
-              inputType: TextInputType.emailAddress,
-              // validator: Validators.validateEmpty,
-            ),
+        Visibility(
+          visible: widget.type.isParent,
+          child: SignUpTextField(
+            upperTitle: LocaleKeys.email,
+            title: LocaleKeys.pleaseEnterTheEmail,
+            controller: _emailCont,
+            onChanged: (val) => _listenToData(
+                (signUpBody as ParentSignUp).copyWith(email: _emailCont.text)),
+            inputType: TextInputType.emailAddress,
+            // validator: Validators.validateEmpty,
           ),
-
+        ),
         Visibility(
           visible: widget.type.isIndividual,
-            child: SignUpTextField(
-              upperTitle: LocaleKeys.age,
-              title: LocaleKeys.pleaseEnterYourAge,
-              onChanged: (val) => _listenToData((signUpBody as MaleAndFemaleSignUp).copyWith(age: val)),
-              controller: _getContBasedUserType(whenMale: _maleAgeCont, whenFemale: _femaleAgeCont),
-              inputType: TextInputType.number,
-              // validator: Validators.validateEmpty,
-            ),
+          child: SignUpTextField(
+            upperTitle: LocaleKeys.age,
+            title: LocaleKeys.pleaseEnterYourAge,
+            onChanged: (val) => _listenToData(
+                (signUpBody as MaleAndFemaleSignUp).copyWith(
+                    age: _getContBasedUserType(
+                            whenMale: _maleAgeCont, whenFemale: _femaleAgeCont)
+                        .text)),
+            controller: _getContBasedUserType(
+                whenMale: _maleAgeCont, whenFemale: _femaleAgeCont),
+            inputType: TextInputType.number,
+            // validator: Validators.validateEmpty,
           ),
-
+        ),
         SignUpTextField(
           upperTitle: LocaleKeys.identifyNumber,
           title: LocaleKeys.pleaseEnterTheNumber,
-          controller: _getContBasedUserType(whenMale: _maleIdentifyNumberCont, whenFemale: _femaleIdentifyNumberCont, whenParent: _parentIdentifyNumberCont),
-          onChanged: (val) => _listenToData(signUpBody.copyWith(identityNumber: val)),
+          controller: _getContBasedUserType(
+              whenMale: _maleIdentifyNumberCont,
+              whenFemale: _femaleIdentifyNumberCont,
+              whenParent: _parentIdentifyNumberCont),
+          onChanged: (val) => _listenToData(signUpBody.copyWith(
+              identityNumber: _getContBasedUserType(
+                      whenMale: _maleIdentifyNumberCont,
+                      whenFemale: _femaleIdentifyNumberCont,
+                      whenParent: _parentIdentifyNumberCont)
+                  .text)),
           inputType: TextInputType.number,
           // validator: Validators.validateEmpty,
         ),
-
         if (widget.type.isParent) ...[
           AppDropinity<List<Kinship>, Kinship>.withApiRequest(
             controller: controller,
-            initialValue: _kinship?.value??'',
+            initialValue: _kinship?.value ?? '',
             asyncCall: (context, page) async => await AuthData.getKinships(),
             getLabel: (e) => e.value,
             hint: LocaleKeys.pleaseEnterTheKinship,
             title: LocaleKeys.kinship,
             onChanged: (val) {
               _kinship = val;
-              _listenToData((signUpBody as ParentSignUp).copyWith(kinship: val.id));
+              _listenToData(
+                  (signUpBody as ParentSignUp).copyWith(kinship: val.id));
             },
           ),
-
           SignUpTextField(
             upperTitle: LocaleKeys.childrenNumber,
             title: LocaleKeys.pleaseEnterTheNumber,
             controller: _childrenNumberCont,
             inputType: TextInputType.number,
-            onChanged: (val) => _listenToData((signUpBody as ParentSignUp).copyWith(childrenNumber: val)),
+            onChanged: (val) => _listenToData((signUpBody as ParentSignUp)
+                .copyWith(childrenNumber: _childrenNumberCont.text)),
             // validator: Validators.validateEmpty,
           ),
-
           AppDropinityLocal<UserType>(
-            listHeight: 100,
+              listHeight: 100,
               hint: _gender?.translate ?? LocaleKeys.pleaseEnterTheGender,
               initialValue: _gender?.name,
               title: LocaleKeys.gender,
@@ -257,16 +290,23 @@ class _SignUpFieldsState extends State<SignUpFields> {
               getLabel: (element) => element.translate,
               onChanged: (val) {
                 _gender = val;
-                _listenToData((signUpBody as ParentSignUp).copyWith(gender: val.name));
-              }
-          ),
+                _listenToData(
+                    (signUpBody as ParentSignUp).copyWith(gender: val.name));
+              }),
         ],
-
         SignUpTextField(
           upperTitle: LocaleKeys.code,
           title: LocaleKeys.pleaseEnterYourCode,
-          onChanged: (val) => _listenToData(signUpBody.copyWith(code: val)),
-          controller: _getContBasedUserType(whenMale: _maleCodeCont, whenFemale: _femaleCodeCont, whenParent: _parentCodeCont),
+          onChanged: (val) => _listenToData(signUpBody.copyWith(
+              code: _getContBasedUserType(
+                      whenMale: _maleCodeCont,
+                      whenFemale: _femaleCodeCont,
+                      whenParent: _parentCodeCont)
+                  .text)),
+          controller: _getContBasedUserType(
+              whenMale: _maleCodeCont,
+              whenFemale: _femaleCodeCont,
+              whenParent: _parentCodeCont),
           inputType: TextInputType.number,
           // validator: Validators.validateEmpty,
         ),

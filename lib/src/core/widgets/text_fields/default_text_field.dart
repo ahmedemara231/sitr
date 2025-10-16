@@ -125,12 +125,14 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
   }
 
   void _debounce(String val){
-    EasyDebounce.debounce(
-      'text_field_${UniqueKey()}', // unique key
-      const Duration(milliseconds: 600),
-          () => widget.onChanged?.call(val),
-    );
+    // EasyDebounce.debounce(
+    //   'text_field_${widget.hashCode}', // unique key
+    //   const Duration(milliseconds: 200),
+    //       () => widget.onChanged?.call(val),
+    // );
+    widget.onChanged?.call(val);
   }
+
   @override
   Widget build(BuildContext context) {
     final bool isLabel = widget.label != null;

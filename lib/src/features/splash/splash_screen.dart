@@ -26,75 +26,18 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    // _testFakeData();
     _manipulateSplashData();
     _initApp();
     super.initState();
   }
 
-  void _testFakeData(){
-    final FemaleModel female = FemaleModel(
-      id: 60,
-      name: "جواهر القحطاني",
-      parentId: null,
-      type: TitleValueShape.fromJson({
-        "value": "individual",
-        "title": "فرد"
-      }),
-      gender: Gender.fromJson({'title' : 'انثي', 'value' : 'female'}),
-      avatar: "https://setr.test/storage/uploads/users/1753656889_8377.jpg",
-      phone: "500500902",
-      countryCode: "966",
-      fullPhone: "966500500902",
-      identityNumber: "5005009002",
-      age: 26,
-      isActive: true,
-      isBlocked: false,
-      adminApprovalStatus: TitleValueShape.initial(),
-      completeRegistration: "completed",
-      token: "Bearer 166|WUktBilvQvagmy3p11HtZx9bKSBS6iEEqBmLXIgu",
-      // token: "Bearer 163|HHo3wbY3XYokTkKKl8AdDxHFzgjbKzsiVDYL0EOl",
-      // token: "Bearer 145|qjG9asgeoAZcqWJgRUzzj734XAw60PciGrxiInD4",
-      nickName: "جوجو",
-      maritalStatus: TitleValueShape.fromJson({'title' : 'انثي', 'value' : 'female'}),
-      height: 160,
-      weight: 52,
-      currentJob: "معلمة",
-      bio: "أبحث عن شريك حياة يقدّر الاحترام والصدق، وأحب الحياة الأسرية المستقرة.",
-      hasChildren: true,
-      numOfChildren: 2,
-      childCustody: TitleValueShape.fromJson({'title' : 'انثي', 'value' : 'female'}),
-      wantChildren: true,
-      prohibitedThings: "الإهمال والكذب",
-      weddingType: TitleValueShape.fromJson({'title' : 'انثي', 'value' : 'female'}),
-      cityId: CityModel.fromJson({'title' : 'انثي', 'value' : 'female'}),
-      educationLevel: "ماجستير",
-      isPrayer: true,
-      healthConditions: "حساسية بسيطة",
-      chatLang: "ar",
-      isSmoker: false,
-      tribeAffiliation: true,
-      skinColor: const TitleValueShape(title: 'title', value: 'value'),
-      religiousCommitment: TitleValueShape.fromJson({'title' : 'انثي', 'value' : 'female'}),
-      views: 0,
-      hijab: "hijab",
-      acceptsPolygamy: false,
-      preferredResidenceAfterMarriage: "المدينة المنورة",
-      guardianName: "عبدالله القحطاني",
-      guardianPhone: "500500511",
-      guardianCountryCode: "966",
-      guardianRelation: Kinship.fromJson(const {'id' : 1, 'name' : 'father'}),
-    );
-
-    UserCubit.instance.updateUser(female);
-  }
   void _initApp() async {
     NotificationNavigator(
       onRoutingMessage: (message) {
         NotificationRoutes.navigateByType(message.data);
       },
       onNoInitialMessage: () {},
-    ); // TODO add notification navigator
+    );
     await injector<NotificationService>()
         .setupNotifications();
   }
