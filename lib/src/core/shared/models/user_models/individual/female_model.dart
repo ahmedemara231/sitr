@@ -157,9 +157,7 @@ class FemaleModel extends IndividualUserModel {
   }
 
   @override
-  Map<String, dynamic> toJson() {
-    final data = super.toJson();
-    data.addAll({
+  Map<String, dynamic> toJson() => super.toJson()..addAll({
       'hijab': hijab,
       'accepts_polygamy': acceptsPolygamy,
       'preferred_residence_after_marriage': preferredResidenceAfterMarriage,
@@ -168,8 +166,6 @@ class FemaleModel extends IndividualUserModel {
       'guardian_country_code': guardianCountryCode,
       'guardian_relation': guardianRelation,
     });
-    return data;
-  }
 
   FemaleModel merge(FemaleModel otherFemaleModel) {
     return FemaleModel(

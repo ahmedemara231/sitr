@@ -234,6 +234,4 @@ class MaleModel extends IndividualUserModel {
       isNotify: otherMaleModel.isNotify ?? isNotify,
     );
   }
-
-
 }
