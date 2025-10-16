@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +12,7 @@ import '../../../../../core/shared/models/user_models/individual/individual_user
 import '../../../../../core/shared/models/user_models/individual/male_model.dart';
 import '../../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../../core/widgets/app_text.dart';
+import '../../../models/dowry.dart';
 import '../../data/auth_data.dart';
 import '../../data/enums_data.dart';
 import '../../enums/answer.dart';
@@ -203,10 +206,8 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         // validator: Validators.validateEmpty,
       ),
       DowryWidget(onSelect: (from, to) {
-        _listenToData(model.copyWith(
-          dowryMin: int.tryParse(from),
-          dowryMax: int.tryParse(to),
-        ) as T);
+        log('the data is ${int.tryParse(from)}'); // 6666
+        _listenToData(model.copyWith(dowry: Dowry(from: from, to: to)) as T);
       }),
 
       DropDownTextField<TitleValueShape>(
@@ -274,6 +275,14 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         itemBuilder: (v) => AppText(v.title.tr()),
         title: LocaleKeys.skinColor,
         onChanged: (val) => _listenToData(model.copyWith(skinColor: TitleValueShape.fromSingleLabel(val?.value)) as T),
+      ),
+
+      DropDownTextField<TitleValueShape>(
+        hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
+        values: EnumsData.religiousCommitment.data,
+        title: LocaleKeys.degreeOfCommitment,
+        itemBuilder: (v) => AppText(v.title),
+        onChanged: (value) => _listenToData(model.copyWith(religiousCommitment: TitleValueShape.fromSingleLabel(value?.value)) as T),
       ),
     ];
 

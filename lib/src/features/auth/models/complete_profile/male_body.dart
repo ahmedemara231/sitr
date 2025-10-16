@@ -47,8 +47,8 @@ class MaleCompleteProfileBody extends SharedFormFieldModel{
     return MaleCompleteProfileBody(
         degreeOfCommitment: maleModel!.religiousCommitment!.title,
         dowry: Dowry(
-            from: maleModel.dowryMin.toString(),
-            to: maleModel.dowryMax.toString()
+            from: maleModel.dowry!.from.toString(),
+            to: maleModel.dowry!.to.toString()
         ),
         nickName: maleModel.nickName??'',
         maritalStatus: maleModel.maritalStatus?.title??'',

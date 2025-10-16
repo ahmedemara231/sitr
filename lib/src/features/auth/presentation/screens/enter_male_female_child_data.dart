@@ -72,13 +72,12 @@ class _EnterMaleOrFemaleOrChildDataScreenState extends State<EnterMaleOrFemaleOr
                         secondaryUserType: widget.secondaryType,
                         onFinishFemaleData: (data) {
                           log('the data is ${data.toJson()}');
-                          // sharedFormFieldModel = data;
+                          sharedFormFieldModel = data;
                         }
                 ) : MaleFields(
                         secondaryType: widget.secondaryType,
                         onFinishMaleData: (data) {
                           log('the data is ${data.toRequestBodyJson()}');
-                          // log('the data is ${data.toJson()}');
                           sharedFormFieldModel = data;
                         }
                 ),

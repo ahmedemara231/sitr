@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/extensions/enum.dart';
-import '../../../../../core/extensions/object.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
 import '../../../../../core/shared/models/title_value_shape.dart';
 import '../../../../../core/shared/models/user_models/individual/female_model.dart';
-import '../../../../../core/shared/models/user_models/user_model.dart';
+import '../../../../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../models/kinship.dart';
 import '../../data/auth_data.dart';
@@ -18,7 +17,7 @@ import 'shared_form_fields.dart';
 
 class FemaleFields extends StatefulWidget {
   final UserType? secondaryUserType;
-  final void Function(UserModel data) onFinishFemaleData;
+  final void Function(IndividualUserModel data) onFinishFemaleData;
   const FemaleFields({
     super.key,
     required this.secondaryUserType,
@@ -31,7 +30,7 @@ class FemaleFields extends StatefulWidget {
 
 class _FemaleFieldsState extends State<FemaleFields> {
 
-  late UserModel femaleFields;
+  late IndividualUserModel femaleFields;
 
   void _init() => femaleFields = FemaleModel.initial();
 
@@ -51,7 +50,6 @@ class _FemaleFieldsState extends State<FemaleFields> {
   @override
   void initState() {
     _init();
-    _listenToWearingHijab();
     _nameCont = TextEditingController();
     _liveAfterMarryCont = TextEditingController();
     _parentNameCont = TextEditingController();
@@ -76,7 +74,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
     super.dispose();
   }
 
-  void _listenToData(UserModel updatedModel) {
+  void _listenToData(IndividualUserModel updatedModel) {
     femaleFields = updatedModel;
     widget.onFinishFemaleData.call(femaleFields);
   }
@@ -87,16 +85,16 @@ class _FemaleFieldsState extends State<FemaleFields> {
 
   final _formKey = GlobalKey<FormState>();
 
-  void _wearingHijabListener(){
-    if(wearingHijab.value.isNull || wearingHijab.value!.isEmpty){
-      degreeOfCommitment = null;
-      _listenToData(asFemale.copyWith(religiousCommitment: null));
-    }
-  }
-
-  void _listenToWearingHijab(){
-    wearingHijab.addListener(_wearingHijabListener);
-  }
+  // void _wearingHijabListener(){
+  //   if(wearingHijab.value.isNull || wearingHijab.value!.isEmpty){
+  //     degreeOfCommitment = null;
+  //     _listenToData(asFemale.copyWith(religiousCommitment: null));
+  //   }
+  // }
+  //
+  // void _listenToWearingHijab(){
+  //   wearingHijab.addListener(_wearingHijabListener);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -135,16 +133,6 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 wearingHijab.value = value?.value;
                 _listenToData(asFemale.copyWith(hijab: wearingHijab.value));
               },
-            ),
-            ValueListenableBuilder(
-              valueListenable: wearingHijab,
-              builder: (context, value, child) => value?.isNotEmpty?? false? DropDownTextField<TitleValueShape>(
-                hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
-                values: EnumsData.religiousCommitment.data,
-                title: LocaleKeys.degreeOfCommitment,
-                itemBuilder: (v) => AppText(v.title),
-                onChanged: (value) => _listenToData(asFemale.copyWith(religiousCommitment: TitleValueShape(title: '', value: value!.value))),
-              ) : const SizedBox.shrink(),
             ),
 
               SignUpTextField(
@@ -234,16 +222,6 @@ class _FemaleFieldsState extends State<FemaleFields> {
                   wearingHijab.value = value?.value;
                   _listenToData(asFemale.copyWith(hijab: wearingHijab.value));
                 },
-              ),
-              ValueListenableBuilder(
-                valueListenable: wearingHijab,
-                builder: (context, value, child) => value?.isNotEmpty?? false? DropDownTextField<TitleValueShape>(
-                  hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
-                  values: EnumsData.religiousCommitment.data,
-                  title: LocaleKeys.degreeOfCommitment,
-                  itemBuilder: (v) => AppText(v.title),
-                  onChanged: (value) => _listenToData(asFemale.copyWith(religiousCommitment: TitleValueShape(title: '', value: value!.value))),
-                ) : const SizedBox.shrink(),
               ),
 
               SignUpTextField(

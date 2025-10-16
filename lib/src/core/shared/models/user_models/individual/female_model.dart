@@ -1,3 +1,4 @@
+import '../../../../../features/auth/models/dowry.dart';
 import '../../../../../features/auth/models/kinship.dart';
 import '../../../../extensions/object.dart';
 import '../../title_value_shape.dart';
@@ -42,8 +43,7 @@ class FemaleModel extends IndividualUserModel {
     super.childCustody,
     super.wantChildren,
     super.prohibitedThings,
-    super.dowryMin,
-    super.dowryMax,
+    super.dowry,
     super.weddingType,
     super.cityId,
     super.educationLevel,
@@ -125,8 +125,7 @@ class FemaleModel extends IndividualUserModel {
       numOfChildren: json['num_of_children'],
       wantChildren: json['want_children'],
       prohibitedThings: json['prohibited_things'],
-      dowryMin: json['dowry_min'],
-      dowryMax: json['dowry_max'],
+      dowry: Dowry(from: json['dowry_min'], to: json['dowry_max']),
       educationLevel: json['education_level'],
       isPrayer: json['is_prayer'],
       healthConditions: json['health_conditions'],
@@ -143,6 +142,18 @@ class FemaleModel extends IndividualUserModel {
       guardianCountryCode: json['guardian_country_code'],
       guardianRelation: Kinship.fromJson(json['guardian_relation'])
     );
+  }
+
+  @override
+  Map<String, dynamic> toRequestBodyJson() {
+    return super.toRequestBodyJson()..addAll({
+      'preferred_residence_after_marriage': preferredResidenceAfterMarriage,
+      'accepts_polygamy': acceptsPolygamy,
+      'guardian_name': guardianName,
+      'guardian_phone': guardianPhone,
+      'guardian_relation_id': guardianRelation?.id.toString(),
+      'hijab': hijab,
+    });
   }
 
   @override
@@ -190,8 +201,7 @@ class FemaleModel extends IndividualUserModel {
       childCustody: childCustody ?? otherFemaleModel.childCustody,
       wantChildren: wantChildren ?? otherFemaleModel.wantChildren,
       prohibitedThings: prohibitedThings ?? otherFemaleModel.prohibitedThings,
-      dowryMin: dowryMin ?? otherFemaleModel.dowryMin,
-      dowryMax: dowryMax ?? otherFemaleModel.dowryMax,
+      dowry: dowry ?? otherFemaleModel.dowry,
       weddingType: weddingType ?? otherFemaleModel.weddingType,
       cityId: cityId ?? otherFemaleModel.cityId,
       educationLevel: educationLevel ?? otherFemaleModel.educationLevel,
@@ -223,7 +233,7 @@ class FemaleModel extends IndividualUserModel {
     String? guardianPhone,
     String? guardianCountryCode,
     Kinship? guardianRelation,
-    String? nickName, TitleValueShape? maritalStatus, int? height, int? weight, String? currentJob, String? bio, bool? hasChildren, int? numOfChildren, TitleValueShape? childCustody, bool? wantChildren, String? prohibitedThings, int? dowryMin, int? dowryMax, TitleValueShape? weddingType, CityModel? cityId, String? educationLevel, bool? isPrayer, String? healthConditions, String? chatLang, bool? isSmoker, bool? tribeAffiliation, TitleValueShape? skinColor, TitleValueShape? religiousCommitment, int? views, int? id, String? name, int? parentId, TitleValueShape? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) {
+    String? nickName, TitleValueShape? maritalStatus, int? height, int? weight, String? currentJob, String? bio, bool? hasChildren, int? numOfChildren, TitleValueShape? childCustody, bool? wantChildren, String? prohibitedThings, Dowry? dowry, TitleValueShape? weddingType, CityModel? cityId, String? educationLevel, bool? isPrayer, String? healthConditions, String? chatLang, bool? isSmoker, bool? tribeAffiliation, TitleValueShape? skinColor, TitleValueShape? religiousCommitment, int? views, int? id, String? name, int? parentId, TitleValueShape? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) {
 
     return FemaleModel(
       isNotify: isNotify ?? this.isNotify,
@@ -254,8 +264,7 @@ class FemaleModel extends IndividualUserModel {
       childCustody: childCustody ?? this.childCustody,
       wantChildren: wantChildren ?? this.wantChildren,
       prohibitedThings: prohibitedThings ?? this.prohibitedThings,
-      dowryMin: dowryMin ?? this.dowryMin,
-      dowryMax: dowryMax ?? this.dowryMax,
+      dowry: dowry ?? this.dowry,
       weddingType: weddingType ?? this.weddingType,
       cityId: cityId ?? this.cityId,
       educationLevel: educationLevel ?? this.educationLevel,

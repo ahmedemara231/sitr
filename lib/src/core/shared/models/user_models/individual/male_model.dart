@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import '../../../../../features/auth/models/dowry.dart';
 import '../../../../extensions/object.dart';
 import '../../title_value_shape.dart' show TitleValueShape;
 import '../user_model.dart';
@@ -34,8 +35,7 @@ class MaleModel extends IndividualUserModel {
     super.childCustody,
     super.wantChildren,
     super.prohibitedThings,
-    super.dowryMin,
-    super.dowryMax,
+    super.dowry,
     super.weddingType,
     super.cityId,
     super.educationLevel,
@@ -71,6 +71,7 @@ class MaleModel extends IndividualUserModel {
       age: json['age'],
       isActive: json['is_active'],
       isBlocked: json['is_blocked'],
+      isNotify: json['is_notify'],
 
       token: json['token'],
       nickName: json['nick_name'],
@@ -84,8 +85,9 @@ class MaleModel extends IndividualUserModel {
 
       wantChildren: json['want_children'],
       prohibitedThings: json['prohibited_things'],
-      dowryMin: json['dowry_min'],
-      dowryMax: json['dowry_max'],
+
+      dowry: ((json['dowry_min'] as Object?).isNotNull && (json['dowry_max'] as Object?).isNotNull)?
+      Dowry(from: json['dowry_min'], to: json['dowry_max']) : null,
 
       adminApprovalStatus: TitleValueShape.fromJson(json['admin_approval_status']),
       completeRegistration: json['complete_registration'],
@@ -116,18 +118,7 @@ class MaleModel extends IndividualUserModel {
     );
   }
 
-  @override
-  Map<String, dynamic> toRequestBodyJson() {
-    return super.toRequestBodyJson()..addAll({
-      'name' : name,
-      'gender' : gender?.titleValueShape?.value,
-      'age' : age,
-      'phone' : phone,
-      'identity_number' : identityNumber,
-      'avatar' : avatar.isNotNull? File(avatar!) : null,
-      'religious_commitment': religiousCommitment,
-    });
-  }
+
   @override
   MaleModel copyWith({
     String? nickName,
@@ -142,8 +133,7 @@ class MaleModel extends IndividualUserModel {
     TitleValueShape? childCustody,
     bool? wantChildren,
     String? prohibitedThings,
-    int? dowryMin,
-    int? dowryMax,
+    Dowry? dowry,
     TitleValueShape? weddingType,
     CityModel? cityId,
     String? educationLevel,
@@ -184,8 +174,7 @@ class MaleModel extends IndividualUserModel {
       childCustody: childCustody ?? this.childCustody,
       wantChildren: wantChildren ?? this.wantChildren,
       prohibitedThings: prohibitedThings ?? this.prohibitedThings,
-      dowryMin: dowryMin ?? this.dowryMin,
-      dowryMax: dowryMax ?? this.dowryMax,
+      dowry: dowry ?? this.dowry,
       weddingType: weddingType ?? this.weddingType,
       cityId: cityId ?? this.cityId,
       educationLevel: educationLevel ?? this.educationLevel,
@@ -230,8 +219,7 @@ class MaleModel extends IndividualUserModel {
       childCustody: childCustody ?? otherMaleModel.childCustody,
       wantChildren: wantChildren ?? otherMaleModel.wantChildren,
       prohibitedThings: prohibitedThings ?? otherMaleModel.prohibitedThings,
-      dowryMin: dowryMin ?? otherMaleModel.dowryMin,
-      dowryMax: dowryMax ?? otherMaleModel.dowryMax,
+      dowry: dowry ?? otherMaleModel.dowry,
       weddingType: weddingType ?? otherMaleModel.weddingType,
       cityId: cityId ?? otherMaleModel.cityId,
       educationLevel: educationLevel ?? otherMaleModel.educationLevel,

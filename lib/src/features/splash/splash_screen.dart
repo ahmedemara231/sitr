@@ -66,8 +66,6 @@ class _SplashScreenState extends State<SplashScreen> {
       childCustody: TitleValueShape.fromJson({'title' : 'انثي', 'value' : 'female'}),
       wantChildren: true,
       prohibitedThings: "الإهمال والكذب",
-      dowryMin: 20000,
-      dowryMax: 80000,
       weddingType: TitleValueShape.fromJson({'title' : 'انثي', 'value' : 'female'}),
       cityId: CityModel.fromJson({'title' : 'انثي', 'value' : 'female'}),
       educationLevel: "ماجستير",

@@ -63,10 +63,7 @@ class _MaleFieldsState extends State<MaleFields> {
     sharedFormFieldModel = updatedModel;
     widget.onFinishMaleData.call(sharedFormFieldModel);
   }
-
   MaleModel get asMaleModel => sharedFormFieldModel as MaleModel;
-
-
   @override
   Widget build(BuildContext context) {
     switch(widget.secondaryType){
@@ -74,18 +71,6 @@ class _MaleFieldsState extends State<MaleFields> {
         return SharedFormFields<MaleModel>(
           restorationId: UserType.male.name,
           onFinished: (data) => _listenToData(asMaleModel.merge(data.copyWith())),
-          onInitData: (data) => data..insertAll(
-            20,
-            [
-              DropDownTextField<TitleValueShape>(
-                hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
-                values: EnumsData.religiousCommitment.data,
-                title: LocaleKeys.degreeOfCommitment,
-                itemBuilder: (v) => AppText(v.title),
-                onChanged: (value) => _listenToData(asMaleModel.copyWith(religiousCommitment: TitleValueShape.fromSingleLabel(value?.value))),
-              ),
-            ]
-          ),
         );
 
       default:

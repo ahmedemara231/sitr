@@ -146,7 +146,7 @@ class FemaleCompleteProfileBody extends SharedFormFieldModel {
       'guardian_name': parentName,
       'guardian_phone': parentNumber,
       'guardian_relation_id': kinship,
-      'hijab': wearingHijab.toString(),
+      'hijab': wearingHijab,
       'religious_commitment': degreeOfCommitment,
     };
   }
