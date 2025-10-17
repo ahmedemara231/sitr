@@ -69,6 +69,7 @@ class ApiConstants {
   static const String checkCodeToNewPhone = 'new-phone-check-code';
   static const String oath = 'oath';
   static const String changeLang = 'change-lang';
+  static const String editProfile = 'update-profile';
 
 
 }

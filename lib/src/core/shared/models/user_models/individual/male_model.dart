@@ -50,11 +50,7 @@ class MaleModel extends IndividualUserModel {
     super.isNotify,
   });
 
-  factory MaleModel.initial() => MaleModel(
-    name: '',
-    age: 0,
-    gender: Gender(),
-  );
+  factory MaleModel.initial() => MaleModel();
 
   factory MaleModel.fromJson(Map<String, dynamic> json) {
     return MaleModel(
@@ -190,48 +186,49 @@ class MaleModel extends IndividualUserModel {
     );
   }
 
-  MaleModel merge(MaleModel otherMaleModel) {
+  @override
+  MaleModel merge(IndividualUserModel otherModel) {
     return MaleModel(
-      id: _mergeHelper(otherMaleModelValue: otherMaleModel.id, currentValue: id),
-      name: _mergeHelper(otherMaleModelValue: otherMaleModel.name, currentValue: name),
-      parentId: _mergeHelper(otherMaleModelValue: otherMaleModel.parentId, currentValue: parentId),
-      type: _mergeHelper(otherMaleModelValue: otherMaleModel.type, currentValue: type),
-      gender: _mergeHelper(otherMaleModelValue: otherMaleModel.gender, currentValue: gender),
-      avatar: _mergeHelper(otherMaleModelValue: otherMaleModel.avatar, currentValue: avatar),
-      phone: _mergeHelper(otherMaleModelValue: otherMaleModel.phone, currentValue: phone),
-      countryCode: _mergeHelper(otherMaleModelValue: otherMaleModel.countryCode, currentValue: countryCode),
-      fullPhone: _mergeHelper(otherMaleModelValue: otherMaleModel.fullPhone, currentValue: fullPhone),
-      identityNumber: _mergeHelper(otherMaleModelValue: otherMaleModel.identityNumber, currentValue: identityNumber),
-      age: _mergeHelper(otherMaleModelValue: otherMaleModel.age, currentValue: age),
-      isActive: _mergeHelper(otherMaleModelValue: otherMaleModel.isActive, currentValue: isActive),
-      isBlocked: _mergeHelper(otherMaleModelValue: otherMaleModel.isBlocked, currentValue: isBlocked),
-      adminApprovalStatus: _mergeHelper(otherMaleModelValue: otherMaleModel.adminApprovalStatus, currentValue: adminApprovalStatus),
-      completeRegistration: _mergeHelper(otherMaleModelValue: otherMaleModel.completeRegistration, currentValue: completeRegistration),
-      token: _mergeHelper(otherMaleModelValue: otherMaleModel.token, currentValue: token),
-      nickName: _mergeHelper(otherMaleModelValue: otherMaleModel.nickName, currentValue: nickName),
-      maritalStatus: _mergeHelper(otherMaleModelValue: otherMaleModel.maritalStatus, currentValue: maritalStatus),
-      height: _mergeHelper(otherMaleModelValue: otherMaleModel.height, currentValue: height),
-      weight: _mergeHelper(otherMaleModelValue: otherMaleModel.weight, currentValue: weight),
-      currentJob: _mergeHelper(otherMaleModelValue: otherMaleModel.currentJob, currentValue: currentJob),
-      bio: _mergeHelper(otherMaleModelValue: otherMaleModel.bio, currentValue: bio),
-      hasChildren: _mergeHelper(otherMaleModelValue: otherMaleModel.hasChildren, currentValue: hasChildren),
-      numOfChildren: _mergeHelper(otherMaleModelValue: otherMaleModel.numOfChildren, currentValue: numOfChildren),
-      childCustody: _mergeHelper(otherMaleModelValue: otherMaleModel.childCustody, currentValue: childCustody),
-      wantChildren: _mergeHelper(otherMaleModelValue: otherMaleModel.wantChildren, currentValue: wantChildren),
-      prohibitedThings: _mergeHelper(otherMaleModelValue: otherMaleModel.prohibitedThings, currentValue: prohibitedThings),
-      dowry: _mergeHelper(otherMaleModelValue: otherMaleModel.dowry, currentValue: dowry),
-      weddingType: _mergeHelper(otherMaleModelValue: otherMaleModel.weddingType, currentValue: weddingType),
-      cityId: _mergeHelper(otherMaleModelValue: otherMaleModel.cityId, currentValue: cityId),
-      educationLevel: _mergeHelper(otherMaleModelValue: otherMaleModel.educationLevel, currentValue: educationLevel),
-      isPrayer: _mergeHelper(otherMaleModelValue: otherMaleModel.isPrayer, currentValue: isPrayer),
-      healthConditions: _mergeHelper(otherMaleModelValue: otherMaleModel.healthConditions, currentValue: healthConditions),
-      chatLang: _mergeHelper(otherMaleModelValue: otherMaleModel.chatLang, currentValue: chatLang),
-      isSmoker: _mergeHelper(otherMaleModelValue: otherMaleModel.isSmoker, currentValue: isSmoker),
-      tribeAffiliation: _mergeHelper(otherMaleModelValue: otherMaleModel.tribeAffiliation, currentValue: tribeAffiliation),
-      skinColor: _mergeHelper(otherMaleModelValue: otherMaleModel.skinColor, currentValue: skinColor),
-      religiousCommitment: _mergeHelper(otherMaleModelValue: otherMaleModel.religiousCommitment, currentValue: religiousCommitment),
-      views: _mergeHelper(otherMaleModelValue: otherMaleModel.views, currentValue: views),
-      isNotify: _mergeHelper(otherMaleModelValue: otherMaleModel.isNotify, currentValue: isNotify),
+      id: _mergeHelper(otherMaleModelValue: otherModel.id, currentValue: id),
+      name: _mergeHelper(otherMaleModelValue: otherModel.name, currentValue: name),
+      parentId: _mergeHelper(otherMaleModelValue: otherModel.parentId, currentValue: parentId),
+      type: _mergeHelper(otherMaleModelValue: otherModel.type, currentValue: type),
+      gender: _mergeHelper(otherMaleModelValue: otherModel.gender, currentValue: gender),
+      avatar: _mergeHelper(otherMaleModelValue: otherModel.avatar, currentValue: avatar),
+      phone: _mergeHelper(otherMaleModelValue: otherModel.phone, currentValue: phone),
+      countryCode: _mergeHelper(otherMaleModelValue: otherModel.countryCode, currentValue: countryCode),
+      fullPhone: _mergeHelper(otherMaleModelValue: otherModel.fullPhone, currentValue: fullPhone),
+      identityNumber: _mergeHelper(otherMaleModelValue: otherModel.identityNumber, currentValue: identityNumber),
+      age: _mergeHelper(otherMaleModelValue: otherModel.age, currentValue: age),
+      isActive: _mergeHelper(otherMaleModelValue: otherModel.isActive, currentValue: isActive),
+      isBlocked: _mergeHelper(otherMaleModelValue: otherModel.isBlocked, currentValue: isBlocked),
+      adminApprovalStatus: _mergeHelper(otherMaleModelValue: otherModel.adminApprovalStatus, currentValue: adminApprovalStatus),
+      completeRegistration: _mergeHelper(otherMaleModelValue: otherModel.completeRegistration, currentValue: completeRegistration),
+      token: _mergeHelper(otherMaleModelValue: otherModel.token, currentValue: token),
+      nickName: _mergeHelper(otherMaleModelValue: otherModel.nickName, currentValue: nickName),
+      maritalStatus: _mergeHelper(otherMaleModelValue: otherModel.maritalStatus, currentValue: maritalStatus),
+      height: _mergeHelper(otherMaleModelValue: otherModel.height, currentValue: height),
+      weight: _mergeHelper(otherMaleModelValue: otherModel.weight, currentValue: weight),
+      currentJob: _mergeHelper(otherMaleModelValue: otherModel.currentJob, currentValue: currentJob),
+      bio: _mergeHelper(otherMaleModelValue: otherModel.bio, currentValue: bio),
+      hasChildren: _mergeHelper(otherMaleModelValue: otherModel.hasChildren, currentValue: hasChildren),
+      numOfChildren: _mergeHelper(otherMaleModelValue: otherModel.numOfChildren, currentValue: numOfChildren),
+      childCustody: _mergeHelper(otherMaleModelValue: otherModel.childCustody, currentValue: childCustody),
+      wantChildren: _mergeHelper(otherMaleModelValue: otherModel.wantChildren, currentValue: wantChildren),
+      prohibitedThings: _mergeHelper(otherMaleModelValue: otherModel.prohibitedThings, currentValue: prohibitedThings),
+      dowry: _mergeHelper(otherMaleModelValue: otherModel.dowry, currentValue: dowry),
+      weddingType: _mergeHelper(otherMaleModelValue: otherModel.weddingType, currentValue: weddingType),
+      cityId: _mergeHelper(otherMaleModelValue: otherModel.cityId, currentValue: cityId),
+      educationLevel: _mergeHelper(otherMaleModelValue: otherModel.educationLevel, currentValue: educationLevel),
+      isPrayer: _mergeHelper(otherMaleModelValue: otherModel.isPrayer, currentValue: isPrayer),
+      healthConditions: _mergeHelper(otherMaleModelValue: otherModel.healthConditions, currentValue: healthConditions),
+      chatLang: _mergeHelper(otherMaleModelValue: otherModel.chatLang, currentValue: chatLang),
+      isSmoker: _mergeHelper(otherMaleModelValue: otherModel.isSmoker, currentValue: isSmoker),
+      tribeAffiliation: _mergeHelper(otherMaleModelValue: otherModel.tribeAffiliation, currentValue: tribeAffiliation),
+      skinColor: _mergeHelper(otherMaleModelValue: otherModel.skinColor, currentValue: skinColor),
+      religiousCommitment: _mergeHelper(otherMaleModelValue: otherModel.religiousCommitment, currentValue: religiousCommitment),
+      views: _mergeHelper(otherMaleModelValue: otherModel.views, currentValue: views),
+      isNotify: _mergeHelper(otherMaleModelValue: otherModel.isNotify, currentValue: isNotify),
     );
   }
 

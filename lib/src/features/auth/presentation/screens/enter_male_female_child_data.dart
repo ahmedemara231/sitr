@@ -64,7 +64,9 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
     _mainType = ValueNotifier(widget.type ?? UserType.male);
   }
 
-  IndividualUserModel sharedFormFieldModel = IndividualUserModel.initial();
+  IndividualUserModel sharedFormFieldModel =
+      (UserModel.currentUser as IndividualUserModel?)?? IndividualUserModel.initial();
+
   UserModel get _currentUser => UserModel.currentUser;
 
   @override
@@ -75,8 +77,11 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CompleteProfileCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => CompleteProfileCubit()),
+        BlocProvider(create: (context) => EditProfileCubit()),
+      ],
       child: Column(
         spacing: 10.h,
         children: [
@@ -95,50 +100,59 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
           if(widget.from == ComesFrom.editProfile)
             SelectImageWidget(
               initialValue: _currentUser.avatar?? ConstantManager.defaultAvatar,
-              onSelectImage: (img){},
+              onSelectImage: (img) => sharedFormFieldModel.copyWith(avatar: img?.path),
             ),
+
           ValueListenableBuilder(
             valueListenable: _mainType,
             builder: (context, value, child) => value.isFemale ?
             FemaleFields(
                 secondaryUserType: widget.secondaryType,
-                onFinishFemaleData: (data) => sharedFormFieldModel = data
+                onFinishFemaleData: (data) => sharedFormFieldModel.merge(data)
             ) : MaleFields(
                 secondaryType: widget.secondaryType,
-                onFinishMaleData: (data) => sharedFormFieldModel = data
+                onFinishMaleData: (data) => sharedFormFieldModel.merge(data)
             ),
           ),
 
           if(widget.from != ComesFrom.editProfile)
             const ConditionsTermsAcceptance(),
 
-          Builder(builder: (ctx) {
-            return DefaultButton(
-                title: widget.from == ComesFrom.editProfile?
-                LocaleKeys.saveChanges : LocaleKeys.confirm,
-                onTap: () async => await ctx.read<CompleteProfileCubit>().completeProfile(
-                    isParent: widget.secondaryType.isNotNull,
-                    body: sharedFormFieldModel,
-                    onSuccess: () {
-                      showDefaultBottomSheet(
-                          child: AppBottomSheet.small(
-                              asyncCall: (context) => Go.offAll(const LoginScreen()),
-                              btnTitle: LocaleKeys.back,
-                              upperWidget: Column(
-                                spacing: 12.h,
-                                children: [
-                                  Lottie.asset(Assets.successDone),
-                                  AppText(LocaleKeys.yourRequestHasBeenSentSuccessfully, fontSize: 16.sp, fontWeight: FontWeight.w500),
-                                  AppText(LocaleKeys.yourRequestWillBeReviewedByManagers, fontSize: 12.sp, color: Colors.black54),
-                                ],
-                              )
-                          )
-                      );
-                      // MessageUtils.showSnackBar();
-                    }
-                )
-            );
-          }),
+          LoadingButton(
+            borderRadius: ConstantManager.buttonBorderRadiusNumber,
+            idleWidget: AppText(
+              widget.from == ComesFrom.editProfile?
+              LocaleKeys.saveChanges : LocaleKeys.confirm,
+              fontSize: 16.sp,
+              color: Colors.white,
+              // height: ,
+            ),
+            call: (ctx) async => widget.from == ComesFrom.editProfile? await ctx.read<EditProfileCubit>().editProfile(
+                body: sharedFormFieldModel,
+                onSuccess: (){}
+            ) :
+            await ctx.read<CompleteProfileCubit>().completeProfile(
+                  isParent: widget.secondaryType.isNotNull,
+                  body: sharedFormFieldModel,
+                  onSuccess: () {
+                    showDefaultBottomSheet(
+                        child: AppBottomSheet.small(
+                            asyncCall: (context) => Go.offAll(const LoginScreen()),
+                            btnTitle: LocaleKeys.back,
+                            upperWidget: Column(
+                              spacing: 12.h,
+                              children: [
+                                Lottie.asset(Assets.successDone),
+                                AppText(LocaleKeys.yourRequestHasBeenSentSuccessfully, fontSize: 16.sp, fontWeight: FontWeight.w500),
+                                AppText(LocaleKeys.yourRequestWillBeReviewedByManagers, fontSize: 12.sp, color: Colors.black54),
+                              ],
+                            )
+                        )
+                    );
+                    // MessageUtils.showSnackBar();
+                  }
+              )
+          ),
 
           if (widget.from == ComesFrom.signUpAsPartner)
             const AlreadyHaveAccWidget()
