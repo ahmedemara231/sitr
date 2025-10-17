@@ -59,9 +59,9 @@ class Sitr extends StatelessWidget {
             // home: const HomeScreen(),
             // home: const CustomDropdownTest(),
             home: const SplashScreen(),
-            // home: const EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(type: UserType.male),
+            // home: const EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(type: UserType.female),
             // home: const EnterMaleOrFemaleOrChildDataScreen.signUpAsParent(),
-            // home: const PackagesScreen.view(),
+            // home: const LoginScreen(),
             // home: OtpScreen(title: '', onConfirmCode: (BuildContext context, String code) {  }, onResendCodePress: (BuildContext context) {  },),
             navigatorObservers: [AppNavigationObserver()],
             builder: (context, child) {

@@ -123,7 +123,7 @@ class UserModel {
       'name': name,
       'parent_id': parentId,
       'type': type,
-      'gender': gender,
+      'gender': gender?.toJson(),
       'avatar': avatar,
       'phone': phone,
       'country_code': countryCode,

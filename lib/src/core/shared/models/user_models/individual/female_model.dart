@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import '../../../../../features/auth/models/dowry.dart';
 import '../../../../../features/auth/models/kinship.dart';
 import '../../../../extensions/object.dart';
@@ -7,7 +9,7 @@ import 'individual_user_model.dart';
 
 
 class FemaleModel extends IndividualUserModel {
-  final String? hijab;
+  final TitleValueShape? hijab;
   final bool? acceptsPolygamy;
   final String? preferredResidenceAfterMarriage;
   final String? guardianName;
@@ -70,7 +72,7 @@ class FemaleModel extends IndividualUserModel {
     name: '',
     age: 0,
     gender: Gender(),
-    hijab: '',
+    hijab: TitleValueShape.initial(),
     acceptsPolygamy: false,
     preferredResidenceAfterMarriage: '',
     guardianName: '',
@@ -116,31 +118,37 @@ class FemaleModel extends IndividualUserModel {
       isBlocked: json['is_blocked'],
       token: json['token'],
       nickName: json['nick_name'],
-      height: json['height'],
-      weight: json['weight'],
+      height: json['height'].toString(),
+      weight: json['weight'].toString(),
 
       currentJob: json['current_job'],
       bio: json['bio'],
       hasChildren: json['has_children'],
-      numOfChildren: json['num_of_children'],
+      numOfChildren: json['num_of_children'].toString(),
       wantChildren: json['want_children'],
       prohibitedThings: json['prohibited_things'],
-      dowry: Dowry(from: json['dowry_min'], to: json['dowry_max']),
+
+      dowry: ((json['dowry_min'] as Object?).isNotNull && (json['dowry_max'] as Object?).isNotNull)?
+      Dowry(from: json['dowry_min'].toString(), to: json['dowry_max'].toString()) : null,
+
       educationLevel: json['education_level'],
       isPrayer: json['is_prayer'],
       healthConditions: json['health_conditions'],
       chatLang: json['chat_lang'],
       isSmoker: json['is_smoker'],
       tribeAffiliation: json['tribe_affiliation'],
-      skinColor: TitleValueShape.fromJson(json['skin_color']),
+      skinColor: (json['skin_color'] as Object?).isNotNull?
+      TitleValueShape.fromJson(json['skin_color']) : null,
       views: json['views'],
-      hijab: json['hijab'],
+      hijab: (json['hijab'] as Object?).isNotNull?
+      TitleValueShape.fromJson(json['hijab']) : null,
       acceptsPolygamy: json['accepts_polygamy'],
       preferredResidenceAfterMarriage: json['preferred_residence_after_marriage'],
       guardianName: json['guardian_name'],
       guardianPhone: json['guardian_phone'],
       guardianCountryCode: json['guardian_country_code'],
-      guardianRelation: Kinship.fromJson(json['guardian_relation'])
+      guardianRelation: (json['guardian_relation'] as Object?).isNotNull?
+      Kinship.fromJson(json['guardian_relation']) : null
     );
   }
 
@@ -148,11 +156,12 @@ class FemaleModel extends IndividualUserModel {
   Map<String, dynamic> toRequestBodyJson() {
     return super.toRequestBodyJson()..addAll({
       'preferred_residence_after_marriage': preferredResidenceAfterMarriage,
+      'hijab': hijab?.value,
       'accepts_polygamy': acceptsPolygamy,
+
       'guardian_name': guardianName,
       'guardian_phone': guardianPhone,
       'guardian_relation_id': guardianRelation?.id.toString(),
-      'hijab': hijab,
     });
   }
 
@@ -169,61 +178,76 @@ class FemaleModel extends IndividualUserModel {
 
   FemaleModel merge(FemaleModel otherFemaleModel) {
     return FemaleModel(
-      isNotify: otherFemaleModel.isNotify ?? isNotify,
-      id: otherFemaleModel.id ?? id,
-      name: otherFemaleModel.name ?? name,
-      parentId: otherFemaleModel.parentId ?? parentId,
-      type: otherFemaleModel.type ?? type,
-      gender: otherFemaleModel.gender ?? gender,
-      avatar: otherFemaleModel.avatar ?? avatar,
-      phone: otherFemaleModel.phone ?? phone,
-      countryCode: otherFemaleModel.countryCode ?? countryCode,
-      fullPhone: otherFemaleModel.fullPhone ?? fullPhone,
-      identityNumber: otherFemaleModel.identityNumber ?? identityNumber,
-      age: otherFemaleModel.age ?? age,
-      isActive: otherFemaleModel.isActive ?? isActive,
-      isBlocked: otherFemaleModel.isBlocked ?? isBlocked,
-      adminApprovalStatus: otherFemaleModel.adminApprovalStatus ?? adminApprovalStatus,
-      completeRegistration: otherFemaleModel.completeRegistration ?? completeRegistration,
-      token: otherFemaleModel.token ?? token,
-      nickName: otherFemaleModel.nickName ?? nickName,
-      maritalStatus: otherFemaleModel.maritalStatus ?? maritalStatus,
-      height: otherFemaleModel.height ?? height,
-      weight: otherFemaleModel.weight ?? weight,
-      currentJob: otherFemaleModel.currentJob ?? currentJob,
-      bio: otherFemaleModel.bio ?? bio,
-      hasChildren: otherFemaleModel.hasChildren ?? hasChildren,
-      numOfChildren: otherFemaleModel.numOfChildren ?? numOfChildren,
-      childCustody: otherFemaleModel.childCustody ?? childCustody,
-      wantChildren: otherFemaleModel.wantChildren ?? wantChildren,
-      prohibitedThings: otherFemaleModel.prohibitedThings ?? prohibitedThings,
-      dowry: otherFemaleModel.dowry ?? dowry,
-      weddingType: otherFemaleModel.weddingType ?? weddingType,
-      cityId: otherFemaleModel.cityId ?? cityId,
-      educationLevel: otherFemaleModel.educationLevel ?? educationLevel,
-      isPrayer: otherFemaleModel.isPrayer ?? isPrayer,
-      healthConditions: otherFemaleModel.healthConditions ?? healthConditions,
-      chatLang: otherFemaleModel.chatLang ?? chatLang,
-      isSmoker: otherFemaleModel.isSmoker ?? isSmoker,
-      tribeAffiliation: otherFemaleModel.tribeAffiliation ?? tribeAffiliation,
-      skinColor: otherFemaleModel.skinColor ?? skinColor,
-      religiousCommitment: otherFemaleModel.religiousCommitment ?? religiousCommitment,
-      views: otherFemaleModel.views ?? views,
-      hijab: otherFemaleModel.hijab ?? hijab,
-      acceptsPolygamy: otherFemaleModel.acceptsPolygamy ?? acceptsPolygamy,
-      preferredResidenceAfterMarriage: otherFemaleModel.preferredResidenceAfterMarriage ?? preferredResidenceAfterMarriage,
-      guardianName: otherFemaleModel.guardianName ?? guardianName,
-      guardianPhone: otherFemaleModel.guardianPhone ?? guardianPhone,
-      guardianCountryCode: otherFemaleModel.guardianCountryCode ?? guardianCountryCode,
-      guardianRelation: otherFemaleModel.guardianRelation ?? guardianRelation,
+      guardianName: _mergeHelper(otherFemaleModelValue: otherFemaleModel.guardianName, currentValue: guardianName),
+      isNotify: _mergeHelper(otherFemaleModelValue: otherFemaleModel.isNotify, currentValue: isNotify),
+      id: _mergeHelper(otherFemaleModelValue: otherFemaleModel.id, currentValue: id),
+      name: _mergeHelper(otherFemaleModelValue: otherFemaleModel.name, currentValue: name),
+      parentId: _mergeHelper(otherFemaleModelValue: otherFemaleModel.parentId, currentValue: parentId),
+      type: _mergeHelper(otherFemaleModelValue: otherFemaleModel.type, currentValue: type),
+      gender: _mergeHelper(otherFemaleModelValue: otherFemaleModel.gender, currentValue: gender),
+      avatar: _mergeHelper(otherFemaleModelValue: otherFemaleModel.avatar, currentValue: avatar),
+      phone: _mergeHelper(otherFemaleModelValue: otherFemaleModel.phone, currentValue: phone),
+      countryCode: _mergeHelper(otherFemaleModelValue: otherFemaleModel.countryCode, currentValue: countryCode),
+      fullPhone: _mergeHelper(otherFemaleModelValue: otherFemaleModel.fullPhone, currentValue: fullPhone),
+      identityNumber: _mergeHelper(otherFemaleModelValue: otherFemaleModel.identityNumber, currentValue: identityNumber),
+      age: _mergeHelper(otherFemaleModelValue: otherFemaleModel.age, currentValue: age),
+      isActive: _mergeHelper(otherFemaleModelValue: otherFemaleModel.isActive, currentValue: isActive),
+      isBlocked: _mergeHelper(otherFemaleModelValue: otherFemaleModel.isBlocked, currentValue: isBlocked),
+      adminApprovalStatus: _mergeHelper(otherFemaleModelValue: otherFemaleModel.adminApprovalStatus, currentValue: adminApprovalStatus),
+      completeRegistration: _mergeHelper(otherFemaleModelValue: otherFemaleModel.completeRegistration, currentValue: completeRegistration),
+      token: _mergeHelper(otherFemaleModelValue: otherFemaleModel.token, currentValue: token),
+      nickName: _mergeHelper(otherFemaleModelValue: otherFemaleModel.nickName, currentValue: nickName),
+      maritalStatus: _mergeHelper(otherFemaleModelValue: otherFemaleModel.maritalStatus, currentValue: maritalStatus),
+      height: _mergeHelper(otherFemaleModelValue: otherFemaleModel.height, currentValue: height),
+      weight: _mergeHelper(otherFemaleModelValue: otherFemaleModel.weight, currentValue: weight),
+      currentJob: _mergeHelper(otherFemaleModelValue: otherFemaleModel.currentJob, currentValue: currentJob),
+      bio: _mergeHelper(otherFemaleModelValue: otherFemaleModel.bio, currentValue: bio),
+      hasChildren: _mergeHelper(otherFemaleModelValue: otherFemaleModel.hasChildren, currentValue: hasChildren),
+      numOfChildren: _mergeHelper(otherFemaleModelValue: otherFemaleModel.numOfChildren, currentValue: numOfChildren),
+      childCustody: _mergeHelper(otherFemaleModelValue: otherFemaleModel.childCustody, currentValue: childCustody),
+      wantChildren: _mergeHelper(otherFemaleModelValue: otherFemaleModel.wantChildren, currentValue: wantChildren),
+      prohibitedThings: _mergeHelper(otherFemaleModelValue: otherFemaleModel.prohibitedThings, currentValue: prohibitedThings),
+      dowry: _mergeHelper(otherFemaleModelValue: otherFemaleModel.dowry, currentValue: dowry),
+      weddingType: _mergeHelper(otherFemaleModelValue: otherFemaleModel.weddingType, currentValue: weddingType),
+      cityId: _mergeHelper(otherFemaleModelValue: otherFemaleModel.cityId, currentValue: cityId),
+      educationLevel: _mergeHelper(otherFemaleModelValue: otherFemaleModel.educationLevel, currentValue: educationLevel),
+      isPrayer: _mergeHelper(otherFemaleModelValue: otherFemaleModel.isPrayer, currentValue: isPrayer),
+      healthConditions: _mergeHelper(otherFemaleModelValue: otherFemaleModel.healthConditions, currentValue: healthConditions),
+      chatLang: _mergeHelper(otherFemaleModelValue: otherFemaleModel.chatLang, currentValue: chatLang),
+      isSmoker: _mergeHelper(otherFemaleModelValue: otherFemaleModel.isSmoker, currentValue: isSmoker),
+      tribeAffiliation: _mergeHelper(otherFemaleModelValue: otherFemaleModel.tribeAffiliation, currentValue: tribeAffiliation),
+      skinColor: _mergeHelper(otherFemaleModelValue: otherFemaleModel.skinColor, currentValue: skinColor),
+      religiousCommitment: _mergeHelper(otherFemaleModelValue: otherFemaleModel.religiousCommitment, currentValue: religiousCommitment),
+      views: _mergeHelper(otherFemaleModelValue: otherFemaleModel.views, currentValue: views),
+      hijab: _mergeHelper(otherFemaleModelValue: otherFemaleModel.hijab, currentValue: hijab),
+      acceptsPolygamy: _mergeHelper(otherFemaleModelValue: otherFemaleModel.acceptsPolygamy, currentValue: acceptsPolygamy),
+      guardianPhone: _mergeHelper(otherFemaleModelValue: otherFemaleModel.guardianPhone, currentValue: guardianPhone),
+      guardianCountryCode: _mergeHelper(otherFemaleModelValue: otherFemaleModel.guardianCountryCode, currentValue: guardianCountryCode),
+      guardianRelation: _mergeHelper(otherFemaleModelValue: otherFemaleModel.guardianRelation, currentValue: guardianRelation),
+      preferredResidenceAfterMarriage: _mergeHelper(otherFemaleModelValue: otherFemaleModel.preferredResidenceAfterMarriage, currentValue: preferredResidenceAfterMarriage),
     );
   }
 
 
+  dynamic _mergeHelper({required dynamic otherFemaleModelValue, required dynamic currentValue}){
+    if(otherFemaleModelValue is String){
+      return (otherFemaleModelValue.isNotNull && otherFemaleModelValue.isNotEmpty)?
+      otherFemaleModelValue : currentValue;
+
+    }else if(otherFemaleModelValue is num){
+      return (otherFemaleModelValue.isNotNull && otherFemaleModelValue != 0)?
+      otherFemaleModelValue : currentValue;
+
+    }else {
+      return (otherFemaleModelValue as Object?).isNotNull?
+      otherFemaleModelValue : currentValue;
+    }
+  }
+
   @override
   FemaleModel copyWith({
     bool? isNotify,
-    String? hijab,
+    TitleValueShape? hijab,
     bool? acceptsPolygamy,
     String? preferredResidenceAfterMarriage,
     String? guardianName,

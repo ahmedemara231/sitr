@@ -76,7 +76,7 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
               if(userResult.gender?.userType?.isFemale?? false)
                 ...[
                   PartnerInfoModel(leading: Assets.svgParentChildren, title: LocaleKeys.doYouAcceptPolygamy, subTitle: (user as FemaleModel).acceptsPolygamy.toString()),
-                  PartnerInfoModel(leading: Assets.svgHijab, title: LocaleKeys.areYouWaringHijab, subTitle: user.hijab),
+                  PartnerInfoModel(leading: Assets.svgHijab, title: LocaleKeys.areYouWaringHijab, subTitle: user.hijab?.title),
 
                   PartnerInfoModel(leading: Assets.svgHome, title: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage, subTitle: user.preferredResidenceAfterMarriage),
                 ],

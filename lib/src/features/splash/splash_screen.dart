@@ -57,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _manipulateLoginState()async{
-    final result =  (await CacheStorage.read('user', isDecoded: true) as Object).isNotNull;
+    final result =  (await CacheStorage.read('user', isDecoded: true) as Object?).isNotNull;
     switch(result){
       case true:
         await UserCubit.instance.init();

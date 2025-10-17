@@ -14,6 +14,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // log('the gender is ${UserTypeHelper.currentType}');
     return BlocProvider(
       create: (context) => SignUpCubit(),
       child: CenterCardScaffold(
@@ -60,6 +61,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               code: code
                           ),
                           onSuccess: (data) async {
+                            log(data.runtimeType.toString());
+                            log(data.toJson().toString());
                             await UserCubit.instance.setUserLoggedIn(
                                 user: data,
                                 token: data.token ?? ''

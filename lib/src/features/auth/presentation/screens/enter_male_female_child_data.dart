@@ -46,6 +46,7 @@ class _EnterMaleOrFemaleOrChildDataScreenState extends State<EnterMaleOrFemaleOr
 
   @override
   Widget build(BuildContext context) {
+    log('the gender is ${UserTypeHelper.currentType}');
     return CenterCardScaffold(
         upperWidget: const SignUpUpperWidget(),
         body: BlocProvider(

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'cache_service.dart';
@@ -33,12 +34,7 @@ extension Parse on String{
 
 class UserTypeHelper{
 
-  static UserType? get currentType{
-    final UserModel user = (UserModel.fromJson(
-        jsonDecode(CacheStorage.read('user'))));
-
-    return user.gender!.titleValueShape?.title.toUserType();
-  }
+  static UserType? get currentType => UserModel.currentUser.gender?.userType;
 
   static bool get isAuthenticated{
     return currentType?.isAuthenticated ?? false;
