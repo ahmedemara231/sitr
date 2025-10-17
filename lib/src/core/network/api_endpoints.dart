@@ -68,6 +68,7 @@ class ApiConstants {
   static const String sendCodeToNewPhone = 'new-phone-send-code';
   static const String checkCodeToNewPhone = 'new-phone-check-code';
   static const String oath = 'oath';
+  static const String changeLang = 'change-lang';
 
 
 }

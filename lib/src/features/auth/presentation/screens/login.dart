@@ -34,9 +34,9 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             Row(
               spacing: context.width / 8,
-              children: [
-                LangIcon(onSelectLang: (lang){}),
-                const AppLogoWidget(),
+              children: const [
+                LangIcon(),
+                AppLogoWidget(),
               ],
             ),
             const LoginStaticTexts()

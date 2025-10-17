@@ -15,10 +15,8 @@ import 'buttons/app_loading_button.dart';
 import 'default_bottom_sheet.dart';
 
 class LangIcon extends StatelessWidget {
-  final FutureOr<void> Function(Languages selectedLang) onSelectLang;
-  const LangIcon({super.key,
-    required this.onSelectLang
-  });
+  final FutureOr<void> Function(BuildContext context, Languages selectedLang)? onSelectLang;
+  const LangIcon({super.key, this.onSelectLang});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +34,7 @@ class LangIcon extends StatelessWidget {
 }
 
 class _LangSheet extends StatelessWidget {
-  final FutureOr<void> Function(Languages selectedLang) onSelectLang;
+  final FutureOr<void> Function(BuildContext context, Languages selectedLang)? onSelectLang;
   const _LangSheet({required this.onSelectLang});
 
   @override
@@ -54,7 +52,7 @@ class _LangSheet extends StatelessWidget {
 }
 
 class SelectLangWidget extends StatefulWidget {
-  final FutureOr<void> Function(Languages selectedLang) onSelectLang;
+  final FutureOr<void> Function(BuildContext context, Languages selectedLang)? onSelectLang;
   const SelectLangWidget({super.key,
     required this.onSelectLang
   });
@@ -109,7 +107,7 @@ class _SelectLangWidgetState extends State<SelectLangWidget> {
                 title: LocaleKeys.confirm,
                 asyncCall: (context) async{
                   Languages.setLocale(language);
-                  await widget.onSelectLang(language);
+                  await widget.onSelectLang?.call(context, language);
                   Go.back();
                 },
             )
