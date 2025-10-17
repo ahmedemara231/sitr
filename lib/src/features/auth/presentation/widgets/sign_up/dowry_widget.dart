@@ -4,11 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/text_fields/default_text_field.dart';
+import '../../../models/dowry.dart';
 
 class DowryWidget extends StatefulWidget {
   final void Function(String from, String to) onSelect;
+  final Dowry? initialValue;
   const DowryWidget({super.key,
     required this.onSelect,
+    this.initialValue,
   });
 
   @override
@@ -21,8 +24,8 @@ class _DowryWidgetState extends State<DowryWidget> {
 
   @override
   void initState() {
-    _fromController = TextEditingController();
-    _toController = TextEditingController();
+    _fromController = TextEditingController(text: widget.initialValue?.from);
+    _toController = TextEditingController(text: widget.initialValue?.to);
     super.initState();
   }
   @override

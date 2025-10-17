@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
+import '../../config/language/languages.dart';
 import '../../features/auth/imports.dart';
 import '../../features/auth/presentation/enums/complete_register_status.dart';
 import '../../features/home/home_screen.dart';
@@ -9,6 +10,14 @@ import '../navigation/navigator.dart';
 
 
 extension FormatString on String {
+
+  Languages toLang(){
+    if(this == Languages.arabic.locale.languageCode || this == Languages.arabic.title){
+      return Languages.arabic;
+    }
+
+    return Languages.english;
+  }
 
   void manageNavigationBasedCompleteRegisterStatus(){
     final CompleteRegisterStatus statusType = toCompleteRegisterStatus();

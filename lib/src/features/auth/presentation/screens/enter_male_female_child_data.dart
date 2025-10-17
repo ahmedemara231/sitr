@@ -46,7 +46,6 @@ class _EnterMaleOrFemaleOrChildDataScreenState extends State<EnterMaleOrFemaleOr
 
   @override
   Widget build(BuildContext context) {
-    log('the gender is ${UserTypeHelper.currentType}');
     return CenterCardScaffold(
         upperWidget: const SignUpUpperWidget(),
         body: BlocProvider(
@@ -68,19 +67,13 @@ class _EnterMaleOrFemaleOrChildDataScreenState extends State<EnterMaleOrFemaleOr
 
               ValueListenableBuilder(
                 valueListenable: _mainType,
-                builder: (context, value, child) => value.isFemale
-                    ? FemaleFields(
-                        secondaryUserType: widget.secondaryType,
-                        onFinishFemaleData: (data) {
-                          log('the data is ${data.toJson()}');
-                          sharedFormFieldModel = data;
-                        }
+                builder: (context, value, child) => value.isFemale ?
+                FemaleFields(
+                    secondaryUserType: widget.secondaryType,
+                    onFinishFemaleData: (data) => sharedFormFieldModel = data
                 ) : MaleFields(
-                        secondaryType: widget.secondaryType,
-                        onFinishMaleData: (data) {
-                          log('the data is ${data.toRequestBodyJson()}');
-                          sharedFormFieldModel = data;
-                        }
+                    secondaryType: widget.secondaryType,
+                    onFinishMaleData: (data) => sharedFormFieldModel = data
                 ),
               ),
 

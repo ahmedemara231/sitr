@@ -49,7 +49,7 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
           onSuccess: (userResult) {
             final user = userResult as IndividualUserModel;
             partnerInfo = [
-              PartnerInfoModel(leading: Assets.svgLocation, title: LocaleKeys.city, subTitle: user.cityId.toString()),
+              PartnerInfoModel(leading: Assets.svgLocation, title: LocaleKeys.city, subTitle: user.cityId?.name),
               PartnerInfoModel(leading: Assets.svgRecycing, title: LocaleKeys.age, subTitle: user.age.toString()),
 
               PartnerInfoModel(leading: Assets.svgTallIcon, title: LocaleKeys.tall, subTitle: user.height.toString()),

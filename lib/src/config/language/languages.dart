@@ -7,8 +7,8 @@ enum Languages {
   english(Locale('en'), 'English', 'en'),
   arabic(Locale('ar'), 'Arabic', 'ar');
 
-  final String title;
   final Locale locale;
+  final String title;
   final String languageCode;
 
   const Languages(

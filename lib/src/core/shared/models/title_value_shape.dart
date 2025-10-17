@@ -1,4 +1,6 @@
-class TitleValueShape{
+import 'package:equatable/equatable.dart';
+
+class TitleValueShape extends Equatable{
   final String title;
   final String value;
 
@@ -28,4 +30,10 @@ class TitleValueShape{
     String? title,
     String? value,
   }) => TitleValueShape(title: title ?? this.title, value: value ?? this.value);
+
+  @override
+  List<Object?> get props => [
+    title,
+    value,
+  ];
 }
