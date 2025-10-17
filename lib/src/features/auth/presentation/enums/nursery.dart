@@ -1,1 +1,0 @@
-// enum Nursery{father, mother}

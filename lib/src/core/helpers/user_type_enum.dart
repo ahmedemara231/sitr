@@ -15,23 +15,6 @@ extension Check on UserType{
   bool get isAuthenticated => this != UserType.unauthenticated;
 }
 
-extension Parse on String{
-  UserType toUserType(){
-    if(this == 'male'){
-      return UserType.male;
-
-    }else if(this == 'female'){
-      return UserType.female;
-
-    }else if(this == 'parent'){
-      return UserType.parent;
-
-    }else{
-      return UserType.unauthenticated;
-    }
-  }
-}
-
 class UserTypeHelper{
 
   static UserType? get currentType => UserModel.currentUser.gender?.userType;

@@ -72,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           body: OtpBody(phone: _phoneCont.text, code: code),
                           onSuccess: (user) {
                             UserCubit.instance.setUserLoggedIn(user: user, token: user.token??'');
-                            Go.offAll(const HomeScreen());
+                            user.completeRegistration?.manageNavigationBasedCompleteRegisterStatus();
                           }
                         ),
                       ),
@@ -107,4 +107,6 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
+
 }

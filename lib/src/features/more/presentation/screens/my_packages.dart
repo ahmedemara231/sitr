@@ -23,7 +23,7 @@ class MyPackagesScreen extends StatelessWidget {
             builder: (context, state) => StatusBuilder(
                 data: state,
                 onSuccess: (data, context) => PackageWidget(
-                    type: ScreenType.subscribe,
+                    type: ScreenType.renew,
                     package: data
                 ),
             ),

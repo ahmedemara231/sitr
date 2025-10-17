@@ -61,13 +61,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               code: code
                           ),
                           onSuccess: (data) async {
-                            log(data.runtimeType.toString());
-                            log(data.toJson().toString());
                             await UserCubit.instance.setUserLoggedIn(
                                 user: data,
                                 token: data.token ?? ''
                             );
-                            Go.to(const PackagesScreen.view());
+
+                            Go.to(const PackagesScreen.firstSubscription(isInAuth: true));
                           },
                         ),
                       ),

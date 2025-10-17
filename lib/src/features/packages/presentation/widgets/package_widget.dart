@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,9 +23,13 @@ import '../screens/subscription_screen.dart';
 class PackageWidget extends StatelessWidget {
   final Package package;
   final ScreenType type;
+
+  final bool isInAuth;
+
   const PackageWidget({super.key,
     required this.type,
     required this.package,
+    this.isInAuth = false,
   });
 
   @override
@@ -66,7 +72,7 @@ class PackageWidget extends StatelessWidget {
                   child: Builder(
                     builder: (context) {
                       return AppDefaultButton.withBorderColor(
-                          title: type == ScreenType.view?
+                          title: type == ScreenType.first?
                           LocaleKeys.subscribeToPackage : LocaleKeys.renewPackage,
                           onTap: () => showDefaultBottomSheet(
                               child: PaymentSheet(
@@ -77,13 +83,15 @@ class PackageWidget extends StatelessWidget {
                                   onSuccess: (url) async{
                                     final result = await Go.to(SubscriptionScreen(
                                       initialUrl: url,
-                                      title: type == ScreenType.view?
+                                      title: type == ScreenType.first?
                                       LocaleKeys.subscribeToPackage : LocaleKeys.renewPackage,
                                     ));
 
                                     if(result == 'success'){
                                       showDefaultBottomSheet(
-                                          child: const SuccessSheet()
+                                          child: SuccessSheet(
+                                              isInAuth: isInAuth
+                                          )
                                       );
                                     }
                                   }

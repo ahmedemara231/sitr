@@ -4,16 +4,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../generated/assets.dart';
 import '../../config/res/config_imports.dart';
 import '../../core/extensions/object.dart';
+import '../../core/extensions/string_extension.dart';
 import '../../core/helpers/cache_service.dart';
 import '../../core/navigation/navigator.dart';
 import '../../core/notification/notification_service.dart';
-import '../../core/shared/models/title_value_shape.dart';
-import '../../core/shared/models/user_models/individual/female_model.dart';
-import '../../core/shared/models/user_models/user_model.dart';
 import '../../core/shared/user_cubit/user_cubit.dart';
 import '../auth/imports.dart';
-import '../auth/models/kinship.dart';
-import '../home/home_screen.dart';
 import '../on_boarding/screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -61,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
     switch(result){
       case true:
         await UserCubit.instance.init();
-        Go.offAll(const HomeScreen());
+        UserCubit.instance.user.completeRegistration?.manageNavigationBasedCompleteRegisterStatus();
         break;
 
       default:

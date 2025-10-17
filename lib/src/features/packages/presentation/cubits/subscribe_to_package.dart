@@ -16,7 +16,7 @@ class PackagesManagerCubit extends AsyncCubit<String>{
     await executeAsync(
         operation: () async => await baseCrudUseCase.call(
             CrudBaseParmas(
-                api: type == ScreenType.view?
+                api: type == ScreenType.first?
                 ApiConstants.subscribePackage :
                 ApiConstants.renewPackage,
                 httpRequestType: HttpRequestType.post,

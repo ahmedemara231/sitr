@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
@@ -10,7 +12,10 @@ import '../app_bottom_sheet.dart';
 import '../app_text.dart' show AppText;
 
 class SuccessSheet extends StatelessWidget {
-  const SuccessSheet({super.key});
+  final bool isInAuth;
+  const SuccessSheet({super.key,
+    required this.isInAuth
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +23,14 @@ class SuccessSheet extends StatelessWidget {
       spacing: 12.h,
       children: [
         AppBottomSheet.small(
-            asyncCall: (context) => Go.to(
+            asyncCall: (context) => !isInAuth?
+            Go.back() :
+            Go.to(
                 UserTypeHelper.currentType!.isParent?
                 const EnterMaleOrFemaleOrChildDataScreen.signUpAsParent() :
                 EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(type: UserTypeHelper.currentType)
             ),
-            btnTitle: LocaleKeys.completeProfile,
+            btnTitle: !isInAuth? LocaleKeys.back : LocaleKeys.completeProfile,
             upperWidget: Column(
               children: [
                 Lottie.asset(Assets.successDone),

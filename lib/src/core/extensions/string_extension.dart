@@ -1,9 +1,73 @@
-import 'dart:ui';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
+import '../../features/auth/imports.dart';
+import '../../features/auth/presentation/enums/complete_register_status.dart';
+import '../../features/home/home_screen.dart';
+import '../../features/packages/presentation/packages_screen.dart';
+import '../helpers/user_type_enum.dart';
+import '../navigation/navigator.dart';
+
 
 extension FormatString on String {
+
+  void manageNavigationBasedCompleteRegisterStatus(){
+    final CompleteRegisterStatus statusType = toCompleteRegisterStatus();
+    if(statusType.isCompleted){
+      Go.offAll(const HomeScreen());
+
+    }else if(statusType.isNotSubscribed){
+      Go.to(const PackagesScreen.firstSubscription(isInAuth: true));
+
+    }else if(statusType.isCompleteChild){
+      Go.to(const EnterMaleOrFemaleOrChildDataScreen.signUpAsParent());
+
+    }else if(statusType.isHasSetrCode){
+
+    }else if(statusType.isIncomplete){
+      Go.to(EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(type: UserTypeHelper.currentType));
+
+    }else{
+      throw Exception('there is no such value with $statusType');
+    }
+  }
+
+
+  CompleteRegisterStatus toCompleteRegisterStatus(){
+    if(this == CompleteRegisterStatus.completed.status){
+      return CompleteRegisterStatus.completed;
+
+    }else if(this == CompleteRegisterStatus.notSubscribed.status){
+      return CompleteRegisterStatus.notSubscribed;
+
+    }else if(this == CompleteRegisterStatus.hasSetrCode.status){
+      return CompleteRegisterStatus.hasSetrCode;
+
+    }else if(this == CompleteRegisterStatus.completeChild.status){
+      return CompleteRegisterStatus.completeChild;
+
+    }else if(this == CompleteRegisterStatus.incomplete.status){
+      return CompleteRegisterStatus.incomplete;
+
+    }else {
+      throw Exception('not such value match with value $this');
+    }
+  }
+
+  UserType toUserType(){
+    if(this == UserType.male.name){
+      return UserType.male;
+
+    }else if(this == UserType.female.name){
+      return UserType.female;
+
+    }else if(this == UserType.parent.name){
+      return UserType.parent;
+
+    }else{
+      return UserType.unauthenticated;
+    }
+  }
+
   String capitalize() {
     return '${this[0].toUpperCase()}${substring(1)}';
   }
