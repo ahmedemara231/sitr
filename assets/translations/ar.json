@@ -239,5 +239,7 @@
   "change_phone_number": "تغيير رقم الجوال",
   "can_not_open_notifications_enable_from_setting": "لا يمكن تفعيل الاشعارات فعلها من الاعدادات",
   "oath": "القسم",
-  "accept": "الموافقة"
+  "accept": "الموافقة",
+  "your_request_has_been_sent_successfully": "تم ارسال طلبك للادارة بنجاح",
+  "your_request_will_be_reviewed_by_managers": "سيتم مراجعة الطلب من الادراة"
 }

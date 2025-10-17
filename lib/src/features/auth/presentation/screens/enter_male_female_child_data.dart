@@ -120,7 +120,20 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
                     isParent: widget.secondaryType.isNotNull,
                     body: sharedFormFieldModel,
                     onSuccess: () {
-                      Go.offAll(const LoginScreen());
+                      showDefaultBottomSheet(
+                          child: AppBottomSheet.small(
+                              asyncCall: (context) => Go.offAll(const LoginScreen()),
+                              btnTitle: LocaleKeys.back,
+                              upperWidget: Column(
+                                spacing: 12.h,
+                                children: [
+                                  Lottie.asset(Assets.successDone),
+                                  AppText(LocaleKeys.yourRequestHasBeenSentSuccessfully, fontSize: 16.sp, fontWeight: FontWeight.w500),
+                                  AppText(LocaleKeys.yourRequestWillBeReviewedByManagers, fontSize: 12.sp, color: Colors.black54),
+                                ],
+                              )
+                          )
+                      );
                       // MessageUtils.showSnackBar();
                     }
                 )

@@ -239,5 +239,7 @@
   "change_phone_number": "change phone number",
   "can_not_open_notifications_enable_from_setting": "can not open notifications enable from setting",
   "oath": "Oath",
-  "accept": "Accept"
+  "accept": "Accept",
+  "your_request_has_been_sent_successfully": "your request has been sent successfully",
+  "your_request_will_be_reviewed_by_managers": "your request will be reviewed by managers"
 }

@@ -706,4 +706,10 @@ abstract class LocaleKeys {
   static const String _accept = 'accept';
   static String get accept => _accept.tr();
 
+  static const String _yourRequestHasBeenSentSuccessfully = 'your_request_has_been_sent_successfully';
+  static String get yourRequestHasBeenSentSuccessfully => _yourRequestHasBeenSentSuccessfully.tr();
+
+  static const String _yourRequestWillBeReviewedByManagers = 'your_request_will_be_reviewed_by_managers';
+  static String get yourRequestWillBeReviewedByManagers => _yourRequestWillBeReviewedByManagers.tr();
+
 }

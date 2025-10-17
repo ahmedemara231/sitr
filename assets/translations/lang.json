@@ -244,5 +244,7 @@
     "change phone number" : "تغيير رقم الجوال",
     "can not open notifications enable from setting" : "لا يمكن تفعيل الاشعارات فعلها من الاعدادات",
     "Oath" : "القسم",
-    "Accept" : "الموافقة"
+    "Accept" : "الموافقة",
+    "your request has been sent successfully" : "تم ارسال طلبك للادارة بنجاح",
+    "your request will be reviewed by managers" : "سيتم مراجعة الطلب من الادراة"
 }
