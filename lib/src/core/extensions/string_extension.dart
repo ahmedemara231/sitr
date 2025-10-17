@@ -73,7 +73,7 @@ extension FormatString on String {
       return UserType.parent;
 
     }else{
-      return UserType.unauthenticated;
+      return UserType.unknown;
     }
   }
 

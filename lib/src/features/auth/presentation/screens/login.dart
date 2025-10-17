@@ -71,8 +71,30 @@ class _LoginScreenState extends State<LoginScreen> {
                           type: OtpType.afterLogin,
                           body: OtpBody(phone: _phoneCont.text, code: code),
                           onSuccess: (user) {
-                            UserCubit.instance.setUserLoggedIn(user: user, token: user.token??'');
-                            user.completeRegistration?.manageNavigationBasedCompleteRegisterStatus();
+                            showDefaultBottomSheet(
+                              enableDrag: false,
+                                child: BlocProvider(
+                                  create: (context) => OathCubit()..getOath(),
+                                  child: AppBottomSheet.small(
+                                      asyncCall: (context) async {
+                                        UserCubit.instance.setUserLoggedIn(user: user, token: user.token??'');
+                                        user.completeRegistration?.manageNavigationBasedCompleteRegisterStatus();
+                                      },
+                                      btnTitle: LocaleKeys.accept,
+                                      upperWidget: Column(
+                                        children: [
+                                          AppText(LocaleKeys.oath, fontWeight: FontWeight.w500),
+                                          BlocBuilder<OathCubit, AsyncState<String>>(
+                                              builder: (context, state) => StatusBuilder(
+                                                  data: state,
+                                                  onSuccess: (oath, context) => AppText(oath, fontSize: 12.sp)
+                                              )
+                                          ),
+                                        ],
+                                      )
+                                  ),
+                                )
+                            );
                           }
                         ),
                       ),
@@ -107,6 +129,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
-
 }

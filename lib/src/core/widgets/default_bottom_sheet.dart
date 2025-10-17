@@ -5,8 +5,10 @@ import '../../config/res/config_imports.dart';
 import '../extensions/sized_box_helper.dart';
 import '../navigation/navigator.dart';
 
-Future showDefaultBottomSheet({BuildContext? context, required Widget child}) {
+Future showDefaultBottomSheet({BuildContext? context, required Widget child, bool? enableDrag}) {
   return showModalBottomSheet(
+    enableDrag: enableDrag ?? true,
+    isDismissible: false,
     isScrollControlled: true,
     context: context ?? Go.context,
     backgroundColor: Colors.white,

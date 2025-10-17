@@ -22,7 +22,7 @@ class ApiConstants {
   static const String movableDetails = 'Movables/GetById/';
 
 
-  
+
   // auth
   static const String login = 'login';
   static const String logout = 'sign-out';
@@ -67,6 +67,7 @@ class ApiConstants {
 
   static const String sendCodeToNewPhone = 'new-phone-send-code';
   static const String checkCodeToNewPhone = 'new-phone-check-code';
+  static const String oath = 'oath';
 
 
 }

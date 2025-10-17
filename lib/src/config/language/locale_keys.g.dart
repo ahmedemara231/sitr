@@ -700,4 +700,10 @@ abstract class LocaleKeys {
   static const String _canNotOpenNotificationsEnableFromSetting = 'can_not_open_notifications_enable_from_setting';
   static String get canNotOpenNotificationsEnableFromSetting => _canNotOpenNotificationsEnableFromSetting.tr();
 
+  static const String _oath = 'oath';
+  static String get oath => _oath.tr();
+
+  static const String _accept = 'accept';
+  static String get accept => _accept.tr();
+
 }

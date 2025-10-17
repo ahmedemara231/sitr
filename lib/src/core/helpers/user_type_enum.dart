@@ -2,17 +2,17 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'dart:convert';
+import '../extensions/object.dart';
 import 'cache_service.dart';
 import '../shared/models/user_models/user_model.dart';
 
-enum UserType{male, female, parent, unauthenticated}
+enum UserType{male, female, parent, unknown}
 
 extension Check on UserType{
   bool get isMale => this == UserType.male;
   bool get isFemale => this == UserType.female;
   bool get isIndividual => this == UserType.male || this == UserType.female;
   bool get isParent => this == UserType.parent;
-  bool get isAuthenticated => this != UserType.unauthenticated;
 }
 
 class UserTypeHelper{
@@ -20,7 +20,7 @@ class UserTypeHelper{
   static UserType? get currentType => UserModel.currentUser.gender?.userType;
 
   static bool get isAuthenticated{
-    return currentType?.isAuthenticated ?? false;
+    return (UserModel.currentUser as Object?).isNotNull;
   }
 
   static FutureOr<void> make({

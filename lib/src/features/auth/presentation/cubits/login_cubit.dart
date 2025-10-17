@@ -15,7 +15,7 @@ class LoginCubit extends AsyncCubit{
                 body: body.toJson(),
             ),
         ),
-      successEmitter: (data) => onSuccess.call(data as String)
+      // successEmitter: (data) => onSuccess.call('')
     );
   }
 
