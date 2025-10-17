@@ -161,4 +161,3 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
     );
   }
 }
-

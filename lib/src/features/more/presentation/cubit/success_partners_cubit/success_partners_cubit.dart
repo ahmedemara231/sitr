@@ -9,16 +9,11 @@ class SuccessPartnersCubit extends AsyncCubit<List<SuccessPartnersModel>> {
   Future<void> fetchSuccessPartners() async {
     await executeAsync(
         operation: () async => await baseCrudUseCase
-                .call<List<SuccessPartnersModel>>(CrudBaseParmas(
+                .call(CrudBaseParmas(
               api: ApiConstants.successPartners,
               httpRequestType: HttpRequestType.get,
-              mapper: (data) {
-                final list = data
-                    .map<SuccessPartnersModel>(
-                        (e) => SuccessPartnersModel.fromJson(e))
-                    .toList();
-                return list;
-              },
+              mapper: (data) => data.map<SuccessPartnersModel>(
+                      (e) => SuccessPartnersModel.fromJson(e)).toList()
             )));
   }
 }

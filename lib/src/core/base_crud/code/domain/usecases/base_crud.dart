@@ -29,7 +29,7 @@ class CrudBaseParmas<T>  {
   final HttpRequestType httpRequestType;
   final Map<String, dynamic>? body;
   final Map<String, dynamic>? queryParameters;
-  final T Function(dynamic)? mapper;
+  final T Function(dynamic json)? mapper;
   final bool isFromData;
   final void Function(int, int)? onSendProgress;
   CrudBaseParmas({
