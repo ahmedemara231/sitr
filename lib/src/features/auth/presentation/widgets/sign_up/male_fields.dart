@@ -96,7 +96,7 @@ class _MaleFieldsState extends State<MaleFields> {
             ..insertAll(
               2,
               [
-                SignUpImageWidget(onSelectImage: (image) {
+                SelectImageWidget(onSelectImage: (image) {
                   selectedImage = image;
                   _listenToData(
                       asMaleModel.copyWith(avatar: selectedImage?.path));

@@ -5,6 +5,7 @@ final GetIt injector = GetIt.instance;
 class ConstantManager {
   static const String bundleId = 'com.aait.flutter.sitr';
   static const String appName = 'sitr';
+  static const String defaultAvatar = 'https://share.google/images/xqtQr0B9c0ROYtxeG';
   static const String fontFamily = 'Tajawal';
   static const String token = 'token';
   static const String projectName = 'sitr';

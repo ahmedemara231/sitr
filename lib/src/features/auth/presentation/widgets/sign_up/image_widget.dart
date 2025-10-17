@@ -1,43 +1,64 @@
 import 'dart:io';
+import 'package:dropinity/helpers/extensions/padding_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../generated/assets.dart';
-import '../../../../../config/language/locale_keys.g.dart';
+import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/extensions/object.dart';
 import '../../../../../core/helpers/helpers.dart';
-import '../shared/text_field.dart';
+import '../../../../../core/widgets/svg_pic.dart';
 
-class SignUpImageWidget extends StatelessWidget {
+class SelectImageWidget extends StatelessWidget {
+  final String? initialValue;
   final void Function(File? image) onSelectImage;
-  SignUpImageWidget({super.key,
+  SelectImageWidget({super.key,
     required this.onSelectImage,
+    this.initialValue,
   });
 
-  ValueNotifier<File?> image = ValueNotifier(null);
+  final ValueNotifier<File?> image = ValueNotifier(null);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SignUpTextField(
-          readOnly: true,
-          onTap: () async{
-            final selectedImage = await Helpers.getImageFromCameraOrDevice();
-            image.value = selectedImage;
-            onSelectImage.call(selectedImage);
-          },
-          upperTitle: LocaleKeys.profilePicture,
-          title: LocaleKeys.pleaseEnterYourProfilePicture,
-          suffixIconPath: Assets.svgCamera,
-          controller: TextEditingController(),
-          // validator: Validators.validateEmpty,
-        ),
         ValueListenableBuilder(
             valueListenable: image,
-            builder: (context, value, child) => value.isNotNull? CircleAvatar(
-              radius: 50.sp,
-              backgroundImage: FileImage(value!),
-            ) : const SizedBox.shrink()
+            builder: (context, value, child) => Stack(
+              alignment: Alignment.bottomRight,
+              children: [
+                Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.primary),
+                    shape: BoxShape.circle
+                  ),
+                  child: CircleAvatar(
+                    radius: 50.sp,
+                    backgroundImage: value.isNotNull? FileImage(value!) : NetworkImage(initialValue!),
+                  ).paddingAll(3.r),
+                ),
+                InkWell(
+                  onTap: () async{
+                    final selectedImage = await Helpers.getImageFromCameraOrDevice();
+                    image.value = selectedImage;
+                    onSelectImage.call(selectedImage);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(5.r),
+                      decoration: const BoxDecoration(
+                        color: AppColors.primary,
+                        shape: BoxShape.circle
+                      ),
+                      child: SizedBox.square(
+                          dimension: 20.sp,
+                          child: const SvgPic(assetName: Assets.svgCamera, color: Colors.white,)
+                      )
+                  ),
+                ),
+              ],
+            ),
         ),
       ],
     );

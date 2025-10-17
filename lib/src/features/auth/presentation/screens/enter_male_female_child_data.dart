@@ -2,7 +2,7 @@ part of '../../imports.dart';
 
 enum ComesFrom { signUpAsPartner, signUpAsParent, editProfile }
 
-class EnterMaleOrFemaleOrChildDataScreen extends StatefulWidget {
+class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
   final ComesFrom from;
   final UserType? type;
   final UserType? secondaryType;
@@ -26,10 +26,38 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatefulWidget {
         secondaryType = null;
 
   @override
-  State<EnterMaleOrFemaleOrChildDataScreen> createState() => _EnterMaleOrFemaleOrChildDataScreenState();
+  Widget build(BuildContext context) {
+    return from == ComesFrom.editProfile?
+    AppScaffold(
+        appBarTitle: LocaleKeys.profile,
+        body: _EnterMaleOrFemaleOrChildDataBody(from: from, type: type, secondaryType: secondaryType)
+    ) :
+    CenterCardScaffold(
+        upperWidget: const SignUpUpperWidget(),
+        body: _EnterMaleOrFemaleOrChildDataBody(from: from, type: type, secondaryType: secondaryType)
+    );
+  }
 }
 
-class _EnterMaleOrFemaleOrChildDataScreenState extends State<EnterMaleOrFemaleOrChildDataScreen> {
+class _EnterMaleOrFemaleOrChildDataBody extends StatefulWidget {
+  final ComesFrom from;
+
+  final UserType? type;
+
+  final UserType? secondaryType;
+
+  const _EnterMaleOrFemaleOrChildDataBody({
+    required this.from,
+    required this.type,
+    required this.secondaryType,
+  });
+
+  @override
+  State<_EnterMaleOrFemaleOrChildDataBody> createState() => _EnterMaleOrFemaleOrChildDataBodyState();
+}
+
+class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrChildDataBody> {
+
   late final ValueNotifier<UserType> _mainType;
 
   void _init() {
@@ -37,6 +65,7 @@ class _EnterMaleOrFemaleOrChildDataScreenState extends State<EnterMaleOrFemaleOr
   }
 
   IndividualUserModel sharedFormFieldModel = IndividualUserModel.initial();
+  UserModel get _currentUser => UserModel.currentUser;
 
   @override
   void initState() {
@@ -46,54 +75,63 @@ class _EnterMaleOrFemaleOrChildDataScreenState extends State<EnterMaleOrFemaleOr
 
   @override
   Widget build(BuildContext context) {
-    return CenterCardScaffold(
-        upperWidget: const SignUpUpperWidget(),
-        body: BlocProvider(
-          create: (context) => CompleteProfileCubit(),
-          child: Column(
-            spacing: 10.h,
-            children: [
-              if (widget.type.isNull)
-                BlocBuilder<CompleteProfileCubit, AsyncState>(
-                  builder: (context, state) => ChooseGenderWidget(
-                    canChoose: !state.isLoading,
-                    onSelectGender: (selectedGender) => _mainType.value = selectedGender,
-                    genders: const [
-                      UserType.male,
-                      UserType.female,
-                    ],
-                  ),
-                ),
-
-              ValueListenableBuilder(
-                valueListenable: _mainType,
-                builder: (context, value, child) => value.isFemale ?
-                FemaleFields(
-                    secondaryUserType: widget.secondaryType,
-                    onFinishFemaleData: (data) => sharedFormFieldModel = data
-                ) : MaleFields(
-                    secondaryType: widget.secondaryType,
-                    onFinishMaleData: (data) => sharedFormFieldModel = data
-                ),
+    return BlocProvider(
+      create: (context) => CompleteProfileCubit(),
+      child: Column(
+        spacing: 10.h,
+        children: [
+          if (widget.type.isNull)
+            BlocBuilder<CompleteProfileCubit, AsyncState>(
+              builder: (context, state) => ChooseGenderWidget(
+                canChoose: !state.isLoading,
+                onSelectGender: (selectedGender) => _mainType.value = selectedGender,
+                genders: const [
+                  UserType.male,
+                  UserType.female,
+                ],
               ),
+            ),
 
-              const ConditionsTermsAcceptance(),
-              Builder(builder: (ctx) {
-                return DefaultButton(
-                  onTap: () async => await ctx.read<CompleteProfileCubit>().completeProfile(
-                      isParent: widget.secondaryType.isNotNull,
-                      body: sharedFormFieldModel,
-                      onSuccess: () {
-                        Go.offAll(const LoginScreen());
-                        // MessageUtils.showSnackBar();
-                      }
-                    )
-                );
-              }),
-              if (widget.from == ComesFrom.signUpAsPartner)
-                const AlreadyHaveAccWidget()
-            ],
+          if(widget.from == ComesFrom.editProfile)
+            SelectImageWidget(
+              initialValue: _currentUser.avatar?? ConstantManager.defaultAvatar,
+              onSelectImage: (img){},
+            ),
+          ValueListenableBuilder(
+            valueListenable: _mainType,
+            builder: (context, value, child) => value.isFemale ?
+            FemaleFields(
+                secondaryUserType: widget.secondaryType,
+                onFinishFemaleData: (data) => sharedFormFieldModel = data
+            ) : MaleFields(
+                secondaryType: widget.secondaryType,
+                onFinishMaleData: (data) => sharedFormFieldModel = data
+            ),
           ),
-        ));
+
+          if(widget.from != ComesFrom.editProfile)
+            const ConditionsTermsAcceptance(),
+
+          Builder(builder: (ctx) {
+            return DefaultButton(
+                title: widget.from == ComesFrom.editProfile?
+                LocaleKeys.saveChanges : LocaleKeys.confirm,
+                onTap: () async => await ctx.read<CompleteProfileCubit>().completeProfile(
+                    isParent: widget.secondaryType.isNotNull,
+                    body: sharedFormFieldModel,
+                    onSuccess: () {
+                      Go.offAll(const LoginScreen());
+                      // MessageUtils.showSnackBar();
+                    }
+                )
+            );
+          }),
+
+          if (widget.from == ComesFrom.signUpAsPartner)
+            const AlreadyHaveAccWidget()
+        ],
+      ),
+    );
   }
 }
+
