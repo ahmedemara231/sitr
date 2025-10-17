@@ -12,7 +12,7 @@ class PartnerCard extends StatelessWidget {
   final String location;
   final String weight;
   final int age;
-  final double height;
+  final num height;
   final String maritalStatus;
 
   const PartnerCard({

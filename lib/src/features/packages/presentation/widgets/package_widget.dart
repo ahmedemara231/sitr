@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -79,7 +77,7 @@ class PackageWidget extends StatelessWidget {
                                 onPay: (ctx, paymentMethod) async => context.read<PackagesManagerCubit>().subscribeOrRenewPackage(
                                   packageId: package.id.toString(),
                                   type: type,
-                                  paymentMethod: paymentMethod.name,
+                                  paymentMethod: paymentMethod,
                                   onSuccess: (url) async{
                                     final result = await Go.to(SubscriptionScreen(
                                       initialUrl: url,

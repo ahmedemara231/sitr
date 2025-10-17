@@ -10,6 +10,7 @@ import '../../core/navigation/navigator.dart';
 import '../../core/notification/notification_service.dart';
 import '../../core/shared/user_cubit/user_cubit.dart';
 import '../auth/imports.dart';
+import '../home/home_screen.dart';
 import '../on_boarding/screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -57,7 +58,8 @@ class _SplashScreenState extends State<SplashScreen> {
     switch(result){
       case true:
         await UserCubit.instance.init();
-        UserCubit.instance.user.completeRegistration?.manageNavigationBasedCompleteRegisterStatus();
+        Go.to(const HomeScreen());
+        // UserCubit.instance.user.completeRegistration?.manageNavigationBasedCompleteRegisterStatus();
         break;
 
       default:

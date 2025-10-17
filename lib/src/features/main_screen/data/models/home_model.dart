@@ -136,8 +136,8 @@ class Opportunity {
   TitleValueShape? type;
   Gender? gender;
   String? city;
-  double? height;
-  double? weight;
+  num? height;
+  num? weight;
 Opportunity copyWith({  int? id,
   String? name,
   String? avatar,

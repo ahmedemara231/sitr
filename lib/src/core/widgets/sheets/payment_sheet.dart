@@ -10,7 +10,8 @@ import '../buttons/app_loading_button.dart';
 import '../svg_pic.dart';
 
 enum PaymentMethod {
-  online(0, Assets.svgOnlinePayment);
+  online(0, Assets.svgOnlinePayment),
+  wallet(1, Assets.svgWallet);
 
   final int id;
   final String image;
@@ -33,6 +34,9 @@ extension GetPayMethodAsString on PaymentMethod{
     switch(this){
       case PaymentMethod.online:
         return LocaleKeys.onlinePayment;
+
+      case PaymentMethod.wallet:
+        return LocaleKeys.wallet;
 
       // default:
       //   return '';
@@ -107,10 +111,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
 
 class _PackageCard extends StatelessWidget {
   final PaymentMethod paymentMethod;
-  const _PackageCard({super.key,
-    required this.paymentMethod
-  });
-
+  const _PackageCard({required this.paymentMethod});
 
   @override
   Widget build(BuildContext context) {
