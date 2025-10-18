@@ -151,12 +151,11 @@ class FemaleModel extends IndividualUserModel {
   }
 
   @override
-  Map<String, dynamic> toRequestBodyJson() {
-    return super.toRequestBodyJson()..addAll({
+  Map<String, dynamic> toRequestBodyJson(bool isChild) {
+    return super.toRequestBodyJson(isChild)..addAll({
       'preferred_residence_after_marriage': preferredResidenceAfterMarriage,
       'hijab': hijab?.value,
       'accepts_polygamy': acceptsPolygamy,
-
       'guardian_name': guardianName,
       'guardian_phone': guardianPhone,
       'guardian_relation_id': guardianRelation?.id.toString(),

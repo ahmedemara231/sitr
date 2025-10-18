@@ -80,6 +80,11 @@ class _MaleFieldsState extends State<MaleFields> {
             ..insertAll(
               0,
               [
+                SelectImageWidget(onSelectImage: (image) {
+                  selectedImage = image;
+                  _listenToData(
+                      asMaleModel.copyWith(avatar: selectedImage?.path));
+                }),
                 SignUpTextField(
                 upperTitle: LocaleKeys.name,
                 title: LocaleKeys.pleaseEnterName,
@@ -88,11 +93,6 @@ class _MaleFieldsState extends State<MaleFields> {
                     _listenToData(asMaleModel.copyWith(name: _nameCont.text)),
                 // validator: Validators.validateEmpty,
               ),
-                SelectImageWidget(onSelectImage: (image) {
-                  selectedImage = image;
-                  _listenToData(
-                      asMaleModel.copyWith(avatar: selectedImage?.path));
-                }),
               ]
             )
             ..insert(

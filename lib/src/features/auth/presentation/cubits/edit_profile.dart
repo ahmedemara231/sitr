@@ -20,7 +20,7 @@ class EditProfileCubit extends AsyncCubit<UserModel>{
             CrudBaseParmas(
                 api: ApiConstants.editProfile,
                 httpRequestType: HttpRequestType.post,
-                body: body.toRequestBodyJson(),
+                body: body.toRequestBodyJson(false),
                 queryParameters: {
                   '_method' : 'put'
                 },

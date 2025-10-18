@@ -24,7 +24,7 @@ class CompleteProfileCubit extends AsyncCubit<UserModel>{
                 ApiConstants.completeRegister,
 
                 httpRequestType: HttpRequestType.post,
-                body: body.toRequestBodyJson(),
+                body: body.toRequestBodyJson(false),
                 mapper: (data) => UserModel.fromJson(data)
             )
         ),

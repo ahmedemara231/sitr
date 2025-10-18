@@ -144,7 +144,8 @@ class IndividualUserModel extends UserModel {
     );
   }
 
-  Map<String, dynamic> toRequestBodyJson() => {
+
+  Map<String, dynamic> toJsonBody() => {
     "nick_name": nickName,
     "marital_status": maritalStatus?.value,
     "height": height,
@@ -169,6 +170,21 @@ class IndividualUserModel extends UserModel {
     "skin_color": skinColor?.value,
     'religious_commitment': religiousCommitment?.value,
   };
+
+  Map<String, dynamic> toRequestBodyJson(bool isChild) {
+    if(isChild){
+      return toJsonBody()..addAll({
+        'name' : name,
+        'gender' : gender?.userType?.name,
+        'phone' : phone,
+        'identity_number' : identityNumber,
+        'age' : age,
+      });
+
+    }else{
+      return toJsonBody();
+    }
+  }
 
   @override
   Map<String, dynamic> toJson() {

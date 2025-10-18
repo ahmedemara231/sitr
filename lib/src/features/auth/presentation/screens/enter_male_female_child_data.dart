@@ -92,7 +92,10 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
             ChooseGenderWidget(
               titles: (element) => element.translate,
               canChoose: true,
-              onSelectGender: (selectedGender) => _mainType.value = selectedGender,
+              onSelectGender: (selectedGender) {
+                _mainType.value = selectedGender;
+                _listenToData(sharedFormFieldModel.copyWith(gender: Gender(userType: selectedGender)));
+              },
               genders: const [
                 UserType.male,
                 UserType.female,
