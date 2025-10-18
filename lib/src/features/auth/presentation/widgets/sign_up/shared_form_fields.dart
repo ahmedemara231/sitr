@@ -51,6 +51,15 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
 
   late T model;
 
+  void assignToChildOrPartner(){
+    if(UserModel.isMale){
+
+    }else if(UserModel.isFemale){
+
+    }else{
+
+    }
+  }
   void _init() {
     if(T == MaleModel){
       model = MaleModel.initial() as T;
@@ -80,7 +89,14 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
     childrenExits.addListener(_childrenExitsListener);
   }
 
-  IndividualUserModel get _currentUser => UserModel.currentUser as IndividualUserModel;
+  // IndividualUserModel get _currentUser => UserModel.currentUser as IndividualUserModel;
+  IndividualUserModel get _currentUser {
+    if(UserModel.isIndividual){
+      return UserModel.currentUser as IndividualUserModel;
+    }else{
+      return UserModel.currentUser as IndividualUserModel;
+    }
+  }
 
   @override
   void initState() {
