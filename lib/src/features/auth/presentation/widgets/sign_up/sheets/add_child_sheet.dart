@@ -15,8 +15,8 @@ class AddChildSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBottomSheet.large(
-        asyncCall: (context) => Go.offAll(const LoginScreen()),
-        btnTitle: LocaleKeys.back,
+        asyncCall: (context) => Go.off(const EnterMaleOrFemaleOrChildDataScreen.signUpAsParent()),
+        btnTitle: LocaleKeys.addAnotherChild,
         cancelBackgroundColor: Colors.black,
         cancelBtnTitle: LocaleKeys.sendOrder,
         upperWidget: Column(
