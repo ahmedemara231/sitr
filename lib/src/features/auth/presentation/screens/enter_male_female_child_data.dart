@@ -16,8 +16,7 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
 
   EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner({
     super.key,
-  })  : type =  UserType.male,
-  // })  : type = UserModel.currentUser.gender?.userType ?? UserType.male,
+  })  : type = UserModel.currentUser?.gender?.userType ?? UserType.male,
         from = ComesFrom.signUpAsPartner,
         secondaryType = null;
 
