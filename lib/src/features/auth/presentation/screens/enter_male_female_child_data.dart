@@ -135,7 +135,9 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
               if(widget.from == ComesFrom.editProfile){
                 await ctx.read<EditProfileCubit>().editProfile(
                     body: sharedFormFieldModel,
-                    onSuccess: (){}
+                    onSuccess: () => showDefaultBottomSheet(
+                        child: const EditProfileSheet()
+                    )
                 );
 
               }else if(widget.from == ComesFrom.signUpAsPartner){
@@ -144,19 +146,9 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
                     body: sharedFormFieldModel,
                     onSuccess: () {
                       showDefaultBottomSheet(
-                          child: AppBottomSheet.small(
-                              asyncCall: (context) => Go.offAll(const LoginScreen()),
-                              btnTitle: LocaleKeys.back,
-                              upperWidget: Column(
-                                spacing: 12.h,
-                                children: [
-                                  Lottie.asset(Assets.successDone),
-                                  AppText(LocaleKeys.yourRequestHasBeenSentSuccessfully, fontSize: 16.sp, fontWeight: FontWeight.w500),
-                                  AppText(LocaleKeys.yourRequestWillBeReviewedByManagers, fontSize: 12.sp, color: Colors.black54),
-                                ],
-                              )
-                          )
+                          child: const CompleteProfileSheet()
                       );
+
                       // MessageUtils.showSnackBar();
                     }
                 );
@@ -167,19 +159,9 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
                     onSuccess: () {
                       AuthData.inc(_mainType.value);
                       showDefaultBottomSheet(
-                          child: AppBottomSheet.small(
-                              asyncCall: (context) => Go.offAll(const LoginScreen()),
-                              btnTitle: LocaleKeys.back,
-                              upperWidget: Column(
-                                spacing: 12.h,
-                                children: [
-                                  Lottie.asset(Assets.successDone),
-                                  AppText(LocaleKeys.yourRequestHasBeenSentSuccessfully, fontSize: 16.sp, fontWeight: FontWeight.w500),
-                                  AppText(LocaleKeys.yourRequestWillBeReviewedByManagers, fontSize: 12.sp, color: Colors.black54),
-                                ],
-                              )
-                          )
+                          child: const AddChildSheet()
                       );
+
                       // MessageUtils.showSnackBar();
                     }
                 );

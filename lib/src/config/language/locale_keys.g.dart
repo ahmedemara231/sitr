@@ -238,6 +238,15 @@ abstract class LocaleKeys {
   static const String _tall = 'tall';
   static String get tall => _tall.tr();
 
+  static const String _childDataHasBeenAddedSuccessfully = 'child_data_has_been_added_successfully';
+  static String get childDataHasBeenAddedSuccessfully => _childDataHasBeenAddedSuccessfully.tr();
+
+  static const String _sendOrder = 'send_order';
+  static String get sendOrder => _sendOrder.tr();
+
+  static const String _addAnotherChild = 'add_another_child';
+  static String get addAnotherChild => _addAnotherChild.tr();
+
   static const String _weight = 'weight';
   static String get weight => _weight.tr();
 
@@ -285,6 +294,9 @@ abstract class LocaleKeys {
 
   static const String _inChatYouPrefer = 'in_chat_you_prefer';
   static String get inChatYouPrefer => _inChatYouPrefer.tr();
+
+  static const String _doYouWantToAddAnotherChildOrSendARequestToTheAdministrationForReview = 'do_you_want_to_add_another_child_or_send_a_request_to_the_administration_for_review';
+  static String get doYouWantToAddAnotherChildOrSendARequestToTheAdministrationForReview => _doYouWantToAddAnotherChildOrSendARequestToTheAdministrationForReview.tr();
 
   static const String _areYouSmoke = 'are_you_smoke';
   static String get areYouSmoke => _areYouSmoke.tr();

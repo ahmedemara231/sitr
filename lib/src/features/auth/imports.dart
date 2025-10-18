@@ -63,6 +63,9 @@ import 'presentation/widgets/sign_up/conditions_terms_acceptance.dart';
 import 'presentation/widgets/sign_up/female_fields.dart';
 import 'presentation/widgets/sign_up/image_widget.dart';
 import 'presentation/widgets/sign_up/male_fields.dart';
+import 'presentation/widgets/sign_up/sheets/add_child_sheet.dart';
+import 'presentation/widgets/sign_up/sheets/complete_profile_sheet.dart';
+import 'presentation/widgets/sign_up/sheets/edit_profile.dart';
 import 'presentation/widgets/sign_up/sign_up_upper_widget.dart';
 
 import 'package:easy_localization/easy_localization.dart';
