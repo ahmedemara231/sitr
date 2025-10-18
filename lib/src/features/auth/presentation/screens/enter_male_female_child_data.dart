@@ -7,11 +7,6 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
   final UserType? type;
   final UserType? secondaryType;
 
-  const EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner({
-    super.key,
-    required this.type
-  })  : from = ComesFrom.signUpAsPartner,
-        secondaryType = null;
 
   const EnterMaleOrFemaleOrChildDataScreen.signUpAsParent({
     super.key,
@@ -19,9 +14,16 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
         type = null,
         secondaryType = UserType.parent;
 
+  EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner({
+    super.key,
+  })  : type =  UserType.male,
+  // })  : type = UserModel.currentUser.gender?.userType ?? UserType.male,
+        from = ComesFrom.signUpAsPartner,
+        secondaryType = null;
+
   EnterMaleOrFemaleOrChildDataScreen.editProfile({
     super.key,
-  }) : type = UserModel.currentUser.gender?.userType,
+  })  : type = UserModel.currentUser?.gender?.userType ?? UserType.male,
         from = ComesFrom.editProfile,
         secondaryType = null;
 
@@ -64,10 +66,9 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
     _mainType = ValueNotifier(widget.type ?? UserType.male);
   }
 
-  IndividualUserModel sharedFormFieldModel =
-      (UserModel.currentUser as IndividualUserModel?)?? IndividualUserModel.initial();
+  IndividualUserModel sharedFormFieldModel = IndividualUserModel.initial();
 
-  UserModel get _currentUser => UserModel.currentUser;
+  UserModel get _currentUser => UserModel.currentUser ?? UserModel.initial();
 
   @override
   void initState() {
@@ -75,6 +76,8 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
     super.initState();
   }
 
+  void _listenToData(IndividualUserModel updatedModel) => sharedFormFieldModel = updatedModel;
+  
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -99,7 +102,7 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
 
           if(widget.from == ComesFrom.editProfile)
             SelectImageWidget(
-              initialValue: _currentUser.avatar?? ConstantManager.defaultAvatar,
+              initialValue: _currentUser.avatar,
               onSelectImage: (img) => sharedFormFieldModel.copyWith(avatar: img?.path),
             ),
 
@@ -108,10 +111,10 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
             builder: (context, value, child) => value.isFemale ?
             FemaleFields(
                 secondaryUserType: widget.secondaryType,
-                onFinishFemaleData: (data) => sharedFormFieldModel.merge(data)
+                onFinishFemaleData: (data) => _listenToData(sharedFormFieldModel.merge(data))
             ) : MaleFields(
                 secondaryType: widget.secondaryType,
-                onFinishMaleData: (data) => sharedFormFieldModel.merge(data)
+                onFinishMaleData: (data) => _listenToData(sharedFormFieldModel.merge(data))
             ),
           ),
 

@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -85,7 +84,6 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
 
   @override
   void initState() {
-    log('the name is ${_currentUser.toJson()}');
     _init();
     _listenToModelChanges();
     _nickNameCont = TextEditingController(text: _currentUser.nickName);

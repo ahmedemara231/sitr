@@ -91,10 +91,15 @@ class UserModel {
     return currentUser.isNotNull;
   }
 
-  static UserModel get currentUser{
-    return UserModel.fromJson(
-        CacheStorage.read('user', isDecoded: true)
-    );
+  static UserModel? get currentUser {
+    final res = (CacheStorage.read('user', isDecoded: true) as Object?).isNotNull;
+    if(res){
+      return UserModel.fromJson(
+          CacheStorage.read('user', isDecoded: true)
+      );
+    }
+
+    return null;
   }
 
 

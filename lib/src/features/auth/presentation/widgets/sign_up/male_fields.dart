@@ -1,16 +1,11 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
-import '../../../../../core/shared/models/title_value_shape.dart';
 import '../../../../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../../../../core/shared/models/user_models/individual/male_model.dart';
 import '../../../../../core/shared/models/user_models/user_model.dart';
-import '../../../../../core/widgets/app_text.dart';
-import '../../data/enums_data.dart';
 import '../shared/text_field.dart';
-import 'drop_down_text_field.dart';
 import 'image_widget.dart';
 import 'shared_form_fields.dart';
 
@@ -39,7 +34,7 @@ class _MaleFieldsState extends State<MaleFields> {
 
   void _init() => sharedFormFieldModel = MaleModel.initial();
 
-  UserModel get _currentUser => UserModel.currentUser;
+  UserModel get _currentUser => UserModel.currentUser ?? UserModel.initial();
 
   @override
   void initState() {
@@ -82,9 +77,10 @@ class _MaleFieldsState extends State<MaleFields> {
           onFinished: (data) =>
               _listenToData(asMaleModel.merge(data.copyWith())),
           onInitData: (List<Widget> children) => children
-            ..insert(
+            ..insertAll(
               0,
-              SignUpTextField(
+              [
+                SignUpTextField(
                 upperTitle: LocaleKeys.name,
                 title: LocaleKeys.pleaseEnterName,
                 controller: _nameCont,
@@ -92,15 +88,15 @@ class _MaleFieldsState extends State<MaleFields> {
                     _listenToData(asMaleModel.copyWith(name: _nameCont.text)),
                 // validator: Validators.validateEmpty,
               ),
-            )
-            ..insertAll(
-              2,
-              [
                 SelectImageWidget(onSelectImage: (image) {
                   selectedImage = image;
                   _listenToData(
                       asMaleModel.copyWith(avatar: selectedImage?.path));
                 }),
+              ]
+            )
+            ..insert(
+              2,
                 SignUpTextField(
                   upperTitle: LocaleKeys.phoneNumber,
                   title: LocaleKeys.pleaseEnterTheNumber,
@@ -110,7 +106,6 @@ class _MaleFieldsState extends State<MaleFields> {
                       asMaleModel.copyWith(phone: _phoneCont.text)),
                   // validator: Validators.validateEmpty,
                 ),
-              ],
             )
             ..insertAll(7, [
               SignUpTextField(
@@ -132,18 +127,6 @@ class _MaleFieldsState extends State<MaleFields> {
                 // validator: Validators.validateEmpty,
               ),
             ])
-            ..insert(
-              20,
-              DropDownTextField<TitleValueShape>(
-                hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
-                values: EnumsData.religiousCommitment.data,
-                title: LocaleKeys.degreeOfCommitment,
-                itemBuilder: (v) => AppText(v.title),
-                onChanged: (value) => _listenToData(asMaleModel.copyWith(
-                    religiousCommitment:
-                        TitleValueShape.fromSingleLabel(value?.value))),
-              ),
-            ),
         );
     }
   }

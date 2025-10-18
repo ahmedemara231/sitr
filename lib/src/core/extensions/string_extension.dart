@@ -33,7 +33,7 @@ extension FormatString on String {
     }else if(statusType.isHasSetrCode){
 
     }else if(statusType.isIncomplete){
-      Go.to(EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(type: UserTypeHelper.currentType));
+      Go.to(EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner());
 
     }else{
       throw Exception('there is no such value with $statusType');

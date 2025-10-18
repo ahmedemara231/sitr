@@ -181,7 +181,6 @@ class _SignUpFieldsState extends State<SignUpFields> {
       spacing: 12.h,
       children: [
         SelectImageWidget(
-            initialValue: ConstantManager.defaultAvatar,
             onSelectImage: (img) => _listenToData(signUpBody.copyWith(image: img))
         ),
         SignUpTextField(

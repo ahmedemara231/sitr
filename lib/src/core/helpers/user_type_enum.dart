@@ -17,7 +17,7 @@ extension Check on UserType{
 
 class UserTypeHelper{
 
-  static UserType? get currentType => UserModel.currentUser.gender?.userType;
+  static UserType? get currentType => UserModel.currentUser?.gender?.userType;
 
   static bool get isAuthenticated{
     return (UserModel.currentUser as Object?).isNotNull;
