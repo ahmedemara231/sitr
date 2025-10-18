@@ -1,15 +1,14 @@
-import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/language/languages.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/extensions/enum.dart';
-import '../../../../../core/extensions/string_extension.dart';
 import '../../../../../core/shared/models/title_value_shape.dart';
 import '../../../../../core/shared/models/user_models/individual/female_model.dart';
 import '../../../../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../../../../core/shared/models/user_models/individual/male_model.dart';
+import '../../../../../core/shared/models/user_models/parent/parent_model.dart';
 import '../../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../models/dowry.dart';
@@ -47,34 +46,35 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
   late TextEditingController _thingsCont;
   late TextEditingController _educationalQualificationCont;
   late TextEditingController _diseasesCont;
-  late final ValueNotifier<Answer?> childrenExits = ValueNotifier(_currentUser.hasChildren?.toAnswer);
+  late final ValueNotifier<Answer?> childrenExits = ValueNotifier(UserModel.isParent? null : asIndividualUserModel.hasChildren?.toAnswer);
 
   late T model;
 
-  void assignToChildOrPartner(){
-    if(UserModel.isMale){
+  final List<IndividualUserModel> _childrenList = [];
+  void _initIndividualOrChild(IndividualUserModel element){
+    if(UserModel.isIndividual){
+      model = element as T;
 
-    }else if(UserModel.isFemale){
-
-    }else{
-
+    }else if(UserModel.isParent){
+      _childrenList.insert(AuthData.childrenNumber.value.total, element);
+      model = _childrenList[AuthData.childrenNumber.value.total] as T;
     }
   }
+
   void _init() {
     if(T == MaleModel){
-      model = MaleModel.initial() as T;
+      _initIndividualOrChild(MaleModel.initial());
 
     }else if(T == FemaleModel){
-      model = FemaleModel.initial() as T;
+      _initIndividualOrChild(FemaleModel.initial());
 
     }else{
-      model = IndividualUserModel.initial() as T;
+      _initIndividualOrChild(IndividualUserModel.initial());
     }
   }
 
   void _listenToData(T updatedModel, {String? comingVal}) {
     model = updatedModel;
-    log(model.nickName.toString());
     widget.onFinished.call(model);
   }
 
@@ -90,28 +90,43 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
   }
 
   // IndividualUserModel get _currentUser => UserModel.currentUser as IndividualUserModel;
-  IndividualUserModel get _currentUser {
+
+  UserModel? get _currentUser {
     if(UserModel.isIndividual){
       return UserModel.currentUser as IndividualUserModel;
+
+    }else if(UserModel.isParent){
+      // IndividualUserModel لازم يبقي فيه children جوا ال parent model عشان كله يبقي
+      // return ((UserModel.currentUser as ParentModel).children[index]) as IndividualUserModel;
+      return UserModel.currentUser ?? UserModel.initial();
+
     }else{
-      return UserModel.currentUser as IndividualUserModel;
+      return UserModel.initial();
     }
   }
+
+  IndividualUserModel get asIndividualUserModel => _currentUser as IndividualUserModel;
 
   @override
   void initState() {
     _init();
     _listenToModelChanges();
-    _nickNameCont = TextEditingController(text: _currentUser.nickName);
-    _tallCont = TextEditingController(text: _currentUser.height);
-    _weightCont = TextEditingController(text: _currentUser.weight);
-    _currentJobCont = TextEditingController(text: _currentUser.currentJob);
-    _briefCont = TextEditingController(text: _currentUser.bio);
-    _childrenNumberCont = TextEditingController(text: _currentUser.numOfChildren);
-    _thingsCont = TextEditingController(text: _currentUser.prohibitedThings);
-    _educationalQualificationCont = TextEditingController(text: _currentUser.educationLevel);
-    _diseasesCont = TextEditingController(text: _currentUser.healthConditions);
+    _nickNameCont = TextEditingController(text: UserModel.isParent? null : asIndividualUserModel.nickName);
+    _tallCont = TextEditingController(text: UserModel.isParent? null : asIndividualUserModel.height);
+    _weightCont = TextEditingController(text: UserModel.isParent? null : asIndividualUserModel.weight);
+    _currentJobCont = TextEditingController(text: UserModel.isParent? null : asIndividualUserModel.currentJob);
+    _briefCont = TextEditingController(text: UserModel.isParent? null : asIndividualUserModel.bio);
+    _childrenNumberCont = TextEditingController(text: UserModel.isParent? null : asIndividualUserModel.numOfChildren);
+    _thingsCont = TextEditingController(text: UserModel.isParent? null : asIndividualUserModel.prohibitedThings);
+    _educationalQualificationCont = TextEditingController(text: UserModel.isParent? null : asIndividualUserModel.educationLevel);
+    _diseasesCont = TextEditingController(text: UserModel.isParent? null : asIndividualUserModel.healthConditions);
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant SharedFormFields<T> oldWidget) {
+    _init();
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -178,7 +193,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         // validator: Validators.validateEmpty,
       ),
       RadioWidget<Answer>(
-          initialValue: _currentUser.hasChildren?.toAnswer,
+          // initialValue: _currentUser.hasChildren?.toAnswer,
           title: LocaleKeys.childrenExists,
           onSubmit: (result) {
             childrenExits.value = result;
@@ -202,7 +217,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
                  // validator: Validators.validateEmpty,
                ),
                RadioWidget<TitleValueShape>(
-                 initialValue: _currentUser.childCustody,
+                 // initialValue: _currentUser.childCustody,
                  title: LocaleKeys.nursery,
                  onSubmit: (result) => _listenToData(model.copyWith(childCustody: result) as T),
                  values: EnumsData.childCustody.data,
@@ -214,7 +229,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
        ),
 
       RadioWidget<Answer>(
-        initialValue: _currentUser.wantChildren?.toAnswer,
+        // initialValue: _currentUser.wantChildren?.toAnswer,
           title: LocaleKeys.wantToHaveChildren,
           onSubmit: (result) =>
               _listenToData(model.copyWith(wantChildren: result.toBool) as T),
@@ -231,12 +246,12 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
       ),
 
       DowryWidget(
-        initialValue: _currentUser.dowry,
+        // initialValue: _currentUser.dowry,
         onSelect: (from, to) => _listenToData(model.copyWith(dowry: Dowry(from: from, to: to)) as T)
       ),
 
       DropDownTextField<TitleValueShape>(
-        // initialValue: ,
+        // // initialValue: ,
         hint: LocaleKeys.pleaseEnterTheWeddingParty,
         values: EnumsData.weddingTypes.data,
         title: LocaleKeys.typeOfWeddingParty,
@@ -260,7 +275,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         // validator: Validators.validateEmpty,
       ),
       RadioWidget<Answer>(
-        initialValue: _currentUser.isPrayer?.toAnswer,
+        // initialValue: _currentUser.isPrayer?.toAnswer,
           title: LocaleKeys.areYouPray,
           onSubmit: (result) =>
               _listenToData(model.copyWith(isPrayer: result.toBool) as T),
@@ -276,7 +291,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         // validator: Validators.validateEmpty,
       ),
       RadioWidget<Languages>(
-        initialValue: _currentUser.chatLang?.toLang(),
+        // initialValue: _currentUser.chatLang?.toLang(),
           title: LocaleKeys.inChatYouPrefer,
           onSubmit: (result) => _listenToData(
               model.copyWith(chatLang: result.languageCode) as T),
@@ -284,7 +299,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
           titleBuilder: (i) => AppText(Languages.values[i].translate),
       ),
       RadioWidget<Answer>(
-        initialValue: _currentUser.isSmoker?.toAnswer,
+        // initialValue: _currentUser.isSmoker?.toAnswer,
           title: LocaleKeys.areYouSmoke,
           onSubmit: (result) =>
               _listenToData(model.copyWith(isSmoker: result.toBool) as T),
@@ -292,7 +307,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
           titleBuilder: (i) => AppText(Answer.values[i].translate),
       ),
       RadioWidget<Answer>(
-        initialValue: _currentUser.tribeAffiliation?.toAnswer,
+        // initialValue: _currentUser.tribeAffiliation?.toAnswer,
           title: LocaleKeys.doYouBelongToATribe,
           onSubmit: (result) =>
               _listenToData(model.copyWith(tribeAffiliation: result.toBool) as T),

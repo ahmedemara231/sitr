@@ -39,10 +39,10 @@ class _MaleFieldsState extends State<MaleFields> {
   @override
   void initState() {
     _init();
-    _nameCont = TextEditingController(text: _currentUser.name);
-    _phoneCont = TextEditingController(text: _currentUser.phone);
-    _identifyNumberCont = TextEditingController(text: _currentUser.identityNumber);
-    _ageCont = TextEditingController(text: _currentUser.age.toString());
+    _nameCont = TextEditingController(text: UserModel.isParent? null : _currentUser.name);
+    _phoneCont = TextEditingController(text: UserModel.isParent? null : _currentUser.phone);
+    _identifyNumberCont = TextEditingController(text: UserModel.isParent? null : _currentUser.identityNumber);
+    _ageCont = TextEditingController(text: UserModel.isParent? null : _currentUser.age.toString());
     super.initState();
   }
 

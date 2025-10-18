@@ -76,27 +76,27 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
   }
 
   void _listenToData(IndividualUserModel updatedModel) => sharedFormFieldModel = updatedModel;
-  
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => CompleteProfileCubit()),
         BlocProvider(create: (context) => EditProfileCubit()),
+        BlocProvider(create: (context) => AddChildCubit()),
       ],
       child: Column(
         spacing: 10.h,
         children: [
           if (widget.type.isNull)
-            BlocBuilder<CompleteProfileCubit, AsyncState>(
-              builder: (context, state) => ChooseGenderWidget(
-                canChoose: !state.isLoading,
-                onSelectGender: (selectedGender) => _mainType.value = selectedGender,
-                genders: const [
-                  UserType.male,
-                  UserType.female,
-                ],
-              ),
+            ChooseGenderWidget(
+              titles: (element) => element.translate,
+              canChoose: true,
+              onSelectGender: (selectedGender) => _mainType.value = selectedGender,
+              genders: const [
+                UserType.male,
+                UserType.female,
+              ],
             ),
 
           if(widget.from == ComesFrom.editProfile)
@@ -107,13 +107,16 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
 
           ValueListenableBuilder(
             valueListenable: _mainType,
-            builder: (context, value, child) => value.isFemale ?
-            FemaleFields(
-                secondaryUserType: widget.secondaryType,
-                onFinishFemaleData: (data) => _listenToData(sharedFormFieldModel.merge(data))
-            ) : MaleFields(
-                secondaryType: widget.secondaryType,
-                onFinishMaleData: (data) => _listenToData(sharedFormFieldModel.merge(data))
+            builder: (context, type, child) => ValueListenableBuilder(
+              valueListenable: AuthData.childrenNumber,
+              builder: (context, currentIndex, child) => type.isFemale ?
+              FemaleFields(
+                  secondaryUserType: widget.secondaryType,
+                  onFinishFemaleData: (data) => _listenToData(sharedFormFieldModel.merge(data))
+              ) : MaleFields(
+                  secondaryType: widget.secondaryType,
+                  onFinishMaleData: (data) => _listenToData(sharedFormFieldModel.merge(data))
+              ),
             ),
           ),
 
@@ -127,33 +130,63 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
               LocaleKeys.saveChanges : LocaleKeys.confirm,
               fontSize: 16.sp,
               color: Colors.white,
-              // height: ,
             ),
-            call: (ctx) async => widget.from == ComesFrom.editProfile? await ctx.read<EditProfileCubit>().editProfile(
-                body: sharedFormFieldModel,
-                onSuccess: (){}
-            ) :
-            await ctx.read<CompleteProfileCubit>().completeProfile(
-                  isParent: widget.secondaryType.isNotNull,
-                  body: sharedFormFieldModel,
-                  onSuccess: () {
-                    showDefaultBottomSheet(
-                        child: AppBottomSheet.small(
-                            asyncCall: (context) => Go.offAll(const LoginScreen()),
-                            btnTitle: LocaleKeys.back,
-                            upperWidget: Column(
-                              spacing: 12.h,
-                              children: [
-                                Lottie.asset(Assets.successDone),
-                                AppText(LocaleKeys.yourRequestHasBeenSentSuccessfully, fontSize: 16.sp, fontWeight: FontWeight.w500),
-                                AppText(LocaleKeys.yourRequestWillBeReviewedByManagers, fontSize: 12.sp, color: Colors.black54),
-                              ],
-                            )
-                        )
-                    );
-                    // MessageUtils.showSnackBar();
-                  }
-              )
+            call: (ctx) async {
+              if(widget.from == ComesFrom.editProfile){
+                await ctx.read<EditProfileCubit>().editProfile(
+                    body: sharedFormFieldModel,
+                    onSuccess: (){}
+                );
+
+              }else if(widget.from == ComesFrom.signUpAsPartner){
+                await ctx.read<CompleteProfileCubit>().completeProfile(
+                    isParent: widget.secondaryType.isNotNull,
+                    body: sharedFormFieldModel,
+                    onSuccess: () {
+                      showDefaultBottomSheet(
+                          child: AppBottomSheet.small(
+                              asyncCall: (context) => Go.offAll(const LoginScreen()),
+                              btnTitle: LocaleKeys.back,
+                              upperWidget: Column(
+                                spacing: 12.h,
+                                children: [
+                                  Lottie.asset(Assets.successDone),
+                                  AppText(LocaleKeys.yourRequestHasBeenSentSuccessfully, fontSize: 16.sp, fontWeight: FontWeight.w500),
+                                  AppText(LocaleKeys.yourRequestWillBeReviewedByManagers, fontSize: 12.sp, color: Colors.black54),
+                                ],
+                              )
+                          )
+                      );
+                      // MessageUtils.showSnackBar();
+                    }
+                );
+
+              }else if(widget.from == ComesFrom.signUpAsParent){
+                await ctx.read<AddChildCubit>().addChild(
+                    body: sharedFormFieldModel,
+                    onSuccess: () {
+                      AuthData.inc(_mainType.value);
+                      showDefaultBottomSheet(
+                          child: AppBottomSheet.small(
+                              asyncCall: (context) => Go.offAll(const LoginScreen()),
+                              btnTitle: LocaleKeys.back,
+                              upperWidget: Column(
+                                spacing: 12.h,
+                                children: [
+                                  Lottie.asset(Assets.successDone),
+                                  AppText(LocaleKeys.yourRequestHasBeenSentSuccessfully, fontSize: 16.sp, fontWeight: FontWeight.w500),
+                                  AppText(LocaleKeys.yourRequestWillBeReviewedByManagers, fontSize: 12.sp, color: Colors.black54),
+                                ],
+                              )
+                          )
+                      );
+                      // MessageUtils.showSnackBar();
+                    }
+                );
+              }
+
+              return;
+            }
           ),
 
           if (widget.from == ComesFrom.signUpAsPartner)

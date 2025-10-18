@@ -12,11 +12,13 @@ class ChooseGenderWidget extends StatefulWidget {
   final Function(UserType selectedGender) onSelectGender;
   final List<UserType> genders;
   final bool canChoose;
+  final String Function(UserType element) titles;
 
   const ChooseGenderWidget({super.key,
     required this.onSelectGender,
     required this.genders,
-    required this.canChoose
+    required this.canChoose,
+    required this.titles
   });
 
   @override
@@ -35,7 +37,7 @@ class _ChooseGenderWidgetState extends State<ChooseGenderWidget> {
           (index) => Expanded(
             child: AppDefaultButton.withBackGroundColor(
               textColor: currentIndex == index? AppColors.white : AppColors.primary,
-              title: widget.genders[index].translate,
+              title: widget.titles.call(widget.genders[index]),
               backgroundColor: currentIndex == index? AppColors.primary : Colors.white,
               onTap: () {
                 if(widget.canChoose){

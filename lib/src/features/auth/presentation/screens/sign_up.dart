@@ -24,6 +24,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             children: [
               BlocBuilder<SignUpCubit, AsyncState>(
                 builder: (context, state) => ChooseGenderWidget(
+                  titles: (element) => element.translate,
                   canChoose: !state.isLoading,
                   onSelectGender: (selectedGender) => type.value = selectedGender,
                   genders: const [
