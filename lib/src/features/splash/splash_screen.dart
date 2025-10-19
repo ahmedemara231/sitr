@@ -58,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen> {
     switch(result){
       case true:
         await UserCubit.instance.init();
-        Go.to(const HomeScreen());
+        Go.offAll(const HomeScreen());
         // UserCubit.instance.user.completeRegistration?.manageNavigationBasedCompleteRegisterStatus();
         break;
 

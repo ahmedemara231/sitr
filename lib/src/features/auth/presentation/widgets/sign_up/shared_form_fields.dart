@@ -109,7 +109,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
     }
   }
 
-  IndividualUserModel get asIndividualUserModel => _currentUser as IndividualUserModel;
+  IndividualUserModel get asIndividualUserModel => UserModel.currentUser as IndividualUserModel;
 
   @override
   void initState() {

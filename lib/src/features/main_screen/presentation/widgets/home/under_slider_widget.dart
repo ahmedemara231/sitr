@@ -5,11 +5,8 @@ import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/widgets/app_text.dart';
 
-enum Options{first, second}
-
 class UnderSliderWidget extends StatefulWidget {
-
-  final void Function(Options selectedOption) onSelectOption;
+  final void Function(String selectedOption) onSelectOption;
   final bool secondSlider;
   final List<String> titles;
   final double fontSize;
@@ -28,7 +25,7 @@ class UnderSliderWidget extends StatefulWidget {
 }
 
 class _UnderSliderWidgetState extends State<UnderSliderWidget> {
-  Options option = Options.first;
+  late String option = widget.titles.first;
 
   @override
   Widget build(BuildContext context) {
@@ -40,19 +37,19 @@ class _UnderSliderWidgetState extends State<UnderSliderWidget> {
         widget.titles.length,
             (index) => InkWell(
           onTap: () {
-            final Options selectedOption = Options.values[index];
+            final String selectedOption = widget.titles[index];
             widget.onSelectOption(selectedOption);
             setState(() => option = selectedOption);
           },
           child: Container(
             decoration: BoxDecoration(
-              color: option == Options.values[index] ?
+              color: option == widget.titles[index] ?
               AppColors.primary : AppColors.white,
               borderRadius: BorderRadius.circular(30.r),
             ),
             child: AppText(
               widget.titles[index],
-              color: option == Options.values[index] ?
+              color: option == widget.titles[index] ?
               Colors.white : AppColors.black,
               fontSize: widget.fontSize,
               fontWeight: widget.fontWeight ?? FontWeight.normal,

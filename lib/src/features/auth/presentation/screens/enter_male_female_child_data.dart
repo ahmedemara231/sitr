@@ -86,7 +86,7 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => CompleteProfileCubit()),
-        BlocProvider(create: (context) => AddComplaintCubit()),
+        BlocProvider(create: (context) => AddChildCubit()),
         BlocProvider(create: (context) => EditProfileCubit()),
       ],
       child: Column(
@@ -130,54 +130,50 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
           if(widget.from != ComesFrom.editProfile)
             const ConditionsTermsAcceptance(),
 
-          Builder(
-            builder: (context) {
-              return LoadingButton(
-                borderRadius: ConstantManager.buttonBorderRadiusNumber,
-                idleWidget: AppText(
-                  widget.from == ComesFrom.editProfile?
-                  LocaleKeys.saveChanges : LocaleKeys.confirm,
-                  fontSize: 16.sp,
-                  color: Colors.white,
-                ),
-                call: (ctx) async {
-                  if(widget.from == ComesFrom.editProfile){
-                    await context.read<EditProfileCubit>().editProfile(
-                        body: sharedFormFieldModel,
-                        onSuccess: () => showDefaultBottomSheet(
-                            child: const EditProfileSheet()
-                        )
-                    );
+          LoadingButton(
+            borderRadius: ConstantManager.buttonBorderRadiusNumber,
+            idleWidget: AppText(
+              widget.from == ComesFrom.editProfile?
+              LocaleKeys.saveChanges : LocaleKeys.confirm,
+              fontSize: 16.sp,
+              color: Colors.white,
+            ),
+            call: (ctx) async {
+              if(widget.from == ComesFrom.editProfile){
+                await ctx.read<EditProfileCubit>().editProfile(
+                    body: sharedFormFieldModel,
+                    onSuccess: () => showDefaultBottomSheet(
+                        child: const EditProfileSheet()
+                    )
+                );
 
-                  }else if(widget.from == ComesFrom.signUpAsPartner){
-                    await context.read<CompleteProfileCubit>().completeProfile(
-                        isParent: widget.secondaryType.isNotNull,
-                        body: sharedFormFieldModel,
-                        onSuccess: () {
-                          showDefaultBottomSheet(
-                              child: const CompleteProfileSheet()
-                          );
+              }else if(widget.from == ComesFrom.signUpAsPartner){
+                await ctx.read<CompleteProfileCubit>().completeProfile(
+                    isParent: widget.secondaryType.isNotNull,
+                    body: sharedFormFieldModel,
+                    onSuccess: () {
+                      showDefaultBottomSheet(
+                          child: const CompleteProfileSheet()
+                      );
 
-                          // MessageUtils.showSnackBar();
-                        }
-                    );
+                      // MessageUtils.showSnackBar();
+                    }
+                );
 
-                  }else if(widget.from == ComesFrom.signUpAsParent){
-                    context.read<AddChildCubit>().addChild(
-                        body: sharedFormFieldModel,
-                        onSuccess: () {
-                          showDefaultBottomSheet(
-                              child: const AddChildSheet()
-                          );
+              }else if(widget.from == ComesFrom.signUpAsParent){
+                ctx.read<AddChildCubit>().addChild(
+                    body: sharedFormFieldModel,
+                    onSuccess: () {
+                      showDefaultBottomSheet(
+                          child: const AddChildSheet()
+                      );
 
-                          // MessageUtils.showSnackBar();
-                        }
-                    );
-                  }
+                      // MessageUtils.showSnackBar();
+                    }
+                );
+              }
 
-                  return;
-                }
-              );
+              return;
             }
           ),
 

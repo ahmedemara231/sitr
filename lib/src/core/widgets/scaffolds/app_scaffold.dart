@@ -28,7 +28,8 @@ class AppScaffold extends StatelessWidget {
             backgroundColor: AppColors.whiteGreyColor,
             centerTitle: true,
             title: AppText(appBarTitle, fontWeight: FontWeight.bold, fontSize: 16.sp, color: Colors.black,),
-            leading: const AppBackButton(),
+            leading: ModalRoute.of(context)!.canPop?
+            const AppBackButton() : null,
           )
       ),
       body: SingleChildScrollView(

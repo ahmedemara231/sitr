@@ -99,7 +99,7 @@ class ScreenChildren extends StatelessWidget {
                 Container(
                     width: context.width,
                     decoration: BoxDecoration(
-                      color: bodyColor??Colors.white,
+                      color: bodyColor,
                       borderRadius: BorderRadius.vertical(top: Radius.circular(22.r)),
                     ),
                     child: centerCardBody.isNotNull?

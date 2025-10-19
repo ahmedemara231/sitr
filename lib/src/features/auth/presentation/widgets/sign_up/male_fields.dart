@@ -37,6 +37,13 @@ class _MaleFieldsState extends State<MaleFields> {
 
   UserModel get _currentUser => UserModel.currentUser ?? UserModel.initial();
 
+  // String? get _title{
+  //   if(UserModel.isParent){
+  //     return asMaleModel.name;
+  //   }
+  //
+  //   return _currentUser.name;
+  // }
   @override
   void initState() {
     _init();
