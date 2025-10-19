@@ -70,5 +70,6 @@ class ApiConstants {
   static const String changeLang = 'change-lang';
   static const String editProfile = 'update-profile';
   static const String addChild = 'add-child';
+  static const String opportunityChildren = 'opportunity-children/';
 
 }

@@ -1,15 +1,12 @@
 import 'package:flutter/cupertino.dart';
-
 import '../../../../config/res/config_imports.dart';
-import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/network/network_request.dart';
 import '../../../../core/network/network_service.dart';
-import '../../../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../models/kinship.dart';
 
-class AuthData<T extends IndividualUserModel>{
+class AuthData{
   static Future<List<CityModel>> getCities()async{
     List<CityModel> citiesList = [];
     await injector<NetworkService>().callApi(
@@ -42,10 +39,12 @@ class AuthData<T extends IndividualUserModel>{
 
     return kinshipsList;
   }
-  // late T model;
 
-  // static final List<IndividualUserModel> childrenList = [];
   static ValueNotifier<ChildrenNumber> childrenNumber = ValueNotifier(ChildrenNumber());
+
+// late T model;
+
+// static final List<IndividualUserModel> childrenList = [];
 
 // static void inc(UserType user) => childrenNumber.value = childrenNumber.value.copyWith(
 //     maleNumbers: user.isMale? childrenNumber.value.maleNumbers + 1 : childrenNumber.value.maleNumbers,

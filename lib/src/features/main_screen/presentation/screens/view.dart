@@ -94,6 +94,7 @@ class MainView extends StatelessWidget {
                 ],
               ),
           ),
+          bodyColor: Colors.white,
           upperWidgetPadding: const EdgeInsets.all(20),
           centerCardBody: StatusBuilder(
                 data: state,
@@ -108,7 +109,6 @@ class MainView extends StatelessWidget {
                 onSelectOption: (selectedOption) => firstSelection.value = selectedOption,
                 titles: _partnersOrConsultants,
               ),
-
               ValueListenableBuilder(
                 valueListenable: firstSelection,
                 builder: (context, value, child) => value == _partnersOrConsultants.first? Column(
@@ -213,7 +213,6 @@ class MainView extends StatelessWidget {
               ),
             ],
           ),
-
         ),
       ),
     );

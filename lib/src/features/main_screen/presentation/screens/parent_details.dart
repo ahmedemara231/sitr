@@ -1,21 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pagify/pagify.dart';
 import '../../../../../generated/assets.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/helpers/status_builder.dart';
+import '../../../../core/navigation/navigator.dart';
 import '../../../../core/shared/models/user_models/parent/parent_model.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
+import '../../../../core/widgets/app_pagify.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/image_widgets/cached_image.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
+import '../../data/home_data.dart';
+import '../../data/models/home_model.dart';
 import '../../data/models/partner_info_model.dart';
 import '../cubits/get_partner_info_cubit.dart';
 import '../widgets/app_bar_actions.dart';
+import '../widgets/home/partner_card.dart';
 import '../widgets/partner_info/info_widget.dart';
+import 'partner_details.dart';
 
 class ParentDetailsScreen extends StatelessWidget {
   final int id;
@@ -70,6 +77,7 @@ class ParentDetailsScreen extends StatelessWidget {
               ),
             ),
           body: Column(
+            spacing: 10.h,
             children: [
               StatusBuilder(
                 data: state,
@@ -85,6 +93,22 @@ class ParentDetailsScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              AppPagify<Opportunity>(
+                  asyncCall: (context, page)async => await HomeData.getParentChildren(id),
+                  itemBuilder: (context, data, index, element) => InkWell(
+                    onTap: () => Go.to(PartnerDetails(id: element.id ?? 0)),
+                    child: PartnerCard(
+                        name: element.name??'',
+                        imageUrl: element.avatar??'',
+                        location: element.city??'',
+                        weight: element.weight.toString() ?? '',
+                        height: element.height.toString() ?? '',
+                        age: element.age ?? 0,
+                        maritalStatus: element.name??''
+                    ).paddingBottom(10.h),
+                  ),
+                  pagifyController: PagifyController()
+              )
             ],
           )
         ),
