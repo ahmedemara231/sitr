@@ -77,20 +77,24 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
 
   void _listenToData(IndividualUserModel updatedModel) => sharedFormFieldModel = updatedModel;
 
+  // late BlocProvider dataCubit = _mainType.value.isFemale
+  //     ? BlocProvider<AddChildCubit<Female>>(create: (_) => AddChildCubit<Female>())
+  //     : BlocProvider<AddChildCubit<Male>>(create: (_) => AddChildCubit<Male>());
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => CompleteProfileCubit()),
+        BlocProvider(create: (context) => AddComplaintCubit()),
         BlocProvider(create: (context) => EditProfileCubit()),
-        BlocProvider(create: (context) => AddChildCubit()),
       ],
       child: Column(
         spacing: 10.h,
         children: [
           if (widget.type.isNull)
             ChooseGenderWidget(
-              titles: (element) => element.translate,
+              titles: (element) => '${element.translate}  ${element.isFemale? AuthData.childrenNumber.value.femaleNumbers : AuthData.childrenNumber.value.maleNumbers}',
               canChoose: true,
               onSelectGender: (selectedGender) {
                 _mainType.value = selectedGender;
@@ -115,10 +119,10 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
               builder: (context, currentIndex, child) => type.isFemale ?
               FemaleFields(
                   secondaryUserType: widget.secondaryType,
-                  onFinishFemaleData: (data) => _listenToData(sharedFormFieldModel.merge(data))
+                  onChangeFemaleData: (data) => _listenToData(sharedFormFieldModel.merge(data))
               ) : MaleFields(
                   secondaryType: widget.secondaryType,
-                  onFinishMaleData: (data) => _listenToData(sharedFormFieldModel.merge(data))
+                  onChangeMaleData: (data) => _listenToData(sharedFormFieldModel.merge(data))
               ),
             ),
           ),
@@ -126,51 +130,54 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
           if(widget.from != ComesFrom.editProfile)
             const ConditionsTermsAcceptance(),
 
-          LoadingButton(
-            borderRadius: ConstantManager.buttonBorderRadiusNumber,
-            idleWidget: AppText(
-              widget.from == ComesFrom.editProfile?
-              LocaleKeys.saveChanges : LocaleKeys.confirm,
-              fontSize: 16.sp,
-              color: Colors.white,
-            ),
-            call: (ctx) async {
-              if(widget.from == ComesFrom.editProfile){
-                await ctx.read<EditProfileCubit>().editProfile(
-                    body: sharedFormFieldModel,
-                    onSuccess: () => showDefaultBottomSheet(
-                        child: const EditProfileSheet()
-                    )
-                );
+          Builder(
+            builder: (context) {
+              return LoadingButton(
+                borderRadius: ConstantManager.buttonBorderRadiusNumber,
+                idleWidget: AppText(
+                  widget.from == ComesFrom.editProfile?
+                  LocaleKeys.saveChanges : LocaleKeys.confirm,
+                  fontSize: 16.sp,
+                  color: Colors.white,
+                ),
+                call: (ctx) async {
+                  if(widget.from == ComesFrom.editProfile){
+                    await context.read<EditProfileCubit>().editProfile(
+                        body: sharedFormFieldModel,
+                        onSuccess: () => showDefaultBottomSheet(
+                            child: const EditProfileSheet()
+                        )
+                    );
 
-              }else if(widget.from == ComesFrom.signUpAsPartner){
-                await ctx.read<CompleteProfileCubit>().completeProfile(
-                    isParent: widget.secondaryType.isNotNull,
-                    body: sharedFormFieldModel,
-                    onSuccess: () {
-                      showDefaultBottomSheet(
-                          child: const CompleteProfileSheet()
-                      );
+                  }else if(widget.from == ComesFrom.signUpAsPartner){
+                    await context.read<CompleteProfileCubit>().completeProfile(
+                        isParent: widget.secondaryType.isNotNull,
+                        body: sharedFormFieldModel,
+                        onSuccess: () {
+                          showDefaultBottomSheet(
+                              child: const CompleteProfileSheet()
+                          );
 
-                      // MessageUtils.showSnackBar();
-                    }
-                );
+                          // MessageUtils.showSnackBar();
+                        }
+                    );
 
-              }else if(widget.from == ComesFrom.signUpAsParent){
-                await ctx.read<AddChildCubit>().addChild(
-                    body: sharedFormFieldModel,
-                    onSuccess: () {
-                      AuthData.inc(_mainType.value);
-                      showDefaultBottomSheet(
-                          child: const AddChildSheet()
-                      );
+                  }else if(widget.from == ComesFrom.signUpAsParent){
+                    context.read<AddChildCubit>().addChild(
+                        body: sharedFormFieldModel,
+                        onSuccess: () {
+                          showDefaultBottomSheet(
+                              child: const AddChildSheet()
+                          );
 
-                      // MessageUtils.showSnackBar();
-                    }
-                );
-              }
+                          // MessageUtils.showSnackBar();
+                        }
+                    );
+                  }
 
-              return;
+                  return;
+                }
+              );
             }
           ),
 

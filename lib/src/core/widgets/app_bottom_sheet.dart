@@ -16,13 +16,14 @@ class AppBottomSheet extends StatelessWidget {
   final Widget upperWidget;
   final Color? cancelBackgroundColor;
   final String? cancelBtnTitle;
+  final FutureOr<void> Function()? cancelOnTap;
 
   const AppBottomSheet.small({super.key,
     required this.asyncCall,
     required this.btnTitle,
     required this.upperWidget,
-    this.cancelBtnTitle,
-  }) : size = AppBottomSheetSize.small, cancelBackgroundColor = null;
+  }) : size = AppBottomSheetSize.small,
+        cancelBackgroundColor = null, cancelOnTap = null, cancelBtnTitle = null;
 
   const AppBottomSheet.large({super.key,
     required this.asyncCall,
@@ -30,6 +31,7 @@ class AppBottomSheet extends StatelessWidget {
     required this.upperWidget,
     this.cancelBackgroundColor,
     this.cancelBtnTitle,
+    this.cancelOnTap,
   }) : size = AppBottomSheetSize.large;
 
   @override
@@ -52,10 +54,11 @@ class AppBottomSheet extends StatelessWidget {
               )
             else
               _AppSheetButtons(
+                asyncCall: asyncCall,
+                title: btnTitle,
+                cancelBackgroundColor: cancelBackgroundColor,
                 cancelBtnTitle: cancelBtnTitle,
-                  asyncCall: asyncCall,
-                   cancelBackgroundColor: cancelBackgroundColor,
-                  title: btnTitle
+                cancelOnTap: cancelOnTap,
               )
           ],
         ),
@@ -70,12 +73,14 @@ class _AppSheetButtons extends StatelessWidget {
   final String title;
   final Color? cancelBackgroundColor;
   final String? cancelBtnTitle;
+  final FutureOr<void> Function()? cancelOnTap;
 
   const _AppSheetButtons({
     required this.asyncCall,
     required this.title,
     this.cancelBackgroundColor,
     this.cancelBtnTitle,
+    this.cancelOnTap,
   });
 
   @override
@@ -93,7 +98,7 @@ class _AppSheetButtons extends StatelessWidget {
           child: AppDefaultButton.withBackGroundColor(
               title: cancelBtnTitle ?? LocaleKeys.cancel,
               backgroundColor: cancelBackgroundColor,
-              onTap: () => Go.back()
+              onTap: cancelOnTap ?? () => Go.back()
           ),
         )
       ],

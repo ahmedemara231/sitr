@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import '../../../../../config/language/locale_keys.g.dart';
@@ -11,12 +12,12 @@ import 'shared_form_fields.dart';
 
 class MaleFields extends StatefulWidget {
   final UserType? secondaryType;
-  final void Function(IndividualUserModel data) onFinishMaleData;
+  final void Function(IndividualUserModel data) onChangeMaleData;
 
   const MaleFields({
     super.key,
     required this.secondaryType,
-    required this.onFinishMaleData,
+    required this.onChangeMaleData,
   });
 
   @override
@@ -57,7 +58,7 @@ class _MaleFieldsState extends State<MaleFields> {
 
   void _listenToData(IndividualUserModel updatedModel) {
     sharedFormFieldModel = updatedModel;
-    widget.onFinishMaleData.call(sharedFormFieldModel);
+    widget.onChangeMaleData.call(sharedFormFieldModel);
   }
 
   MaleModel get asMaleModel => sharedFormFieldModel as MaleModel;
@@ -67,14 +68,14 @@ class _MaleFieldsState extends State<MaleFields> {
       case null:
         return SharedFormFields<MaleModel>(
           restorationId: UserType.male.name,
-          onFinished: (data) =>
+          onChanged: (data) =>
               _listenToData(asMaleModel.merge(data.copyWith())),
         );
 
       default:
         return SharedFormFields<MaleModel>(
           restorationId: UserType.male.name,
-          onFinished: (data) =>
+          onChanged: (data) =>
               _listenToData(asMaleModel.merge(data.copyWith())),
           onInitData: (List<Widget> children) => children
             ..insertAll(
@@ -107,7 +108,9 @@ class _MaleFieldsState extends State<MaleFields> {
                   // validator: Validators.validateEmpty,
                 ),
             )
-            ..insertAll(7, [
+            ..insertAll(
+                7,
+                [
               SignUpTextField(
                 upperTitle: LocaleKeys.identifyNumber,
                 title: LocaleKeys.pleaseEnterTheNumber,
@@ -126,7 +129,8 @@ class _MaleFieldsState extends State<MaleFields> {
                     asMaleModel.copyWith(age: int.tryParse(_ageCont.text))),
                 // validator: Validators.validateEmpty,
               ),
-            ])
+            ]
+            )
         );
     }
   }

@@ -5,30 +5,11 @@ import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/network/network_request.dart';
 import '../../../../core/network/network_service.dart';
+import '../../../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../models/kinship.dart';
 
-class ChildrenNumber {
-  final int maleNumbers;
-  final int femaleNumbers;
-
-  int get total => maleNumbers + femaleNumbers;
-
-  ChildrenNumber({
-    this.maleNumbers = 0,
-    this.femaleNumbers = 0,
-  });
-
-  ChildrenNumber copyWith({
-    int? maleNumbers,
-    int? femaleNumbers,
-  }) => ChildrenNumber(
-    maleNumbers: maleNumbers??this.maleNumbers,
-    femaleNumbers: femaleNumbers??this.femaleNumbers,
-  );
-}
-
-class AuthData{
+class AuthData<T extends IndividualUserModel>{
   static Future<List<CityModel>> getCities()async{
     List<CityModel> citiesList = [];
     await injector<NetworkService>().callApi(
@@ -61,10 +42,33 @@ class AuthData{
 
     return kinshipsList;
   }
+  // late T model;
 
+  // static final List<IndividualUserModel> childrenList = [];
   static ValueNotifier<ChildrenNumber> childrenNumber = ValueNotifier(ChildrenNumber());
-  static void inc(UserType user) => childrenNumber.value.copyWith(
-    maleNumbers: user.isMale? childrenNumber.value.maleNumbers + 1 : childrenNumber.value.maleNumbers,
-    femaleNumbers: user.isFemale? childrenNumber.value.femaleNumbers + 1 : childrenNumber.value.femaleNumbers
+
+// static void inc(UserType user) => childrenNumber.value = childrenNumber.value.copyWith(
+//     maleNumbers: user.isMale? childrenNumber.value.maleNumbers + 1 : childrenNumber.value.maleNumbers,
+//     femaleNumbers: user.isFemale? childrenNumber.value.femaleNumbers + 1 : childrenNumber.value.femaleNumbers
+// );
+}
+
+class ChildrenNumber {
+  final int maleNumbers;
+  final int femaleNumbers;
+
+  int get total => maleNumbers + femaleNumbers;
+
+  ChildrenNumber({
+    this.maleNumbers = 0,
+    this.femaleNumbers = 0,
+  });
+
+  ChildrenNumber copyWith({
+    int? maleNumbers,
+    int? femaleNumbers,
+  }) => ChildrenNumber(
+    maleNumbers: maleNumbers??this.maleNumbers,
+    femaleNumbers: femaleNumbers??this.femaleNumbers,
   );
 }

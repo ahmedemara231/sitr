@@ -19,11 +19,11 @@ import 'shared_form_fields.dart';
 
 class FemaleFields extends StatefulWidget {
   final UserType? secondaryUserType;
-  final void Function(IndividualUserModel data) onFinishFemaleData;
+  final void Function(IndividualUserModel data) onChangeFemaleData;
   const FemaleFields({
     super.key,
     required this.secondaryUserType,
-    required this.onFinishFemaleData,
+    required this.onChangeFemaleData,
   });
 
   @override
@@ -89,10 +89,10 @@ class _FemaleFieldsState extends State<FemaleFields> {
   }
 
   void _listenToData(IndividualUserModel updatedModel) {
-    log((updatedModel as FemaleModel).toJson().toString());
-    log('============================================================================================================================================');
     femaleFields = updatedModel;
-    widget.onFinishFemaleData.call(femaleFields);
+    log((femaleFields as FemaleModel).toJson().toString());
+    log('============================================================================================================================================');
+    widget.onChangeFemaleData.call(femaleFields);
   }
 
   FemaleModel get asFemale {
@@ -107,7 +107,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
       case null:
         return SharedFormFields<FemaleModel>(
           restorationId: 'female_fields',
-          onFinished: (data) => _listenToData(asFemale.merge(data.copyWith())),
+          onChanged: (data) => _listenToData(asFemale.merge(data.copyWith())),
           onInitData: (List<Widget> children) => children..insert(
               15,
               SignUpTextField(
@@ -169,7 +169,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
       default:
         return SharedFormFields<FemaleModel>(
           restorationId: 'female_fields',
-          onFinished: (data) => _listenToData(asFemale.merge(data.copyWith())),
+          onChanged: (data) => _listenToData(asFemale.merge(data.copyWith())),
           onInitData: (List<Widget> children) => children..insert(2, 
             SignUpTextField(
               upperTitle: LocaleKeys.phoneNumber,

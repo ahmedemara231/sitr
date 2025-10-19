@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +10,6 @@ import '../../../../../core/shared/models/title_value_shape.dart';
 import '../../../../../core/shared/models/user_models/individual/female_model.dart';
 import '../../../../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../../../../core/shared/models/user_models/individual/male_model.dart';
-import '../../../../../core/shared/models/user_models/parent/parent_model.dart';
 import '../../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../models/dowry.dart';
@@ -22,12 +23,12 @@ import 'radio_widget.dart';
 
 class SharedFormFields<T extends IndividualUserModel> extends StatefulWidget {
   final String? restorationId;
-  final void Function(T sharedFields) onFinished;
+  final void Function(T sharedFields) onChanged;
   final void Function(List<Widget> children)? onInitData;
   const SharedFormFields({
     super.key,
     this.restorationId,
-    required this.onFinished,
+    required this.onChanged,
     this.onInitData,
   });
 
@@ -48,17 +49,20 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
   late TextEditingController _diseasesCont;
   late final ValueNotifier<Answer?> childrenExits = ValueNotifier(UserModel.isParent? null : asIndividualUserModel.hasChildren?.toAnswer);
 
+  // لازم يبقي برا عشان تعرف تتحكم فيه وتحسب عدد الmale وال female
   late T model;
 
-  final List<IndividualUserModel> _childrenList = [];
+  // final AuthData<T> _authData = AuthData<T>();
   void _initIndividualOrChild(IndividualUserModel element){
-    if(UserModel.isIndividual){
-      model = element as T;
+    model = element.copyWith() as T;
 
-    }else if(UserModel.isParent){
-      _childrenList.insert(AuthData.childrenNumber.value.total, element);
-      model = _childrenList[AuthData.childrenNumber.value.total] as T;
-    }
+    // if(UserModel.isIndividual){
+    //   model = element.copyWith() as T;
+    //
+    // }else if(UserModel.isParent){
+    //   AuthData.childrenList.add(element.copyWith());
+    //   model = AuthData.childrenList[AuthData.childrenList.length - 1] as T;
+    // }
   }
 
   void _init() {
@@ -75,7 +79,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
 
   void _listenToData(T updatedModel, {String? comingVal}) {
     model = updatedModel;
-    widget.onFinished.call(model);
+    widget.onChanged.call(model);
   }
 
   void _childrenExitsListener(){
