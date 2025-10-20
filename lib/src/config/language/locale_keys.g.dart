@@ -730,4 +730,10 @@ abstract class LocaleKeys {
   static const String _addedChildren = 'added_children';
   static String get addedChildren => _addedChildren.tr();
 
+  static const String _myChats = 'my_chats';
+  static String get myChats => _myChats.tr();
+
+  static const String _previousChats = 'previous_chats';
+  static String get previousChats => _previousChats.tr();
+
 }

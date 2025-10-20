@@ -6,6 +6,7 @@ import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/navigation/navigator.dart';
+import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../core/widgets/parent_children_screen.dart';
 import '../../../../core/widgets/view_profile_widget.dart';
@@ -32,6 +33,11 @@ class MoreScreen extends StatelessWidget {
         label: LocaleKeys.profile,
         onTap: () => Go.to(const ProfileScreen()),
       ),
+      MorItemModel(
+        icon: Assets.svgChatsIcon,
+        label: LocaleKeys.chats,
+        // onTap: () => Go.to(const ProfileScreen()),
+      ),
 
       MorItemModel(
         icon: Assets.svgPackageIcon,
@@ -41,7 +47,7 @@ class MoreScreen extends StatelessWidget {
       MorItemModel(
         icon: Assets.svgUser,
         label: LocaleKeys.addedChildren,
-        onTap: () => Go.to(ParentChildrenView(id: UserCubit.instance.user.id ?? 0)),
+        onTap: () => Go.to(const ParentChildrenView()),
       ),
       // Go.to(ParentChildrenView(id: state.data.id ?? 0))
       MorItemModel(

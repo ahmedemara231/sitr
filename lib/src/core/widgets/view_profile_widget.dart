@@ -45,7 +45,7 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
   Widget build(BuildContext context) {
     late List<PartnerInfoModel> partnerInfo = [];
     return BlocProvider(
-      create: (context) => cubit..getUserModelData(
+      create: (context) => cubit..getProfile(
           onSuccess: (userResult) {
             final user = userResult as IndividualUserModel;
             partnerInfo = [
@@ -190,11 +190,11 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
               ),
               if(_type.isPartnerProfile)
                 LoadingButton(
-                height: 40.h,
-                call: (context) async{},
-                borderRadius: 40.r,
-                idleWidget: AppText(LocaleKeys.startChat, fontWeight: FontWeight.w500, color: Colors.white,),
-              )
+                  height: 40.h,
+                  call: (context) async{},
+                  borderRadius: 40.r,
+                  idleWidget: AppText(LocaleKeys.startChat, fontWeight: FontWeight.w500, color: Colors.white,),
+                )
             ],
           ),
         ),

@@ -247,5 +247,7 @@
   "your_request_has_been_sent_successfully": "تم ارسال طلبك للادارة بنجاح",
   "your_request_will_be_reviewed_by_managers": "سيتم مراجعة الطلب من الادراة",
   "children": "الابناء",
-  "added_children": "الابناء المضافين"
+  "added_children": "الابناء المضافين",
+  "my_chats": "محادثاتي",
+  "previous_chats": "المحادثات السابقة"
 }

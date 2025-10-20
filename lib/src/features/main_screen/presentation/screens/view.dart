@@ -13,13 +13,13 @@ import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/image_widgets/custom_image_slider.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
+import '../../../../core/widgets/choose_from_options.dart';
 import '../../data/models/home_model.dart';
 import '../cubits/home_cubit.dart';
 import '../widgets/home/filter_icon.dart';
 import '../widgets/home/mariage_consultant.dart';
 import '../widgets/home/parent_card.dart';
 import '../widgets/home/partner_card.dart';
-import '../widgets/home/under_slider_widget.dart';
 import 'parent_details.dart';
 import 'partner_details.dart';
 
@@ -105,19 +105,20 @@ class MainView extends StatelessWidget {
             ),
           body: Column(
             children: [
-              UnderSliderWidget(
+              ChooseFromOptionsWidget(
                 onSelectOption: (selectedOption) => firstSelection.value = selectedOption,
+                fontSize: 14.sp,
                 titles: _partnersOrConsultants,
               ),
               ValueListenableBuilder(
                 valueListenable: firstSelection,
                 builder: (context, value, child) => value == _partnersOrConsultants.first? Column(
                   children: [
-                    UnderSliderWidget(
+                    ChooseFromOptionsWidget(
                       fontWeight: FontWeight.w500,
                       onSelectOption: (selectedOption) => secondSelection.value = selectedOption,
                       titles: _opportunitiesTitles,
-                      fontSize: 12.sp,
+                      fontSize: 14.sp,
                       secondSlider: true,
                     ),
 
@@ -132,7 +133,7 @@ class MainView extends StatelessWidget {
                                       (index) {
                                     final opportunity = state.data.opportunities?.male?[index];
                                     return InkWell(
-                                      onTap: () => Go.to(PartnerDetails(id: opportunity?.id ?? 0)),
+                                      onTap: () => Go.to(IndividualDetailsScreen.opportunity(id: opportunity?.id ?? 0)),
                                       child: PartnerCard(
                                           name: opportunity?.name??'',
                                           imageUrl: opportunity?.avatar??'',
@@ -156,7 +157,7 @@ class MainView extends StatelessWidget {
                                       (index) {
                                     final opportunity = state.data.opportunities?.female?[index];
                                     return InkWell(
-                                      onTap: () => Go.to(PartnerDetails(id: opportunity?.id ?? 0)),
+                                      onTap: () => Go.to(IndividualDetailsScreen.opportunity(id: opportunity?.id ?? 0)),
                                       child: PartnerCard(
                                           name: opportunity?.name??'',
                                           imageUrl: opportunity?.avatar??'',

@@ -23,9 +23,8 @@ class ProfileAppBarActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        const AppBackButton(),
-        const Spacer(),
         if(_type.isPartnerProfile)
           ...[
             IconButton(

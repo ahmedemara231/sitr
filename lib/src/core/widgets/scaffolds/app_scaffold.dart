@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../config/res/config_imports.dart';
 import '../../extensions/context_extension.dart';
+import '../../extensions/object.dart';
 import '../../extensions/padding_extension.dart';
 import '../../navigation/navigator.dart';
 import '../app_text.dart';
@@ -12,12 +13,14 @@ class AppScaffold extends StatelessWidget {
   final Widget body;
   final Color? scaffoldBackgroundColor;
   final Widget? bottomBar;
+  final PreferredSizeWidget? bottomWidget;
 
   const AppScaffold({super.key,
     required this.appBarTitle,
     required this.body,
     this.scaffoldBackgroundColor,
     this.bottomBar,
+    this.bottomWidget,
   });
 
   @override
@@ -26,13 +29,14 @@ class AppScaffold extends StatelessWidget {
       bottomNavigationBar: bottomBar,
       backgroundColor: scaffoldBackgroundColor?? Colors.white,
       appBar: PreferredSize(
-          preferredSize: Size(context.width, 60.h),
+          preferredSize: Size(context.width, bottomWidget.isNull? 60.h : 160),
           child: AppBar(
             backgroundColor: AppColors.whiteGreyColor,
             centerTitle: true,
             title: AppText(appBarTitle, fontWeight: FontWeight.bold, fontSize: 16.sp, color: Colors.black,),
             leading: ModalRoute.of(context)!.canPop?
             const AppBackButton() : null,
+            bottom: bottomWidget,
           )
       ),
       body: SingleChildScrollView(

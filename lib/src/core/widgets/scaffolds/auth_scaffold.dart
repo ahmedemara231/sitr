@@ -4,6 +4,7 @@ import '../../../config/res/config_imports.dart';
 import '../../extensions/context_extension.dart';
 import '../../extensions/object.dart';
 import '../../extensions/padding_extension.dart';
+import 'app_scaffold.dart' show AppBackButton;
 
 class CardProperties{
   final Color? color;
@@ -93,7 +94,13 @@ class ScreenChildren extends StatelessWidget {
                     color: AppColors.whiteGreyColor,
                     child: Padding(
                       padding: upperWidgetPadding?? EdgeInsets.zero,
-                      child: upperWidget,
+                      child: Stack(
+                        children: [
+                          upperWidget,
+                          if(ModalRoute.of(context)!.canPop)
+                            const AppBackButton(),
+                        ],
+                      ),
                     )
                 ),
                 Container(

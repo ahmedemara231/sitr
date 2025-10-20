@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../../generated/assets.dart' show Assets;
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
@@ -12,11 +11,8 @@ import '../../../../core/navigation/navigator.dart';
 import '../../../../core/shared/models/user_models/parent/parent_model.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/widgets/app_text.dart';
-import '../../../../core/widgets/buttons/custom_app_buttons/default_button.dart';
 import '../../../../core/widgets/image_widgets/cached_image.dart';
-import '../../../../core/widgets/parent_children.dart';
 import '../../../../core/widgets/parent_children_screen.dart';
-import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
 import '../../../../core/widgets/view_profile_widget.dart';
 import '../../../main_screen/data/models/partner_info_model.dart';
@@ -31,7 +27,7 @@ class ProfileScreen extends StatelessWidget {
     late List<PartnerInfoModel> partnerInfo = [];
     return UserModel.isParent?
     BlocProvider(
-      create: (context) => GetProfileCubit()..getUserModelData(
+      create: (context) => GetProfileCubit()..getProfile(
           onSuccess: (user){
             partnerInfo = [
               PartnerInfoModel(leading: Assets.svgMartialStatus, title: LocaleKeys.kinship, subTitle: (user as ParentModel).relation?.value),
@@ -101,7 +97,7 @@ class ProfileScreen extends StatelessWidget {
                         partnerInfo.length,
                             (i) => InkWell(
                                 onTap: i == 1?
-                                    () => Go.to(ParentChildrenView(id: state.data.id ?? 0))
+                                    () => Go.to(const ParentChildrenView())
                                     : null,
                                 child: InfoWidget(partnerInfoModel: partnerInfo[i])
                             )
