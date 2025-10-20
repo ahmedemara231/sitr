@@ -73,5 +73,10 @@ class ApiConstants {
   static const String opportunityChildren = 'opportunity-children/';
   static const String getChildren = 'children';
   static const String getChildProfile = 'get-child-profile/';
+  static const String pendingChats = 'chats/pending';
+  static const String cancelledChats = 'chats/cancelled';
+  static const String completedChats = 'chats/completed';
+  static const String rejectedChats = 'chats/rejected';
+  static const String currentChats = 'chats/current';
 
 }
