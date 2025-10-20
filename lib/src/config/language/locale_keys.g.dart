@@ -724,4 +724,7 @@ abstract class LocaleKeys {
   static const String _yourRequestWillBeReviewedByManagers = 'your_request_will_be_reviewed_by_managers';
   static String get yourRequestWillBeReviewedByManagers => _yourRequestWillBeReviewedByManagers.tr();
 
+  static const String _children = 'children';
+  static String get children => _children.tr();
+
 }

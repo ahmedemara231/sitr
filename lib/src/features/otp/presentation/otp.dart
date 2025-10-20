@@ -113,6 +113,7 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
             OtpStaticTexts(phone: widget.phone),
           ],
         ).paddingAll(12.r),
+        bodyColor: Colors.white,
         body: SizedBox(
           height: context.height * .7,
           child: Column(

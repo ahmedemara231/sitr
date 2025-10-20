@@ -19,6 +19,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       create: (context) => SignUpCubit(),
       child: CenterCardScaffold(
           upperWidget: const SignUpUpperWidget(),
+          bodyColor: AppColors.white,
           body: Column(
             spacing: 10.h,
             children: [

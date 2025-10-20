@@ -35,6 +35,7 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
     ) :
     CenterCardScaffold(
         upperWidget: const SignUpUpperWidget(),
+        bodyColor: AppColors.white,
         body: _EnterMaleOrFemaleOrChildDataBody(from: from, type: type, secondaryType: secondaryType)
     );
   }
@@ -74,13 +75,7 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
     _init();
     super.initState();
   }
-
   void _listenToData(IndividualUserModel updatedModel) => sharedFormFieldModel = updatedModel;
-
-  // late BlocProvider dataCubit = _mainType.value.isFemale
-  //     ? BlocProvider<AddChildCubit<Female>>(create: (_) => AddChildCubit<Female>())
-  //     : BlocProvider<AddChildCubit<Male>>(create: (_) => AddChildCubit<Male>());
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(

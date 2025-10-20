@@ -42,6 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
             const LoginStaticTexts()
           ],
         ).paddingAll(12.r),
+        bodyColor: AppColors.white,
         body: SizedBox(
           height: context.height * .7,
           child: Column(

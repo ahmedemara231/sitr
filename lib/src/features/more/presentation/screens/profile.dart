@@ -8,10 +8,13 @@ import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubi
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/helpers/status_builder.dart';
+import '../../../../core/navigation/navigator.dart';
 import '../../../../core/shared/models/user_models/parent/parent_model.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/image_widgets/cached_image.dart';
+import '../../../../core/widgets/parent_children.dart';
+import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
 import '../../../../core/widgets/view_profile_widget.dart';
 import '../../../main_screen/data/models/partner_info_model.dart';
@@ -94,7 +97,10 @@ class ProfileScreen extends StatelessWidget {
                     childAspectRatio: 2.5,
                     children: List.generate(
                         partnerInfo.length,
-                            (i) => InfoWidget(partnerInfoModel: partnerInfo[i])
+                            (i) => InkWell(
+                                onTap: i == 1? () => Go.to(_ParentChildrenView(id: state.data.id ?? 0)) : null,
+                                child: InfoWidget(partnerInfoModel: partnerInfo[i])
+                            )
                     ),
                   ),
                 ),
@@ -104,5 +110,19 @@ class ProfileScreen extends StatelessWidget {
       ),
     ) :
     ViewProfileWidget.profile(cubit: GetProfileCubit());
+  }
+}
+
+class _ParentChildrenView extends StatelessWidget {
+  final int id;
+  const _ParentChildrenView({super.key, required this.id});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppScaffold(
+        appBarTitle: LocaleKeys.children,
+        body: ParentChildren(id: id),
+
+    );
   }
 }

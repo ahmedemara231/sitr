@@ -14,6 +14,7 @@ import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/widgets/app_pagify.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/image_widgets/cached_image.dart';
+import '../../../../core/widgets/parent_children.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
 import '../../data/home_data.dart';
 import '../../data/models/home_model.dart';
@@ -93,22 +94,8 @@ class ParentDetailsScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              AppPagify<Opportunity>(
-                  asyncCall: (context, page)async => await HomeData.getParentChildren(id),
-                  itemBuilder: (context, data, index, element) => InkWell(
-                    onTap: () => Go.to(PartnerDetails(id: element.id ?? 0)),
-                    child: PartnerCard(
-                        name: element.name??'',
-                        imageUrl: element.avatar??'',
-                        location: element.city??'',
-                        weight: element.weight.toString() ?? '',
-                        height: element.height.toString() ?? '',
-                        age: element.age ?? 0,
-                        maritalStatus: element.name??''
-                    ).paddingBottom(10.h),
-                  ),
-                  pagifyController: PagifyController()
-              )
+
+              ParentChildren(id: id),
             ],
           )
         ),
