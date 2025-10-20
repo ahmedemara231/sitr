@@ -108,6 +108,7 @@ class MainView extends StatelessWidget {
               ChooseFromOptionsWidget(
                 onSelectOption: (selectedOption) => firstSelection.value = selectedOption,
                 fontSize: 14.sp,
+                childPadding: EdgeInsets.symmetric(vertical: 16.h),
                 titles: _partnersOrConsultants,
               ),
               ValueListenableBuilder(
@@ -117,9 +118,9 @@ class MainView extends StatelessWidget {
                     ChooseFromOptionsWidget(
                       fontWeight: FontWeight.w500,
                       onSelectOption: (selectedOption) => secondSelection.value = selectedOption,
+                      childPadding: EdgeInsets.symmetric(vertical: 12.h),
                       titles: _opportunitiesTitles,
                       fontSize: 14.sp,
-                      secondSlider: true,
                     ),
 
                     ValueListenableBuilder(

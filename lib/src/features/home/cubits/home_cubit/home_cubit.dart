@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../chats/presentation/screens/chats_screen.dart';
 import '../../../main_screen/presentation/screens/view.dart';
 import '../../../more/presentation/screens/more_screen.dart';
 import '../../../notifications/presentation/pages/noitifcations_screen.dart';
@@ -23,7 +24,7 @@ class HomeCubit extends Cubit<HomeState> {
   List<Widget> screens = [
     MainView(),
     const NotificationsScreen(),
-    Container(),
+    const ChatsScreen(),
     const PackagesScreen.firstSubscription(),
     const MoreScreen(),
   ];

@@ -8,17 +8,17 @@ import 'app_text.dart';
 
 class ChooseFromOptionsWidget extends StatefulWidget {
   final void Function(String selectedOption) onSelectOption;
-  final bool secondSlider;
   final List<String> titles;
   final double fontSize;
   final FontWeight? fontWeight;
+  final EdgeInsetsGeometry? childPadding;
 
   const ChooseFromOptionsWidget({super.key,
     required this.onSelectOption,
     required this.titles,
-    this.secondSlider = false,
     this.fontSize = 10,
-    this.fontWeight
+    this.fontWeight,
+    this.childPadding
   });
 
   @override
@@ -32,9 +32,8 @@ class _ChooseFromOptionsWidgetState extends State<ChooseFromOptionsWidget> {
   Widget build(BuildContext context) {
     return FittedBox(
       child: Row(
-        spacing: widget.secondSlider? 16.w : 0,
-        mainAxisAlignment: widget.secondSlider?
-        MainAxisAlignment.center : MainAxisAlignment.spaceEvenly,
+        spacing: 10.w,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: List.generate(
           widget.titles.length,
               (index) => InkWell(
@@ -52,13 +51,16 @@ class _ChooseFromOptionsWidgetState extends State<ChooseFromOptionsWidget> {
               ),
               child: Center(
                 child: FittedBox(
-                  child: AppText(
-                    widget.titles[index],
-                    color: option == widget.titles[index] ?
-                    Colors.white : AppColors.black,
-                    fontSize: widget.fontSize,
-                    fontWeight: widget.fontWeight ?? FontWeight.normal,
-                  ).paddingSymmetric(vertical: widget.secondSlider? 10.h : 18.h, horizontal: widget.secondSlider ? 30.w : 18.w),
+                  child: Padding(
+                    padding: widget.childPadding ?? EdgeInsets.zero,
+                    child: AppText(
+                      widget.titles[index],
+                      color: option == widget.titles[index] ?
+                      Colors.white : AppColors.black,
+                      fontSize: widget.fontSize,
+                      fontWeight: widget.fontWeight ?? FontWeight.normal,
+                    ),
+                  ),
                 ),
               ),
             ),

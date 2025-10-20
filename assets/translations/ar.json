@@ -249,5 +249,9 @@
   "children": "الابناء",
   "added_children": "الابناء المضافين",
   "my_chats": "محادثاتي",
-  "previous_chats": "المحادثات السابقة"
+  "previous_chats": "المحادثات السابقة",
+  "completed": "مكتملة",
+  "refused": "مرفوضة",
+  "hanging": "معلقة",
+  "cancelled": "ملغية"
 }

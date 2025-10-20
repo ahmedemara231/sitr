@@ -736,4 +736,16 @@ abstract class LocaleKeys {
   static const String _previousChats = 'previous_chats';
   static String get previousChats => _previousChats.tr();
 
+  static const String _completed = 'completed';
+  static String get completed => _completed.tr();
+
+  static const String _refused = 'refused';
+  static String get refused => _refused.tr();
+
+  static const String _hanging = 'hanging';
+  static String get hanging => _hanging.tr();
+
+  static const String _cancelled = 'cancelled';
+  static String get cancelled => _cancelled.tr();
+
 }

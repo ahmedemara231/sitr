@@ -249,5 +249,9 @@
   "children": "children",
   "added_children": "added children",
   "my_chats": "my chats",
-  "previous_chats": "previous chats"
+  "previous_chats": "previous chats",
+  "completed": "completed",
+  "refused": "refused",
+  "hanging": "hanging",
+  "cancelled": "Cancelled"
 }
