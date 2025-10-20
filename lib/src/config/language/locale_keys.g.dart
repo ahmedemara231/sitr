@@ -727,4 +727,7 @@ abstract class LocaleKeys {
   static const String _children = 'children';
   static String get children => _children.tr();
 
+  static const String _addedChildren = 'added_children';
+  static String get addedChildren => _addedChildren.tr();
+
 }

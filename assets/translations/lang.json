@@ -251,5 +251,6 @@
     "Accept" : "الموافقة",
     "your request has been sent successfully" : "تم ارسال طلبك للادارة بنجاح",
     "your request will be reviewed by managers" : "سيتم مراجعة الطلب من الادراة",
-    "children" : "الابناء"
+    "children" : "الابناء",
+    "added children" : "الابناء المضافين"
 }

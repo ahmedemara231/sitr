@@ -11,16 +11,19 @@ class AppScaffold extends StatelessWidget {
   final String appBarTitle;
   final Widget body;
   final Color? scaffoldBackgroundColor;
+  final Widget? bottomBar;
 
   const AppScaffold({super.key,
     required this.appBarTitle,
     required this.body,
     this.scaffoldBackgroundColor,
+    this.bottomBar,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: bottomBar,
       backgroundColor: scaffoldBackgroundColor?? Colors.white,
       appBar: PreferredSize(
           preferredSize: Size(context.width, 60.h),
