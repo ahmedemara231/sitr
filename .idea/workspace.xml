@@ -9,13 +9,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="```&#10;refactor: Improve UI/UX and data handling across features&#10;&#10;This commit introduces several refinements to enhance user experience, data consistency, and code clarity.&#10;&#10;- **feat(home):**&#10;  - Implemented dynamic filtering options on the home screen based on the user's type (parent, male, or female), providing more relevant search categories.&#10;  - Enabled navigation to the `ParentDetailsScreen` with the correct ID when a parent card is tapped.&#10;&#10;- **fix(nav):**&#10;  - Corrected navigation from the splash screen to the home screen by using `Go.offAll` to prevent users from navigating back to the splash screen.&#10;  - The back button in `AppScaffold` is now conditionally displayed only if the current route can be popped.&#10;&#10;- **refactor(cubits):**&#10;  - Made the `onSuccess` callback optional in `GetPartnerInfoCubit` to increase flexibility.&#10;  - Deleted the unused `get_parent_info_cubit.dart` file.&#10;&#10;- **refactor(UI):**&#10;  - Changed the `height` property in `PartnerCard` from `num` to `String` to prevent type errors.&#10;  - Simplified the `UnderSliderWidget` by replacing the `Options` enum with a `String` for state management.&#10;  - Removed a redundant `Builder` widget in the authentication form screen.&#10;  - Standardized the access to the current user model in `shared_form_fields.dart`.&#10;&#10;```">
-      <change afterPath="$PROJECT_DIR$/lib/src/features/main_screen/data/home_data.dart" afterDir="false" />
+    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="refactor: Implement parent's children view and enhance home UI&#10;&#10;This commit introduces the functionality for viewing the children associated with a parent account and includes several UI/UX refinements on the home screen.&#10;&#10;- **feat(parent):**&#10;    - Implemented `ParentDetailsScreen` to display a parent's information along with a paginated list of their associated children.&#10;    - Created `HomeData.getParentChildren` to fetch a list of a parent's children from the new `opportunity-children/:id` endpoint.&#10;    - Users can now tap on a child's card within the parent's detail view to navigate to that child's specific profile details.&#10;&#10;- **refactor(UI):**&#10;    - Changed the `bodyColor` of the main screen to `Colors.white` for a cleaner look.&#10;    - Simplified `AuthData` by removing an unused generic type parameter.&#10;&#10;- **chore(API):**&#10;    - Added the `opportunityChildren` endpoint to `ApiConstants`.">
+      <change afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/profile.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/network/api_endpoints.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/network/api_endpoints.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/data/auth_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/data/auth_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/parent_details.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/parent_details.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/more_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/more_screen.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,27 +88,27 @@
     <option name="foldersAlwaysOnTop" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Flutter.main.dart.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "com.google.services.firebase.aqiPopupShown": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "retestLogic",
-    "io.flutter.reload.alreadyRun": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/aaita/Desktop/apps/crud_sitr/sitr/assets/images",
-    "settings.editor.selected.configurable": "reference.idesettings.emmet",
-    "show.migrate.to.gradle.popup": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Flutter.main.dart.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;retestLogic&quot;,
+    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/aaita/Desktop/apps/crud_sitr/sitr/assets/images&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.idesettings.emmet&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/assets/images" />
@@ -134,14 +132,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
-    </task>
-    <task id="LOCAL-00004" summary="fix more">
-      <option name="closed" value="true" />
-      <created>1759402491456</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1759402491456</updated>
     </task>
     <task id="LOCAL-00005" summary="fix more">
       <option name="closed" value="true" />
@@ -527,7 +517,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760882980644</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="refactor: Implement parent's children view and enhance home UI&#10;&#10;This commit introduces the functionality for viewing the children associated with a parent account and includes several UI/UX refinements on the home screen.&#10;&#10;- **feat(parent):**&#10;    - Implemented `ParentDetailsScreen` to display a parent's information along with a paginated list of their associated children.&#10;    - Created `HomeData.getParentChildren` to fetch a list of a parent's children from the new `opportunity-children/:id` endpoint.&#10;    - Users can now tap on a child's card within the parent's detail view to navigate to that child's specific profile details.&#10;&#10;- **refactor(UI):**&#10;    - Changed the `bodyColor` of the main screen to `Colors.white` for a cleaner look.&#10;    - Simplified `AuthData` by removing an unused generic type parameter.&#10;&#10;- **chore(API):**&#10;    - Added the `opportunityChildren` endpoint to `ApiConstants`.">
+      <option name="closed" value="true" />
+      <created>1760885491297</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1760885491298</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -548,7 +546,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: Implement my package and wallet functionality&#10;&#10;This commit introduces features for users to view their current package and manage their wallet. It also includes related UI and logic enhancements.&#10;&#10;- **feat(packages):**&#10;    - Created a &quot;My Package&quot; screen to display the user's currently subscribed package.&#10;    - Added a cubit (`MyPackageCubit`) to fetch the user's package details from the `my-package` endpoint.&#10;    - Unified the package subscription and renewal logic into a single `subscribeOrRenewPackage` method, which dynamically calls either the `subscribe` or `renew` API endpoint based on the context.&#10;&#10;- **feat(wallet):**&#10;    - Implemented a cubit (`FetchWalletCubit`) to get the user's wallet balance from the `show-wallet` endpoint.&#10;    - Integrated the wallet balance display into the &quot;More&quot; screen's app bar.&#10;&#10;- **refactor(home):** Removed a hardcoded test token from the home screen.&#10;&#10;- **fix(models):** Corrected the `skinColor` field in the `FemaleModel` to be a `TitleValueShape` object instead of a `String` to match the API response." />
     <MESSAGE value="feat: Implement logout functionality&#10;&#10;This commit introduces the user logout functionality.&#10;&#10;- **feat(auth):**&#10;    - Added a `LogoutCubit` to handle the logout API request to the `/sign-out` endpoint.&#10;    - Implemented a confirmation bottom sheet that appears when the user clicks the logout icon.&#10;    - Upon successful logout, the user's local data is cleared, and they are redirected to the login screen.&#10;- **feat(assets):** Added a new image and SVG for the logout confirmation dialog.&#10;- **chore(i18n):** Added translations for the logout confirmation message." />
     <MESSAGE value="feat: Implement logout functionality and refactor notifications&#10;&#10;This commit introduces user logout functionality and refactors the notification handling logic, alongside several minor fixes and improvements.&#10;&#10;- **feat(auth):**&#10;    - Implemented logout functionality.&#10;    - Added a `LogoutCubit` to handle the API request.&#10;    - A confirmation bottom sheet with a custom image is now displayed when the user taps the logout icon in the &quot;More&quot; screen app bar.&#10;    - Upon successful logout, user data is cleared, and the user is redirected to the login screen.&#10;&#10;- **refactor(notifications):**&#10;    - Changed the notification `type` from `int` to `String` to align with the API response.&#10;    - Updated notification routing logic to parse the string `type` instead of an `id`.&#10;&#10;- **refactor(packages):**&#10;    - Renamed `SubscribePackageCubit` to `PackagesManagerCubit` for better clarity.&#10;&#10;- **fix(UI):**&#10;    - Wrapped the price text in package widgets with `FittedBox` to prevent overflow on smaller screens.&#10;    - Resolved a potential null `fontSize` issue in the `AppText` widget.&#10;    - Added a `cancelBackgroundColor` property to `AppBottomSheet` for more flexible styling.&#10;&#10;- **fix(models):**&#10;    - Added a null check for the `opportunities` field in `HomeModel` to prevent potential crashes." />
     <MESSAGE value="feat(notifications): Implement notification toggle functionality&#10;&#10;This commit introduces the ability for users to toggle their notification settings on and off from the settings screen.&#10;&#10;- **feat(settings):**&#10;    - Added a `ChangeNotifyCubit` to handle the API request to the `/switch-notification` endpoint, sending the device ID and type.&#10;    - Integrated a `Switch` widget in the &quot;Settings&quot; screen for the &quot;Notifications&quot; item. This switch is managed by the `ChangeNotifyCubit` to reflect and update the user's notification preference.&#10;&#10;- **refactor(more):**&#10;    - Refactored `MorItemModel` to distinguish between a standard tappable item and an item with a switch.&#10;    - Created a new constructor `MorItemModel.withSwitch` for items that require a toggle switch, like the notification setting.&#10;&#10;- **refactor(models):**&#10;    - Added the `is_notify` boolean field to the base `UserModel` and its subclasses (`ParentModel`, `IndividualUserModel`, `FemaleModel`). This allows the user's notification preference to be stored and accessed throughout the app." />
@@ -573,7 +570,8 @@
     <MESSAGE value="feat(auth): Add confirmation sheets for profile actions&#10;&#10;This commit introduces dedicated success confirmation bottom sheets for various profile-related actions, improving user feedback.&#10;&#10;- **feat(UI):**&#10;    - Created `CompleteProfileSheet`: A bottom sheet shown after successfully completing a new user profile. It informs the user their request is under review and navigates them to the login screen.&#10;    - Created `EditProfileSheet`: A simple sheet that confirms profile changes have been saved successfully.&#10;    - Created `AddChildSheet`: A sheet displayed after a parent adds a child. It provides options to either &quot;add another child&quot; or &quot;send order&quot; for administrative review.&#10;&#10;- **refactor(auth):**&#10;    - Updated the `enter_male_female_child_data.dart` screen to display the appropriate success sheet (`CompleteProfileSheet`, `EditProfileSheet`, or `AddChildSheet`) based on the action performed (complete profile, edit profile, or add child).&#10;&#10;- **refactor(UI):**&#10;    - Enhanced `AppBottomSheet` to accept an optional `cancelBtnTitle`, allowing for more descriptive button text than the default &quot;Cancel&quot;.&#10;&#10;- **chore(i18n):**&#10;    - Added new translations for the text used in the new success sheets, including &quot;Child data has been added successfully,&quot; &quot;add another child,&quot; and &quot;send order.&quot;" />
     <MESSAGE value="refactor(auth): Unify request body generation for profile actions&#10;&#10;This commit refactors how the request body is generated for completing a profile, editing a profile, and adding a child. The logic has been centralized within the `IndividualUserModel` to reduce duplication and handle different payload requirements more cleanly.&#10;&#10;- **refactor(models):**&#10;    - Renamed `toRequestBodyJson` in `IndividualUserModel` to `toJsonBody` to clarify its role as a base JSON generator.&#10;    - Created a new `toRequestBodyJson(bool isChild)` method in `IndividualUserModel`.&#10;    - This method now conditionally includes parent-only fields (`name`, `gender`, `phone`, etc.) in the request body only when the `isChild` flag is `true`.&#10;    - Updated `FemaleModel` to use the new `toRequestBodyJson(isChild)` from its parent, simplifying its implementation.&#10;&#10;- **refactor(cubits):**&#10;    - `CompleteProfileCubit` and `EditProfileCubit` now call `body.toRequestBodyJson(false)`, ensuring that base user fields are not sent.&#10;    - `AddChildCubit` now calls `body.toRequestBodyJson(true)`, ensuring that the necessary child-specific fields are included in the API request.&#10;&#10;- **fix(UI):**&#10;    - In `enter_male_female_child_data.dart`, the gender from `ChooseGenderWidget` is now correctly propagated to the underlying data model (`sharedFormFieldModel`).&#10;    - The `SelectImageWidget` in `male_fields.dart` was moved to appear before the name field, standardizing the field order." />
     <MESSAGE value="```&#10;refactor: Improve UI/UX and data handling across features&#10;&#10;This commit introduces several refinements to enhance user experience, data consistency, and code clarity.&#10;&#10;- **feat(home):**&#10;  - Implemented dynamic filtering options on the home screen based on the user's type (parent, male, or female), providing more relevant search categories.&#10;  - Enabled navigation to the `ParentDetailsScreen` with the correct ID when a parent card is tapped.&#10;&#10;- **fix(nav):**&#10;  - Corrected navigation from the splash screen to the home screen by using `Go.offAll` to prevent users from navigating back to the splash screen.&#10;  - The back button in `AppScaffold` is now conditionally displayed only if the current route can be popped.&#10;&#10;- **refactor(cubits):**&#10;  - Made the `onSuccess` callback optional in `GetPartnerInfoCubit` to increase flexibility.&#10;  - Deleted the unused `get_parent_info_cubit.dart` file.&#10;&#10;- **refactor(UI):**&#10;  - Changed the `height` property in `PartnerCard` from `num` to `String` to prevent type errors.&#10;  - Simplified the `UnderSliderWidget` by replacing the `Options` enum with a `String` for state management.&#10;  - Removed a redundant `Builder` widget in the authentication form screen.&#10;  - Standardized the access to the current user model in `shared_form_fields.dart`.&#10;&#10;```" />
-    <option name="LAST_COMMIT_MESSAGE" value="```&#10;refactor: Improve UI/UX and data handling across features&#10;&#10;This commit introduces several refinements to enhance user experience, data consistency, and code clarity.&#10;&#10;- **feat(home):**&#10;  - Implemented dynamic filtering options on the home screen based on the user's type (parent, male, or female), providing more relevant search categories.&#10;  - Enabled navigation to the `ParentDetailsScreen` with the correct ID when a parent card is tapped.&#10;&#10;- **fix(nav):**&#10;  - Corrected navigation from the splash screen to the home screen by using `Go.offAll` to prevent users from navigating back to the splash screen.&#10;  - The back button in `AppScaffold` is now conditionally displayed only if the current route can be popped.&#10;&#10;- **refactor(cubits):**&#10;  - Made the `onSuccess` callback optional in `GetPartnerInfoCubit` to increase flexibility.&#10;  - Deleted the unused `get_parent_info_cubit.dart` file.&#10;&#10;- **refactor(UI):**&#10;  - Changed the `height` property in `PartnerCard` from `num` to `String` to prevent type errors.&#10;  - Simplified the `UnderSliderWidget` by replacing the `Options` enum with a `String` for state management.&#10;  - Removed a redundant `Builder` widget in the authentication form screen.&#10;  - Standardized the access to the current user model in `shared_form_fields.dart`.&#10;&#10;```" />
+    <MESSAGE value="refactor: Implement parent's children view and enhance home UI&#10;&#10;This commit introduces the functionality for viewing the children associated with a parent account and includes several UI/UX refinements on the home screen.&#10;&#10;- **feat(parent):**&#10;    - Implemented `ParentDetailsScreen` to display a parent's information along with a paginated list of their associated children.&#10;    - Created `HomeData.getParentChildren` to fetch a list of a parent's children from the new `opportunity-children/:id` endpoint.&#10;    - Users can now tap on a child's card within the parent's detail view to navigate to that child's specific profile details.&#10;&#10;- **refactor(UI):**&#10;    - Changed the `bodyColor` of the main screen to `Colors.white` for a cleaner look.&#10;    - Simplified `AuthData` by removing an unused generic type parameter.&#10;&#10;- **chore(API):**&#10;    - Added the `opportunityChildren` endpoint to `ApiConstants`." />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: Implement parent's children view and enhance home UI&#10;&#10;This commit introduces the functionality for viewing the children associated with a parent account and includes several UI/UX refinements on the home screen.&#10;&#10;- **feat(parent):**&#10;    - Implemented `ParentDetailsScreen` to display a parent's information along with a paginated list of their associated children.&#10;    - Created `HomeData.getParentChildren` to fetch a list of a parent's children from the new `opportunity-children/:id` endpoint.&#10;    - Users can now tap on a child's card within the parent's detail view to navigate to that child's specific profile details.&#10;&#10;- **refactor(UI):**&#10;    - Changed the `bodyColor` of the main screen to `Colors.white` for a cleaner look.&#10;    - Simplified `AuthData` by removing an unused generic type parameter.&#10;&#10;- **chore(API):**&#10;    - Added the `opportunityChildren` endpoint to `ApiConstants`." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

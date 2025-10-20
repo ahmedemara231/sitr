@@ -15,6 +15,7 @@ import 'blocked_user_screen/blocked_user_screen.dart';
 import 'complaint_and_suggestion/complaints_and_suggestions_screen.dart';
 import 'contact_us/contact_us_screen.dart';
 import 'my_packages.dart';
+import 'profile.dart';
 import 'success_partners/success_partners_screen.dart';
 import 'terms_andcondition_and_about_us/terms_andcondition_and_about_us.dart';
 
@@ -27,7 +28,7 @@ class MoreScreen extends StatelessWidget {
       MorItemModel(
         icon: Assets.svgUser,
         label: LocaleKeys.profile,
-        onTap: () => Go.to(ViewProfileWidget.profile(cubit: GetProfileCubit())),
+        onTap: () => Go.to(const ProfileScreen()),
       ),
       MorItemModel(
         icon: Assets.svgPackageIcon,
