@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
+import '../../features/chats/presentation/screens/chat_screen.dart';
 import '../../features/main_screen/data/models/partner_info_model.dart';
 import '../../features/main_screen/presentation/widgets/app_bar_actions.dart';
 import '../../features/main_screen/presentation/widgets/partner_info/info_widget.dart';
@@ -13,11 +14,13 @@ import '../extensions/padding_extension.dart';
 import '../extensions/sized_box_helper.dart';
 import '../helpers/status_builder.dart';
 import '../helpers/user_type_enum.dart';
+import '../navigation/navigator.dart';
 import '../shared/convert_user_model_to_data_list_cubit.dart';
 import '../shared/models/user_models/individual/female_model.dart';
 import '../shared/models/user_models/individual/individual_user_model.dart';
 import '../shared/models/user_models/user_model.dart';
 import 'app_text.dart' show AppText;
+import 'buttons/custom_app_buttons/default_button.dart';
 import 'buttons/custom_app_buttons/loading_button.dart';
 import 'image_widgets/cached_image.dart';
 import 'scaffolds/auth_scaffold.dart';
@@ -35,10 +38,15 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
 
   const ViewProfileWidget.profile({super.key,
     required this.cubit,
-  }) : _type = ProfileType.profile;
+  }) : _type = ProfileType.profile,
+        receiverId = null;
+
+  final int? receiverId;
+  // final int? fromHome;
 
   const ViewProfileWidget.viewPartner({super.key,
     required this.cubit,
+    required this.receiverId,
   }) : _type = ProfileType.partnerProfile;
 
   @override
@@ -189,11 +197,12 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
                 ),
               ),
               if(_type.isPartnerProfile)
-                LoadingButton(
-                  height: 40.h,
-                  call: (context) async{},
-                  borderRadius: 40.r,
-                  idleWidget: AppText(LocaleKeys.startChat, fontWeight: FontWeight.w500, color: Colors.white,),
+                AppDefaultButton.withBackGroundColor(
+                  onTap: () => Go.to(ChatScreen(
+                    receiverId: receiverId ?? 0,
+                    fromHome: 1,
+                  )),
+                  title: LocaleKeys.startChat,
                 )
             ],
           ),

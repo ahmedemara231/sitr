@@ -8,6 +8,7 @@ import 'core/shared/route_observer.dart';
 import 'core/helpers/loading_manager.dart';
 import 'core/shared/user_cubit/user_cubit.dart' show UserCubit;
 import 'core/widgets/offline_widget.dart';
+import 'features/chats/presentation/screens/chat_screen.dart';
 import 'features/chats/presentation/screens/chats_screen.dart';
 import 'features/splash/splash_screen.dart';
 
@@ -59,7 +60,7 @@ class Sitr extends StatelessWidget {
             restorationScopeId: 'app',
             // home: const HomeScreen(),
             // home: const CustomDropdownTest(),
-            // home: const ChatsScreen(),
+            // home: ChatScreen(),
             home: const SplashScreen(),
             // home: EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(),
             // home: const EnterMaleOrFemaleOrChildDataScreen.signUpAsParent(),

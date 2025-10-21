@@ -78,5 +78,7 @@ class ApiConstants {
   static const String completedChats = 'chats/completed';
   static const String rejectedChats = 'chats/rejected';
   static const String currentChats = 'chats/current';
+  static const String startChat = 'start-chat';
+  // static const String startChat = 'upload-room-file/';
 
 }

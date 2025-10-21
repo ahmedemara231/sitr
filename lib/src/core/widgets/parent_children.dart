@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/pagify.dart';
-
 import '../../features/main_screen/data/home_data.dart';
 import '../../features/main_screen/data/models/home_model.dart';
 import '../../features/main_screen/presentation/screens/partner_details.dart';

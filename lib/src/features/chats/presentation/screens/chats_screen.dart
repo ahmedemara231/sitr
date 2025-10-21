@@ -8,6 +8,7 @@ import '../../../../config/res/config_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/helpers/status_builder.dart';
+import '../../../../core/navigation/navigator.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/widgets/app_pagify.dart';
 import '../../../../core/widgets/not_contain_data.dart';
@@ -16,6 +17,7 @@ import '../../../../core/widgets/choose_from_options.dart';
 import '../../data/models/chat_model.dart';
 import '../cubits/get_chats_cubit.dart';
 import '../widgets/chat_card.dart';
+import 'chat_screen.dart';
 
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});
@@ -147,12 +149,18 @@ class _ChatsBodyState extends State<_ChatsBody> {
           onSuccess: (data, context) => data.isNotEmpty? Column(
             spacing: 10.h,
             children: List.generate(
-                10,
-                    (index) => ChatCard(
-                    url: data[index].room?.members?.first.image ?? '',
-                    partnerName: data[index].room?.members?.first.name ?? '',
-                    subTitle: data[index].room?.lastMessageBody??''
-                )
+                data.length,
+                    (index) => InkWell(
+                      onTap: () => Go.to(ChatScreen(
+                        receiverId: data[index].room?.members?.first.id ?? 0,
+                        fromHome: 1,
+                      )),
+                      child: ChatCard(
+                          url: data[index].room?.members?.first.image ?? '',
+                          partnerName: data[index].room?.members?.first.name ?? '',
+                          subTitle: data[index].room?.lastMessageBody??''
+                      ),
+                    )
             ),
           ) : const NotContainData(),
         ),

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import '../../../../core/widgets/view_profile_widget.dart';
 import '../../../more/presentation/cubit/get_child_profile.dart';
@@ -21,6 +19,7 @@ class IndividualDetailsScreen extends StatelessWidget {
     required this.id,
   }) : _type = IndividualDetailsType.myChild;
 
+
   const IndividualDetailsScreen.opportunity({
     super.key,
     required this.id,
@@ -37,19 +36,10 @@ class IndividualDetailsScreen extends StatelessWidget {
 
       default:
         return ViewProfileWidget<GetPartnerInfoCubit>.viewPartner(
-            cubit: GetPartnerInfoCubit(id)
+          cubit: GetPartnerInfoCubit(id),
+          receiverId: id,
         );
     }
-    if(_type == IndividualDetailsType.myChild){
-      return ViewProfileWidget<GetChildProfileCubit>.profile(cubit: GetChildProfileCubit(id));
 
-    }else if(_type == IndividualDetailsType.profile){
-      return ViewProfileWidget<GetProfileCubit>.profile(cubit: GetProfileCubit());
-
-    }else{
-      return ViewProfileWidget<GetPartnerInfoCubit>.viewPartner(
-          cubit: GetPartnerInfoCubit(id)
-      );
-    }
   }
 }

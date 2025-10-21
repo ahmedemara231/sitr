@@ -253,5 +253,7 @@
   "completed": "completed",
   "refused": "refused",
   "hanging": "hanging",
-  "cancelled": "Cancelled"
+  "cancelled": "Cancelled",
+  "chat": "Chat",
+  "here_is_the_text_of_the_message_here_is_the_text_of_the_message_here_is_the_text_of_the_message": "Here is the text of the message Here is the text of the message Here is the text of the message"
 }

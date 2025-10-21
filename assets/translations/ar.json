@@ -253,5 +253,7 @@
   "completed": "مكتملة",
   "refused": "مرفوضة",
   "hanging": "معلقة",
-  "cancelled": "ملغية"
+  "cancelled": "ملغية",
+  "chat": "المحادثة",
+  "here_is_the_text_of_the_message_here_is_the_text_of_the_message_here_is_the_text_of_the_message": "هنا نص الرسالة هنا نص الرسالة هنا نص الرسالة"
 }

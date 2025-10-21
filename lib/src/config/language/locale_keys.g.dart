@@ -748,4 +748,10 @@ abstract class LocaleKeys {
   static const String _cancelled = 'cancelled';
   static String get cancelled => _cancelled.tr();
 
+  static const String _chat = 'chat';
+  static String get chat => _chat.tr();
+
+  static const String _hereIsTheTextOfTheMessageHereIsTheTextOfTheMessageHereIsTheTextOfTheMessage = 'here_is_the_text_of_the_message_here_is_the_text_of_the_message_here_is_the_text_of_the_message';
+  static String get hereIsTheTextOfTheMessageHereIsTheTextOfTheMessageHereIsTheTextOfTheMessage => _hereIsTheTextOfTheMessageHereIsTheTextOfTheMessageHereIsTheTextOfTheMessage.tr();
+
 }

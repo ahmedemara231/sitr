@@ -134,7 +134,9 @@ class MainView extends StatelessWidget {
                                       (index) {
                                     final opportunity = state.data.opportunities?.male?[index];
                                     return InkWell(
-                                      onTap: () => Go.to(IndividualDetailsScreen.opportunity(id: opportunity?.id ?? 0)),
+                                      onTap: () => Go.to(IndividualDetailsScreen.opportunity(
+                                        id: opportunity?.id ?? 0,
+                                      )),
                                       child: PartnerCard(
                                           name: opportunity?.name??'',
                                           imageUrl: opportunity?.avatar??'',
@@ -158,7 +160,9 @@ class MainView extends StatelessWidget {
                                       (index) {
                                     final opportunity = state.data.opportunities?.female?[index];
                                     return InkWell(
-                                      onTap: () => Go.to(IndividualDetailsScreen.opportunity(id: opportunity?.id ?? 0)),
+                                      onTap: () => Go.to(IndividualDetailsScreen.opportunity(
+                                            id: opportunity?.id ?? 0,
+                                          )),
                                       child: PartnerCard(
                                           name: opportunity?.name??'',
                                           imageUrl: opportunity?.avatar??'',
