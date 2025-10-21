@@ -757,4 +757,7 @@ abstract class LocaleKeys {
   static const String _areYouSureToBlockThisUser = 'are_you_sure_to_block_this_user';
   static String get areYouSureToBlockThisUser => _areYouSureToBlockThisUser.tr();
 
+  static const String _areYouSureToReportThisUser = 'are_you_sure_to_report_this_user';
+  static String get areYouSureToReportThisUser => _areYouSureToReportThisUser.tr();
+
 }

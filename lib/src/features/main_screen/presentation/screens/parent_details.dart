@@ -10,9 +10,11 @@ import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/shared/models/user_models/parent/parent_model.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/widgets/app_text.dart';
+import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/image_widgets/cached_image.dart';
 import '../../../../core/widgets/parent_children.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
+import '../../../../core/widgets/sheets/bloc_success.dart';
 import '../../data/models/partner_info_model.dart';
 import '../cubits/get_partner_info_cubit.dart';
 import '../widgets/app_bar_actions.dart';
@@ -50,7 +52,16 @@ class ParentDetailsScreen extends StatelessWidget {
                         colors: [Colors.black38, Colors.black26])
                 ),
               ),
-              ProfileAppBarActions(onBlock: (context){}, onReport: (context){}),
+
+              ProfileAppBarActions(
+                  onBlock: (context) => showDefaultBottomSheet(
+                    child: BlocManagerSheet(
+                        id: id,
+                        blocManager: BlocManager.block
+                    ),
+                  ),
+                  onReport: (context){}
+              ),
             ],
           ),
           cardTopPadding: 150.h,

@@ -12,7 +12,7 @@ class GetChildProfileCubit extends GetUserModelCubit{
     executeAsync(
         operation: () => baseCrudUseCase.call(
           CrudBaseParmas(
-            api: ApiConstants.getChildProfile+id.toString(),
+            api: ApiConstants.getPartnerInfo+id.toString(),
             httpRequestType: HttpRequestType.get,
             mapper: (json) => UserModel.fromJson(json),
           ),

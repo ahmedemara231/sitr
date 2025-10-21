@@ -78,6 +78,7 @@ class Assets {
   static const String svgPrey = 'assets/svg/prey.svg';
   static const String svgProfilePhone = 'assets/svg/profile_phone.svg';
   static const String svgRecycing = 'assets/svg/recycing.svg';
+  static const String svgReport = 'assets/svg/report.svg';
   static const String svgSAFlag = 'assets/svg/SA_flag.svg';
   static const String svgSend = 'assets/svg/send.svg';
   static const String svgSettingIcon = 'assets/svg/settingIcon.svg';

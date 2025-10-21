@@ -15,18 +15,17 @@ import '../extensions/sized_box_helper.dart';
 import '../helpers/status_builder.dart';
 import '../helpers/user_type_enum.dart';
 import '../navigation/navigator.dart';
-import '../shared/block_user_cubit.dart';
 import '../shared/convert_user_model_to_data_list_cubit.dart';
 import '../shared/models/user_models/individual/female_model.dart';
 import '../shared/models/user_models/individual/individual_user_model.dart';
 import '../shared/models/user_models/user_model.dart';
 import 'app_text.dart' show AppText;
 import 'buttons/custom_app_buttons/default_button.dart';
-import 'buttons/custom_app_buttons/loading_button.dart';
 import 'default_bottom_sheet.dart';
 import 'image_widgets/cached_image.dart';
 import 'scaffolds/auth_scaffold.dart';
 import 'sheets/bloc_success.dart';
+import 'sheets/report_cheet.dart';
 
 enum ProfileType{profile, partnerProfile}
 
@@ -136,7 +135,11 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
                           blocManager: BlocManager.block
                       ),
                     ),
-                    onReport: (context){}
+                    onReport: (context) => showDefaultBottomSheet(
+                      child: ReportSheet(
+                          id: receiverId!,
+                      ),
+                    ),
                 ),
             ],
           ),

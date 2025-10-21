@@ -261,6 +261,7 @@
     "Cancelled" : "ملغية",
     "Chat" : "المحادثة",
     "Here is the text of the message Here is the text of the message Here is the text of the message" : "هنا نص الرسالة هنا نص الرسالة هنا نص الرسالة",
-    "are you sure to block this user" : "هل انت متأكد من حظر المستخدم"
+    "are you sure to block this user" : "هل انت متأكد من حظر المستخدم",
+    "are you sure to report this user" : "هل انت متاكد من الابلاغ عن المستخدم"
 
 }
