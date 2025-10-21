@@ -50,6 +50,7 @@ class Assets {
   static const String svgDeleteIcon = 'assets/svg/delete_icon.svg';
   static const String svgEducationalQualification = 'assets/svg/educational_qualification.svg';
   static const String svgFacebook = 'assets/svg/facebook.svg';
+  static const String svgForbidden = 'assets/svg/forbidden.svg';
   static const String svgGreyBackground = 'assets/svg/grey_background.svg';
   static const String svgHijab = 'assets/svg/hijab.svg';
   static const String svgHome = 'assets/svg/home.svg';

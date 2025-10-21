@@ -754,4 +754,7 @@ abstract class LocaleKeys {
   static const String _hereIsTheTextOfTheMessageHereIsTheTextOfTheMessageHereIsTheTextOfTheMessage = 'here_is_the_text_of_the_message_here_is_the_text_of_the_message_here_is_the_text_of_the_message';
   static String get hereIsTheTextOfTheMessageHereIsTheTextOfTheMessageHereIsTheTextOfTheMessage => _hereIsTheTextOfTheMessageHereIsTheTextOfTheMessageHereIsTheTextOfTheMessage.tr();
 
+  static const String _areYouSureToBlockThisUser = 'are_you_sure_to_block_this_user';
+  static String get areYouSureToBlockThisUser => _areYouSureToBlockThisUser.tr();
+
 }

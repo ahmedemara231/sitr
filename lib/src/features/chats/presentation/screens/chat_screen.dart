@@ -48,7 +48,7 @@ class ChatScreen extends StatelessWidget {
         appBarTitle: LocaleKeys.chat,
         body: EasyChat(
           itemExtent: 60.h,
-          socketType: SignalRImpl(
+          socketType: ClientIOImpl(
             url: 'server url',
             jsonToChatMessage: (jsonMessage) => ChatMessages(
                 senderImage: jsonMessage['senderImage'],

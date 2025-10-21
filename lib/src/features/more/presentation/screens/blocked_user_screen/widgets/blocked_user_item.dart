@@ -8,7 +8,9 @@ import '../../../../../../core/base_crud/code/presentation/cubit/base_cubit/asyn
 import '../../../../../../core/extensions/sized_box_helper.dart';
 import '../../../../../../core/widgets/app_text.dart';
 import '../../../../../../core/widgets/buttons/default_button.dart';
+import '../../../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../../../core/widgets/icon_widget.dart';
+import '../../../../../../core/widgets/sheets/bloc_success.dart';
 import '../../../cubit/block_user_cubit/un_block_user_cubit.dart';
 import '../../../models/block_user_model.dart';
 
@@ -50,10 +52,12 @@ class BlockedUserItem extends StatelessWidget {
                     ? const CircularProgressIndicator(color: AppColors.primary,)
                     : DefaultButton(
                   onTap: () async {
-                    await context
-                        .read<UnBlockUserCubit>()
-                        .unblockUser(
-                        userId: blockUserModel.id ?? 0, function: function);
+                    showDefaultBottomSheet(
+                      child: BlocManagerSheet(
+                          id: blockUserModel.id ?? 0,
+                          blocManager: BlocManager.unblock
+                      )
+                    );
                   },
                   width: 83.w,
                   height: 22.h,
