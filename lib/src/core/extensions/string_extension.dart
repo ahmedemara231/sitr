@@ -1,12 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../config/language/languages.dart';
 import '../../features/auth/imports.dart';
+import '../../features/auth/presentation/cubits/add_child.dart';
+import '../../features/auth/presentation/cubits/complete_profile_cubit.dart';
 import '../../features/auth/presentation/enums/complete_register_status.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/packages/presentation/packages_screen.dart';
 import '../helpers/user_type_enum.dart';
 import '../navigation/navigator.dart';
+import '../shared/models/user_models/user_model.dart';
 
 
 extension FormatString on String {
@@ -28,12 +32,29 @@ extension FormatString on String {
       Go.to(const PackagesScreen.firstSubscription(isInAuth: true));
 
     }else if(statusType.isCompleteChild){
-      Go.to(const EnterMaleOrFemaleOrChildDataScreen.signUpAsParent());
-
+      Go.to(EnterMaleOrFemaleOrChildDataScreen.withParent(
+          scaffoldType: ScaffoldType.centerCard,
+          showAlreadyHaveAccount: true,
+          showConditionsAndTerms: true,
+          onClick: (context, user) => context.read<AddChildCubit>().addChild(
+            body: user,
+            onSuccess: () {},
+          )
+      ));
     }else if(statusType.isHasSetrCode){
 
     }else if(statusType.isIncomplete){
-      Go.to(EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner());
+      Go.to(EnterMaleOrFemaleOrChildDataScreen.individual(
+          scaffoldType: ScaffoldType.centerCard,
+          showAlreadyHaveAccount: true,
+          showConditionsAndTerms: true,
+          userType: UserModel.currentUser?.gender?.userType,
+          onClick: (context, user) => context.read<CompleteProfileCubit>().completeProfile(
+              body: user,
+              onSuccess: () {},
+              isParent: false
+          ),
+      ));
 
     }else{
       throw Exception('there is no such value with $statusType');

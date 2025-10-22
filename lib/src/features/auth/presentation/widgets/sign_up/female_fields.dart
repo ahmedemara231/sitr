@@ -7,6 +7,7 @@ import '../../../../../core/helpers/user_type_enum.dart';
 import '../../../../../core/shared/models/title_value_shape.dart';
 import '../../../../../core/shared/models/user_models/individual/female_model.dart';
 import '../../../../../core/shared/models/user_models/individual/individual_user_model.dart';
+import '../../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../models/kinship.dart';
 import '../../data/auth_data.dart';
@@ -18,11 +19,13 @@ import 'radio_widget.dart';
 import 'shared_form_fields.dart';
 
 class FemaleFields extends StatefulWidget {
-  final UserType? secondaryUserType;
+  final bool withParent;
+  final IndividualUserModel? initialValue;
   final void Function(IndividualUserModel data) onChangeFemaleData;
   const FemaleFields({
     super.key,
-    required this.secondaryUserType,
+    this.initialValue,
+    required this.withParent,
     required this.onChangeFemaleData,
   });
 
@@ -31,10 +34,6 @@ class FemaleFields extends StatefulWidget {
 }
 
 class _FemaleFieldsState extends State<FemaleFields> {
-
-  late IndividualUserModel femaleFields;
-
-  void _init() => femaleFields = FemaleModel.initial();
 
   late TextEditingController _nameCont;
   late TextEditingController _liveAfterMarryCont;
@@ -60,6 +59,14 @@ class _FemaleFieldsState extends State<FemaleFields> {
   //   wearingHijab.addListener(_wearingHijabListener);
   // }
 
+  late IndividualUserModel femaleFields;
+
+  void _init() {
+    femaleFields = FemaleModel.initial();
+    _listenToData(femaleFields.copyWith(
+        gender: Gender(userType: UserType.female)
+    ));
+  }
 
   @override
   void initState() {
@@ -90,24 +97,20 @@ class _FemaleFieldsState extends State<FemaleFields> {
 
   void _listenToData(IndividualUserModel updatedModel) {
     femaleFields = updatedModel;
-    log((femaleFields as FemaleModel).toJson().toString());
-    log('============================================================================================================================================');
     widget.onChangeFemaleData.call(femaleFields);
   }
 
-  FemaleModel get asFemale {
-    return femaleFields as FemaleModel;
-  }
-
+  FemaleModel get asFemale => femaleFields as FemaleModel;
   final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
-    switch (widget.secondaryUserType) {
-      case null:
+    switch (widget.withParent) {
+      case false:
         return SharedFormFields<FemaleModel>(
           restorationId: 'female_fields',
+          initialValue: widget.initialValue,
           onChanged: (data) => _listenToData(asFemale.merge(data.copyWith())),
+          // onChanged: (data) => _listenToData(asFemale.merge(data.copyWith())),
           onInitData: (List<Widget> children) => children..insert(
               15,
               SignUpTextField(
@@ -169,6 +172,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
       default:
         return SharedFormFields<FemaleModel>(
           restorationId: 'female_fields',
+          initialValue: widget.initialValue,
           onChanged: (data) => _listenToData(asFemale.merge(data.copyWith())),
           onInitData: (List<Widget> children) => children..insert(2, 
             SignUpTextField(

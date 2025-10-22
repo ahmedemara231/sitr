@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import '../../../../../config/language/locale_keys.g.dart';
@@ -7,16 +6,17 @@ import '../../../../../core/shared/models/user_models/individual/individual_user
 import '../../../../../core/shared/models/user_models/individual/male_model.dart';
 import '../../../../../core/shared/models/user_models/user_model.dart';
 import '../shared/text_field.dart';
-import 'image_widget.dart';
 import 'shared_form_fields.dart';
 
 class MaleFields extends StatefulWidget {
-  final UserType? secondaryType;
+  final bool withParent;
+  final IndividualUserModel? initialValue;
   final void Function(IndividualUserModel data) onChangeMaleData;
 
   const MaleFields({
     super.key,
-    required this.secondaryType,
+    this.initialValue,
+    required this.withParent,
     required this.onChangeMaleData,
   });
 
@@ -25,7 +25,7 @@ class MaleFields extends StatefulWidget {
 }
 
 class _MaleFieldsState extends State<MaleFields> {
-  late IndividualUserModel sharedFormFieldModel;
+  late IndividualUserModel maleFields;
   File? selectedImage;
 
   late TextEditingController _nameCont;
@@ -33,24 +33,21 @@ class _MaleFieldsState extends State<MaleFields> {
   late TextEditingController _identifyNumberCont;
   late TextEditingController _ageCont;
 
-  void _init() => sharedFormFieldModel = MaleModel.initial();
+  void _init() {
+    maleFields = MaleModel.initial();
+    _listenToData(maleFields.copyWith(
+        gender: Gender(userType: UserType.male)
+    ));
+  }
 
-  UserModel get _currentUser => UserModel.currentUser ?? UserModel.initial();
 
-  // String? get _title{
-  //   if(UserModel.isParent){
-  //     return asMaleModel.name;
-  //   }
-  //
-  //   return _currentUser.name;
-  // }
   @override
   void initState() {
     _init();
-    _nameCont = TextEditingController(text: UserModel.isParent? null : _currentUser.name);
-    _phoneCont = TextEditingController(text: UserModel.isParent? null : _currentUser.phone);
-    _identifyNumberCont = TextEditingController(text: UserModel.isParent? null : _currentUser.identityNumber);
-    _ageCont = TextEditingController(text: UserModel.isParent? null : _currentUser.age.toString());
+    _nameCont = TextEditingController();
+    _phoneCont = TextEditingController();
+    _identifyNumberCont = TextEditingController();
+    _ageCont = TextEditingController();
     super.initState();
   }
 
@@ -64,16 +61,17 @@ class _MaleFieldsState extends State<MaleFields> {
   }
 
   void _listenToData(IndividualUserModel updatedModel) {
-    sharedFormFieldModel = updatedModel;
-    widget.onChangeMaleData.call(sharedFormFieldModel);
+    maleFields = updatedModel;
+    widget.onChangeMaleData.call(maleFields);
   }
 
-  MaleModel get asMaleModel => sharedFormFieldModel as MaleModel;
+  MaleModel get asMaleModel => maleFields as MaleModel;
   @override
   Widget build(BuildContext context) {
-    switch (widget.secondaryType) {
-      case null:
+    switch (widget.withParent) {
+      case false:
         return SharedFormFields<MaleModel>(
+          initialValue: widget.initialValue,
           restorationId: UserType.male.name,
           onChanged: (data) =>
               _listenToData(asMaleModel.merge(data.copyWith())),
@@ -82,17 +80,13 @@ class _MaleFieldsState extends State<MaleFields> {
       default:
         return SharedFormFields<MaleModel>(
           restorationId: UserType.male.name,
+          initialValue: widget.initialValue,
           onChanged: (data) =>
               _listenToData(asMaleModel.merge(data.copyWith())),
           onInitData: (List<Widget> children) => children
             ..insertAll(
               0,
               [
-                SelectImageWidget(onSelectImage: (image) {
-                  selectedImage = image;
-                  _listenToData(
-                      asMaleModel.copyWith(avatar: selectedImage?.path));
-                }),
                 SignUpTextField(
                 upperTitle: LocaleKeys.name,
                 title: LocaleKeys.pleaseEnterName,

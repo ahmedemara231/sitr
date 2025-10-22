@@ -23,6 +23,7 @@ import 'radio_widget.dart';
 
 class SharedFormFields<T extends IndividualUserModel> extends StatefulWidget {
   final String? restorationId;
+  final IndividualUserModel? initialValue;
   final void Function(T sharedFields) onChanged;
   final void Function(List<Widget> children)? onInitData;
   const SharedFormFields({
@@ -30,6 +31,7 @@ class SharedFormFields<T extends IndividualUserModel> extends StatefulWidget {
     this.restorationId,
     required this.onChanged,
     this.onInitData,
+    this.initialValue,
   });
 
   @override
@@ -47,12 +49,10 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
   late TextEditingController _thingsCont;
   late TextEditingController _educationalQualificationCont;
   late TextEditingController _diseasesCont;
-  late final ValueNotifier<Answer?> childrenExits = ValueNotifier(UserModel.isParent? null : asIndividualUserModel.hasChildren?.toAnswer);
+  late final ValueNotifier<Answer?> childrenExits = ValueNotifier(null);
 
-  // لازم يبقي برا عشان تعرف تتحكم فيه وتحسب عدد الmale وال female
   late T model;
 
-  // final AuthData<T> _authData = AuthData<T>();
   void _initIndividualOrChild(IndividualUserModel element){
     model = element.copyWith() as T;
 
@@ -93,37 +93,21 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
     childrenExits.addListener(_childrenExitsListener);
   }
 
-  // IndividualUserModel get _currentUser => UserModel.currentUser as IndividualUserModel;
-
-  UserModel? get _currentUser {
-    if(UserModel.isIndividual){
-      return UserModel.currentUser as IndividualUserModel;
-
-    }else if(UserModel.isParent){
-      // IndividualUserModel لازم يبقي فيه children جوا ال parent model عشان كله يبقي
-      // return ((UserModel.currentUser as ParentModel).children[index]) as IndividualUserModel;
-      return UserModel.currentUser ?? UserModel.initial();
-
-    }else{
-      return UserModel.initial();
-    }
-  }
-
-  IndividualUserModel get asIndividualUserModel => UserModel.currentUser as IndividualUserModel;
+  // IndividualUserModel get asIndividualUserModel => UserModel.currentUser as IndividualUserModel;
 
   @override
   void initState() {
     _init();
     _listenToModelChanges();
-    _nickNameCont = TextEditingController(text: UserModel.isParent? null : asIndividualUserModel.nickName);
-    _tallCont = TextEditingController(text: UserModel.isParent? null : asIndividualUserModel.height);
-    _weightCont = TextEditingController(text: UserModel.isParent? null : asIndividualUserModel.weight);
-    _currentJobCont = TextEditingController(text: UserModel.isParent? null : asIndividualUserModel.currentJob);
-    _briefCont = TextEditingController(text: UserModel.isParent? null : asIndividualUserModel.bio);
-    _childrenNumberCont = TextEditingController(text: UserModel.isParent? null : asIndividualUserModel.numOfChildren);
-    _thingsCont = TextEditingController(text: UserModel.isParent? null : asIndividualUserModel.prohibitedThings);
-    _educationalQualificationCont = TextEditingController(text: UserModel.isParent? null : asIndividualUserModel.educationLevel);
-    _diseasesCont = TextEditingController(text: UserModel.isParent? null : asIndividualUserModel.healthConditions);
+    _nickNameCont = TextEditingController();
+    _tallCont = TextEditingController();
+    _weightCont = TextEditingController();
+    _currentJobCont = TextEditingController();
+    _briefCont = TextEditingController();
+    _childrenNumberCont = TextEditingController();
+    _thingsCont = TextEditingController();
+    _educationalQualificationCont = TextEditingController();
+    _diseasesCont = TextEditingController();
     super.initState();
   }
 

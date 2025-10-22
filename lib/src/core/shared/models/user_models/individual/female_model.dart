@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import '../../../../../features/auth/models/dowry.dart';
 import '../../../../../features/auth/models/kinship.dart';
 import '../../../../extensions/object.dart';
@@ -66,18 +68,7 @@ class FemaleModel extends IndividualUserModel {
     this.guardianRelation,
   });
 
-  factory FemaleModel.initial() => FemaleModel(
-    name: '',
-    age: 0,
-    gender: Gender(),
-    hijab: TitleValueShape.initial(),
-    acceptsPolygamy: false,
-    preferredResidenceAfterMarriage: '',
-    guardianName: '',
-    guardianPhone: '',
-    guardianCountryCode: '',
-    guardianRelation: Kinship(id: 0, value: ''),
-  );
+  factory FemaleModel.initial() => FemaleModel();
 
 
   factory FemaleModel.fromJson(Map<String, dynamic> json) {

@@ -6,14 +6,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../generated/assets.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
+import '../../../../../core/helpers/user_type_enum.dart';
 import '../../../../../core/navigation/named_routes.dart';
 import '../../../../../core/navigation/navigator.dart';
+import '../../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../../core/widgets/app_bottom_sheet.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../auth/imports.dart';
+import '../../../../auth/presentation/cubits/edit_profile.dart';
 import '../../../../home/home_screen.dart';
 import '../../../../otp/presentation/otp.dart';
 import '../../cubit/change_phone_manager.dart';
@@ -31,7 +34,14 @@ class SettingScreen extends StatelessWidget {
       MorItemModel(
         icon: Assets.svgUser,
         label: LocaleKeys.profile,
-        onTap: () => Go.to(EnterMaleOrFemaleOrChildDataScreen.editProfile()),
+        // onTap: () => UserModel.isIndividual? Go.to(EnterMaleOrFemaleOrChildDataScreen(
+        //     scaffoldType: ScaffoldType.appScaffold,
+        //     withParent: true,
+        //     onClick: (context, user) => context.read<EditProfileCubit>().editProfile(
+        //         body: user,
+        //         onSuccess: () {}
+        //     )
+        // )) : null,
       ),
       MorItemModel(
         icon: Assets.svgContactPhone,
