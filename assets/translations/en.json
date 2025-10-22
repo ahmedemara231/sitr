@@ -257,5 +257,6 @@
   "chat": "Chat",
   "here_is_the_text_of_the_message_here_is_the_text_of_the_message_here_is_the_text_of_the_message": "Here is the text of the message Here is the text of the message Here is the text of the message",
   "are_you_sure_to_block_this_user": "are you sure to block this user",
-  "are_you_sure_to_report_this_user": "are you sure to report this user"
+  "are_you_sure_to_report_this_user": "are you sure to report this user",
+  "edit_data": "edit data"
 }

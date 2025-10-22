@@ -80,4 +80,5 @@ class ApiConstants {
   static const String currentChats = 'chats/current';
   static const String startChat = 'start-chat';
   static const String report = 'user-reports';
+  static const String updateChildProfile = 'update-child-profile/';
 }

@@ -9,37 +9,31 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
   final bool showConditionsAndTerms;
   final bool showAlreadyHaveAccount;
   final UserType? userType;
+  final bool showGenderSelection;
   final Future<void> Function(BuildContext context, IndividualUserModel user) onClick;
 
 
   const EnterMaleOrFemaleOrChildDataScreen.withParent({
     super.key,
+    this.showGenderSelection = true,
     required this.scaffoldType,
     this.initialValue,
     required this.onClick,
     this.showConditionsAndTerms = false,
     this.showAlreadyHaveAccount = false,
-  }) : _withParent = true, userType = null;
+    this.userType,
+  }) : _withParent = true;
 
   const EnterMaleOrFemaleOrChildDataScreen.individual({
     super.key,
     required this.scaffoldType,
+    this.showGenderSelection = false,
     this.initialValue,
     required this.onClick,
     this.showConditionsAndTerms = false,
     this.showAlreadyHaveAccount = false,
     required this.userType,
   }) : _withParent = false;
-
-  // const EnterMaleOrFemaleOrChildDataScreen({
-  //   super.key,
-  //   required this.scaffoldType,
-  //   required this.withParent,
-  //   this.initialValue,
-  //   required this.onClick,
-  //   this.showConditionsAndTerms = false,
-  //   this.showAlreadyHaveAccount = false,
-  // });
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +43,7 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
         body: _EnterMaleOrFemaleOrChildDataBody(
           userType: userType,
           withParent: _withParent,
+          showGenderSelection: showGenderSelection,
           initialValue: initialValue,
           showAlreadyHaveAccount: showAlreadyHaveAccount,
           showConditionsAndTerms: showConditionsAndTerms,
@@ -60,6 +55,7 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
         bodyColor: AppColors.white,
         body: _EnterMaleOrFemaleOrChildDataBody(
           withParent: _withParent,
+          showGenderSelection: showGenderSelection,
           userType: userType,
           initialValue: initialValue,
           showAlreadyHaveAccount: showAlreadyHaveAccount,
@@ -74,6 +70,7 @@ class _EnterMaleOrFemaleOrChildDataBody extends StatefulWidget {
   final UserType? userType;
   final IndividualUserModel? initialValue;
   final bool withParent;
+  final bool showGenderSelection;
   final bool showConditionsAndTerms;
   final bool showAlreadyHaveAccount;
   final Future<void> Function(BuildContext context, IndividualUserModel user) onClick;
@@ -82,6 +79,7 @@ class _EnterMaleOrFemaleOrChildDataBody extends StatefulWidget {
     required this.withParent,
     this.initialValue,
     required this.userType,
+    required this.showGenderSelection,
     required this.onClick,
     this.showConditionsAndTerms = false,
     this.showAlreadyHaveAccount = false,
@@ -141,7 +139,7 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
       child: Column(
         spacing: 10.h,
         children: [
-          if(widget.withParent)
+          if(widget.showGenderSelection)
             ChooseGenderWidget(
               // titles: (element) => '${element.translate}  ${element.isFemale? AuthData.childrenNumber.value.femaleNumbers : AuthData.childrenNumber.value.maleNumbers}',
               titles: (element) => element.translate,

@@ -10,9 +10,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="feat(more): Enable navigation to Chats screen and conditionally show &quot;Added Children&quot;&#10;&#10;This commit updates the &quot;More&quot; screen with two key changes:&#10;&#10;- **feat(navigation):**&#10;  - The &quot;Chats&quot; item is now functional and navigates the user to the `ChatsScreen` when tapped.&#10;&#10;- **refactor(UI):**&#10;  - The &quot;Added Children&quot; item is now displayed conditionally. It will only appear in the list for users who are identified as a &quot;parent&quot; (`UserModel.isParent`), making the menu more relevant to the user's role.">
-      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/male_fields.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/male_fields.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/shared_form_fields.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/shared_form_fields.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/setting/setting_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/setting/setting_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/core/widgets/parent_children_card.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/cubit/edit_child_data_cubit.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/translations/ar.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/ar.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/translations/lang.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/lang.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/config/language/locale_keys.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/config/language/locale_keys.g.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/network/api_endpoints.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/network/api_endpoints.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/parent_children.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/parent_children.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/parent_children_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/parent_children_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/screens/enter_male_female_child_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/screens/enter_male_female_child_data.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/widgets/home/partner_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/widgets/home/partner_card.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,14 +140,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
-    </task>
-    <task id="LOCAL-00016" summary="refactor(widgets): Decouple CustomDropDownButton configuration&#10;&#10;This commit refactors the `CustomDropDownButton` by separating its configuration into dedicated data classes: `ButtonData`, `TextFieldData`, and `CustomDropDownButtonPagifyData`. This change improves modularity and makes the widget's properties more organized and easier to manage.&#10;&#10;The main changes include:&#10;- `ButtonData`: Encapsulates properties related to the main dropdown button's appearance and behavior.&#10;- `TextFieldData`: Holds all configurations for the search text field within the dropdown.&#10;- `CustomDropDownButtonPagifyData`: The `listHeight` property is now part of this class to group all pagination-related settings.&#10;&#10;The test file for the dropdown has been updated to reflect these new data structures.">
-      <option name="closed" value="true" />
-      <created>1760052880689</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1760052880689</updated>
     </task>
     <task id="LOCAL-00017" summary="refactor(widgets): Decouple CustomDropDownButton configuration&#10;&#10;This commit refactors the `CustomDropDownButton` by separating its configuration into dedicated data classes: `ButtonData`, `TextFieldData`, and `CustomDropDownButtonPagifyData`. This change improves modularity and makes the widget's properties more organized and easier to manage.&#10;&#10;The main changes include:&#10;- `ButtonData`: Encapsulates properties related to the main dropdown button's appearance and behavior.&#10;- `TextFieldData`: Holds all configurations for the search text field within the dropdown.&#10;- `CustomDropDownButtonPagifyData`: The `listHeight` property is now part of this class to group all pagination-related settings.&#10;&#10;The test file for the dropdown has been updated to reflect these new data structures.">
       <option name="closed" value="true" />
@@ -524,7 +525,15 @@
       <option name="project" value="LOCAL" />
       <updated>1761136706388</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="feat(more): Enable navigation to Chats screen and conditionally show &quot;Added Children&quot;&#10;&#10;This commit updates the &quot;More&quot; screen with two key changes:&#10;&#10;- **feat(navigation):**&#10;  - The &quot;Chats&quot; item is now functional and navigates the user to the `ChatsScreen` when tapped.&#10;&#10;- **refactor(UI):**&#10;  - The &quot;Added Children&quot; item is now displayed conditionally. It will only appear in the list for users who are identified as a &quot;parent&quot; (`UserModel.isParent`), making the menu more relevant to the user's role.">
+      <option name="closed" value="true" />
+      <created>1761137651405</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1761137651405</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="ToolWindowManager">
