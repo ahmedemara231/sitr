@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/language/languages.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/extensions/enum.dart';
+import '../../../../../core/extensions/string_extension.dart';
 import '../../../../../core/shared/models/title_value_shape.dart';
 import '../../../../../core/shared/models/user_models/individual/female_model.dart';
 import '../../../../../core/shared/models/user_models/individual/individual_user_model.dart';
@@ -99,15 +100,15 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
   void initState() {
     _init();
     _listenToModelChanges();
-    _nickNameCont = TextEditingController();
-    _tallCont = TextEditingController();
-    _weightCont = TextEditingController();
-    _currentJobCont = TextEditingController();
-    _briefCont = TextEditingController();
-    _childrenNumberCont = TextEditingController();
-    _thingsCont = TextEditingController();
-    _educationalQualificationCont = TextEditingController();
-    _diseasesCont = TextEditingController();
+    _nickNameCont = TextEditingController(text: widget.initialValue?.nickName);
+    _tallCont = TextEditingController(text: widget.initialValue?.height);
+    _weightCont = TextEditingController(text: widget.initialValue?.weight);
+    _currentJobCont = TextEditingController(text: widget.initialValue?.currentJob);
+    _briefCont = TextEditingController(text: widget.initialValue?.bio);
+    _childrenNumberCont = TextEditingController(text: widget.initialValue?.numOfChildren);
+    _thingsCont = TextEditingController(text: widget.initialValue?.prohibitedThings);
+    _educationalQualificationCont = TextEditingController(text: widget.initialValue?.educationLevel);
+    _diseasesCont = TextEditingController(text: widget.initialValue?.healthConditions);
     super.initState();
   }
 
@@ -181,7 +182,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         // validator: Validators.validateEmpty,
       ),
       RadioWidget<Answer>(
-          // initialValue: _currentUser.hasChildren?.toAnswer,
+          initialValue: widget.initialValue?.hasChildren?.toAnswer,
           title: LocaleKeys.childrenExists,
           onSubmit: (result) {
             childrenExits.value = result;
@@ -205,7 +206,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
                  // validator: Validators.validateEmpty,
                ),
                RadioWidget<TitleValueShape>(
-                 // initialValue: _currentUser.childCustody,
+                 initialValue: widget.initialValue?.childCustody,
                  title: LocaleKeys.nursery,
                  onSubmit: (result) => _listenToData(model.copyWith(childCustody: result) as T),
                  values: EnumsData.childCustody.data,
@@ -217,7 +218,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
        ),
 
       RadioWidget<Answer>(
-        // initialValue: _currentUser.wantChildren?.toAnswer,
+        initialValue: widget.initialValue?.wantChildren?.toAnswer,
           title: LocaleKeys.wantToHaveChildren,
           onSubmit: (result) =>
               _listenToData(model.copyWith(wantChildren: result.toBool) as T),
@@ -234,7 +235,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
       ),
 
       DowryWidget(
-        // initialValue: _currentUser.dowry,
+        initialValue: widget.initialValue?.dowry,
         onSelect: (from, to) => _listenToData(model.copyWith(dowry: Dowry(from: from, to: to)) as T)
       ),
 
@@ -263,7 +264,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         // validator: Validators.validateEmpty,
       ),
       RadioWidget<Answer>(
-        // initialValue: _currentUser.isPrayer?.toAnswer,
+        initialValue: widget.initialValue?.isPrayer?.toAnswer,
           title: LocaleKeys.areYouPray,
           onSubmit: (result) =>
               _listenToData(model.copyWith(isPrayer: result.toBool) as T),
@@ -279,7 +280,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         // validator: Validators.validateEmpty,
       ),
       RadioWidget<Languages>(
-        // initialValue: _currentUser.chatLang?.toLang(),
+        initialValue: widget.initialValue?.chatLang?.toLang(),
           title: LocaleKeys.inChatYouPrefer,
           onSubmit: (result) => _listenToData(
               model.copyWith(chatLang: result.languageCode) as T),
@@ -287,7 +288,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
           titleBuilder: (i) => AppText(Languages.values[i].translate),
       ),
       RadioWidget<Answer>(
-        // initialValue: _currentUser.isSmoker?.toAnswer,
+        initialValue: widget.initialValue?.isSmoker?.toAnswer,
           title: LocaleKeys.areYouSmoke,
           onSubmit: (result) =>
               _listenToData(model.copyWith(isSmoker: result.toBool) as T),
@@ -295,7 +296,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
           titleBuilder: (i) => AppText(Answer.values[i].translate),
       ),
       RadioWidget<Answer>(
-        // initialValue: _currentUser.tribeAffiliation?.toAnswer,
+        initialValue: widget.initialValue?.tribeAffiliation?.toAnswer,
           title: LocaleKeys.doYouBelongToATribe,
           onSubmit: (result) =>
               _listenToData(model.copyWith(tribeAffiliation: result.toBool) as T),

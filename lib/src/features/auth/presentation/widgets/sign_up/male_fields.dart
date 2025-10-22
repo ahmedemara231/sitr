@@ -44,10 +44,10 @@ class _MaleFieldsState extends State<MaleFields> {
   @override
   void initState() {
     _init();
-    _nameCont = TextEditingController();
-    _phoneCont = TextEditingController();
-    _identifyNumberCont = TextEditingController();
-    _ageCont = TextEditingController();
+    _nameCont = TextEditingController(text: widget.initialValue?.name);
+    _phoneCont = TextEditingController(text: widget.initialValue?.phone);
+    _identifyNumberCont = TextEditingController(text: widget.initialValue?.identityNumber);
+    _ageCont = TextEditingController(text: widget.initialValue?.age.toString());
     super.initState();
   }
 

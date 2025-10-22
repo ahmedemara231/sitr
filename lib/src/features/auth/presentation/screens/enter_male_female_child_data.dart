@@ -101,15 +101,23 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
   }
 
   late IndividualUserModel sharedFormFieldModel;
-  void _assignToInitial(){
-    if(_mainType.value.isMale){
-      sharedFormFieldModel = MaleModel.initial();
-
-    }else if(_mainType.value.isFemale){
-      sharedFormFieldModel = FemaleModel.initial();
+  void _assignToInitialValueOr(IndividualUserModel model){
+    if(widget.initialValue.isNotNull){
+      sharedFormFieldModel = widget.initialValue!;
 
     }else{
-      sharedFormFieldModel = IndividualUserModel.initial();
+      sharedFormFieldModel = model;
+    }
+  }
+  void _assignToInitial(){
+    if(_mainType.value.isMale){
+      _assignToInitialValueOr(MaleModel.initial());
+
+    }else if(_mainType.value.isFemale){
+      _assignToInitialValueOr(FemaleModel.initial());
+
+    }else{
+      _assignToInitialValueOr(IndividualUserModel.initial());
     }
   }
 

@@ -9,6 +9,7 @@ import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
 import '../../../../../core/navigation/named_routes.dart';
 import '../../../../../core/navigation/navigator.dart';
+import '../../../../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../../core/widgets/app_bottom_sheet.dart';
@@ -34,14 +35,15 @@ class SettingScreen extends StatelessWidget {
       MorItemModel(
         icon: Assets.svgUser,
         label: LocaleKeys.profile,
-        // onTap: () => UserModel.isIndividual? Go.to(EnterMaleOrFemaleOrChildDataScreen(
-        //     scaffoldType: ScaffoldType.appScaffold,
-        //     withParent: true,
-        //     onClick: (context, user) => context.read<EditProfileCubit>().editProfile(
-        //         body: user,
-        //         onSuccess: () {}
-        //     )
-        // )) : null,
+        onTap: () => UserModel.isIndividual? Go.to(EnterMaleOrFemaleOrChildDataScreen.individual(
+            scaffoldType: ScaffoldType.appScaffold,
+            userType: UserModel.currentUser?.gender?.userType,
+            initialValue: UserModel.currentUser as IndividualUserModel,
+            onClick: (context, user) => context.read<EditProfileCubit>().editProfile(
+                body: user,
+                onSuccess: () {}
+            )
+        )) : null,
       ),
       MorItemModel(
         icon: Assets.svgContactPhone,
