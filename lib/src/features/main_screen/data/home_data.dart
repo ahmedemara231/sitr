@@ -5,9 +5,28 @@ import '../../../core/extensions/object.dart';
 import '../../../core/network/api_endpoints.dart';
 import '../../../core/network/network_request.dart';
 import '../../../core/network/network_service.dart';
+import 'models/filter_model.dart';
 import 'models/home_model.dart';
 
 class HomeData{
+  static Future<(List<Opportunity>, PaginationData)> filter(FilterModel filter)async{
+    return (await injector<NetworkService>().callApi(
+        NetworkRequest(
+          method: RequestMethod.get,
+          path: ApiConstants.filter
+        ),
+        mapper: (data) => (
+        (data['data'] as List)
+            .map((e) => Opportunity.fromJson(e))
+            .toList(),
+        PaginationData(
+            perPage: data['pagination']['per_page'],
+            totalPages: data['pagination']['total_pages']
+        ),
+        )
+    )).data;
+  }
+
   static Future<(List<Opportunity>, PaginationData)> getParentChildren(int? parentId)async{
     return (await injector<NetworkService>().callApi(
         NetworkRequest(

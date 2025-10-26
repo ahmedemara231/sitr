@@ -80,6 +80,7 @@ class TipsSheet extends StatelessWidget {
   final String path;
   final void Function(BuildContext context) onConfirm;
   const TipsSheet({
+    super.key,
     required this.title,
     required this.path,
     required this.onConfirm
