@@ -9,7 +9,7 @@ import 'message_widget.dart';
 
 class ChatBody<Response> extends StatefulWidget {
   final SocketHelper socketType;
-  final FutureOr Function(BuildContext context, ChatMessages message) onReceiveMessage;
+  // final FutureOr Function(BuildContext context, ChatMessages message) onReceiveMessage;
   final PagifyController<ChatMessages> controller;
   final Future<Response> Function(BuildContext context, int currentPage) asyncCall;
   final PagifyData<ChatMessages> Function(Response response) mapper;
@@ -26,7 +26,7 @@ class ChatBody<Response> extends StatefulWidget {
 
 const ChatBody({super.key,
     required this.socketType,
-    required this.onReceiveMessage,
+    // required this.onReceiveMessage,
     required this.controller,
     required this.asyncCall,
     required this.mapper,
@@ -50,9 +50,9 @@ class _ChatBodyState<Response> extends State<ChatBody<Response>> {
 
   Future<void> _init() async {
     await widget.socketType.connect();
-    widget.socketType.onReceiveMessage().listen(
-            (event) => widget.onReceiveMessage.call(context, event)
-    );
+
+    // widget.socketType.onReceiveMessage.call()
+    // widget.onReceiveMessage.call(context, event)
   }
 
   @override
@@ -66,6 +66,7 @@ class _ChatBodyState<Response> extends State<ChatBody<Response>> {
     widget.socketType.disconnect();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Pagify<Response, ChatMessages>.listView(

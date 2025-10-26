@@ -26,7 +26,7 @@ class ChatMessageWidget extends StatelessWidget {
               radius: 20.sp,
               backgroundImage: NetworkImage(message.senderImage),
             ),
-            AppText(message.time, fontSize: 10.sp, color: Colors.grey),
+            AppText(message.time??'', fontSize: 10.sp, color: Colors.grey),
           ],
         ),
 

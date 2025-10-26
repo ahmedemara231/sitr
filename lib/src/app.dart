@@ -50,39 +50,73 @@ class Sitr extends StatelessWidget {
       builder: (ctx, child) {
         return BlocProvider(
           create: (context) => injector<UserCubit>(),
-          child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: ConstantManager.projectName,
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
-            navigatorKey: Go.navigatorKey,
-            restorationScopeId: 'app',
-            // home: const HomeScreen(),
-            // home: const CustomDropdownTest(),
-            // home: ChatScreen(),
-            // home: EnterMaleOrFemaleOrChildDataScreen(
-            //     scaffoldType: ScaffoldType.centerCard,
-            //     withParent: true,
-            //     // withParent: UserTypeHelper.currentType!.isParent,
-            //     showConditionsAndTerms: true,
-            //     showAlreadyHaveAccount: true,
-            //     onClick: (context, user) async => log(user.toRequestBodyJson(true).toString()),
-            // ),
-            home: const SplashScreen(),
-            // home: EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(),
-            // home: const EnterMaleOrFemaleOrChildDataScreen.signUpAsParent(),
-            // home: const LoginScreen(),
-            // home: OtpScreen(title: '', onConfirmCode: (BuildContext context, String code) {  }, onResendCodePress: (BuildContext context) {  },),
-            navigatorObservers: [AppNavigationObserver()],
-            builder: (context, child) {
-              return OfflineWidget(
-                child: FullScreenLoadingManager(child: child!),
-              );
-            },
+          child: PageStorage(
+            bucket: _bucket,
+            child: MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: ConstantManager.projectName,
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+              navigatorKey: Go.navigatorKey,
+              restorationScopeId: 'app',
+              // home: const HomeScreen(),
+              // home: const CustomDropdownTest(),
+              // home: ChatScreen(),
+              // home: EnterMaleOrFemaleOrChildDataScreen(
+              //     scaffoldType: ScaffoldType.centerCard,
+              //     withParent: true,
+              //     // withParent: UserTypeHelper.currentType!.isParent,
+              //     showConditionsAndTerms: true,
+              //     showAlreadyHaveAccount: true,
+              //     onClick: (context, user) async => log(user.toRequestBodyJson(true).toString()),
+              // ),
+
+              home: const SplashScreen(),
+
+              // home: EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(),
+              // home: const EnterMaleOrFemaleOrChildDataScreen.signUpAsParent(),
+              // home: const LoginScreen(),
+              // home: OtpScreen(title: '', onConfirmCode: (BuildContext context, String code) {  }, onResendCodePress: (BuildContext context) {  },),
+
+              // home: const TestScreen(
+              //     key: PageStorageKey('value')
+              // ),
+              // home: const TestScreen(),
+              navigatorObservers: [AppNavigationObserver()],
+              builder: (context, child) {
+                return OfflineWidget(
+                  child: FullScreenLoadingManager(child: child!),
+                );
+              },
+            ),
           ),
         );
       },
+    );
+  }
+}
+final PageStorageBucket _bucket = PageStorageBucket();
+
+class TestScreen extends StatefulWidget {
+  const TestScreen({super.key});
+
+  @override
+  State<TestScreen> createState() => _TestScreenState();
+}
+
+class _TestScreenState extends State<TestScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: ListView.builder(
+        key: const PageStorageKey('test_screen_list'),
+        itemBuilder: (context, index) => InkWell(
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const TestScreen())),
+            child: AppText('text $index', fontSize: 30)),
+        itemCount: 30,
+      ),
     );
   }
 }

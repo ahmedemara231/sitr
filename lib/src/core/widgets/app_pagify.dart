@@ -4,7 +4,6 @@ import 'package:lottie/lottie.dart';
 import 'package:pagify/helpers/data_and_pagination_data.dart';
 import 'package:pagify/helpers/errors.dart';
 import 'package:pagify/pagify.dart';
-import 'package:pagify/widgets/text.dart';
 import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
 import 'app_text.dart';

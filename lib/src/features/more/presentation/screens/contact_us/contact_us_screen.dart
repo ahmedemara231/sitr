@@ -31,54 +31,56 @@ class ContactUsScreen extends StatelessWidget {
         appBar: customAppBar(appBarTitle: LocaleKeys.contactUs),
         body: Form(
           key: formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppText(
-                LocaleKeys.messageText,
-                color: AppColors.textBlack,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w700,
-              ),
-              8.szH,
-              DefaultTextField(
-                controller: controllerMessage,
-                title: LocaleKeys.pleaseAttachText,
-                fillColor: AppColors.whiteGreyColorProMax,
-                borderColor: Colors.transparent,
-                maxLines: 9,
-                inputType: TextInputType.multiline,
-                validator: (value) => Validators.validateEmpty(value),
-              ),
-              27.szH,
-              AppText(
-                LocaleKeys.youCanContactUsThroughTheFollowingChannels,
-                color: AppColors.textBlack,
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w700,
-              ).centerWidget,
-              20.szH,
-              FittedBox(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: List.generate(
-                    iconPath.length,
-                    (index) => Padding(
-                      padding: EdgeInsets.only(right: 12.w),
-                      child: GestureDetector(
-                        onTap: actions[index],
-                        child: IconWidget(
-                          icon: iconPath[index],
-                          width: 30.w,
-                          height: 30.h,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppText(
+                  LocaleKeys.messageText,
+                  color: AppColors.textBlack,
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w700,
+                ),
+                8.szH,
+                DefaultTextField(
+                  controller: controllerMessage,
+                  title: LocaleKeys.pleaseAttachText,
+                  fillColor: AppColors.whiteGreyColorProMax,
+                  borderColor: Colors.transparent,
+                  maxLines: 9,
+                  inputType: TextInputType.multiline,
+                  validator: (value) => Validators.validateEmpty(value),
+                ),
+                27.szH,
+                AppText(
+                  LocaleKeys.youCanContactUsThroughTheFollowingChannels,
+                  color: AppColors.textBlack,
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w700,
+                ).centerWidget,
+                20.szH,
+                FittedBox(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: List.generate(
+                      iconPath.length,
+                      (index) => Padding(
+                        padding: EdgeInsets.only(right: 12.w),
+                        child: GestureDetector(
+                          onTap: actions[index],
+                          child: IconWidget(
+                            icon: iconPath[index],
+                            width: 30.w,
+                            height: 30.h,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ).paddingAll(16.r),
+              ],
+            ).paddingAll(16.r),
+          ),
         ),
         bottomNavigationBar: BlocBuilder<ContactUsCubit, AsyncState>(
           builder: (context, state) {

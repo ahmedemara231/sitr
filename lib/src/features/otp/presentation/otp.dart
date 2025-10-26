@@ -4,7 +4,6 @@ import 'package:easy_timer_count/helpers/time.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagify/widgets/text.dart';
 import 'package:pinput/pinput.dart';
 import '../../../config/language/locale_keys.g.dart';
 import '../../../config/res/config_imports.dart';

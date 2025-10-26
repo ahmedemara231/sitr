@@ -8,7 +8,7 @@ import '../../features/main_screen/presentation/screens/partner_details.dart';
 import '../extensions/padding_extension.dart';
 import '../navigation/navigator.dart';
 import 'buttons/custom_app_buttons/default_button.dart' show AppDefaultButton;
-import 'parent_children.dart' show ParentChildren;
+import 'parent_children.dart' show ParentChildren, ChildCard;
 import 'scaffolds/app_scaffold.dart';
 
 class ParentChildrenView extends StatelessWidget {
@@ -18,7 +18,7 @@ class ParentChildrenView extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppScaffold(
       appBarTitle: LocaleKeys.children,
-      body: const ParentChildren(type: IndividualDetailsType.myChild),
+      body: const ParentChildren(type: IndividualDetailsType.myChild, childCard: ChildCard.sub),
       bottomBar: AppDefaultButton.withBackGroundColor(
           title: LocaleKeys.addAnotherChild,
           onTap: () => Go.to(BlocProvider(

@@ -9,12 +9,15 @@ import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/shared/models/user_models/parent/parent_model.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
+import '../../../../core/shared/report_cubit.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/image_widgets/cached_image.dart';
 import '../../../../core/widgets/parent_children.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
 import '../../../../core/widgets/sheets/bloc_success.dart';
+import '../../../../core/widgets/sheets/report_cheet.dart';
+import '../../../../core/widgets/sheets/tips_sheet.dart';
 import '../../data/models/partner_info_model.dart';
 import '../cubits/get_partner_info_cubit.dart';
 import '../widgets/app_bar_actions.dart';
@@ -60,7 +63,9 @@ class ParentDetailsScreen extends StatelessWidget {
                         blocManager: BlocManager.block
                     ),
                   ),
-                  onReport: (context){}
+                  onReport: (context) => showDefaultBottomSheet(
+                    child: ReportSheet(id: id)
+                  ),
               ),
             ],
           ),
@@ -105,6 +110,13 @@ class ParentDetailsScreen extends StatelessWidget {
                 ),
               ),
               ParentChildren(id: id, type: IndividualDetailsType.opportunity),
+              BlocBuilder<GetPartnerInfoCubit, AsyncState<UserModel>>(
+                builder: (context, state) => StatusBuilder(
+                  data: state,
+                  onSuccess: (data, context) => ChatButton(user: state.data),
+                ),
+              ),
+
             ],
           )
       ),

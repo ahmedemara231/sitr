@@ -1,6 +1,5 @@
 import 'package:easy_loading_button/easy_loading_button.dart';
 import 'package:flutter/material.dart';
-import 'package:pagify/widgets/text.dart';
 
 import '../../../../config/res/config_imports.dart';
 import '../../app_text.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagify/widgets/text.dart';
 import '../../../../../../../generated/assets.dart';
 import '../../../../../../config/res/config_imports.dart';
 import '../../../../../../core/extensions/sized_box_helper.dart';

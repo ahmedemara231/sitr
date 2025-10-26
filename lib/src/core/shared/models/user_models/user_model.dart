@@ -26,6 +26,9 @@ class UserModel {
   final String? completeRegistration;
   final String? token;
   final bool? isNotify;
+  final bool? canChat;
+  final bool? hasChatWith;
+  final bool? isParentMatch;
 
   const UserModel({
     this.id,
@@ -44,7 +47,10 @@ class UserModel {
     this.adminApprovalStatus,
     this.completeRegistration,
     this.token,
-    this.isNotify
+    this.isNotify,
+    this.canChat,
+    this.hasChatWith,
+    this.isParentMatch,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {

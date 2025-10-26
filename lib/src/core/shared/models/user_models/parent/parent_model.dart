@@ -27,6 +27,10 @@ class ParentModel extends UserModel {
     super.adminApprovalStatus,
     super.completeRegistration,
     super.token,
+    super.canChat,
+    super.hasChatWith,
+    super.isParentMatch,
+
     this.email,
     this.relation,
     this.numOfChildren,
@@ -36,6 +40,10 @@ class ParentModel extends UserModel {
 
   factory ParentModel.fromJson(Map<String, dynamic> json) {
     return ParentModel(
+      isNotify: json['is_notify'],
+      canChat: json['can_chat'],
+      hasChatWith: json['has_chat_with'],
+      isParentMatch: json['is_parent_match'],
       id: json['id'],
       name: json['name'],
       parentId: json['parent_id'],
@@ -81,11 +89,16 @@ class ParentModel extends UserModel {
     int? numOfChildren,
     int? maleChildrenNum,
     int? femaleChildrenNum,
-
+    bool? canChat,
+    bool? hasChatWith,
+    bool? isParentMatch,
     int? id, String? name, int? parentId, TitleValueShape? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) {
     return ParentModel(
       isNotify: isNotify ?? this.isNotify,
       id: id ?? this.id,
+      canChat: canChat??this.canChat,
+      hasChatWith: hasChatWith??this.hasChatWith,
+      isParentMatch: isParentMatch??this.isParentMatch,
       name: name ?? this.name,
       parentId: parentId ?? this.parentId,
       type: type ?? this.type,

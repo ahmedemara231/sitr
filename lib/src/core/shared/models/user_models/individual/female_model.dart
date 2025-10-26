@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import '../../../../../features/auth/models/dowry.dart';
 import '../../../../../features/auth/models/kinship.dart';
 import '../../../../extensions/object.dart';
@@ -58,6 +56,9 @@ class FemaleModel extends IndividualUserModel {
     super.religiousCommitment,
     super.views,
     super.isNotify,
+    super.canChat,
+    super.hasChatWith,
+    super.isParentMatch,
 
     this.hijab,
     this.acceptsPolygamy,
@@ -73,6 +74,9 @@ class FemaleModel extends IndividualUserModel {
 
   factory FemaleModel.fromJson(Map<String, dynamic> json) {
     return FemaleModel(
+        canChat: json['can_chat'],
+        hasChatWith: json['has_chat_with'],
+        isParentMatch: json['is_parent_match'],
       adminApprovalStatus: TitleValueShape.fromJson(json['admin_approval_status']),
       completeRegistration: json['complete_registration'],
 
@@ -167,6 +171,9 @@ class FemaleModel extends IndividualUserModel {
   @override
   FemaleModel merge(IndividualUserModel otherModel) {
     return FemaleModel(
+      canChat: _mergeHelper(otherFemaleModelValue: otherModel.canChat, currentValue: canChat),
+      hasChatWith: _mergeHelper(otherFemaleModelValue: otherModel.hasChatWith, currentValue: hasChatWith),
+      isParentMatch: _mergeHelper(otherFemaleModelValue: otherModel.isParentMatch, currentValue: isParentMatch),
       guardianName: _mergeHelper(otherFemaleModelValue: (otherModel as FemaleModel).guardianName, currentValue: guardianName),
       hijab: _mergeHelper(otherFemaleModelValue: otherModel.hijab, currentValue: hijab),
       acceptsPolygamy: _mergeHelper(otherFemaleModelValue: otherModel.acceptsPolygamy, currentValue: acceptsPolygamy),
@@ -238,6 +245,9 @@ class FemaleModel extends IndividualUserModel {
     bool? isNotify,
     TitleValueShape? hijab,
     bool? acceptsPolygamy,
+    bool? canChat,
+    bool? hasChatWith,
+    bool? isParentMatch,
     String? preferredResidenceAfterMarriage,
     String? guardianName,
     String? guardianPhone,
@@ -246,6 +256,9 @@ class FemaleModel extends IndividualUserModel {
     String? nickName, TitleValueShape? maritalStatus, String? height, String? weight, String? currentJob, String? bio, bool? hasChildren, String? numOfChildren, TitleValueShape? childCustody, bool? wantChildren, String? prohibitedThings, Dowry? dowry, TitleValueShape? weddingType, CityModel? cityId, String? educationLevel, bool? isPrayer, String? healthConditions, String? chatLang, bool? isSmoker, bool? tribeAffiliation, TitleValueShape? skinColor, TitleValueShape? religiousCommitment, int? views, int? id, String? name, int? parentId, TitleValueShape? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) {
 
     return FemaleModel(
+      canChat: canChat ?? this.canChat,
+      hasChatWith: hasChatWith ?? this.hasChatWith,
+      isParentMatch: isParentMatch ?? this.isParentMatch,
       isNotify: isNotify ?? this.isNotify,
       id: id ?? this.id,
       name: name ?? this.name,

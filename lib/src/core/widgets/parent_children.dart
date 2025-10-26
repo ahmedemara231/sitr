@@ -16,14 +16,17 @@ import 'app_pagify.dart';
 import 'parent_children_card.dart';
 
 
+enum ChildCard{sub, full}
 class ParentChildren extends StatelessWidget {
   final int? id;
   final IndividualDetailsType type;
+  final ChildCard childCard;
 
   const ParentChildren({
     super.key,
     this.id,
     required this.type,
+    this.childCard = ChildCard.full
   });
 
   Widget _individualDetailsScreenRoute(int id){
@@ -52,7 +55,7 @@ class ParentChildren extends StatelessWidget {
 
           child: BlocProvider(
             create: (context) => GetPartnerInfoCubit(element.id!),
-            child: ParentChildrenCard(
+            child: childCard == ChildCard.sub? ParentChildrenCard(
                 onEditTap: (context) => context.read<GetPartnerInfoCubit>().getProfile(
                     onSuccess: (user) => Go.to(BlocProvider(
                         create: (context) => EditChildDataCubit(),
@@ -67,24 +70,18 @@ class ParentChildren extends StatelessWidget {
                 ),
                 name: element.name,
                 url: element.avatar
-            ),
+            ).paddingBottom(10.h) : PartnerCard(
+              name: element.name??'',
+              imageUrl: element.avatar??'',
+              location: element.city??'',
+              weight: element.weight.toString(),
+              height: element.height.toString(),
+              age: element.age ?? 0,
+              maritalStatus: element.name??'',
+            ).paddingBottom(10.h),
           ),
 
-          // child: PartnerCard(
-          //   name: element.name??'',
-          //   imageUrl: element.avatar??'',
-          //   location: element.city??'',
-          //   weight: element.weight.toString(),
-          //   height: element.height.toString(),
-          //   age: element.age ?? 0,
-          //   maritalStatus: element.name??'',
-          //   onEditDataTap: () => Go.to(EnterMaleOrFemaleOrChildDataScreen.individual(
-          //       scaffoldType: ScaffoldType.appScaffold,
-          //       // initialValue: element, // جيب الداتا الاول بعدين خش اعمل edit
-          //       onClick: (context, user)async{}, // edit child data endpoint
-          //       userType: element.gender?.userType
-          //   )),
-          // ).paddingBottom(10.h),
+
         ),
         pagifyController: PagifyController()
     );

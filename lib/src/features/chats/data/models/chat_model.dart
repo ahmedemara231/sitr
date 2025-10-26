@@ -1,5 +1,7 @@
 import 'package:pagify/helpers/data_and_pagination_data.dart';
 
+import '../../../../core/widgets/easy_chat-master/models/chat_message.dart';
+
 class ChatModel {
   MatchRequest? matchRequest;
   Room? room;
@@ -154,9 +156,9 @@ class Room {
     if (members != null) {
       data['members'] = members!.map((v) => v.toJson()).toList();
     }
-    if (messages != null) {
-      data['messages'] = messages!.toJson();
-    }
+    // if (messages != null) {
+    //   data['messages'] = messages!.toJson();
+    // }
     data['last_message_body'] = lastMessageBody;
     data['last_message_created_dt'] = lastMessageCreatedDt;
     return data;
@@ -190,7 +192,7 @@ class Members {
 
 class Messages {
   PaginationData? pagination;
-  List<Data>? data;
+  List<ChatMessages>? data;
 
   Messages({this.pagination, this.data});
 
@@ -199,23 +201,24 @@ class Messages {
         ? PaginationData(perPage: json['pagination']['per_page'], totalPages: json['pagination']['total_pages'])
         : null;
     if (json['data'] != null) {
-      data = <Data>[];
+      data = [];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(ChatMessages.fromJson(v));
       });
     }
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    // if (pagination != null) {
-    //   data['pagination'] = pagination!.toJson();
-    // }
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     // if (pagination != null) {
+//     //   data['pagination'] = pagination!.toJson();
+//     // }
+//     if (this.data != null) {
+//       data['data'] = this.data!.map((v) => v.toJson()).toList();
+//     }
+//     return data;
+//   }
+
 }
 
 // class Pagination {

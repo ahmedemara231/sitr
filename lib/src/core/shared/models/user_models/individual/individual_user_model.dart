@@ -47,6 +47,9 @@ class IndividualUserModel extends UserModel {
     super.completeRegistration,
     super.token,
     super.isNotify,
+    super.canChat,
+    super.hasChatWith,
+    super.isParentMatch,
 
     this.dowry,
     this.nickName,
@@ -97,6 +100,17 @@ class IndividualUserModel extends UserModel {
     skinColor: null,
     religiousCommitment: TitleValueShape.initial(),
     views: 0,
+    isNotify: false,
+    id: 0,
+    name: '',
+    parentId: 0,
+    type: null,
+    gender: null,
+    avatar: '',
+    phone: '',
+    countryCode: '',
+    fullPhone: '',
+    identityNumber: '',
   );
 
   factory IndividualUserModel.fromJson(Map<String, dynamic> json) {
@@ -144,7 +158,6 @@ class IndividualUserModel extends UserModel {
     );
   }
 
-
   Map<String, dynamic> toJsonBody() => {
     "nick_name": nickName,
     "marital_status": maritalStatus?.value,
@@ -189,6 +202,10 @@ class IndividualUserModel extends UserModel {
   @override
   Map<String, dynamic> toJson() {
     return super.toJson()..addAll({
+      'can_chat' : canChat,
+      'has_chat_with' : hasChatWith,
+      'is_parent_match' : isParentMatch,
+
       'nick_name': nickName,
       'marital_status': maritalStatus?.toJson(),
       'height': height,
@@ -218,6 +235,10 @@ class IndividualUserModel extends UserModel {
 
   IndividualUserModel merge(IndividualUserModel otherModel) {
     return IndividualUserModel(
+      canChat: _mergeHelper(otherMaleModelValue: otherModel.canChat, currentValue: canChat),
+      hasChatWith: _mergeHelper(otherMaleModelValue: otherModel.hasChatWith, currentValue: hasChatWith),
+      isParentMatch: _mergeHelper(otherMaleModelValue: otherModel.isParentMatch, currentValue: isParentMatch),
+
       id: _mergeHelper(otherMaleModelValue: otherModel.id, currentValue: id),
       name: _mergeHelper(otherMaleModelValue: otherModel.name, currentValue: name),
       parentId: _mergeHelper(otherMaleModelValue: otherModel.parentId, currentValue: parentId),
@@ -278,6 +299,10 @@ class IndividualUserModel extends UserModel {
 
   @override
   IndividualUserModel copyWith({
+    bool? canChat,
+    bool? hasChatWith,
+    bool? isParentMatch,
+
       String? nickName,
       bool? isNotify,
       TitleValueShape? maritalStatus,
@@ -304,6 +329,10 @@ class IndividualUserModel extends UserModel {
       int? views,
     int? id, String? name, int? parentId, TitleValueShape? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) => IndividualUserModel(
     id: id?? this.id,
+    canChat: canChat??this.canChat,
+    hasChatWith: hasChatWith??this.hasChatWith,
+    isParentMatch: isParentMatch??this.isParentMatch,
+
     name: name?? this.name,
     parentId: parentId?? this.parentId,
     type: type?? this.type,

@@ -1,4 +1,4 @@
- 
+
 import '../../../config/res/config_imports.dart';
 
 class DropDownModel {

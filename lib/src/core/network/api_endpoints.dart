@@ -81,4 +81,8 @@ class ApiConstants {
   static const String startChat = 'start-chat';
   static const String report = 'user-reports';
   static const String updateChildProfile = 'update-child-profile/';
+  static const String sendMsg = 'send-message/';
+  static const String appStages = 'app-stages';
+  static const String chattingStageTips = 'chatting-stage-tips';
+  static const String parentIndividualConversation = 'parent-individual-conversation';
 }

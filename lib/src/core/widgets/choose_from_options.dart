@@ -42,7 +42,9 @@ class _ChooseFromOptionsWidgetState extends State<ChooseFromOptionsWidget> {
               widget.onSelectOption(selectedOption);
               setState(() => option = selectedOption);
             },
-            child: Container(
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 150),
+              curve: Curves.linear,
               width: context.width / widget.titles.length,
               decoration: BoxDecoration(
                 color: option == widget.titles[index] ?

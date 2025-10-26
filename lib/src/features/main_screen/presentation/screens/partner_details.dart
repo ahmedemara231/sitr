@@ -37,7 +37,6 @@ class IndividualDetailsScreen extends StatelessWidget {
       default:
         return ViewProfileWidget<GetPartnerInfoCubit>.viewPartner(
           cubit: GetPartnerInfoCubit(id),
-          receiverId: id,
         );
     }
 

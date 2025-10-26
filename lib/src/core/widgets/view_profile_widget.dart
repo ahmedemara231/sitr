@@ -1,9 +1,13 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
+import '../../features/chats/presentation/cubits/app_stages_cubit.dart';
+import '../../features/chats/presentation/cubits/get_chatting_tips.dart';
+import '../../features/chats/presentation/cubits/get_tips_cubit.dart';
 import '../../features/chats/presentation/screens/chat_screen.dart';
 import '../../features/main_screen/data/models/partner_info_model.dart';
 import '../../features/main_screen/presentation/widgets/app_bar_actions.dart';
@@ -15,6 +19,7 @@ import '../extensions/sized_box_helper.dart';
 import '../helpers/status_builder.dart';
 import '../helpers/user_type_enum.dart';
 import '../navigation/navigator.dart';
+import '../network/api_endpoints.dart';
 import '../shared/convert_user_model_to_data_list_cubit.dart';
 import '../shared/models/user_models/individual/female_model.dart';
 import '../shared/models/user_models/individual/individual_user_model.dart';
@@ -26,6 +31,7 @@ import 'image_widgets/cached_image.dart';
 import 'scaffolds/auth_scaffold.dart';
 import 'sheets/bloc_success.dart';
 import 'sheets/report_cheet.dart';
+import 'sheets/tips_sheet.dart';
 
 enum ProfileType{profile, partnerProfile}
 
@@ -40,15 +46,10 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
 
   const ViewProfileWidget.profile({super.key,
     required this.cubit,
-  }) : _type = ProfileType.profile,
-        receiverId = null;
-
-  final int? receiverId;
-  // final int? fromHome;
+  }) : _type = ProfileType.profile;
 
   const ViewProfileWidget.viewPartner({super.key,
     required this.cubit,
-    required this.receiverId,
   }) : _type = ProfileType.partnerProfile;
 
   @override
@@ -131,13 +132,13 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
                 ProfileAppBarActions(
                     onBlock: (context) => showDefaultBottomSheet(
                       child: BlocManagerSheet(
-                          id: receiverId!,
+                          id: state.data.id!,
                           blocManager: BlocManager.block
                       ),
                     ),
                     onReport: (context) => showDefaultBottomSheet(
                       child: ReportSheet(
-                          id: receiverId!,
+                          id: state.data.id!,
                       ),
                     ),
                 ),
@@ -191,12 +192,12 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
 
         bodyColor: AppColors.whiteGreyColorProMax,
         body: BlocBuilder<T, AsyncState<UserModel>>(
-          builder: (context, state) => Column(
-            spacing: 14.h,
-            children: [
-              StatusBuilder(
-                data: state,
-                onSuccess: (data, context) => GridView.count(
+          builder: (context, state) => StatusBuilder(
+            data: state,
+            onSuccess: (data, context) => Column(
+              spacing: 14.h,
+              children: [
+                GridView.count(
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -209,16 +210,11 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
                           (i) => InfoWidget(partnerInfoModel: partnerInfo[i])
                   ),
                 ),
-              ),
-              if(_type.isPartnerProfile)
-                AppDefaultButton.withBackGroundColor(
-                  onTap: () => Go.to(ChatScreen(
-                    receiverId: receiverId ?? 0,
-                    fromHome: 1,
-                  )),
-                  title: LocaleKeys.startChat,
-                )
-            ],
+
+                if(_type.isPartnerProfile)
+                  ChatButton(user: state.data),
+              ],
+            ),
           ),
         ),
       ),

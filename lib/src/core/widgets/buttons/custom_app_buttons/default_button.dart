@@ -26,8 +26,9 @@ class AppDefaultButton extends StatelessWidget {
     required this.title,
     required this.onTap,
     this.backgroundColor,
-    this.textColor
-  }) : shapeType = ShapeType.withBackGroundColor, borderColor = null;
+    this.textColor,
+    this.borderColor,
+  }) : shapeType = ShapeType.withBackGroundColor;
 
   @override
   Widget build(BuildContext context) {

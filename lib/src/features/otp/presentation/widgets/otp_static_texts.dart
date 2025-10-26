@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagify/widgets/text.dart';
 
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/widgets/app_text.dart';

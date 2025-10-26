@@ -763,4 +763,10 @@ abstract class LocaleKeys {
   static const String _editData = 'edit_data';
   static String get editData => _editData.tr();
 
+  static const String _tipsForTheStageOfSufficientKnowledge = 'tips_for_the_stage_of_sufficient_knowledge';
+  static String get tipsForTheStageOfSufficientKnowledge => _tipsForTheStageOfSufficientKnowledge.tr();
+
+  static const String _clarification = 'clarification';
+  static String get clarification => _clarification.tr();
+
 }

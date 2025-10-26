@@ -14,12 +14,12 @@ class StartChatCubit extends AsyncCubit<ChatModel>{
       operation: () => baseCrudUseCase.call(
           CrudBaseParmas(
             api: ApiConstants.startChat,
-            httpRequestType: HttpRequestType.get,
+            httpRequestType: HttpRequestType.post,
             body: {
               "receiver_id": receiverId,
               "from_home": fromHome,
             },
-            mapper: (json) => json.map<ChatModel>((e) => ChatModel.fromJson(e)).toList(),
+            mapper: (json) => ChatModel.fromJson(json),
           )
       ),
     );

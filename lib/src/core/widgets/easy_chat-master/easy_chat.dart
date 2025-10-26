@@ -9,7 +9,7 @@ import 'widgets/chat_body.dart';
 
 class EasyChat<Response> extends StatelessWidget {
   final SocketHelper socketType;
-  final FutureOr Function(BuildContext context, ChatMessages message) onReceiveMessage;
+  // final FutureOr Function(BuildContext context, ChatMessages message) onReceiveMessage;
   final PagifyController<ChatMessages> controller;
   final Future<Response> Function(BuildContext context, int page) asyncCall;
   final PagifyData<ChatMessages> Function(Response response) mapper;
@@ -26,7 +26,7 @@ class EasyChat<Response> extends StatelessWidget {
 
   const EasyChat({super.key,
     required this.socketType,
-    required this.onReceiveMessage,
+    // required this.onReceiveMessage,
     required this.controller,
     required this.asyncCall,
     required this.mapper,
@@ -48,7 +48,7 @@ class EasyChat<Response> extends StatelessWidget {
       cacheExtent: cacheExtent,
       itemExtent: itemExtent,
       socketType: socketType,
-      onReceiveMessage: onReceiveMessage,
+      // onReceiveMessage: onReceiveMessage, // المفروض مش بتتبعت اساسا
       errorMapper: errorMapper,
       mapper: mapper,
       asyncCall: asyncCall,

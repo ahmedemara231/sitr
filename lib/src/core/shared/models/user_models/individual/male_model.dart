@@ -48,12 +48,18 @@ class MaleModel extends IndividualUserModel {
     super.religiousCommitment,
     super.views,
     super.isNotify,
+    super.canChat,
+    super.hasChatWith,
+    super.isParentMatch,
   });
 
   factory MaleModel.initial() => MaleModel();
 
   factory MaleModel.fromJson(Map<String, dynamic> json) {
     return MaleModel(
+      canChat: json['can_chat'],
+      hasChatWith: json['has_chat_with'],
+      isParentMatch: json['is_parent_match'],
       id: json['id'],
       name: json['name'],
       parentId: json['parent_id'],
@@ -117,6 +123,9 @@ class MaleModel extends IndividualUserModel {
 
   @override
   MaleModel copyWith({
+    bool? canChat,
+    bool? hasChatWith,
+    bool? isParentMatch,
     String? nickName,
     bool? isNotify,
     TitleValueShape? maritalStatus,
@@ -143,6 +152,9 @@ class MaleModel extends IndividualUserModel {
     int? views,
     int? id, String? name, int? parentId, TitleValueShape? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) {
     return MaleModel(
+      canChat: canChat??this.canChat,
+      hasChatWith: hasChatWith??this.hasChatWith,
+      isParentMatch: isParentMatch??this.isParentMatch,
       id: id?? this.id,
       name: name?? this.name,
       parentId: parentId?? this.parentId,
@@ -189,6 +201,9 @@ class MaleModel extends IndividualUserModel {
   @override
   MaleModel merge(IndividualUserModel otherModel) {
     return MaleModel(
+      canChat: _mergeHelper(otherMaleModelValue: otherModel.canChat, currentValue: canChat),
+      hasChatWith: _mergeHelper(otherMaleModelValue: otherModel.hasChatWith, currentValue: hasChatWith),
+      isParentMatch: _mergeHelper(otherMaleModelValue: otherModel.isParentMatch, currentValue: isParentMatch),
       id: _mergeHelper(otherMaleModelValue: otherModel.id, currentValue: id),
       name: _mergeHelper(otherMaleModelValue: otherModel.name, currentValue: name),
       parentId: _mergeHelper(otherMaleModelValue: otherModel.parentId, currentValue: parentId),
