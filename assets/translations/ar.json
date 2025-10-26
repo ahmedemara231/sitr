@@ -260,5 +260,7 @@
   "are_you_sure_to_report_this_user": "هل انت متاكد من الابلاغ عن المستخدم",
   "edit_data": "تعديل البيانات",
   "tips_for_the_stage_of_sufficient_knowledge": "نصائح في مرحلة الالمام الكافي",
-  "clarification": "توضيح"
+  "clarification": "توضيح",
+  "filter": "فلترة",
+  "search_result": "نتائج البحث"
 }

@@ -33,6 +33,7 @@ class LoadingButton extends StatelessWidget {
       _easyButtonState = EasyButtonState.loading;
       await call(context);
       _easyButtonState = EasyButtonState.idle;
+
     } finally {
       _easyButtonState = EasyButtonState.idle;
     }

@@ -60,7 +60,6 @@ class _FemaleFieldsState extends State<FemaleFields> {
   // }
 
   late IndividualUserModel femaleFields;
-
   void _init() {
     femaleFields = FemaleModel.initial();
     _listenToData(femaleFields.copyWith(

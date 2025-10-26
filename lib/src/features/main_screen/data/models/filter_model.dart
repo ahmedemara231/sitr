@@ -1,9 +1,11 @@
+import '../../../../core/shared/models/user_models/user_model.dart';
+import '../../../auth/models/dowry.dart';
+
 class FilterModel {
   final String? maritalStatus;
   final int? age;
   final String? currentJob;
-  final int? dowryMin;
-  final int? dowryMax;
+  final Dowry? dowry;
   final String? educationLevel;
   final String? skinColor;
   final int? wantChildren;
@@ -22,8 +24,7 @@ class FilterModel {
     this.maritalStatus,
     this.age,
     this.currentJob,
-    this.dowryMin,
-    this.dowryMax,
+    this.dowry,
     this.educationLevel,
     this.skinColor,
     this.wantChildren,
@@ -45,8 +46,8 @@ class FilterModel {
       'marital_status': maritalStatus,
       'age': age,
       'current_job': currentJob,
-      'dowry_min': dowryMin,
-      'dowry_max': dowryMax,
+      'dowry_min': dowry?.from,
+      'dowry_max': dowry?.to,
       'education_level': educationLevel,
       'skin_color': skinColor,
       'want_children': wantChildren,
@@ -56,7 +57,7 @@ class FilterModel {
       'is_prayer': isPrayer,
       'wedding_type': weddingType,
       'religious_commitment': religiousCommitment,
-      'type': type,
+      'type': UserModel.isFemale? 'male' : 'female',
       'city_id': cityId,
       'weight': weight,
       'height': height,
@@ -68,8 +69,7 @@ class FilterModel {
     String? maritalStatus,
     int? age,
     String? currentJob,
-    int? dowryMin,
-    int? dowryMax,
+    Dowry? dowry,
     String? educationLevel,
     String? skinColor,
     int? wantChildren,
@@ -88,8 +88,7 @@ class FilterModel {
       maritalStatus: maritalStatus ?? this.maritalStatus,
       age: age ?? this.age,
       currentJob: currentJob ?? this.currentJob,
-      dowryMin: dowryMin ?? this.dowryMin,
-      dowryMax: dowryMax ?? this.dowryMax,
+      dowry: dowry ?? this.dowry,
       educationLevel: educationLevel ?? this.educationLevel,
       skinColor: skinColor ?? this.skinColor,
       wantChildren: wantChildren ?? this.wantChildren,
@@ -112,8 +111,7 @@ class FilterModel {
       maritalStatus: json['marital_status'] as String?,
       age: json['age'] as int?,
       currentJob: json['current_job'] as String?,
-      dowryMin: json['dowry_min'] as int?,
-      dowryMax: json['dowry_max'] as int?,
+      dowry: Dowry(from: json['dowry_min'], to: json['dowry_max']),
       educationLevel: json['education_level'] as String?,
       skinColor: json['skin_color'] as String?,
       wantChildren: json['want_children'] as int?,
@@ -128,10 +126,5 @@ class FilterModel {
       weight: (json['weight'] as num?)?.toDouble(),
       height: (json['height'] as num?)?.toDouble(),
     );
-  }
-
-  @override
-  String toString() {
-    return 'FilterModel(maritalStatus: $maritalStatus, age: $age, currentJob: $currentJob, dowryMin: $dowryMin, dowryMax: $dowryMax, educationLevel: $educationLevel, skinColor: $skinColor, wantChildren: $wantChildren, hijab: $hijab, chatLang: $chatLang, isSmoker: $isSmoker, isPrayer: $isPrayer, weddingType: $weddingType, religiousCommitment: $religiousCommitment, type: $type, cityId: $cityId, weight: $weight, height: $height)';
   }
 }

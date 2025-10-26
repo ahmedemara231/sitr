@@ -769,4 +769,10 @@ abstract class LocaleKeys {
   static const String _clarification = 'clarification';
   static String get clarification => _clarification.tr();
 
+  static const String _filter = 'filter';
+  static String get filter => _filter.tr();
+
+  static const String _searchResult = 'search_result';
+  static String get searchResult => _searchResult.tr();
+
 }

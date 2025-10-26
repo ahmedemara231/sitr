@@ -13,7 +13,8 @@ class HomeData{
     return (await injector<NetworkService>().callApi(
         NetworkRequest(
           method: RequestMethod.get,
-          path: ApiConstants.filter
+          path: ApiConstants.filter,
+          queryParameters: filter.toJson()
         ),
         mapper: (data) => (
         (data['data'] as List)

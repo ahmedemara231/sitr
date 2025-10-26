@@ -27,3 +27,13 @@ extension ConvertAnswer on Answer?{
     return false;
   }
 }
+
+extension ConvertAnswerToBinary on Answer?{
+  int get toBinary {
+    if(this == Answer.yes){
+      return 1;
+    }
+
+    return 0;
+  }
+}

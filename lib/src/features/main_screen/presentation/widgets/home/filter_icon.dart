@@ -3,7 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../../generated/assets.dart' show Assets;
 import '../../../../../core/extensions/padding_extension.dart';
+import '../../../../../core/navigation/navigator.dart';
+import '../../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../../core/widgets/svg_pic.dart';
+import '../../screens/filter.dart';
 
 class FilterButton extends StatelessWidget {
   const FilterButton({super.key});
@@ -11,14 +14,7 @@ class FilterButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      onPressed: () {
-        showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          builder: (context) => Container(),
-          // builder: (context) => const FilterWidget(),
-        );
-      },
+      onPressed: () => Go.to(const FilterScreen()),
       icon: Container(
         height: 45.h,
         width: 45.w,
