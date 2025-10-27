@@ -265,5 +265,10 @@
   "search_result": "search result",
   "the_internet_connection_is_restored": "The internet connection is restored",
   "the_internet_connection_is_slow": "The internet connection is slow",
-  "the_internet_connection_is_disabled": "The internet connection is disabled"
+  "the_internet_connection_is_disabled": "The internet connection is disabled",
+  "please_select_option": "please select option",
+  "please_select_the_suitable_option": "please select the suitable option",
+  "move_to_next_stage": "move to next stage",
+  "refuse_move_to_next_stage": "refuse move to next stage",
+  "request_for_extension_of_period": "Request for extension of period"
 }

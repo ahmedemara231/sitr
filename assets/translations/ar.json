@@ -265,5 +265,10 @@
   "search_result": "نتائج البحث",
   "the_internet_connection_is_restored": "عاد اتصالك بالانترنت",
   "the_internet_connection_is_slow": "اتصالك بالانترنت بطئ",
-  "the_internet_connection_is_disabled": "تعطل اتصالك بالانترنت"
+  "the_internet_connection_is_disabled": "تعطل اتصالك بالانترنت",
+  "please_select_option": "يرجي التحديد",
+  "please_select_the_suitable_option": "قم باختيار الخيار المناسب",
+  "move_to_next_stage": "الانتقال للمرحلة التالية",
+  "refuse_move_to_next_stage": "رفص الانتقال",
+  "request_for_extension_of_period": "طلب تمديد الفترة"
 }

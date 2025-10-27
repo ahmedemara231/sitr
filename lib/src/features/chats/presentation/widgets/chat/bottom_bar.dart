@@ -13,12 +13,14 @@ import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/helpers/helpers.dart';
 import '../../../../../core/widgets/svg_pic.dart';
 import '../../../../../core/widgets/text_fields/default_text_field.dart';
+import '../../../data/models/chat_inputs_model.dart';
 import '../../cubits/send_message.dart';
 
 class ChatBottomBar extends StatefulWidget {
-  final FutureOr<void> Function(BuildContext context, String msg) onSend;
-  const ChatBottomBar({super.key,
-    required this.onSend
+  final FutureOr<void> Function(BuildContext context, ChatInputsModel model) onSend;
+  const ChatBottomBar({
+    super.key,
+    required this.onSend,
   });
 
   @override
@@ -28,6 +30,12 @@ class ChatBottomBar extends StatefulWidget {
 class _ChatBottomBarState extends State<ChatBottomBar> {
   late final TextEditingController _chatCont;
   final ValueNotifier<File?> _selectedImage = ValueNotifier(null);
+
+  ChatInputsModel chatInputsModel = ChatInputsModel();
+
+  void _changeInputs(ChatInputsModel newModel) {
+    chatInputsModel = newModel;
+  }
 
   @override
   void initState() {
@@ -65,9 +73,11 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
               spacing: 10.w,
               children: [
                 InkWell(
-                  onTap: () {
+                  onTap: _chatCont.text.isEmpty && _selectedImage.value.isNull ? null : () {
+                    widget.onSend.call(context, chatInputsModel);
+
                     _chatCont.clear();
-                    widget.onSend.call(context, _chatCont.text);
+                    _selectedImage.value = null;
                   },
                   child: Container(
                     padding: EdgeInsets.all(10.sp),
@@ -81,11 +91,14 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                 Expanded(
                   child: DefaultTextField(
                     controller: _chatCont,
+                    onChanged: (val) =>
+                        _changeInputs(chatInputsModel.copyWith(text: val)),
                     title: LocaleKeys.hereIsTheTextOfTheMessageHereIsTheTextOfTheMessageHereIsTheTextOfTheMessage,
                     prefixIcon: IconButton(
                         onPressed: () async{
                           final result = await Helpers.getImageFromCameraOrDevice();
                           _selectedImage.value = result;
+                          _changeInputs(chatInputsModel.copyWith(image: result));
                         },
                         icon: const Icon(Icons.camera_alt_sharp, color: AppColors.primary)
                     ),

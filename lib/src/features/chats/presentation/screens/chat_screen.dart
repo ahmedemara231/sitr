@@ -16,10 +16,12 @@ import '../../../../core/helpers/helpers.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
+import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/easy_chat-master/easy_chat.dart';
 import '../../../../core/widgets/easy_chat-master/factory.dart';
 import '../../../../core/widgets/easy_chat-master/models/chat_message.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
+import '../../../../core/widgets/sheets/chat_requests_sheet.dart';
 import '../../../../core/widgets/svg_pic.dart';
 import '../../../../core/zego_service/zego.dart';
 import '../../data/chats_data.dart';
@@ -55,7 +57,8 @@ class ChatScreen extends StatelessWidget {
   // }
 
   late final socket = ClientIOImpl(
-    url: ConstantManager.socketUrl,
+    url: 'https://str-sa.com:4866/?userId=260&userType=user&lang=ar&name=Adam&deviceType=ios&deviceId=cU0GQb7P_g6Td_Zy6x7nHN:APA91bHfP_H03_7lSMLZWW1w18SSg74XShz_WflZZGOoX7uBkeYuHUWuV53EPBSJ_Sls4nTfTT1bZPMWw9IJybyetPRYUqG2GaSTPT4YoyRWlYie9UdXy2s&avatar=https://res.cloudinary.com/demo/image/upload/w_400,h_300,c_fill/sample.jpg',
+    // url: ConstantManager.socketUrl,
     jsonToChatMessage: (json) => ChatMessages.fromJson(json),
     onReceiveMessage: (msg) => _chatController.addItem(msg),
   );
@@ -107,11 +110,11 @@ class ChatScreen extends StatelessWidget {
       bottomBar: BlocProvider(
         create: (context) => SendMsgCubit(),
         child: ChatBottomBar(
-            onSend: (context, msg) => socket.send(
+            onSend: (context, model) => socket.send(
               event: SocketEvents.sendMsg,
               data: ChatMessages(
                   senderImage: UserCubit.instance.user.avatar??'',
-                  message: msg,
+                  message: model.text ?? '',
                   isFromMe: true,
                   type: 'text',
                   id: UserCubit.instance.user.id??0,

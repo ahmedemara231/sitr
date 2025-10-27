@@ -86,4 +86,5 @@ class ApiConstants {
   static const String chattingStageTips = 'chatting-stage-tips';
   static const String parentIndividualConversation = 'parent-individual-conversation';
   static const String filter = 'filter';
+  static const String uploadImage = 'upload-room-file';
 }

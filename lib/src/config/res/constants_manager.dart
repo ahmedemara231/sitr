@@ -13,6 +13,9 @@ class ConstantManager {
   static const String baseUrl = 'https://str-sa.com/api/v1/';
 
   static const String socketUrl = 'https://str-sa.com:4866';
+  // static const String socketUrl = 'https://shorakaalhayah.com:4808';
+
+
   // static const int zegoAppId = 509026631;
   // static const String zegoAppSign =
   //     'abd4c5e860e63439d4887862a9c14d08fd1b5991fc7fd9ca69e79ee347a6e17e';

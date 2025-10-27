@@ -270,6 +270,11 @@
     "search result" : "نتائج البحث",
     "The internet connection is restored" : "عاد اتصالك بالانترنت",
     "The internet connection is slow" : "اتصالك بالانترنت بطئ",
-    "The internet connection is disabled" : "تعطل اتصالك بالانترنت"
+    "The internet connection is disabled" : "تعطل اتصالك بالانترنت",
+    "please select option" : "يرجي التحديد",
+    "please select the suitable option" : "قم باختيار الخيار المناسب",
+    "move to next stage" : "الانتقال للمرحلة التالية",
+    "refuse move to next stage" : "رفص الانتقال",
+    "Request for extension of period" : "طلب تمديد الفترة"
 
 }

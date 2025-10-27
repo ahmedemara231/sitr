@@ -784,4 +784,19 @@ abstract class LocaleKeys {
   static const String _theInternetConnectionIsDisabled = 'the_internet_connection_is_disabled';
   static String get theInternetConnectionIsDisabled => _theInternetConnectionIsDisabled.tr();
 
+  static const String _pleaseSelectOption = 'please_select_option';
+  static String get pleaseSelectOption => _pleaseSelectOption.tr();
+
+  static const String _pleaseSelectTheSuitableOption = 'please_select_the_suitable_option';
+  static String get pleaseSelectTheSuitableOption => _pleaseSelectTheSuitableOption.tr();
+
+  static const String _moveToNextStage = 'move_to_next_stage';
+  static String get moveToNextStage => _moveToNextStage.tr();
+
+  static const String _refuseMoveToNextStage = 'refuse_move_to_next_stage';
+  static String get refuseMoveToNextStage => _refuseMoveToNextStage.tr();
+
+  static const String _requestForExtensionOfPeriod = 'request_for_extension_of_period';
+  static String get requestForExtensionOfPeriod => _requestForExtensionOfPeriod.tr();
+
 }

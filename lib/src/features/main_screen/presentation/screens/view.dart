@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pagify/helpers/add_frame.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/extensions/context_extension.dart';
@@ -11,9 +12,11 @@ import '../../../../core/navigation/navigator.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../core/widgets/app_text.dart';
+import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/image_widgets/custom_image_slider.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
 import '../../../../core/widgets/choose_from_options.dart';
+import '../../../../core/widgets/sheets/chat_requests_sheet.dart';
 import '../../data/models/home_model.dart';
 import '../cubits/home_cubit.dart';
 import '../widgets/home/filter_icon.dart';
@@ -28,13 +31,14 @@ class MainView extends StatelessWidget {
   MainView({super.key});
 
   late final ValueNotifier<String> firstSelection = ValueNotifier(_partnersOrConsultants.first);
+
   late final ValueNotifier<String> secondSelection = ValueNotifier(_opportunitiesTitles.first);
+
   void firstSelectionListener(){
     if(firstSelection.value == _partnersOrConsultants.first){
       secondSelection.value = _opportunitiesTitles.first;
     }
   }
-
 
   List<String> get _partnersOrConsultants => [
     LocaleKeys.searchForLifePartner,

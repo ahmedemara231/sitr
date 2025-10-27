@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'dart:developer';
+import '../../../features/chats/data/models/message_params_model.dart';
 import 'models/chat_message.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class SocketEvents{
   static const String enterChat = 'enter-chat';
   static const String sendMsg = 'send-message';
+  // static const String sendMessageEvent = 'sendMessage';
+
   static const String exitChat = 'exit-chat';
 }
 
@@ -22,15 +25,6 @@ abstract interface class SocketHelper{
 
   FutureOr<void> connect({dynamic Function(dynamic)? handler});
   FutureOr<void> disconnect({dynamic Function(dynamic)? handler});
-
-//   FutureOr<void> send({
-//     required String event,
-//     dynamic data,
-// });
-//   void onReceiveMessage(
-//       String event, {
-//         required FutureOr<void> Function(ChatMessages event) handler
-//       }); // should make json parsing here to chat message
 }
 
 class ClientIOImpl extends SocketHelper{
@@ -40,30 +34,33 @@ class ClientIOImpl extends SocketHelper{
     required super.onReceiveMessage
   });
 
+
   late final IO.Socket socket;
   void _init(){
     socket = IO.io(url, IO.OptionBuilder()
         .setTransports(['websocket']) // for Flutter or Dart VM
         .disableAutoConnect()  // disable auto-connection
+        .setExtraHeaders(MessageParamsModel().toJson())
+        .setQuery(MessageParamsModel().toJson())
         .build()
-    );
+    )..connect();
   }
 
   @override
   FutureOr<void> connect({dynamic Function(dynamic)? handler}) {
     _init();
-    socket.connect();
 
     socket.onConnect((d) {
       handler?.call(d);
-      log('connect');
-      socket.emit('msg', 'test');
+      log('Socket connected');
+      socket.emit(SocketEvents.enterChat);
     });
 
-    socket.onDisconnect((_) => log('Disconnected from socket'));
-    socket.onConnectError((err) => log('Socket connect error: $err'));
-    socket.onError((err) => log('Socket error: $err'));
+    socket.onDisconnect((_) => log('⚠️ Disconnected from socket'));
+    socket.onConnectError((err) => log('❌ Socket connect error: $err'));
+    socket.onError((err) => log('❌ Socket error: $err'));
 
+    onReceiveMsg();
   }
 
   @override
