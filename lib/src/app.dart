@@ -90,8 +90,9 @@ class Sitr extends StatelessWidget {
               navigatorObservers: [AppNavigationObserver()],
               builder: (context, child) {
                 return InternetInterceptorWidget(
-                    onChanged: (status) => _manageInternetConnectivity(status),
-                    builder: (status) => FullScreenLoadingManager(child: child!),
+                  loadingWidget: const SplashScreen(),
+                  onChanged: (status) => _manageInternetConnectivity(status),
+                  builder: (status) => FullScreenLoadingManager(child: child!),
                 );
                 // return OfflineWidget(
                 //   child: FullScreenLoadingManager(child: child!),

@@ -4,9 +4,9 @@ import '../../../core/network/network_service.dart';
 import 'models/chat_model.dart';
 
 class ChatsData{
-  static late final ChatModel chatModel;
+  // static late final ChatModel chatModel;
   static Future<ChatModel> getChats(String path, {required int receiverId, required int fromHome})async{
-    chatModel = (await injector<NetworkService>().callApi(
+    return (await injector<NetworkService>().callApi(
           NetworkRequest(
             method: RequestMethod.post,
             path: path,
@@ -18,6 +18,6 @@ class ChatsData{
           mapper: (data) => ChatModel.fromJson(data)
       )).data;
 
-    return chatModel;
+    // return chatModel;
   }
 }

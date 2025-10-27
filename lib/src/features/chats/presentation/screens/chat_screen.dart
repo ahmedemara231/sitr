@@ -6,16 +6,22 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/helpers/data_and_pagination_data.dart';
 import 'package:pagify/helpers/errors.dart';
 import 'package:pagify/pagify.dart';
+import 'package:zego_uikit/zego_uikit.dart';
 
+import '../../../../../generated/assets.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/num.dart';
+import '../../../../core/helpers/helpers.dart';
 import '../../../../core/network/api_endpoints.dart';
+import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../core/widgets/easy_chat-master/easy_chat.dart';
 import '../../../../core/widgets/easy_chat-master/factory.dart';
 import '../../../../core/widgets/easy_chat-master/models/chat_message.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
+import '../../../../core/widgets/svg_pic.dart';
+import '../../../../core/zego_service/zego.dart';
 import '../../data/chats_data.dart';
 import '../cubits/send_message.dart';
 import '../cubits/start_chat.dart';
@@ -58,6 +64,15 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppScaffold(
       appBarTitle: LocaleKeys.chat,
+      actions: [
+        Helpers.zegoService.zegoButton(
+            isVideoCall: false,
+            icon: const SvgPic(assetName: Assets.svgPhoneIcon),
+            invites: [
+              ZegoUIKitUser(id: '279', name: 'jzjdjjdjd')
+            ],
+        )
+      ],
       body: EasyChat(
         itemExtent: 60.h,
         socketType: socket,

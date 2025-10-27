@@ -34,7 +34,7 @@ void main() async {
       ),
       EasyLocalization.ensureInitialized(),
       CacheStorage.init(),
-      ScreenUtil.ensureScreenSize()
+      ScreenUtil.ensureScreenSize(),
     ],
   );
   SystemChrome.setPreferredOrientations(

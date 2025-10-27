@@ -15,7 +15,7 @@ class AppScaffold extends StatelessWidget {
   final Widget? bottomBar;
   final PreferredSizeWidget? bottomWidget;
   final double? appBarHeight;
-
+  final List<Widget>? actions;
   const AppScaffold({super.key,
     required this.appBarTitle,
     required this.body,
@@ -23,6 +23,7 @@ class AppScaffold extends StatelessWidget {
     this.bottomBar,
     this.bottomWidget,
     this.appBarHeight,
+    this.actions,
   });
 
   @override
@@ -33,12 +34,15 @@ class AppScaffold extends StatelessWidget {
       appBar: PreferredSize(
           preferredSize: Size(context.width, appBarHeight ?? 60),
           child: AppBar(
+            actionsPadding: EdgeInsets.all(10.r),
             backgroundColor: AppColors.whiteGreyColor,
             centerTitle: true,
             title: AppText(appBarTitle, fontWeight: FontWeight.bold, fontSize: 16.sp, color: Colors.black,),
             leading: ModalRoute.of(context)!.canPop?
             const AppBackButton() : null,
             bottom: bottomWidget,
+            actions: actions?.map((e)
+                => SizedBox.square(dimension: 30.sp, child: e)).toList(),
           )
       ),
       body: SingleChildScrollView(

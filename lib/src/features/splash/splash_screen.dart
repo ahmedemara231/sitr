@@ -5,9 +5,11 @@ import '../../../generated/assets.dart';
 import '../../config/res/config_imports.dart';
 import '../../core/extensions/object.dart';
 import '../../core/helpers/cache_service.dart';
+import '../../core/helpers/helpers.dart';
 import '../../core/navigation/navigator.dart';
 import '../../core/notification/notification_service.dart';
 import '../../core/shared/user_cubit/user_cubit.dart';
+import '../../core/zego_service/zego.dart';
 import '../auth/imports.dart';
 import '../home/home_screen.dart';
 import '../on_boarding/screen.dart';
@@ -39,7 +41,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _manipulateSplashData()async{
-    await Future.delayed(const Duration(seconds: 3));
+    await _initZego();
+
+    await Future.delayed(const Duration(seconds: 2));
     final result = await CacheStorage.read(CacheConstant.onBoardingSubmission);
     switch(result){
       case true:
@@ -65,6 +69,10 @@ class _SplashScreenState extends State<SplashScreen> {
         Go.offAll(const LoginScreen());
         break;
     }
+  }
+
+  Future<void> _initZego()async{
+    await Helpers.initZegoService();
   }
 
   @override

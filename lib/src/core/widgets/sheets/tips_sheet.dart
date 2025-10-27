@@ -7,6 +7,7 @@ import '../../../features/chats/presentation/cubits/get_tips_cubit.dart';
 import '../../../features/chats/presentation/screens/chat_screen.dart';
 import '../../base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../extensions/padding_extension.dart';
+import '../../helpers/helpers.dart';
 import '../../helpers/status_builder.dart';
 import '../../helpers/user_type_enum.dart';
 import '../../navigation/navigator.dart';
@@ -22,10 +23,12 @@ class ChatButton extends StatelessWidget {
   ChatButton({super.key, required this.user});
 
   late final Map<ChatButtonActions, FutureOr<void> Function()?> _chatButtonPossibleActions = {
-    ChatButtonActions.startChat : () => Go.to(ChatScreen(
+    ChatButtonActions.startChat : () {
+      Go.to(ChatScreen(
       receiverId: user.id ?? 0,
       fromHome: 1,
-    )),
+    ));
+    },
 
     ChatButtonActions.viewTips : () => user.gender!.userType!.isParent?
     showDefaultBottomSheet(

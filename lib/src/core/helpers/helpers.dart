@@ -22,12 +22,16 @@ import 'permission_handler/handler.dart';
 import 'permission_handler/model.dart';
 
 class Helpers {
-  void initZegoService(){
-    ZegoService(
+  static late ZegoService zegoService;
+  static Future<void> initZegoService()async{
+    zegoService = ZegoService(
         appId: ConstantManager.zegoAppId,
-        appSign: ConstantManager.appSign,
+        appSign: ConstantManager.zegoAppSign,
         navigatorKey: Go.navigatorKey
-    )..initZego()..onUserLogin(
+    );
+
+    await zegoService.initZego();
+    await zegoService.onUserLogin(
         currentUserId: UserModel.currentUser!.id.toString(),
         currentUserName: UserModel.currentUser!.name.toString()
     );
@@ -120,7 +124,7 @@ class Helpers {
         )
     );
   }
-  
+
   static Future<File?> getImageFromCameraOrDevice() async {
     final ImagePicker picker = ImagePicker();
     File? image;
