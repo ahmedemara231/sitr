@@ -11,7 +11,10 @@ class ConstantManager {
   static const String projectName = 'sitr';
   static const int splashTimer = 3000;
   static const String baseUrl = 'https://str-sa.com/api/v1/';
+
   static const String socketUrl = 'https://str-sa.com:4866';
+  static const int zegoAppId = 1545294325;
+  static const String appSign = 'dd246a143dd5f0c30fa5d5e2bbf7f46a579c517bdf86b2d61b5d13574eb9fd56';
   static const int paginationFirstPage = 1;
   static const int paginationPageSize = 10;
   static const String emptyText = '';

@@ -775,4 +775,13 @@ abstract class LocaleKeys {
   static const String _searchResult = 'search_result';
   static String get searchResult => _searchResult.tr();
 
+  static const String _theInternetConnectionIsRestored = 'the_internet_connection_is_restored';
+  static String get theInternetConnectionIsRestored => _theInternetConnectionIsRestored.tr();
+
+  static const String _theInternetConnectionIsSlow = 'the_internet_connection_is_slow';
+  static String get theInternetConnectionIsSlow => _theInternetConnectionIsSlow.tr();
+
+  static const String _theInternetConnectionIsDisabled = 'the_internet_connection_is_disabled';
+  static String get theInternetConnectionIsDisabled => _theInternetConnectionIsDisabled.tr();
+
 }

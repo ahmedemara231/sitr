@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../generated/assets.dart';
 import '../../config/res/config_imports.dart';
 import '../../core/extensions/object.dart';
-import '../../core/extensions/string_extension.dart';
 import '../../core/helpers/cache_service.dart';
 import '../../core/navigation/navigator.dart';
 import '../../core/notification/notification_service.dart';

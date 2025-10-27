@@ -262,5 +262,8 @@
   "tips_for_the_stage_of_sufficient_knowledge": "Tips for the stage of sufficient knowledge",
   "clarification": "Clarification",
   "filter": "Filter",
-  "search_result": "search result"
+  "search_result": "search result",
+  "the_internet_connection_is_restored": "The internet connection is restored",
+  "the_internet_connection_is_slow": "The internet connection is slow",
+  "the_internet_connection_is_disabled": "The internet connection is disabled"
 }

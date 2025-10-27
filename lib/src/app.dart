@@ -2,11 +2,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart'; 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'config/language/locale_keys.g.dart';
 import 'config/res/config_imports.dart';
 import 'core/navigation/navigator.dart';
 import 'core/shared/route_observer.dart';
 import 'core/helpers/loading_manager.dart';
 import 'core/shared/user_cubit/user_cubit.dart' show UserCubit;
+import 'core/widgets/connectivity_interceptor/internet_supporter_widget.dart';
+import 'core/widgets/custom_messages.dart';
 import 'core/widgets/offline_widget.dart';
 import 'features/chats/presentation/screens/chat_screen.dart';
 import 'features/chats/presentation/screens/chats_screen.dart';
@@ -85,15 +89,33 @@ class Sitr extends StatelessWidget {
               // home: const TestScreen(),
               navigatorObservers: [AppNavigationObserver()],
               builder: (context, child) {
-                return OfflineWidget(
-                  child: FullScreenLoadingManager(child: child!),
+                return InternetInterceptorWidget(
+                    onChanged: (status) => _manageInternetConnectivity(status),
+                    builder: (status) => FullScreenLoadingManager(child: child!),
                 );
+                // return OfflineWidget(
+                //   child: FullScreenLoadingManager(child: child!),
+                // );
               },
             ),
           ),
         );
       },
     );
+  }
+
+  void _manageInternetConnectivity(InternetConnectionStatus state){
+    switch(state){
+      case InternetConnectionStatus.connected:
+        MessageUtils.showSnackBar(LocaleKeys.theInternetConnectionIsRestored);
+        break;
+      case InternetConnectionStatus.slow:
+        MessageUtils.showSnackBar(LocaleKeys.theInternetConnectionIsSlow);
+        break;
+
+      default:
+        MessageUtils.showSnackBar(LocaleKeys.theInternetConnectionIsDisabled);
+    }
   }
 }
 final PageStorageBucket _bucket = PageStorageBucket();

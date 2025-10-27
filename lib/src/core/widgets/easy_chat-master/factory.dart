@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-import 'package:flutter/cupertino.dart';
-
 import 'models/chat_message.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -47,7 +45,6 @@ class ClientIOImpl extends SocketHelper{
     socket = IO.io(url, IO.OptionBuilder()
         .setTransports(['websocket']) // for Flutter or Dart VM
         .disableAutoConnect()  // disable auto-connection
-        .setExtraHeaders({'foo': 'bar'}) // optional
         .build()
     );
   }
@@ -56,20 +53,25 @@ class ClientIOImpl extends SocketHelper{
   FutureOr<void> connect({dynamic Function(dynamic)? handler}) {
     _init();
     socket.connect();
+
     socket.onConnect((d) {
       handler?.call(d);
-
       log('connect');
       socket.emit('msg', 'test');
     });
+
+    socket.onDisconnect((_) => log('Disconnected from socket'));
+    socket.onConnectError((err) => log('Socket connect error: $err'));
+    socket.onError((err) => log('Socket error: $err'));
+
   }
 
   @override
   FutureOr<void> disconnect({dynamic Function(dynamic)? handler}) {
     socket.disconnect();
     socket.dispose();
-    socket.onDisconnect.call((d) => handler?.call(d));
   }
+
   // @override
   // void onReceiveMessage(String event, {required FutureOr<void> Function(ChatMessages message) handler}) {
   //   socket.on(event, (v)async =>  await handler.call(jsonToChatMessage.call(v)));

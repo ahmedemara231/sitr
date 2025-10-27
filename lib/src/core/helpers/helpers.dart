@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
-
+import '../../core/shared/models/user_models/user_model.dart';
+import '../../core/extensions/string_extension.dart';
+import '../../core/zego_service/zego.dart';
 import 'package:easy_timer_count/extensions/null_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,6 +22,16 @@ import 'permission_handler/handler.dart';
 import 'permission_handler/model.dart';
 
 class Helpers {
+  void initZegoService(){
+    ZegoService(
+        appId: ConstantManager.zegoAppId,
+        appSign: ConstantManager.appSign,
+        navigatorKey: Go.navigatorKey
+    )..initZego()..onUserLogin(
+        currentUserId: UserModel.currentUser!.id.toString(),
+        currentUserName: UserModel.currentUser!.name.toString()
+    );
+  }
 
   static Future<void> manageBlocListener(BaseStatus baseStatus, {
     String? msg,
