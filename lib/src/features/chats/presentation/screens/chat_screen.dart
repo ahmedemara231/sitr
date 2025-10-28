@@ -89,10 +89,11 @@ class ChatScreen extends StatelessWidget {
       bottomBar: BlocProvider(
         create: (context) => SendMsgCubit(),
         child: ChatBottomBar(
-            onSend: (context, model) => socket.send(
+          onUpload: (url) {},
+            onSend: (context, msg) => socket.send(
               event: SocketEvents.sendMsg,
               data: ChatMessages(
-                  message: model.text ?? '',
+                  message: msg,
                   type: 'text',
 
                   // isFromMe: true,
