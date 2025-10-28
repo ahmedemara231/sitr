@@ -1,23 +1,17 @@
-import 'package:dropinity/helpers/extensions/padding_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/extensions/context_extension.dart';
+import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/navigation/navigator.dart';
-import '../../../../core/network/api_endpoints.dart';
-import '../../../../core/widgets/app_pagify.dart';
-import '../../../../core/widgets/app_text.dart';
-import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/not_contain_data.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../core/widgets/choose_from_options.dart';
 import '../../data/models/chat_model.dart';
-import '../cubits/app_stages_cubit.dart';
 import '../cubits/get_chats_cubit.dart';
 import '../widgets/chat_card.dart';
 import 'chat_screen.dart';

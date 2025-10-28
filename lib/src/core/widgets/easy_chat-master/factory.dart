@@ -10,6 +10,7 @@ class SocketEvents{
   // static const String sendMessageEvent = 'sendMessage';
 
   static const String exitChat = 'exit-chat';
+  static const String receivedMsg = 'message-received';
 }
 
 abstract interface class SocketHelper{
@@ -53,7 +54,9 @@ class ClientIOImpl extends SocketHelper{
     socket.onConnect((d) {
       handler?.call(d);
       log('Socket connected');
-      socket.emit(SocketEvents.enterChat);
+      socket.emit(SocketEvents.enterChat, {
+        'room_id' : 3,
+      });
     });
 
     socket.onDisconnect((_) => log('⚠️ Disconnected from socket'));
@@ -95,6 +98,13 @@ class ClientIOImpl extends SocketHelper{
           log('data is delivered');
           log(data.toString());
           onReceiveMessage.call(data);
+        }
+    )..on(
+        SocketEvents.receivedMsg,
+            (data) {
+          log('data is delivered');
+          log(data.toString());
+          onReceiveMessage.call(jsonToChatMessage.call(data));
         }
     );
   }

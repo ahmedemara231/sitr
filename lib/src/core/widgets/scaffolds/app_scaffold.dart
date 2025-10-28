@@ -16,6 +16,8 @@ class AppScaffold extends StatelessWidget {
   final PreferredSizeWidget? bottomWidget;
   final double? appBarHeight;
   final List<Widget>? actions;
+  final bool isScrollable;
+
   const AppScaffold({super.key,
     required this.appBarTitle,
     required this.body,
@@ -24,6 +26,7 @@ class AppScaffold extends StatelessWidget {
     this.bottomWidget,
     this.appBarHeight,
     this.actions,
+    this.isScrollable = true,
   });
 
   @override
@@ -45,14 +48,14 @@ class AppScaffold extends StatelessWidget {
                 => SizedBox.square(dimension: 30.sp, child: e)).toList(),
           )
       ),
-      body: SingleChildScrollView(
+      body: isScrollable? SingleChildScrollView(
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16.r)
           ),
           child: body.defaultScreenPadding(),
         ),
-      ),
+      ) : body.defaultScreenPadding(),
     );
   }
 }

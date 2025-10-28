@@ -1,6 +1,5 @@
-import 'package:dropinity/helpers/extensions/object.dart';
-
 import '../../../../../features/auth/models/dowry.dart';
+import '../../../../extensions/object.dart';
 import '../../title_value_shape.dart';
 import '../user_model.dart';
 

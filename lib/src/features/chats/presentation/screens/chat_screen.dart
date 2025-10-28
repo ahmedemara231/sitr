@@ -40,33 +40,21 @@ class ChatScreen extends StatelessWidget {
   });
 
   final PagifyController<ChatMessages> _chatController = PagifyController<ChatMessages>();
-  // Future<List<ChatMessages>> testFun(int currentPage)async {
-  //   final List<ChatMessages> msgs = [];
-  //   await Future.delayed(const Duration(seconds: 2));
-  //
-  //   msgs.addAll([
-  //     ChatMessages(senderImage: 'image', message: 'message1', time: 'time1', isFromMe: true),
-  //     ChatMessages(senderImage: 'image', message: 'message2', time: 'time1', isFromMe: true),
-  //     ChatMessages(senderImage: 'image', message: 'message3', time: 'time1', isFromMe: false),
-  //     ChatMessages(senderImage: 'image', message: 'message4', time: 'time1', isFromMe: false),
-  //     ChatMessages(senderImage: 'image', message: 'message5', time: 'time1', isFromMe: true),
-  //     ChatMessages(senderImage: 'image', message: 'message6', time: 'time1', isFromMe: false),
-  //   ]);
-  //
-  //   return msgs;
-  // }
 
   late final socket = ClientIOImpl(
-    url: 'https://str-sa.com:4866/?userId=260&userType=user&lang=ar&name=Adam&deviceType=ios&deviceId=cU0GQb7P_g6Td_Zy6x7nHN:APA91bHfP_H03_7lSMLZWW1w18SSg74XShz_WflZZGOoX7uBkeYuHUWuV53EPBSJ_Sls4nTfTT1bZPMWw9IJybyetPRYUqG2GaSTPT4YoyRWlYie9UdXy2s&avatar=https://res.cloudinary.com/demo/image/upload/w_400,h_300,c_fill/sample.jpg',
-    // url: ConstantManager.socketUrl,
+    url: ConstantManager.socketUrl,
     jsonToChatMessage: (json) => ChatMessages.fromJson(json),
-    onReceiveMessage: (msg) => _chatController.addItem(msg),
+    onReceiveMessage: (msg) {
+      _chatController.addItem(msg);
+      _chatController.moveToMaxBottom();
+    }
   );
 
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
       appBarTitle: LocaleKeys.chat,
+      isScrollable: false,
       actions: [
         Helpers.zegoService.zegoButton(
             isVideoCall: false,
@@ -79,20 +67,13 @@ class ChatScreen extends StatelessWidget {
       body: EasyChat(
         itemExtent: 60.h,
         socketType: socket,
-        // onReceiveMessage: (context, message) async{
-        //   // if(message.isFromMe){
-        //   //   _chatController.moveToMaxBottom();
-        //   // }
-        //   //
-        //   log('add item');
-        //   _chatController.addItem(message);
-        // },
         controller: _chatController,
         asyncCall: (context, page) async => await ChatsData.getChats(
           ApiConstants.startChat,
           fromHome: fromHome,
           receiverId: receiverId
         ),
+        errorMapper: PagifyErrorMapper(errorWhenDio: (e) => e.response?.data['msg']),
         mapper: (response) => PagifyData(
             data: response.room!.messages!.data!,
             paginationData: PaginationData(
@@ -101,26 +82,28 @@ class ChatScreen extends StatelessWidget {
             )
         ),
 
-        errorMapper: PagifyErrorMapper(errorWhenDio: (e) => e.response?.data['msg']),
+
         rightMessageBuilder: (msg) => ChatMessageWidget(message: msg),
         leftMessageBuilder: (msg) => ChatMessageWidget(message: msg),
       ),
-
-      // body: Container(),
       bottomBar: BlocProvider(
         create: (context) => SendMsgCubit(),
         child: ChatBottomBar(
             onSend: (context, model) => socket.send(
               event: SocketEvents.sendMsg,
               data: ChatMessages(
-                  senderImage: UserCubit.instance.user.avatar??'',
                   message: model.text ?? '',
-                  isFromMe: true,
                   type: 'text',
-                  id: UserCubit.instance.user.id??0,
-                  senderId: UserCubit.instance.user.id??0,
-                  senderName: UserCubit.instance.user.name??''
-              ).toJson(),
+
+                  // isFromMe: true,
+                  // senderImage: UserCubit.instance.user.avatar??'',
+                  // id: UserCubit.instance.user.id??0,
+                  // senderId: UserCubit.instance.user.id??0,
+                  // senderName: UserCubit.instance.user.name??'',
+                  // time:
+              ).toJson()..addAll({
+                'room_id' : ChatsData.chatModel?.room?.id,
+              }),
             )
         ),
       ),

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:dropinity/custom_drop_down/dropinity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/helpers/data_and_pagination_data.dart';
@@ -8,6 +7,7 @@ import 'package:pagify/pagify.dart';
 import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
+import '../dropinity/custom_drop_down/dropinity.dart';
 import '../extensions/padding_extension.dart';
 import 'app_text.dart';
 import 'svg_pic.dart';

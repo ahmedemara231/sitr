@@ -1,8 +1,8 @@
-import 'package:dropinity/helpers/extensions/padding_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../config/res/config_imports.dart';
+import '../../../../../core/dropinity/helpers/extensions/padding_extension.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/easy_chat-master/models/chat_message.dart';
 
@@ -24,7 +24,7 @@ class ChatMessageWidget extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 20.sp,
-              backgroundImage: NetworkImage(message.senderImage),
+              backgroundImage: NetworkImage(message.senderImage ?? ConstantManager.defaultAvatar),
             ),
             AppText(message.time??'', fontSize: 10.sp, color: Colors.grey),
           ],
