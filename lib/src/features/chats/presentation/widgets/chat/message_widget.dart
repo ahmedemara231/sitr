@@ -45,6 +45,9 @@ class _MessageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width * 0.6,
+        ),
         decoration: BoxDecoration(
           color: message.isFromMe? AppColors.primary : AppColors.whiteGreyColor,
           borderRadius: BorderRadius.only(
@@ -55,11 +58,14 @@ class _MessageBody extends StatelessWidget {
             topRight: message.isFromMe? Radius.zero: Radius.circular(16.r),
           ),
         ),
-        child: AppText(
+        child: message.type == 'text'? AppText(
           message.message,
           fontSize: 14.sp,
           color: message.isFromMe? Colors.white : Colors.black,
-        ).paddingAll(10.r)
+        ).paddingAll(10.r) : SizedBox.square(
+            dimension: 150.sp,
+            child: Image.network(message.message, fit: BoxFit.fill,)
+        )
     );
   }
 }

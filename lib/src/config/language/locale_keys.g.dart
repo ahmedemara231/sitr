@@ -799,4 +799,7 @@ abstract class LocaleKeys {
   static const String _requestForExtensionOfPeriod = 'request_for_extension_of_period';
   static String get requestForExtensionOfPeriod => _requestForExtensionOfPeriod.tr();
 
+  static const String _sufficientKnowledge = 'sufficient_knowledge';
+  static String get sufficientKnowledge => _sufficientKnowledge.tr();
+
 }

@@ -7,14 +7,14 @@ import '../../../../core/network/api_endpoints.dart';
 class UploadImageCubit extends AsyncCubit<String>{
   UploadImageCubit() : super('');
 
-  Future<void> uploadImage(File image)async{
+  Future<void> uploadImage({required File image, required String roomId})async{
     await executeAsync(
     operation: () => baseCrudUseCase.call(
         CrudBaseParmas(
-          api: ApiConstants.uploadImage,
+          api: ApiConstants.uploadImage+roomId,
           isFromData: true,
           httpRequestType: HttpRequestType.post,
-          mapper: (json) => json['file_url'],
+          mapper: (json) => json['file_name'],
           body: {'file' : image}
         )
     ));

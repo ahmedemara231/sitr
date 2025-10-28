@@ -18,10 +18,11 @@ import '../chat_image_viewer.dart';
 class ChatBottomBar extends StatefulWidget {
   final FutureOr<void> Function(BuildContext context, String message) onSend;
   final void Function(String url) onUpload;
+
   const ChatBottomBar({
     super.key,
     required this.onSend,
-    required this.onUpload
+    required this.onUpload,
   });
 
   @override
@@ -54,7 +55,7 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
 
   void _selectedImageListener() => _selectedImage.value.isNotNull?
   Go.to(ChatImageViewerWidget(
-    image: _selectedImage.value,
+    image: _selectedImage.value!,
     onUpload: widget.onUpload,
   )) : null;
 
@@ -103,6 +104,9 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                   Expanded(
                     child: DefaultTextField(
                       controller: _chatCont,
+                      maxLines: 5,          // grows up to 5 lines
+                      // inputType: TextInputType.multiline,
+                      action: TextInputAction.newline,
                       title: LocaleKeys.hereIsTheTextOfTheMessageHereIsTheTextOfTheMessageHereIsTheTextOfTheMessage,
                       prefixIcon: IconButton(
                           onPressed: () async{

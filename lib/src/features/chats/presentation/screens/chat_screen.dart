@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:easy_timer_count/easy_timer_count.dart';
+import 'package:easy_timer_count/helpers/time.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,6 +18,7 @@ import '../../../../core/helpers/helpers.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
+import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/easy_chat-master/easy_chat.dart';
 import '../../../../core/widgets/easy_chat-master/factory.dart';
@@ -64,32 +67,74 @@ class ChatScreen extends StatelessWidget {
             ],
         )
       ],
-      body: EasyChat(
-        itemExtent: 60.h,
-        socketType: socket,
-        controller: _chatController,
-        asyncCall: (context, page) async => await ChatsData.getChats(
-          ApiConstants.startChat,
-          fromHome: fromHome,
-          receiverId: receiverId
-        ),
-        errorMapper: PagifyErrorMapper(errorWhenDio: (e) => e.response?.data['msg']),
-        mapper: (response) => PagifyData(
-            data: response.room!.messages!.data!,
-            paginationData: PaginationData(
-                perPage: response.room!.messages!.pagination!.perPage,
-                totalPages: response.room!.messages!.pagination!.totalPages
-            )
-        ),
+      body: Column(
+        children: [
+          EasyTimerCount.builder(
+              duration: EasyTime(seconds: ChatsData.chatModel?.room?.timer ?? 60),
+              builder: (time) => Column(
+                spacing: 10.h,
+                children: [
+                  AppText(LocaleKeys.sufficientKnowledge),
+                  Row(
+                    spacing: 5.w,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.timelapse, color: Colors.amber),
+                      AppText(time, fontSize: 22.sp, fontWeight: FontWeight.w500),
+                    ],
+                  )
+                ],
+              ),
+              onTimerStarts: (context){},
+              onTimerEnds: (context){},
+          ),
+          Expanded(
+            child: EasyChat(
+              // itemExtent: 60.h,
+              socketType: socket,
+              controller: _chatController,
+              asyncCall: (context, page) async => await ChatsData.getChats(
+                ApiConstants.startChat,
+                fromHome: fromHome,
+                receiverId: receiverId
+              ),
+              errorMapper: PagifyErrorMapper(errorWhenDio: (e) => e.response?.data['msg']),
+              mapper: (response) => PagifyData(
+                  data: response.room!.messages!.data!,
+                  paginationData: PaginationData(
+                      perPage: response.room!.messages!.pagination!.perPage,
+                      totalPages: response.room!.messages!.pagination!.totalPages
+                  )
+              ),
 
 
-        rightMessageBuilder: (msg) => ChatMessageWidget(message: msg),
-        leftMessageBuilder: (msg) => ChatMessageWidget(message: msg),
+              rightMessageBuilder: (msg) => ChatMessageWidget(message: msg),
+              leftMessageBuilder: (msg) => ChatMessageWidget(message: msg),
+            ),
+          ),
+        ],
       ),
       bottomBar: BlocProvider(
         create: (context) => SendMsgCubit(),
         child: ChatBottomBar(
-          onUpload: (url) {},
+            onUpload: (url){
+              socket.send(
+                event: SocketEvents.sendMsg,
+                data: ChatMessages(
+                  message: url,
+                  type: 'image',
+
+                  // isFromMe: true,
+                  // senderImage: UserCubit.instance.user.avatar??'',
+                  // id: UserCubit.instance.user.id??0,
+                  // senderId: UserCubit.instance.user.id??0,
+                  // senderName: UserCubit.instance.user.name??'',
+                  // time:
+                ).toJson()..addAll({
+                  'room_id' : ChatsData.chatModel?.room?.id,
+                }),
+              );
+            },
             onSend: (context, msg) => socket.send(
               event: SocketEvents.sendMsg,
               data: ChatMessages(

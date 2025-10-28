@@ -25,7 +25,6 @@ class EasyChat<Response> extends StatelessWidget {
 
   const EasyChat({super.key,
     required this.socketType,
-    // required this.onReceiveMessage,
     required this.controller,
     required this.asyncCall,
     required this.mapper,
