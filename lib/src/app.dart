@@ -11,6 +11,7 @@ import 'core/helpers/loading_manager.dart';
 import 'core/shared/user_cubit/user_cubit.dart' show UserCubit;
 import 'core/widgets/connectivity_interceptor/internet_supporter_widget.dart';
 import 'core/widgets/custom_messages.dart';
+import 'core/widgets/exeption_view.dart';
 import 'core/widgets/offline_widget.dart';
 import 'features/chats/presentation/screens/chat_screen.dart';
 import 'features/chats/presentation/screens/chats_screen.dart';
@@ -92,7 +93,8 @@ class Sitr extends StatelessWidget {
                 return InternetInterceptorWidget(
                   loadingWidget: const SplashScreen(),
                   onChanged: (status) => _manageInternetConnectivity(status),
-                  builder: (status) => FullScreenLoadingManager(child: child!),
+                  builder: (status) => status == InternetConnectionStatus.disconnected?
+                  const ExceptionView() : child!,
                 );
                 // return OfflineWidget(
                 //   child: FullScreenLoadingManager(child: child!),

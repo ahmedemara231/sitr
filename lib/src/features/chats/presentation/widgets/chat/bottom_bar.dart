@@ -15,6 +15,7 @@ import '../../../../../core/widgets/svg_pic.dart';
 import '../../../../../core/widgets/text_fields/default_text_field.dart';
 import '../../../data/models/chat_inputs_model.dart';
 import '../../cubits/send_message.dart';
+import '../../cubits/upload_image.dart';
 
 class ChatBottomBar extends StatefulWidget {
   final FutureOr<void> Function(BuildContext context, ChatInputsModel model) onSend;

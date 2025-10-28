@@ -1,3 +1,5 @@
+import '../../../shared/models/user_models/user_model.dart';
+
 class ChatMessages{
   final String message;
   final String type;
@@ -26,11 +28,12 @@ class ChatMessages{
     senderImage: json['avatar'],
     message: json['body'],
     time: json['created_at'],
-    isFromMe: (json['is_sender']) is int?
-    json['is_sender'] == 1? false : true :
-    json['is_sender'],
+    // isFromMe: (json['is_sender']) is int?
+    // json['is_sender'] == 1? false : true :
+    // json['is_sender'],
 
     // isFromMe: json['is_sender'] == 0? false : true,
+    isFromMe: (json['sender_id'] as int) == UserModel.currentUser?.id,
     type: json['type'],
     id: json['id'],
     senderId: json['sender_id'],

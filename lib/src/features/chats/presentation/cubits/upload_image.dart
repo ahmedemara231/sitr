@@ -12,6 +12,7 @@ class UploadImageCubit extends AsyncCubit{
     operation: () => baseCrudUseCase.call(
         CrudBaseParmas(
           api: ApiConstants.uploadImage,
+          isFromData: true,
           httpRequestType: HttpRequestType.post,
           body: {
             'file' : image,
