@@ -271,5 +271,6 @@
   "move_to_next_stage": "move to next stage",
   "refuse_move_to_next_stage": "refuse move to next stage",
   "request_for_extension_of_period": "Request for extension of period",
-  "sufficient_knowledge": "Sufficient knowledge"
+  "sufficient_knowledge": "Sufficient knowledge",
+  "photo": "Photo"
 }

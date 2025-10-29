@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 
 import '../../../config/res/config_imports.dart';
+import '../../../features/chats/di.dart';
 import '../../network/dio_service.dart';
 import '../../network/network_service.dart';
 import '../../notification/notification_service.dart';
@@ -18,6 +19,7 @@ import 'setup_service_locators.config.dart';
 void setUpServiceLocator() {
   injector.init();
   setUpGeneralDependencies();
+  setChatNotificationDependencies();
 }
 
 void setUpGeneralDependencies() {

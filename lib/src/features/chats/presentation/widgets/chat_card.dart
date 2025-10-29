@@ -7,11 +7,13 @@ class ChatCard extends StatelessWidget {
   final String url;
   final String partnerName;
   final String subTitle;
+  final String time;
 
   const ChatCard({super.key,
     required this.url,
     required this.partnerName,
     required this.subTitle,
+    required this.time,
   });
 
   @override
@@ -30,6 +32,7 @@ class ChatCard extends StatelessWidget {
         ),
         title: AppText(partnerName, fontWeight: FontWeight.w500),
         subtitle: AppText(subTitle, color: Colors.grey),
+        trailing: AppText(time, color: Colors.grey),
       ),
     );
   }

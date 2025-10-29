@@ -4,8 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import '../../../../core/dropinity/helpers/extensions/object.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/padding_extension.dart';
+import '../../../../core/extensions/string_extension.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/widgets/not_contain_data.dart';
@@ -154,8 +156,11 @@ class _ChatsBodyState extends State<_ChatsBody> {
                       )),
                       child: ChatCard(
                           url: data[index].room?.members?.first.image ?? '',
+                          time: data[index].room?.lastMessageCreatedDt ?? '',
                           partnerName: data[index].room?.members?.first.name ?? '',
-                          subTitle: data[index].room?.lastMessageBody??''
+                          subTitle: data[index].room!.lastMessageBody.isNotNull?
+                          data[index].room!.lastMessageBody!.isImage?
+                          LocaleKeys.photo : data[index].room!.lastMessageBody! : '',
                       ),
                     )
             ),

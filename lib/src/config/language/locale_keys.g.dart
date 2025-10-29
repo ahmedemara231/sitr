@@ -802,4 +802,7 @@ abstract class LocaleKeys {
   static const String _sufficientKnowledge = 'sufficient_knowledge';
   static String get sufficientKnowledge => _sufficientKnowledge.tr();
 
+  static const String _photo = 'photo';
+  static String get photo => _photo.tr();
+
 }

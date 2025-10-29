@@ -17,6 +17,12 @@ import '../shared/models/user_models/user_model.dart';
 
 extension FormatString on String {
 
+  bool get isImage =>
+      contains('jpg') ||
+          contains('png') ||
+          contains('svg') ||
+          contains('gif');
+
   String get pathToRequest{
     if(this == LocaleKeys.moveToNextStage){
       return ApiConstants.userMoveToNextRequest;
