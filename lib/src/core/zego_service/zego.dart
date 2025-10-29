@@ -49,6 +49,7 @@ class ZegoService {
         userID: currentUserId,
         userName: currentUserName,
         plugins: [ZegoUIKitSignalingPlugin()],
+
         invitationEvents: ZegoUIKitPrebuiltCallInvitationEvents(
             onIncomingCallAcceptButtonPressed: onIncomingCallAcceptButtonPressed,
             onIncomingCallDeclineButtonPressed: onIncomingCallDeclineButtonPressed,
@@ -68,6 +69,7 @@ class ZegoService {
             onHangUpConfirmation: onHangUpConfirmation,
             onError: onError
         ),
+
         requireConfig: (data) {
           final config = (data.invitees.length > 1)
               ? ZegoCallType.videoCall == data.type
