@@ -4,6 +4,7 @@ import 'package:pagify/pagify.dart';
 
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/extensions/padding_extension.dart';
+import '../../../../core/notification/notification_service.dart';
 import '../../../../core/widgets/app_pagify.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../data/notification_data.dart';

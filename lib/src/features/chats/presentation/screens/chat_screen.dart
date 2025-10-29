@@ -83,11 +83,13 @@ class _ChatScreenState extends State<ChatScreen> {
 
     if(matchRequestId.getMatchRequest.isMoveToNext){
 
-    }else if(matchRequestId.getMatchRequest.isReject){
-
-    }else if(matchRequestId.getMatchRequest.isExtension){
-
-    }else{
+    }
+    // else if(matchRequestId.getMatchRequest.isReject){
+    //
+    // }else if(matchRequestId.getMatchRequest.isExtension){
+    //
+    // }
+    else{
       return;
     }
   }
@@ -136,27 +138,27 @@ class _ChatScreenState extends State<ChatScreen> {
                     ],
                   ),
                   onTimerStarts: (context){},
-                  // onTimerEnds: (context) {}
-                  onTimerEnds: (context) => WidgetsBinding.instance.addPostFrameCallback(
-                          (_) => showDefaultBottomSheet(
-                              child: ChooseRequestSheet(
-                                onConfirm: (context, selectedVal) async => context.read<RequestCubit>().executeRequest(
-                                    requestModel: RequestModel(
-                                      receiverId: widget.receiverId.toString(),
-                                      fromHome: widget.fromHome.toString(),
-
-                                      matchRequestId: state.notification!.data['match_request_id'].toString(),
-                                    ),
-                                    path: selectedVal.pathToRequest+state.notification!.data['match_request_id'].toString(),
-                                ),
-                                titles: [
-                                  LocaleKeys.moveToNextStage,
-                                  LocaleKeys.refuseMoveToNextStage,
-                                  LocaleKeys.requestForExtensionOfPeriod
-                                ],
-                              )
-                          )
-                  )
+                  onTimerEnds: (context) {}
+                  // onTimerEnds: (context) => WidgetsBinding.instance.addPostFrameCallback(
+                  //         (_) => showDefaultBottomSheet(
+                  //             child: ChooseRequestSheet(
+                  //               onConfirm: (context, selectedVal) async => context.read<RequestCubit>().executeRequest(
+                  //                   requestModel: RequestModel(
+                  //                     receiverId: widget.receiverId.toString(),
+                  //                     fromHome: widget.fromHome.toString(),
+                  //
+                  //                     matchRequestId: state.notification!.data['match_request_id'].toString(),
+                  //                   ),
+                  //                   path: selectedVal.pathToRequest+state.notification!.data['match_request_id'].toString(),
+                  //               ),
+                  //               titles: [
+                  //                 LocaleKeys.moveToNextStage,
+                  //                 LocaleKeys.refuseMoveToNextStage,
+                  //                 LocaleKeys.requestForExtensionOfPeriod
+                  //               ],
+                  //             )
+                  //         )
+                  // )
               ),
               Expanded(
                 child: EasyChat(

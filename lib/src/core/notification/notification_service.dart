@@ -7,6 +7,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import '../../config/res/config_imports.dart';
+import '../../features/main_screen/presentation/screens/parent_details.dart';
+import '../../features/more/presentation/screens/complaint_and_suggestion/complaint_details_screen.dart';
+import '../../features/more/presentation/screens/my_packages.dart';
+import '../navigation/navigator.dart';
 
 part 'navigation_types.dart';
 part 'notification_routes.dart';

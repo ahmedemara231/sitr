@@ -56,14 +56,8 @@ class _ChatsScreenState extends State<ChatsScreen>
               spacing: 20.h,
               children: [
                 ChooseFromOptionsWidget(
-                  onSelectOption: (val) {
-                    setState(() => _chatType = val);
-                    if(val == _chatTitles.first){
-
-                    }else{
-
-                    }
-                  },
+                  onSelectOption: (val) =>
+                      setState(() => _chatType = val),
                   fontSize: 16,
                   titles: _chatTitles,
                   childPadding: EdgeInsets.symmetric(vertical: 16.h),
