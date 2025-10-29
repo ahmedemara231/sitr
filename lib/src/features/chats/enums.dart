@@ -9,5 +9,5 @@ enum ChatStages{
 }
 
 extension Check on ChatStages{
-  bool get isFamiliarityStage =>  this == ChatStages.newChat;
+  bool get isNewChat =>  this == ChatStages.newChat;
 }

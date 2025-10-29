@@ -28,6 +28,7 @@ import '../../../../core/widgets/easy_chat-master/factory.dart';
 import '../../../../core/widgets/easy_chat-master/models/chat_message.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../core/widgets/sheets/chat_requests_sheet.dart';
+import '../../../../core/widgets/sheets/success_sheet.dart';
 import '../../data/chat_notification_service.dart';
 import '../../data/chats_data.dart';
 import '../../enums.dart';
@@ -139,10 +140,11 @@ class _ChatScreenState extends State<ChatScreen> {
                   // itemExtent: 60.h,
                   socketType: socket,
                   controller: _chatController,
-                  asyncCall: (context, page) async => await ChatsData.getChats(
+                  asyncCall: (context, page) async => await ChatsData.startChat(
                     ApiConstants.startChat,
                     fromHome: widget.fromHome,
-                    receiverId: widget.receiverId
+                    receiverId: widget.receiverId,
+                    onSuccess: (stage) => 'stage.isNewChat?'
                   ),
                   errorMapper: PagifyErrorMapper(errorWhenDio: (e) => e.response?.data['msg']),
                   mapper: (response) => PagifyData(
@@ -167,13 +169,6 @@ class _ChatScreenState extends State<ChatScreen> {
                   data: ChatMessages(
                     message: url,
                     type: 'image',
-
-                    // isFromMe: true,
-                    // senderImage: UserCubit.instance.user.avatar??'',
-                    // id: UserCubit.instance.user.id??0,
-                    // senderId: UserCubit.instance.user.id??0,
-                    // senderName: UserCubit.instance.user.name??'',
-                    // time:
                   ).toJson()..addAll({
                     'room_id' : ChatsData.chatModel?.room?.id,
                   }),
@@ -184,13 +179,6 @@ class _ChatScreenState extends State<ChatScreen> {
                 data: ChatMessages(
                     message: msg,
                     type: 'text',
-
-                    // isFromMe: true,
-                    // senderImage: UserCubit.instance.user.avatar??'',
-                    // id: UserCubit.instance.user.id??0,
-                    // senderId: UserCubit.instance.user.id??0,
-                    // senderName: UserCubit.instance.user.name??'',
-                    // time:
                 ).toJson()..addAll({
                   'room_id' : ChatsData.chatModel?.room?.id,
                 }),
@@ -201,14 +189,3 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 }
-/*
-* Map<String, dynamic> toJson() => {
-    'senderImage': senderImage,
-    'message': message,
-    'time': time,
-    'isFromMe': isFromMe,
-    'type': type,
-    'id': id,
-    'senderId': senderId,
-    'senderName': senderName
-  };*/

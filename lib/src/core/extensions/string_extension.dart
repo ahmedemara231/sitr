@@ -7,6 +7,7 @@ import '../../features/auth/imports.dart';
 import '../../features/auth/presentation/cubits/add_child.dart';
 import '../../features/auth/presentation/cubits/complete_profile_cubit.dart';
 import '../../features/auth/presentation/enums/complete_register_status.dart';
+import '../../features/chats/enums.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/packages/presentation/packages_screen.dart';
 import '../helpers/user_type_enum.dart';
@@ -16,6 +17,9 @@ import '../shared/models/user_models/user_model.dart';
 
 
 extension FormatString on String {
+
+  ChatStages get getCurrentStageAsStagesEnum => ChatStages.values
+      .firstWhere((e) => this == e.stageText);
 
   bool get isImage =>
       contains('jpg') ||
