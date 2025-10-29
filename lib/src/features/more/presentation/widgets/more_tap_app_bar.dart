@@ -7,6 +7,7 @@ import '../../../../config/res/config_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/extensions/align_helper.dart';
 import '../../../../core/extensions/sized_box_helper.dart';
+import '../../../../core/helpers/helpers.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
@@ -149,6 +150,7 @@ class MoreTabAppBar extends StatelessWidget {
                                       onSuccess: () {
                                         Go.offAll(const LoginScreen());
                                         UserCubit.instance.logout();
+                                        Helpers.zegoService.onUserLogout();
                                       }
                                   ),
                                   btnTitle: LocaleKeys.confirm,

@@ -1,16 +1,28 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../config/language/locale_keys.g.dart';
+import '../../network/api_endpoints.dart';
 import '../app_text.dart';
 import '../buttons/app_loading_button.dart';
 import '../choose_from_options.dart';
 
-class ChatRequestsSheet extends StatelessWidget {
-  const ChatRequestsSheet({super.key});
+
+class ChooseRequestSheet extends StatelessWidget {
+
+  final List<String> titles;
+  final void Function(String)? onSelectOption;
+  final Future<void> Function(BuildContext, String) onConfirm;
+
+  const ChooseRequestSheet({super.key,
+    required this.titles,
+    this.onSelectOption,
+    required this.onConfirm,
+  });
 
   @override
   Widget build(BuildContext context) {
+    String selectedVal = '';
     return Column(
       spacing: 10.h,
       children: [
@@ -18,18 +30,17 @@ class ChatRequestsSheet extends StatelessWidget {
         AppText(LocaleKeys.pleaseSelectTheSuitableOption, fontSize: 14.sp, color: Colors.black87),
 
         ChooseFromOptionsWidget(
-            onSelectOption: (option) {},
-            titles: [
-              LocaleKeys.moveToNextStage,
-              LocaleKeys.refuseMoveToNextStage,
-              LocaleKeys.requestForExtensionOfPeriod
-            ],
+            onSelectOption: (val) {
+              onSelectOption?.call(val);
+              selectedVal = val;
+            },
+            titles: titles,
             fontSize: 16.sp,
             childPadding: EdgeInsets.all(20.r),
             ranking: OptionsRanking.vertical
         ),
 
-        AppLoadingButton(asyncCall: (context)async{}, title: LocaleKeys.confirm)
+        AppLoadingButton(asyncCall: (context) => onConfirm.call(context, selectedVal), title: LocaleKeys.confirm)
       ],
     );
   }

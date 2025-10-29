@@ -21,7 +21,7 @@ class MessageUtils {
       backgroundColor: backgroundColor ?? AppColors.white,
       behavior: SnackBarBehavior.floating,
     );
-    ScaffoldMessenger.of(context ?? Go.navigatorKey.currentContext!)
+    ScaffoldMessenger.of(context ?? Go.context)
         .showSnackBar(snackBar);
   }
 }

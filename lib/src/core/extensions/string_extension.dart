@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../config/language/languages.dart';
+import '../../config/language/locale_keys.g.dart';
 import '../../features/auth/imports.dart';
 import '../../features/auth/presentation/cubits/add_child.dart';
 import '../../features/auth/presentation/cubits/complete_profile_cubit.dart';
@@ -10,10 +11,26 @@ import '../../features/home/home_screen.dart';
 import '../../features/packages/presentation/packages_screen.dart';
 import '../helpers/user_type_enum.dart';
 import '../navigation/navigator.dart';
+import '../network/api_endpoints.dart';
 import '../shared/models/user_models/user_model.dart';
 
 
 extension FormatString on String {
+
+  String get pathToRequest{
+    if(this == LocaleKeys.moveToNextStage){
+      return ApiConstants.userMoveToNextRequest;
+
+    }else if(this == LocaleKeys.refuseMoveToNextStage){
+      return ApiConstants.rejectRequest;
+
+    }else if(this == LocaleKeys.requestForExtensionOfPeriod){
+      return ApiConstants.userExtensionRequest;
+
+    }else{
+      return '';
+    }
+  }
 
   Languages toLang(){
     if(this == Languages.arabic.locale.languageCode || this == Languages.arabic.title){

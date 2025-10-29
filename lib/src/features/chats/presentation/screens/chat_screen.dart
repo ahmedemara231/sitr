@@ -25,15 +25,11 @@ import '../../../../core/widgets/easy_chat-master/factory.dart';
 import '../../../../core/widgets/easy_chat-master/models/chat_message.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../core/widgets/sheets/chat_requests_sheet.dart';
-import '../../../../core/widgets/svg_pic.dart';
-import '../../../../core/zego_service/zego.dart';
 import '../../data/chats_data.dart';
-import '../cubits/send_message.dart';
-import '../cubits/start_chat.dart';
 import '../widgets/chat/bottom_bar.dart';
 import '../widgets/chat/message_widget.dart';
 
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends StatefulWidget {
   final int receiverId;
   final int fromHome;
 
@@ -42,6 +38,11 @@ class ChatScreen extends StatelessWidget {
     required this.fromHome,
   });
 
+  @override
+  State<ChatScreen> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
   final PagifyController<ChatMessages> _chatController = PagifyController<ChatMessages>();
 
   late final socket = ClientIOImpl(
@@ -53,24 +54,38 @@ class ChatScreen extends StatelessWidget {
     }
   );
 
+  late final EasyTimerController _timerCont;
+
+  @override
+  void initState() {
+    _timerCont = EasyTimerController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timerCont.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
       appBarTitle: LocaleKeys.chat,
       isScrollable: false,
-      actions: [
-        Helpers.zegoService.zegoButton(
-            isVideoCall: false,
-            icon: const SvgPic(assetName: Assets.svgPhoneIcon),
-            invites: [
-              ZegoUIKitUser(id: '279', name: 'jzjdjjdjd')
-            ],
-        )
-      ],
+      // actions: [
+      //   Helpers.zegoService.zegoButton(
+      //       isVideoCall: false,
+      //       icon: const SvgPic(assetName: Assets.svgPhoneIcon),
+      //       invites: [
+      //         ZegoUIKitUser(id: '145', name: 'jzjdjjdjd')
+      //       ],
+      //   )
+      // ],
       body: Column(
         children: [
           EasyTimerCount.builder(
-              duration: EasyTime(seconds: ChatsData.chatModel?.room?.timer ?? 60),
+            controller: _timerCont,
+              duration: EasyTime(seconds: ChatsData.chatModel?.room?.timer ?? 5),
               builder: (time) => Column(
                 spacing: 10.h,
                 children: [
@@ -86,7 +101,18 @@ class ChatScreen extends StatelessWidget {
                 ],
               ),
               onTimerStarts: (context){},
-              onTimerEnds: (context){},
+              onTimerEnds: (context) => WidgetsBinding.instance.addPostFrameCallback(
+                      (_) => showDefaultBottomSheet(
+                          child: ChooseRequestSheet(
+                            onConfirm: (context, selectedVal) async{},
+                            titles: [
+                              LocaleKeys.moveToNextStage,
+                              LocaleKeys.refuseMoveToNextStage,
+                              LocaleKeys.requestForExtensionOfPeriod
+                            ],
+                          )
+                      )
+              )
           ),
           Expanded(
             child: EasyChat(
@@ -95,8 +121,8 @@ class ChatScreen extends StatelessWidget {
               controller: _chatController,
               asyncCall: (context, page) async => await ChatsData.getChats(
                 ApiConstants.startChat,
-                fromHome: fromHome,
-                receiverId: receiverId
+                fromHome: widget.fromHome,
+                receiverId: widget.receiverId
               ),
               errorMapper: PagifyErrorMapper(errorWhenDio: (e) => e.response?.data['msg']),
               mapper: (response) => PagifyData(
@@ -114,44 +140,41 @@ class ChatScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomBar: BlocProvider(
-        create: (context) => SendMsgCubit(),
-        child: ChatBottomBar(
-            onUpload: (url){
-              socket.send(
-                event: SocketEvents.sendMsg,
-                data: ChatMessages(
-                  message: url,
-                  type: 'image',
-
-                  // isFromMe: true,
-                  // senderImage: UserCubit.instance.user.avatar??'',
-                  // id: UserCubit.instance.user.id??0,
-                  // senderId: UserCubit.instance.user.id??0,
-                  // senderName: UserCubit.instance.user.name??'',
-                  // time:
-                ).toJson()..addAll({
-                  'room_id' : ChatsData.chatModel?.room?.id,
-                }),
-              );
-            },
-            onSend: (context, msg) => socket.send(
+      bottomBar: ChatBottomBar(
+          onUpload: (url){
+            socket.send(
               event: SocketEvents.sendMsg,
               data: ChatMessages(
-                  message: msg,
-                  type: 'text',
+                message: url,
+                type: 'image',
 
-                  // isFromMe: true,
-                  // senderImage: UserCubit.instance.user.avatar??'',
-                  // id: UserCubit.instance.user.id??0,
-                  // senderId: UserCubit.instance.user.id??0,
-                  // senderName: UserCubit.instance.user.name??'',
-                  // time:
+                // isFromMe: true,
+                // senderImage: UserCubit.instance.user.avatar??'',
+                // id: UserCubit.instance.user.id??0,
+                // senderId: UserCubit.instance.user.id??0,
+                // senderName: UserCubit.instance.user.name??'',
+                // time:
               ).toJson()..addAll({
                 'room_id' : ChatsData.chatModel?.room?.id,
               }),
-            )
-        ),
+            );
+          },
+          onSend: (context, msg) => socket.send(
+            event: SocketEvents.sendMsg,
+            data: ChatMessages(
+                message: msg,
+                type: 'text',
+
+                // isFromMe: true,
+                // senderImage: UserCubit.instance.user.avatar??'',
+                // id: UserCubit.instance.user.id??0,
+                // senderId: UserCubit.instance.user.id??0,
+                // senderName: UserCubit.instance.user.name??'',
+                // time:
+            ).toJson()..addAll({
+              'room_id' : ChatsData.chatModel?.room?.id,
+            }),
+          )
       ),
     );
   }

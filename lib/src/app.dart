@@ -77,7 +77,6 @@ class Sitr extends StatelessWidget {
               //     onClick: (context, user) async => log(user.toRequestBodyJson(true).toString()),
               // ),
 
-              home: const SplashScreen(),
 
               // home: EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(),
               // home: const EnterMaleOrFemaleOrChildDataScreen.signUpAsParent(),
@@ -88,14 +87,17 @@ class Sitr extends StatelessWidget {
               //     key: PageStorageKey('value')
               // ),
               // home: const TestScreen(),
+
+              home: const SplashScreen(),
               navigatorObservers: [AppNavigationObserver()],
               builder: (context, child) {
                 return InternetInterceptorWidget(
-                  loadingWidget: const SplashScreen(),
+                  loadingWidget: const SizedBox.shrink(),
                   onChanged: (status) => _manageInternetConnectivity(status),
                   builder: (status) => status == InternetConnectionStatus.disconnected?
                   const ExceptionView() : child!,
                 );
+
                 // return OfflineWidget(
                 //   child: FullScreenLoadingManager(child: child!),
                 // );
