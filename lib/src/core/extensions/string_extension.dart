@@ -21,6 +21,9 @@ extension FormatString on String {
   ChatStages get getCurrentStageAsStagesEnum => ChatStages.values
       .firstWhere((e) => this == e.stageText);
 
+  MatchRequest get getMatchRequest => MatchRequest.values
+      .firstWhere((e) => this == e.requestName);
+
   bool get isImage =>
       contains('jpg') ||
           contains('png') ||

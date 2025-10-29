@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:easy_timer_count/easy_timer_count.dart';
 import 'package:easy_timer_count/helpers/time.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,6 +32,7 @@ import '../../../../core/widgets/sheets/chat_requests_sheet.dart';
 import '../../../../core/widgets/sheets/success_sheet.dart';
 import '../../data/chat_notification_service.dart';
 import '../../data/chats_data.dart';
+import '../../data/models/request_model.dart';
 import '../../enums.dart';
 import '../cubits/notification_cubit.dart';
 import '../cubits/request_cubit.dart';
@@ -41,7 +43,7 @@ class ChatScreen extends StatefulWidget {
   final int receiverId;
   final int fromHome;
 
-  ChatScreen({super.key,
+  const ChatScreen({super.key,
     required this.receiverId,
     required this.fromHome,
   });
@@ -76,14 +78,30 @@ class _ChatScreenState extends State<ChatScreen> {
     super.dispose();
   }
 
+  void makeActionsBasedNotifications(RemoteMessage notification){
+    final matchRequestId = notification.data['match_request_id'] as int;
+
+    if(matchRequestId.getMatchRequest.isMoveToNext){
+
+    }else if(matchRequestId.getMatchRequest.isReject){
+
+    }else if(matchRequestId.getMatchRequest.isExtension){
+
+    }else{
+      return;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ChatNotificationCubit(injector<ChatNotificationService>()),
       child: BlocConsumer<ChatNotificationCubit, ChatNotificationState>(
+        // النوتيفيكيشنز هي الوحيدة اللي هتطلع ال bottom sheet
         listener: (context, state) {
           log('the notification is received ${state.notification}');
           log('the notification is received ${state.notificationType}');
+          makeActionsBasedNotifications(state.notification!);
         },
         builder: (context, state) => AppScaffold(
           appBarTitle: LocaleKeys.chat,
@@ -118,22 +136,27 @@ class _ChatScreenState extends State<ChatScreen> {
                     ],
                   ),
                   onTimerStarts: (context){},
-                  onTimerEnds: (context) {}
-                  // onTimerEnds: (context) => WidgetsBinding.instance.addPostFrameCallback(
-                  //         (_) => showDefaultBottomSheet(
-                  //             child: ChooseRequestSheet(
-                  //               onConfirm: (context, selectedVal) async => context.read<RequestCubit>().executeRequest(
-                  //                   requestModel: requestModel,
-                  //                   path: selectedVal.pathToRequest
-                  //               ),
-                  //               titles: [
-                  //                 LocaleKeys.moveToNextStage,
-                  //                 LocaleKeys.refuseMoveToNextStage,
-                  //                 LocaleKeys.requestForExtensionOfPeriod
-                  //               ],
-                  //             )
-                  //         )
-                  // )
+                  // onTimerEnds: (context) {}
+                  onTimerEnds: (context) => WidgetsBinding.instance.addPostFrameCallback(
+                          (_) => showDefaultBottomSheet(
+                              child: ChooseRequestSheet(
+                                onConfirm: (context, selectedVal) async => context.read<RequestCubit>().executeRequest(
+                                    requestModel: RequestModel(
+                                      receiverId: widget.receiverId.toString(),
+                                      fromHome: widget.fromHome.toString(),
+
+                                      matchRequestId: state.notification!.data['match_request_id'].toString(),
+                                    ),
+                                    path: selectedVal.pathToRequest+state.notification!.data['match_request_id'].toString(),
+                                ),
+                                titles: [
+                                  LocaleKeys.moveToNextStage,
+                                  LocaleKeys.refuseMoveToNextStage,
+                                  LocaleKeys.requestForExtensionOfPeriod
+                                ],
+                              )
+                          )
+                  )
               ),
               Expanded(
                 child: EasyChat(
