@@ -19,6 +19,7 @@ import '../../../../core/extensions/num.dart';
 import '../../../../core/extensions/remote_notification.dart';
 import '../../../../core/extensions/string_extension.dart';
 import '../../../../core/helpers/helpers.dart';
+import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/notification/notification_service.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
@@ -79,7 +80,6 @@ class _ChatScreenState extends State<ChatScreen> {
               create: (context) => RequestCubit(),
               child: ChooseRequestSheet(
                 onConfirm: (context, selectedVal) async {
-
                   context.read<RequestCubit>().executeRequest(
                     onSuccess: (){},
                     requestModel: RequestModel(
@@ -143,7 +143,6 @@ class _ChatScreenState extends State<ChatScreen> {
               fromHome: widget.fromHome,
               onSuccess: (stages){
 
-
               }
           ),
         ),
@@ -174,34 +173,36 @@ class _ChatScreenState extends State<ChatScreen> {
             children: [
               // if(state.notification?.getCurrentStageAsInt.getCurrentStageAsStagesEnum.isFamiliarityStage ?? false)
                 BlocBuilder<StartChatCubit, AsyncState<ChatModel>>(
-                  builder: (context, state) => EasyTimerCount.builder(
-                  controller: _timerCont,
-                    duration: EasyTime(seconds: state.data.room?.timer ?? 5),
-                    builder: (time) => Column(
-                      spacing: 10.h,
-                      children: [
-                        AppText(LocaleKeys.sufficientKnowledge),
-                        Row(
-                          spacing: 5.w,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Icons.timelapse, color: Colors.amber),
-                            AppText(time, fontSize: 22.sp, fontWeight: FontWeight.w500),
-                          ],
-                        )
-                      ],
-                    ),
-                      onTimerStarts: (context){},
-                      onTimerEnds: (context) {}
-                   ),
+                  builder: (context, state) => StatusBuilder(
+                    data: state,
+                    onSuccess: (data, context) => EasyTimerCount.builder(
+                    controller: _timerCont,
+                      duration: EasyTime(seconds: state.data.room?.timer ?? 5),
+                      builder: (time) => Column(
+                        spacing: 10.h,
+                        children: [
+                          AppText(LocaleKeys.sufficientKnowledge),
+                          Row(
+                            spacing: 5.w,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.timelapse, color: Colors.amber),
+                              AppText(time, fontSize: 22.sp, fontWeight: FontWeight.w500),
+                            ],
+                          )
+                        ],
+                      ),
+                        onTimerStarts: (context){},
+                        onTimerEnds: (context) {}
+                     ),
+                  ),
                 ),
               Expanded(
                 child: EasyChat(
                   // itemExtent: 60.h,
                   socketType: socket,
                   controller: _chatController,
-                  asyncCall: (context, page) async => await ChatsData.startChat(
-                    ApiConstants.startChat,
+                  asyncCall: (context, page) async => await ChatsData.getChatMessages(
                     fromHome: widget.fromHome,
                     receiverId: widget.receiverId,
                   ),
