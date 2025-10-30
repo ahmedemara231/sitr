@@ -24,7 +24,7 @@ extension CheckUserRequestStatus on UserRequestStatus{
 }
 
 enum ChatStages{
-  newChat(0, 'chatting'),
+  newChat(0, 'new'),
   shariaComplaintMeeting(1, 'sharia_complaint_meeting'),
   istikharah(2, 'istikharah'),
   informParents(3, 'inform_parents'),
@@ -69,7 +69,6 @@ extension CheckMatchRequest on MatchRequest{
   bool get isVideoCall => this == MatchRequest.videoCall;
   bool get isAdminMeeting => this == MatchRequest.adminMeeting;
   bool get isParentMeeting => this == MatchRequest.parentMeeting;
-
   bool get isParentExchangeNumbers => this == MatchRequest.parentExchangeNumbers;
   bool get isParentIndividualApproval => this == MatchRequest.parentIndividualApproval;
 }

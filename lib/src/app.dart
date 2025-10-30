@@ -93,9 +93,18 @@ class Sitr extends StatelessWidget {
               builder: (context, child) {
                 return InternetInterceptorWidget(
                   loadingWidget: const SizedBox.shrink(),
-                  onChanged: (status) => _manageInternetConnectivity(status),
-                  builder: (status) => status == InternetConnectionStatus.disconnected?
-                  const ExceptionView() : child!,
+                  onChanged: (status) => _manageInternetConnectivity(context, status),
+                  builder: (status) {
+                    return Stack(
+                      children: [
+                        child!,
+                        if (status == InternetConnectionStatus.disconnected)
+                          const Positioned.fill(
+                            child: ExceptionView(),
+                          ),
+                      ],
+                    );
+                  },
                 );
 
                 // return OfflineWidget(
@@ -109,17 +118,17 @@ class Sitr extends StatelessWidget {
     );
   }
 
-  void _manageInternetConnectivity(InternetConnectionStatus state){
+  void _manageInternetConnectivity(BuildContext context, InternetConnectionStatus state){
     switch(state){
       case InternetConnectionStatus.connected:
-        MessageUtils.showSnackBar(LocaleKeys.theInternetConnectionIsRestored);
+        MessageUtils.showSnackBar(context: context, LocaleKeys.theInternetConnectionIsRestored);
         break;
       case InternetConnectionStatus.slow:
-        MessageUtils.showSnackBar(LocaleKeys.theInternetConnectionIsSlow);
+        MessageUtils.showSnackBar(context: context, LocaleKeys.theInternetConnectionIsSlow);
         break;
 
       default:
-        MessageUtils.showSnackBar(LocaleKeys.theInternetConnectionIsDisabled);
+        MessageUtils.showSnackBar(context: context, LocaleKeys.theInternetConnectionIsDisabled);
     }
   }
 }

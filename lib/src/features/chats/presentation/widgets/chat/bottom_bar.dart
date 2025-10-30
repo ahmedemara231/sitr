@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../../generated/assets.dart';
@@ -13,6 +14,7 @@ import '../../../../../core/helpers/helpers.dart';
 import '../../../../../core/navigation/navigator.dart';
 import '../../../../../core/widgets/svg_pic.dart';
 import '../../../../../core/widgets/text_fields/default_text_field.dart';
+import '../../cubits/start_chat.dart';
 import '../chat_image_viewer.dart';
 
 class ChatBottomBar extends StatefulWidget {
@@ -35,16 +37,9 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
 
   @override
   void initState() {
+    _addListener();
     _chatCont = TextEditingController();
     super.initState();
-  }
-
-  bool makeConditionToNull(bool Function() condition){
-    if(condition.call()){
-      return true;
-    }
-
-    return false;
   }
 
   @override
@@ -54,29 +49,24 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
   }
 
   void _selectedImageListener() => _selectedImage.value.isNotNull?
-  Go.to(ChatImageViewerWidget(
-    image: _selectedImage.value!,
-    onUpload: widget.onUpload,
+  Go.to(BlocProvider.value(
+    value: context.read<StartChatCubit>(),
+    child: ChatImageViewerWidget(
+      image: _selectedImage.value!,
+      onUpload: widget.onUpload,
+    ),
   )) : null;
 
   void _addListener() => _selectedImage.addListener(_selectedImageListener);
+
   @override
   Widget build(BuildContext context) {
-    _addListener();
     return SafeArea(
       top: false,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // ValueListenableBuilder(
-          //     valueListenable: _selectedImage,
-          //     builder: (context, file, child) => file.isNotNull?
-          //         SizedBox.square(
-          //             dimension: 100.sp,
-          //             child: Image.file(file!)
-          //         ) : const SizedBox.shrink()
-          // ).paddingAll(10.r),
           SizedBox(
             height: 75.h,
             child: Container(
@@ -88,7 +78,6 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                   InkWell(
                     onTap: _chatCont.text.isEmpty && _selectedImage.value.isNull ? null : () {
                       widget.onSend.call(context, _chatCont.text);
-
                       _chatCont.clear();
                       _selectedImage.value = null;
                     },

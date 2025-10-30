@@ -7,7 +7,7 @@ import '../../../../core/network/api_endpoints.dart';
 class UploadImageCubit extends AsyncCubit<String>{
   UploadImageCubit() : super('');
 
-  Future<void> uploadImage({required File image, required String roomId})async{
+  Future<void> uploadImage({required File image, required String roomId, required Function(String url) onSuccess})async{
     await executeAsync(
     operation: () => baseCrudUseCase.call(
         CrudBaseParmas(
@@ -17,6 +17,8 @@ class UploadImageCubit extends AsyncCubit<String>{
           mapper: (json) => json['file_name'],
           body: {'file' : image}
         )
-    ));
+       ),
+      successEmitter: (data) => onSuccess(data)
+    );
   }
 }

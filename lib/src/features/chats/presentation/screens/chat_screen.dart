@@ -13,6 +13,7 @@ import 'package:zego_uikit/zego_uikit.dart';
 import '../../../../../generated/assets.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
+import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/extensions/int.dart';
 import '../../../../core/extensions/num.dart';
 import '../../../../core/extensions/remote_notification.dart';
@@ -32,10 +33,12 @@ import '../../../../core/widgets/sheets/chat_requests_sheet.dart';
 import '../../../../core/widgets/sheets/success_sheet.dart';
 import '../../data/chat_notification_service.dart';
 import '../../data/chats_data.dart';
+import '../../data/models/chat_model.dart';
 import '../../data/models/request_model.dart';
 import '../../enums.dart';
 import '../cubits/notification_cubit.dart';
 import '../cubits/request_cubit.dart';
+import '../cubits/start_chat.dart';
 import '../widgets/chat/bottom_bar.dart';
 import '../widgets/chat/message_widget.dart';
 
@@ -66,6 +69,38 @@ class _ChatScreenState extends State<ChatScreen> {
 
   late final EasyTimerController _timerCont;
 
+  void _openSheet({
+    required String requestId,
+    required String requestName,
+  }){
+    WidgetsBinding.instance.addPostFrameCallback(
+            (_) => showDefaultBottomSheet(
+            child: BlocProvider(
+              create: (context) => RequestCubit(),
+              child: ChooseRequestSheet(
+                onConfirm: (context, selectedVal) async {
+
+                  context.read<RequestCubit>().executeRequest(
+                    onSuccess: (){},
+                    requestModel: RequestModel(
+                      receiverId: widget.receiverId.toString(),
+                      fromHome: widget.fromHome.toString(),
+                      matchRequestId: requestId.toString(),
+                    ),
+                    path: selectedVal.pathToRequest+requestId,
+                  );
+                },
+                titles: [
+                  LocaleKeys.moveToNextStage,
+                  LocaleKeys.refuseMoveToNextStage,
+                  LocaleKeys.requestForExtensionOfPeriod
+                ],
+              ),
+            )
+        )
+    );
+  }
+
   @override
   void initState() {
     _timerCont = EasyTimerController();
@@ -78,9 +113,12 @@ class _ChatScreenState extends State<ChatScreen> {
     super.dispose();
   }
 
-  void makeActionsBasedNotifications(RemoteMessage notification){
-    final matchRequestId = notification.data['match_request_id'] as int;
-
+  void _makeActionsBasedNotifications(RemoteMessage notification){
+    log('the data is ${notification.data}');
+    log('the data is ${notification.data['match_request_name']}');
+    final matchRequestId = notification.data['match_request_id'];
+    final matchRequestName = notification.data['match_request_name'];
+    _openSheet(requestId: matchRequestId, requestName: matchRequestName);
     if(matchRequestId.getMatchRequest.isMoveToNext){
 
     }
@@ -94,16 +132,31 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ChatNotificationCubit(injector<ChatNotificationService>()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => StartChatCubit()..startChat(
+              receiverId: widget.receiverId,
+              fromHome: widget.fromHome,
+              onSuccess: (stages){
+
+
+              }
+          ),
+        ),
+        BlocProvider(
+          create: (context) => ChatNotificationCubit(injector<ChatNotificationService>()),
+        )
+      ],
       child: BlocConsumer<ChatNotificationCubit, ChatNotificationState>(
         // النوتيفيكيشنز هي الوحيدة اللي هتطلع ال bottom sheet
         listener: (context, state) {
           log('the notification is received ${state.notification}');
           log('the notification is received ${state.notificationType}');
-          makeActionsBasedNotifications(state.notification!);
+          _makeActionsBasedNotifications(state.notification!);
         },
         builder: (context, state) => AppScaffold(
           appBarTitle: LocaleKeys.chat,
@@ -120,46 +173,28 @@ class _ChatScreenState extends State<ChatScreen> {
           body: Column(
             children: [
               // if(state.notification?.getCurrentStageAsInt.getCurrentStageAsStagesEnum.isFamiliarityStage ?? false)
-                EasyTimerCount.builder(
-                controller: _timerCont,
-                  duration: EasyTime(seconds: ChatsData.chatModel?.room?.timer ?? 5),
-                  builder: (time) => Column(
-                    spacing: 10.h,
-                    children: [
-                      AppText(LocaleKeys.sufficientKnowledge),
-                      Row(
-                        spacing: 5.w,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.timelapse, color: Colors.amber),
-                          AppText(time, fontSize: 22.sp, fontWeight: FontWeight.w500),
-                        ],
-                      )
-                    ],
-                  ),
-                  onTimerStarts: (context){},
-                  onTimerEnds: (context) {}
-                  // onTimerEnds: (context) => WidgetsBinding.instance.addPostFrameCallback(
-                  //         (_) => showDefaultBottomSheet(
-                  //             child: ChooseRequestSheet(
-                  //               onConfirm: (context, selectedVal) async => context.read<RequestCubit>().executeRequest(
-                  //                   requestModel: RequestModel(
-                  //                     receiverId: widget.receiverId.toString(),
-                  //                     fromHome: widget.fromHome.toString(),
-                  //
-                  //                     matchRequestId: state.notification!.data['match_request_id'].toString(),
-                  //                   ),
-                  //                   path: selectedVal.pathToRequest+state.notification!.data['match_request_id'].toString(),
-                  //               ),
-                  //               titles: [
-                  //                 LocaleKeys.moveToNextStage,
-                  //                 LocaleKeys.refuseMoveToNextStage,
-                  //                 LocaleKeys.requestForExtensionOfPeriod
-                  //               ],
-                  //             )
-                  //         )
-                  // )
-              ),
+                BlocBuilder<StartChatCubit, AsyncState<ChatModel>>(
+                  builder: (context, state) => EasyTimerCount.builder(
+                  controller: _timerCont,
+                    duration: EasyTime(seconds: state.data.room?.timer ?? 5),
+                    builder: (time) => Column(
+                      spacing: 10.h,
+                      children: [
+                        AppText(LocaleKeys.sufficientKnowledge),
+                        Row(
+                          spacing: 5.w,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.timelapse, color: Colors.amber),
+                            AppText(time, fontSize: 22.sp, fontWeight: FontWeight.w500),
+                          ],
+                        )
+                      ],
+                    ),
+                      onTimerStarts: (context){},
+                      onTimerEnds: (context) {}
+                   ),
+                ),
               Expanded(
                 child: EasyChat(
                   // itemExtent: 60.h,
@@ -169,7 +204,6 @@ class _ChatScreenState extends State<ChatScreen> {
                     ApiConstants.startChat,
                     fromHome: widget.fromHome,
                     receiverId: widget.receiverId,
-                    onSuccess: (stage) => 'stage.isNewChat?'
                   ),
                   errorMapper: PagifyErrorMapper(errorWhenDio: (e) => e.response?.data['msg']),
                   mapper: (response) => PagifyData(
@@ -187,27 +221,29 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ],
           ),
-          bottomBar: ChatBottomBar(
-              onUpload: (url){
-                socket.send(
+          bottomBar: BlocBuilder<StartChatCubit, AsyncState<ChatModel>>(
+            builder: (context, state) => ChatBottomBar(
+                onUpload: (url){
+                  socket.send(
+                    event: SocketEvents.sendMsg,
+                    data: ChatMessages(
+                      message: url,
+                      type: 'image',
+                    ).toJson()..addAll({
+                      'room_id' : state.data.room?.id,
+                    }),
+                  );
+                },
+                onSend: (context, msg) => socket.send(
                   event: SocketEvents.sendMsg,
                   data: ChatMessages(
-                    message: url,
-                    type: 'image',
+                      message: msg,
+                      type: 'text',
                   ).toJson()..addAll({
-                    'room_id' : ChatsData.chatModel?.room?.id,
+                    'room_id' : state.data.room?.id,
                   }),
-                );
-              },
-              onSend: (context, msg) => socket.send(
-                event: SocketEvents.sendMsg,
-                data: ChatMessages(
-                    message: msg,
-                    type: 'text',
-                ).toJson()..addAll({
-                  'room_id' : ChatsData.chatModel?.room?.id,
-                }),
-              )
+                )
+            ),
           ),
         ),
       ),

@@ -40,7 +40,10 @@ class ChooseRequestSheet extends StatelessWidget {
             ranking: OptionsRanking.vertical
         ),
 
-        AppLoadingButton(asyncCall: (context) => onConfirm.call(context, selectedVal), title: LocaleKeys.confirm)
+        AppLoadingButton(
+            asyncCall: (context) => onConfirm.call(context, selectedVal),
+            title: LocaleKeys.confirm
+        )
       ],
     );
   }
