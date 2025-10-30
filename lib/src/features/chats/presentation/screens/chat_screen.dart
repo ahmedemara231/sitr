@@ -40,6 +40,7 @@ import '../../enums.dart';
 import '../cubits/notification_cubit.dart';
 import '../cubits/request_cubit.dart';
 import '../cubits/start_chat.dart';
+import '../widgets/accept_or_reject_first_stage.dart';
 import '../widgets/chat/bottom_bar.dart';
 import '../widgets/chat/message_widget.dart';
 
@@ -141,9 +142,7 @@ class _ChatScreenState extends State<ChatScreen> {
           create: (context) => StartChatCubit()..startChat(
               receiverId: widget.receiverId,
               fromHome: widget.fromHome,
-              onSuccess: (stages){
-
-              }
+              onSuccess: (stages){}
           ),
         ),
         BlocProvider(
@@ -171,11 +170,15 @@ class _ChatScreenState extends State<ChatScreen> {
           // ],
           body: Column(
             children: [
-              // if(state.notification?.getCurrentStageAsInt.getCurrentStageAsStagesEnum.isFamiliarityStage ?? false)
-                BlocBuilder<StartChatCubit, AsyncState<ChatModel>>(
+              BlocBuilder<StartChatCubit, AsyncState<ChatModel>>(
                   builder: (context, state) => StatusBuilder(
                     data: state,
-                    onSuccess: (data, context) => EasyTimerCount.builder(
+                    onSuccess: (data, context) => state.data.matchRequest!.userRequestStatus!.getUserRequestStatus.isPending?
+                    AcceptOrRejectFirstStageWidget(
+                      onAccept: ()async{},
+                      onReject: ()async{},
+                    ) :
+                    EasyTimerCount.builder(
                     controller: _timerCont,
                       duration: EasyTime(seconds: state.data.room?.timer ?? 5),
                       builder: (time) => Column(

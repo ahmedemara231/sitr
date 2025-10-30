@@ -805,4 +805,7 @@ abstract class LocaleKeys {
   static const String _photo = 'photo';
   static String get photo => _photo.tr();
 
+  static const String _wantToContactWithYou = 'want_to_contact_with_you';
+  static String get wantToContactWithYou => _wantToContactWithYou.tr();
+
 }

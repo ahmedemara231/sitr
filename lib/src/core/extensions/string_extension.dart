@@ -26,6 +26,9 @@ extension FormatString on String {
   MatchRequest get getMatchRequest => MatchRequest.values
       .firstWhere((e) => this == e.requestName);
 
+  UserRequestStatus get getUserRequestStatus => UserRequestStatus.values
+      .firstWhere((e) => this == e.statusText);
+
   bool get isImage =>
       contains('jpg') ||
           contains('png') ||

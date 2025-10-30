@@ -32,8 +32,6 @@ class MatchRequest {
   Type? type;
   Stage? stage;
   int? timer;
-  bool? nextStageRequest;
-  bool? continueStageRequest;
   String? userRequest;
   String? userRequestStatus;
 
@@ -42,8 +40,6 @@ class MatchRequest {
         this.type,
         this.stage,
         this.timer,
-        this.nextStageRequest,
-        this.continueStageRequest,
         this.userRequest,
         this.userRequestStatus});
 
@@ -52,8 +48,6 @@ class MatchRequest {
     type = json['type'] != null ? Type.fromJson(json['type']) : null;
     stage = json['stage'] != null ? Stage.fromJson(json['stage']) : null;
     timer = json['timer'];
-    nextStageRequest = json['next_stage_request'];
-    continueStageRequest = json['continue_stage_request'];
     userRequest = json['user_request'];
     userRequestStatus = json['user_request_status'];
   }
@@ -68,8 +62,6 @@ class MatchRequest {
       data['stage'] = stage!.toJson();
     }
     data['timer'] = timer;
-    data['next_stage_request'] = nextStageRequest;
-    data['continue_stage_request'] = continueStageRequest;
     data['user_request'] = userRequest;
     data['user_request_status'] = userRequestStatus;
     return data;
