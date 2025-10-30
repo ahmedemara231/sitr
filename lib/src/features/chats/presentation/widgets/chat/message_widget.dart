@@ -3,8 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/dropinity/helpers/extensions/padding_extension.dart';
+import '../../../../../core/navigation/navigator.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/easy_chat-master/models/chat_message.dart';
+import '../../../../../core/widgets/view_profile_widget.dart';
+import '../../../../main_screen/presentation/cubits/get_partner_info_cubit.dart';
+import '../../../../more/presentation/screens/profile.dart';
 
 class ChatMessageWidget extends StatelessWidget {
   final ChatMessages message;
@@ -64,7 +68,14 @@ class _MessageBody extends StatelessWidget {
           color: message.isFromMe? Colors.white : Colors.black,
         ).paddingAll(10.r) : SizedBox.square(
             dimension: 150.sp,
-            child: Image.network(message.message, fit: BoxFit.fill,)
+            child: InkWell(
+                onTap: () => Go.to(
+                  message.isFromMe? const ProfileScreen() :
+                    ViewProfileWidget<GetPartnerInfoCubit>.viewPartner(
+                      cubit: GetPartnerInfoCubit(message.id ?? 0),
+                    )
+                ),
+                child: Image.network(message.message, fit: BoxFit.fill,))
         )
     );
   }

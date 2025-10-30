@@ -109,7 +109,7 @@ class ClientIOImpl extends SocketHelper{
     );
   }
 
-  FutureOr<void> send({
+  FutureOr<void> sendMsg({
     required String event,
     dynamic data,
   }) {

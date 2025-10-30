@@ -8,10 +8,26 @@ import '../../enums.dart';
 class StartChatCubit extends AsyncCubit<ChatModel>{
   StartChatCubit() : super(ChatModel());
 
+  Stage? get currentStage => state.data.matchRequest?.stage;
+  String? get userRequest => state.data.matchRequest?.userRequest;
+  String? get userRequestStatus => state.data.matchRequest?.userRequestStatus;
+  int? get matchRequestId => state.data.matchRequest?.id;
+
+  // void initTimer(){
+  //   final currentModel = state.data;
+  //   emit(state.copyWith(
+  //     data: currentModel.copyWith(
+  //       matchRequest: currentModel.matchRequest?.copyWith(
+  //         timer: 432000,
+  //       )
+  //     )
+  //   ));
+  // }
+
   Future<void> startChat({
     required int receiverId,
     required int fromHome,
-    required void Function(ChatStages chatCurrentStage) onSuccess
+    void Function(ChatStages chatCurrentStage)? onSuccess
 })async{
     await executeAsync(
       operation: () => baseCrudUseCase.call(
@@ -26,7 +42,7 @@ class StartChatCubit extends AsyncCubit<ChatModel>{
           ),
       ),
       successEmitter: (data) =>
-          onSuccess.call(data.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum)
+          onSuccess?.call(data.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum)
     );
   }
 }

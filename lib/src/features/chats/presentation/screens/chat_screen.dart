@@ -14,12 +14,14 @@ import '../../../../../generated/assets.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import '../../../../core/dropinity/helpers/extensions/object.dart';
 import '../../../../core/extensions/int.dart';
 import '../../../../core/extensions/num.dart';
 import '../../../../core/extensions/remote_notification.dart';
 import '../../../../core/extensions/string_extension.dart';
 import '../../../../core/helpers/helpers.dart';
 import '../../../../core/helpers/status_builder.dart';
+import '../../../../core/navigation/navigator.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/notification/notification_service.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
@@ -29,9 +31,11 @@ import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/easy_chat-master/easy_chat.dart';
 import '../../../../core/widgets/easy_chat-master/factory.dart';
 import '../../../../core/widgets/easy_chat-master/models/chat_message.dart';
+import '../../../../core/widgets/exeption_view.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../core/widgets/sheets/chat_requests_sheet.dart';
 import '../../../../core/widgets/sheets/success_sheet.dart';
+import '../../../home/home_screen.dart';
 import '../../data/chat_notification_service.dart';
 import '../../data/chats_data.dart';
 import '../../data/models/chat_model.dart';
@@ -58,61 +62,6 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final PagifyController<ChatMessages> _chatController = PagifyController<ChatMessages>();
-
-  late final socket = ClientIOImpl(
-    url: ConstantManager.socketUrl,
-    jsonToChatMessage: (json) => ChatMessages.fromJson(json),
-    onReceiveMessage: (msg) {
-      _chatController.addItem(msg);
-      _chatController.moveToMaxBottom();
-    }
-  );
-
-  late final EasyTimerController _timerCont;
-
-  void _openSheet({
-    required String requestId,
-    required String requestName,
-  }){
-    WidgetsBinding.instance.addPostFrameCallback(
-            (_) => showDefaultBottomSheet(
-            child: BlocProvider(
-              create: (context) => RequestCubit(),
-              child: ChooseRequestSheet(
-                onConfirm: (context, selectedVal) async {
-                  context.read<RequestCubit>().executeRequest(
-                    onSuccess: (){},
-                    requestModel: RequestModel(
-                      receiverId: widget.receiverId.toString(),
-                      fromHome: widget.fromHome.toString(),
-                      matchRequestId: requestId.toString(),
-                    ),
-                    path: selectedVal.pathToRequest+requestId,
-                  );
-                },
-                titles: [
-                  LocaleKeys.moveToNextStage,
-                  LocaleKeys.refuseMoveToNextStage,
-                  LocaleKeys.requestForExtensionOfPeriod
-                ],
-              ),
-            )
-        )
-    );
-  }
-
-  @override
-  void initState() {
-    _timerCont = EasyTimerController();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _timerCont.dispose();
-    super.dispose();
-  }
 
   void _makeActionsBasedNotifications(RemoteMessage notification){
     log('the data is ${notification.data}');
@@ -133,16 +82,137 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  Widget _upperWidget(ChatModel model){
+    final ChatStages currentStage = model.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum;
+    final int? timer = model.matchRequest!.timer;
+    if(currentStage.isNewChat &&
+        (timer.isNotNull || timer.isNotEqualZero)){
+     return EasyTimerCount.builder(
+          controller: _timerCont,
+          duration: EasyTime(seconds: model.room?.timer ?? 5),
+          builder: (time) => Column(
+            spacing: 10.h,
+            children: [
+              AppText(LocaleKeys.sufficientKnowledge),
+              Row(
+                spacing: 5.w,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.timelapse, color: Colors.amber),
+                  AppText(time, fontSize: 22.sp, fontWeight: FontWeight.w500),
+                ],
+              )
+            ],
+          ),
+          onTimerStarts: (context){},
+          onTimerEnds: (context) {}
+     );
+    }
+
+    return const SizedBox.shrink();
+  }
+
+  final PagifyController<ChatMessages> _chatController = PagifyController<ChatMessages>();
+
+  late final socket = ClientIOImpl(
+    url: ConstantManager.socketUrl,
+    jsonToChatMessage: (json) => ChatMessages.fromJson(json),
+    onReceiveMessage: (msg) {
+      _chatController.addItem(msg);
+      _chatController.moveToMaxBottom();
+    }
+  );
+
+  late final EasyTimerController _timerCont;
+
+  void _openSheet({
+    required String requestId,
+    required String requestName,
+  }){
+    WidgetsBinding.instance.addPostFrameCallback(
+            (_) => showDefaultBottomSheet(
+            child: ChooseRequestSheet(
+              onConfirm: (context, selectedVal) async {
+                context.read<RequestCubit>().executeRequest(
+                  onSuccess: (){},
+                  requestModel: RequestModel(
+                    receiverId: widget.receiverId.toString(),
+                    fromHome: widget.fromHome.toString(),
+                    matchRequestId: requestId.toString(),
+                  ),
+                  path: selectedVal.pathToRequest+requestId,
+                );
+              },
+              titles: [
+                LocaleKeys.moveToNextStage,
+                LocaleKeys.refuseMoveToNextStage,
+                LocaleKeys.requestForExtensionOfPeriod
+              ],
+            )
+        )
+    );
+  }
+
+  void _executeReq({
+    required BuildContext context,
+    required String path,
+    required void Function() onSuccess
+  }) => context.read<RequestCubit>().executeRequest(
+      requestModel: RequestModel(
+        receiverId: widget.receiverId.toString(),
+        fromHome: widget.fromHome.toString(),
+        matchRequestId: context.read<StartChatCubit>().matchRequestId.toString(),
+      ),
+      path: path+context.read<StartChatCubit>().userRequest!,
+      onSuccess: onSuccess
+  );
+
+  Widget? _initBottomBar({
+    required UserRequestStatus status,
+    required ChatStages stage,
+  }){
+    if(stage.isNewChat && status.isPending){
+      return AcceptOrRejectFirstStageWidget(
+        onAccept: (context) async => _executeReq(
+            context: context,
+            path: ApiConstants.acceptRequest,
+            onSuccess: () => context.read<StartChatCubit>().startChat(
+                receiverId: widget.receiverId,
+                fromHome: widget.fromHome,
+            ),
+        ),
+        onReject: (context)async => _executeReq(
+            context: context,
+            path: ApiConstants.rejectRequest,
+            onSuccess: () =>  Go.off(const HomeScreen())
+        ),
+      );
+    }
+
+    return null;
+  }
+
+  @override
+  void initState() {
+    _timerCont = EasyTimerController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timerCont.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (_) => RequestCubit()),
         BlocProvider(
           create: (context) => StartChatCubit()..startChat(
               receiverId: widget.receiverId,
               fromHome: widget.fromHome,
-              onSuccess: (stages){}
           ),
         ),
         BlocProvider(
@@ -173,33 +243,10 @@ class _ChatScreenState extends State<ChatScreen> {
               BlocBuilder<StartChatCubit, AsyncState<ChatModel>>(
                   builder: (context, state) => StatusBuilder(
                     data: state,
-                    onSuccess: (data, context) => state.data.matchRequest!.userRequestStatus!.getUserRequestStatus.isPending?
-                    AcceptOrRejectFirstStageWidget(
-                      onAccept: ()async{},
-                      onReject: ()async{},
-                    ) :
-                    EasyTimerCount.builder(
-                    controller: _timerCont,
-                      duration: EasyTime(seconds: state.data.room?.timer ?? 5),
-                      builder: (time) => Column(
-                        spacing: 10.h,
-                        children: [
-                          AppText(LocaleKeys.sufficientKnowledge),
-                          Row(
-                            spacing: 5.w,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(Icons.timelapse, color: Colors.amber),
-                              AppText(time, fontSize: 22.sp, fontWeight: FontWeight.w500),
-                            ],
-                          )
-                        ],
-                      ),
-                        onTimerStarts: (context){},
-                        onTimerEnds: (context) {}
-                     ),
-                  ),
+                    onSuccess: (data, context) => _upperWidget(state.data)
                 ),
+
+              ),
               Expanded(
                 child: EasyChat(
                   // itemExtent: 60.h,
@@ -209,6 +256,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     fromHome: widget.fromHome,
                     receiverId: widget.receiverId,
                   ),
+                  errorBuilder: (e) => const ExceptionView(),
                   errorMapper: PagifyErrorMapper(errorWhenDio: (e) => e.response?.data['msg']),
                   mapper: (response) => PagifyData(
                       data: response.room!.messages!.data!,
@@ -226,28 +274,35 @@ class _ChatScreenState extends State<ChatScreen> {
             ],
           ),
           bottomBar: BlocBuilder<StartChatCubit, AsyncState<ChatModel>>(
-            builder: (context, state) => ChatBottomBar(
-                onUpload: (url){
-                  socket.send(
-                    event: SocketEvents.sendMsg,
-                    data: ChatMessages(
-                      message: url,
-                      type: 'image',
-                    ).toJson()..addAll({
-                      'room_id' : state.data.room?.id,
-                    }),
-                  );
-                },
-                onSend: (context, msg) => socket.send(
-                  event: SocketEvents.sendMsg,
-                  data: ChatMessages(
-                      message: msg,
-                      type: 'text',
-                  ).toJson()..addAll({
-                    'room_id' : state.data.room?.id,
-                  }),
-                )
-            ),
+            builder: (context, state) =>
+            StatusBuilder(
+              data: state,
+              onSuccess: (data, context) =>
+              _initBottomBar(
+                  status: state.data.matchRequest!.userRequestStatus!.getUserRequestStatus,
+                  stage: state.data.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum
+              ) ?? ChatBottomBar(
+                      onUpload: (url){
+                        socket.sendMsg(
+                          event: SocketEvents.sendMsg,
+                          data: ChatMessages(
+                            message: url,
+                            type: 'image',
+                          ).toJson()..addAll({
+                            'room_id' : state.data.room?.id,
+                          }),
+                        );
+                      },
+                      onSend: (context, msg) => socket.sendMsg(
+                        event: SocketEvents.sendMsg,
+                        data: ChatMessages(
+                          message: msg,
+                          type: 'text',
+                        ).toJson()..addAll({
+                          'room_id' : state.data.room?.id,
+                        }),
+                      )),
+            )
           ),
         ),
       ),

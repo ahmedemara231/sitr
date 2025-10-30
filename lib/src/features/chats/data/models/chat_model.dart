@@ -1,295 +1,316 @@
 import 'package:pagify/helpers/data_and_pagination_data.dart';
-
 import '../../../../core/widgets/easy_chat-master/models/chat_message.dart';
 
 class ChatModel {
-  MatchRequest? matchRequest;
-  Room? room;
+  final MatchRequest? matchRequest;
+  final Room? room;
 
   ChatModel({this.matchRequest, this.room});
 
-  ChatModel.fromJson(Map<String, dynamic> json) {
-    matchRequest = json['match_request'] != null
-        ? MatchRequest.fromJson(json['match_request'])
-        : null;
-    room = json['room'] != null ? Room.fromJson(json['room']) : null;
-  }
+  ChatModel.fromJson(Map<String, dynamic> json)
+      : matchRequest = json['match_request'] != null
+      ? MatchRequest.fromJson(json['match_request'])
+      : null,
+        room = json['room'] != null ? Room.fromJson(json['room']) : null;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (matchRequest != null) {
-      data['match_request'] = matchRequest!.toJson();
-    }
-    if (room != null) {
-      data['room'] = room!.toJson();
-    }
+    final Map<String, dynamic> data = {};
+    if (matchRequest != null) data['match_request'] = matchRequest!.toJson();
+    if (room != null) data['room'] = room!.toJson();
     return data;
+  }
+
+  ChatModel copyWith({
+    MatchRequest? matchRequest,
+    Room? room,
+  }) {
+    return ChatModel(
+      matchRequest: matchRequest ?? this.matchRequest,
+      room: room ?? this.room,
+    );
   }
 }
 
 class MatchRequest {
-  int? id;
-  Type? type;
-  Stage? stage;
-  int? timer;
-  String? userRequest;
-  String? userRequestStatus;
+  final int? id;
+  final Type? type;
+  final Stage? stage;
+  final int? timer;
+  final String? userRequest;
+  final String? userRequestStatus;
 
-  MatchRequest(
-      {this.id,
-        this.type,
-        this.stage,
-        this.timer,
-        this.userRequest,
-        this.userRequestStatus});
+  MatchRequest({
+    this.id,
+    this.type,
+    this.stage,
+    this.timer,
+    this.userRequest,
+    this.userRequestStatus,
+  });
 
-  MatchRequest.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    type = json['type'] != null ? Type.fromJson(json['type']) : null;
-    stage = json['stage'] != null ? Stage.fromJson(json['stage']) : null;
-    timer = json['timer'];
-    userRequest = json['user_request'];
-    userRequestStatus = json['user_request_status'];
-  }
+  MatchRequest.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        type = json['type'] != null ? Type.fromJson(json['type']) : null,
+        stage = json['stage'] != null ? Stage.fromJson(json['stage']) : null,
+        timer = json['timer'],
+        userRequest = json['user_request'],
+        userRequestStatus = json['user_request_status'];
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data = {};
     data['id'] = id;
-    if (type != null) {
-      data['type'] = type!.toJson();
-    }
-    if (stage != null) {
-      data['stage'] = stage!.toJson();
-    }
+    if (type != null) data['type'] = type!.toJson();
+    if (stage != null) data['stage'] = stage!.toJson();
     data['timer'] = timer;
     data['user_request'] = userRequest;
     data['user_request_status'] = userRequestStatus;
     return data;
   }
+
+  MatchRequest copyWith({
+    int? id,
+    Type? type,
+    Stage? stage,
+    int? timer,
+    String? userRequest,
+    String? userRequestStatus,
+  }) {
+    return MatchRequest(
+      id: id ?? this.id,
+      type: type ?? this.type,
+      stage: stage ?? this.stage,
+      timer: timer ?? this.timer,
+      userRequest: userRequest ?? this.userRequest,
+      userRequestStatus: userRequestStatus ?? this.userRequestStatus,
+    );
+  }
 }
 
 class Type {
-  String? value;
-  String? title;
+  final String? value;
+  final String? title;
 
   Type({this.value, this.title});
 
-  Type.fromJson(Map<String, dynamic> json) {
-    value = json['value'];
-    title = json['title'];
-  }
+  Type.fromJson(Map<String, dynamic> json)
+      : value = json['value'],
+        title = json['title'];
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data = {};
     data['value'] = value;
     data['title'] = title;
     return data;
   }
+
+  Type copyWith({
+    String? value,
+    String? title,
+  }) {
+    return Type(
+      value: value ?? this.value,
+      title: title ?? this.title,
+    );
+  }
 }
 
 class Stage {
-  String? value;
-  String? text;
-  String? description;
+  final String? value;
+  final String? text;
+  final String? description;
 
   Stage({this.value, this.text, this.description});
 
-  Stage.fromJson(Map<String, dynamic> json) {
-    value = json['value'];
-    text = json['text'];
-    description = json['description'];
-  }
+  Stage.fromJson(Map<String, dynamic> json)
+      : value = json['value'],
+        text = json['text'],
+        description = json['description'];
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data = {};
     data['value'] = value;
     data['text'] = text;
     data['description'] = description;
     return data;
   }
+
+  Stage copyWith({
+    String? value,
+    String? text,
+    String? description,
+  }) {
+    return Stage(
+      value: value ?? this.value,
+      text: text ?? this.text,
+      description: description ?? this.description,
+    );
+  }
 }
 
 class Room {
-  int? id;
-  int? timer;
-  List<Members>? members;
-  Messages? messages;
-  String? lastMessageBody;
-  String? lastMessageCreatedDt;
+  final int? id;
+  final int? timer;
+  final List<Members>? members;
+  final Messages? messages;
+  final String? lastMessageBody;
+  final String? lastMessageCreatedDt;
 
-  Room(
-      {this.id,
-        this.timer,
-        this.members,
-        this.messages,
-        this.lastMessageBody,
-        this.lastMessageCreatedDt});
+  Room({
+    this.id,
+    this.timer,
+    this.members,
+    this.messages,
+    this.lastMessageBody,
+    this.lastMessageCreatedDt,
+  });
 
-  Room.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    timer = json['timer'];
-    if (json['members'] != null) {
-      members = <Members>[];
-      json['members'].forEach((v) {
-        members!.add(Members.fromJson(v));
-      });
-    }
-    messages = json['messages'] != null
-        ? Messages.fromJson(json['messages'])
-        : null;
-    lastMessageBody = json['last_message_body'];
-    lastMessageCreatedDt = json['last_message_created_dt'];
-  }
+  Room.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        timer = json['timer'],
+        members = json['members'] != null
+            ? (json['members'] as List)
+            .map((v) => Members.fromJson(v))
+            .toList()
+            : null,
+        messages =
+        json['messages'] != null ? Messages.fromJson(json['messages']) : null,
+        lastMessageBody = json['last_message_body'],
+        lastMessageCreatedDt = json['last_message_created_dt'];
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data = {};
     data['id'] = id;
     data['timer'] = timer;
-    if (members != null) {
-      data['members'] = members!.map((v) => v.toJson()).toList();
-    }
-    // if (messages != null) {
-    //   data['messages'] = messages!.toJson();
-    // }
+    if (members != null) data['members'] = members!.map((v) => v.toJson()).toList();
     data['last_message_body'] = lastMessageBody;
     data['last_message_created_dt'] = lastMessageCreatedDt;
     return data;
   }
+
+  Room copyWith({
+    int? id,
+    int? timer,
+    List<Members>? members,
+    Messages? messages,
+    String? lastMessageBody,
+    String? lastMessageCreatedDt,
+  }) {
+    return Room(
+      id: id ?? this.id,
+      timer: timer ?? this.timer,
+      members: members ?? this.members,
+      messages: messages ?? this.messages,
+      lastMessageBody: lastMessageBody ?? this.lastMessageBody,
+      lastMessageCreatedDt:
+      lastMessageCreatedDt ?? this.lastMessageCreatedDt,
+    );
+  }
 }
 
 class Members {
-  int? id;
-  String? type;
-  String? name;
-  String? image;
+  final int? id;
+  final String? type;
+  final String? name;
+  final String? image;
 
   Members({this.id, this.type, this.name, this.image});
 
-  Members.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    type = json['type'];
-    name = json['name'];
-    image = json['image'];
-  }
+  Members.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        type = json['type'],
+        name = json['name'],
+        image = json['image'];
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data = {};
     data['id'] = id;
     data['type'] = type;
     data['name'] = name;
     data['image'] = image;
     return data;
   }
+
+  Members copyWith({
+    int? id,
+    String? type,
+    String? name,
+    String? image,
+  }) {
+    return Members(
+      id: id ?? this.id,
+      type: type ?? this.type,
+      name: name ?? this.name,
+      image: image ?? this.image,
+    );
+  }
 }
 
 class Messages {
-  PaginationData? pagination;
-  List<ChatMessages>? data;
+  final PaginationData? pagination;
+  final List<ChatMessages>? data;
 
   Messages({this.pagination, this.data});
 
-  Messages.fromJson(Map<String, dynamic> json) {
-    pagination = json['pagination'] != null
-        ? PaginationData(perPage: json['pagination']['per_page'], totalPages: json['pagination']['total_pages'])
-        : null;
-    if (json['data'] != null) {
-      data = [];
-      json['data'].forEach((v) {
-        data!.add(ChatMessages.fromJson(v));
-      });
-    }
+  Messages.fromJson(Map<String, dynamic> json)
+      : pagination = json['pagination'] != null
+      ? PaginationData(
+    perPage: json['pagination']['per_page'],
+    totalPages: json['pagination']['total_pages'],
+  )
+      : null,
+        data = json['data'] != null
+            ? (json['data'] as List)
+            .map((v) => ChatMessages.fromJson(v))
+            .toList()
+            : null;
+
+  Messages copyWith({
+    PaginationData? pagination,
+    List<ChatMessages>? data,
+  }) {
+    return Messages(
+      pagination: pagination ?? this.pagination,
+      data: data ?? this.data,
+    );
   }
-
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = <String, dynamic>{};
-//     // if (pagination != null) {
-//     //   data['pagination'] = pagination!.toJson();
-//     // }
-//     if (this.data != null) {
-//       data['data'] = this.data!.map((v) => v.toJson()).toList();
-//     }
-//     return data;
-//   }
-
 }
 
-// class Pagination {
-//   int? totalItems;
-//   int? countItems;
-//   int? perPage;
-//   int? totalPages;
-//   int? currentPage;
-//   String? nextPageUrl;
-//   String? pervPageUrl;
-//
-//   Pagination(
-//       {this.totalItems,
-//         this.countItems,
-//         this.perPage,
-//         this.totalPages,
-//         this.currentPage,
-//         this.nextPageUrl,
-//         this.pervPageUrl});
-//
-//   Pagination.fromJson(Map<String, dynamic> json) {
-//     totalItems = json['total_items'];
-//     countItems = json['count_items'];
-//     perPage = json['per_page'];
-//     totalPages = json['total_pages'];
-//     currentPage = json['current_page'];
-//     nextPageUrl = json['next_page_url'];
-//     pervPageUrl = json['perv_page_url'];
-//   }
-//
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = <String, dynamic>{};
-//     data['total_items'] = totalItems;
-//     data['count_items'] = countItems;
-//     data['per_page'] = perPage;
-//     data['total_pages'] = totalPages;
-//     data['current_page'] = currentPage;
-//     data['next_page_url'] = nextPageUrl;
-//     data['perv_page_url'] = pervPageUrl;
-//     return data;
-//   }
-// }
-
 class Data {
-  int? id;
-  int? senderId;
-  bool? isSender;
-  String? body;
-  String? type;
-  int? duration;
-  String? name;
-  String? createdAt;
-  String? avatar;
+  final int? id;
+  final int? senderId;
+  final bool? isSender;
+  final String? body;
+  final String? type;
+  final int? duration;
+  final String? name;
+  final String? createdAt;
+  final String? avatar;
 
-  Data(
-      {this.id,
-        this.senderId,
-        this.isSender,
-        this.body,
-        this.type,
-        this.duration,
-        this.name,
-        this.createdAt,
-        this.avatar});
+  Data({
+    this.id,
+    this.senderId,
+    this.isSender,
+    this.body,
+    this.type,
+    this.duration,
+    this.name,
+    this.createdAt,
+    this.avatar,
+  });
 
-  Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    senderId = json['sender_id'];
-    isSender = json['is_sender'];
-    body = json['body'];
-    type = json['type'];
-    duration = json['duration'];
-    name = json['name'];
-    createdAt = json['created_at'];
-    avatar = json['avatar'];
-  }
+  Data.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        senderId = json['sender_id'],
+        isSender = json['is_sender'],
+        body = json['body'],
+        type = json['type'],
+        duration = json['duration'],
+        name = json['name'],
+        createdAt = json['created_at'],
+        avatar = json['avatar'];
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data = {};
     data['id'] = id;
     data['sender_id'] = senderId;
     data['is_sender'] = isSender;
@@ -300,5 +321,29 @@ class Data {
     data['created_at'] = createdAt;
     data['avatar'] = avatar;
     return data;
+  }
+
+  Data copyWith({
+    int? id,
+    int? senderId,
+    bool? isSender,
+    String? body,
+    String? type,
+    int? duration,
+    String? name,
+    String? createdAt,
+    String? avatar,
+  }) {
+    return Data(
+      id: id ?? this.id,
+      senderId: senderId ?? this.senderId,
+      isSender: isSender ?? this.isSender,
+      body: body ?? this.body,
+      type: type ?? this.type,
+      duration: duration ?? this.duration,
+      name: name ?? this.name,
+      createdAt: createdAt ?? this.createdAt,
+      avatar: avatar ?? this.avatar,
+    );
   }
 }
