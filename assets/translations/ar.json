@@ -275,5 +275,8 @@
   "photo": "صورة",
   "want_to_contact_with_you": "يريد التواصل معك",
   "partner_wants_to": "الشريك يريد ان",
-  "tips_for_sharia_complaint_meeting": "نصائح لمرحلة النظرة الشرعية"
+  "tips_for_sharia_complaint_meeting": "نصائح لمرحلة النظرة الشرعية",
+  "optional_stage_you_can_skip_this_stage": "مرحلة اختيارية يمكنك تخطي هذه المرحلة",
+  "shariaa_meeting_stage": "مرحلة النظرة الشرعية",
+  "continue_the_stage": "استكمال المرحلة"
 }

@@ -814,4 +814,13 @@ abstract class LocaleKeys {
   static const String _tipsForShariaComplaintMeeting = 'tips_for_sharia_complaint_meeting';
   static String get tipsForShariaComplaintMeeting => _tipsForShariaComplaintMeeting.tr();
 
+  static const String _optionalStageYouCanSkipThisStage = 'optional_stage_you_can_skip_this_stage';
+  static String get optionalStageYouCanSkipThisStage => _optionalStageYouCanSkipThisStage.tr();
+
+  static const String _shariaaMeetingStage = 'shariaa_meeting_stage';
+  static String get shariaaMeetingStage => _shariaaMeetingStage.tr();
+
+  static const String _continueTheStage = 'continue_the_stage';
+  static String get continueTheStage => _continueTheStage.tr();
+
 }

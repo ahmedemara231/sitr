@@ -53,6 +53,7 @@ import '../widgets/accept_or_reject_request.dart';
 import '../widgets/chat/bottom_bar.dart';
 import '../widgets/chat/message_widget.dart';
 import '../widgets/chat/timer.dart';
+import '../widgets/sheets/shariaa_meeting_skipping.dart';
 
 class ChatScreen extends StatelessWidget {
   final int receiverId;
@@ -207,19 +208,8 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     return null;
   }
 
-  final PagifyController<ChatMessages> _chatController = PagifyController<ChatMessages>();
-
-  late final socket = ClientIOImpl(
-    url: ConstantManager.socketUrl,
-    jsonToChatMessage: (json) => ChatMessages.fromJson(json),
-    onReceiveMessage: (msg) {
-      _chatController.addItem(msg);
-      _chatController.moveToMaxBottom();
-    }
-  );
-
-  void _startChat(){
-    context.read<ChatCubit>().startChat(
+  Future<void> _startChat()async{
+    await context.read<ChatCubit>().startChat(
         receiverId: widget.receiverId,
         fromHome: widget.fromHome,
         onSuccess: (data){
@@ -235,6 +225,35 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
           }else if(timer.isEqualZero){
             _makeRequestSheet(matchReqId: data.matchRequest!.id.toString());
+
+          }else if(stage.isShariaComplaintMeeting){
+            showDefaultBottomSheet(
+                child: ShariaaMeetingSkipping(
+                    onChanged: (context, val)async{
+                      if(val == LocaleKeys.continueTheStage){
+                        showDefaultBottomSheet(
+                            child: TipsSheet(
+                                title: LocaleKeys.tipsForShariaComplaintMeeting,
+                                path: ApiConstants.shariaComplaintMeetingTips,
+                                onConfirm: (context) => Go.back()
+                            )
+                        );
+                      }else if(val == LocaleKeys.moveToNextStage){
+                        await context.read<ChatCubit>().executeRequest(
+                          onSuccess: (chatModel) => Go.back(),
+                          requestModel: RequestModel(
+                            receiverId: widget.receiverId.toString(),
+                            fromHome: widget.fromHome.toString(),
+                            matchRequestId: data.matchRequest!.id.toString(),
+                          ),
+                          path: ApiConstants.userMoveToNextRequest,
+                        );
+                      }
+
+                      return;
+                    }
+                )
+            );
           }
 
           // else if(stage!.isChatting && userStatus.isUndefined && data.matchRequest!.timer.isEqualZero){
@@ -248,22 +267,64 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     );
   }
 
-  FutureOr<void> _showBased(RemoteMessage notification){
+  Future<void> _showBased(RemoteMessage notification)async{
+    _startChat();
     final ChatStages stage = (notification.data['stage'] as String).getCurrentStageAsStagesEnum;
+    // التايمر خلص
+    // واحد قدم طلب والتاني المفروض يقبل
+    // هترن السيرفس تاني في حالة ان الاتنين وافقو علي اي حاجة
 
-    if(stage.isShariaComplaintMeeting){
-      // showDefaultBottomSheet(
-      //     child: TipsSheet(
-      //         title: LocaleKeys.tipsForShariaComplaintMeeting,
-      //         path: ApiConstants.shariaComplaintMeetingTips,
-      //         onConfirm: (context){}
-      //     )
-    }
 
-    _makeRequestSheet(
-      matchReqId: notification.data[''],
-    );
+    // await context.read<ChatCubit>().startChat(
+    //     receiverId: widget.receiverId,
+    //     fromHome: widget.fromHome
+    // );
+    //
+    // if(context.read<ChatCubit>().currentStageAsEnum!.isShariaComplaintMeeting){
+    //   showDefaultBottomSheet(
+    //       child: ShariaaMeetingSkipping(
+    //           onChanged: (context, val)async{
+    //             if(val == LocaleKeys.continueTheStage){
+    //               showDefaultBottomSheet(
+    //                   child: TipsSheet(
+    //                       title: LocaleKeys.tipsForShariaComplaintMeeting,
+    //                       path: ApiConstants.shariaComplaintMeetingTips,
+    //                       onConfirm: (context) => Go.back()
+    //                   )
+    //               );
+    //             }else if(val == LocaleKeys.moveToNextStage){
+    //               await context.read<ChatCubit>().executeRequest(
+    //                 onSuccess: (chatModel) => Go.back(),
+    //                 requestModel: RequestModel(
+    //                   receiverId: widget.receiverId.toString(),
+    //                   fromHome: widget.fromHome.toString(),
+    //                   matchRequestId: notification.data['match_request_id'],
+    //                 ),
+    //                 path: ApiConstants.userMoveToNextRequest,
+    //               );
+    //             }
+    //
+    //             return;
+    //           }
+    //       )
+    //   );
+    // }
+    //
+    // _makeRequestSheet(
+    //   matchReqId: notification.data[''],
+    // );
   }
+
+  final PagifyController<ChatMessages> _chatController = PagifyController<ChatMessages>();
+
+  late final socket = ClientIOImpl(
+      url: ConstantManager.socketUrl,
+      jsonToChatMessage: (json) => ChatMessages.fromJson(json),
+      onReceiveMessage: (msg) {
+        _chatController.addItem(msg);
+        _chatController.moveToMaxBottom();
+      }
+  );
 
   @override
   void initState() {
