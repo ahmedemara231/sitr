@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,6 +41,7 @@ import '../../../../core/widgets/sheets/tips_sheet.dart';
 import '../../../../core/widgets/svg_pic.dart';
 import '../../../home/home_screen.dart';
 import '../../data/chat_notification_service.dart';
+import '../../data/chat_sheet_manager.dart';
 import '../../data/chats_data.dart';
 import '../../data/models/chat_model.dart';
 import '../../data/models/request_model.dart';
@@ -150,9 +154,6 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
               onConfirm: (context, selectedVal) async {
                 await context.read<ChatCubit>().executeRequest(
                   onSuccess: (chatModel) => Go.back(),
-                  // selectedVal == LocaleKeys.refuseMoveToNextStage?
-                  // Go.offAll(const HomeScreen()) : Go.back(),
-
                   requestModel: RequestModel(
                     receiverId: widget.receiverId.toString(),
                     fromHome: widget.fromHome.toString(),
@@ -247,6 +248,23 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     );
   }
 
+  FutureOr<void> _showBased(RemoteMessage notification){
+    final ChatStages stage = (notification.data['stage'] as String).getCurrentStageAsStagesEnum;
+
+    if(stage.isShariaComplaintMeeting){
+      // showDefaultBottomSheet(
+      //     child: TipsSheet(
+      //         title: LocaleKeys.tipsForShariaComplaintMeeting,
+      //         path: ApiConstants.shariaComplaintMeetingTips,
+      //         onConfirm: (context){}
+      //     )
+    }
+
+    _makeRequestSheet(
+      matchReqId: notification.data[''],
+    );
+  }
+
   @override
   void initState() {
     _startChat();
@@ -256,22 +274,8 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<ChatNotificationCubit, ChatNotificationState>(
-      listener: (context, state)async {
-        final ChatStages stage = (state.notification!.data['stage'] as String).getCurrentStageAsStagesEnum;
-
-        if(stage.isShariaComplaintMeeting){
-          // showDefaultBottomSheet(
-          //     child: TipsSheet(
-          //         title: LocaleKeys.tipsForShariaComplaintMeeting,
-          //         path: ApiConstants.shariaComplaintMeetingTips,
-          //         onConfirm: (context){}
-          //     )
-        }
-
-        _makeRequestSheet(
-            matchReqId: state.notification!.data[''],
-        );
-      },
+      listener: (context, state) async =>
+          _showBased(state.notification!),
       child: AppScaffold(
         appBarTitle: LocaleKeys.chat,
         isScrollable: false,
