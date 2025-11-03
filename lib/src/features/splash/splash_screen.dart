@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _manipulateSplashData()async{
-    // await _initZego();
+    await _initZego();
 
     await Future.delayed(const Duration(seconds: 2));
     final result = await CacheStorage.read(CacheConstant.onBoardingSubmission);

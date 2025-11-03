@@ -32,7 +32,6 @@ class AppScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: bottomBar,
       backgroundColor: scaffoldBackgroundColor?? Colors.white,
       appBar: PreferredSize(
           preferredSize: Size(context.width, appBarHeight ?? 60),
@@ -56,6 +55,7 @@ class AppScaffold extends StatelessWidget {
           child: body.defaultScreenPadding(),
         ),
       ) : body.defaultScreenPadding(),
+      bottomNavigationBar: bottomBar,
     );
   }
 }

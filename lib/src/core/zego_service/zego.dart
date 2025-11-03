@@ -25,22 +25,26 @@ class ZegoService {
     );
   }
 
-  Future<void> onUserLogin({
+  Future<bool> onUserLogin({
     required String currentUserId,
     required String currentUserName,
     Duration? callDuration,
     bool isSmallViewDraggable = true,
     bool switchLargeOrSmallViewByClick = true,
     void Function(ZegoCallEndEvent, void Function())? onCallEnd,
-    Future<bool> Function(ZegoCallHangUpConfirmationEvent, Future<bool> Function())? onHangUpConfirmation,
+    Future<bool> Function(ZegoCallHangUpConfirmationEvent, Future<bool> Function())?
+        onHangUpConfirmation,
     dynamic Function(ZegoUIKitError)? onError,
     bool addChatButton = false,
     dynamic Function()? onIncomingCallAcceptButtonPressed,
     dynamic Function()? onIncomingCallDeclineButtonPressed,
     dynamic Function(String, ZegoCallUser, String)? onIncomingCallCanceled,
-    dynamic Function(String, ZegoCallUser, ZegoCallInvitationType, List<ZegoCallUser>, String)? onIncomingCallReceived,
-    Future<void> Function(String, ZegoCallUser, ZegoCallInvitationType, List<ZegoCallUser>, String, Future<void> Function())? onIncomingMissedCallClicked,
-    dynamic Function()? onIncomingMissedCallDialBackFailed
+    dynamic Function(String, ZegoCallUser, ZegoCallInvitationType, List<ZegoCallUser>, String)?
+        onIncomingCallReceived,
+    Future<void> Function(
+            String, ZegoCallUser, ZegoCallInvitationType, List<ZegoCallUser>, String, Future<void> Function())?
+        onIncomingMissedCallClicked,
+    dynamic Function()? onIncomingMissedCallDialBackFailed,
   }) async {
     try {
       await ZegoUIKitPrebuiltCallInvitationService().init(
@@ -49,14 +53,13 @@ class ZegoService {
         userID: currentUserId,
         userName: currentUserName,
         plugins: [ZegoUIKitSignalingPlugin()],
-
         invitationEvents: ZegoUIKitPrebuiltCallInvitationEvents(
-            onIncomingCallAcceptButtonPressed: onIncomingCallAcceptButtonPressed,
-            onIncomingCallDeclineButtonPressed: onIncomingCallDeclineButtonPressed,
-            onIncomingCallCanceled: onIncomingCallCanceled,
-            onIncomingCallReceived: onIncomingCallReceived,
-            onIncomingMissedCallClicked: onIncomingMissedCallClicked,
-            onIncomingMissedCallDialBackFailed: onIncomingMissedCallDialBackFailed
+          onIncomingCallAcceptButtonPressed: onIncomingCallAcceptButtonPressed,
+          onIncomingCallDeclineButtonPressed: onIncomingCallDeclineButtonPressed,
+          onIncomingCallCanceled: onIncomingCallCanceled,
+          onIncomingCallReceived: onIncomingCallReceived,
+          onIncomingMissedCallClicked: onIncomingMissedCallClicked,
+          onIncomingMissedCallDialBackFailed: onIncomingMissedCallDialBackFailed,
         ),
         config: ZegoCallInvitationConfig(
           missedCall: ZegoCallInvitationMissedCallConfig(
@@ -65,19 +68,18 @@ class ZegoService {
           ),
         ),
         events: ZegoUIKitPrebuiltCallEvents(
-            onCallEnd: onCallEnd,
-            onHangUpConfirmation: onHangUpConfirmation,
-            onError: onError
+          onCallEnd: onCallEnd,
+          onHangUpConfirmation: onHangUpConfirmation,
+          onError: onError,
         ),
-
         requireConfig: (data) {
           final config = (data.invitees.length > 1)
               ? ZegoCallType.videoCall == data.type
-              ? ZegoUIKitPrebuiltCallConfig.groupVideoCall()
-              : ZegoUIKitPrebuiltCallConfig.groupVoiceCall()
+                  ? ZegoUIKitPrebuiltCallConfig.groupVideoCall()
+                  : ZegoUIKitPrebuiltCallConfig.groupVoiceCall()
               : ZegoCallType.videoCall == data.type
-              ? ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall()
-              : ZegoUIKitPrebuiltCallConfig.oneOnOneVoiceCall();
+                  ? ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall()
+                  : ZegoUIKitPrebuiltCallConfig.oneOnOneVoiceCall();
 
           config.duration.isVisible = true;
           if (callDuration != null) {
@@ -101,14 +103,15 @@ class ZegoService {
         },
       );
 
-      _waitForSignalingConnection();
+      return await _waitForSignalingConnection();
     } on Exception catch (e) {
-      log('the error is ${e.toString()}');
+      log('the error is \${e.toString()}');
+      return false;
     }
   }
 
   bool _isSignalingConnected = false;
-  Future<void> _waitForSignalingConnection() async {
+  Future<bool> _waitForSignalingConnection() async {
     log('✅ Signaling connection test');
     int attempts = 0;
     const maxAttempts = 10;
@@ -119,15 +122,16 @@ class ZegoService {
       if (connectionState == ZegoSignalingPluginConnectionState.connected) {
         _isSignalingConnected = true;
         log('✅ Signaling connected successfully');
-        return;
+        return true;
       }
 
-      log('⏳ Waiting for signaling connection... (${attempts + 1}/$maxAttempts)');
+      log('⏳ Waiting for signaling connection... (\${attempts + 1}/\$maxAttempts)');
       await Future.delayed(const Duration(milliseconds: 500));
       attempts++;
     }
 
     log('⚠️ Signaling connection timeout');
+    return false;
   }
 
   Future<void> onUserLogout() async {
@@ -138,11 +142,12 @@ class ZegoService {
     bool isVideoCall = false,
     required Widget icon,
     required List<ZegoUIKitUser> invites,
-  }) => ZegoSendCallInvitationButton(
-    isVideoCall: isVideoCall,
-    icon: ButtonIcon(icon: icon),
-    iconSize: Size(25.w, 25.h),
-    resourceID: "zegouikit_call",
-    invitees: invites,
-  );
+  }) =>
+      ZegoSendCallInvitationButton(
+        isVideoCall: isVideoCall,
+        icon: ButtonIcon(icon: icon),
+        iconSize: Size(25.w, 25.h),
+        resourceID: "zegouikit_call",
+        invitees: invites,
+      );
 }

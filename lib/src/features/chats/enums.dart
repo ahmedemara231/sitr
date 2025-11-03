@@ -24,12 +24,14 @@ extension CheckUserRequestStatus on UserRequestStatus{
 }
 
 enum ChatStages{
-  newChat(0, 'new'),
+  newChat(-1, 'new'),
+  chatting(0, 'chatting'),
   shariaComplaintMeeting(1, 'sharia_complaint_meeting'),
   istikharah(2, 'istikharah'),
   informParents(3, 'inform_parents'),
   engagement(4, 'engagement'),
-  individualParent(5, 'individual_parent');
+  individualParent(5, 'individual_parent'),
+  rejected(6, 'rejected');
 
   final int stage;
   final String stageText;
@@ -39,6 +41,7 @@ enum ChatStages{
 
 extension CheckChatStages on ChatStages{
   bool get isNewChat =>  this == ChatStages.newChat;
+  bool get isChatting =>  this == ChatStages.chatting;
   bool get isShariaComplaintMeeting => this == ChatStages.shariaComplaintMeeting;
   bool get isIstirah => this == ChatStages.istikharah;
   bool get isInformParents => this == ChatStages.informParents;
@@ -46,7 +49,7 @@ extension CheckChatStages on ChatStages{
   bool get isIndividualParent => this == ChatStages.individualParent;
 }
 
-enum MatchRequest{
+enum MatchRequestEnum{
   moveToNext(0, 'next_stage_request'),
   reject(2, 'reject_request'),
   extension(1, 'extension_request'),
@@ -59,16 +62,16 @@ enum MatchRequest{
 
   final int id;
   final String requestName;
-  const MatchRequest(this.id, this.requestName);
+  const MatchRequestEnum(this.id, this.requestName);
 }
 
-extension CheckMatchRequest on MatchRequest{
-  bool get isMoveToNext => this == MatchRequest.moveToNext;
-  bool get isReject => this == MatchRequest.reject;
-  bool get isExtension => this == MatchRequest.extension;
-  bool get isVideoCall => this == MatchRequest.videoCall;
-  bool get isAdminMeeting => this == MatchRequest.adminMeeting;
-  bool get isParentMeeting => this == MatchRequest.parentMeeting;
-  bool get isParentExchangeNumbers => this == MatchRequest.parentExchangeNumbers;
-  bool get isParentIndividualApproval => this == MatchRequest.parentIndividualApproval;
+extension CheckMatchRequest on MatchRequestEnum{
+  bool get isMoveToNext => this == MatchRequestEnum.moveToNext;
+  bool get isReject => this == MatchRequestEnum.reject;
+  bool get isExtension => this == MatchRequestEnum.extension;
+  bool get isVideoCall => this == MatchRequestEnum.videoCall;
+  bool get isAdminMeeting => this == MatchRequestEnum.adminMeeting;
+  bool get isParentMeeting => this == MatchRequestEnum.parentMeeting;
+  bool get isParentExchangeNumbers => this == MatchRequestEnum.parentExchangeNumbers;
+  bool get isParentIndividualApproval => this == MatchRequestEnum.parentIndividualApproval;
 }

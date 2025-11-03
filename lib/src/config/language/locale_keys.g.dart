@@ -808,4 +808,10 @@ abstract class LocaleKeys {
   static const String _wantToContactWithYou = 'want_to_contact_with_you';
   static String get wantToContactWithYou => _wantToContactWithYou.tr();
 
+  static const String _partnerWantsTo = 'partner_wants_to';
+  static String get partnerWantsTo => _partnerWantsTo.tr();
+
+  static const String _tipsForShariaComplaintMeeting = 'tips_for_sharia_complaint_meeting';
+  static String get tipsForShariaComplaintMeeting => _tipsForShariaComplaintMeeting.tr();
+
 }

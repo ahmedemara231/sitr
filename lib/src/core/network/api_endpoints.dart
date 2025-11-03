@@ -91,19 +91,9 @@ class ApiConstants {
   static const String rejectRequest = 'reject-request/';
   static const String acceptRequest = 'accept-request/';
 
-  static const String userMoveToNextRequest = 'user-match-request/move_to_next_stage';
-  static const String userRejectRequest = 'user-match-request/reject_request';
+  static const String userMoveToNextRequest = 'user-match-request/next_stage_request';
   static const String userExtensionRequest = 'user-match-request/extension_request';
   static const String payRequest = 'pay-request/';
+  static const String shariaComplaintMeetingTips = 'sharia-complaint-meeting-tips';
 
 }
-/*
-*    if(this == LocaleKeys.moveToNextStage){
-      return ApiConstants.moveToNextStage;
-
-    }else if(this == LocaleKeys.refuseMoveToNextStage){
-      return ApiConstants.refuseRequest;
-
-    }else if(this == LocaleKeys.requestForExtensionOfPeriod){
-      return ApiConstants.requestForExtensionOfPeriod;
-      */

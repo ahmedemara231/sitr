@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import '../../core/shared/models/user_models/user_model.dart';
 import '../../core/extensions/string_extension.dart';
@@ -23,43 +24,49 @@ import 'permission_handler/model.dart';
 
 class Helpers {
   static late ZegoService zegoService;
-  static Future<void> initZegoService()async{
-    zegoService = ZegoService(
-        appId: ConstantManager.zegoAppId,
-        appSign: ConstantManager.zegoAppSign,
-        navigatorKey: Go.navigatorKey
-    );
+  static Future<void> initZegoService() async {
+      zegoService = ZegoService(
+          appId: ConstantManager.zegoAppId,
+          appSign: ConstantManager.zegoAppSign,
+          navigatorKey: Go.navigatorKey);
 
-    await zegoService.initZego();
-    await zegoService.onUserLogin(
-        currentUserId: UserModel.currentUser!.id.toString(),
-        currentUserName: UserModel.currentUser!.name.toString()
-    );
+      await zegoService.initZego();
+      final bool isConnected = await zegoService.onUserLogin(
+          currentUserId: UserModel.currentUser!.id.toString(),
+          currentUserName: UserModel.currentUser!.name.toString()
+      );
+
+      if (isConnected) {
+        log('✅ Zego service initialized successfully');
+      } else {
+        log('⚠️ Zego service failed to initialize');
+      }
   }
 
-  static Future<void> manageBlocListener(BaseStatus baseStatus, {
+  static Future<void> manageBlocListener(
+    BaseStatus baseStatus, {
     String? msg,
     FutureOr<void> Function()? onSuccess,
     FutureOr<void> Function()? onError,
     FutureOr<void> Function()? onLoading,
-  }) async{
-    switch(baseStatus){
+  }) async {
+    switch (baseStatus) {
       case BaseStatus.loading:
         await onLoading?.call();
 
       case BaseStatus.success:
         await onSuccess?.call();
-        if(msg.isNotNull){
+        if (msg.isNotNull) {
           MessageUtils.showSnackBar(
-              msg!,
-              backgroundColor: AppColors.primary,
+            msg!,
+            backgroundColor: AppColors.primary,
           );
         }
         break;
 
       case BaseStatus.error:
         await onError?.call();
-        if(msg.isNotNull){
+        if (msg.isNotNull) {
           // MessageUtils.showSimpleToast(msg: msg, color: Colors.red);
         }
         break;
@@ -69,10 +76,10 @@ class Helpers {
     }
   }
 
-  static Alignment get getAlignment{
-    if(Languages.currentLanguage == Languages.arabic){
+  static Alignment get getAlignment {
+    if (Languages.currentLanguage == Languages.arabic) {
       return Alignment.topRight;
-    }else{
+    } else {
       return Alignment.topLeft;
     }
   }
@@ -111,18 +118,18 @@ class Helpers {
     );
   }
 
-  static Future<void> checkPermission(Permission permission,{
+  static Future<void> checkPermission(
+    Permission permission, {
     required FutureOr<void> Function(Permission permission)? onGranted,
     required FutureOr<void> Function(Permission permission)? onDenied,
-  })async{
+  }) async {
     await PermissionHandler().checkPermission(
         permissionManagerModel: PermissionModel(
-          permissions: [permission],
-          onGranted: onGranted,
-          onDenied: onDenied,
-          onDeniedForever: onDenied,
-        )
-    );
+      permissions: [permission],
+      onGranted: onGranted,
+      onDenied: onDenied,
+      onDeniedForever: onDenied,
+    ));
   }
 
   static Future<File?> getImageFromCameraOrDevice() async {
@@ -138,36 +145,34 @@ class Helpers {
                   leading: const Icon(Icons.photo_library),
                   title: Text(LocaleKeys.photoLibrary),
                   onTap: () async {
-                    checkPermission(
-                        Permission.photos,
-                        onGranted: (permission) async{
-                          final currentImage =
-                              await picker.pickImage(source: ImageSource.gallery);
-                          if (currentImage != null) {
-                            image = File(currentImage.path);
-                          }
-                          Go.back();
-                        },
-                        onDenied: (permission) => MessageUtils.showSnackBar(LocaleKeys.unableToAccessPhotosPleaseOpenIt)
-                    );
+                    checkPermission(Permission.photos, onGranted: (permission) async {
+                      final currentImage =
+                          await picker.pickImage(source: ImageSource.gallery);
+                      if (currentImage != null) {
+                        image = File(currentImage.path);
+                      }
+                      Go.back();
+                    }, onDenied: (permission) {
+                      MessageUtils.showSnackBar(
+                          LocaleKeys.unableToAccessPhotosPleaseOpenIt);
+                    });
                   },
                 ),
                 ListTile(
                   leading: const Icon(Icons.photo_camera),
                   title: Text(LocaleKeys.camera),
                   onTap: () async {
-                    checkPermission(
-                        Permission.camera,
-                        onGranted: (permission) async{
-                          final currentImage =
-                              await picker.pickImage(source: ImageSource.camera);
-                          if (currentImage != null) {
-                            image = File(currentImage.path);
-                          }
-                          Go.back();
-                        },
-                        onDenied: (permission) => MessageUtils.showSnackBar(LocaleKeys.unableToAccessCameraPleaseOpenIt)
-                    );
+                    checkPermission(Permission.camera, onGranted: (permission) async {
+                      final currentImage =
+                          await picker.pickImage(source: ImageSource.camera);
+                      if (currentImage != null) {
+                        image = File(currentImage.path);
+                      }
+                      Go.back();
+                    }, onDenied: (permission) {
+                      MessageUtils.showSnackBar(
+                          LocaleKeys.unableToAccessCameraPleaseOpenIt);
+                    });
                   },
                 ),
               ],

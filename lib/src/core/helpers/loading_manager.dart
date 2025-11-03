@@ -25,7 +25,7 @@ class _FullScreenLoadingManagerState extends State<FullScreenLoadingManager> {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      alignment: AlignmentDirectional.center,
+      alignment: AlignmentDirectional.topCenter,
       children: [
         widget.child,
         ValueListenableBuilder(

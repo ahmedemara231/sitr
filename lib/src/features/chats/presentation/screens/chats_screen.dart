@@ -8,8 +8,11 @@ import '../../../../core/dropinity/helpers/extensions/object.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/extensions/string_extension.dart';
+import '../../../../core/helpers/helpers.dart';
+import '../../../../core/helpers/loading_manager.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/navigation/navigator.dart';
+import '../../../../core/widgets/custom_loading.dart';
 import '../../../../core/widgets/not_contain_data.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../core/widgets/choose_from_options.dart';
@@ -104,33 +107,7 @@ class _ChatsBody extends StatefulWidget {
   State<_ChatsBody> createState() => _ChatsBodyState();
 }
 
-// enum ChatType {
-//   current,
-//   completed,
-//   rejected,
-//   pending,
-//   cancelled
-// }
 class _ChatsBodyState extends State<_ChatsBody> {
-
-  // String _getChatType(ChatType chatType){
-  //   switch(chatType){
-  //     case ChatType.current:
-  //       return ApiConstants.currentChats;
-  //
-  //     case ChatType.completed:
-  //       return ApiConstants.completedChats;
-  //
-  //     case ChatType.rejected:
-  //       return ApiConstants.rejectedChats;
-  //
-  //     case ChatType.cancelled:
-  //       return ApiConstants.cancelledChats;
-  //
-  //     case ChatType.pending:
-  //       return ApiConstants.pendingChats;
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -144,10 +121,12 @@ class _ChatsBodyState extends State<_ChatsBody> {
             children: List.generate(
                 data.length,
                     (index) => InkWell(
-                      onTap: () => Go.to(ChatScreen(
-                        receiverId: data[index].room?.members?.first.id ?? 0,
-                        fromHome: 1,
-                      )),
+                      onTap: () async => Go.to(ChatScreen(
+                          receiverId: data[index].room?.members?.first.id ?? 0,
+                          receiverName: data[index].room?.members?.first.name ?? '',
+                          fromHome: 1,
+                        )),
+
                       child: ChatCard(
                           url: data[index].room?.members?.first.image ?? '',
                           time: data[index].room?.lastMessageCreatedDt ?? '',

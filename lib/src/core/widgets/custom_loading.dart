@@ -17,4 +17,8 @@ class CustomLoading {
   static void showFullScreenLoading() => FullScreenLoadingManager.show();
 
   static void hideFullScreenLoading() => FullScreenLoadingManager.hide();
+  static void manageFullScreenLoading(Future<void> Function() call) {
+      CustomLoading.showFullScreenLoading();
+      CustomLoading.hideFullScreenLoading();
+    }
 }

@@ -23,7 +23,7 @@ extension FormatString on String {
   ChatStages get getCurrentStageAsStagesEnum => ChatStages.values
       .firstWhere((e) => this == e.stageText);
 
-  MatchRequest get getMatchRequest => MatchRequest.values
+  MatchRequestEnum get getMatchRequest => MatchRequestEnum.values
       .firstWhere((e) => this == e.requestName);
 
   UserRequestStatus get getUserRequestStatus => UserRequestStatus.values

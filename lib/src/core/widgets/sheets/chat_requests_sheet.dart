@@ -22,7 +22,7 @@ class ChooseRequestSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String selectedVal = '';
+    String selectedVal = titles.first;
     return Column(
       spacing: 10.h,
       children: [
@@ -41,7 +41,7 @@ class ChooseRequestSheet extends StatelessWidget {
         ),
 
         AppLoadingButton(
-            asyncCall: (context) => onConfirm.call(context, selectedVal),
+            asyncCall: (context)async => await onConfirm.call(context, selectedVal),
             title: LocaleKeys.confirm
         )
       ],

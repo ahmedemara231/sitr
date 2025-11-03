@@ -50,7 +50,7 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
 
   void _selectedImageListener() => _selectedImage.value.isNotNull?
   Go.to(BlocProvider.value(
-    value: context.read<StartChatCubit>(),
+    value: context.read<ChatCubit>(),
     child: ChatImageViewerWidget(
       image: _selectedImage.value!,
       onUpload: widget.onUpload,
@@ -67,47 +67,44 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 75.h,
-            child: Container(
-              color: AppColors.whiteGreyColor,
-              padding: EdgeInsets.all(16.r),
-              child: Row(
-                spacing: 10.w,
-                children: [
-                  InkWell(
-                    onTap: _chatCont.text.isEmpty && _selectedImage.value.isNull ? null : () {
-                      widget.onSend.call(context, _chatCont.text);
-                      _chatCont.clear();
-                      _selectedImage.value = null;
-                    },
-                    child: Container(
-                      padding: EdgeInsets.all(10.sp),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.r),
-                        color: Colors.white,
-                      ),
-                      child: const SvgPic(assetName: Assets.svgSend, color: AppColors.primary),
+          Container(
+            color: AppColors.whiteGreyColor,
+            padding: EdgeInsets.all(16.r),
+            child: Row(
+              spacing: 10.w,
+              children: [
+                InkWell(
+                  onTap: _chatCont.text.isEmpty && _selectedImage.value.isNull ? null : () {
+                    widget.onSend.call(context, _chatCont.text);
+                    _chatCont.clear();
+                    _selectedImage.value = null;
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(10.sp),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.r),
+                      color: Colors.white,
+                    ),
+                    child: const SvgPic(assetName: Assets.svgSend, color: AppColors.primary),
+                  ),
+                ),
+                Expanded(
+                  child: DefaultTextField(
+                    controller: _chatCont,
+                    maxLines: 5,          // grows up to 5 lines
+                    // inputType: TextInputType.multiline,
+                    action: TextInputAction.newline,
+                    title: LocaleKeys.hereIsTheTextOfTheMessageHereIsTheTextOfTheMessageHereIsTheTextOfTheMessage,
+                    prefixIcon: IconButton(
+                        onPressed: () async{
+                          final result = await Helpers.getImageFromCameraOrDevice();
+                          _selectedImage.value = result;
+                        },
+                        icon: const Icon(Icons.camera_alt_sharp, color: AppColors.primary)
                     ),
                   ),
-                  Expanded(
-                    child: DefaultTextField(
-                      controller: _chatCont,
-                      maxLines: 5,          // grows up to 5 lines
-                      // inputType: TextInputType.multiline,
-                      action: TextInputAction.newline,
-                      title: LocaleKeys.hereIsTheTextOfTheMessageHereIsTheTextOfTheMessageHereIsTheTextOfTheMessage,
-                      prefixIcon: IconButton(
-                          onPressed: () async{
-                            final result = await Helpers.getImageFromCameraOrDevice();
-                            _selectedImage.value = result;
-                          },
-                          icon: const Icon(Icons.camera_alt_sharp, color: AppColors.primary)
-                      ),
-                    ),
-                  )
-                ],
-              ),
+                )
+              ],
             ),
           ).paddingBottom(MediaQuery.of(context).viewInsets.bottom),
         ],

@@ -37,7 +37,7 @@ class ChatImageViewerWidget extends StatelessWidget {
               builder: (context, state) => InkWell(
                 onTap: () => context.read<UploadImageCubit>().uploadImage(
                     image: image,
-                    roomId: context.read<StartChatCubit>().state.data.room!.id.toString(),
+                    roomId: context.read<ChatCubit>().state.data.room!.id.toString(),
                     onSuccess: (data){
                       onUpload.call(state.data);
                       Go.back();
