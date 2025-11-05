@@ -7,9 +7,9 @@ import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/choose_from_options.dart';
 
 class ShariaaMeetingSkipping extends StatelessWidget {
-  final FutureOr<void> Function(BuildContext context, String val) onChanged;
+  final FutureOr<void> Function(BuildContext context, String val) onSubmit;
   ShariaaMeetingSkipping({super.key,
-    required this.onChanged,
+    required this.onSubmit,
   });
 
   final List<String> options = [LocaleKeys.moveToNextStage, LocaleKeys.continueTheStage];
@@ -17,7 +17,7 @@ class ShariaaMeetingSkipping extends StatelessWidget {
   Widget build(BuildContext context) {
     String selectedVal = options.first;
     return AppBottomSheet.small(
-        asyncCall: (context) => onChanged.call(context, selectedVal),
+        asyncCall: (context) => onSubmit.call(context, selectedVal),
         btnTitle: LocaleKeys.confirm,
         upperWidget: Column(
           spacing: 10.h,
@@ -25,7 +25,10 @@ class ShariaaMeetingSkipping extends StatelessWidget {
             AppText(LocaleKeys.shariaaMeetingStage),
             AppText(LocaleKeys.optionalStageYouCanSkipThisStage),
             ChooseFromOptionsWidget(
-                onSelectOption: (val) => selectedVal = val,
+              onSelectOption: (val) => selectedVal = val,
+              ranking: OptionsRanking.vertical,
+              fontSize: 16,
+              childPadding: EdgeInsets.symmetric(vertical: 16.h),
                 titles: options,
             ),
           ],

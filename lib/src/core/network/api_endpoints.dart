@@ -95,5 +95,8 @@ class ApiConstants {
   static const String userExtensionRequest = 'user-match-request/extension_request';
   static const String payRequest = 'pay-request/';
   static const String shariaComplaintMeetingTips = 'sharia-complaint-meeting-tips';
+  static const String istikharaTips = 'istikhara-tips';
+  static const String continueStageRequest = 'user-match-request/continue_stage_request';
+  static const String informParentsTips = 'inform-parents';
 
 }

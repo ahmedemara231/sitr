@@ -6,6 +6,7 @@ import '../../../config/language/locale_keys.g.dart';
 import '../../../core/widgets/app_pagify.dart';
 import '../../../core/widgets/app_text.dart';
 import '../../../core/widgets/scaffolds/app_scaffold.dart';
+import '../../../core/widgets/sheets/payment_sheet.dart';
 import '../data/packages_data.dart';
 import '../models/package.dart';
 import 'widgets/package_widget.dart';
@@ -15,12 +16,15 @@ enum ScreenType{first, renew}
 class PackagesScreen extends StatelessWidget {
   final ScreenType type;
   final bool isInAuth;
+  final List<PaymentMethod>? paymentMethods;
 
   const PackagesScreen.firstSubscription({super.key,
     this.isInAuth = false,
+    this.paymentMethods,
   }) : type = ScreenType.first;
   const PackagesScreen.renew({super.key,
     required this.isInAuth,
+    this.paymentMethods,
   }) : type = ScreenType.renew;
 
   @override
@@ -34,8 +38,9 @@ class PackagesScreen extends StatelessWidget {
                 asyncCall: (ctx, page) async => await PackagesData.getPackages(),
                 itemBuilder: (ctx, data, index, element) => PackageWidget(
                   type: type,
-                  package: element,
+                  paymentMethods: paymentMethods,
                   isInAuth: isInAuth,
+                  package: element,
                 ),
                 pagifyController: PagifyController()
             )

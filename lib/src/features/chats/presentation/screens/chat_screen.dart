@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/notification/notification_service.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
+import '../../../../core/widgets/app_bottom_sheet.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/custom_loading.dart';
 import '../../../../core/widgets/default_bottom_sheet.dart';
@@ -36,10 +38,12 @@ import '../../../../core/widgets/exeption_view.dart';
 import '../../../../core/widgets/icon_widget.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../core/widgets/sheets/chat_requests_sheet.dart';
+import '../../../../core/widgets/sheets/payment_sheet.dart';
 import '../../../../core/widgets/sheets/success_sheet.dart';
 import '../../../../core/widgets/sheets/tips_sheet.dart';
 import '../../../../core/widgets/svg_pic.dart';
 import '../../../home/home_screen.dart';
+import '../../../packages/presentation/screens/subscription_screen.dart';
 import '../../data/chat_notification_service.dart';
 import '../../data/chat_sheet_manager.dart';
 import '../../data/chats_data.dart';
@@ -47,12 +51,15 @@ import '../../data/models/chat_model.dart';
 import '../../data/models/request_model.dart';
 import '../../enums.dart';
 import '../cubits/notification_cubit.dart';
+import '../cubits/pay_request.dart';
 import '../cubits/start_chat.dart';
 import '../widgets/accept_or_reject_first_stage.dart';
 import '../widgets/accept_or_reject_request.dart';
 import '../widgets/chat/bottom_bar.dart';
 import '../widgets/chat/message_widget.dart';
 import '../widgets/chat/timer.dart';
+import '../widgets/sheets/enter_parent_phone.dart';
+import '../widgets/sheets/inform_parent.dart';
 import '../widgets/sheets/shariaa_meeting_skipping.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -120,7 +127,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     required String requestId,
     required String requestName,
   }) => WidgetsBinding.instance.addPostFrameCallback(
-          (_) => showDefaultBottomSheet(
+          (_) => ChatSheetManager.show(
           child: BlocProvider.value(
             value: context.read<ChatCubit>(),
             child: AcceptOrRejectRequestWidget(
@@ -143,12 +150,8 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
   // make request
   void _makeRequestSheet({
     required String matchReqId,
-  }) => _openSheet(requestId: matchReqId);
-
-  void _openSheet({
-    required String requestId,
   }) => WidgetsBinding.instance.addPostFrameCallback(
-          (_) => showDefaultBottomSheet(
+          (_) => ChatSheetManager.show(
           child: BlocProvider.value(
             value: context.read<ChatCubit>(),
             child: ChooseRequestSheet(
@@ -158,7 +161,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                   requestModel: RequestModel(
                     receiverId: widget.receiverId.toString(),
                     fromHome: widget.fromHome.toString(),
-                    matchRequestId: requestId,
+                    matchRequestId: matchReqId,
                   ),
                   path: selectedVal.pathToRequest,
                 );
@@ -173,12 +176,12 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
       )
   );
 
+
   Widget _upperWidget(ChatModel model){
-    final ChatStages currentStage = model.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum;
     final int? timer = model.matchRequest!.timer;
-    if(currentStage.isChatting && timer.isNotNull && timer.isNotEqualZero){
-     return ChatTimerWidget(seconds: model.room?.timer ?? 5);
-    }
+    if(timer.isNotNull && timer.isNotEqualZero){
+     return ChatTimerWidget(minutes: model.matchRequest?.timer ?? 5);
+   }
 
     return const SizedBox.shrink();
   }
@@ -208,36 +211,84 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     return null;
   }
 
-  Future<void> _startChat()async{
-    await context.read<ChatCubit>().startChat(
-        receiverId: widget.receiverId,
-        fromHome: widget.fromHome,
-        onSuccess: (data){
-          final stage = data.matchRequest!.stage!.value?.getCurrentStageAsStagesEnum;
-          final userStatus = data.matchRequest!.userRequestStatus!.getUserRequestStatus;
-          final timer = data.matchRequest!.timer;
+  bool get _tipsSheetVal{
+    return false;
+  }
 
-          if(!stage!.isNewChat && userStatus.isPending){
-            _openAcceptanceSheet(
-              requestName: data.matchRequest?.userRequest ?? '',
-              requestId: data.matchRequest!.id.toString(),
-            );
+  void Function() _manageSuccessState(ChatModel data) {
+    final stage = data.matchRequest!.stage!.value?.getCurrentStageAsStagesEnum;
+    final userStatus = data.matchRequest!.userRequestStatus!.getUserRequestStatus;
+    final timer = data.matchRequest!.timer;
+    final matchRequest = data.matchRequest!.userRequest!.getMatchRequest;
 
-          }else if(timer.isEqualZero){
-            _makeRequestSheet(matchReqId: data.matchRequest!.id.toString());
+    final bool isTipsSheetOpened = _tipsSheetVal;
 
-          }else if(stage.isShariaComplaintMeeting){
-            showDefaultBottomSheet(
+    if(!stage!.isNewChat && userStatus.isPending){
+      _openAcceptanceSheet(
+        requestName: data.matchRequest?.userRequest ?? '',
+        requestId: data.matchRequest!.id.toString(),
+      );
+
+    }else if((matchRequest.isExtension || matchRequest.isVideoCall || matchRequest.isAdminMeeting) && userStatus.isAccepted){
+      return (){
+        ChatSheetManager.show(
+          child: BlocProvider(
+            create: (context) => PayRequestCubit(),
+            child: BlocProvider.value(
+              value: context.read<ChatCubit>(),
+              child: PaymentSheet(
+                  onPay: (context, payMethod)async => context.read<PayRequestCubit>().pay(
+                      path: ApiConstants.payRequest+context.read<ChatCubit>().userRequest!,
+                      matchRequestId: data.matchRequest!.id.toString(),
+                      paymentMethod: payMethod.name,
+                      onSuccess: (url) async{
+                        Object? result = '';
+
+                        if(payMethod == PaymentMethod.online){
+                          result = await Go.to(SubscriptionScreen(
+                            initialUrl: url!,
+                            title: LocaleKeys.pay
+                          ));
+                        }else if(payMethod == PaymentMethod.wallet){
+                          result = 'success';
+                        }
+
+                        if(result == 'success'){
+                          showDefaultBottomSheet(
+                              child: const SuccessSheet(
+                                isInAuth: false,
+                              )
+                          );
+                        }
+                      },
+                  ),
+              ),
+            ),
+          ),
+        );
+      };
+
+    } else if(stage.isShariaComplaintMeeting){
+      return (){
+        _showTipsSheet(
+            title: LocaleKeys.tipsForShariaComplaintMeeting,
+            path: ApiConstants.shariaComplaintMeetingTips,
+            onConfirm: (context) => ChatSheetManager.show(
+              child: BlocProvider.value(
+                value: context.read<ChatCubit>(),
                 child: ShariaaMeetingSkipping(
-                    onChanged: (context, val)async{
+                    onSubmit: (context, val)async{
                       if(val == LocaleKeys.continueTheStage){
-                        showDefaultBottomSheet(
-                            child: TipsSheet(
-                                title: LocaleKeys.tipsForShariaComplaintMeeting,
-                                path: ApiConstants.shariaComplaintMeetingTips,
-                                onConfirm: (context) => Go.back()
-                            )
+                        await context.read<ChatCubit>().executeRequest(
+                          onSuccess: (chatModel) => Go.back(),
+                          requestModel: RequestModel(
+                            receiverId: widget.receiverId.toString(),
+                            fromHome: widget.fromHome.toString(),
+                            matchRequestId: data.matchRequest!.id.toString(),
+                          ),
+                          path: ApiConstants.continueStageRequest,
                         );
+
                       }else if(val == LocaleKeys.moveToNextStage){
                         await context.read<ChatCubit>().executeRequest(
                           onSuccess: (chatModel) => Go.back(),
@@ -250,69 +301,165 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                         );
                       }
 
+                      // return;
+                    }
+                ),
+              ),
+            )
+        );
+      };
+
+    }else if(stage.isIstikharah){
+      _showTipsSheet(
+        path: ApiConstants.istikharaTips,
+        onConfirm: (context) => Go.back(),
+      );
+
+    }else if(stage.isInformParents){
+      _showTipsSheet(
+          path: ApiConstants.informParentsTips,
+          onConfirm: (context) => ChatSheetManager.show(
+              child: InformParentSheet(
+                  onSubmit: (context, val){
+                    if(val == LocaleKeys.enterParentPhoneNumber){
+                      // ChatSheetManager.show(
+                      //   child: EnterParentPhoneSheet(
+                      //       onSubmit: (context, phone){}
+                      //   ),
+                      // );
+
+                    }else if(val == LocaleKeys.requestForADialogueSessionUnderTheSupervisionOfTheApplication){
+
+
+                    }else{
                       return;
                     }
-                )
-            );
-          }
+                  }
+              )
+          )
+      );
+    }
+    // else if(!isTipsSheetOpened){
+    //   if(stage.isShariaComplaintMeeting){
+    //     return (){
+    //       _showTipsSheet(
+    //           title: LocaleKeys.tipsForShariaComplaintMeeting,
+    //           path: ApiConstants.shariaComplaintMeetingTips,
+    //           onConfirm: (context) => ChatSheetManager.show(
+    //             child: BlocProvider.value(
+    //               value: context.read<ChatCubit>(),
+    //               child: ShariaaMeetingSkipping(
+    //                   onSubmit: (context, val)async{
+    //                     if(val == LocaleKeys.continueTheStage){
+    //                       await context.read<ChatCubit>().executeRequest(
+    //                         onSuccess: (chatModel) => Go.back(),
+    //                         requestModel: RequestModel(
+    //                           receiverId: widget.receiverId.toString(),
+    //                           fromHome: widget.fromHome.toString(),
+    //                           matchRequestId: data.matchRequest!.id.toString(),
+    //                         ),
+    //                         path: ApiConstants.continueStageRequest,
+    //                       );
+    //
+    //                     }else if(val == LocaleKeys.moveToNextStage){
+    //                       await context.read<ChatCubit>().executeRequest(
+    //                         onSuccess: (chatModel) => Go.back(),
+    //                         requestModel: RequestModel(
+    //                           receiverId: widget.receiverId.toString(),
+    //                           fromHome: widget.fromHome.toString(),
+    //                           matchRequestId: data.matchRequest!.id.toString(),
+    //                         ),
+    //                         path: ApiConstants.userMoveToNextRequest,
+    //                       );
+    //                     }
+    //
+    //                     // return;
+    //                   }
+    //               ),
+    //             ),
+    //           )
+    //       );
+    //     };
+    //
+    //   }else if(stage.isIstikharah){
+    //     _showTipsSheet(
+    //       path: ApiConstants.istikharaTips,
+    //       onConfirm: (context) => Go.back(),
+    //     );
+    //
+    //   }else if(stage.isInformParents){
+    //     _showTipsSheet(
+    //         path: ApiConstants.informParentsTips,
+    //         onConfirm: (context) => ChatSheetManager.show(
+    //             child: InformParentSheet(
+    //                 onSubmit: (context, val){
+    //                   if(val == LocaleKeys.enterParentPhoneNumber){
+    //                     // ChatSheetManager.show(
+    //                     //   child: EnterParentPhoneSheet(
+    //                     //       onSubmit: (context, phone){}
+    //                     //   ),
+    //                     // );
+    //
+    //                   }else if(val == LocaleKeys.requestForADialogueSessionUnderTheSupervisionOfTheApplication){
+    //
+    //
+    //                   }else{
+    //                     return;
+    //                   }
+    //                 }
+    //             )
+    //         )
+    //     );
+    //   }
 
-          // else if(stage!.isChatting && userStatus.isUndefined && data.matchRequest!.timer.isEqualZero){
-          //   _makeRequestSheet(matchReqId: data.matchRequest!.id.toString());
-          // }
 
-          // _makeActionsBasedCurrentData(
-          //   matchReqId: data.matchRequest!.id.toString(),
-          // );
-        }
+    // }
+    else if(timer.isEqualZero){
+      log('timer::: $timer ${timer.isEqualZero}');
+      return (){
+        _makeRequestSheet(matchReqId: data.matchRequest!.id.toString());
+      };
+
+    }else if(matchRequest.isParentMeeting){
+      // show parent sheet
+    }
+
+    return (){};
+  }
+
+
+  void _showTipsSheet({
+    String? title,
+    required String path,
+    required void Function(BuildContext context) onConfirm
+  }){
+    ChatSheetManager.show(
+      child: BlocProvider.value(
+        value: context.read<ChatCubit>(),
+        child: TipsSheet(
+            title: title ?? '',
+            path: path,
+            onConfirm: onConfirm
+        ),
+      )
+    );
+  }
+
+  Future<void> _startChat()async{
+    await context.read<ChatCubit>().startChat(
+        receiverId: widget.receiverId,
+        fromHome: widget.fromHome,
+        onSuccess: (data) => _manageSuccessState.call(data).call(),
     );
   }
 
   Future<void> _showBased(RemoteMessage notification)async{
-    _startChat();
-    final ChatStages stage = (notification.data['stage'] as String).getCurrentStageAsStagesEnum;
+    if((notification.data['action'] as Object?).isNotNull){
+      _startChat();
+    }
     // التايمر خلص
     // واحد قدم طلب والتاني المفروض يقبل
     // هترن السيرفس تاني في حالة ان الاتنين وافقو علي اي حاجة
-
-
-    // await context.read<ChatCubit>().startChat(
-    //     receiverId: widget.receiverId,
-    //     fromHome: widget.fromHome
-    // );
-    //
-    // if(context.read<ChatCubit>().currentStageAsEnum!.isShariaComplaintMeeting){
-    //   showDefaultBottomSheet(
-    //       child: ShariaaMeetingSkipping(
-    //           onChanged: (context, val)async{
-    //             if(val == LocaleKeys.continueTheStage){
-    //               showDefaultBottomSheet(
-    //                   child: TipsSheet(
-    //                       title: LocaleKeys.tipsForShariaComplaintMeeting,
-    //                       path: ApiConstants.shariaComplaintMeetingTips,
-    //                       onConfirm: (context) => Go.back()
-    //                   )
-    //               );
-    //             }else if(val == LocaleKeys.moveToNextStage){
-    //               await context.read<ChatCubit>().executeRequest(
-    //                 onSuccess: (chatModel) => Go.back(),
-    //                 requestModel: RequestModel(
-    //                   receiverId: widget.receiverId.toString(),
-    //                   fromHome: widget.fromHome.toString(),
-    //                   matchRequestId: notification.data['match_request_id'],
-    //                 ),
-    //                 path: ApiConstants.userMoveToNextRequest,
-    //               );
-    //             }
-    //
-    //             return;
-    //           }
-    //       )
-    //   );
-    // }
-    //
-    // _makeRequestSheet(
-    //   matchReqId: notification.data[''],
-    // );
   }
 
   final PagifyController<ChatMessages> _chatController = PagifyController<ChatMessages>();
@@ -352,7 +499,9 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
           BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
               builder: (context, state) => StatusBuilder(
                 data: state,
-                onSuccess: (data, context) => context.read<ChatCubit>().currentStage?.value?.getCurrentStageAsStagesEnum.isShariaComplaintMeeting ?? false?
+                onSuccess: (data, context) =>
+                context.read<ChatCubit>().currentStage!.value!.getCurrentStageAsStagesEnum.isShariaComplaintMeeting &&
+                    data.matchRequest!.timer.isNotEqualZero ?
                   Helpers.zegoService.zegoButton(
                     isVideoCall: true,
                     icon: const SvgPic(assetName: Assets.svgVideoCall),

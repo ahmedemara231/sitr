@@ -23,10 +23,12 @@ class PackageWidget extends StatelessWidget {
   final ScreenType type;
 
   final bool isInAuth;
+  final List<PaymentMethod>? paymentMethods;
 
   const PackageWidget({super.key,
     required this.type,
     required this.package,
+    this.paymentMethods,
     this.isInAuth = false,
   });
 
@@ -74,21 +76,27 @@ class PackageWidget extends StatelessWidget {
                           LocaleKeys.subscribeToPackage : LocaleKeys.renewPackage,
                           onTap: () => showDefaultBottomSheet(
                               child: PaymentSheet(
+                                paymentMethods: paymentMethods,
                                 onPay: (ctx, paymentMethod) async => context.read<PackagesManagerCubit>().subscribeOrRenewPackage(
                                   packageId: package.id.toString(),
                                   type: type,
                                   paymentMethod: paymentMethod,
                                   onSuccess: (url) async{
-                                    final result = await Go.to(SubscriptionScreen(
-                                      initialUrl: url,
-                                      title: type == ScreenType.first?
-                                      LocaleKeys.subscribeToPackage : LocaleKeys.renewPackage,
-                                    ));
+                                    Object? result = '';
+
+                                    if(paymentMethod == PaymentMethod.online){
+                                      result = await Go.to(SubscriptionScreen(
+                                          initialUrl: url!,
+                                          title: LocaleKeys.pay
+                                      ));
+                                    }else if(paymentMethod == PaymentMethod.wallet){
+                                      result = 'success';
+                                    }
 
                                     if(result == 'success'){
                                       showDefaultBottomSheet(
-                                          child: SuccessSheet(
-                                              isInAuth: isInAuth
+                                          child: const SuccessSheet(
+                                            isInAuth: false,
                                           )
                                       );
                                     }

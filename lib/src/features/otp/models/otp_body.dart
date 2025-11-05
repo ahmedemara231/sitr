@@ -1,4 +1,5 @@
 import '../../../config/language/languages.dart';
+import '../../../core/notification/notification_service.dart';
 import '../../auth/models/auth_body_static_data.dart';
 
 class OtpBody{
@@ -14,7 +15,6 @@ class OtpBody{
     'lang' : Languages.currentLanguage.languageCode,
     'phone' : phone,
     'code' : code,
-    'device_id' : '1111'
-    // 'device_id' : NotificationService.deviceToken
+    'device_id' : NotificationService.deviceToken
   });
 }

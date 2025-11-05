@@ -283,6 +283,11 @@
   "Tips for sharia complaint meeting" : "نصائح لمرحلة النظرة الشرعية",
   "Optional stage you can skip this stage" : "مرحلة اختيارية يمكنك تخطي هذه المرحلة",
   "Shariaa meeting stage" : "مرحلة النظرة الشرعية",
-  "Continue the stage" : "استكمال المرحلة"
+  "Continue the stage" : "استكمال المرحلة",
+  "enter parent phone number" : "ادخال رقم ولي الامر",
+  "Request for a dialogue session under the supervision of the application" : "طلب لقاء حواري تحت اشراف التطبيق",
+  "please select" : "يرجي التحديد",
+  "please enter parent phone number": "يرجي ادخال رقم ولي الامر",
+  "Enter the following option external communication will be established" : "قم بادخال الخيار التالي سيتم التواصل خارجيا"
 
 }

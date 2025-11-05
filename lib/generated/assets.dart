@@ -3,6 +3,7 @@ class Assets {
   Assets._();
 
   static const String assetsSvgPackageIcon = 'assets/svg/package_icon.svg';
+  static const String svgWalletPay = 'assets/svg/wallet_pay.svg';
   static const String svgVideoCall = 'assets/svg/video_call.svg';
   static const String dataEmptyBox = 'assets/lottie/data/empty_box.json';
   static const String dataEmptyCart = 'assets/lottie/data/empty_cart.json';

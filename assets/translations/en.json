@@ -278,5 +278,10 @@
   "tips_for_sharia_complaint_meeting": "Tips for sharia complaint meeting",
   "optional_stage_you_can_skip_this_stage": "Optional stage you can skip this stage",
   "shariaa_meeting_stage": "Shariaa meeting stage",
-  "continue_the_stage": "Continue the stage"
+  "continue_the_stage": "Continue the stage",
+  "enter_parent_phone_number": "enter parent phone number",
+  "request_for_a_dialogue_session_under_the_supervision_of_the_application": "Request for a dialogue session under the supervision of the application",
+  "please_select": "please select",
+  "please_enter_parent_phone_number": "please enter parent phone number",
+  "enter_the_following_option_external_communication_will_be_established": "Enter the following option external communication will be established"
 }

@@ -12,17 +12,13 @@ class CompleteProfileCubit extends AsyncCubit<UserModel>{
   CompleteProfileCubit() : super(UserModel.initial());
 
   Future<void> completeProfile({
-    required bool isParent,
     required IndividualUserModel body,
     required void Function() onSuccess
 })async{
     await executeAsync(
         operation: () async => await baseCrudUseCase.call<UserModel>(
             CrudBaseParmas(
-                api: isParent?
-                ApiConstants.addChild :
-                ApiConstants.completeRegister,
-
+                api: ApiConstants.completeRegister,
                 httpRequestType: HttpRequestType.post,
                 body: body.toRequestBodyJson(false),
                 mapper: (data) => UserModel.fromJson(data)

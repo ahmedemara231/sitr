@@ -278,5 +278,10 @@
   "tips_for_sharia_complaint_meeting": "نصائح لمرحلة النظرة الشرعية",
   "optional_stage_you_can_skip_this_stage": "مرحلة اختيارية يمكنك تخطي هذه المرحلة",
   "shariaa_meeting_stage": "مرحلة النظرة الشرعية",
-  "continue_the_stage": "استكمال المرحلة"
+  "continue_the_stage": "استكمال المرحلة",
+  "enter_parent_phone_number": "ادخال رقم ولي الامر",
+  "request_for_a_dialogue_session_under_the_supervision_of_the_application": "طلب لقاء حواري تحت اشراف التطبيق",
+  "please_select": "يرجي التحديد",
+  "please_enter_parent_phone_number": "يرجي ادخال رقم ولي الامر",
+  "enter_the_following_option_external_communication_will_be_established": "قم بادخال الخيار التالي سيتم التواصل خارجيا"
 }

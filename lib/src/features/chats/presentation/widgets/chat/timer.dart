@@ -7,9 +7,9 @@ import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/widgets/app_text.dart';
 
 class ChatTimerWidget extends StatefulWidget {
-  final int seconds;
+  final int minutes;
   const ChatTimerWidget({super.key,
-    required this.seconds,
+    required this.minutes,
   });
 
   @override
@@ -37,11 +37,11 @@ class _ChatTimerWidgetState extends State<ChatTimerWidget> {
   Widget build(BuildContext context) {
     return EasyTimerCount.builder(
         controller: _timerCont,
-        duration: EasyTime(seconds: widget.seconds),
+        duration: EasyTime(minutes: widget.minutes),
         builder: (time) => Column(
           spacing: 10.h,
           children: [
-            AppText(LocaleKeys.sufficientKnowledge),
+            // AppText(LocaleKeys.sufficientKnowledge),
             Row(
               spacing: 5.w,
               mainAxisAlignment: MainAxisAlignment.center,

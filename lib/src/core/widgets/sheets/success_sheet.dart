@@ -36,11 +36,8 @@ class SuccessSheet extends StatelessWidget {
                    scaffoldType: ScaffoldType.centerCard,
                    showConditionsAndTerms: true,
                    showAlreadyHaveAccount: true,
-                   onClick: (context, user) => UserTypeHelper.currentType!.isParent? context.read<AddChildCubit>().addChild(
+                   onClick: (context, user) => context.read<AddChildCubit>().addChild(
                      body: user, onSuccess: () => showDefaultBottomSheet(child: const AddChildSheet()),
-                   ) : context.read<CompleteProfileCubit>().completeProfile(
-                     isParent: false,
-                     body: user, onSuccess: () => showDefaultBottomSheet(child: const CompleteProfileSheet()),
                    )
                ) :
                EnterMaleOrFemaleOrChildDataScreen.individual(
@@ -48,10 +45,7 @@ class SuccessSheet extends StatelessWidget {
                    showConditionsAndTerms: true,
                    showAlreadyHaveAccount: true,
                    userType: UserModel.currentUser?.gender?.userType,
-                   onClick: (context, user) => UserTypeHelper.currentType!.isParent? context.read<AddChildCubit>().addChild(
-                     body: user, onSuccess: () => showDefaultBottomSheet(child: const AddChildSheet()),
-                   ) : context.read<CompleteProfileCubit>().completeProfile(
-                     isParent: UserTypeHelper.currentType!.isParent,
+                   onClick: (context, user) => context.read<CompleteProfileCubit>().completeProfile(
                      body: user, onSuccess: () => showDefaultBottomSheet(child: const CompleteProfileSheet()),
                    ),
                )

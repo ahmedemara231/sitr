@@ -823,4 +823,19 @@ abstract class LocaleKeys {
   static const String _continueTheStage = 'continue_the_stage';
   static String get continueTheStage => _continueTheStage.tr();
 
+  static const String _enterParentPhoneNumber = 'enter_parent_phone_number';
+  static String get enterParentPhoneNumber => _enterParentPhoneNumber.tr();
+
+  static const String _requestForADialogueSessionUnderTheSupervisionOfTheApplication = 'request_for_a_dialogue_session_under_the_supervision_of_the_application';
+  static String get requestForADialogueSessionUnderTheSupervisionOfTheApplication => _requestForADialogueSessionUnderTheSupervisionOfTheApplication.tr();
+
+  static const String _pleaseSelect = 'please_select';
+  static String get pleaseSelect => _pleaseSelect.tr();
+
+  static const String _pleaseEnterParentPhoneNumber = 'please_enter_parent_phone_number';
+  static String get pleaseEnterParentPhoneNumber => _pleaseEnterParentPhoneNumber.tr();
+
+  static const String _enterTheFollowingOptionExternalCommunicationWillBeEstablished = 'enter_the_following_option_external_communication_will_be_established';
+  static String get enterTheFollowingOptionExternalCommunicationWillBeEstablished => _enterTheFollowingOptionExternalCommunicationWillBeEstablished.tr();
+
 }

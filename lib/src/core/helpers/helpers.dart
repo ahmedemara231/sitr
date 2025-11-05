@@ -28,20 +28,13 @@ class Helpers {
       zegoService = ZegoService(
           appId: ConstantManager.zegoAppId,
           appSign: ConstantManager.zegoAppSign,
-          navigatorKey: Go.navigatorKey);
-
-      await zegoService.initZego();
-      final bool isConnected = await zegoService.onUserLogin(
-          currentUserId: UserModel.currentUser!.id.toString(),
-          currentUserName: UserModel.currentUser!.name.toString()
+          navigatorKey: Go.navigatorKey
       );
 
-      if (isConnected) {
-        log('✅ Zego service initialized successfully');
-      } else {
-        log('⚠️ Zego service failed to initialize');
-      }
+      await zegoService.initZego();
   }
+
+  static String get deviceType => Platform.isAndroid? 'android' : 'ios';
 
   static Future<void> manageBlocListener(
     BaseStatus baseStatus, {

@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onConfirmCode: (ctx, code) => ctx.read<OtpCubit>().sendOtp(
                           type: OtpType.afterLogin,
                           body: OtpBody(phone: _phoneCont.text, code: code),
-                          onSuccess: (user) {
+                          onSuccess: (user)async {
                             showDefaultBottomSheet(
                               enableDrag: false,
                                 child: BlocProvider(
@@ -80,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       asyncCall: (context) async {
                                         UserCubit.instance.setUserLoggedIn(user: user, token: user.token??'');
                                         user.completeRegistration?.manageNavigationBasedCompleteRegisterStatus();
-                                      },
+                                        },
                                       btnTitle: LocaleKeys.accept,
                                       upperWidget: Column(
                                         children: [

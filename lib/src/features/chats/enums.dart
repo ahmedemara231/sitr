@@ -43,13 +43,14 @@ extension CheckChatStages on ChatStages{
   bool get isNewChat =>  this == ChatStages.newChat;
   bool get isChatting =>  this == ChatStages.chatting;
   bool get isShariaComplaintMeeting => this == ChatStages.shariaComplaintMeeting;
-  bool get isIstirah => this == ChatStages.istikharah;
+  bool get isIstikharah => this == ChatStages.istikharah;
   bool get isInformParents => this == ChatStages.informParents;
   bool get isEngagement => this == ChatStages.engagement;
   bool get isIndividualParent => this == ChatStages.individualParent;
 }
 
 enum MatchRequestEnum{
+  noRequests(-1, 'no_requests'),
   moveToNext(0, 'next_stage_request'),
   reject(2, 'reject_request'),
   extension(1, 'extension_request'),
@@ -57,8 +58,8 @@ enum MatchRequestEnum{
   adminMeeting(4, 'admin_meeting_request'),
   parentMeeting(5, 'parent_meeting_request'),
   parentExchangeNumbers(6, 'parent_exchange_numbers'),
-  parentIndividualApproval(7, 'parent_individual_approval');
-
+  parentIndividualApproval(7, 'parent_individual_approval'),
+  continueStageRequest(8, 'continue_stage_request');
 
   final int id;
   final String requestName;

@@ -39,6 +39,7 @@ import '../../core/widgets/default_bottom_sheet.dart';
 import '../../core/widgets/lang_icon.dart';
 import '../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../core/widgets/scaffolds/auth_scaffold.dart';
+import '../../core/widgets/sheets/payment_sheet.dart';
 import '../../core/widgets/sheets/success_sheet.dart';
 import '../../core/widgets/text_fields/default_text_field.dart';
 import '../home/home_screen.dart';

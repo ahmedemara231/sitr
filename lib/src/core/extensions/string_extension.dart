@@ -9,6 +9,8 @@ import '../../features/auth/imports.dart';
 import '../../features/auth/presentation/cubits/add_child.dart';
 import '../../features/auth/presentation/cubits/complete_profile_cubit.dart';
 import '../../features/auth/presentation/enums/complete_register_status.dart';
+import '../../features/auth/presentation/widgets/sign_up/sheets/add_child_sheet.dart';
+import '../../features/auth/presentation/widgets/sign_up/sheets/complete_profile_sheet.dart';
 import '../../features/chats/enums.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/packages/presentation/packages_screen.dart';
@@ -16,6 +18,8 @@ import '../helpers/user_type_enum.dart';
 import '../navigation/navigator.dart';
 import '../network/api_endpoints.dart';
 import '../shared/models/user_models/user_model.dart';
+import '../widgets/default_bottom_sheet.dart';
+import '../widgets/sheets/payment_sheet.dart';
 
 
 extension FormatString on String {
@@ -65,31 +69,52 @@ extension FormatString on String {
       Go.offAll(const HomeScreen());
 
     }else if(statusType.isNotSubscribed){
-      Go.to(const PackagesScreen.firstSubscription(isInAuth: true));
+      Go.to(const PackagesScreen.firstSubscription(
+          paymentMethods: [PaymentMethod.online],
+          isInAuth: true,
+      ));
 
     }else if(statusType.isCompleteChild){
       Go.to(EnterMaleOrFemaleOrChildDataScreen.withParent(
           scaffoldType: ScaffoldType.centerCard,
-          showAlreadyHaveAccount: true,
           showConditionsAndTerms: true,
+          showAlreadyHaveAccount: true,
           onClick: (context, user) => context.read<AddChildCubit>().addChild(
-            body: user,
-            onSuccess: () {},
+            body: user, onSuccess: () => showDefaultBottomSheet(child: const AddChildSheet()),
           )
       ));
+
     }else if(statusType.isHasSetrCode){
+      Go.to(
+          UserTypeHelper.currentType!.isParent?
+          EnterMaleOrFemaleOrChildDataScreen.withParent(
+              scaffoldType: ScaffoldType.centerCard,
+              showConditionsAndTerms: true,
+              showAlreadyHaveAccount: true,
+              onClick: (context, user) => context.read<AddChildCubit>().addChild(
+                body: user, onSuccess: () => showDefaultBottomSheet(child: const AddChildSheet()),
+              )
+          ) :
+          EnterMaleOrFemaleOrChildDataScreen.individual(
+            scaffoldType: ScaffoldType.centerCard,
+            showConditionsAndTerms: true,
+            showAlreadyHaveAccount: true,
+            userType: UserModel.currentUser?.gender?.userType,
+            onClick: (context, user) => context.read<CompleteProfileCubit>().completeProfile(
+              body: user, onSuccess: () => showDefaultBottomSheet(child: const CompleteProfileSheet()),
+            ),
+          )
+      );
 
     }else if(statusType.isIncomplete){
       Go.to(EnterMaleOrFemaleOrChildDataScreen.individual(
-          scaffoldType: ScaffoldType.centerCard,
-          showAlreadyHaveAccount: true,
-          showConditionsAndTerms: true,
-          userType: UserModel.currentUser?.gender?.userType,
-          onClick: (context, user) => context.read<CompleteProfileCubit>().completeProfile(
-              body: user,
-              onSuccess: () {},
-              isParent: false
-          ),
+        scaffoldType: ScaffoldType.centerCard,
+        showConditionsAndTerms: true,
+        showAlreadyHaveAccount: true,
+        userType: UserModel.currentUser?.gender?.userType,
+        onClick: (context, user) => context.read<CompleteProfileCubit>().completeProfile(
+          body: user, onSuccess: () => showDefaultBottomSheet(child: const CompleteProfileSheet()),
+        ),
       ));
 
     }else{

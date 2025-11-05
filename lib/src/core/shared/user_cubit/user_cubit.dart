@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../config/res/config_imports.dart';
 import '../../helpers/cache_service.dart';
+import '../../helpers/helpers.dart';
 import '../../network/log_interceptor.dart';
 import '../../network/network_service.dart';
 import '../models/user_models/user_model.dart';
@@ -46,6 +47,19 @@ class UserCubit extends Cubit<UserState> with UserUtils {
     emit(state.copyWith(userModel: user));
   }
 
+  Future<void> _initZego()async{
+    final bool isConnected = await Helpers.zegoService.onUserLogin(
+        currentUserId: UserModel.currentUser!.id.toString(),
+        currentUserName: UserModel.currentUser!.name.toString()
+    );
+
+    if (isConnected) {
+      log('✅ Zego service initialized successfully');
+    } else {
+      log('⚠️ Zego service failed to initialize');
+    }
+  }
+
   Future<bool> init() async {
     final Map<String, dynamic>? userMap = CacheStorage.read(
       _userKey,
@@ -55,6 +69,7 @@ class UserCubit extends Cubit<UserState> with UserUtils {
     log('userMap $userMap, token $token');
     if (token != null && userMap != null) {
       injector<NetworkService>().setToken(token);
+      _initZego();
       emit(
         state.copyWith(
           userModel: UserModel.fromJson(userMap),

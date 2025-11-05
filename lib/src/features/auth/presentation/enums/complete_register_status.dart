@@ -2,8 +2,8 @@ enum CompleteRegisterStatus{
   completed('completed'),
   notSubscribed('not_subscribed'),
   hasSetrCode('has_setr_code'),
-  completeChild('complete_child'),
-  incomplete('incomplete');
+  completeChild('complete_child'), // parent
+  incomplete('incomplete'); // male - female
 
   final String status;
   const CompleteRegisterStatus(this.status);

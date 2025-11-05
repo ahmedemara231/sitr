@@ -11,7 +11,7 @@ import '../svg_pic.dart';
 
 enum PaymentMethod {
   online(0, Assets.svgOnlinePayment),
-  wallet(1, Assets.svgWallet);
+  wallet(1, Assets.svgWalletPay);
 
   final int id;
   final String image;
@@ -45,9 +45,11 @@ extension GetPayMethodAsString on PaymentMethod{
 }
 
 class PaymentSheet extends StatefulWidget {
+  final List<PaymentMethod>? paymentMethods;
   final Future<void> Function(BuildContext context, PaymentMethod paymentMethod) onPay;
   const PaymentSheet({super.key,
-    required this.onPay
+    required this.onPay,
+    this.paymentMethods = PaymentMethod.values,
   });
 
   @override
@@ -62,15 +64,6 @@ class _PaymentSheetState extends State<PaymentSheet> {
     paymentMethod = newIndex.getPaymentMethod;
   }
 
-  // final List paymentMethodCards = [
-  //   Column(
-  //     children: [
-  //       const SvgPic(assetName: Assets.svgOnlinePayment).paddingAll(20),
-  //       AppText(LocaleKeys.onlinePayment, fontWeight: FontWeight.bold,)
-  //     ],
-  //   ),
-  // ];
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -81,7 +74,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
         Column(
           spacing: 7.h,
           children: List.generate(
-              PaymentMethod.values.length,
+              widget.paymentMethods!.length,
                   (index) => InkWell(
                     onTap: () => _changeIndex(index),
                     child: Container(
@@ -94,7 +87,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
                           )
                       ),
                       child: Center(
-                        child: _PackageCard(paymentMethod: PaymentMethod.values[index]).paddingAll(12.r),
+                        child: _PackageCard(paymentMethod: widget.paymentMethods![index]).paddingAll(12.r),
                       ),
                     ),
                   ),
