@@ -5,7 +5,7 @@ class GetTipsCubit extends AsyncCubit<List<String>>{
   GetTipsCubit() : super([]);
 
   Future<void> getTips(String path)async{
-    await executeAsync(
+    await executeAsyncWithBaseModel(
       operation: () => baseCrudUseCase.call(
         CrudBaseParmas(
             api: path,

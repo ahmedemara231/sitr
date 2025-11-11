@@ -7,7 +7,7 @@ class ResendCodeCubit extends AsyncCubit{
   ResendCodeCubit() : super(null);
 
   Future<void> resendOtp({required ResendCodeBody body}) async {
-    await executeAsync(
+    await executeAsyncWithBaseModel(
         operation: () => baseCrudUseCase.call(
           CrudBaseParmas(
               api: ApiConstants.resendCode,

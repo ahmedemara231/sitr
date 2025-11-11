@@ -43,7 +43,7 @@ class ChangePhoneManagerCubit extends AsyncCubit{
     String? phone, String? code,
     FutureOr<void> Function(dynamic data)? onSuccess
 })async{
-    await executeAsync(
+    await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call(
             CrudBaseParmas(
                 api: _getEndPoint(phase),

@@ -7,7 +7,7 @@ class LogoutCubit extends AsyncCubit{
   LogoutCubit() : super(null);
 
   Future<void> logout({required void Function() onSuccess})async{
-    await executeAsync(
+    await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call(
             CrudBaseParmas(
               api: ApiConstants.logout,

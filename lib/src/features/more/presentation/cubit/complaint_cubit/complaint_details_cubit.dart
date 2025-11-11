@@ -7,7 +7,7 @@ class ComplaintDetailsCubit extends AsyncCubit<ComplaintDetailsModel?> {
   ComplaintDetailsCubit() : super(null);
 
   Future<void> fetchComplaintDetails(int complaintId) async {
-    await executeAsync(
+    await executeAsyncWithBaseModel(
       operation: () async =>
           await baseCrudUseCase.call<ComplaintDetailsModel>(CrudBaseParmas(
         api: '${ApiConstants.complaintDetails}$complaintId',

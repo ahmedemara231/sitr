@@ -3,7 +3,7 @@ part of '../base_data_imports.dart';
 abstract class BaseRemoteDataSource {
   Future<List<T>> getData<T extends BaseEntity>(GetBaseEntityParams? param);
 
-  Future<T> crudCall<T>(CrudBaseParmas param);
+  Future<BaseModel<T>> crudCall<T>(CrudBaseParmas<T> param);
 }
 
 @LazySingleton(as: BaseRemoteDataSource)
@@ -28,8 +28,8 @@ class BaseRemoteDataSourceImpl implements BaseRemoteDataSource {
   }
 
   @override
-  Future<T> crudCall<T>(CrudBaseParmas param) async {
-    return (await dioService.callApi<T>(
+  Future<BaseModel<T>> crudCall<T>(CrudBaseParmas<T> param) async {
+    final response = await dioService.callApi<T>(
       NetworkRequest(
           path: param.api,
           method: param.httpRequestType.requestMethod,
@@ -38,8 +38,9 @@ class BaseRemoteDataSourceImpl implements BaseRemoteDataSource {
           queryParameters: param.queryParameters,
           onSendProgress: param.onSendProgress
       ),
-      mapper: param.mapper.isNotNull?
-          (json) => param.mapper!.call(json) : null,
-    )).data;
+      mapper: param.mapper,
+    );
+
+    return response;
   }
 }

@@ -40,20 +40,29 @@ class FetchComplaintCubit extends AsyncCubit<List<ComplaintModel>>{
         }..removeWhere((k, v) => v == null || v.toString().isEmpty),
         httpRequestType: HttpRequestType.get,
         mapper: (value) {
-          totalPage=value['pagination']['total_pages'];
-          final consultants = (value['data'] as List)
-              .map((item) => ComplaintModel.fromJson(item))
-              .toList();
-          return consultants;
+          // value contains the data field which has pagination and data
+          if (value is Map && value.containsKey('pagination')) {
+            totalPage = value['pagination']['total_pages'];
+            final consultants = (value['data'] as List)
+                .map((item) => ComplaintModel.fromJson(item))
+                .toList();
+            return consultants;
+          } else {
+            // Fallback if structure is different
+            final consultants = (value as List)
+                .map((item) => ComplaintModel.fromJson(item))
+                .toList();
+            return consultants;
+          }
         },
       ),
     );
 
     result.when(
-          (response) {
-        setSuccess(data:isFirstPage? response:[...response,...state.data]);
+          (baseModelResponse) {
+        // Extract data from BaseModel
+        setSuccess(data:isFirstPage? baseModelResponse.data:[...baseModelResponse.data,...state.data]);
         emit(state.copyWith(status: BaseStatus.success));
-
       },
           (error) {
         MessageUtils.showSnackBar(error.message);

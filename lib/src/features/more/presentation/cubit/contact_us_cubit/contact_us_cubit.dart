@@ -15,7 +15,7 @@ class ContactUsCubit extends AsyncCubit<bool> {
     required String phone,
     required String message,
   }) async {
-    await executeAsync(
+    await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call(CrudBaseParmas(
             api: ApiConstants.contactStore,
             httpRequestType: HttpRequestType.post,

@@ -7,6 +7,7 @@ import '../../../error/failure.dart';
 import '../../../network/network_request.dart';
 import 'entities/country_entity.dart';
 import 'entities/faqs.dart';
+import 'usecases/pagination_response.dart';
 
 part 'entities/async.dart';
 part 'entities/base_name_and_id_entity.dart';

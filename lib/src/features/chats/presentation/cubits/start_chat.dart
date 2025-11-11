@@ -29,7 +29,7 @@ class ChatCubit extends AsyncCubit<ChatModel>{
     required String path,
     required FutureOr<void> Function(ChatModel model) onSuccess,
   })async{
-    await executeAsync(
+    await executeAsyncWithBaseModel(
         operation: () => baseCrudUseCase.call(
           CrudBaseParmas(
             api: path,
@@ -48,7 +48,7 @@ class ChatCubit extends AsyncCubit<ChatModel>{
     void Function(ChatModel chatModel)? onSuccess
 })async{
     await Helpers.initZegoService();
-    await executeAsync(
+    await executeAsyncWithBaseModel(
       operation: () => baseCrudUseCase.call(
           CrudBaseParmas(
             api: ApiConstants.startChat,

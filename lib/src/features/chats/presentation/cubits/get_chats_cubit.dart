@@ -34,7 +34,7 @@ class GetChatsCubit extends AsyncCubit<List<ChatModel>>{
   }
 
   Future<void> getChat(ChatType chatType)async{
-    await executeAsync(
+    await executeAsyncWithBaseModel(
       operation: () => baseCrudUseCase.call(
           CrudBaseParmas(
             api: _getChatType(chatType),

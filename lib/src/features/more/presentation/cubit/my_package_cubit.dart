@@ -7,7 +7,7 @@ class MyPackageCubit extends AsyncCubit<Package>{
   MyPackageCubit() : super(Package.initial());
 
   Future<void> getMyPackage()async{
-    executeAsync(
+    executeAsyncWithBaseModel(
         operation: () => baseCrudUseCase.call(
           CrudBaseParmas(
             api: ApiConstants.myPackage,

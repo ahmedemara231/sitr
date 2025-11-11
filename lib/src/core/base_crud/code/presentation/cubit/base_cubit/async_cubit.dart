@@ -6,6 +6,7 @@ import '../../../../../error/failure.dart';
 import '../../../../../shared/base_state.dart';
 import '../../../../../widgets/custom_messages.dart';
 import '../../../domain/base_domain_imports.dart';
+import '../../../domain/usecases/pagination_response.dart';
 
 part 'async_state.dart';
 
@@ -54,13 +55,33 @@ abstract class AsyncCubit<T> extends Cubit<AsyncState<T>> {
     setLoading();
     final result = await operation();
     result.when(
-      (success) {
+          (success) {
         setSuccess(data: success);
         if (successEmitter != null) {
           successEmitter(success);
         }
       },
-      (failure) {
+          (failure) {
+        MessageUtils.showSnackBar(failure.message);
+        setError(errorMessage: failure.message);
+      },
+    );
+  }
+
+  Future<void> executeAsyncWithBaseModel({
+    required Future<Result<BaseModel<T>, Failure>> Function() operation,
+    Function(T)? successEmitter,
+  }) async {
+    setLoading();
+    final result = await operation();
+    result.when(
+          (success) {
+        setSuccess(data: success.data);
+        if (successEmitter != null) {
+          successEmitter(success.data);
+        }
+      },
+          (failure) {
         MessageUtils.showSnackBar(failure.message);
         setError(errorMessage: failure.message);
       },

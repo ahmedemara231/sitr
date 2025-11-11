@@ -14,7 +14,7 @@ class BaseRepositoryImpl implements BaseRepository {
   }
 
   @override
-  Future<Result<T, Failure>> crudCall<T>(CrudBaseParmas params) async {
+  Future<Result<BaseModel<T>, Failure>> crudCall<T>(CrudBaseParmas<T> params) async {
     return await baseRemoteDataSource
         .crudCall<T>(params)
         .handleCallbackWithFailure();

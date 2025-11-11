@@ -7,7 +7,7 @@ class DeleteAccountCubit extends AsyncCubit{
   DeleteAccountCubit() : super(null);
 
   Future<void> deleteAccount({required void Function() onSuccess})async{
-    await executeAsync(
+    await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call(
             CrudBaseParmas(
                 api: ApiConstants.deleteAccount,

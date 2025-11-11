@@ -5,8 +5,8 @@ part of '../base_domain_imports.dart';
 class BaseCrudUseCase {
   final BaseRepository repository;
   BaseCrudUseCase({required this.repository});
-  Future<Result<T, Failure>> call<T>(
-      CrudBaseParmas param) async {
+  Future<Result<BaseModel<T>, Failure>> call<T>(
+      CrudBaseParmas<T> param) async {
     return await repository.crudCall<T>(param);
   }
 }

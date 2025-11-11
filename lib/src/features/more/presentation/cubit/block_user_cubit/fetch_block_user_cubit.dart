@@ -8,13 +8,13 @@ import '../../models/block_user_model.dart';
 class FetchBlockUserCubit extends AsyncCubit<List<BlockUserModel>>{
   FetchBlockUserCubit():super([]);
   Future<void> fetchBlockUser() async {
-    await executeAsync(
+    await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase
             .call<List<BlockUserModel>>(CrudBaseParmas(
           api: ApiConstants.blockUser,
           httpRequestType: HttpRequestType.get,
           mapper: (data) {
-            final list = data['data']
+            final list = (data as List)
                 .map<BlockUserModel>(
                     (e) => BlockUserModel.fromJson(e))
                 .toList();

@@ -15,7 +15,7 @@ class CompleteProfileCubit extends AsyncCubit<UserModel>{
     required IndividualUserModel body,
     required void Function() onSuccess
 })async{
-    await executeAsync(
+    await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call<UserModel>(
             CrudBaseParmas(
                 api: ApiConstants.completeRegister,

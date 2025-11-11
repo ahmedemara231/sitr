@@ -6,7 +6,7 @@ class AppStagesCubit extends AsyncCubit<List<String>>{
   AppStagesCubit() : super([]);
 
   Future<void> getAppStages()async{
-    await executeAsync(
+    await executeAsyncWithBaseModel(
       operation: () => baseCrudUseCase.call(
           CrudBaseParmas(
             api: ApiConstants.appStages,

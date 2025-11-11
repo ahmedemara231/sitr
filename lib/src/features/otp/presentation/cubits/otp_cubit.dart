@@ -14,7 +14,7 @@ class OtpCubit extends AsyncCubit<UserModel>{
     required OtpBody body,
     FutureOr<void> Function(UserModel data)? onSuccess,
 }) async {
-    await executeAsync(
+    await executeAsyncWithBaseModel(
         operation: () => baseCrudUseCase.call(
           CrudBaseParmas(
               api: type == OtpType.afterLogin?

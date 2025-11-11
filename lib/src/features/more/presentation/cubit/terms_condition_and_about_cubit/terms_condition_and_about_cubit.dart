@@ -6,7 +6,7 @@ class TermsConditionAndAboutCubit  extends AsyncCubit<String>  {
   TermsConditionAndAboutCubit():super('');
 
   Future<void>fetchTermsAndConditions({required StaticPageType staticPageType})async{
-    await executeAsync(
+    await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call<String>(
               CrudBaseParmas(
                   api:staticPageType.name,

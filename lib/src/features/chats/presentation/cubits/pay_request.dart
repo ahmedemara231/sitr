@@ -10,7 +10,7 @@ class PayRequestCubit extends AsyncCubit<String>{
     required String paymentMethod,
     required Function(String? url) onSuccess,
 })async{
-    await executeAsync(
+    await executeAsyncWithBaseModel(
         operation: () => baseCrudUseCase.call(
           CrudBaseParmas(
             api: path,

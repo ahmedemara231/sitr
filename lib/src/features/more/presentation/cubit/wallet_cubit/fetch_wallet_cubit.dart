@@ -9,7 +9,7 @@ class FetchWalletCubit extends AsyncCubit<num>{
   FetchWalletCubit() : super(0);
 
   Future<void> fetchWallet()async{
-      await executeAsync(
+      await executeAsyncWithBaseModel(
           operation: () async => await baseCrudUseCase.call<num>(
               CrudBaseParmas(
                   api: ApiConstants.showWallet,

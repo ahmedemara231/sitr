@@ -7,7 +7,7 @@ class SignUpCubit extends AsyncCubit{
   SignUpCubit() : super(null);
 
   Future<void> signUp(SignUpBody body) async{
-    await executeAsync(
+    await executeAsyncWithBaseModel(
         operation: () => baseCrudUseCase.call(
             CrudBaseParmas(
                 isFromData: true,

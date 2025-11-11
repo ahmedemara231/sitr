@@ -18,7 +18,7 @@ class AddComplaintCubit extends AsyncCubit<bool> {
     required String title,
     required List<File> file,
   }) async {
-    await executeAsync(
+    await executeAsyncWithBaseModel(
       operation: () async => await baseCrudUseCase.call(CrudBaseParmas(
         api: ApiConstants.addComplaint,
         httpRequestType: HttpRequestType.post,

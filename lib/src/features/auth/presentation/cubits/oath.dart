@@ -6,7 +6,7 @@ class OathCubit extends AsyncCubit<String>{
   OathCubit() : super('');
 
   Future<void> getOath()async{
-    await executeAsync(
+    await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call(
           CrudBaseParmas(
             api: ApiConstants.oath,

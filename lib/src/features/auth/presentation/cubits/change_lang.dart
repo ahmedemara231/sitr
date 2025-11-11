@@ -7,7 +7,7 @@ class ChangeLangCubit extends AsyncCubit<String>{
   ChangeLangCubit() : super('');
 
   Future<void> changeLang(String newLang)async{
-    await executeAsync(
+    await executeAsyncWithBaseModel(
       operation: () async => await baseCrudUseCase.call(
         CrudBaseParmas(
           api: ApiConstants.changeLang,

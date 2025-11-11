@@ -4,6 +4,6 @@ abstract class BaseRepository {
   Future<Result<List<T>, Failure>> getBaseIdAndNameEntity<T extends BaseEntity>(
       GetBaseEntityParams? param);
 
-  Future<Result<T, Failure>> crudCall<T>(
-      CrudBaseParmas params);
+  Future<Result<BaseModel<T>, Failure>> crudCall<T>(
+      CrudBaseParmas<T> params);
 }

@@ -14,7 +14,7 @@ class PackagesManagerCubit extends AsyncCubit<String>{
     void Function(String url)? onSuccess
   })async{
     setLoading();
-    await executeAsync(
+    await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call(
             CrudBaseParmas(
                 api: type == ScreenType.first?

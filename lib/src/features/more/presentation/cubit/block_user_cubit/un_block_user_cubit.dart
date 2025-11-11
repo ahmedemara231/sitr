@@ -8,7 +8,7 @@ import '../../models/block_user_model.dart';
 class UnBlockUserCubit extends AsyncCubit{
   UnBlockUserCubit():super(false);
   Future<void> unblockUser({required int userId, Function(dynamic)? function})async{
-    await executeAsync(
+    await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call(CrudBaseParmas(
           api: '${ApiConstants.unBlockUser}$userId',
           httpRequestType: HttpRequestType.delete,

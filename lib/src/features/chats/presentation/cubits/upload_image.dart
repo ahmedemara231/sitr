@@ -8,7 +8,7 @@ class UploadImageCubit extends AsyncCubit<String>{
   UploadImageCubit() : super('');
 
   Future<void> uploadImage({required File image, required String roomId, required Function(String url) onSuccess})async{
-    await executeAsync(
+    await executeAsyncWithBaseModel(
     operation: () => baseCrudUseCase.call(
         CrudBaseParmas(
           api: ApiConstants.uploadImage+roomId,

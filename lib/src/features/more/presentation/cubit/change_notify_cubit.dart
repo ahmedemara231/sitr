@@ -8,7 +8,7 @@ class ChangeNotifyCubit extends AsyncCubit<bool>{
   ChangeNotifyCubit() : super(UserCubit.instance.user.isNotify ?? false);
 
   Future<void> changeNotify()async{
-    await executeAsync(
+    await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call(
             CrudBaseParmas(
               api: ApiConstants.switchNotify,

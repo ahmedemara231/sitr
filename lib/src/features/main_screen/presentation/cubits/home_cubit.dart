@@ -7,7 +7,7 @@ class MainViewCubit extends AsyncCubit<HomeModel>{
   MainViewCubit() : super(HomeModel());
   
   Future<void> getHomeData()async{
-    executeAsync(
+    executeAsyncWithBaseModel(
         operation: () => baseCrudUseCase.call(
           CrudBaseParmas(
             api: ApiConstants.home,
