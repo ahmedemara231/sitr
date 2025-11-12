@@ -157,21 +157,16 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
                       AppText(LocaleKeys.remainingTime, color: Colors.grey),
                       5.szW,
                       AppText(time, fontWeight: FontWeight.w500,),
-                      BlocListener<ResendCodeCubit, AsyncState>(
-                        listener: (context, state) => Helpers.manageBlocListener(
-                          state.status,
-                        ),
-                        child: TextButton(
-                            onPressed: _canResend? () {
-                              context.read<ResendCodeCubit>().resendOtp(body: ResendCodeBody(phone: widget.phone));
-                              _timeCont.restart();
-                              setState(() => _canResend = false);
-                            } : null,
-                            child: AppText(
-                              LocaleKeys.resendCode,
-                              color: _canResend? AppColors.primary : Colors.grey,
-                            )
-                        ),
+                      TextButton(
+                          onPressed: _canResend? () {
+                            context.read<ResendCodeCubit>().resendOtp(body: ResendCodeBody(phone: widget.phone));
+                            _timeCont.restart();
+                            setState(() => _canResend = false);
+                          } : null,
+                          child: AppText(
+                            LocaleKeys.resendCode,
+                            color: _canResend? AppColors.primary : Colors.grey,
+                          )
                       ),
                     ],
                   ),

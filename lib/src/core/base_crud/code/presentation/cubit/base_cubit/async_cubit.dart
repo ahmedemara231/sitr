@@ -70,7 +70,7 @@ abstract class AsyncCubit<T> extends Cubit<AsyncState<T>> {
 
   Future<void> executeAsyncWithBaseModel({
     required Future<Result<BaseModel<T>, Failure>> Function() operation,
-    Function(T)? successEmitter,
+    Function(BaseModel<T>)? successEmitter,
   }) async {
     setLoading();
     final result = await operation();
@@ -78,7 +78,7 @@ abstract class AsyncCubit<T> extends Cubit<AsyncState<T>> {
           (success) {
         setSuccess(data: success.data);
         if (successEmitter != null) {
-          successEmitter(success.data);
+          successEmitter(success);
         }
       },
           (failure) {

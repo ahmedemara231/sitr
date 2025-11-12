@@ -1,3 +1,4 @@
+import '../base_crud/code/domain/usecases/pagination_response.dart';
 import '../shared/base_model.dart';
 import 'network_request.dart';
 

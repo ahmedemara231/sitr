@@ -1,4 +1,5 @@
 import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
+import '../../../../core/base_crud/code/domain/usecases/pagination_response.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../models/sign_up_body.dart';
@@ -6,7 +7,7 @@ import '../../models/sign_up_body.dart';
 class SignUpCubit extends AsyncCubit{
   SignUpCubit() : super(null);
 
-  Future<void> signUp(SignUpBody body) async{
+  Future<void> signUp(SignUpBody body, {required void Function(BaseModel data) onSuccess}) async{
     await executeAsyncWithBaseModel(
         operation: () => baseCrudUseCase.call(
             CrudBaseParmas(
@@ -14,9 +15,9 @@ class SignUpCubit extends AsyncCubit{
                 api: ApiConstants.register,
                 httpRequestType: HttpRequestType.post,
                 body: body.toJson(),
-                mapper: (json) => null
             )
-        )
+        ),
+      successEmitter: (data) => onSuccess.call(data)
     );
   }
 

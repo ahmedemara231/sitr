@@ -60,48 +60,47 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               BlocListener<LoginCubit, AsyncState>(
-                listener: (context, state) => Helpers.manageBlocListener(
-                  state.status,
-                  onSuccess: () {
+                listener: (context, state) {
+                  if(state.isSuccess){
                     Go.to(BlocProvider(
                       create: (context) => OtpCubit(),
                       child: OtpScreen(
                         title: LocaleKeys.confirmCode,
                         phone: _phoneCont.text,
                         onConfirmCode: (ctx, code) => ctx.read<OtpCubit>().sendOtp(
-                          type: OtpType.afterLogin,
-                          body: OtpBody(phone: _phoneCont.text, code: code),
-                          onSuccess: (user)async {
-                            showDefaultBottomSheet(
-                              enableDrag: false,
-                                child: BlocProvider(
-                                  create: (context) => OathCubit()..getOath(),
-                                  child: AppBottomSheet.small(
-                                      asyncCall: (context) async {
-                                        UserCubit.instance.setUserLoggedIn(user: user, token: user.token??'');
-                                        user.completeRegistration?.manageNavigationBasedCompleteRegisterStatus();
+                            type: OtpType.afterLogin,
+                            body: OtpBody(phone: _phoneCont.text, code: code),
+                            onSuccess: (user)async {
+                              showDefaultBottomSheet(
+                                  enableDrag: false,
+                                  child: BlocProvider(
+                                    create: (context) => OathCubit()..getOath(),
+                                    child: AppBottomSheet.small(
+                                        asyncCall: (context) async {
+                                          UserCubit.instance.setUserLoggedIn(user: user, token: user.token??'');
+                                          user.completeRegistration?.manageNavigationBasedCompleteRegisterStatus();
                                         },
-                                      btnTitle: LocaleKeys.accept,
-                                      upperWidget: Column(
-                                        children: [
-                                          AppText(LocaleKeys.oath, fontWeight: FontWeight.w500),
-                                          BlocBuilder<OathCubit, AsyncState<String>>(
-                                              builder: (context, state) => StatusBuilder(
-                                                  data: state,
-                                                  onSuccess: (oath, context) => AppText(oath, fontSize: 12.sp)
-                                              )
-                                          ),
-                                        ],
-                                      )
-                                  ),
-                                )
-                            );
-                          }
+                                        btnTitle: LocaleKeys.accept,
+                                        upperWidget: Column(
+                                          children: [
+                                            AppText(LocaleKeys.oath, fontWeight: FontWeight.w500),
+                                            BlocBuilder<OathCubit, AsyncState<String>>(
+                                                builder: (context, state) => StatusBuilder(
+                                                    data: state,
+                                                    onSuccess: (oath, context) => AppText(oath, fontSize: 12.sp)
+                                                )
+                                            ),
+                                          ],
+                                        )
+                                    ),
+                                  )
+                              );
+                            }
                         ),
                       ),
                     ));
-                 }
-                ),
+                  }
+                },
                 child: AppLoadingButton(
                   title: LocaleKeys.login,
                   asyncCall: (ctx) async {

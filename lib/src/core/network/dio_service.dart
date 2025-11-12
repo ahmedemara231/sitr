@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -6,7 +7,7 @@ import '../../config/language/languages.dart' show Languages;
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../error/exceptions.dart';
-import '../shared/base_model.dart';
+import '../base_crud/code/domain/usecases/pagination_response.dart';
 import 'configuration_interceptor.dart';
 import 'extensions.dart';
 import 'log_interceptor.dart';
@@ -37,11 +38,9 @@ class DioService implements NetworkService {
       })
       ..options.responseType = ResponseType.json;
 
+    _dio.interceptors.add(ConfigurationInterceptor());
     if (kDebugMode) {
-      _dio.interceptors.addAll([
-        LoggerInterceptor(),
-        ConfigurationInterceptor(),
-      ]);
+      _dio.interceptors.add(LoggerInterceptor());
     }
   }
 

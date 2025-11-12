@@ -184,6 +184,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
             onSelectImage: (img) => _listenToData(signUpBody.copyWith(image: img))
         ),
         SignUpTextField(
+          validator: Validators.validateEmpty,
           upperTitle: LocaleKeys.name,
           title: LocaleKeys.pleaseEnterYourName,
           onChanged: (val) => _listenToData(signUpBody.copyWith(
@@ -199,6 +200,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
           // validator: Validators.validateEmpty,
         ),
         SignUpTextField(
+          validator: Validators.validatePhone,
           upperTitle: LocaleKeys.phoneNumber,
           title: LocaleKeys.pleaseEnterTheNumber,
           controller: _getContBasedUserType(
@@ -217,6 +219,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
         Visibility(
           visible: widget.type.isParent,
           child: SignUpTextField(
+            validator: Validators.validateEmail,
             upperTitle: LocaleKeys.email,
             title: LocaleKeys.pleaseEnterTheEmail,
             controller: _emailCont,
@@ -229,6 +232,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
         Visibility(
           visible: widget.type.isIndividual,
           child: SignUpTextField(
+            validator: Validators.validateEmpty,
             upperTitle: LocaleKeys.age,
             title: LocaleKeys.pleaseEnterYourAge,
             onChanged: (val) => _listenToData(
@@ -243,6 +247,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
           ),
         ),
         SignUpTextField(
+          validator: Validators.validateEmpty,
           upperTitle: LocaleKeys.identifyNumber,
           title: LocaleKeys.pleaseEnterTheNumber,
           controller: _getContBasedUserType(
@@ -273,6 +278,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
             },
           ),
           SignUpTextField(
+            validator: Validators.validateEmpty,
             upperTitle: LocaleKeys.childrenNumber,
             title: LocaleKeys.pleaseEnterTheNumber,
             controller: _childrenNumberCont,
@@ -296,6 +302,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
         ],
         SignUpTextField(
           upperTitle: LocaleKeys.code,
+          validator: Validators.validateEmpty,
           title: LocaleKeys.pleaseEnterYourCode,
           onChanged: (val) => _listenToData(signUpBody.copyWith(
               code: _getContBasedUserType(

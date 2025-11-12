@@ -31,7 +31,7 @@ class PackagesManagerCubit extends AsyncCubit<String>{
                 data['redirect_url'] : ''
             )
         ),
-        successEmitter: (data) => onSuccess?.call(data)
+        successEmitter: (data) => onSuccess?.call(data.data)
     );
   }
 

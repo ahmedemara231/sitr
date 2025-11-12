@@ -1,17 +1,21 @@
+import '../../../../extensions/object.dart';
 import '../base_domain_imports.dart';
 
 class BaseModel<T> {
   final String key;
   final String msg;
-  final T? data;
-  BaseModel({required this.key, required this.msg, this.data});
+  final T data;
+  BaseModel({required this.key, required this.msg, required this.data});
 
-  factory BaseModel.fromMap(Map<String, dynamic> map,
-      {T Function(dynamic)? mapper}) {
+  factory BaseModel.fromJson(
+    Map<String, dynamic> json, {
+    T Function(dynamic json)? jsonToModel,
+  }) {
     return BaseModel<T>(
-      key: map['key'] as String,
-      msg: map['msg'] as String,
-      data: map['data'] != null && mapper != null ? mapper(map['data']) : null,
+      key: json['key'],
+      msg: json['msg'],
+      data: jsonToModel.isNotNull?
+      jsonToModel!(json['data']) : json['data'],
     );
   }
 }

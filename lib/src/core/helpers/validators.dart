@@ -37,20 +37,17 @@ class Validators {
     return null;
   }
 
-  static String? validatePhone(String? value, {String? fieldTitle}) {
+  static String? validatePhone(String? value, {String? message}) {
     if (value?.trim().isEmpty ?? true) {
-      return fieldTitle == null
-          ? LocaleKeys.fillField.tr(context: Go.context)
-          : '${LocaleKeys.filedValidation.tr()} $fieldTitle';
-    } else if (RegExp(r'[<>]').hasMatch(value!)) {
-      return LocaleKeys.scripInjectionValidate.tr(
-        context: Go.context,
-      );
-    } else if (!RegExp(r'^\d{8,15}$').hasMatch(value)) {
-      return LocaleKeys.phoneValidation.tr(context: Go.context);
+      return message ?? LocaleKeys.fillField;
+    } else if (!RegExp(r'^(5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$')
+        .hasMatch(value!.trim()) ||
+        value.length < 9) {
+      return message ?? LocaleKeys.phoneValidation.tr();
     }
     return null;
   }
+
 
  
  

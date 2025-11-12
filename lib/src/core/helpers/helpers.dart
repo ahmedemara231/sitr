@@ -1,10 +1,6 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
-import '../../core/shared/models/user_models/user_model.dart';
-import '../../core/extensions/string_extension.dart';
 import '../../core/zego_service/zego.dart';
-import 'package:easy_timer_count/extensions/null_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,7 +12,6 @@ import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../extensions/padding_extension.dart';
 import '../navigation/navigator.dart';
-import '../shared/base_state.dart';
 import '../widgets/custom_loading.dart';
 import '../widgets/custom_messages.dart';
 import 'permission_handler/handler.dart';
@@ -35,39 +30,6 @@ class Helpers {
   }
 
   static String get deviceType => Platform.isAndroid? 'android' : 'ios';
-
-  static Future<void> manageBlocListener(
-    BaseStatus baseStatus, {
-    String? msg,
-    FutureOr<void> Function()? onSuccess,
-    FutureOr<void> Function()? onError,
-    FutureOr<void> Function()? onLoading,
-  }) async {
-    switch (baseStatus) {
-      case BaseStatus.loading:
-        await onLoading?.call();
-
-      case BaseStatus.success:
-        await onSuccess?.call();
-        if (msg.isNotNull) {
-          MessageUtils.showSnackBar(
-            msg!,
-            backgroundColor: AppColors.primary,
-          );
-        }
-        break;
-
-      case BaseStatus.error:
-        await onError?.call();
-        if (msg.isNotNull) {
-          // MessageUtils.showSimpleToast(msg: msg, color: Colors.red);
-        }
-        break;
-
-      default:
-        return;
-    }
-  }
 
   static Alignment get getAlignment {
     if (Languages.currentLanguage == Languages.arabic) {

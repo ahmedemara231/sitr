@@ -22,7 +22,7 @@ class PayRequestCubit extends AsyncCubit<String>{
             mapper: (json) => json['redirect_url'],
           ),
         ),
-        successEmitter: (data) => onSuccess.call(data)
+        successEmitter: (data) => onSuccess.call(data.data)
     );
   }
 }

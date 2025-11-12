@@ -49,36 +49,47 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
 
               BlocListener<SignUpCubit, AsyncState>(
-                listener: (context, state) => Helpers.manageBlocListener(
-                    state.status,
-                    onSuccess: () => Go.to(BlocProvider(
-                      create: (context) => OtpCubit(),
-                      child: OtpScreen(
-                        title: LocaleKeys.activationCode,
-                        phone: signUpBody.phone,
-                        onConfirmCode: (ctx, code) => ctx.read<OtpCubit>().sendOtp(
-                          type: OtpType.afterRegister,
-                          body: OtpBody(
-                              phone: signUpBody.phone,
-                              code: code
-                          ),
-                          onSuccess: (data) async {
-                            await UserCubit.instance.setUserLoggedIn(
-                                user: data,
-                                token: data.token ?? ''
-                            );
+                listener: (context, state) {
+                  if(state.isSuccess){
 
-                            Go.to(const PackagesScreen.firstSubscription(
-                                paymentMethods: [PaymentMethod.online],
-                                isInAuth: true
-                            ));
-                          },
-                        ),
-                      ),
-                    ))
-                ),
+                  }
+                },
                 child: AppLoadingButton(
-                  asyncCall: (ctx) async => await ctx.read<SignUpCubit>().signUp(signUpBody),
+                  asyncCall: (ctx) async {
+                    if(formKey.currentState?.validate() ?? false){
+                      await ctx.read<SignUpCubit>().signUp(
+                        signUpBody,
+                        onSuccess: (data) {
+                          MessageUtils.showSnackBar(data.msg);
+                          Go.to(BlocProvider(
+                            create: (context) => OtpCubit(),
+                            child: OtpScreen(
+                              title: LocaleKeys.activationCode,
+                              phone: signUpBody.phone,
+                              onConfirmCode: (ctx, code) => ctx.read<OtpCubit>().sendOtp(
+                                type: OtpType.afterRegister,
+                                body: OtpBody(
+                                    phone: signUpBody.phone,
+                                    code: code
+                                ),
+                                onSuccess: (data) async {
+                                  await UserCubit.instance.setUserLoggedIn(
+                                      user: data,
+                                      token: data.token ?? ''
+                                  );
+
+                                  Go.to(const PackagesScreen.firstSubscription(
+                                      paymentMethods: [PaymentMethod.online],
+                                      isInAuth: true
+                                  ));
+                                },
+                              ),
+                            ),
+                          ));
+                        }
+                      );
+                    }
+                  },
                   title: LocaleKeys.confirm,
                 ),
               ),
