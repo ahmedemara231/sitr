@@ -50,20 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyB1h-d8nGN-mxCbUcngtVqGt8o1u8RemhU',
-    appId: '1:1012921206611:android:5fbc07dfc23b16ad9443a6',
-    messagingSenderId: '1012921206611',
-    projectId: 'satr-e500f',
-    storageBucket: 'satr-e500f.firebasestorage.app',
+    apiKey: 'AIzaSyAoynJGRiLWAFsP0DbWXg1L57Wqz4tPrbo',
+    appId: '1:1006389814807:android:603cb872fb20b56b339e52',
+    messagingSenderId: '1006389814807',
+    projectId: 'satr-d9442',
+    storageBucket: 'satr-d9442.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBnCWcDUno5DfS3QvreL8mH6WGd_PfohCA',
-    appId: '1:1012921206611:ios:01fe3e51c4af42039443a6',
-    messagingSenderId: '1012921206611',
-    projectId: 'satr-e500f',
-    storageBucket: 'satr-e500f.firebasestorage.app',
-    iosBundleId: 'com.aait.flutter.satr',
+    apiKey: 'AIzaSyBKMBXip4WMshqdX0ohzxI5Aeidut4rD1U',
+    appId: '1:1006389814807:ios:e615306d7dfe4a1d339e52',
+    messagingSenderId: '1006389814807',
+    projectId: 'satr-d9442',
+    storageBucket: 'satr-d9442.firebasestorage.app',
+    iosBundleId: 'com.aait.flutter.sitr',
   );
 
 }

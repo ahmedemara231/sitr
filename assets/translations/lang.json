@@ -288,6 +288,7 @@
   "Request for a dialogue session under the supervision of the application" : "طلب لقاء حواري تحت اشراف التطبيق",
   "please select" : "يرجي التحديد",
   "please enter parent phone number": "يرجي ادخال رقم ولي الامر",
-  "Enter the following option external communication will be established" : "قم بادخال الخيار التالي سيتم التواصل خارجيا"
+  "Enter the following option external communication will be established" : "قم بادخال الخيار التالي سيتم التواصل خارجيا",
+  "Login First" : "قم بتسجيل الدخول اولا"
 
 }

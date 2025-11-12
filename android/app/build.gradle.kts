@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.aait.flutter.satr"
+    namespace = "com.aait.flutter.sitr"
     compileSdk = 36   // ✅ Android 35
 
     ndkVersion = flutter.ndkVersion
@@ -26,7 +26,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.aait.flutter.satr"
+        applicationId = "com.aait.flutter.sitr"
 
         // ✅ الصياغة الصحيحة في Kotlin DSL
         minSdk = flutter.minSdkVersion

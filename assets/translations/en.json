@@ -283,5 +283,6 @@
   "request_for_a_dialogue_session_under_the_supervision_of_the_application": "Request for a dialogue session under the supervision of the application",
   "please_select": "please select",
   "please_enter_parent_phone_number": "please enter parent phone number",
-  "enter_the_following_option_external_communication_will_be_established": "Enter the following option external communication will be established"
+  "enter_the_following_option_external_communication_will_be_established": "Enter the following option external communication will be established",
+  "login_first": "Login First"
 }

@@ -5,13 +5,11 @@ import '../../../../../generated/assets.dart' show Assets;
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/padding_extension.dart';
+import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
-import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../core/widgets/parent_children_screen.dart';
-import '../../../../core/widgets/view_profile_widget.dart';
 import '../../../chats/presentation/screens/chats_screen.dart';
-import '../cubit/get_profile.dart';
 import '../cubit/terms_condition_and_about_cubit/terms_condition_and_about_cubit.dart';
 import '../widgets/more_item.dart';
 import '../widgets/more_tap_app_bar.dart';
@@ -29,23 +27,26 @@ class MoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<MorItemModel> moreItemsList = [
-      MorItemModel(
-        icon: Assets.svgUser,
-        label: LocaleKeys.profile,
-        onTap: () => Go.to(const ProfileScreen()),
-      ),
-      MorItemModel(
-        icon: Assets.svgChatsIcon,
-        label: LocaleKeys.chats,
-        onTap: () => Go.to(const ChatsScreen()),
-      ),
+      if(UserTypeHelper.isAuthenticated)
+        ...[
+          MorItemModel(
+            icon: Assets.svgUser,
+            label: LocaleKeys.profile,
+            onTap: () => Go.to(const ProfileScreen()),
+          ),
+          MorItemModel(
+            icon: Assets.svgChatsIcon,
+            label: LocaleKeys.chats,
+            onTap: () => Go.to(const ChatsScreen()),
+          ),
 
-      MorItemModel(
-        icon: Assets.svgPackageIcon,
-        label: LocaleKeys.myPackage,
-        onTap: () => Go.to(const MyPackagesScreen()),
-      ),
-      if(UserModel.isParent)
+          MorItemModel(
+            icon: Assets.svgPackageIcon,
+            label: LocaleKeys.myPackage,
+            onTap: () => Go.to(const MyPackagesScreen()),
+          ),
+        ],
+      if(UserTypeHelper.isAuthenticated && UserModel.isParent)
         MorItemModel(
           icon: Assets.svgUser,
           label: LocaleKeys.addedChildren,
@@ -59,27 +60,30 @@ class MoreScreen extends StatelessWidget {
           Go.to(const SuccessPartnersScreen());
         },
       ),
-      MorItemModel(
-        icon: Assets.svgBlockUser,
-        label: LocaleKeys.blockedCustomers,
-        onTap: () {
-          Go.to(const BlockedUserScreen());
-        },
-      ),
-      MorItemModel(
-        icon: Assets.svgContactUsIcon,
-        label: LocaleKeys.contactUs,
-        onTap: () {
-          Go.to(ContactUsScreen());
-        },
-      ),
-      MorItemModel(
-        icon: Assets.svgComplaintIcon,
-        label: LocaleKeys.complaintsAndSuggestions,
-        onTap: () {
-          Go.to(const ComplaintsAndSuggestionsScreen());
-        },
-      ),
+      if(UserTypeHelper.isAuthenticated)
+        ...[
+          MorItemModel(
+            icon: Assets.svgBlockUser,
+            label: LocaleKeys.blockedCustomers,
+            onTap: () {
+              Go.to(const BlockedUserScreen());
+            },
+          ),
+          MorItemModel(
+            icon: Assets.svgContactUsIcon,
+            label: LocaleKeys.contactUs,
+            onTap: () {
+              Go.to(ContactUsScreen());
+            },
+          ),
+          MorItemModel(
+            icon: Assets.svgComplaintIcon,
+            label: LocaleKeys.complaintsAndSuggestions,
+            onTap: () {
+              Go.to(const ComplaintsAndSuggestionsScreen());
+            },
+          ),
+        ],
       MorItemModel(
         icon: Assets.svgAboutIcon,
         label: LocaleKeys.aboutUs,

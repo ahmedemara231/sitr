@@ -838,4 +838,7 @@ abstract class LocaleKeys {
   static const String _enterTheFollowingOptionExternalCommunicationWillBeEstablished = 'enter_the_following_option_external_communication_will_be_established';
   static String get enterTheFollowingOptionExternalCommunicationWillBeEstablished => _enterTheFollowingOptionExternalCommunicationWillBeEstablished.tr();
 
+  static const String _loginFirst = 'login_first';
+  static String get loginFirst => _loginFirst.tr();
+
 }

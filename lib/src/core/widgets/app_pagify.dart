@@ -56,6 +56,12 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
                   totalPages: data.$2.totalPages
               )
           ),
+          errorBuilder: (e) => Column(
+            children: [
+              Lottie.asset(Assets.errorApiError),
+              AppText(LocaleKeys.notFound)
+            ],
+          ),
           errorMapper: PagifyErrorMapper(
               errorWhenDio: (e) {
                 final String? msg = e.response?.data['msg'];
@@ -77,6 +83,12 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
           key: widget.key,
           controller: widget.pagifyController,
           asyncCall: widget.asyncCall,
+          errorBuilder: (e) => Column(
+            children: [
+              Lottie.asset(Assets.errorApiError),
+              AppText(LocaleKeys.notFound)
+            ],
+          ),
           emptyListView: Column(
             children: [
               Lottie.asset(Assets.dataEmptyBox),
@@ -90,13 +102,6 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
                   perPage: data.$2.perPage,
                   totalPages: data.$2.totalPages
               )
-          ),
-          errorBuilder: (e) => Column(
-            spacing: 10.h,
-            children: [
-              // Lottie.asset(Assets.errorApiError),
-              AppText('${LocaleKeys.exceptionError} ${e.msg}')
-            ],
           ),
           errorMapper: PagifyErrorMapper(
               errorWhenDio: (error) => error.response?.data['msg']

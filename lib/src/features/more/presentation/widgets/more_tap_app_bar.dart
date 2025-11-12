@@ -10,6 +10,7 @@ import '../../../../core/extensions/align_helper.dart';
 import '../../../../core/extensions/sized_box_helper.dart';
 import '../../../../core/helpers/helpers.dart';
 import '../../../../core/helpers/status_builder.dart';
+import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../core/widgets/app_bottom_sheet.dart';
@@ -30,86 +31,90 @@ class MoreTabAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 250.h,
+      // height: 250.h,
       child: Stack(
         children: [
-          Positioned(
-            top: 115.h,
-            child: Container(
-              alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.only(
-                  top: 24.5.h, left: 16.w, right: 16.w, bottom: 15.h),
-              decoration: const BoxDecoration(
-                color: AppColors.primary,
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  Go.to(const WalletScreen());
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  height: 80.h,
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  decoration: BoxDecoration(
-                    color: AppColors.darkGoldenRod,
-                    borderRadius: BorderRadius.circular(10.r),
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const CustomIconInsideContainer(
-                        icon: Assets.svgWallet,
-                      ),
-                      10.szW,
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          AppText(
-                            LocaleKeys.balance,
-                            fontSize: 9.sp,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.white,
-                          ),
-                          BlocProvider(
-                            create: (context) => FetchWalletCubit()..fetchWallet(),
-                            child: BlocBuilder<FetchWalletCubit, AsyncState<num>>(
-                                builder: (context, state) => StatusBuilder(
-                                    data: state,
-                                    onSuccess: (data, context) => AppText(
-                                      '$data ${LocaleKeys.sar}',
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColors.white,
-                                    ),
+          if(UserTypeHelper.isAuthenticated)
+            Positioned(
+              top: 115.h,
+              child: Container(
+                alignment: Alignment.center,
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.only(
+                    top: 24.5.h, left: 16.w, right: 16.w, bottom: 15.h),
+                decoration: const BoxDecoration(
+                  color: AppColors.primary,
+                ),
+                child: GestureDetector(
+                  onTap: () {
+                    Go.to(const WalletScreen());
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 80.h,
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    decoration: BoxDecoration(
+                      color: AppColors.darkGoldenRod,
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const CustomIconInsideContainer(
+                          icon: Assets.svgWallet,
+                        ),
+                        10.szW,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            AppText(
+                              LocaleKeys.balance,
+                              fontSize: 9.sp,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.white,
+                            ),
+                            BlocProvider(
+                                create: (context) => FetchWalletCubit()..fetchWallet(),
+                                child: BlocBuilder<FetchWalletCubit, AsyncState<num>>(
+                                    builder: (context, state) => StatusBuilder(
+                                      data: state,
+                                      onSuccess: (data, context) => AppText(
+                                        '$data ${LocaleKeys.sar}',
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.white,
+                                      ),
+                                    )
                                 )
-                            )
+                            ),
+                          ],
+                        ),
+                        const Spacer(),
+                        Container(
+                          width: 70.w,
+                          height: 40.h,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8.r),
                           ),
-                        ],
-                      ),
-                      const Spacer(),
-                      Container(
-                        width: 70.w,
-                        height: 40.h,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8.r),
-                        ),
-                        child: AppText(
-                          LocaleKeys.myBalance,
-                          fontSize: 13.sp,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                        ),
-                      )
-                    ],
+                          child: AppText(
+                            LocaleKeys.myBalance,
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
+            )
+          else
+             const SizedBox.shrink(),
+
           Container(
             alignment: Alignment.center,
             height: 130.h,

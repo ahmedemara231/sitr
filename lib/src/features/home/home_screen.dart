@@ -1,11 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
+import '../../core/helpers/user_type_enum.dart';
 import '../../core/network/network_service.dart';
+import '../../core/widgets/default_bottom_sheet.dart';
 import '../../core/widgets/icon_widget.dart';
+import '../../core/widgets/sheets/login_when_visitor.dart';
 import 'cubits/home_cubit/home_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -56,7 +61,18 @@ class HomeScreen extends StatelessWidget {
                           fontSize: 13.sp,
                           fontWeight: FontWeight.w500,),
                         currentIndex: cubit.currentIndex,
-                        onTap: (index) => cubit.changeBottomNavIndex(index),
+                        onTap: (index) {
+                          cubit.changeBottomNavIndex(index);
+                          if(index != 0 && index != 4){
+                            if(!UserTypeHelper.isAuthenticated){
+                              WidgetsBinding.instance.addPostFrameCallback(
+                                      (_) => showDefaultBottomSheet(
+                                      child: const LoginWhenVisitorSheet()
+                                  )
+                              );
+                            }
+                          }
+                        },
                         items: [
                           BottomNavigationBarItem(
                             icon: IconWidget(

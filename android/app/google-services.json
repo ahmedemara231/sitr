@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "1012921206611",
-    "project_id": "satr-e500f",
-    "storage_bucket": "satr-e500f.firebasestorage.app"
+    "project_number": "1006389814807",
+    "project_id": "satr-d9442",
+    "storage_bucket": "satr-d9442.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1012921206611:android:5fbc07dfc23b16ad9443a6",
+        "mobilesdk_app_id": "1:1006389814807:android:603cb872fb20b56b339e52",
         "android_client_info": {
-          "package_name": "com.aait.flutter.satr"
+          "package_name": "com.aait.flutter.sitr"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB1h-d8nGN-mxCbUcngtVqGt8o1u8RemhU"
+          "current_key": "AIzaSyAoynJGRiLWAFsP0DbWXg1L57Wqz4tPrbo"
         }
       ],
       "services": {

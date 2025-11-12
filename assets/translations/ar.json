@@ -283,5 +283,6 @@
   "request_for_a_dialogue_session_under_the_supervision_of_the_application": "طلب لقاء حواري تحت اشراف التطبيق",
   "please_select": "يرجي التحديد",
   "please_enter_parent_phone_number": "يرجي ادخال رقم ولي الامر",
-  "enter_the_following_option_external_communication_will_be_established": "قم بادخال الخيار التالي سيتم التواصل خارجيا"
+  "enter_the_following_option_external_communication_will_be_established": "قم بادخال الخيار التالي سيتم التواصل خارجيا",
+  "login_first": "قم بتسجيل الدخول اولا"
 }
