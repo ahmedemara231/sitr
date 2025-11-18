@@ -5,10 +5,11 @@ import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/helpers/validators.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/text_fields/default_text_field.dart';
+import '../../../../../core/widgets/validation_helper.dart';
 import '../../../models/dowry.dart';
 
 class DowryWidget extends StatefulWidget {
-  final void Function(String from, String to) onSelect;
+  final void Function(Dowry dowry) onSelect;
   final Dowry? initialValue;
   const DowryWidget({super.key,
     required this.onSelect,
@@ -36,8 +37,10 @@ class _DowryWidgetState extends State<DowryWidget> {
     super.dispose();
   }
 
+  Dowry get _dowryValue => Dowry(from: _fromController.text, to: _toController.text);
+
   void onChanged(){
-    widget.onSelect.call(_fromController.text, _toController.text);
+    widget.onSelect.call(_dowryValue);
   }
 
   @override
@@ -46,35 +49,56 @@ class _DowryWidgetState extends State<DowryWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         AppText(LocaleKeys.dowry, fontWeight: FontWeight.bold, fontSize: 11.sp),
-        Row(
-          spacing: 10.w,
-          children: [
-            Expanded(
-              child: DefaultTextField(
-                title: LocaleKeys.from,
-                inputType: TextInputType.number,
-                // validator: (val) => Validators.validateDowry(
-                //     min: _fromController.text,
-                //     max: _toController.text
-                // ),
-                controller: _fromController,
-                onChanged: (v) => onChanged(),
+        ValidationHost<Dowry>(
+          onSaved: (d){},
+          validator: (dowry) {
+            final num min = num.tryParse(dowry!.from) ?? 0;
+            final num max = num.tryParse(dowry.to) ?? 0;
+
+            if(min >= max){
+              return LocaleKeys.theMinDowryCanNotBeGreaterThanMax;
+            }
+
+            return null;
+          },
+          initialValue: widget.initialValue ?? Dowry(from: '0', to: '0'),
+          builderWidget: (dowry) => Column(
+            spacing: 10.h,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                spacing: 10.w,
+                children: [
+                  Expanded(
+                    child: DefaultTextField(
+                      title: LocaleKeys.from,
+                      inputType: TextInputType.number,
+                      controller: _fromController,
+                      onChanged: (v) {
+                        dowry.didChange(_dowryValue);
+                        onChanged();
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: DefaultTextField(
+                      title: LocaleKeys.to,
+                      inputType: TextInputType.number,
+                      controller: _toController,
+                      onChanged: (v) {
+                        dowry.didChange(_dowryValue);
+                        onChanged();
+                      },
+                    ),
+                  )
+                ],
               ),
-            ),
-            Expanded(
-              child: DefaultTextField(
-                title: LocaleKeys.to,
-                // validator: (val) => Validators.validateDowry(
-                //     min: _fromController.text,
-                //     max: _toController.text
-                // ),
-                inputType: TextInputType.number,
-                controller: _toController,
-                onChanged: (v) => onChanged(),
-              ),
-            )
-          ],
+              if(dowry.hasError)
+                AppText(dowry.errorText ?? '', color: Colors.red),
+            ],
+          ),
         ),
+
       ],
     );
   }

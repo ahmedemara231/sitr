@@ -236,7 +236,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
 
       DowryWidget(
         initialValue: widget.initialValue?.dowry,
-        onSelect: (from, to) => _listenToData(model.copyWith(dowry: Dowry(from: from, to: to)) as T)
+        onSelect: (dowryVal) => _listenToData(model.copyWith(dowry: dowryVal) as T)
       ),
 
       DropDownTextField<TitleValueShape>(
