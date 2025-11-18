@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import '../../../../config/res/config_imports.dart';
+import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/network/network_request.dart';
 import '../../../../core/network/network_service.dart';
@@ -41,20 +42,19 @@ class AuthData{
   }
 
   static ValueNotifier<ChildrenNumber> childrenNumber = ValueNotifier(ChildrenNumber());
-
-// late T model;
-
-// static final List<IndividualUserModel> childrenList = [];
-
-// static void inc(UserType user) => childrenNumber.value = childrenNumber.value.copyWith(
-//     maleNumbers: user.isMale? childrenNumber.value.maleNumbers + 1 : childrenNumber.value.maleNumbers,
-//     femaleNumbers: user.isFemale? childrenNumber.value.femaleNumbers + 1 : childrenNumber.value.femaleNumbers
-// );
 }
 
 class ChildrenNumber {
-  final int maleNumbers;
-  final int femaleNumbers;
+  int maleNumbers;
+  int femaleNumbers;
+
+  void increment(UserType user){
+    if(user.isFemale){
+      femaleNumbers++;
+    }else{
+      maleNumbers++;
+    }
+  }
 
   int get total => maleNumbers + femaleNumbers;
 
@@ -62,12 +62,4 @@ class ChildrenNumber {
     this.maleNumbers = 0,
     this.femaleNumbers = 0,
   });
-
-  ChildrenNumber copyWith({
-    int? maleNumbers,
-    int? femaleNumbers,
-  }) => ChildrenNumber(
-    maleNumbers: maleNumbers??this.maleNumbers,
-    femaleNumbers: femaleNumbers??this.femaleNumbers,
-  );
 }

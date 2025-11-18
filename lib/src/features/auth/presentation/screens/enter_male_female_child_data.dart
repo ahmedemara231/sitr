@@ -141,8 +141,8 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
         children: [
           if(widget.showGenderSelection)
             ChooseGenderWidget(
-              // titles: (element) => '${element.translate}  ${element.isFemale? AuthData.childrenNumber.value.femaleNumbers : AuthData.childrenNumber.value.maleNumbers}',
-              titles: (element) => element.translate,
+              titles: (element) => '${element.translate}  ${element.isFemale? AuthData.childrenNumber.value.femaleNumbers : AuthData.childrenNumber.value.maleNumbers}',
+              // titles: (element) => element.translate,
               canChoose: true,
               onSelectGender: (selectedGender) => _mainType.value = selectedGender,
               genders: const [

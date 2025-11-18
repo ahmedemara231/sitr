@@ -14,6 +14,7 @@ import 'core/shared/user_cubit/user_cubit.dart' show UserCubit;
 import 'core/widgets/connectivity_interceptor/internet_supporter_widget.dart';
 import 'core/widgets/custom_messages.dart';
 import 'core/widgets/exeption_view.dart';
+import 'core/widgets/no_internet_widget.dart';
 import 'core/widgets/offline_widget.dart';
 import 'core/widgets/splash_logo.dart';
 import 'features/chats/presentation/screens/chat_screen.dart';
@@ -68,30 +69,8 @@ class Sitr extends StatelessWidget {
               locale: context.locale,
               navigatorKey: Go.navigatorKey,
               restorationScopeId: 'app',
-              // home: const HomeScreen(),
-              // home: const CustomDropdownTest(),
-              // home: ChatScreen(),
-              // home: EnterMaleOrFemaleOrChildDataScreen(
-              //     scaffoldType: ScaffoldType.centerCard,
-              //     withParent: true,
-              //     // withParent: UserTypeHelper.currentType!.isParent,
-              //     showConditionsAndTerms: true,
-              //     showAlreadyHaveAccount: true,
-              //     onClick: (context, user) async => log(user.toRequestBodyJson(true).toString()),
-              // ),
 
-
-              // home: EnterMaleOrFemaleOrChildDataScreen.signUpAsPartner(),
-              // home: const EnterMaleOrFemaleOrChildDataScreen.signUpAsParent(),
-              // home: const LoginScreen(),
-              // home: OtpScreen(title: '', onConfirmCode: (BuildContext context, String code) {  }, onResendCodePress: (BuildContext context) {  },),
-
-              // home: const TestScreen(
-              //     key: PageStorageKey('value')
-              // ),
-              // home: const TestScreen(),
-
-              home: EnterMaleOrFemaleOrChildDataScreen.individual(scaffoldType: ScaffoldType.centerCard, showConditionsAndTerms: true, showAlreadyHaveAccount: true, onClick: (context, user)async{}, userType: UserType.male),
+              home: EnterMaleOrFemaleOrChildDataScreen.withParent(scaffoldType: ScaffoldType.appScaffold, showConditionsAndTerms: true, onClick: (context, user)async{}),
               navigatorObservers: [AppNavigationObserver()],
               builder: (context, child) {
                 return InternetInterceptorWidget(
@@ -103,7 +82,7 @@ class Sitr extends StatelessWidget {
                         child!,
                         if (status == InternetConnectionStatus.disconnected)
                           const Positioned.fill(
-                            child: ExceptionView(),
+                            child: NoInternetWidget(),
                           ),
                       ],
                     );
