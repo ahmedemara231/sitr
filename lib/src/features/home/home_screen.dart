@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
+import '../../core/helpers/helpers.dart';
 import '../../core/helpers/user_type_enum.dart';
 import '../../core/network/network_service.dart';
 import '../../core/widgets/default_bottom_sheet.dart';
@@ -65,11 +66,7 @@ class HomeScreen extends StatelessWidget {
                           cubit.changeBottomNavIndex(index);
                           if(index != 0 && index != 4){
                             if(!UserTypeHelper.isAuthenticated){
-                              WidgetsBinding.instance.addPostFrameCallback(
-                                      (_) => showDefaultBottomSheet(
-                                      child: const LoginWhenVisitorSheet()
-                                  )
-                              );
+                              Helpers.showUnauthenticatedSheet();
                             }
                           }
                         },

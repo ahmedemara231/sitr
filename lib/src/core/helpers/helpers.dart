@@ -14,6 +14,8 @@ import '../extensions/padding_extension.dart';
 import '../navigation/navigator.dart';
 import '../widgets/custom_loading.dart';
 import '../widgets/custom_messages.dart';
+import '../widgets/default_bottom_sheet.dart';
+import '../widgets/sheets/login_when_visitor.dart';
 import 'permission_handler/handler.dart';
 import 'permission_handler/model.dart';
 
@@ -29,6 +31,14 @@ class Helpers {
       await zegoService.initZego();
   }
 
+  static void showUnauthenticatedSheet(){
+    WidgetsBinding.instance.addPostFrameCallback(
+            (_) => showDefaultBottomSheet(
+              enableDrag: false,
+            child: const LoginWhenVisitorSheet()
+        )
+    );
+  }
   static String get deviceType => Platform.isAndroid? 'android' : 'ios';
 
   static Alignment get getAlignment {

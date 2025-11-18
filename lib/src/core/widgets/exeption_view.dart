@@ -12,21 +12,15 @@ class ExceptionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.scaffoldBackground,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+    return Center(
+      child: Column(
         spacing: AppMargin.mH10,
         children: [
-          AppAssets.lottie.error.error1.lottie(
-            width: context.width * .7,
-            height: context.height * .3,
-          ),
-          Text(
-            LocaleKeys.exceptionError,
-            style: const TextStyle().setPrimaryColor.s13.medium,
-          ),
+          AppAssets.lottie.error.apiError.lottie(),
+          // Text(
+          //   LocaleKeys.exceptionError,
+          //   style: const TextStyle().setPrimaryColor.s13.medium,
+          // ),
         ],
       ),
     );

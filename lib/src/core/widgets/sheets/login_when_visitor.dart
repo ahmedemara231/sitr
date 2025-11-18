@@ -14,19 +14,17 @@ class LoginWhenVisitorSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IntrinsicHeight(
-      child: AppBottomSheet.large(
-          asyncCall: (context) => Go.offAll(const LoginScreen()),
-          btnTitle: LocaleKeys.login,
-          cancelBackgroundColor: AppColors.pink,
-          upperWidget: Column(
-            spacing: 12.h,
-            children: [
-              Image.asset(Assets.imagesLogoutImage),
-              AppText(LocaleKeys.loginFirst)
-            ],
-          )
-      ),
+    return AppBottomSheet.large(
+        asyncCall: (context) => Go.offAll(const LoginScreen()),
+        btnTitle: LocaleKeys.login,
+        cancelBackgroundColor: AppColors.pink,
+        upperWidget: Column(
+          spacing: 12.h,
+          children: [
+            Image.asset(Assets.imagesLogoutImage),
+            AppText(LocaleKeys.loginFirst)
+          ],
+        )
     );
   }
 }

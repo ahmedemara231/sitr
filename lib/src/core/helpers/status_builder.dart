@@ -5,6 +5,7 @@ import '../../config/language/locale_keys.g.dart';
 import '../base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../shared/base_state.dart';
 import '../widgets/custom_loading.dart';
+import '../widgets/exeption_view.dart';
 
 class StatusBuilder<T> extends StatelessWidget {
   final AsyncState<T> data;
@@ -29,8 +30,7 @@ class StatusBuilder<T> extends StatelessWidget {
           Center(child: CustomLoading.showLoadingView());
     }, onError: () {
       return onFail?.call() ??
-          CenterErrorWidget(
-              message: errorMessage ?? LocaleKeys.exceptionError.tr());
+          const ExceptionView();
     },
       onInitial: () {
         return onSuccess(data.data, context);

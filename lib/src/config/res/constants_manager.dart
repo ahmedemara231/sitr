@@ -16,6 +16,7 @@ class ConstantManager {
 
   static const int zegoAppId = 509026631;
   static const String zegoAppSign = 'abd4c5e860e63439d4887862a9c14d08fd1b5991fc7fd9ca69e79ee347a6e17e';
+
   // static const int zegoAppId = 1545294325;
   // static const String zegoAppSign = 'dd246a143dd5f0c30fa5d5e2bbf7f46a579c517bdf86b2d61b5d13574eb9fd56';
 

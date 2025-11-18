@@ -8,6 +8,7 @@ import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
 import 'app_text.dart';
 import 'custom_loading.dart';
+import 'exeption_view.dart';
 
 enum Ranking{listView, gridView}
 class AppPagify<T> extends StatefulWidget {
@@ -56,12 +57,7 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
                   totalPages: data.$2.totalPages
               )
           ),
-          errorBuilder: (e) => Column(
-            children: [
-              Lottie.asset(Assets.errorApiError),
-              AppText(LocaleKeys.notFound)
-            ],
-          ),
+          errorBuilder: (e) => const ExceptionView(),
           errorMapper: PagifyErrorMapper(
               errorWhenDio: (e) {
                 final String? msg = e.response?.data['msg'];
