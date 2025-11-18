@@ -52,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
         break;
 
       default:
-        Go.offAll(OnBoardingView());
+        Go.offAll(const OnBoardingView());
         break;
     }
   }
@@ -61,6 +61,8 @@ class _SplashScreenState extends State<SplashScreen> {
     final result =  (await CacheStorage.read('user', isDecoded: true) as Object?).isNotNull;
     switch(result){
       case true:
+        // Go.offAll(const LoginScreen());
+
         await UserCubit.instance.init();
         Go.offAll(const HomeScreen());
         // UserCubit.instance.user.completeRegistration?.manageNavigationBasedCompleteRegisterStatus();

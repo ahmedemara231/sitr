@@ -15,10 +15,12 @@ class SocketEvents{
 
 abstract interface class SocketHelper{
   final String url;
+  final int roomId;
   ChatMessages Function(Map<String, dynamic> jsonMessage) jsonToChatMessage;
   FutureOr<void> Function(ChatMessages message) onReceiveMessage;
 
   SocketHelper({
+    required this.roomId,
     required this.url,
     required this.jsonToChatMessage,
     required this.onReceiveMessage
@@ -30,6 +32,7 @@ abstract interface class SocketHelper{
 
 class ClientIOImpl extends SocketHelper{
   ClientIOImpl({
+    required super.roomId,
     required super.url,
     required super.jsonToChatMessage,
     required super.onReceiveMessage
@@ -41,7 +44,7 @@ class ClientIOImpl extends SocketHelper{
     socket = IO.io(url, IO.OptionBuilder()
         .setTransports(['websocket']) // for Flutter or Dart VM
         .disableAutoConnect()  // disable auto-connection
-        .setExtraHeaders(MessageParamsModel().toJson())
+        // .setExtraHeaders(MessageParamsModel().toJson())
         .setQuery(MessageParamsModel().toJson())
         .build()
     )..connect();
@@ -55,7 +58,7 @@ class ClientIOImpl extends SocketHelper{
       handler?.call(d);
       log('Socket connected');
       socket.emit(SocketEvents.enterChat, {
-        'room_id' : 3,
+        'room_id' : roomId,
       });
     });
 

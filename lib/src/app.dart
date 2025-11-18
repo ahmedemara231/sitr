@@ -91,7 +91,7 @@ class Sitr extends StatelessWidget {
               // ),
               // home: const TestScreen(),
 
-              home: const LoginScreen(),
+              home: const SplashScreen(),
               navigatorObservers: [AppNavigationObserver()],
               builder: (context, child) {
                 return InternetInterceptorWidget(

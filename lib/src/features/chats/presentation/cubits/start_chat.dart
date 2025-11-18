@@ -22,6 +22,7 @@ class ChatCubit extends AsyncCubit<ChatModel>{
   UserRequestStatus? get userRequestStatusAsEnum => state.data.matchRequest?.userRequestStatus?.getUserRequestStatus;
 
   int? get matchRequestId => state.data.matchRequest?.id;
+  Room? get currentRoom => state.data.room;
 
 
   Future<void> executeRequest({

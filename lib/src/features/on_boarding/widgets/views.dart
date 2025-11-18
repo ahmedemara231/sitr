@@ -8,14 +8,15 @@ import '../../../core/extensions/padding_extension.dart';
 import '../../../core/helpers/cache_service.dart';
 import '../../../core/navigation/navigator.dart';
 import '../../../core/widgets/app_text.dart';
+import '../../../core/widgets/image_widgets/cached_image.dart';
 import '../../auth/imports.dart';
-import '../models/screen_model.dart';
+import '../models/intro_model.dart';
 import 'on_boarding_dots.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   final int totalNumber;
   final int currentIndex;
-  final ScreenModel model;
+  final IntroModel model;
 
   const OnBoardingScreen({super.key,
     required this.model,
@@ -43,7 +44,8 @@ class OnBoardingScreen extends StatelessWidget {
                 stops: [0, 0, 0.6, 1],
               ),
             ),
-            child: Image.asset(model.backgroundImage, fit: BoxFit.fill)),
+            child: CachedImage(url: model.image, fit: BoxFit.fill)
+        ),
         Positioned(
           bottom: 100.h,
           width: context.width,
@@ -51,13 +53,13 @@ class OnBoardingScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             spacing: 7.h,
             children: [
-              AppText(model.firstText, fontWeight: FontWeight.bold, fontSize: 22.h, color: Colors.white,),
-              AppText(model.secondText, fontSize: 14.sp, color: Colors.white),
+              AppText(model.title, fontWeight: FontWeight.bold, fontSize: 16.h, color: Colors.white,),
+              AppText(model.description, fontSize: 14.sp, color: Colors.white),
               OnBoardingDots(currentIndex: currentIndex, totalDotsNumber: totalNumber),
             ],
-          ),
+          ).paddingSymmetric(horizontal: 12.w),
         ),
-        if(!model.isLast)
+        if(!(currentIndex == totalNumber - 1))
           Align(
             alignment: Languages.currentLanguage == Languages.arabic?
             Alignment.topRight : Alignment.topLeft,

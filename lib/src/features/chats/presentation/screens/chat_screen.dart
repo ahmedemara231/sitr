@@ -427,7 +427,6 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     return (){};
   }
 
-
   void _showTipsSheet({
     String? title,
     required String path,
@@ -466,6 +465,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
   late final socket = ClientIOImpl(
       url: ConstantManager.socketUrl,
+      roomId: context.read<ChatCubit>().currentRoom!.id!,
       jsonToChatMessage: (json) => ChatMessages.fromJson(json),
       onReceiveMessage: (msg) {
         _chatController.addItem(msg);
@@ -512,39 +512,39 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
               ),
           ),
         ],
-        body: Column(
-          children: [
-            BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
-              builder: (context, state) => StatusBuilder(
-                  data: state,
-                  onSuccess: (data, context) => _upperWidget(state.data)
-              ),
-            ),
-            Expanded(
-              child: EasyChat(
-                // itemExtent: 60.h,
-                socketType: socket,
-                controller: _chatController,
-                asyncCall: (context, page) async => await ChatsData.getChatMessages(
-                  fromHome: widget.fromHome,
-                  receiverId: widget.receiverId,
-                ),
-                errorBuilder: (e) => const ExceptionView(),
-                errorMapper: PagifyErrorMapper(errorWhenDio: (e) => e.response?.data['msg']),
-                mapper: (response) => PagifyData(
-                    data: response.room!.messages!.data!,
-                    paginationData: PaginationData(
-                        perPage: response.room!.messages!.pagination!.perPage,
-                        totalPages: response.room!.messages!.pagination!.totalPages
-                    )
-                ),
+        body: BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
+          builder: (context, state) => StatusBuilder(
+              data: state,
+              onSuccess: (data, context) => Column(
+                children: [
+                  _upperWidget(state.data),
+                  Expanded(
+                    child: EasyChat(
+                      // itemExtent: 60.h,
+                      socketType: socket,
+                      controller: _chatController,
+                      asyncCall: (context, page) async => await ChatsData.getChatMessages(
+                        fromHome: widget.fromHome,
+                        receiverId: widget.receiverId,
+                      ),
+                      errorBuilder: (e) => const ExceptionView(),
+                      errorMapper: PagifyErrorMapper(errorWhenDio: (e) => e.response?.data['msg']),
+                      mapper: (response) => PagifyData(
+                          data: response.room!.messages!.data!,
+                          paginationData: PaginationData(
+                              perPage: response.room!.messages!.pagination!.perPage,
+                              totalPages: response.room!.messages!.pagination!.totalPages
+                          )
+                      ),
 
 
-                rightMessageBuilder: (msg) => ChatMessageWidget(message: msg),
-                leftMessageBuilder: (msg) => ChatMessageWidget(message: msg),
-              ),
-            ),
-          ],
+                      rightMessageBuilder: (msg) => ChatMessageWidget(message: msg),
+                      leftMessageBuilder: (msg) => ChatMessageWidget(message: msg),
+                    ),
+                  ),
+                ],
+              )
+          ),
         ),
         bottomBar: BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
             builder: (context, state) =>
