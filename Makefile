@@ -28,3 +28,7 @@ openXcode:
 
 translations:
 	dart run generate/strings/main.dart
+
+put:
+    export PATH="$PATH:/path/to/your/app/bin"
+

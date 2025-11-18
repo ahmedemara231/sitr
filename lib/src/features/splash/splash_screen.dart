@@ -9,6 +9,7 @@ import '../../core/helpers/helpers.dart';
 import '../../core/navigation/navigator.dart';
 import '../../core/notification/notification_service.dart';
 import '../../core/shared/user_cubit/user_cubit.dart';
+import '../../core/widgets/splash_logo.dart';
 import '../../core/zego_service/zego.dart';
 import '../auth/imports.dart';
 import '../home/home_screen.dart';
@@ -77,11 +78,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black,
-      height: 1.sh,
-      width: 1.sw,
-      child: Center(child: SvgPicture.asset(Assets.svgAppLogo)),
-    );
+    return const SplashLogo();
   }
 }

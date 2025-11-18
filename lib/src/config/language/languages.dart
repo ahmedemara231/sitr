@@ -36,9 +36,17 @@ enum Languages {
     return language.locale.languageCode;
   }
 
+  /// Get device locale from platform without context
+  static Languages getDeviceLocaleFromPlatform() {
+    final platformLocale = WidgetsBinding.instance.platformDispatcher.locale;
+    return platformLocale.languageCode == 'ar' ?
+    Languages.arabic : Languages.english;
+  }
+
+  /// Get device locale using EasyLocalization context
   static Languages get deviceLocale {
-    return EasyLocalization.of(Go.navigatorKey.currentContext!)?.locale.languageCode == 'en'?
-    Languages.english : Languages.arabic;
+    return EasyLocalization.of(Go.navigatorKey.currentContext!)?.locale.languageCode == 'ar'?
+    Languages.arabic : Languages.english;
   }
 
 

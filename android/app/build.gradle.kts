@@ -11,8 +11,7 @@ plugins {
 android {
     namespace = "com.aait.flutter.sitr"
     compileSdk = 36   // ✅ Android 35
-
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "28.2.13676358"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

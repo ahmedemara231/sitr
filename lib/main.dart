@@ -68,7 +68,7 @@ void main() async {
       supportedLocales: Languages.suppoerLocales,
       path: 'assets/translations',
       saveLocale: true,
-      startLocale: const Locale('ar'),
+      startLocale: Languages.getDeviceLocaleFromPlatform().locale,
       fallbackLocale: const Locale('ar'),
       child: const RootRestorationScope(
           restorationId:'app',

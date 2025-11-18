@@ -16,21 +16,22 @@ class SignUpUpperWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       spacing: 12.h,
-      children: [
+      children: const [
         Row(
-          spacing: context.width / 8,
+          mainAxisAlignment: MainAxisAlignment.center,
+          // spacing: context.width / 8,
           children: [
-            BlocProvider(
-              create: (context) => ChangeLangCubit(),
-              child: LangIcon(
-                  onSelectLang: (context, lang) async =>
-                  await context.read<ChangeLangCubit>().changeLang(lang.languageCode)
-              ),
-            ),
-            const AppLogoWidget(),
+            // BlocProvider(
+            //   create: (context) => ChangeLangCubit(),
+            //   child: LangIcon(
+            //       onSelectLang: (context, lang) async =>
+            //       await context.read<ChangeLangCubit>().changeLang(lang.languageCode)
+            //   ),
+            // ),
+            AppLogoWidget(),
           ],
         ),
-        const SignUpStaticTexts()
+        SignUpStaticTexts()
       ],
     ).paddingAll(12.r);
   }

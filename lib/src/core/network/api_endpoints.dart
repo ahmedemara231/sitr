@@ -4,6 +4,7 @@ class ApiConstants {
   static const String slider = 'Home/GetTop5NewsByLang/';
   static const String services = 'Home/GetAllServices';
   static const String emirateNumbers = 'Home/GetCounts';
+  static const String introPages = 'intros';
 
 // ---------------------- About_Emirate -----------------------------------
   static const String aboutUs = 'AboutUs';

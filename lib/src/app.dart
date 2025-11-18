@@ -2,7 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart'; 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import '../generated/assets.dart';
 import 'config/language/locale_keys.g.dart';
 import 'config/res/config_imports.dart';
 import 'core/navigation/navigator.dart';
@@ -13,6 +15,7 @@ import 'core/widgets/connectivity_interceptor/internet_supporter_widget.dart';
 import 'core/widgets/custom_messages.dart';
 import 'core/widgets/exeption_view.dart';
 import 'core/widgets/offline_widget.dart';
+import 'core/widgets/splash_logo.dart';
 import 'features/chats/presentation/screens/chat_screen.dart';
 import 'features/chats/presentation/screens/chats_screen.dart';
 import 'features/splash/splash_screen.dart';
@@ -88,11 +91,11 @@ class Sitr extends StatelessWidget {
               // ),
               // home: const TestScreen(),
 
-              home: const SplashScreen(),
+              home: const LoginScreen(),
               navigatorObservers: [AppNavigationObserver()],
               builder: (context, child) {
                 return InternetInterceptorWidget(
-                  loadingWidget: const SizedBox.shrink(),
+                  loadingWidget: const SplashLogo(),
                   onChanged: (status) => _manageInternetConnectivity(context, status),
                   builder: (status) {
                     return Stack(
@@ -132,6 +135,9 @@ class Sitr extends StatelessWidget {
     }
   }
 }
+
+
+
 final PageStorageBucket _bucket = PageStorageBucket();
 
 class TestScreen extends StatefulWidget {
