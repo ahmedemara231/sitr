@@ -302,7 +302,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
         ],
         SignUpTextField(
           upperTitle: LocaleKeys.code,
-          validator: Validators.validateEmpty,
+          // validator: Validators.validateEmpty,
           title: LocaleKeys.pleaseEnterYourCode,
           onChanged: (val) => _listenToData(signUpBody.copyWith(
               code: _getContBasedUserType(

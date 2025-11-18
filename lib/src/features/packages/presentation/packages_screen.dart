@@ -18,7 +18,7 @@ class PackagesScreen extends StatelessWidget {
   final bool isInAuth;
   final List<PaymentMethod>? paymentMethods;
 
-  const PackagesScreen.firstSubscription({super.key,
+  const PackagesScreen.subscription({super.key,
     this.isInAuth = false,
     this.paymentMethods,
   }) : type = ScreenType.first;
@@ -29,6 +29,7 @@ class PackagesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final PagifyController<Package> controller = PagifyController<Package>();
     return AppScaffold(
         appBarTitle: LocaleKeys.packages,
         body: Column(
@@ -42,7 +43,7 @@ class PackagesScreen extends StatelessWidget {
                   isInAuth: isInAuth,
                   package: element,
                 ),
-                pagifyController: PagifyController()
+                pagifyController: controller,
             )
           ],
         )

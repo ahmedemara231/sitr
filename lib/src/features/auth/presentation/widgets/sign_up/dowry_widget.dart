@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../config/language/locale_keys.g.dart';
+import '../../../../../core/helpers/validators.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/text_fields/default_text_field.dart';
 import '../../../models/dowry.dart';
@@ -52,6 +53,10 @@ class _DowryWidgetState extends State<DowryWidget> {
               child: DefaultTextField(
                 title: LocaleKeys.from,
                 inputType: TextInputType.number,
+                // validator: (val) => Validators.validateDowry(
+                //     min: _fromController.text,
+                //     max: _toController.text
+                // ),
                 controller: _fromController,
                 onChanged: (v) => onChanged(),
               ),
@@ -59,6 +64,10 @@ class _DowryWidgetState extends State<DowryWidget> {
             Expanded(
               child: DefaultTextField(
                 title: LocaleKeys.to,
+                // validator: (val) => Validators.validateDowry(
+                //     min: _fromController.text,
+                //     max: _toController.text
+                // ),
                 inputType: TextInputType.number,
                 controller: _toController,
                 onChanged: (v) => onChanged(),

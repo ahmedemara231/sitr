@@ -50,12 +50,13 @@ class SuccessSheet extends StatelessWidget {
                    ),
                )
            ),
-            btnTitle: !isInAuth? LocaleKeys.back : LocaleKeys.completeProfile,
+            btnTitle: isInAuth? LocaleKeys.completeProfile : LocaleKeys.back,
             upperWidget: Column(
               children: [
                 Lottie.asset(Assets.successDone),
                 AppText(LocaleKeys.paymentSucceeded, fontSize: 16.sp, fontWeight: FontWeight.bold),
-                AppText(LocaleKeys.youCanNowCompleteYourProfile),
+                if(isInAuth)
+                  AppText(LocaleKeys.youCanNowCompleteYourProfile),
               ],
             )
         )

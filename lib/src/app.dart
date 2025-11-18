@@ -91,7 +91,7 @@ class Sitr extends StatelessWidget {
               // ),
               // home: const TestScreen(),
 
-              home: const SplashScreen(),
+              home: EnterMaleOrFemaleOrChildDataScreen.individual(scaffoldType: ScaffoldType.centerCard, showConditionsAndTerms: true, showAlreadyHaveAccount: true, onClick: (context, user)async{}, userType: UserType.male),
               navigatorObservers: [AppNavigationObserver()],
               builder: (context, child) {
                 return InternetInterceptorWidget(

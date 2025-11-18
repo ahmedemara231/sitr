@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -66,6 +68,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
 
   @override
   Widget build(BuildContext context) {
+    // final methods = widget.paymentMethods ?? PaymentMethod.values;
     return Column(
       spacing: 12.h,
       children: [
@@ -74,7 +77,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
         Column(
           spacing: 7.h,
           children: List.generate(
-              widget.paymentMethods!.length,
+            PaymentMethod.values.length,
                   (index) => InkWell(
                     onTap: () => _changeIndex(index),
                     child: Container(
@@ -87,7 +90,9 @@ class _PaymentSheetState extends State<PaymentSheet> {
                           )
                       ),
                       child: Center(
-                        child: _PackageCard(paymentMethod: widget.paymentMethods![index]).paddingAll(12.r),
+                        child: _PackageCard(
+                            paymentMethod: PaymentMethod.values[index]
+                        ).paddingAll(12.r),
                       ),
                     ),
                   ),

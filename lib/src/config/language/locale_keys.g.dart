@@ -349,6 +349,9 @@ abstract class LocaleKeys {
   static const String _pleaseEnterTheBrief = 'please_enter_the_brief';
   static String get pleaseEnterTheBrief => _pleaseEnterTheBrief.tr();
 
+  static const String _theMinDowryCanNotBeGreaterThanMax = 'the_min_dowry_can_not_be_greater_than_max';
+  static String get theMinDowryCanNotBeGreaterThanMax => _theMinDowryCanNotBeGreaterThanMax.tr();
+
   static const String _yes = 'yes';
   static String get yes => _yes.tr();
 

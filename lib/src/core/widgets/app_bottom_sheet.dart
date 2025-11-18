@@ -36,31 +36,32 @@ class AppBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 300.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(12.r)),
-        color: Colors.white,
-      ),
-      child: Column(
-        spacing: 10.h,
-        children: [
-          upperWidget,
-
-          if(size == AppBottomSheetSize.small)
-            AppLoadingButton(
-                asyncCall: (context) async => await asyncCall.call(context),
-                title: btnTitle
-            )
-          else
-            _AppSheetButtons(
-              asyncCall: asyncCall,
-              title: btnTitle,
-              cancelBackgroundColor: cancelBackgroundColor,
-              cancelBtnTitle: cancelBtnTitle,
-              cancelOnTap: cancelOnTap,
-            )
-        ],
+    return IntrinsicHeight(
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(12.r)),
+          color: Colors.white,
+        ),
+        child: Column(
+          spacing: 10.h,
+          children: [
+            upperWidget,
+      
+            if(size == AppBottomSheetSize.small)
+              AppLoadingButton(
+                  asyncCall: (context) async => await asyncCall.call(context),
+                  title: btnTitle
+              )
+            else
+              _AppSheetButtons(
+                asyncCall: asyncCall,
+                title: btnTitle,
+                cancelBackgroundColor: cancelBackgroundColor,
+                cancelBtnTitle: cancelBtnTitle,
+                cancelOnTap: cancelOnTap,
+              )
+          ],
+        ),
       ),
     );
   }

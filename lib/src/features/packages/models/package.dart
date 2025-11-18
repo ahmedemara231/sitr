@@ -4,7 +4,7 @@ class Package{
   final PackageType type;
   final String image;
   final int duration;
-  final double price;
+  final num price;
 
   Package(this.id, this.name, this.type, this.image, this.duration, this.price);
 

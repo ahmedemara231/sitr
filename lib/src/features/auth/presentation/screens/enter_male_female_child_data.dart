@@ -150,11 +150,12 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
                 UserType.female,
               ],
             ),
-           
-          SelectImageWidget(
-            initialValue: widget.initialValue?.avatar,
-            onSelectImage: (img) => sharedFormFieldModel.copyWith(avatar: img?.path),
-          ),
+
+          if(widget.withParent)
+            SelectImageWidget(
+              initialValue: widget.initialValue?.avatar,
+              onSelectImage: (img) => sharedFormFieldModel.copyWith(avatar: img?.path),
+            ),
 
           ValueListenableBuilder(
             valueListenable: _mainType,

@@ -25,7 +25,7 @@ class HomeCubit extends Cubit<HomeState> {
     MainView(),
     const NotificationsScreen(),
     const ChatsScreen(),
-    const PackagesScreen.firstSubscription(),
+    const PackagesScreen.subscription(),
     const MoreScreen(),
   ];
 

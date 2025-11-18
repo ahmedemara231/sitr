@@ -10,6 +10,7 @@ import '../../../../core/navigation/navigator.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/buttons/custom_app_buttons/default_button.dart';
 import '../../../../core/widgets/default_bottom_sheet.dart';
+import '../../../../core/widgets/image_widgets/cached_image.dart';
 import '../../../../core/widgets/sheets/payment_sheet.dart';
 import '../../../../core/widgets/sheets/success_sheet.dart';
 import '../../../../core/widgets/svg_pic.dart';
@@ -44,11 +45,13 @@ class PackageWidget extends StatelessWidget {
         children: [
           ListTile(
             leading: Container(
+              width: 60.w,
+                height: 60.h,
                 decoration: BoxDecoration(
                   color: AppColors.whiteGreyColor,
                   borderRadius: BorderRadius.circular(12.r),
                 ),
-                child: const SvgPic(assetName: Assets.svgPackageIcon).paddingAll(10.r)),
+                child: CachedImage(url: package.image).paddingAll(10.r)),
             title: AppText(package.name, fontWeight: FontWeight.bold, fontSize: 16.sp,),
             subtitle: Row(
               spacing: 5.w,
@@ -86,7 +89,7 @@ class PackageWidget extends StatelessWidget {
 
                                     if(paymentMethod == PaymentMethod.online){
                                       result = await Go.to(SubscriptionScreen(
-                                          initialUrl: url!,
+                                          initialUrl: url,
                                           title: LocaleKeys.pay
                                       ));
                                     }else if(paymentMethod == PaymentMethod.wallet){
@@ -95,8 +98,8 @@ class PackageWidget extends StatelessWidget {
 
                                     if(result == 'success'){
                                       showDefaultBottomSheet(
-                                          child: const SuccessSheet(
-                                            isInAuth: false,
+                                          child: SuccessSheet(
+                                            isInAuth: isInAuth,
                                           )
                                       );
                                     }

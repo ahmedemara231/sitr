@@ -17,6 +17,17 @@ class Validators {
     return null;
   }
 
+  static String? validateDowry({required String min, required String max}) {
+    final num minNum = num.tryParse(min) ?? 0;
+    final num maxNum = num.tryParse(max) ?? 0;
+
+    if(minNum >= maxNum){
+      return LocaleKeys.theMinDowryCanNotBeGreaterThanMax;
+    }
+
+    return null;
+  }
+
  
 
   static String? validateEmail(String? value, {String? fieldTitle}) {

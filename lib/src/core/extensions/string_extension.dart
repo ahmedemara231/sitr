@@ -69,7 +69,7 @@ extension FormatString on String {
       Go.offAll(const HomeScreen());
 
     }else if(statusType.isNotSubscribed){
-      Go.to(const PackagesScreen.firstSubscription(
+      Go.to(const PackagesScreen.subscription(
           paymentMethods: [PaymentMethod.online],
           isInAuth: true,
       ));

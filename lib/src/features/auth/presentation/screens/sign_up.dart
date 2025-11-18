@@ -78,7 +78,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       token: data.token ?? ''
                                   );
 
-                                  Go.to(const PackagesScreen.firstSubscription(
+                                  Go.to(const PackagesScreen.subscription(
                                       paymentMethods: [PaymentMethod.online],
                                       isInAuth: true
                                   ));
