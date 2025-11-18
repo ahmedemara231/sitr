@@ -55,6 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   inputType: TextInputType.phone,
                   title: LocaleKeys.pleaseEnterTheNumber,
                   fillColor: Colors.grey[50],
+                  maxLength: 9,
                   validator: Validators.validatePhone,
                   controller: _phoneCont,
                 ),

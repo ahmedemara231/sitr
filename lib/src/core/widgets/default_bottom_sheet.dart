@@ -12,7 +12,7 @@ Future showDefaultBottomSheet({BuildContext? context, required Widget child, boo
     isScrollControlled: true,
     context: context ?? Go.context,
     backgroundColor: Colors.white,
-    barrierColor: Colors.black.withOpacity(0.6),
+    barrierColor: Colors.black.withOpacity(0.8),
     builder: (context) => DefaultSheetBody(
       child: child,
     ),

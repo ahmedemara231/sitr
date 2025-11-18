@@ -37,7 +37,7 @@ class AddChildSheet extends StatelessWidget {
             btnTitle: LocaleKeys.addAnotherChild,
             cancelBackgroundColor: Colors.black,
             cancelBtnTitle: LocaleKeys.sendOrder,
-            cancelOnTap: () async => Go.off(const LoginScreen()),
+            cancelOnTap: () async => Go.offAll(const LoginScreen()),
             upperWidget: Column(
               spacing: 12.h,
               children: [

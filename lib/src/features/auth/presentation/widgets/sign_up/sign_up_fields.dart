@@ -202,6 +202,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
         SignUpTextField(
           validator: Validators.validatePhone,
           upperTitle: LocaleKeys.phoneNumber,
+          maxLength: 10,
           title: LocaleKeys.pleaseEnterTheNumber,
           controller: _getContBasedUserType(
               whenMale: _malePhoneCont,

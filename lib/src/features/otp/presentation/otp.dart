@@ -129,12 +129,15 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
               ),
               Form(
                 key: _formKey,
-                child: Pinput(
-                  separatorBuilder: (n) => 20.szW,
-                  defaultPinTheme: defaultPinTheme,
-                  controller: pinCont,
-                  onChanged: (val) => code = val,
-                  validator: Validators.validateEmpty,
+                child: Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Pinput(
+                    separatorBuilder: (n) => 20.szW,
+                    defaultPinTheme: defaultPinTheme,
+                    controller: pinCont,
+                    onChanged: (val) => code = val,
+                    validator: Validators.validateEmpty,
+                  ),
                 ),
               ),
               16.szH,
@@ -150,7 +153,7 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
 
               EasyTimerCount.builder(
                   controller: _timeCont,
-                  duration: const EasyTime(seconds: 3),
+                  duration: const EasyTime(minutes: 1),
                   builder: (time) => Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

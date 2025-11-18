@@ -16,7 +16,7 @@ class SignUpTextField extends StatefulWidget {
   final bool readOnly;
   final void Function()? onTap;
   final void Function(String?)? onChanged;
-
+  final int? maxLength;
 
   const SignUpTextField({super.key,
     required this.upperTitle,
@@ -27,7 +27,8 @@ class SignUpTextField extends StatefulWidget {
     this.inputType,
     this.readOnly = false,
     this.onTap,
-    this.onChanged
+    this.onChanged,
+    this.maxLength,
   });
 
   @override
@@ -39,6 +40,7 @@ class _SignUpTextFieldState extends State<SignUpTextField> {
   @override
   Widget build(BuildContext context) {
     return DefaultTextField.withTitle(
+      maxLength: widget.maxLength,
       onChanged: widget.onChanged,
       onTap: widget.onTap,
       readOnly: widget.readOnly,
