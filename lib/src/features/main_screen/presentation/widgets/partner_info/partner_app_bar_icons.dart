@@ -13,7 +13,7 @@ class PartnerAppBarIcons extends StatelessWidget {
         width: 40.w,
         height: 40.h,
         decoration: const BoxDecoration(
-            color: Colors.white10,
+            color: Colors.black12,
             shape: BoxShape.circle
         ),
         child: icon,

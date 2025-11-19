@@ -331,6 +331,9 @@ abstract class LocaleKeys {
   static const String _kinship = 'kinship';
   static String get kinship => _kinship.tr();
 
+  static const String _theChildren = 'the_children';
+  static String get theChildren => _theChildren.tr();
+
   static const String _pleaseEnterTheKinship = 'please_enter_the_kinship';
   static String get pleaseEnterTheKinship => _pleaseEnterTheKinship.tr();
 

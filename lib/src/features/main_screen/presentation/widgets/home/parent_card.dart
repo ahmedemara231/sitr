@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../../generated/assets.dart';
+import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/extensions/sized_box_helper.dart';
 import '../../../../../core/widgets/svg_pic.dart';
@@ -65,7 +66,7 @@ class ParentCard extends StatelessWidget {
                   backgroundColor: const Color(0xFFFFF3E0),
                 ),
                 _buildStatItem(
-                  value: childrenNumber.toString(),
+                  value: '$childrenNumber ${LocaleKeys.children}',
                   icon: Assets.svgParentChildren,
                   color: const Color(0xFFF57C00),
                   backgroundColor: const Color(0xFFFFF3E0),

@@ -188,7 +188,7 @@ class _MainViewState extends State<MainView> {
                                             name: opportunity?.nickName??'',
                                             imageUrl: opportunity?.avatar??'',
                                             location: opportunity?.city??'',
-                                            weight: '${opportunity?.weight} ${LocaleKeys.kg}',
+                                            weight: opportunity?.weight.toString() ?? '',
                                             height: opportunity?.height.toString() ?? '',
                                             age: opportunity?.age ?? 0,
                                             maritalStatus: opportunity?.martialStatus?.title??''

@@ -77,7 +77,7 @@ class PartnerCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 24),
                       _buildStatItem(
-                        value: weight,
+                        value: '$weight ${LocaleKeys.kg}',
                         icon: Assets.svgWeight,
                         color: const Color(0xFF9C27B0),
                         backgroundColor: const Color(0xFFF3E5F5),

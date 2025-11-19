@@ -91,6 +91,7 @@ class ParentDetailsScreen extends StatelessWidget {
             ),
           ),
           body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 10.h,
             children: [
               BlocBuilder<GetPartnerInfoCubit, AsyncState<UserModel>>(
@@ -109,6 +110,7 @@ class ParentDetailsScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              AppText(LocaleKeys.addedChildren, fontSize: 18.sp, fontWeight: FontWeight.bold),
               ParentChildren(id: id, type: IndividualDetailsType.opportunity),
               BlocBuilder<GetPartnerInfoCubit, AsyncState<UserModel>>(
                 builder: (context, state) => StatusBuilder(
