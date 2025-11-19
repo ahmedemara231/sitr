@@ -32,6 +32,7 @@ class ParentDetailsScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => GetPartnerInfoCubit(id)..getProfile(),
       child: CenterCardScaffold.withCenteredCard(
+        onRefresh: (context) => context.read<GetPartnerInfoCubit>().getProfile(),
           upperWidget: Stack(
             alignment: Alignment.topCenter,
             children: [

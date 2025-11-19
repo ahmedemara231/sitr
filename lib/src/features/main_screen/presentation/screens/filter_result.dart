@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/pagify.dart';
@@ -18,25 +20,31 @@ class FilterResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ValueNotifier<double> random = ValueNotifier(Random().nextDouble());
     return AppScaffold(
+        onRefresh: (c) => random.value = Random().nextDouble(),
         appBarTitle: LocaleKeys.searchResult,
-        body: AppPagify(
-          pagifyController: PagifyController(),
-          asyncCall: (context, page) async => await HomeData.filter(filterModel),
-          itemBuilder: (context, data, i, opportunity) => InkWell(
-            onTap: () => Go.to(IndividualDetailsScreen.opportunity(
-              id: opportunity?.id ?? 0,
-            )),
-            child: PartnerCard(
-                name: opportunity?.name??'',
-                imageUrl: opportunity?.avatar??'',
-                location: opportunity?.city??'',
-                weight: opportunity?.weight.toString() ?? '',
-                height: opportunity?.height.toString() ?? '',
-                age: opportunity?.age ?? 0,
-                maritalStatus: opportunity?.name??''
-            ).paddingBottom(10.h),
-        ))
+        body: ValueListenableBuilder(
+          valueListenable: random,
+          builder: (context, value, child) => AppPagify(
+            key: UniqueKey(),
+            pagifyController: PagifyController(),
+            asyncCall: (context, page) async => await HomeData.filter(filterModel),
+            itemBuilder: (context, data, i, opportunity) => InkWell(
+              onTap: () => Go.to(IndividualDetailsScreen.opportunity(
+                id: opportunity?.id ?? 0,
+              )),
+              child: PartnerCard(
+                  name: opportunity?.name??'',
+                  imageUrl: opportunity?.avatar??'',
+                  location: opportunity?.city??'',
+                  weight: opportunity?.weight.toString() ?? '',
+                  height: opportunity?.height.toString() ?? '',
+                  age: opportunity?.age ?? 0,
+                  maritalStatus: opportunity?.name??''
+              ).paddingBottom(10.h),
+          )),
+        )
     );
   }
 }

@@ -32,7 +32,7 @@ extension TypeCheck on ProfileType{
   bool get isPartnerProfile => this == ProfileType.partnerProfile;
 }
 
-class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
+class ViewProfileWidget<T extends GetUserModelCubit> extends StatefulWidget {
   final ProfileType _type;
   final T cubit;
 
@@ -45,57 +45,71 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
   }) : _type = ProfileType.partnerProfile;
 
   @override
+  State<ViewProfileWidget<T>> createState() => _ViewProfileWidgetState<T>();
+}
+
+class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewProfileWidget<T>> {
+  late List<PartnerInfoModel> partnerInfo = [];
+  void _onSuccess(UserModel userResult){
+    final user = userResult as IndividualUserModel;
+    partnerInfo = [
+      PartnerInfoModel(leading: Assets.svgLocation, title: LocaleKeys.city, subTitle: user.cityId?.name),
+      PartnerInfoModel(leading: Assets.svgRecycing, title: LocaleKeys.age, subTitle: user.age.toString()),
+
+      PartnerInfoModel(leading: Assets.svgTallIcon, title: LocaleKeys.tall, subTitle: user.height.toString()),
+      PartnerInfoModel(leading: Assets.svgWeight, title: LocaleKeys.weight, subTitle: user.weight.toString()),
+
+      PartnerInfoModel(leading: Assets.svgParentIcon, title: LocaleKeys.skinColor, subTitle: user.skinColor?.title),
+      PartnerInfoModel(leading: Assets.svgMartialStatus, title: LocaleKeys.maritalStatus, subTitle: user.maritalStatus?.title),
+
+      PartnerInfoModel(leading: Assets.svgEducationalQualification, title: LocaleKeys.educationalQualification, subTitle: user.educationLevel),
+      PartnerInfoModel(leading: Assets.svgJob, title: LocaleKeys.currentJob, subTitle: user.currentJob),
+
+      PartnerInfoModel(leading: Assets.svgParentChildren, title: LocaleKeys.childrenExists, subTitle: user.hasChildren.toString()),
+      PartnerInfoModel(leading: Assets.svgParentChildren, title: LocaleKeys.childrenNumber, subTitle: user.numOfChildren.toString()),
+
+      PartnerInfoModel(leading: Assets.svgParentChildren, title: LocaleKeys.nursery, subTitle: user.childCustody?.title),
+      PartnerInfoModel(leading: Assets.svgRecycing, title: LocaleKeys.wantToHaveChildren, subTitle: user.wantChildren.toString()),
+
+      PartnerInfoModel(leading: Assets.svgRecycing, title: LocaleKeys.dowry, subTitle: '${LocaleKeys.from} ${user.dowry?.from} ${LocaleKeys.to} ${user.dowry?.to}'),
+      PartnerInfoModel(leading: Assets.svgRecycing, title: LocaleKeys.typeOfWeddingParty, subTitle: user.weddingType?.title),
+
+      PartnerInfoModel(leading: Assets.svgPrey, title: LocaleKeys.areYouPray, subTitle: user.isPrayer.toString()),
+      PartnerInfoModel(leading: Assets.svgSmoke, title: LocaleKeys.areYouSmoke, subTitle: user.isSmoker.toString()),
+
+      if(userResult.gender?.userType?.isFemale?? false)
+        ...[
+          PartnerInfoModel(leading: Assets.svgParentChildren, title: LocaleKeys.doYouAcceptPolygamy, subTitle: (user as FemaleModel).acceptsPolygamy.toString()),
+          PartnerInfoModel(leading: Assets.svgHijab, title: LocaleKeys.areYouWaringHijab, subTitle: user.hijab?.title),
+
+          PartnerInfoModel(leading: Assets.svgHome, title: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage, subTitle: user.preferredResidenceAfterMarriage),
+        ],
+      PartnerInfoModel(leading: Assets.svgTribe, title: LocaleKeys.doYouBelongToATribe, subTitle: user.tribeAffiliation.toString()),
+
+      PartnerInfoModel(leading: Assets.svgHospital, title: LocaleKeys.diseasesIfExists, subTitle: user.healthConditions),
+      PartnerInfoModel(leading: Assets.svgTranslation, title: LocaleKeys.inChatYouPrefer, subTitle: user.chatLang),
+
+      PartnerInfoModel(leading: Assets.svgRecycing, title: LocaleKeys.thingsIAbsolutelyDoNotAcceptOrWant, subTitle: user.prohibitedThings),
+
+      if(widget._type.isProfile)
+        PartnerInfoModel(leading: Assets.svgProfilePhone, title: LocaleKeys.phoneNumber, subTitle: user.phone),
+    ];
+  }
+
+  @override
   Widget build(BuildContext context) {
-    late List<PartnerInfoModel> partnerInfo = [];
     return BlocProvider(
-      create: (context) => cubit..getProfile(
+      create: (context) => widget.cubit..getProfile(
           onSuccess: (userResult) {
-            final user = userResult as IndividualUserModel;
-            partnerInfo = [
-              PartnerInfoModel(leading: Assets.svgLocation, title: LocaleKeys.city, subTitle: user.cityId?.name),
-              PartnerInfoModel(leading: Assets.svgRecycing, title: LocaleKeys.age, subTitle: user.age.toString()),
-
-              PartnerInfoModel(leading: Assets.svgTallIcon, title: LocaleKeys.tall, subTitle: user.height.toString()),
-              PartnerInfoModel(leading: Assets.svgWeight, title: LocaleKeys.weight, subTitle: user.weight.toString()),
-
-              PartnerInfoModel(leading: Assets.svgParentIcon, title: LocaleKeys.skinColor, subTitle: user.skinColor?.title),
-              PartnerInfoModel(leading: Assets.svgMartialStatus, title: LocaleKeys.maritalStatus, subTitle: user.maritalStatus?.title),
-
-              PartnerInfoModel(leading: Assets.svgEducationalQualification, title: LocaleKeys.educationalQualification, subTitle: user.educationLevel),
-              PartnerInfoModel(leading: Assets.svgJob, title: LocaleKeys.currentJob, subTitle: user.currentJob),
-
-              PartnerInfoModel(leading: Assets.svgParentChildren, title: LocaleKeys.childrenExists, subTitle: user.hasChildren.toString()),
-              PartnerInfoModel(leading: Assets.svgParentChildren, title: LocaleKeys.childrenNumber, subTitle: user.numOfChildren.toString()),
-
-              PartnerInfoModel(leading: Assets.svgParentChildren, title: LocaleKeys.nursery, subTitle: user.childCustody?.title),
-              PartnerInfoModel(leading: Assets.svgRecycing, title: LocaleKeys.wantToHaveChildren, subTitle: user.wantChildren.toString()),
-
-              PartnerInfoModel(leading: Assets.svgRecycing, title: LocaleKeys.dowry, subTitle: '${LocaleKeys.from} ${user.dowry?.from} ${LocaleKeys.to} ${user.dowry?.to}'),
-              PartnerInfoModel(leading: Assets.svgRecycing, title: LocaleKeys.typeOfWeddingParty, subTitle: user.weddingType?.title),
-
-              PartnerInfoModel(leading: Assets.svgPrey, title: LocaleKeys.areYouPray, subTitle: user.isPrayer.toString()),
-              PartnerInfoModel(leading: Assets.svgSmoke, title: LocaleKeys.areYouSmoke, subTitle: user.isSmoker.toString()),
-
-              if(userResult.gender?.userType?.isFemale?? false)
-                ...[
-                  PartnerInfoModel(leading: Assets.svgParentChildren, title: LocaleKeys.doYouAcceptPolygamy, subTitle: (user as FemaleModel).acceptsPolygamy.toString()),
-                  PartnerInfoModel(leading: Assets.svgHijab, title: LocaleKeys.areYouWaringHijab, subTitle: user.hijab?.title),
-
-                  PartnerInfoModel(leading: Assets.svgHome, title: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage, subTitle: user.preferredResidenceAfterMarriage),
-                ],
-              PartnerInfoModel(leading: Assets.svgTribe, title: LocaleKeys.doYouBelongToATribe, subTitle: user.tribeAffiliation.toString()),
-
-              PartnerInfoModel(leading: Assets.svgHospital, title: LocaleKeys.diseasesIfExists, subTitle: user.healthConditions),
-              PartnerInfoModel(leading: Assets.svgTranslation, title: LocaleKeys.inChatYouPrefer, subTitle: user.chatLang),
-
-              PartnerInfoModel(leading: Assets.svgRecycing, title: LocaleKeys.thingsIAbsolutelyDoNotAcceptOrWant, subTitle: user.prohibitedThings),
-
-              if(_type.isProfile)
-                PartnerInfoModel(leading: Assets.svgProfilePhone, title: LocaleKeys.phoneNumber, subTitle: user.phone),
-            ];
+            _onSuccess(userResult);
           }
       ),
       child: CenterCardScaffold.withCenteredCard(
+        onRefresh: (context) => widget.cubit.getProfile(
+            onSuccess: (userResult) {
+              _onSuccess(userResult);
+            }
+        ),
         upperWidget: BlocBuilder<T, AsyncState<UserModel>>(
           builder: (context, state) => Stack(
             alignment: Alignment.topCenter,
@@ -118,7 +132,7 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
                 ),
               ),
 
-              if(_type.isProfile)
+              if(widget._type.isProfile)
                 const ProfileAppBarActions.withBackButtonOnly()
               else
                 ProfileAppBarActions(
@@ -148,7 +162,7 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 10.h,
                 children: [
-                  if(_type.isPartnerProfile)
+                  if(widget._type.isPartnerProfile)
                     Row(
                       children: [
                         AppText(state.data.name??'', fontWeight: FontWeight.bold),
@@ -203,7 +217,7 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatelessWidget {
                   ),
                 ),
 
-                if(_type.isPartnerProfile)
+                if(widget._type.isPartnerProfile)
                   ChatButton(user: state.data),
               ],
             ),

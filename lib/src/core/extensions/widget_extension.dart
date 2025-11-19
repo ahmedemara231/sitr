@@ -1,8 +1,13 @@
 // extension to Text widget to add icon and text
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../navigation/navigator.dart';
 import '../widgets/icon_widget.dart';
+import '../widgets/pull_refresher.dart';
 
 extension TextWithIcon on Text {
   Widget withIcon(
@@ -30,6 +35,18 @@ extension TextWithIcon on Text {
       mainAxisAlignment: mainAxisAlignment,
       crossAxisAlignment: crossAxisAlignment,
       children: children,
+    );
+  }
+}
+
+extension Refresh on Widget{
+  Widget withPullRefresher(BuildContext context, {required FutureOr<void> Function(BuildContext context) onRefresh}){
+    return PullRefresherWidget(
+        onRefresh: () async {
+          log('test');
+          await onRefresh.call(context);
+        },
+        child: this
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -7,6 +9,7 @@ import '../../extensions/object.dart';
 import '../../extensions/padding_extension.dart';
 import '../../navigation/navigator.dart';
 import '../app_text.dart';
+import '../pull_refresher.dart';
 
 class AppScaffold extends StatelessWidget {
   final String appBarTitle;
@@ -17,6 +20,7 @@ class AppScaffold extends StatelessWidget {
   final double? appBarHeight;
   final List<Widget>? actions;
   final bool isScrollable;
+  final FutureOr<void> Function(BuildContext context)? onRefresh;
 
   const AppScaffold({super.key,
     required this.appBarTitle,
@@ -27,6 +31,7 @@ class AppScaffold extends StatelessWidget {
     this.appBarHeight,
     this.actions,
     this.isScrollable = true,
+    this.onRefresh,
   });
 
   @override
@@ -47,12 +52,15 @@ class AppScaffold extends StatelessWidget {
                 => SizedBox.square(dimension: 30.sp, child: e)).toList(),
           )
       ),
-      body: isScrollable? SingleChildScrollView(
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16.r)
+      body: isScrollable? PullRefresherWidget(
+        onRefresh: ()async => onRefresh?.call(context),
+        child: SingleChildScrollView(
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16.r)
+            ),
+            child: body.defaultScreenPadding(),
           ),
-          child: body.defaultScreenPadding(),
         ),
       ) : body.defaultScreenPadding(),
       bottomNavigationBar: bottomBar,

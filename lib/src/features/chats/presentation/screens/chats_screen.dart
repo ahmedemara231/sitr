@@ -8,6 +8,7 @@ import '../../../../core/dropinity/helpers/extensions/object.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/extensions/string_extension.dart';
+import '../../../../core/extensions/widget_extension.dart';
 import '../../../../core/helpers/helpers.dart';
 import '../../../../core/helpers/loading_manager.dart';
 import '../../../../core/helpers/status_builder.dart';
@@ -49,7 +50,6 @@ class _ChatsScreenState extends State<ChatsScreen>
   }
   @override
   Widget build(BuildContext context) {
-
     return AppScaffold(
         appBarTitle: LocaleKeys.chats,
         appBarHeight: _chatType == _chatTitles.last? 220 : 150,
@@ -99,9 +99,7 @@ class _ChatsScreenState extends State<ChatsScreen>
 
 class _ChatsBody extends StatefulWidget {
   final ChatType chatType;
-  const _ChatsBody({super.key,
-    required this.chatType,
-  });
+  const _ChatsBody({required this.chatType});
 
   @override
   State<_ChatsBody> createState() => _ChatsBodyState();
@@ -138,8 +136,7 @@ class _ChatsBodyState extends State<_ChatsBody> {
                     )
             ),
           ) : const NotContainData(),
-        ),
-      ),
+        ))
     );
   }
 }

@@ -4,6 +4,7 @@ import '../../../config/res/config_imports.dart';
 import '../../extensions/context_extension.dart';
 import '../../extensions/object.dart';
 import '../../extensions/padding_extension.dart';
+import '../pull_refresher.dart';
 import 'app_scaffold.dart' show AppBackButton;
 
 class CardProperties{
@@ -21,13 +22,15 @@ class CenterCardScaffold extends StatelessWidget {
   final double? cardTopPadding;
   final Color? bodyColor;
   final EdgeInsetsGeometry? upperWidgetPadding;
+  final Future<void> Function(BuildContext context)? onRefresh;
 
   const CenterCardScaffold({
     super.key,
     required this.body,
     required this.upperWidget,
     this.bodyColor,
-    this.upperWidgetPadding
+    this.upperWidgetPadding,
+    this.onRefresh,
   }) : centerCardBody = null, cardProperties = null, bodyTopPadding = null, cardTopPadding = null;
 
   const CenterCardScaffold.withCenteredCard({
@@ -39,14 +42,17 @@ class CenterCardScaffold extends StatelessWidget {
     this.bodyTopPadding,
     this.cardTopPadding,
     this.bodyColor,
-    this.upperWidgetPadding
+    this.upperWidgetPadding,
+    this.onRefresh,
 });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
       body: SafeArea(
         child: ScreenChildren(
+          onRefresh: ()async => onRefresh?.call(context),
           upperWidgetPadding: upperWidgetPadding,
           cardProperties: cardProperties,
           bodyColor: bodyColor,
@@ -70,8 +76,11 @@ class ScreenChildren extends StatelessWidget {
   final double? cardTopPadding;
   final Color? bodyColor;
   final EdgeInsetsGeometry? upperWidgetPadding;
+  final Future<void> Function() onRefresh;
+
   const ScreenChildren({super.key,
     required this.body,
+    required this.onRefresh,
     required this.upperWidget,
     this.centerCardBody,
     this.cardProperties,
@@ -83,50 +92,53 @@ class ScreenChildren extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        Stack(
-          children: [
-            Column(
-              children: [
-                Container(
-                    width: context.width,
-                    color: AppColors.whiteGreyColor,
-                    child: Padding(
-                      padding: upperWidgetPadding?? EdgeInsets.zero,
-                      child: Stack(
-                        children: [
-                          upperWidget,
-                          if(ModalRoute.of(context)!.canPop)
-                            const AppBackButton(),
-                        ],
+    return PullRefresherWidget(
+      onRefresh: onRefresh,
+      child: ListView(
+        children: [
+          Stack(
+            children: [
+              Column(
+                children: [
+                  Container(
+                      width: context.width,
+                      color: AppColors.whiteGreyColor,
+                      child: Padding(
+                        padding: upperWidgetPadding?? EdgeInsets.zero,
+                        child: Stack(
+                          children: [
+                            upperWidget,
+                            if(ModalRoute.of(context)!.canPop)
+                              const AppBackButton(),
+                          ],
+                        ),
+                      )
+                  ),
+                  Container(
+                      width: context.width,
+                      decoration: BoxDecoration(
+                        color: bodyColor,
+                        borderRadius: BorderRadius.vertical(top: Radius.circular(22.r)),
                       ),
-                    )
-                ),
-                Container(
-                    width: context.width,
-                    decoration: BoxDecoration(
-                      color: bodyColor,
-                      borderRadius: BorderRadius.vertical(top: Radius.circular(22.r)),
-                    ),
-                    child: centerCardBody.isNotNull?
-                    body.defaultScreenPadding().paddingTop(topPadding ?? 40.h) :
-                    body.defaultScreenPadding()
-                ),
-              ],
-            ),
+                      child: centerCardBody.isNotNull?
+                      body.defaultScreenPadding().paddingTop(topPadding ?? 40.h) :
+                      body.defaultScreenPadding()
+                  ),
+                ],
+              ),
 
-            if(centerCardBody.isNotNull)
-              Container(
-                decoration: BoxDecoration(
-                    color: cardProperties?.color??Colors.white,
-                    borderRadius: BorderRadius.circular(12.r)
-                ),
-                child: centerCardBody
-              ).paddingTop(cardTopPadding ?? 100.h).paddingSymmetric(horizontal: 12.w)
-          ],
-        )
-      ],
+              if(centerCardBody.isNotNull)
+                Container(
+                  decoration: BoxDecoration(
+                      color: cardProperties?.color??Colors.white,
+                      borderRadius: BorderRadius.circular(12.r)
+                  ),
+                  child: centerCardBody
+                ).paddingTop(cardTopPadding ?? 100.h).paddingSymmetric(horizontal: 12.w)
+            ],
+          )
+        ],
+      ),
     );
   }
 }

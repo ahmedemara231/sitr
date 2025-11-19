@@ -6,6 +6,7 @@ import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/enum.dart';
+import '../../../../core/extensions/widget_extension.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/navigation/navigator.dart';
@@ -77,6 +78,7 @@ class MainView extends StatelessWidget {
       create: (context) => MainViewCubit()..getHomeData(),
       child: BlocBuilder<MainViewCubit, AsyncState<HomeModel>>(
         builder: (context, state) => CenterCardScaffold.withCenteredCard(
+          onRefresh: (context) => context.read<MainViewCubit>().getHomeData(),
           bodyTopPadding: 120,
           cardTopPadding: 100,
           upperWidget: SizedBox(
@@ -107,122 +109,125 @@ class MainView extends StatelessWidget {
                     images: state.data.banners!.map((e) => e.image??'').toList()
                 )
             ),
-          body: Column(
-            children: [
-              ChooseFromOptionsWidget(
-                onSelectOption: (selectedOption) => firstSelection.value = selectedOption,
-                fontSize: 14.sp,
-                childPadding: EdgeInsets.symmetric(vertical: 16.h),
-                titles: _partnersOrConsultants,
-              ),
-              ValueListenableBuilder(
-                valueListenable: firstSelection,
-                builder: (context, value, child) => value == _partnersOrConsultants.first? Column(
-                  children: [
-                    ChooseFromOptionsWidget(
-                      fontWeight: FontWeight.w500,
-                      onSelectOption: (selectedOption) => secondSelection.value = selectedOption,
-                      childPadding: EdgeInsets.symmetric(vertical: 12.h),
-                      titles: _opportunitiesTitles,
-                      fontSize: 14.sp,
-                    ),
+          body: StatusBuilder(
+            data: state,
+            onSuccess: (data, context) => Column(
+              children: [
+                ChooseFromOptionsWidget(
+                  onSelectOption: (selectedOption) => firstSelection.value = selectedOption,
+                  fontSize: 14.sp,
+                  childPadding: EdgeInsets.symmetric(vertical: 16.h),
+                  titles: _partnersOrConsultants,
+                ),
+                ValueListenableBuilder(
+                  valueListenable: firstSelection,
+                  builder: (context, value, child) => value == _partnersOrConsultants.first? Column(
+                    children: [
+                      ChooseFromOptionsWidget(
+                        fontWeight: FontWeight.w500,
+                        onSelectOption: (selectedOption) => secondSelection.value = selectedOption,
+                        childPadding: EdgeInsets.symmetric(vertical: 12.h),
+                        titles: _opportunitiesTitles,
+                        fontSize: 14.sp,
+                      ),
 
-                    ValueListenableBuilder(
-                        valueListenable: secondSelection,
-                        builder: (context, val, child) {
-                          if(val == UserType.male.translate){
-                            return Column(
-                              spacing: 10.h,
-                              children: List.generate(
-                                  state.data.opportunities?.male?.length ?? 0,
-                                      (index) {
-                                    final opportunity = state.data.opportunities?.male?[index];
-                                    return InkWell(
-                                      onTap: () => Go.to(IndividualDetailsScreen.opportunity(
-                                        id: opportunity?.id ?? 0,
-                                      )),
-                                      child: PartnerCard(
-                                          name: opportunity?.name??'',
-                                          imageUrl: opportunity?.avatar??'',
-                                          location: opportunity?.city??'',
-                                          weight: opportunity?.weight.toString() ?? '',
-                                          height: opportunity?.height.toString() ?? '',
-                                          age: opportunity?.age ?? 0,
-                                          maritalStatus: opportunity?.name??''
-                                      ),
-                                    );
-                                  }
-                              ),
-                            );
+                      ValueListenableBuilder(
+                          valueListenable: secondSelection,
+                          builder: (context, val, child) {
+                            if(val == UserType.male.translate){
+                              return Column(
+                                spacing: 10.h,
+                                children: List.generate(
+                                    state.data.opportunities?.male?.length ?? 0,
+                                        (index) {
+                                      final opportunity = state.data.opportunities?.male?[index];
+                                      return InkWell(
+                                        onTap: () => Go.to(IndividualDetailsScreen.opportunity(
+                                          id: opportunity?.id ?? 0,
+                                        )),
+                                        child: PartnerCard(
+                                            name: opportunity?.name??'',
+                                            imageUrl: opportunity?.avatar??'',
+                                            location: opportunity?.city??'',
+                                            weight: opportunity?.weight.toString() ?? '',
+                                            height: opportunity?.height.toString() ?? '',
+                                            age: opportunity?.age ?? 0,
+                                            maritalStatus: opportunity?.name??''
+                                        ),
+                                      );
+                                    }
+                                ),
+                              );
 
-                          }
-                          else if(val == UserType.female.translate){
-                            return Column(
-                              spacing: 10.h,
-                              children: List.generate(
-                                  state.data.opportunities?.female?.length ?? 0,
-                                      (index) {
-                                    final opportunity = state.data.opportunities?.female?[index];
-                                    return InkWell(
-                                      onTap: () => Go.to(IndividualDetailsScreen.opportunity(
-                                            id: opportunity?.id ?? 0,
-                                          )),
-                                      child: PartnerCard(
-                                          name: opportunity?.name??'',
-                                          imageUrl: opportunity?.avatar??'',
-                                          location: opportunity?.city??'',
-                                          weight: opportunity?.weight.toString() ?? '',
-                                          height: opportunity?.height.toString() ?? '',
-                                          age: opportunity?.age ?? 0,
-                                          maritalStatus: opportunity?.name??''
-                                      ),
-                                    );
-                                  }
-                              ),
-                            );
+                            }
+                            else if(val == UserType.female.translate){
+                              return Column(
+                                spacing: 10.h,
+                                children: List.generate(
+                                    state.data.opportunities?.female?.length ?? 0,
+                                        (index) {
+                                      final opportunity = state.data.opportunities?.female?[index];
+                                      return InkWell(
+                                        onTap: () => Go.to(IndividualDetailsScreen.opportunity(
+                                              id: opportunity?.id ?? 0,
+                                            )),
+                                        child: PartnerCard(
+                                            name: opportunity?.name??'',
+                                            imageUrl: opportunity?.avatar??'',
+                                            location: opportunity?.city??'',
+                                            weight: opportunity?.weight.toString() ?? '',
+                                            height: opportunity?.height.toString() ?? '',
+                                            age: opportunity?.age ?? 0,
+                                            maritalStatus: opportunity?.name??''
+                                        ),
+                                      );
+                                    }
+                                ),
+                              );
 
+                            }
+                            else{
+                              return Column(
+                                spacing: 10.h,
+                                children: List.generate(
+                                    state.data.opportunities?.parent?.length ?? 0,
+                                        (index) {
+                                      final opportunity = state.data.opportunities?.parent?[index];
+                                      return InkWell(
+                                        onTap: () => Go.to( ParentDetailsScreen(id: opportunity?.id ?? 0)),
+                                        child: ParentCard(
+                                            parentImage: opportunity?.avatar??'',
+                                            name: opportunity?.name??'',
+                                            kinship: opportunity?.relation?.name ?? '',
+                                            childrenNumber: opportunity?.numOfChildren ?? 0
+                                        ),
+                                      );
+                                    }
+                                ),
+                              );
+                            }
                           }
-                          else{
-                            return Column(
-                              spacing: 10.h,
-                              children: List.generate(
-                                  state.data.opportunities?.parent?.length ?? 0,
-                                      (index) {
-                                    final opportunity = state.data.opportunities?.parent?[index];
-                                    return InkWell(
-                                      onTap: () => Go.to( ParentDetailsScreen(id: opportunity?.id ?? 0)),
-                                      child: ParentCard(
-                                          parentImage: opportunity?.avatar??'',
-                                          name: opportunity?.name??'',
-                                          kinship: opportunity?.relation?.name ?? '',
-                                          childrenNumber: opportunity?.numOfChildren ?? 0
-                                      ),
-                                    );
-                                  }
-                              ),
-                            );
-                          }
+                      ),
+                    ],
+                  ) : Column(
+                    spacing: 10.h,
+                    children: List.generate(
+                        state.data.marriageConsultants?.length ?? 0,
+                            (i) {
+                          final marriageConsultant = state.data.marriageConsultants?[i];
+                          return MarriageConsultantCard(
+                              name: marriageConsultant?.name ?? '',
+                              phone: marriageConsultant?.phone ?? '',
+                              parentImage: marriageConsultant?.image ?? '',
+                              description: marriageConsultant?.description ?? ''
+                          );
                         }
                     ),
-                  ],
-                ) : Column(
-                  spacing: 10.h,
-                  children: List.generate(
-                      state.data.marriageConsultants?.length ?? 0,
-                          (i) {
-                        final marriageConsultant = state.data.marriageConsultants?[i];
-                        return MarriageConsultantCard(
-                            name: marriageConsultant?.name ?? '',
-                            phone: marriageConsultant?.phone ?? '',
-                            parentImage: marriageConsultant?.image ?? '',
-                            description: marriageConsultant?.description ?? ''
-                        );
-                      }
-                  ),
-                )
-              ),
-            ],
-          ),
+                  )
+                ),
+              ],
+            ),
+          )
         ),
       ),
     );
