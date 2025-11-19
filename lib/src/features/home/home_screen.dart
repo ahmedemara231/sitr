@@ -1,17 +1,15 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
+import '../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../core/helpers/helpers.dart';
 import '../../core/helpers/user_type_enum.dart';
-import '../../core/network/network_service.dart';
-import '../../core/widgets/default_bottom_sheet.dart';
+import '../../core/widgets/app_text.dart';
 import '../../core/widgets/icon_widget.dart';
-import '../../core/widgets/sheets/login_when_visitor.dart';
+import 'cubits/get_notification_count.dart';
 import 'cubits/home_cubit/home_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -19,6 +17,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final countCubit = GetNotificationCountCubit()..getNotificationCount();
     return BlocProvider(
       create: (context) => HomeCubit(),
       child: BlocBuilder<HomeCubit, HomeState>(
@@ -81,11 +80,20 @@ class HomeScreen extends StatelessWidget {
                             label: LocaleKeys.home,
                           ),
                           BottomNavigationBarItem(
-                            icon: IconWidget(
-                              icon: Assets.svgNotificationIcon,
-                              color: cubit.currentIndex == 1
-                                  ? AppColors.primary
-                                  : null,
+                            icon: BlocBuilder<GetNotificationCountCubit, AsyncState<int>>(
+                              bloc: countCubit,
+                              builder: (context, state) => Badge(
+                                backgroundColor: AppColors.primary,
+                                label: AppText(state.data.toString()),
+                                isLabelVisible: state.data <= 0 ? false : true,
+                                child: IconWidget(
+                                  onTap: () => countCubit.reset(),
+                                  icon: Assets.svgNotificationIcon,
+                                  color: cubit.currentIndex == 1
+                                      ? AppColors.primary
+                                      : null,
+                                ),
+                              ),
                             ),
                             label: LocaleKeys.notifications,
                           ),
