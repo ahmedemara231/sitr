@@ -19,6 +19,7 @@ import 'core/widgets/offline_widget.dart';
 import 'core/widgets/splash_logo.dart';
 import 'features/chats/presentation/screens/chat_screen.dart';
 import 'features/chats/presentation/screens/chats_screen.dart';
+import 'features/home/cubits/get_notification_count.dart';
 import 'features/splash/splash_screen.dart';
 
 import 'package:path/path.dart';
@@ -61,39 +62,42 @@ class Sitr extends StatelessWidget {
           create: (context) => injector<UserCubit>(),
           child: PageStorage(
             bucket: _bucket,
-            child: MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: ConstantManager.projectName,
-              localizationsDelegates: context.localizationDelegates,
-              supportedLocales: context.supportedLocales,
-              locale: context.locale,
-              navigatorKey: Go.navigatorKey,
-              restorationScopeId: 'app',
+            child: BlocProvider(
+              create: (context) => GetNotificationCountCubit()..startNotificationInterceptor(),
+              child: MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: ConstantManager.projectName,
+                localizationsDelegates: context.localizationDelegates,
+                supportedLocales: context.supportedLocales,
+                locale: context.locale,
+                navigatorKey: Go.navigatorKey,
+                restorationScopeId: 'app',
 
-              // home: EnterMaleOrFemaleOrChildDataScreen.withParent(scaffoldType: ScaffoldType.appScaffold, showConditionsAndTerms: true, onClick: (context, user)async{}),
-              home: const SplashScreen(),
-              navigatorObservers: [AppNavigationObserver()],
-              builder: (context, child) {
-                return InternetInterceptorWidget(
-                  loadingWidget: const SplashLogo(),
-                  onChanged: (status) => _manageInternetConnectivity(context, status),
-                  builder: (status) {
-                    return Stack(
-                      children: [
-                        child!,
-                        if (status == InternetConnectionStatus.disconnected)
-                          const Positioned.fill(
-                            child: NoInternetWidget(),
-                          ),
-                      ],
-                    );
-                  },
-                );
+                // home: EnterMaleOrFemaleOrChildDataScreen.withParent(scaffoldType: ScaffoldType.appScaffold, showConditionsAndTerms: true, onClick: (context, user)async{}),
+                home: const SplashScreen(),
+                navigatorObservers: [AppNavigationObserver()],
+                builder: (context, child) {
+                  return InternetInterceptorWidget(
+                    loadingWidget: const SplashLogo(),
+                    onChanged: (status) => _manageInternetConnectivity(context, status),
+                    builder: (status) {
+                      return Stack(
+                        children: [
+                          child!,
+                          if (status == InternetConnectionStatus.disconnected)
+                            const Positioned.fill(
+                              child: NoInternetWidget(),
+                            ),
+                        ],
+                      );
+                    },
+                  );
 
-                // return OfflineWidget(
-                //   child: FullScreenLoadingManager(child: child!),
-                // );
-              },
+                  // return OfflineWidget(
+                  //   child: FullScreenLoadingManager(child: child!),
+                  // );
+                },
+              ),
             ),
           ),
         );

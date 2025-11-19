@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final countCubit = GetNotificationCountCubit()..getNotificationCount();
+    // final countCubit = GetNotificationCountCubit()..getNotificationCount();
     return BlocProvider(
       create: (context) => HomeCubit(),
       child: BlocBuilder<HomeCubit, HomeState>(
@@ -81,13 +81,12 @@ class HomeScreen extends StatelessWidget {
                           ),
                           BottomNavigationBarItem(
                             icon: BlocBuilder<GetNotificationCountCubit, AsyncState<int>>(
-                              bloc: countCubit,
                               builder: (context, state) => Badge(
                                 backgroundColor: AppColors.primary,
                                 label: AppText(state.data.toString()),
                                 isLabelVisible: state.data <= 0 ? false : true,
                                 child: IconWidget(
-                                  onTap: () => countCubit.reset(),
+                                  onTap: () => context.read<GetNotificationCountCubit>().reset(),
                                   icon: Assets.svgNotificationIcon,
                                   color: cubit.currentIndex == 1
                                       ? AppColors.primary
