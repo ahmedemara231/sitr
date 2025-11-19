@@ -55,7 +55,7 @@ class ApiConstants {
   static const String getPartnerInfo = 'opportunity-profile/';
   static const String getNotifications = 'notifications';
   static const String getNotificationsCount = 'count-notifications';
-  static const String deleteNotification = 'delete-notification';
+  static const String deleteNotification = 'delete-notification/';
   static const String deleteAllNotification = 'delete-notifications';
   static const String profile = 'profile';
   static const String myPackage = 'my-package';

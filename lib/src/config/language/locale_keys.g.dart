@@ -376,6 +376,12 @@ abstract class LocaleKeys {
   static const String _pleaseEnterTheType = 'please_enter_the_type';
   static String get pleaseEnterTheType => _pleaseEnterTheType.tr();
 
+  static const String _areYouSureToDeleteThisNotification = 'are_you_sure_to_delete_this_notification';
+  static String get areYouSureToDeleteThisNotification => _areYouSureToDeleteThisNotification.tr();
+
+  static const String _areYouSureToDeleteAllNotifications = 'are_you_sure_to_delete_all_notifications';
+  static String get areYouSureToDeleteAllNotifications => _areYouSureToDeleteAllNotifications.tr();
+
   static const String _pleaseEnterTheCity = 'please_enter_the_city';
   static String get pleaseEnterTheCity => _pleaseEnterTheCity.tr();
 

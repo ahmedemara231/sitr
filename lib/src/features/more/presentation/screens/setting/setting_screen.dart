@@ -6,16 +6,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../generated/assets.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
-import '../../../../../core/helpers/user_type_enum.dart';
 import '../../../../../core/navigation/named_routes.dart';
 import '../../../../../core/navigation/navigator.dart';
 import '../../../../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../../core/shared/user_cubit/user_cubit.dart';
-import '../../../../../core/widgets/app_bottom_sheet.dart';
-import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../../core/widgets/scaffolds/app_scaffold.dart';
+import '../../../../../core/widgets/sheets/delete_sheet.dart';
 import '../../../../auth/imports.dart';
 import '../../../../auth/presentation/cubits/edit_profile.dart';
 import '../../../../home/home_screen.dart';
@@ -154,25 +152,15 @@ class SettingScreen extends StatelessWidget {
           showDefaultBottomSheet(
               child: BlocProvider(
                 create: (context) => DeleteAccountCubit(),
-                child: AppBottomSheet.large(
-                    cancelBackgroundColor: AppColors.cancelColor,
+                child: DeleteSheet(
                     asyncCall: (context) => context.read<DeleteAccountCubit>().deleteAccount(
                         onSuccess: () {
                           Go.offAll(const LoginScreen());
                           UserCubit.instance.logout();
                         }
                     ),
-                    btnTitle: LocaleKeys.confirm,
-                    upperWidget: Column(
-                      children: [
-                        SizedBox.square(
-                            dimension: 200.sp,
-                            child: Image.asset(Assets.imagesDeleteIcon)
-                        ),
-                        AppText(LocaleKeys.areYouSureYouWantToDeleteYourAccount, fontWeight: FontWeight.w500),
-                      ],
-                    )
-                ),
+                    title: LocaleKeys.areYouSureYouWantToDeleteYourAccount
+                )
               )
           );
         },

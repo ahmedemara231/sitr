@@ -11,8 +11,11 @@ import '../../data/models/notification_model.dart';
 
 class NotificationCard extends StatefulWidget {
   final NotificationModel notificationModel;
+  final Future<void> Function(String id) onDelete;
 
-  const NotificationCard({super.key, required this.notificationModel});
+  const NotificationCard({super.key,
+    required this.onDelete,
+    required this.notificationModel});
 
   @override
   State<NotificationCard> createState() => _NotificationCardState();
@@ -55,7 +58,7 @@ class _NotificationCardState extends State<NotificationCard> {
               children: [
                 AppText(widget.notificationModel.createdAt, fontSize: 10.sp, color: Colors.grey),
                 IconButton(
-                  onPressed: () async {},
+                  onPressed: () async => widget.onDelete.call(widget.notificationModel.id),
                   icon: const SvgPic(assetName: Assets.svgTrashIcon)
                 )
 
