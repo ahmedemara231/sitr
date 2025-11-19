@@ -107,6 +107,8 @@ Opportunities copyWith({
 
 class Opportunity {
   Opportunity({
+    this.martialStatus,
+    this.nickName,
       this.id,
       this.name,
       this.avatar,
@@ -115,8 +117,8 @@ class Opportunity {
       this.gender,
       this.city,
       this.height,
-      this.weight
-    ,});
+      this.weight,
+  });
 
   Opportunity.fromJson(dynamic json) {
     id = json['id'];
@@ -128,7 +130,10 @@ class Opportunity {
     city = json['city'];
     height = json['height'];
     weight = json['weight'];
+    martialStatus = json['martial_status'];
+    nickName = json['nick_name'];
   }
+
   int? id;
   String? name;
   String? avatar;
@@ -138,6 +143,9 @@ class Opportunity {
   String? city;
   num? height;
   num? weight;
+  TitleValueShape? martialStatus;
+  String? nickName;
+
 Opportunity copyWith({  int? id,
   String? name,
   String? avatar,
@@ -147,10 +155,14 @@ Opportunity copyWith({  int? id,
   String? city,
   double? height,
   double? weight,
+  TitleValueShape? martialStatus,
+  String? nickName,
 }) => Opportunity(  id: id ?? this.id,
   name: name ?? this.name,
   avatar: avatar ?? this.avatar,
   age: age ?? this.age,
+  martialStatus: martialStatus??this.martialStatus,
+  nickName: nickName??this.nickName,
   type: type ?? this.type,
   gender: gender ?? this.gender,
   city: city ?? this.city,
@@ -163,6 +175,8 @@ Opportunity copyWith({  int? id,
     map['name'] = name;
     map['avatar'] = avatar;
     map['age'] = age;
+    map['martial_status'] = martialStatus;
+    map['nick_name'] = nickName;
     if (type != null) {
       map['type'] = type?.toJson();
     }

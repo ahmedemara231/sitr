@@ -10,6 +10,7 @@ import '../../../../core/extensions/widget_extension.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/navigation/navigator.dart';
+import '../../../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../core/widgets/app_text.dart';
@@ -28,12 +29,24 @@ import 'parent_details.dart';
 import 'partner_details.dart';
 
 
-class MainView extends StatelessWidget {
+class MainView extends StatefulWidget {
   MainView({super.key});
 
-  late final ValueNotifier<String> firstSelection = ValueNotifier(_partnersOrConsultants.first);
+  @override
+  State<MainView> createState() => _MainViewState();
+}
 
-  late final ValueNotifier<String> secondSelection = ValueNotifier(_opportunitiesTitles.first);
+class _MainViewState extends State<MainView> {
+  late final ValueNotifier<String> firstSelection;
+  late final ValueNotifier<String> secondSelection;
+
+  @override
+  void initState() {
+    firstSelection = ValueNotifier(_partnersOrConsultants.first);
+    secondSelection = ValueNotifier(_opportunitiesTitles.first);
+    firstSelection.addListener(firstSelectionListener);
+    super.initState();
+  }
 
   void firstSelectionListener(){
     if(firstSelection.value == _partnersOrConsultants.first){
@@ -73,7 +86,6 @@ class MainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    firstSelection.addListener(firstSelectionListener);
     return BlocProvider(
       create: (context) => MainViewCubit()..getHomeData(),
       child: BlocBuilder<MainViewCubit, AsyncState<HomeModel>>(
@@ -91,7 +103,7 @@ class MainView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       AppText(LocaleKeys.welcome, fontSize: 12.sp),
-                      AppText(UserCubit.instance.user.name??'Test', fontWeight: FontWeight.bold, fontSize: 16.sp),
+                      AppText(UserCubit.instance.user.name??'', fontWeight: FontWeight.bold, fontSize: 16.sp),
                     ],
                   ),
 
@@ -121,7 +133,8 @@ class MainView extends StatelessWidget {
                 ),
                 ValueListenableBuilder(
                   valueListenable: firstSelection,
-                  builder: (context, value, child) => value == _partnersOrConsultants.first? Column(
+                  builder: (context, value, child) => value == _partnersOrConsultants.first?
+                  Column(
                     children: [
                       ChooseFromOptionsWidget(
                         fontWeight: FontWeight.w500,
@@ -172,13 +185,13 @@ class MainView extends StatelessWidget {
                                               id: opportunity?.id ?? 0,
                                             )),
                                         child: PartnerCard(
-                                            name: opportunity?.name??'',
+                                            name: opportunity?.nickName??'',
                                             imageUrl: opportunity?.avatar??'',
                                             location: opportunity?.city??'',
-                                            weight: opportunity?.weight.toString() ?? '',
+                                            weight: '${opportunity?.weight} ${LocaleKeys.kg}',
                                             height: opportunity?.height.toString() ?? '',
                                             age: opportunity?.age ?? 0,
-                                            maritalStatus: opportunity?.name??''
+                                            maritalStatus: opportunity?.martialStatus?.title??''
                                         ),
                                       );
                                     }
@@ -209,7 +222,8 @@ class MainView extends StatelessWidget {
                           }
                       ),
                     ],
-                  ) : Column(
+                  ) :
+                  Column(
                     spacing: 10.h,
                     children: List.generate(
                         state.data.marriageConsultants?.length ?? 0,

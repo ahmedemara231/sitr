@@ -66,8 +66,13 @@ class HomeScreen extends StatelessWidget {
                           if(index != 0 && index != 4){
                             if(!UserTypeHelper.isAuthenticated){
                               Helpers.showUnauthenticatedSheet();
+
                             }
+                          }else if(index == 1){
+                            context.read<GetNotificationCountCubit>().reset();
                           }
+
+                          return;
                         },
                         items: [
                           BottomNavigationBarItem(
@@ -86,7 +91,6 @@ class HomeScreen extends StatelessWidget {
                                 label: AppText(state.data.toString()),
                                 isLabelVisible: state.data <= 0 ? false : true,
                                 child: IconWidget(
-                                  onTap: () => context.read<GetNotificationCountCubit>().reset(),
                                   icon: Assets.svgNotificationIcon,
                                   color: cubit.currentIndex == 1
                                       ? AppColors.primary

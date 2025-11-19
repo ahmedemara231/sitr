@@ -66,6 +66,7 @@ class ConfigurationInterceptor extends Interceptor {
     log('the error key is $errorKey');
     switch (errorKey) {
       case 'fail':
+      case 'notApproved':
         return HttpStatus.badRequest;
       case 'unauthenticated':
         return HttpStatus.unauthorized;
@@ -73,9 +74,6 @@ class ConfigurationInterceptor extends Interceptor {
         return HttpStatus.locked;
       case 'exception':
         return HttpStatus.internalServerError;
-      case 'needActive':
-      case 'notApproved':
-        return HttpStatus.badGateway;
 
       default:
         return null;

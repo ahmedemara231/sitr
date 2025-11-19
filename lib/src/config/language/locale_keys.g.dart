@@ -379,6 +379,9 @@ abstract class LocaleKeys {
   static const String _areYouSureToDeleteThisNotification = 'are_you_sure_to_delete_this_notification';
   static String get areYouSureToDeleteThisNotification => _areYouSureToDeleteThisNotification.tr();
 
+  static const String _kg = 'kg';
+  static String get kg => _kg.tr();
+
   static const String _areYouSureToDeleteAllNotifications = 'are_you_sure_to_delete_all_notifications';
   static String get areYouSureToDeleteAllNotifications => _areYouSureToDeleteAllNotifications.tr();
 

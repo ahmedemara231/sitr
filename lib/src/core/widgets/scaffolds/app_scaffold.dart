@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../config/res/config_imports.dart';
 import '../../extensions/context_extension.dart';
-import '../../extensions/object.dart';
 import '../../extensions/padding_extension.dart';
 import '../../navigation/navigator.dart';
 import '../app_text.dart';
