@@ -118,6 +118,8 @@ class Opportunity {
       this.city,
       this.height,
       this.weight,
+    this.hijab,
+    this.skin,
   });
 
   Opportunity.fromJson(dynamic json) {
@@ -132,9 +134,13 @@ class Opportunity {
     weight = json['weight'];
     martialStatus = json['martial_status'];
     nickName = json['nick_name'];
+    hijab = json['hijab'] != null ? TitleValueShape.fromJson(json['hijab']) : null;
+    skin = json['skin_color'] != null ? TitleValueShape.fromJson(json['skin_color']) : null;
   }
 
   int? id;
+  TitleValueShape? skin;
+  TitleValueShape? hijab;
   String? name;
   String? avatar;
   int? age;
@@ -175,6 +181,8 @@ Opportunity copyWith({  int? id,
     map['name'] = name;
     map['avatar'] = avatar;
     map['age'] = age;
+    map['skin_color'] = skin?.toJson();
+    map['hijab'] = hijab?.toJson();
     map['martial_status'] = martialStatus;
     map['nick_name'] = nickName;
     if (type != null) {

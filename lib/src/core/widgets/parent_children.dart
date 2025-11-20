@@ -70,15 +70,7 @@ class ParentChildren extends StatelessWidget {
                 ),
                 name: element.name,
                 url: element.avatar
-            ).paddingBottom(10.h) : PartnerCard(
-              name: element.name??'',
-              imageUrl: element.avatar??'',
-              location: element.city??'',
-              weight: element.weight.toString(),
-              height: element.height.toString(),
-              age: element.age ?? 0,
-              maritalStatus: element.name??'',
-            ).paddingBottom(10.h),
+            ).paddingBottom(10.h) : PartnerCard.withParent(opportunity: element).paddingBottom(10.h),
           ),
 
 

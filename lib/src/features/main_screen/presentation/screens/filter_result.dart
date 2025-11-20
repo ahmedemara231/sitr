@@ -34,15 +34,7 @@ class FilterResultScreen extends StatelessWidget {
               onTap: () => Go.to(IndividualDetailsScreen.opportunity(
                 id: opportunity?.id ?? 0,
               )),
-              child: PartnerCard(
-                  name: opportunity?.name??'',
-                  imageUrl: opportunity?.avatar??'',
-                  location: opportunity?.city??'',
-                  weight: opportunity?.weight.toString() ?? '',
-                  height: opportunity?.height.toString() ?? '',
-                  age: opportunity?.age ?? 0,
-                  maritalStatus: opportunity?.name??''
-              ).paddingBottom(10.h),
+              child: PartnerCard.individual(opportunity: opportunity).paddingBottom(10.h),
           )),
         )
     );

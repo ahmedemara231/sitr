@@ -4,29 +4,26 @@ import '../../../../../../generated/assets.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/extensions/sized_box_helper.dart';
+import '../../../../../core/helpers/user_type_enum.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/svg_pic.dart';
+import '../../../data/models/home_model.dart';
 import 'home_image.dart';
 
 class PartnerCard extends StatelessWidget {
-  final String name;
-  final String imageUrl;
-  final String location;
-  final String weight;
-  final int age;
-  final String height;
-  final String maritalStatus;
+  final bool _withParent;
+  final Opportunity opportunity;
 
-  const PartnerCard({
+  const PartnerCard.individual({
     super.key,
-    required this.name,
-    required this.imageUrl,
-    required this.location,
-    required this.weight,
-    required this.age,
-    required this.height,
-    required this.maritalStatus,
-  });
+    required this.opportunity
+  }) : _withParent = false;
+
+  const PartnerCard.withParent({
+    super.key,
+    required this.opportunity
+  }) : _withParent = true;
+
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +44,7 @@ class PartnerCard extends StatelessWidget {
         children: [
           SizedBox.square(
               dimension: 80.sp,
-              child: HomeImage(url: imageUrl)
+              child: HomeImage(url: opportunity.avatar ?? ConstantManager.defaultAvatar)
           ),
           const SizedBox(width: 16),
           Expanded(
@@ -55,7 +52,7 @@ class PartnerCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  name,
+                  opportunity.name ?? '',
                   style: const TextStyle(
                     fontFamily: ConstantManager.fontFamily,
                     fontSize: 16,
@@ -69,15 +66,31 @@ class PartnerCard extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      _buildStatItem(
-                        value: location,
-                        icon: Assets.svgLocation,
-                        color: const Color(0xFFF57C00),
-                        backgroundColor: const Color(0xFFFFF3E0),
-                      ),
+                      if(_withParent)
+                        if(opportunity.gender!.userType!.isFemale)
+                          _buildStatItem(
+                            value: opportunity.hijab?.title ?? '',
+                            icon: Assets.svgHijab,
+                            color: const Color(0xFFF57C00),
+                            backgroundColor: const Color(0xFFFFF3E0),
+                          )else
+                            _buildStatItem(
+                              value: opportunity.skin?.title ?? '',
+                              icon: Assets.svgMartialStatus,
+                              color: const Color(0xFFF57C00),
+                              backgroundColor: const Color(0xFFFFF3E0),
+                            )
+                      else
+                        _buildStatItem(
+                          value: opportunity.city?? '',
+                          icon: Assets.svgLocation,
+                          color: const Color(0xFFF57C00),
+                          backgroundColor: const Color(0xFFFFF3E0),
+                        ),
+
                       const SizedBox(width: 24),
                       _buildStatItem(
-                        value: '$weight ${LocaleKeys.kg}',
+                        value: '${opportunity.weight} ${LocaleKeys.kg}',
                         icon: Assets.svgWeight,
                         color: const Color(0xFF9C27B0),
                         backgroundColor: const Color(0xFFF3E5F5),
@@ -89,26 +102,26 @@ class PartnerCard extends StatelessWidget {
 
                 FittedBox(
                   child: Row(
+                    spacing: 24.w,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      if(!_withParent)
                       _buildStatItem(
-                        value: maritalStatus,
+                        value: opportunity.martialStatus?.title ?? '',
                         icon: Assets.svgMartialStatus,
                         color: const Color(0xFFF57C00),
                         backgroundColor: const Color(0xFFFFF3E0),
                       ),
 
-                      const SizedBox(width: 24),
                       _buildStatItem(
-                        value: '$age سنة',
+                        value: '${opportunity.age} ${LocaleKeys.years}',
                         icon: Assets.svgAgeIcon,
                         color: const Color(0xFF1976D2),
                         backgroundColor: const Color(0xFFE3F2FD),
                       ),
 
-                      const SizedBox(width: 24),
                       _buildStatItem(
-                        value: '$height سم',
+                        value: '${opportunity.height} ${LocaleKeys.centimeter}',
                         icon: Assets.svgTallIcon,
                         color: const Color(0xFF616161),
                         backgroundColor: const Color(0xFFF5F5F5),

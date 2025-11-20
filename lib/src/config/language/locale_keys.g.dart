@@ -790,6 +790,12 @@ abstract class LocaleKeys {
   static const String _filter = 'filter';
   static String get filter => _filter.tr();
 
+  static const String _years = 'years';
+  static String get years => _years.tr();
+
+  static const String _centimeter = 'centimeter';
+  static String get centimeter => _centimeter.tr();
+
   static const String _searchResult = 'search_result';
   static String get searchResult => _searchResult.tr();
 
