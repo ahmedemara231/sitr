@@ -201,7 +201,7 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
           builder: (context, state) => StatusBuilder(
             data: state,
             onSuccess: (data, context) => Column(
-              spacing: 14.h,
+              spacing: 22.h,
               children: [
                 GridView.count(
                   padding: EdgeInsets.zero,

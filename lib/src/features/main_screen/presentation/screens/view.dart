@@ -128,7 +128,7 @@ class _MainViewState extends State<MainView> {
                 ChooseFromOptionsWidget(
                   onSelectOption: (selectedOption) => firstSelection.value = selectedOption,
                   fontSize: 14.sp,
-                  childPadding: EdgeInsets.symmetric(vertical: 16.h),
+                  childPadding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 12.w),
                   titles: _partnersOrConsultants,
                 ),
                 ValueListenableBuilder(
