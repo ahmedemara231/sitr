@@ -43,7 +43,7 @@ class ClientIOImpl extends SocketHelper{
   void _init(){
     socket = IO.io(url, IO.OptionBuilder()
         .setTransports(['websocket']) // for Flutter or Dart VM
-        .disableAutoConnect()  // disable auto-connection
+        .disableAutoConnect()
         // .setExtraHeaders(MessageParamsModel().toJson())
         .setQuery(MessageParamsModel().toJson())
         .build()
@@ -66,7 +66,7 @@ class ClientIOImpl extends SocketHelper{
     socket.onConnectError((err) => log('❌ Socket connect error: $err'));
     socket.onError((err) => log('❌ Socket error: $err'));
 
-    onReceiveMsg();
+    onReceiveEvent();
   }
 
   @override
@@ -80,7 +80,7 @@ class ClientIOImpl extends SocketHelper{
   //   socket.on(event, (v)async =>  await handler.call(jsonToChatMessage.call(v)));
   // }
 
-  void onReceiveMsg(){
+  void onReceiveEvent(){
     socket..on(
         SocketEvents.sendMsg,
             (data) {

@@ -8,6 +8,7 @@ import '../../config/language/locale_keys.g.dart';
 import 'app_text.dart';
 import 'custom_loading.dart';
 import 'exeption_view.dart';
+import 'dart:developer';
 
 enum Ranking{listView, gridView}
 class AppPagify<T> extends StatefulWidget {
@@ -39,6 +40,7 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
     if(widget.rankingType == Ranking.listView){
       return Pagify<(List<T>, PaginationData), T>.listView(
           key: widget.key,
+          onScrollPositionChanged: (val) => log('the val is $val'),
           shrinkWrap: true,
           emptyListView: Column(
             children: [

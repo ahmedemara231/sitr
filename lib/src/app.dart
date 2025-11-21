@@ -4,6 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:pagify/helpers/data_and_pagination_data.dart';
+import 'package:pagify/pagify.dart';
+import 'package:pagify/pagify.dart';
 import '../generated/assets.dart';
 import 'config/language/locale_keys.g.dart';
 import 'config/res/config_imports.dart';
@@ -11,11 +14,13 @@ import 'core/navigation/navigator.dart';
 import 'core/shared/route_observer.dart';
 import 'core/helpers/loading_manager.dart';
 import 'core/shared/user_cubit/user_cubit.dart' show UserCubit;
+import 'core/widgets/app_pagify.dart';
 import 'core/widgets/connectivity_interceptor/internet_supporter_widget.dart';
 import 'core/widgets/custom_messages.dart';
 import 'core/widgets/exeption_view.dart';
 import 'core/widgets/no_internet_widget.dart';
 import 'core/widgets/offline_widget.dart';
+import 'core/widgets/scaffolds/app_scaffold.dart';
 import 'core/widgets/splash_logo.dart';
 import 'features/chats/presentation/screens/chat_screen.dart';
 import 'features/chats/presentation/screens/chats_screen.dart';
@@ -124,25 +129,4 @@ class Sitr extends StatelessWidget {
 
 final PageStorageBucket _bucket = PageStorageBucket();
 
-class TestScreen extends StatefulWidget {
-  const TestScreen({super.key});
 
-  @override
-  State<TestScreen> createState() => _TestScreenState();
-}
-
-class _TestScreenState extends State<TestScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: ListView.builder(
-        key: const PageStorageKey('test_screen_list'),
-        itemBuilder: (context, index) => InkWell(
-            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const TestScreen())),
-            child: AppText('text $index', fontSize: 30)),
-        itemCount: 30,
-      ),
-    );
-  }
-}

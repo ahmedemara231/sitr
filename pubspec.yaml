@@ -85,7 +85,10 @@ dependencies:
   #--------------------- mine ----------------------
   easy_timer_count: ^0.0.2
   pagify:
-    git: https://github.com/ahmedemara231/pagination_helper
+    path: /Users/aaita/Desktop/apps/pagination_helper
+
+#  easy_chat:
+#    path: /Users/aaita/Desktop/apps/easy_chat
   #--------------------- mine ----------------------
 
   rename: ^3.1.0
