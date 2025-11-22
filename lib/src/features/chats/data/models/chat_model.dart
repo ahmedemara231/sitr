@@ -267,17 +267,17 @@ class Messages {
               logDebug('the v is $v');
               return ChatMessages(
                 message: Message(
-                    id: json['id'],
-                    type: json['type'],
-                    body: json['body']
+                    id: v['id'],
+                    type: v['type'],
+                    body: v['body']
                 ),
                 sender: Sender(
-                    id: json['sender_id'],
-                    name: json['sender_name'],
-                    image: json['avatar'],
-                    isFromMe: (json['sender_id'] == UserModel.currentUser?.id)? true : false
+                    id: v['sender_id'],
+                    name: v['name'],
+                    image: v['avatar'],
+                    isFromMe: (v['sender_id'] == UserModel.currentUser?.id)? true : false
                 ),
-                time: json['created_dt'],
+                time: v['created_at'],
                 // messageState: MessageState.sent
               );
         }

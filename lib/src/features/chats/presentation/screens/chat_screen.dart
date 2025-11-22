@@ -452,6 +452,8 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
         fromHome: widget.fromHome,
         onSuccess: (data) => _manageSuccessState.call(data).call(),
     );
+
+    _init();
   }
 
   Future<void> _showBased(RemoteMessage notification)async{
@@ -472,7 +474,6 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     onReceiveAnyEvent: (e, d) => log('event is received $e $d'),
       extraParams: MessageParamsModel().toJson(),
       url: ConstantManager.socketUrl,
-      enableOfflineState: true,
       jsonToChatMessage: (json) => ChatMessages(
           message: Message(id: json['id'], type: json['type'], body: json['body']),
           sender: Sender(
@@ -507,7 +508,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
   @override
   void initState() {
-    _init();
+    // _init();
     _startChat();
     super.initState();
   }
@@ -605,9 +606,9 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                         },
                         onSend: (context, msg) => socketType.sendMessage(
                           {
+                            'body': msg,
+                            'type' : 'text',
                             'room_id' : state.data.room?.id,
-                            'body' : msg,
-                            'type' : 'text'
                           }
                         )
                     ),

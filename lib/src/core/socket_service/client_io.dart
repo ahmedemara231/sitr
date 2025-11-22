@@ -113,13 +113,13 @@ class ClientIOImpl extends SocketHelper{
 
   void initSocketStates(){
     socket.onConnect((d) {
-      onConnect?.call(d);
       emitEvent(event: events.chatEvents.enterChatEvent, data: {'room_id' : roomId});
+      onConnect?.call(d);
     });
 
     socket.onDisconnect((d) {
-      onDisconnect?.call(d);
       emitEvent(event: events.chatEvents.exitChatEvent, data: {'room_id' : roomId});
+      onDisconnect?.call(d);
     });
 
     socket
