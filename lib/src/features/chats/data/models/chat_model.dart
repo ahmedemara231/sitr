@@ -1,5 +1,8 @@
+import 'package:easy_chat/models/chat_message.dart';
 import 'package:pagify/helpers/data_and_pagination_data.dart';
-import '../../../../core/widgets/easy_chat-master/models/chat_message.dart';
+
+import '../../../../core/network/log_interceptor.dart';
+import '../../../../core/shared/models/user_models/user_model.dart';
 
 class ChatModel {
   final MatchRequest? matchRequest;
@@ -260,8 +263,25 @@ class Messages {
       : null,
         data = json['data'] != null
             ? (json['data'] as List)
-            .map((v) => ChatMessages.fromJson(v))
-            .toList()
+            .map((v) {
+              logDebug('the v is $v');
+              return ChatMessages(
+                message: Message(
+                    id: json['id'],
+                    type: json['type'],
+                    body: json['body']
+                ),
+                sender: Sender(
+                    id: json['sender_id'],
+                    name: json['sender_name'],
+                    image: json['avatar'],
+                    isFromMe: (json['sender_id'] == UserModel.currentUser?.id)? true : false
+                ),
+                time: json['created_dt'],
+                // messageState: MessageState.sent
+              );
+        }
+        ).toList()
             : null;
 
   Messages copyWith({

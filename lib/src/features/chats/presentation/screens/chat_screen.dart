@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:easy_chat/easy_chat.dart';
+import 'package:easy_chat/factory.dart';
+import 'package:easy_chat/models/chat_message.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,13 +30,11 @@ import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/notification/notification_service.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
+import '../../../../core/socket_service/client_io.dart';
 import '../../../../core/widgets/app_bottom_sheet.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/custom_loading.dart';
 import '../../../../core/widgets/default_bottom_sheet.dart';
-import '../../../../core/widgets/easy_chat-master/easy_chat.dart';
-import '../../../../core/widgets/easy_chat-master/factory.dart';
-import '../../../../core/widgets/easy_chat-master/models/chat_message.dart';
 import '../../../../core/widgets/exeption_view.dart';
 import '../../../../core/widgets/icon_widget.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
@@ -48,6 +49,7 @@ import '../../data/chat_notification_service.dart';
 import '../../data/chat_sheet_manager.dart';
 import '../../data/chats_data.dart';
 import '../../data/models/chat_model.dart';
+import '../../data/models/message_params_model.dart';
 import '../../data/models/request_model.dart';
 import '../../enums.dart';
 import '../cubits/notification_cubit.dart';
@@ -463,20 +465,57 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
   final PagifyController<ChatMessages> _chatController = PagifyController<ChatMessages>();
 
-  late final socket = ClientIOImpl(
+  late final SocketHelper socketType = ClientIOImpl(
+    onConnect: (d) => log('socket connected'),
+    onDisconnect: (d) => log('socket disconnected'),
+    onReconnect: (d) => log('socket reconnected'),
+    onReceiveAnyEvent: (e, d) => log('event is received $e $d'),
+      extraParams: MessageParamsModel().toJson(),
       url: ConstantManager.socketUrl,
-      roomId: context.read<ChatCubit>().currentRoom!.id!,
-      jsonToChatMessage: (json) => ChatMessages.fromJson(json),
+      enableOfflineState: true,
+      jsonToChatMessage: (json) => ChatMessages(
+          message: Message(id: json['id'], type: json['type'], body: json['body']),
+          sender: Sender(
+              id: json['sender_id'],
+              name: json['sender_name'],
+              image: json['avatar'],
+              isFromMe: (json['sender_id'] == UserModel.currentUser?.id)? true : false
+          ),
+          time: json['created_dt'],
+          // messageState: MessageState.sent
+      ),
       onReceiveMessage: (msg) {
         _chatController.addItem(msg);
         _chatController.moveToMaxBottom();
-      }
+      }, events: EasyChatEvents(
+      messageEvents: MessageEvents(
+          receiveMsgEvent: SocketEvents.receivedMsg,
+          sendMsgEvent: SocketEvents.sendMsg
+      ), chatEvents: ChatEvents(
+      enterChatEvent: SocketEvents.enterChat,
+      exitChatEvent: SocketEvents.exitChat),
+      otherEvents: []
+  ), roomId: context.read<ChatCubit>().currentRoom?.id ?? 0
   );
+
+  void _init() async {
+    socketType
+      ..initSocket()
+      ..initConfig()
+      ..connect();
+  }
 
   @override
   void initState() {
+    _init();
     _startChat();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    socketType.disconnect();
+    super.dispose();
   }
 
   @override
@@ -521,7 +560,6 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                   Expanded(
                     child: EasyChat(
                       // itemExtent: 60.h,
-                      socketType: socket,
                       controller: _chatController,
                       asyncCall: (context, page) async => await ChatsData.getChatMessages(
                         fromHome: widget.fromHome,
@@ -557,24 +595,20 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                         stage: state.data.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum
                     ) ?? ChatBottomBar(
                         onUpload: (url){
-                          socket.sendMsg(
-                            event: SocketEvents.sendMsg,
-                            data: ChatMessages(
-                              message: url,
-                              type: 'image',
-                            ).toJson()..addAll({
-                              'room_id' : state.data.room?.id,
-                            }),
+                          socketType.sendMessage(
+                              {
+                                'room_id' : state.data.room?.id,
+                                'body' : url,
+                                'type' : 'image'
+                              }
                           );
                         },
-                        onSend: (context, msg) => socket.sendMsg(
-                          event: SocketEvents.sendMsg,
-                          data: ChatMessages(
-                            message: msg,
-                            type: 'text',
-                          ).toJson()..addAll({
+                        onSend: (context, msg) => socketType.sendMessage(
+                          {
                             'room_id' : state.data.room?.id,
-                          }),
+                            'body' : msg,
+                            'type' : 'text'
+                          }
                         )
                     ),
                   ),
@@ -583,4 +617,11 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
       ),
     );
   }
+}
+
+class SocketEvents{
+  static const String enterChat = 'enter-chat';
+  static const String sendMsg = 'send-message';
+  static const String exitChat = 'exit-chat';
+  static const String receivedMsg = 'message-received';
 }

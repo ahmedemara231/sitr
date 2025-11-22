@@ -19,8 +19,6 @@ class ConfigurationInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    log(response.statusCode.toString());
-    log('the error key is');
     if (BackendConfiguation.type.isPhp) {
       _handleError(response);
     }
@@ -31,11 +29,7 @@ class ConfigurationInterceptor extends Interceptor {
     final errorKey = response.data['key'];
     final errorMessage = response.data['msg'];
 
-    log(response.statusCode.toString());
-    log('the error key is $errorKey');
-
     final statusCode = _mapErrorKeyToStatusCode(errorKey);
-
     if (statusCode != null) {
       throw DioException(
         type: DioExceptionType.badResponse,
@@ -63,7 +57,6 @@ class ConfigurationInterceptor extends Interceptor {
   // }
 
   int? _mapErrorKeyToStatusCode(String errorKey) {
-    log('the error key is $errorKey');
     switch (errorKey) {
       case 'fail':
       case 'notApproved':
