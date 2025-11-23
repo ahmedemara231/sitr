@@ -77,17 +77,20 @@ class _SwitchIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ChangeNotifyCubit(),
-      child: BlocBuilder<ChangeNotifyCubit, AsyncState<bool>>(
-          builder: (context, state) => StatusBuilder(
-            data: state,
-            onSuccess: (data, context) => SizedBox.square(
-              child: Switch(
-                  activeThumbColor: AppColors.primary,
-                  value: data,
-                  onChanged: (val) => _checkNotificationPermission(context)
-              ),
+      child: BlocConsumer<ChangeNotifyCubit, AsyncState<bool>>(
+        listener: (context, state) {
+          if(state.isError){
+            context.read<ChangeNotifyCubit>().changeNotifyLocally();
+          }
+        },
+          builder: (context, state) => Switch(
+                activeThumbColor: AppColors.primary,
+                value: state.data,
+                onChanged: (val) {
+                  context.read<ChangeNotifyCubit>().changeNotifyLocally();
+                  _checkNotificationPermission(context);
+                }
             ),
-          )
       ),
     );
   }
