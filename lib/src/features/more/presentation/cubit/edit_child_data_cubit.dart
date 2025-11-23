@@ -14,7 +14,6 @@ class EditChildDataCubit extends AsyncCubit<UserModel>{
                 api: ApiConstants.addChild,
                 httpRequestType: HttpRequestType.post,
                 body: child.toRequestBodyJson(true),
-                queryParameters: {'_method' : 'put'},
                 mapper: (data) => UserModel.fromJson(data)
             )
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/pagify.dart';
+import '../../config/language/locale_keys.g.dart';
 import '../../features/auth/imports.dart';
 import '../../features/main_screen/data/home_data.dart';
 import '../../features/main_screen/data/models/home_model.dart';
@@ -13,6 +14,7 @@ import '../extensions/padding_extension.dart';
 import '../navigation/navigator.dart';
 import '../shared/models/user_models/individual/individual_user_model.dart';
 import 'app_pagify.dart';
+import 'custom_messages.dart';
 import 'parent_children_card.dart';
 
 
@@ -62,7 +64,13 @@ class ParentChildren extends StatelessWidget {
                         scaffoldType: ScaffoldType.appScaffold,
                         initialValue: user as IndividualUserModel,
                         showGenderSelection: false,
-                        onClick: (context, user)async => await context.read<EditChildDataCubit>().editChildData(user),
+                        onClick: (context, user)async => await context.read<EditChildDataCubit>().editChildData(
+                            user,
+                          onSuccess: () {
+                              Go.back();
+                              MessageUtils.showSnackBar(LocaleKeys.childDataHasBeenAddedSuccessfully);
+                          }
+                        ),
                         // userType: element.gender?.userType
                     ),
                   )),
@@ -79,7 +87,7 @@ class ParentChildren extends StatelessWidget {
                 ),
                 name: element.name,
                 url: element.avatar
-            ).paddingBottom(10.h) : PartnerCard.withParent(opportunity: element).paddingBottom(10.h),
+            ).paddingBottom(16.h) : PartnerCard.withParent(opportunity: element).paddingBottom(10.h),
           ),
 
 
