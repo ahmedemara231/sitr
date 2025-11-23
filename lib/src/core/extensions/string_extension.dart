@@ -75,7 +75,7 @@ extension FormatString on String {
       ));
 
     }else if(statusType.isCompleteChild){
-      Go.to(EnterMaleOrFemaleOrChildDataScreen.withParent(
+      Go.to(EnterMaleOrFemaleOrChildDataScreen.showAll(
           scaffoldType: ScaffoldType.centerCard,
           showConditionsAndTerms: true,
           showAlreadyHaveAccount: true,
@@ -87,7 +87,7 @@ extension FormatString on String {
     }else if(statusType.isHasSetrCode){
       Go.to(
           UserTypeHelper.currentType!.isParent?
-          EnterMaleOrFemaleOrChildDataScreen.withParent(
+          EnterMaleOrFemaleOrChildDataScreen.showAll(
               scaffoldType: ScaffoldType.centerCard,
               showConditionsAndTerms: true,
               showAlreadyHaveAccount: true,

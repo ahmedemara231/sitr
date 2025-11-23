@@ -59,7 +59,7 @@ class ParentChildren extends StatelessWidget {
                 onEditTap: (context) => context.read<GetPartnerInfoCubit>().getProfile(
                     onSuccess: (user) => Go.to(BlocProvider(
                         create: (context) => EditChildDataCubit(),
-                      child: EnterMaleOrFemaleOrChildDataScreen.withParent(
+                      child: EnterMaleOrFemaleOrChildDataScreen.showAll(
                           scaffoldType: ScaffoldType.appScaffold,
                           initialValue: user as IndividualUserModel,
                           showGenderSelection: false,

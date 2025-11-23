@@ -862,4 +862,10 @@ abstract class LocaleKeys {
   static const String _youAreAlreadySubscribedInPackage = 'you_are_already_subscribed_in_package';
   static String get youAreAlreadySubscribedInPackage => _youAreAlreadySubscribedInPackage.tr();
 
+  static const String _pleaseEnterMartialStatus = 'please_enter_martial_status';
+  static String get pleaseEnterMartialStatus => _pleaseEnterMartialStatus.tr();
+
+  static const String _phoneChangedSuccessfully = 'phone_changed_successfully';
+  static String get phoneChangedSuccessfully => _phoneChangedSuccessfully.tr();
+
 }

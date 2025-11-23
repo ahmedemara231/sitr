@@ -11,6 +11,7 @@ import '../../../../../core/navigation/navigator.dart';
 import '../../../../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../../core/shared/user_cubit/user_cubit.dart';
+import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../../core/widgets/sheets/delete_sheet.dart';
@@ -33,9 +34,10 @@ class SettingScreen extends StatelessWidget {
       MorItemModel(
         icon: Assets.svgUser,
         label: LocaleKeys.profile,
-        onTap: () => UserModel.isIndividual? Go.to(EnterMaleOrFemaleOrChildDataScreen.individual(
+        onTap: () => UserModel.isIndividual? Go.to(EnterMaleOrFemaleOrChildDataScreen.showAll(
             scaffoldType: ScaffoldType.appScaffold,
             userType: UserModel.currentUser?.gender?.userType,
+            showGenderSelection: false,
             initialValue: UserModel.currentUser as IndividualUserModel,
             onClick: (context, user) => context.read<EditProfileCubit>().editProfile(
                 body: user,
@@ -44,7 +46,7 @@ class SettingScreen extends StatelessWidget {
         )) : null,
       ),
       MorItemModel(
-        icon: Assets.svgContactPhone,
+        icon: Assets.svgSettingPhone,
         label: LocaleKeys.changePhoneNumber,
         onTap: () => Go.to( BlocProvider(
           create: (context) => ChangePhoneManagerCubit(),
@@ -53,6 +55,7 @@ class SettingScreen extends StatelessWidget {
               return [
                 MaterialPageRoute(
                   builder: (context) => OtpScreen(
+                    // upperWidget: AppText(LocaleKeys.changePhoneNumber, fontSize: 18.sp, fontWeight: FontWeight.bold,),
                     phone: UserCubit.instance.user.phone ?? '',
                     title: LocaleKeys.changePhoneNumber,
                     onEnterScreen: (context) =>
@@ -64,9 +67,9 @@ class SettingScreen extends StatelessWidget {
                         context.read<ChangePhoneManagerCubit>().manage(
                           phase: Phase.checkOld,
                           code: code,
-                          onSuccess: (data) => showBottomSheet(
+                          onSuccess: (data) => showDefaultBottomSheet(
                             context: context,
-                            builder: (c) => const ChangePhoneSheetBody(),
+                            child: const ChangePhoneSheetBody(),
                           ),
                         ),
                   ),
@@ -88,9 +91,9 @@ class SettingScreen extends StatelessWidget {
                       onConfirmCode: (context, code) => context.read<ChangePhoneManagerCubit>().manage(
                         phase: Phase.checkOld,
                         code: code,
-                        onSuccess: (data) => showBottomSheet(
+                        onSuccess: (data) => showDefaultBottomSheet(
                             context: context,
-                            builder: (c) => const ChangePhoneSheetBody()
+                            child: const ChangePhoneSheetBody()
                         ),
                       ),
                     ),

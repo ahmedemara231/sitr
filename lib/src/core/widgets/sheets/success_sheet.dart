@@ -19,8 +19,10 @@ import '../default_bottom_sheet.dart';
 
 class SuccessSheet extends StatelessWidget {
   final bool isInAuth;
+  final Widget? upperText;
   const SuccessSheet({super.key,
-    required this.isInAuth
+    required this.isInAuth,
+    this.upperText
   });
 
   @override
@@ -33,7 +35,7 @@ class SuccessSheet extends StatelessWidget {
             Go.back() :
            Go.to(
                UserTypeHelper.currentType!.isParent?
-               EnterMaleOrFemaleOrChildDataScreen.withParent(
+               EnterMaleOrFemaleOrChildDataScreen.showAll(
                    scaffoldType: ScaffoldType.centerCard,
                    showConditionsAndTerms: true,
                    showAlreadyHaveAccount: true,
@@ -61,9 +63,7 @@ class SuccessSheet extends StatelessWidget {
             upperWidget: Column(
               children: [
                 Lottie.asset(Assets.successDone),
-                AppText(LocaleKeys.paymentSucceeded, fontSize: 16.sp, fontWeight: FontWeight.bold),
-                if(isInAuth)
-                  AppText(LocaleKeys.youCanNowCompleteYourProfile),
+                upperText ?? const SizedBox.shrink(),
               ],
             )
         )

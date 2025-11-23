@@ -22,7 +22,7 @@ class AddChildSheet extends StatelessWidget {
       builder: (context) {
         return AppBottomSheet.large(
             asyncCall: (context) {
-              Go.off( EnterMaleOrFemaleOrChildDataScreen.withParent(
+              Go.off( EnterMaleOrFemaleOrChildDataScreen.showAll(
                   scaffoldType: ScaffoldType.centerCard,
                   showConditionsAndTerms: true,
                   onClick: (context, user) => context.read<AddChildCubit>().addChild(

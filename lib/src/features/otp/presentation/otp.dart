@@ -7,7 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinput/pinput.dart';
 import '../../../config/language/locale_keys.g.dart';
 import '../../../config/res/config_imports.dart';
-import '../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../core/extensions/context_extension.dart';
 import '../../../core/extensions/padding_extension.dart';
 import '../../../core/extensions/sized_box_helper.dart';
@@ -27,13 +26,15 @@ class OtpScreen extends StatelessWidget {
   final String title;
   final FutureOr<void> Function(BuildContext context)? onEnterScreen;
   final FutureOr<void> Function(BuildContext context, String code) onConfirmCode;
+  final Widget? upperWidget;
   // final FutureOr<void> Function(BuildContext context) onResendCodePress;
 
   const OtpScreen({super.key,
     required this.phone,
     required this.title,
-    this.onEnterScreen,
     required this.onConfirmCode,
+    this.onEnterScreen,
+    this.upperWidget,
     // required this.onResendCodePress
   });
 
@@ -46,7 +47,7 @@ class OtpScreen extends StatelessWidget {
         title: title,
         onEnterScreen: onEnterScreen,
         onConfirmCode: onConfirmCode,
-        // onResendCodePress: onResendCodePress,
+        upperWidget: upperWidget,
       ),
     );
   }
@@ -57,12 +58,14 @@ class OtpScreenBody extends StatefulWidget {
   final String title;
   final FutureOr<void> Function(BuildContext context)? onEnterScreen;
   final FutureOr<void> Function(BuildContext context, String code) onConfirmCode;
-  // final FutureOr<void> Function(BuildContext context) onResendCodePress;
+  final Widget? upperWidget;
+
   const OtpScreenBody({super.key,
     required this.phone,
     required this.title,
     this.onEnterScreen,
     required this.onConfirmCode,
+    this.upperWidget,
     // required this.onResendCodePress
   });
 
@@ -105,7 +108,7 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
   @override
   Widget build(BuildContext context) {
     return CenterCardScaffold(
-        upperWidget: Column(
+        upperWidget:Column(
           spacing: 12.h,
           children: [
             const AppLogoWidget(),

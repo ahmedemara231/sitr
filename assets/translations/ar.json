@@ -290,5 +290,7 @@
   "please_enter_parent_phone_number": "يرجي ادخال رقم ولي الامر",
   "enter_the_following_option_external_communication_will_be_established": "قم بادخال الخيار التالي سيتم التواصل خارجيا",
   "login_first": "قم بتسجيل الدخول اولا",
-  "you_are_already_subscribed_in_package": "انت مشترك في باقة بالفعل"
+  "you_are_already_subscribed_in_package": "انت مشترك في باقة بالفعل",
+  "please_enter_martial_status": "يرجي ادخال الحالة الاجتماعية",
+  "phone_changed_successfully": "تم تغيير رقم الجوال بنجاح"
 }

@@ -23,7 +23,7 @@ class ParentChildrenView extends StatelessWidget {
           title: LocaleKeys.addAnotherChild,
           onTap: () => Go.to(BlocProvider(
             create: (context) => AddChildCubit(),
-            child: EnterMaleOrFemaleOrChildDataScreen.withParent(
+            child: EnterMaleOrFemaleOrChildDataScreen.showAll(
                 scaffoldType: ScaffoldType.appScaffold,
                 onClick: (context, user) async => await context.read<AddChildCubit>().addChild(
                     body: user,

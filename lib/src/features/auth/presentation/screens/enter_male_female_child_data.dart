@@ -13,7 +13,7 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
   final Future<void> Function(BuildContext context, IndividualUserModel user) onClick;
 
 
-  const EnterMaleOrFemaleOrChildDataScreen.withParent({
+  const EnterMaleOrFemaleOrChildDataScreen.showAll({
     super.key,
     this.showGenderSelection = true,
     required this.scaffoldType,
@@ -183,6 +183,7 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
             const ConditionsTermsAcceptance(),
 
           LoadingButton(
+            height: 45.h,
             borderRadius: ConstantManager.buttonBorderRadiusNumber,
             idleWidget: AppText(
               LocaleKeys.confirm,

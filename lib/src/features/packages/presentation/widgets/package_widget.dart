@@ -106,6 +106,17 @@ class PackageWidget extends StatelessWidget {
                                       showDefaultBottomSheet(
                                           child: SuccessSheet(
                                             isInAuth: isInAuth,
+                                            upperText: Column(
+                                              spacing: 10.h,
+                                              children: [
+                                                AppText(
+                                                    LocaleKeys.paymentSucceeded,
+                                                    fontSize: 16.sp,
+                                                    fontWeight: FontWeight.bold
+                                                ),
+                                                AppText(LocaleKeys.youCanNowCompleteYourProfile),
+                                              ],
+                                            ),
                                           )
                                       );
                                     }
