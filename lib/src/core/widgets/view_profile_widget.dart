@@ -153,7 +153,7 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
           ),
         ),
 
-        cardTopPadding: 200,
+        cardTopPadding: 150.h,
         centerCardBody: BlocBuilder<T, AsyncState<UserModel>>(
           builder: (context, state) => StatusBuilder(
             data: state,

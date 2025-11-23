@@ -449,7 +449,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     // هترن السيرفس تاني في حالة ان الاتنين وافقو علي اي حاجة
   }
 
-  final PagifyController<ChatMessages> _chatController = PagifyController<ChatMessages>();
+  late final PagifyController<ChatMessages> _chatController;
 
   late final SocketHelper socketType = ClientIOImpl(
     onConnect: (d) => log('socket connected'),
@@ -464,7 +464,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
               id: json['sender_id'],
               name: json['sender_name'],
               image: json['avatar'],
-              isFromMe: (json['sender_id'] == UserModel.currentUser?.id)? true : false
+              isFromMe: json['is_sender'] ?? (json['sender_id'] == UserModel.currentUser?.id)
           ),
           time: json['created_dt'],
           // messageState: MessageState.sent
@@ -491,6 +491,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
   }
 
   void _handleInitialState()async{
+    _chatController = PagifyController<ChatMessages>();
      await _startChat();
      _init();
   }
@@ -503,6 +504,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
   @override
   void dispose() {
+    _chatController.dispose();
     socketType.disconnect();
     super.dispose();
   }
@@ -516,6 +518,10 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
         appBarTitle: LocaleKeys.chat,
         isScrollable: false,
         actions: [
+          IconButton(onPressed: (){
+            log(_chatController.getRandomItem()?.message.body??'');
+            log(_chatController.getRandomItem()!.sender.isFromMe.toString());
+          }, icon: const Icon(Icons.add)),
           Helpers.zegoService.zegoButton(
             isVideoCall: false,
             icon: const SvgPic(assetName: Assets.svgPhoneIcon),
@@ -540,38 +546,37 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
               ),
           ),
         ],
-        body: BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
-          builder: (context, state) => StatusBuilder(
-              data: state,
-              onSuccess: (data, context) => Column(
-                children: [
-                  _upperWidget(state.data),
-                  Expanded(
-                    child: EasyChat(
-                      // itemExtent: 60.h,
-                      controller: _chatController,
-                      asyncCall: (context, page) async => await ChatsData.getChatMessages(
-                        fromHome: widget.fromHome,
-                        receiverId: widget.receiverId,
-                      ),
-                      errorBuilder: (e) => const ExceptionView(),
-                      errorMapper: PagifyErrorMapper(errorWhenDio: (e) => e.response?.data['msg']),
-                      mapper: (response) => PagifyData(
-                          data: response.room!.messages!.data!,
-                          paginationData: PaginationData(
-                              perPage: response.room!.messages!.pagination!.perPage,
-                              totalPages: response.room!.messages!.pagination!.totalPages
-                          )
-                      ),
+        body: Column(
+          children: [
+            BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
+                builder: (context, state) => StatusBuilder(
+                    data: state,
+                    onSuccess: (data, context) => _upperWidget(data)
+                )),
+            Expanded(
+              child: EasyChat(
+                // itemExtent: 60.h,
+                controller: _chatController,
+                asyncCall: (context, page) async => await ChatsData.getChatMessages(
+                  fromHome: widget.fromHome,
+                  receiverId: widget.receiverId,
+                ),
+                errorBuilder: (e) => const ExceptionView(),
+                errorMapper: PagifyErrorMapper(errorWhenDio: (e) => e.response?.data['msg']),
+                mapper: (response) => PagifyData(
+                    data: response.room!.messages!.data!,
+                    paginationData: PaginationData(
+                        perPage: response.room!.messages!.pagination!.perPage,
+                        totalPages: response.room!.messages!.pagination!.totalPages
+                    )
+                ),
 
 
-                      rightMessageBuilder: (msg) => ChatMessageWidget(message: msg),
-                      leftMessageBuilder: (msg) => ChatMessageWidget(message: msg),
-                    ),
-                  ),
-                ],
-              )
-          ),
+                rightMessageBuilder: (msg) => ChatMessageWidget(message: msg),
+                leftMessageBuilder: (msg) => ChatMessageWidget(message: msg),
+              ),
+            ),
+          ],
         ),
         bottomBar: BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
             builder: (context, state) =>

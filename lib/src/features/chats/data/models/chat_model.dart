@@ -275,7 +275,7 @@ class Messages {
                     id: v['sender_id'],
                     name: v['name'],
                     image: v['avatar'],
-                    isFromMe: (v['sender_id'] == UserModel.currentUser?.id)? true : false
+                    isFromMe: v['is_sender'] ?? false
                 ),
                 time: v['created_at'],
                 // messageState: MessageState.sent

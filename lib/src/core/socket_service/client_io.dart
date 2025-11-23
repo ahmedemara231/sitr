@@ -118,7 +118,6 @@ class ClientIOImpl extends SocketHelper{
     });
 
     socket.onDisconnect((d) {
-      emitEvent(event: events.chatEvents.exitChatEvent, data: {'room_id' : roomId});
       onDisconnect?.call(d);
     });
 
@@ -164,6 +163,7 @@ class ClientIOImpl extends SocketHelper{
 
   @override
   FutureOr<void> disconnect() {
+    emitEvent(event: events.chatEvents.exitChatEvent, data: {'room_id' : roomId});
     socket.disconnect();
     socket.dispose();
   }
