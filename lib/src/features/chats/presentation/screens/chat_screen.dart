@@ -1,13 +1,10 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:easy_chat/easy_chat.dart';
-import 'package:easy_chat/factory.dart';
 import 'package:easy_chat/models/chat_message.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/helpers/data_and_pagination_data.dart';
 import 'package:pagify/helpers/errors.dart';
 import 'package:pagify/pagify.dart';
@@ -17,26 +14,16 @@ import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/dropinity/helpers/extensions/object.dart';
-import '../../../../core/extensions/int.dart';
 import '../../../../core/extensions/num.dart';
-import '../../../../core/extensions/remote_notification.dart';
-import '../../../../core/extensions/sized_box_helper.dart';
 import '../../../../core/extensions/string_extension.dart';
 import '../../../../core/helpers/helpers.dart';
-import '../../../../core/helpers/loading_manager.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/network/api_endpoints.dart';
-import '../../../../core/notification/notification_service.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
-import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../core/socket_service/client_io.dart';
-import '../../../../core/widgets/app_bottom_sheet.dart';
-import '../../../../core/widgets/app_text.dart';
-import '../../../../core/widgets/custom_loading.dart';
 import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/exeption_view.dart';
-import '../../../../core/widgets/icon_widget.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../core/widgets/sheets/chat_requests_sheet.dart';
 import '../../../../core/widgets/sheets/payment_sheet.dart';
@@ -60,7 +47,6 @@ import '../widgets/accept_or_reject_request.dart';
 import '../widgets/chat/bottom_bar.dart';
 import '../widgets/chat/message_widget.dart';
 import '../widgets/chat/timer.dart';
-import '../widgets/sheets/enter_parent_phone.dart';
 import '../widgets/sheets/inform_parent.dart';
 import '../widgets/sheets/shariaa_meeting_skipping.dart';
 
@@ -327,7 +313,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                       // ChatSheetManager.show(
                       //   child: EnterParentPhoneSheet(
                       //       onSubmit: (context, phone){}
-                      //   ),
+                      //   ),٢٢
                       // );
 
                     }else if(val == LocaleKeys.requestForADialogueSessionUnderTheSupervisionOfTheApplication){
@@ -452,8 +438,6 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
         fromHome: widget.fromHome,
         onSuccess: (data) => _manageSuccessState.call(data).call(),
     );
-
-    _init();
   }
 
   Future<void> _showBased(RemoteMessage notification)async{
@@ -506,10 +490,14 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
       ..connect();
   }
 
+  void _handleInitialState()async{
+     await _startChat();
+     _init();
+  }
+
   @override
   void initState() {
-    // _init();
-    _startChat();
+    _handleInitialState();
     super.initState();
   }
 

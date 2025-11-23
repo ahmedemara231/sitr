@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
@@ -203,18 +204,16 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
             onSuccess: (data, context) => Column(
               spacing: 22.h,
               children: [
-                GridView.count(
+                MasonryGridView.count(
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   crossAxisCount: 2,
                   mainAxisSpacing: 10.h,
                   crossAxisSpacing: 10.w,
-                  childAspectRatio: 2.5,
-                  children: List.generate(
-                      partnerInfo.length,
-                          (i) => InfoWidget(partnerInfoModel: partnerInfo[i])
-                  ),
+                  // childAspectRatio: 2.5,
+                  itemCount: partnerInfo.length,
+                  itemBuilder: (BuildContext context, int index) => InfoWidget(partnerInfoModel: partnerInfo[index]),
                 ),
 
                 if(widget._type.isPartnerProfile)

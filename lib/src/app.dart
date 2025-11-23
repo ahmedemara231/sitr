@@ -10,6 +10,7 @@ import 'package:pagify/pagify.dart';
 import '../generated/assets.dart';
 import 'config/language/locale_keys.g.dart';
 import 'config/res/config_imports.dart';
+import 'core/helpers/app_life_sycle_interceptor.dart';
 import 'core/navigation/navigator.dart';
 import 'core/shared/route_observer.dart';
 import 'core/helpers/loading_manager.dart';

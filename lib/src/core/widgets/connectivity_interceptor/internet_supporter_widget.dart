@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import '../../helpers/app_life_sycle_interceptor.dart';
 import 'factory.dart';
 class InternetInterceptorWidget extends StatefulWidget {
   final Widget? loadingWidget;
@@ -33,6 +34,7 @@ class _InternetInterceptorWidgetState extends State<InternetInterceptorWidget> {
   Future<void> _init()async{
     internetCheck = InternetCheck()..init();
     await _getInitialStatus();
+
     internetCheck.start((connectionStatus) =>
         setState(() {
           flag = 1;
@@ -59,6 +61,7 @@ class _InternetInterceptorWidgetState extends State<InternetInterceptorWidget> {
   Widget get _buildStatusView{
     if(flag == 0){
       return _buildInitialView;
+
     }else{
       return widget.builder(internetCheck.status);
     }

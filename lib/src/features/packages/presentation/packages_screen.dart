@@ -38,7 +38,8 @@ class PackagesScreen extends StatelessWidget {
         onRefresh: (context) => random.value = Random().nextDouble(),
         body: Column(
           children: [
-            AppText(LocaleKeys.inOrderToRegisterOtherDataYouMustSubscribeToOneOfTheAvailablePackages, textAlign: TextAlign.center,),
+            if(isInAuth)
+              AppText(LocaleKeys.inOrderToRegisterOtherDataYouMustSubscribeToOneOfTheAvailablePackages, textAlign: TextAlign.center,),
             ValueListenableBuilder(
               valueListenable: random,
               builder: (context, val, child) => AppPagify<Package>(

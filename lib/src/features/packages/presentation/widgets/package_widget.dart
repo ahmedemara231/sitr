@@ -74,10 +74,11 @@ class PackageWidget extends StatelessWidget {
                   create: (context) => PackagesManagerCubit(),
                   child: Builder(
                     builder: (context) {
-                      return AppDefaultButton.withBorderColor(
+                      return AppDefaultButton.withBackGroundColor(
+                        backgroundColor: !package.canSubscribe? Colors.black12 : AppColors.primary,
                           title: type == ScreenType.first?
                           LocaleKeys.subscribeToPackage : LocaleKeys.renewPackage,
-                          onTap: () => showDefaultBottomSheet(
+                          onTap: () => !package.canSubscribe? null : showDefaultBottomSheet(
                               child: PaymentSheet(
                                 paymentMethods: paymentMethods,
                                 onPay: (ctx, paymentMethod) async => context.read<PackagesManagerCubit>().subscribeOrRenewPackage(
