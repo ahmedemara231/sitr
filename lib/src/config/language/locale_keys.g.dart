@@ -868,4 +868,7 @@ abstract class LocaleKeys {
   static const String _phoneChangedSuccessfully = 'phone_changed_successfully';
   static String get phoneChangedSuccessfully => _phoneChangedSuccessfully.tr();
 
+  static const String _ifDeletedAllDataWillBeDeleted = 'if_deleted_all_data_will_be_deleted';
+  static String get ifDeletedAllDataWillBeDeleted => _ifDeletedAllDataWillBeDeleted.tr();
+
 }

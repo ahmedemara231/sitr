@@ -52,21 +52,30 @@ class ParentChildren extends StatelessWidget {
         asyncCall: (context, page)async => await HomeData.getParentChildren(id),
         itemBuilder: (context, data, index, element) => InkWell(
           onTap: () => Go.to(_individualDetailsScreenRoute(element.id ?? 0)),
-
           child: BlocProvider(
             create: (context) => GetPartnerInfoCubit(element.id!),
             child: childCard == ChildCard.sub? ParentChildrenCard(
                 onEditTap: (context) => context.read<GetPartnerInfoCubit>().getProfile(
-                    onSuccess: (user) => Go.to(BlocProvider(
-                        create: (context) => EditChildDataCubit(),
-                      child: EnterMaleOrFemaleOrChildDataScreen.showAll(
-                          scaffoldType: ScaffoldType.appScaffold,
-                          initialValue: user as IndividualUserModel,
-                          showGenderSelection: false,
-                          onClick: (context, user)async => await context.read<EditChildDataCubit>().editChildData(user),
-                          userType: element.gender?.userType
-                      ),
-                    )),
+                  onSuccess: (user) => Go.to(BlocProvider(
+                    create: (context) => EditChildDataCubit(),
+                    child: EnterMaleOrFemaleOrChildDataScreen.showAll(
+                        scaffoldType: ScaffoldType.appScaffold,
+                        initialValue: user as IndividualUserModel,
+                        showGenderSelection: false,
+                        onClick: (context, user)async => await context.read<EditChildDataCubit>().editChildData(user),
+                        // userType: element.gender?.userType
+                    ),
+                  )),
+                    // onSuccess: (user) => Go.to(BlocProvider(
+                    //     create: (context) => EditChildDataCubit(),
+                    //   child: EnterMaleOrFemaleOrChildDataScreen.showAll(
+                    //       scaffoldType: ScaffoldType.appScaffold,
+                    //       initialValue: user as IndividualUserModel,
+                    //       showGenderSelection: false,
+                    //       onClick: (context, user)async => await context.read<EditChildDataCubit>().editChildData(user),
+                    //       userType: element.gender?.userType
+                    //   ),
+                    // )),
                 ),
                 name: element.name,
                 url: element.avatar

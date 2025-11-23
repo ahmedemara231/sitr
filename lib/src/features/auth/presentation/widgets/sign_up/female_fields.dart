@@ -8,6 +8,7 @@ import '../../../../../core/shared/models/title_value_shape.dart';
 import '../../../../../core/shared/models/user_models/individual/female_model.dart';
 import '../../../../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../../../../core/shared/models/user_models/user_model.dart';
+import '../../../../../core/widgets/app_dropinity.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../models/kinship.dart';
 import '../../data/auth_data.dart';
@@ -39,7 +40,6 @@ class _FemaleFieldsState extends State<FemaleFields> {
   late TextEditingController _liveAfterMarryCont;
   late TextEditingController _parentNameCont;
   late TextEditingController _parentNumberCont;
-  late TextEditingController _kinshipCont;
   late TextEditingController _phoneCont;
   late TextEditingController _identifyNumberCont;
   late TextEditingController _ageCont;
@@ -70,14 +70,13 @@ class _FemaleFieldsState extends State<FemaleFields> {
   @override
   void initState() {
     _init();
-    _nameCont = TextEditingController();
-    _liveAfterMarryCont = TextEditingController();
-    _parentNameCont = TextEditingController();
-    _parentNumberCont = TextEditingController();
-    _kinshipCont = TextEditingController();
-    _phoneCont = TextEditingController();
-    _identifyNumberCont = TextEditingController();
-    _ageCont = TextEditingController();
+    _nameCont = TextEditingController(text: widget.initialValue?.name);
+    _liveAfterMarryCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.preferredResidenceAfterMarriage);
+    _parentNameCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.guardianName);
+    _parentNumberCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.guardianPhone);
+    _phoneCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.phone);
+    _identifyNumberCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.identityNumber);
+    _ageCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.age.toString());
     super.initState();
   }
 
@@ -87,7 +86,6 @@ class _FemaleFieldsState extends State<FemaleFields> {
     _liveAfterMarryCont.dispose();
     _parentNameCont.dispose();
     _parentNumberCont.dispose();
-    _kinshipCont.dispose();
     _phoneCont.dispose();
     _identifyNumberCont.dispose();
     _ageCont.dispose();
@@ -211,6 +209,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
             ])
             ..insertAll(17, [
               RadioWidget<Answer>(
+                initialValue: (widget.initialValue as FemaleModel).acceptsPolygamy?.toAnswer,
                   title: LocaleKeys.doYouAcceptPolygamy,
                   onSubmit: (result) {
                     acceptsPolygamy = result;
@@ -221,16 +220,18 @@ class _FemaleFieldsState extends State<FemaleFields> {
               ),
             ])
             ..insertAll(21, [
-              DropDownTextField<TitleValueShape>(
+              AppDropinityLocal<TitleValueShape>(
+                initialValue: (widget.initialValue as FemaleModel).hijab?.title,
                 hint: LocaleKeys.areYouWaringHijab,
-                values: EnumsData.hijab.data,
                 title: LocaleKeys.areYouWaringHijab,
-                itemBuilder: (v) => AppText(v.title),
+                values: EnumsData.hijab.data,
+                getLabel: (TitleValueShape element) => element.title,
                 onChanged: (value) {
                   wearingHijab.value = value?.value;
                   _listenToData(asFemale.copyWith(hijab: TitleValueShape.fromSingleLabel(wearingHijab.value)));
                 },
               ),
+
 
               SignUpTextField(
                 upperTitle: LocaleKeys.parentName,
@@ -248,13 +249,16 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 onChanged: (value) => _listenToData(asFemale.copyWith(guardianPhone: value)),
                 // validator: Validators.validateEmpty,
               ),
-              DropDownTextField<Kinship>.withApiRequest(
-                  hint: LocaleKeys.kinship,
-                  title: LocaleKeys.kinship,
-                  itemBuilder: (v) => AppText(v.value),
-                  onChanged: (value) => _listenToData(asFemale.copyWith(guardianRelation: value)),
-                  request: (BuildContext ctx) async => await AuthData.getKinships()
+
+              AppDropinity<List<Kinship>, Kinship>.withApiRequest(
+                initialValue: (widget.initialValue as FemaleModel).guardianRelation?.value,
+                hint: LocaleKeys.kinship,
+                title: LocaleKeys.kinship,
+                asyncCall: (BuildContext ctx, int page) async => await AuthData.getKinships(),
+                getLabel: (Kinship element) => element.value,
+                onChanged: (value) => _listenToData(asFemale.copyWith(guardianRelation: value)),
               ),
+
             ])
             ..insert(
               0,

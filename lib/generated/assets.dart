@@ -65,6 +65,7 @@ class Assets {
   static const String svgLogo = 'assets/svg/logo.svg';
   static const String svgLogoutImage = 'assets/svg/logout_image.svg';
   static const String svgMartialStatus = 'assets/svg/martial_status.svg';
+  static const String svgMoreChildren = 'assets/svg/more_children.svg';
   static const String svgMoreIcon = 'assets/svg/moreIcon.svg';
   static const String svgMyPackageIcon = 'assets/svg/myPackageIcon.svg';
   static const String svgNotificationIcon = 'assets/svg/notificationIcon.svg';

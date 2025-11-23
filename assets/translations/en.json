@@ -292,5 +292,6 @@
   "login_first": "Login First",
   "you_are_already_subscribed_in_package": "you are already subscribed in package",
   "please_enter_martial_status": "please enter martial status",
-  "phone_changed_successfully": "phone changed successfully"
+  "phone_changed_successfully": "phone changed successfully",
+  "if_deleted_all_data_will_be_deleted": "If deleted all data will be deleted"
 }

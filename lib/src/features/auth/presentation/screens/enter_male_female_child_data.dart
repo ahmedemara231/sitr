@@ -94,7 +94,11 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
   late final ValueNotifier<UserType> _mainType;
 
   void _init() {
-    _mainType = ValueNotifier(widget.userType ?? UserType.male);
+    _mainType = ValueNotifier(
+        widget.userType ??
+            widget.initialValue?.gender?.userType ??
+            UserType.male
+    );
     _assignToInitial();
   }
 

@@ -162,7 +162,8 @@ class SettingScreen extends StatelessWidget {
                           UserCubit.instance.logout();
                         }
                     ),
-                    title: LocaleKeys.areYouSureYouWantToDeleteYourAccount
+                    title: LocaleKeys.areYouSureYouWantToDeleteYourAccount,
+                  secondTitle: LocaleKeys.ifDeletedAllDataWillBeDeleted,
                 )
               )
           );

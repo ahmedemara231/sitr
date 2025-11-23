@@ -34,11 +34,11 @@ class MoreScreen extends StatelessWidget {
             label: LocaleKeys.profile,
             onTap: () => Go.to(const ProfileScreen()),
           ),
-          MorItemModel(
-            icon: Assets.svgChatsIcon,
-            label: LocaleKeys.chats,
-            onTap: () => Go.to(const ChatsScreen()),
-          ),
+          // MorItemModel(
+          //   icon: Assets.svgChatsIcon,
+          //   label: LocaleKeys.chats,
+          //   onTap: () => Go.to(const ChatsScreen()),
+          // ),
 
           MorItemModel(
             icon: Assets.svgPackageIcon,
@@ -48,7 +48,7 @@ class MoreScreen extends StatelessWidget {
         ],
       if(UserTypeHelper.isAuthenticated && UserModel.isParent)
         MorItemModel(
-          icon: Assets.svgUser,
+          icon: Assets.svgMoreChildren,
           label: LocaleKeys.addedChildren,
           onTap: () => Go.to(const ParentChildrenView()),
         ),
