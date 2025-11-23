@@ -65,7 +65,7 @@ class OnBoardingScreen extends StatelessWidget {
             Alignment.topRight : Alignment.topLeft,
             child: TextButton(
                 onPressed: () {
-                  Go.to(const LoginScreen());
+                  Go.offAll(const LoginScreen());
                   CacheStorage.write(CacheConstant.onBoardingSubmission, true);
                 },
                 child: AppText(LocaleKeys.skip, color: Colors.white).paddingSymmetric(

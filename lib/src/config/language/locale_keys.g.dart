@@ -505,9 +505,6 @@ abstract class LocaleKeys {
   static const String _amount = 'amount';
   static String get amount => _amount.tr();
 
-  static const String _sar = 'sar';
-  static String get sar => _sar.tr();
-
   static const String _consultants = 'consultants';
   static String get consultants => _consultants.tr();
 

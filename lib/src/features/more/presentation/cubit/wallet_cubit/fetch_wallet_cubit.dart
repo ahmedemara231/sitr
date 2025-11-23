@@ -12,9 +12,9 @@ class FetchWalletCubit extends AsyncCubit<num>{
       await executeAsyncWithBaseModel(
           operation: () async => await baseCrudUseCase.call<num>(
               CrudBaseParmas(
-                  api: ApiConstants.showWallet,
-                  httpRequestType: HttpRequestType.get,
-                  mapper: (data)=> num.parse( data['available_balance'].toString()),
+                api: ApiConstants.showWallet,
+                httpRequestType: HttpRequestType.get,
+                mapper: (json) => json['balance'],
               )
           ),
       );

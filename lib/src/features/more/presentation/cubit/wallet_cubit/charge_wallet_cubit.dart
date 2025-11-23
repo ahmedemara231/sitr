@@ -7,23 +7,20 @@ import '../../../../../core/network/api_endpoints.dart';
 import '../../../../../core/network/network_service.dart';
 import '../../../../../core/widgets/custom_messages.dart';
 
-class ChargeWalletCubit extends AsyncCubit<bool>{
-  ChargeWalletCubit() : super(false);
+class ChargeWalletCubit extends AsyncCubit<String>{
+  ChargeWalletCubit() : super('');
 
-  Future<void> chargeWallet(double amount)async{
+  Future<void> chargeWallet(double amount, {void Function()? onSuccess})async{
     await executeAsyncWithBaseModel(
       operation: () async => await baseCrudUseCase.call(
           CrudBaseParmas(
             api: ApiConstants.chargeWallet,
             httpRequestType: HttpRequestType.post,
             body: {'amount':amount,},
-            mapper: (data)=>true,
+            mapper: (data) => data['redirect_url'],
           )
       ),
-      successEmitter: (data){
-        MessageUtils.showSnackBar(LocaleKeys.successDone);
-        Go.back();
-      }
+      successEmitter: (data) => onSuccess?.call()
     );
   }
 

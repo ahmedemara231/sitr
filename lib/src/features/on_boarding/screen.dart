@@ -66,7 +66,7 @@ class _OnBoarding extends StatelessWidget {
                     borderRadius: BorderRadius.circular(40.r),
                     onTap: () {
                       if(value == data.length - 1){
-                        Go.to(const LoginScreen());
+                        Go.offAll(const LoginScreen());
                         CacheStorage.write(CacheConstant.onBoardingSubmission, true);
                       }else{
                         value++;

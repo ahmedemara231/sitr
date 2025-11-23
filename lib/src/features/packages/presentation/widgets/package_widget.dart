@@ -70,7 +70,6 @@ class PackageWidget extends StatelessWidget {
               FittedBox(child: AppText(LocaleKeys.price, color: Colors.grey)),
               RiyalPriceText(price: package.price.toString(), priceTextStyle: const TextStyle(color: Colors.black)),
 
-              // AppText('${package.price} ${LocaleKeys.sR}', fontWeight: FontWeight.bold, color: AppColors.primary,),
               const Spacer(),
               SizedBox(
                 width: context.width * .4,
