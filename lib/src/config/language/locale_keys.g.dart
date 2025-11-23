@@ -463,9 +463,6 @@ abstract class LocaleKeys {
   static const String _day = 'day';
   static String get day => _day.tr();
 
-  static const String _sR = 's_r';
-  static String get sR => _sR.tr();
-
   static const String _onlinePayment = 'online_payment';
   static String get onlinePayment => _onlinePayment.tr();
 
@@ -864,5 +861,8 @@ abstract class LocaleKeys {
 
   static const String _loginFirst = 'login_first';
   static String get loginFirst => _loginFirst.tr();
+
+  static const String _youAreAlreadySubscribedInPackage = 'you_are_already_subscribed_in_package';
+  static String get youAreAlreadySubscribedInPackage => _youAreAlreadySubscribedInPackage.tr();
 
 }

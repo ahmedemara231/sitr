@@ -9,8 +9,10 @@ import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/buttons/custom_app_buttons/default_button.dart';
+import '../../../../core/widgets/custom_messages.dart';
 import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/image_widgets/cached_image.dart';
+import '../../../../core/widgets/riyal_price_text.dart';
 import '../../../../core/widgets/sheets/payment_sheet.dart';
 import '../../../../core/widgets/sheets/success_sheet.dart';
 import '../../../../core/widgets/svg_pic.dart';
@@ -18,6 +20,7 @@ import '../../models/package.dart';
 import '../cubits/subscribe_to_package.dart';
 import '../packages_screen.dart';
 import '../screens/subscription_screen.dart';
+import 'package:saudi_currency/saudi_currency.dart';
 
 class PackageWidget extends StatelessWidget {
   final Package package;
@@ -65,7 +68,9 @@ class PackageWidget extends StatelessWidget {
             spacing: 7.w,
             children: [
               FittedBox(child: AppText(LocaleKeys.price, color: Colors.grey)),
-              AppText('${package.price} ${LocaleKeys.sR}', fontWeight: FontWeight.bold, color: AppColors.primary,),
+              RiyalPriceText(price: package.price.toString(), priceTextStyle: const TextStyle(color: Colors.black)),
+
+              // AppText('${package.price} ${LocaleKeys.sR}', fontWeight: FontWeight.bold, color: AppColors.primary,),
               const Spacer(),
               SizedBox(
                 width: context.width * .4,
@@ -74,11 +79,12 @@ class PackageWidget extends StatelessWidget {
                   create: (context) => PackagesManagerCubit(),
                   child: Builder(
                     builder: (context) {
-                      return AppDefaultButton.withBackGroundColor(
-                        backgroundColor: !package.canSubscribe? Colors.black12 : AppColors.primary,
+                      return AppDefaultButton.withBorderColor(
                           title: type == ScreenType.first?
                           LocaleKeys.subscribeToPackage : LocaleKeys.renewPackage,
-                          onTap: () => !package.canSubscribe? null : showDefaultBottomSheet(
+                          onTap: () => !package.canSubscribe?
+                          MessageUtils.showSnackBar(LocaleKeys.youAreAlreadySubscribedInPackage) :
+                          showDefaultBottomSheet(
                               child: PaymentSheet(
                                 paymentMethods: paymentMethods,
                                 onPay: (ctx, paymentMethod) async => context.read<PackagesManagerCubit>().subscribeOrRenewPackage(

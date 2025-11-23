@@ -153,7 +153,6 @@
   "profile": "الملف الشخصي",
   "save_changes": "حفظ التغييرات",
   "day": "يوم",
-  "s_r": "رس",
   "online_payment": "دفع اونلاين",
   "still_loading": "لازال التحميل مفعلا",
   "please_wait": "من فضلك انتظر",
@@ -291,5 +290,6 @@
   "please_select": "يرجي التحديد",
   "please_enter_parent_phone_number": "يرجي ادخال رقم ولي الامر",
   "enter_the_following_option_external_communication_will_be_established": "قم بادخال الخيار التالي سيتم التواصل خارجيا",
-  "login_first": "قم بتسجيل الدخول اولا"
+  "login_first": "قم بتسجيل الدخول اولا",
+  "you_are_already_subscribed_in_package": "انت مشترك في باقة بالفعل"
 }

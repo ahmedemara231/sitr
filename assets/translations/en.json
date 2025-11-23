@@ -153,7 +153,6 @@
   "profile": "profile",
   "save_changes": "Save changes",
   "day": "Day",
-  "s_r": "SR",
   "online_payment": "Online payment",
   "still_loading": "Still loading",
   "please_wait": "please wait",
@@ -291,5 +290,6 @@
   "please_select": "please select",
   "please_enter_parent_phone_number": "please enter parent phone number",
   "enter_the_following_option_external_communication_will_be_established": "Enter the following option external communication will be established",
-  "login_first": "Login First"
+  "login_first": "Login First",
+  "you_are_already_subscribed_in_package": "you are already subscribed in package"
 }

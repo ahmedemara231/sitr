@@ -158,7 +158,6 @@
     "profile" : "الملف الشخصي",
     "Save changes" : "حفظ التغييرات",
     "Day" : "يوم",
-    "SR" : "رس",
     "Online payment" : "دفع اونلاين",
     "Still loading" : "لازال التحميل مفعلا",
     "please wait" : "من فضلك انتظر",
@@ -297,6 +296,7 @@
   "please select" : "يرجي التحديد",
   "please enter parent phone number": "يرجي ادخال رقم ولي الامر",
   "Enter the following option external communication will be established" : "قم بادخال الخيار التالي سيتم التواصل خارجيا",
-  "Login First" : "قم بتسجيل الدخول اولا"
+  "Login First" : "قم بتسجيل الدخول اولا",
+  "you are already subscribed in package" : "انت مشترك في باقة بالفعل"
 
 }

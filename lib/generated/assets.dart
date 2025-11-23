@@ -3,8 +3,6 @@ class Assets {
   Assets._();
 
   static const String assetsSvgPackageIcon = 'assets/svg/package_icon.svg';
-  static const String svgWalletPay = 'assets/svg/wallet_pay.svg';
-  static const String svgVideoCall = 'assets/svg/video_call.svg';
   static const String dataEmptyBox = 'assets/lottie/data/empty_box.json';
   static const String dataEmptyCart = 'assets/lottie/data/empty_cart.json';
   static const String dataNoData = 'assets/lottie/data/no_data.json';
@@ -16,6 +14,7 @@ class Assets {
   static const String errorError2 = 'assets/lottie/error/error_2.json';
   static const String errorError3 = 'assets/lottie/error/error_3.json';
   static const String errorError4 = 'assets/lottie/error/error_4.json';
+  static const String fontsRiyal = 'assets/fonts/riyal.ttf';
   static const String imagesAppLogo = 'assets/images/app_logo.png';
   static const String imagesArrowDown = 'assets/images/arrow_down.png';
   static const String imagesAttachComplaintImage = 'assets/images/attachComplaintImage.png';
@@ -98,7 +97,9 @@ class Assets {
   static const String svgUSAFlag = 'assets/svg/USA_flag.svg';
   static const String svgUploadImage = 'assets/svg/upload-image.svg';
   static const String svgUser = 'assets/svg/User.svg';
+  static const String svgVideoCall = 'assets/svg/video_call.svg';
   static const String svgWallet = 'assets/svg/Wallet.svg';
+  static const String svgWalletPay = 'assets/svg/wallet_pay.svg';
   static const String svgWalletScreenImage = 'assets/svg/walletScreenImage.svg';
   static const String svgWeight = 'assets/svg/weight.svg';
   static const String svgWhatsApp = 'assets/svg/whatsApp.svg';
