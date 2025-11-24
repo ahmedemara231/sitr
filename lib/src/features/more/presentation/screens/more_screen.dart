@@ -73,7 +73,7 @@ class MoreScreen extends StatelessWidget {
             icon: Assets.svgContactUsIcon,
             label: LocaleKeys.contactUs,
             onTap: () {
-              Go.to(ContactUsScreen());
+              Go.to(const ContactUsScreen());
             },
           ),
           MorItemModel(
