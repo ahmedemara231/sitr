@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/extensions/object.dart';
 import '../../../../../core/extensions/padding_extension.dart';
@@ -46,6 +45,8 @@ class _SignUpTextFieldState extends State<SignUpTextField> {
       readOnly: widget.readOnly,
       upperTitle: widget.upperTitle,
       title: widget.title,
+      action: widget.inputType == TextInputType.multiline?
+      TextInputAction.newline : TextInputAction.next,
       suffixIcon: widget.suffixIconPath.isNotNull?
       SvgPic(assetName: widget.suffixIconPath!).paddingAll(16) : null,
       fillColor: Colors.grey[50],
