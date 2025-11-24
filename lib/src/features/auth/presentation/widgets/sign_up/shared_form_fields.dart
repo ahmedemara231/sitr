@@ -333,15 +333,6 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         getLabel: (element) => element.title,
         onChanged: (value) => _listenToData(model.copyWith(religiousCommitment: TitleValueShape.fromSingleLabel(value?.value)) as T),
       ),
-
-      DropDownTextField<TitleValueShape>(
-        initialValue: widget.initialValue?.religiousCommitment,
-        hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
-        values: EnumsData.religiousCommitment.data,
-        title: LocaleKeys.degreeOfCommitment,
-        itemBuilder: (v) => AppText(v.title),
-        onChanged: (value) => _listenToData(model.copyWith(religiousCommitment: TitleValueShape.fromSingleLabel(value?.value)) as T),
-      ),
     ];
 
     widget.onInitData?.call(inputs);

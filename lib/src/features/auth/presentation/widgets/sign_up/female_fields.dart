@@ -129,13 +129,14 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 titleBuilder: (i) => AppText(Answer.values[i].translate),
               ),
             )..insertAll(21, [
-              DropDownTextField<TitleValueShape>(
+            AppDropinityLocal<TitleValueShape>(
+              initialValue: (widget.initialValue as FemaleModel).hijab?.title,
               hint: LocaleKeys.areYouWaringHijab,
-              values: EnumsData.hijab.data,
               title: LocaleKeys.areYouWaringHijab,
-              itemBuilder: (v) => AppText(v.title),
+              values: EnumsData.hijab.data,
+              getLabel: (TitleValueShape element) => element.title,
               onChanged: (value) {
-                wearingHijab.value = value?.value;
+                wearingHijab.value = value.value;
                 _listenToData(asFemale.copyWith(hijab: TitleValueShape.fromSingleLabel(wearingHijab.value)));
               },
             ),
@@ -156,12 +157,13 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 onChanged: (value) => _listenToData(asFemale.copyWith(guardianPhone: value)),
                 // validator: Validators.validateEmpty,
               ),
-              DropDownTextField<Kinship>.withApiRequest(
+            AppDropinity<List<Kinship>, Kinship>.withApiRequest(
+              initialValue: (widget.initialValue as FemaleModel).guardianRelation?.value,
               hint: LocaleKeys.kinship,
               title: LocaleKeys.kinship,
-              itemBuilder: (v) => AppText(v.value),
+              asyncCall: (BuildContext ctx, int page) async => await AuthData.getKinships(),
+              getLabel: (Kinship element) => element.value,
               onChanged: (value) => _listenToData(asFemale.copyWith(guardianRelation: value)),
-              request: (BuildContext ctx) async => await AuthData.getKinships()
             ),
             ]),
         );
