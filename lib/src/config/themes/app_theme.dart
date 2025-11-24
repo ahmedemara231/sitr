@@ -11,10 +11,6 @@ class AppTheme {
       hoverColor: Colors.transparent,
       splashColor: Colors.transparent,
       fontFamily: ConstantManager.fontFamily,
-      bottomSheetTheme: const BottomSheetThemeData(
-        modalBackgroundColor: AppColors.white,
-        surfaceTintColor: Colors.transparent,
-      ),
       scaffoldBackgroundColor: AppColors.scaffoldBackground,
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: AppColors.white,
@@ -59,9 +55,6 @@ class AppTheme {
       primarySwatch: AppColorsWithDarkMode.primary.toMaterialColor(),
       primaryColor: AppColorsWithDarkMode.primary,
       useMaterial3: true,
-      bottomSheetTheme: const BottomSheetThemeData(
-        modalBackgroundColor: AppColorsWithDarkMode.white,
-      ),
       scaffoldBackgroundColor: AppColorsWithDarkMode.border,
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: AppColorsWithDarkMode.white,

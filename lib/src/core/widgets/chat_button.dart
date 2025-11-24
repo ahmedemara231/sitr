@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../config/language/locale_keys.g.dart';
+import '../../config/res/config_imports.dart';
 import '../../features/chats/presentation/screens/chat_screen.dart';
 import '../helpers/user_type_enum.dart';
 import '../navigation/navigator.dart';
@@ -33,6 +34,7 @@ class ChatButton extends StatelessWidget {
         child: TipsSheet(
             title: LocaleKeys.tipsForTheStageOfSufficientKnowledge,
             path: ApiConstants.parentIndividualConversation,
+            btnTitle: LocaleKeys.start,
             onConfirm: (context) => _chatButtonPossibleActions[ChatButtonActions.startChat]?.call()
         )
     ) :
@@ -43,6 +45,7 @@ class ChatButton extends StatelessWidget {
           onConfirm: (context) => showDefaultBottomSheet(
               child: TipsSheet(
                   title: LocaleKeys.tipsForTheStageOfSufficientKnowledge,
+                  btnTitle: LocaleKeys.start,
                   path: ApiConstants.chattingStageTips,
                   onConfirm: (context) => _chatButtonPossibleActions[ChatButtonActions.startChat]?.call()
               )
