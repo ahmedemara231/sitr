@@ -335,7 +335,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
       ),
 
       DropDownTextField<TitleValueShape>(
-        initialValue: widget.initialValue!.religiousCommitment,
+        initialValue: widget.initialValue?.religiousCommitment,
         hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
         values: EnumsData.religiousCommitment.data,
         title: LocaleKeys.degreeOfCommitment,

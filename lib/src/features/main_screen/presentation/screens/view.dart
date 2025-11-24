@@ -5,6 +5,7 @@ import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/enum.dart';
+import '../../../../core/extensions/object.dart';
 import '../../../../core/extensions/widget_extension.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/helpers/user_type_enum.dart';
@@ -15,6 +16,7 @@ import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/image_widgets/custom_image_slider.dart';
+import '../../../../core/widgets/not_contain_data.dart';
 import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
 import '../../../../core/widgets/choose_from_options.dart';
 import '../../../../core/widgets/sheets/chat_requests_sheet.dart';
@@ -80,7 +82,11 @@ class _MainViewState extends State<MainView> {
 
     }
 
-    return List.empty();
+    return [
+      LocaleKeys.male,
+      LocaleKeys.female,
+      LocaleKeys.parents
+    ];
   }
 
   @override
@@ -147,60 +153,72 @@ class _MainViewState extends State<MainView> {
                           valueListenable: secondSelection,
                           builder: (context, val, child) {
                             if(val == UserType.male.translate){
-                              return Column(
-                                spacing: 10.h,
-                                children: List.generate(
-                                    state.data.opportunities?.male?.length ?? 0,
-                                        (index) {
-                                      final opportunity = state.data.opportunities?.male?[index];
-                                      return InkWell(
-                                        onTap: () => Go.to(IndividualDetailsScreen.opportunity(
-                                          id: opportunity.id ?? 0,
-                                        )),
-                                        child: PartnerCard.individual(opportunity: opportunity!),
-                                      );
-                                    }
-                                ),
-                              );
-
+                              if(data.opportunities!.male.isNull || data.opportunities!.male!.isEmpty){
+                                return const NotContainData();
+                              }else{
+                                return Column(
+                                  spacing: 10.h,
+                                  children: List.generate(
+                                      state.data.opportunities?.male?.length ?? 0,
+                                          (index) {
+                                        final opportunity = state.data.opportunities?.male?[index];
+                                        return InkWell(
+                                          onTap: () => Go.to(IndividualDetailsScreen.opportunity(
+                                            id: opportunity.id ?? 0,
+                                          )),
+                                          child: PartnerCard.individual(opportunity: opportunity!),
+                                        );
+                                      }
+                                  ),
+                                );
+                              }
                             }
                             else if(val == UserType.female.translate){
-                              return Column(
-                                spacing: 10.h,
-                                children: List.generate(
-                                    state.data.opportunities?.female?.length ?? 0,
-                                        (index) {
-                                      final opportunity = state.data.opportunities?.female?[index];
-                                      return InkWell(
-                                        onTap: () => Go.to(IndividualDetailsScreen.opportunity(
-                                              id: opportunity.id ?? 0,
-                                            )),
-                                        child: PartnerCard.individual(opportunity: opportunity!),
-                                      );
-                                    }
-                                ),
-                              );
+                              if(data.opportunities!.female.isNull || data.opportunities!.female!.isEmpty){
+                                return const NotContainData();
 
+                              }else{
+                                return Column(
+                                  spacing: 10.h,
+                                  children: List.generate(
+                                      state.data.opportunities?.female?.length ?? 0,
+                                          (index) {
+                                        final opportunity = state.data.opportunities?.female?[index];
+                                        return InkWell(
+                                          onTap: () => Go.to(IndividualDetailsScreen.opportunity(
+                                            id: opportunity.id ?? 0,
+                                          )),
+                                          child: PartnerCard.individual(opportunity: opportunity!),
+                                        );
+                                      }
+                                  ),
+                                );
+                              }
                             }
                             else{
-                              return Column(
-                                spacing: 10.h,
-                                children: List.generate(
-                                    state.data.opportunities?.parent?.length ?? 0,
-                                        (index) {
-                                      final opportunity = state.data.opportunities?.parent?[index];
-                                      return InkWell(
-                                        onTap: () => Go.to( ParentDetailsScreen(id: opportunity?.id ?? 0)),
-                                        child: ParentCard(
-                                            parentImage: opportunity?.avatar??'',
-                                            name: opportunity?.name??'',
-                                            kinship: opportunity?.relation?.name ?? '',
-                                            childrenNumber: opportunity?.numOfChildren ?? 0
-                                        ),
-                                      );
-                                    }
-                                ),
-                              );
+                              if(data.opportunities!.parent.isNull || data.opportunities!.parent!.isEmpty){
+                                return const NotContainData();
+
+                              }else{
+                                return Column(
+                                  spacing: 10.h,
+                                  children: List.generate(
+                                      state.data.opportunities?.parent?.length ?? 0,
+                                          (index) {
+                                        final opportunity = state.data.opportunities?.parent?[index];
+                                        return InkWell(
+                                          onTap: () => Go.to( ParentDetailsScreen(id: opportunity?.id ?? 0)),
+                                          child: ParentCard(
+                                              parentImage: opportunity?.avatar??'',
+                                              name: opportunity?.name??'',
+                                              kinship: opportunity?.relation?.name ?? '',
+                                              childrenNumber: opportunity?.numOfChildren ?? 0
+                                          ),
+                                        );
+                                      }
+                                  ),
+                                );
+                              }
                             }
                           }
                       ),

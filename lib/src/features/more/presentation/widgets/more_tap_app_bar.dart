@@ -34,7 +34,7 @@ class MoreTabAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 250.h,
+      height: UserTypeHelper.isAuthenticated? 250.h : 100.h,
       child: Stack(
         children: [
           if(UserTypeHelper.isAuthenticated)
@@ -175,33 +175,38 @@ class MoreTabAppBar extends StatelessWidget {
                     8.szW,
                     InkWell(
                       onTap: (){
-                        showDefaultBottomSheet(
-                            child: BlocProvider(
-                              create: (context) => LogoutCubit(),
-                              child: AppBottomSheet.large(
-                                  cancelBackgroundColor: AppColors.cancelColor,
-                                  asyncCall: (context) => context.read<LogoutCubit>().logout(
-                                      onSuccess: () {
-                                        Go.offAll(const LoginScreen());
-                                        UserCubit.instance.logout();
-                                        if(Helpers.zegoService.isNotNull){
-                                          Helpers.zegoService.onUserLogout();
+                        if(UserTypeHelper.isAuthenticated){
+                          showDefaultBottomSheet(
+                              child: BlocProvider(
+                                create: (context) => LogoutCubit(),
+                                child: AppBottomSheet.large(
+                                    cancelBackgroundColor: AppColors.cancelColor,
+                                    asyncCall: (context) => context.read<LogoutCubit>().logout(
+                                        onSuccess: () {
+                                          Go.offAll(const LoginScreen());
+                                          UserCubit.instance.logout();
+                                          if(Helpers.zegoService.isNotNull){
+                                            Helpers.zegoService.onUserLogout();
+                                          }
                                         }
-                                      }
-                                  ),
-                                  btnTitle: LocaleKeys.confirm,
-                                  upperWidget: Column(
-                                    children: [
-                                      SizedBox.square(
-                                          dimension: 200.sp,
-                                          child: Image.asset(Assets.imagesLogoutImage)
-                                      ),
-                                      AppText(LocaleKeys.areYouSureToLogout, fontWeight: FontWeight.w500),
-                                    ],
-                                  )
-                              ),
-                            )
-                        );
+                                    ),
+                                    btnTitle: LocaleKeys.confirm,
+                                    upperWidget: Column(
+                                      children: [
+                                        SizedBox.square(
+                                            dimension: 200.sp,
+                                            child: Image.asset(Assets.imagesLogoutImage)
+                                        ),
+                                        AppText(LocaleKeys.areYouSureToLogout, fontWeight: FontWeight.w500),
+                                      ],
+                                    )
+                                ),
+                              )
+                          );
+
+                        }else{
+                          Helpers.showUnauthenticatedSheet();
+                        }
                       },
                       child: const CustomIconInsideContainer(
                         icon: Assets.svgLogOutIcon,

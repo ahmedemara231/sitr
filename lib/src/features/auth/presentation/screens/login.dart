@@ -88,7 +88,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                             BlocBuilder<OathCubit, AsyncState<String>>(
                                                 builder: (context, state) => StatusBuilder(
                                                     data: state,
-                                                    onSuccess: (oath, context) => AppText(oath, fontSize: 12.sp)
+                                                    onSuccess: (oath, context) => Html(
+                                                      data: oath,
+                                                    )
                                                 )
                                             ),
                                           ],

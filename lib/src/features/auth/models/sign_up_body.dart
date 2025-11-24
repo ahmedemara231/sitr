@@ -22,7 +22,7 @@ class SignUpBody{
   Map<String, dynamic> toJson() => AuthBodyStaticData().toJson()..addAll({
     'name' : name,
     'phone' : phone,
-    'code' : code,
+    'setr_code' : code,
     'identity_number' : identityNumber,
     'avatar' : image,
     'gender' : gender,

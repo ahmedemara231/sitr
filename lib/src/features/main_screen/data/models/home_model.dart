@@ -58,6 +58,10 @@ class Opportunities {
       this.female
   });
 
+  // bool get isEmptyData => (parent == null && male == null && female == null) ||
+  //     (parent!.isEmpty && male!.isEmpty && female!.isEmpty);
+
+
   Opportunities.fromJson(dynamic json) {
     if (json['parent'] != null) {
       parent = [];

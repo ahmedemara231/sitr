@@ -11,7 +11,7 @@ class ConfigurationInterceptor extends Interceptor {
     options.headers.addAll({
       HttpHeaders.acceptHeader: ContentType.json,
       Headers.contentTypeHeader: Headers.jsonContentType,
-      HttpHeaders.acceptLanguageHeader:
+      'lang':
           Languages.currentLanguage.locale.languageCode
     });
     handler.next(options);
