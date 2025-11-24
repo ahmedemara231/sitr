@@ -40,7 +40,6 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
     if(widget.rankingType == Ranking.listView){
       return Pagify<(List<T>, PaginationData), T>.listView(
           key: widget.key,
-          onScrollPositionChanged: (val) => log('the val is $val'),
           shrinkWrap: true,
           emptyListView: Column(
             children: [

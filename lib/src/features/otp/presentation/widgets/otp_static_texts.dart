@@ -16,7 +16,7 @@ class OtpStaticTexts extends StatelessWidget {
       children: [
         AppText(LocaleKeys.otpCode, fontWeight: FontWeight.w500, fontSize: 16.sp),
         AppText(
-            '${LocaleKeys.pleaseEnterTheActivationCodeSentToYourMobileNumber} $phone',
+            '${LocaleKeys.pleaseEnterTheActivationCodeSentToYourMobileNumber} +966$phone',
             textAlign: TextAlign.center,
             fontSize: 12.sp
         ),

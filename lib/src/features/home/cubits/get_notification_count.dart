@@ -8,6 +8,11 @@ import '../../../core/shared/base_state.dart';
 class GetNotificationCountCubit extends AsyncCubit<int>{
     GetNotificationCountCubit() : super(0);
 
+    @override
+    reset(){
+      emit(state.copyWith(data: 0));
+    }
+
     void startNotificationInterceptor(){
       FirebaseMessaging
           .onMessage

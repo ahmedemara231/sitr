@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -62,13 +64,17 @@ class HomeScreen extends StatelessWidget {
                           fontWeight: FontWeight.w500,),
                         currentIndex: cubit.currentIndex,
                         onTap: (index) {
+                          log('the index is $index');
                           cubit.changeBottomNavIndex(index);
+
                           if(index != 0 && index != 4){
                             if(!UserTypeHelper.isAuthenticated){
                               Helpers.showUnauthenticatedSheet();
-
                             }
-                          }else if(index == 1){
+                          }
+
+                          if(index == 1){
+                            log('enter heerrerre');
                             context.read<GetNotificationCountCubit>().reset();
                           }
 
