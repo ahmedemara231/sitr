@@ -27,12 +27,9 @@ class ComplaintsAndSuggestionsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-      FetchComplaintCubit()
-        ..fetchComplaint(),
+      create: (context) => FetchComplaintCubit()..fetchComplaint(),
       child: Scaffold(
         backgroundColor: AppColors.whiteScaffoldBackground,
-
         appBar: customAppBar(appBarTitle: LocaleKeys.complaintsAndSuggestions),
         body: Column(
           children: [
@@ -49,7 +46,7 @@ class ComplaintsAndSuggestionsScreen extends StatelessWidget {
                               index) {
                             if(index==  state.data.length){
                               if(state.isLoadingMore){
-                                return    CustomLoading.showLoadingView();
+                                return CustomLoading.showLoadingView();
                               }else{
                                 return const SizedBox.shrink();
                               }

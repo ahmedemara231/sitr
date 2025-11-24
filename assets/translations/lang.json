@@ -300,6 +300,7 @@
   "please enter martial status" : "يرجي ادخال الحالة الاجتماعية",
   "phone changed successfully" : "تم تغيير رقم الجوال بنجاح",
   "If deleted all data will be deleted" : "في حالة الحذف سيتم حذف جميع البيانات",
-  "The complaint data has been successfully sent to management" : "لقد تم ارسال بيانات الشكوي للادارة بنجاح"
+  "The complaint data has been successfully sent to management" : "لقد تم ارسال بيانات الشكوي للادارة بنجاح",
+  "Admin reply" : "رد الادارة"
 
 }

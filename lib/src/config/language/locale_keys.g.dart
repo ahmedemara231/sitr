@@ -874,4 +874,7 @@ abstract class LocaleKeys {
   static const String _theComplaintDataHasBeenSuccessfullySentToManagement = 'the_complaint_data_has_been_successfully_sent_to_management';
   static String get theComplaintDataHasBeenSuccessfullySentToManagement => _theComplaintDataHasBeenSuccessfullySentToManagement.tr();
 
+  static const String _adminReply = 'admin_reply';
+  static String get adminReply => _adminReply.tr();
+
 }

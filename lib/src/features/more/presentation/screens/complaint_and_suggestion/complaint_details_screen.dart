@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../../generated/assets.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import '../../../../../core/dropinity/helpers/extensions/object.dart';
 import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/extensions/sized_box_helper.dart';
 import '../../../../../core/helpers/status_builder.dart';
-import '../../../../../core/helpers/validators.dart';
 import '../../../../../core/navigation/navigator.dart';
-import '../../../../../core/widgets/app_bottom_sheet.dart';
 import '../../../../../core/widgets/app_text.dart';
-import '../../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../../core/widgets/custom_app_bar.dart';
-import '../../../../../core/widgets/icon_widget.dart';
 import '../../../../../core/widgets/image_widgets/cached_image.dart';
-import '../../../../../core/widgets/image_widgets/upload_image.dart';
-import '../../../../../core/widgets/text_fields/default_text_field.dart';
 import '../../cubit/complaint_cubit/complaint_details_cubit.dart';
 import '../../models/complaint_details_model.dart';
 import 'image_view.dart';
@@ -86,6 +80,21 @@ class ComplaintDetailsScreen extends StatelessWidget {
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w400,
                         ),
+
+                        12.szH,
+                        if(data!.adminReply.isNotNull && data.adminReply!.isNotEmpty)
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              AppText(LocaleKeys.adminReply),
+                              AppText(
+                                data.adminReply ?? '',
+                                color: AppColors.textBlack,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ],
+                          ),
                       ],
                     ).paddingAll(16.r),
                   );
