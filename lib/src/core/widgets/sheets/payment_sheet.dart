@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../generated/assets.dart';
 import '../../../config/language/locale_keys.g.dart';
 import '../../../config/res/config_imports.dart';
@@ -77,7 +74,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
         Column(
           spacing: 7.h,
           children: List.generate(
-            PaymentMethod.values.length,
+            widget.paymentMethods!.length,
                   (index) => InkWell(
                     onTap: () => _changeIndex(index),
                     child: Container(
@@ -91,7 +88,7 @@ class _PaymentSheetState extends State<PaymentSheet> {
                       ),
                       child: Center(
                         child: _PackageCard(
-                            paymentMethod: PaymentMethod.values[index]
+                            paymentMethod: widget.paymentMethods![index]
                         ).paddingAll(12.r),
                       ),
                     ),

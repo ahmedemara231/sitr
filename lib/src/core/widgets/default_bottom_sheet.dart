@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../config/res/config_imports.dart';
+import '../extensions/object.dart';
 import '../extensions/padding_extension.dart';
 import '../extensions/sized_box_helper.dart';
 import '../navigation/navigator.dart';
 
-Future showDefaultBottomSheet({BuildContext? context, required Widget child, bool? enableDrag, Color? backgroundColor}) {
+Future showDefaultBottomSheet({
+  BuildContext? context,
+  required Widget child,
+  bool? enableDrag,
+  Color? backgroundColor,
+  bool withPadding = true,
+}) {
   return showModalBottomSheet(
     enableDrag: enableDrag ?? true,
     isDismissible: false,
@@ -15,7 +22,8 @@ Future showDefaultBottomSheet({BuildContext? context, required Widget child, boo
     backgroundColor: backgroundColor?? Colors.white,
     barrierColor: Colors.black.withOpacity(0.8),
     builder: (context) => DefaultSheetBody(
-      child: child,
+      child: !withPadding? child :
+      Padding(padding: EdgeInsets.all(12.r), child: child),
     ),
   );
 }

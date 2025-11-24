@@ -31,6 +31,7 @@ class ChatButton extends StatelessWidget {
 
     ChatButtonActions.viewTips : () => user.gender!.userType!.isParent?
     showDefaultBottomSheet(
+        withPadding: false,
         child: TipsSheet(
             title: LocaleKeys.tipsForTheStageOfSufficientKnowledge,
             path: ApiConstants.parentIndividualConversation,
@@ -39,10 +40,12 @@ class ChatButton extends StatelessWidget {
         )
     ) :
     showDefaultBottomSheet(
+      withPadding: false,
         child: TipsSheet(
           title: LocaleKeys.clarification,
           path: ApiConstants.appStages,
           onConfirm: (context) => showDefaultBottomSheet(
+              withPadding: false,
               child: TipsSheet(
                   title: LocaleKeys.tipsForTheStageOfSufficientKnowledge,
                   btnTitle: LocaleKeys.start,

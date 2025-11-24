@@ -23,6 +23,7 @@ class CenterCardScaffold extends StatelessWidget {
   final Color? bodyColor;
   final EdgeInsetsGeometry? upperWidgetPadding;
   final Future<void> Function(BuildContext context)? onRefresh;
+  final bool showBackButton;
 
   const CenterCardScaffold({
     super.key,
@@ -31,6 +32,7 @@ class CenterCardScaffold extends StatelessWidget {
     this.bodyColor,
     this.upperWidgetPadding,
     this.onRefresh,
+    this.showBackButton = false
   }) : centerCardBody = null, cardProperties = null, bodyTopPadding = null, cardTopPadding = null;
 
   const CenterCardScaffold.withCenteredCard({
@@ -41,6 +43,7 @@ class CenterCardScaffold extends StatelessWidget {
     this.cardProperties,
     this.bodyTopPadding,
     this.cardTopPadding,
+    this.showBackButton = true,
     this.bodyColor,
     this.upperWidgetPadding,
     this.onRefresh,
@@ -52,6 +55,7 @@ class CenterCardScaffold extends StatelessWidget {
       backgroundColor: AppColors.scaffoldBackground,
       body: SafeArea(
         child: ScreenChildren(
+          showBackButton: showBackButton,
           onRefresh: ()async => onRefresh?.call(context),
           upperWidgetPadding: upperWidgetPadding,
           cardProperties: cardProperties,
@@ -77,6 +81,7 @@ class ScreenChildren extends StatelessWidget {
   final Color? bodyColor;
   final EdgeInsetsGeometry? upperWidgetPadding;
   final Future<void> Function() onRefresh;
+  final bool showBackButton;
 
   const ScreenChildren({super.key,
     required this.body,
@@ -87,7 +92,8 @@ class ScreenChildren extends StatelessWidget {
     this.topPadding,
     this.cardTopPadding,
     required this.bodyColor,
-    required this.upperWidgetPadding
+    required this.upperWidgetPadding,
+    this.showBackButton = true
   });
 
   @override
@@ -108,7 +114,7 @@ class ScreenChildren extends StatelessWidget {
                         child: Stack(
                           children: [
                             upperWidget,
-                            if(ModalRoute.of(context)!.canPop)
+                            if(ModalRoute.of(context)!.canPop && showBackButton)
                               const AppBackButton(),
                           ],
                         ),

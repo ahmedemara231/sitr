@@ -26,7 +26,7 @@ class Package{
     json['image'],
     json['duration'],
     json['price'],
-    json['can_subscribe']??false
+    json['can_subscribe']??true
   );
 }
 

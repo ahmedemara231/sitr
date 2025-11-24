@@ -108,7 +108,8 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
   @override
   Widget build(BuildContext context) {
     return CenterCardScaffold(
-        upperWidget:Column(
+      showBackButton: false,
+        upperWidget: Column(
           spacing: 12.h,
           children: [
             const AppLogoWidget(),

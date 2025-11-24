@@ -73,38 +73,11 @@ class ChangePhoneSheetBody extends StatelessWidget {
                           }
                       )
                   }
-                    // OtpScreen(
-                    //   phone: phone,
-                    //   title: LocaleKeys.changePhoneNumber,
-                    //   onConfirmCode: (context, code) => context.read<ChangePhoneManagerCubit>().manage(
-                    //       phase: Phase.checkNew,
-                    //       code: code,
-                    //       onSuccess: (data) {
-                    //         final newUser = UserCubit.instance.user.copyWith(phone: phone);
-                    //         UserCubit.instance.updateUser(newUser);
-                    //       }
-                    //   ),
-                    // )
                 )
-
-                // onSuccess: (data) => Go.off(
-                //     OtpScreen(
-                //         phone: phone,
-                //         title: LocaleKeys.changePhoneNumber,
-                //         onConfirmCode: (context, code) => context.read<ChangePhoneManagerCubit>().manage(
-                //             phase: Phase.checkNew,
-                //             code: code,
-                //             onSuccess: (data) {
-                //               final newUser = UserCubit.instance.user.copyWith(phone: phone);
-                //               UserCubit.instance.updateUser(newUser);
-                //             }
-                //         ),
-                //     )
-                // )
               ),
           ),
         ],
       ).defaultScreenPadding(),
-    );
+    ).paddingBottom(MediaQuery.of(context).viewInsets.bottom);
   }
 }
