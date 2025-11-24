@@ -17,8 +17,10 @@ import '../../../../../core/widgets/app_bottom_sheet.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../../core/widgets/custom_app_bar.dart';
+import '../../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../../core/widgets/icon_widget.dart';
 import '../../../../../core/widgets/image_widgets/upload_image.dart';
+import '../../../../../core/widgets/sheets/success_sheet.dart';
 import '../../../../../core/widgets/text_fields/default_text_field.dart';
 import '../../cubit/complaint_cubit/add_complaint_cubit.dart';
 
@@ -73,9 +75,8 @@ class _AddComplaintAndSuggestionState extends State<AddComplaintAndSuggestion> {
                       children: [
                         AppText(
                           LocaleKeys.pleaseAttachImages,
-                          color: AppColors.textBlack,
+                          color: AppColors.grey,
                           fontSize: 12.sp,
-                          fontWeight: FontWeight.w700,
                         ),
                         const IconWidget(icon: Assets.svgCamera),
                       ],
@@ -106,7 +107,21 @@ class _AddComplaintAndSuggestionState extends State<AddComplaintAndSuggestion> {
               ],
             ).paddingAll(16.r),
           ),
-          bottomNavigationBar: BlocBuilder<AddComplaintCubit, AsyncState>(
+          bottomNavigationBar: BlocConsumer<AddComplaintCubit, AsyncState>(
+            listener: (context, state) {
+              if(state.isSuccess){
+                showDefaultBottomSheet(
+                    child: SuccessSheet(
+                      isInAuth: false,
+                      upperText: AppText(
+                        LocaleKeys.theComplaintDataHasBeenSuccessfullySentToManagement,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    )
+                );
+              }
+            },
             builder: (context, state) {
               return AppLoadingButton(
                   asyncCall: (context) async {

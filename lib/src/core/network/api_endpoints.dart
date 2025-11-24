@@ -99,5 +99,6 @@ class ApiConstants {
   static const String istikharaTips = 'istikhara-tips';
   static const String continueStageRequest = 'user-match-request/continue_stage_request';
   static const String informParentsTips = 'inform-parents';
+  static const String socials = 'socials';
 
 }

@@ -9,17 +9,13 @@ class FetchBlockUserCubit extends AsyncCubit<List<BlockUserModel>>{
   FetchBlockUserCubit():super([]);
   Future<void> fetchBlockUser() async {
     await executeAsyncWithBaseModel(
-        operation: () async => await baseCrudUseCase
-            .call<List<BlockUserModel>>(CrudBaseParmas(
+        operation: () async => await baseCrudUseCase.call<List<BlockUserModel>>(CrudBaseParmas(
           api: ApiConstants.blockUser,
           httpRequestType: HttpRequestType.get,
-          mapper: (data) {
-            final list = (data as List)
+          mapper: (data) => (data['data'] as List)
                 .map<BlockUserModel>(
                     (e) => BlockUserModel.fromJson(e))
-                .toList();
-            return list;
-          },
+                .toList()
         )));
   }
 

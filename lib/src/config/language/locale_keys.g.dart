@@ -871,4 +871,7 @@ abstract class LocaleKeys {
   static const String _ifDeletedAllDataWillBeDeleted = 'if_deleted_all_data_will_be_deleted';
   static String get ifDeletedAllDataWillBeDeleted => _ifDeletedAllDataWillBeDeleted.tr();
 
+  static const String _theComplaintDataHasBeenSuccessfullySentToManagement = 'the_complaint_data_has_been_successfully_sent_to_management';
+  static String get theComplaintDataHasBeenSuccessfullySentToManagement => _theComplaintDataHasBeenSuccessfullySentToManagement.tr();
+
 }

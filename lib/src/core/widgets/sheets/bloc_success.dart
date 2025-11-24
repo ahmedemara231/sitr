@@ -30,7 +30,10 @@ class BlocManagerSheet extends StatelessWidget {
       ],
       child: AppBottomSheet.large(
           asyncCall: (context) => blocManager == BlocManager.unblock?
-          context.read<UnBlockUserCubit>().unblockUser(userId: id, function: (d) => () => Go.back()) :
+          context.read<UnBlockUserCubit>().unblockUser(
+              userId: id,
+              onSuccess: () => () => Go.back()
+          ) :
           context.read<BlockUserCubit>().block(id, onSuccess: () => 2.pop()),
           btnTitle: LocaleKeys.confirm,
           cancelBackgroundColor: AppColors.pink,
