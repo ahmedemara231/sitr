@@ -22,6 +22,7 @@ import '../../../../core/navigation/navigator.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/socket_service/client_io.dart';
+import '../../../../core/widgets/custom_messages.dart';
 import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/exeption_view.dart';
 import '../../../../core/widgets/not_contain_data.dart';
@@ -97,22 +98,6 @@ class _ChatScreenBody extends StatefulWidget {
 }
 
 class _ChatScreenBodyState extends State<_ChatScreenBody> {
-
-  // accept / reject
-  // Future<void> _executeAcceptRejectReq({
-  //   required BuildContext context,
-  //   required String path,
-  //   required void Function(ChatModel model) onSuccess
-  // }) => context.read<ChatCubit>().executeRequest(
-  //     requestModel: RequestModel(
-  //       receiverId: widget.receiverId.toString(),
-  //       fromHome: widget.fromHome.toString(),
-  //       matchRequestId: context.read<ChatCubit>().matchRequestId.toString(),
-  //     ),
-  //     path: path+context.read<ChatCubit>().userRequest!,
-  //     onSuccess: onSuccess
-  // );
-
   Future<void> _executeReq({
     required BuildContext context,
     required String path,
@@ -138,12 +123,12 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
               requestName: requestName,
               onAccept: (context) async => _executeReq(
                   context: context,
-                  path: ApiConstants.acceptRequest,
+                  path: '${ApiConstants.acceptRequest}${context.read<ChatCubit>().userRequest!}',
                   onSuccess: (chatModel) => Go.back()
               ),
               onReject:(context) async => _executeReq(
                   context: context,
-                  path: ApiConstants.rejectRequest,
+                  path: ApiConstants.rejectRequest+context.read<ChatCubit>().userRequest!,
                   onSuccess: (chatModel) => Go.back()
               ),
             ),
@@ -151,7 +136,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
       )
   );
 
-  // make request
+
   void _makeRequestSheet({
     required String matchReqId,
   }) => WidgetsBinding.instance.addPostFrameCallback(
@@ -224,8 +209,8 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
   void Function() _manageSuccessState(ChatModel data) {
     final timer = data.matchRequest!.timer;
     final stage = data.matchRequest!.stage!.value?.getCurrentStageAsStagesEnum;
-    final userStatus = data.matchRequest!.userRequestStatus!.getUserRequestStatus;
-    final matchRequest = data.matchRequest!.userRequest!.getMatchRequest;
+    final userStatus = data.matchRequest!.userRequestStatus!.getUserRequestStatusAsEnum;
+    final matchRequest = data.matchRequest!.userRequest!.getMatchRequestAsEnum;
     final ShowTips currentTips = data.matchRequest!.tipsPage!.currentStageTips;
 
     if(!currentTips.isNoPage){
@@ -234,11 +219,6 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
           title: currentTips.title.currentStageTipsTitle,
           path: currentTips.path,
           onConfirm: (context) async{
-            await context.read<ChatCubit>().tipsSeen(
-              matchReqId: context.read<ChatCubit>().matchRequestId.toString(),
-              onSuccess: (data) => Go.back(),
-            );
-
             if(currentTips.isShariaComplaintMeetingTips){
               ChatSheetManager.show(
                   child: BlocProvider.value(
@@ -290,6 +270,9 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                     ),
                   )
               );
+
+            }else{
+              Go.back();
             }
           }
         );
@@ -302,7 +285,20 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
         requestId: data.matchRequest!.id.toString(),
       );
 
-    }else if((matchRequest.isExtension || matchRequest.isVideoCall || matchRequest.isAdminMeeting)
+
+    }
+
+    else if(stage.isParentsExchangeNumber){
+      ChatSheetManager.show(
+        child: EnterParentPhoneSheet(
+            onSubmit: (context, phone){
+
+            }
+        ),
+      );
+    }
+
+    else if((matchRequest.isExtension || matchRequest.isVideoCall || matchRequest.isAdminMeeting)
         && userStatus.isAccepted){
       return (){
         ChatSheetManager.show(
@@ -342,35 +338,22 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
         );
       };
 
-    }else if(stage.isInformParents){
-      ChatSheetManager.show(
-        child: EnterParentPhoneSheet(
-            onSubmit: (context, phone){
+    }
 
-            }
-        ),
-      );
+    else if(matchRequest.isParentMeeting){
+      // show parent sheet
     }
 
     else if(timer.isEqualZero){
-      log('timer::: $timer ${timer.isEqualZero}');
       return (){
         _makeRequestSheet(
           matchReqId: data.matchRequest!.id.toString(),
         );
       };
 
-    }else if(matchRequest.isParentMeeting){
-      // show parent sheet
     }
-
     return (){};
   }
-
-
-
-
-
 
 
   void _showTipsSheet({
@@ -378,6 +361,10 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     required String path,
     required FutureOr<void> Function(BuildContext context) onConfirm
   }){
+    context.read<ChatCubit>().tipsSeen(
+        matchReqId: context.read<ChatCubit>().matchRequestId.toString(),
+    );
+
     ChatSheetManager.show(
       child: BlocProvider.value(
         value: context.read<ChatCubit>(),
@@ -402,9 +389,6 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     if((notification.data['action'] as Object?).isNotNull){
       _startChat();
     }
-    // التايمر خلص
-    // واحد قدم طلب والتاني المفروض يقبل
-    // هترن السيرفس تاني في حالة ان الاتنين وافقو علي اي حاجة
   }
 
   late final PagifyController<ChatMessages> _chatController;
@@ -469,9 +453,19 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ChatNotificationCubit, ChatNotificationState>(
-      listener: (context, state) async =>
-          _showBased(state.notification!),
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<ChatNotificationCubit, ChatNotificationState>(
+          listener: (context, state) async =>
+              _showBased(state.notification!),
+        ),
+
+        // show toast based new stage
+        // BlocListener<ChatCubit, AsyncState<ChatModel>>(
+        //   listener: (context, state) async => state.isSuccess?
+        //   MessageUtils.showSnackBar(state.errorMessage!) : null
+        // )
+      ],
       child: AppScaffold(
         appBarTitle: LocaleKeys.chat,
         isScrollable: false,
@@ -547,7 +541,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                     data: state,
                     onSuccess: (data, context) =>
                     _initBottomBar(
-                        status: state.data.matchRequest!.userRequestStatus!.getUserRequestStatus,
+                        status: state.data.matchRequest!.userRequestStatus!.getUserRequestStatusAsEnum,
                         stage: state.data.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum
                     ) ?? ChatBottomBar(
                         onUpload: (url){

@@ -92,6 +92,8 @@ class ApiConstants {
   static const String uploadImage = 'upload-room-file/';
 
   static const String rejectRequest = 'reject-request/';
+  static const String rejectAll = 'user-match-request/reject-request';
+
   static const String acceptRequest = 'accept-request/';
 
   static const String userMoveToNextRequest = 'user-match-request/next_stage_request';

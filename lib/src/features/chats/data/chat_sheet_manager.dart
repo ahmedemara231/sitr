@@ -21,8 +21,3 @@ class ChatSheetManager {
     isOpened = false;
   }
 }
-
-// tips
-// accept - reject
-// push offer
-// other

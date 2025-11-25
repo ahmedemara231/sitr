@@ -32,9 +32,10 @@ enum ChatStages{
   shariaComplaintMeeting(1, 'sharia_complaint_meeting'),
   istikharah(2, 'istikharah'),
   informParents(3, 'inform_parents'),
-  engagement(4, 'engagement'),
-  individualParent(5, 'individual_parent'),
-  rejected(6, 'rejected');
+  parentsExchangeNumber(4, 'parent_exchange_numbers'),
+  engagement(5, 'engagement'),
+  individualParent(6, 'individual_parent'),
+  rejected(7, 'rejected');
 
   final int stage;
   final String stageText;
@@ -48,6 +49,7 @@ extension CheckChatStages on ChatStages{
   bool get isShariaComplaintMeeting => this == ChatStages.shariaComplaintMeeting;
   bool get isIstikharah => this == ChatStages.istikharah;
   bool get isInformParents => this == ChatStages.informParents;
+  bool get isParentsExchangeNumber => this == ChatStages.parentsExchangeNumber;
   bool get isEngagement => this == ChatStages.engagement;
   bool get isIndividualParent => this == ChatStages.individualParent;
 }

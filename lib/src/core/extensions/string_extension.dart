@@ -40,7 +40,7 @@ extension FormatString on String {
     }else if(this == ShowTips.chattingStageTips.title){
       return LocaleKeys.tipsForTheStageOfSufficientKnowledge;
 
-    }else if(this == ShowTips.informParentsTips){
+    }else if(this == ShowTips.informParentsTips.title){
       return LocaleKeys.tipsForTheParentingStage;
     }
 
@@ -51,10 +51,10 @@ extension FormatString on String {
   ChatStages get getCurrentStageAsStagesEnum => ChatStages.values
       .firstWhere((e) => this == e.stageText);
 
-  MatchRequestEnum get getMatchRequest => MatchRequestEnum.values
-      .firstWhere((e) => this == e.requestName);
+  MatchRequestEnum get getMatchRequestAsEnum => MatchRequestEnum.values
+      .firstWhere((e) => this == e.requestName.split("/").last);
 
-  UserRequestStatus get getUserRequestStatus => UserRequestStatus.values
+  UserRequestStatus get getUserRequestStatusAsEnum => UserRequestStatus.values
       .firstWhere((e) => this == e.statusText);
 
   bool get isImage =>
@@ -68,7 +68,7 @@ extension FormatString on String {
       return ApiConstants.userMoveToNextRequest;
 
     }else if(this == LocaleKeys.refuseMoveToNextStage){
-      return ApiConstants.rejectRequest;
+      return ApiConstants.rejectAll;
 
     }else if(this == LocaleKeys.requestForExtensionOfPeriod){
       return ApiConstants.userExtensionRequest;

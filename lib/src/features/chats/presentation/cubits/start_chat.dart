@@ -12,16 +12,18 @@ import '../../enums.dart';
 class ChatCubit extends AsyncCubit<ChatModel>{
   ChatCubit() : super(ChatModel());
 
-  Stage? get currentStage => state.data.matchRequest?.stage;
-  ChatStages? get currentStageAsEnum => state.data.matchRequest?.stage?.value?.getCurrentStageAsStagesEnum;
+  MatchRequest? get matchRequest => state.data.matchRequest;
+  Stage? get currentStage => matchRequest?.stage;
+  String? get userRequest => matchRequest?.userRequest;
+  MatchRequestEnum? get userRequestAsEnum => matchRequest?.userRequest?.getMatchRequestAsEnum;
 
-  String? get userRequest => state.data.matchRequest?.userRequest;
-  MatchRequestEnum? get userRequestAsEnum => state.data.matchRequest?.userRequest?.getMatchRequest;
+  String? get userRequestStatus => matchRequest?.userRequestStatus;
+  UserRequestStatus? get userRequestStatusAsEnum => matchRequest?.userRequestStatus?.getUserRequestStatusAsEnum;
 
-  String? get userRequestStatus => state.data.matchRequest?.userRequestStatus;
-  UserRequestStatus? get userRequestStatusAsEnum => state.data.matchRequest?.userRequestStatus?.getUserRequestStatus;
+  int? get matchRequestId => matchRequest?.id;
 
-  int? get matchRequestId => state.data.matchRequest?.id;
+  ChatStages? get currentStageAsEnum => currentStage?.value?.getCurrentStageAsStagesEnum;
+
   Room? get currentRoom => state.data.room;
 
 
@@ -67,7 +69,6 @@ class ChatCubit extends AsyncCubit<ChatModel>{
 
   Future<void> tipsSeen({
     required String matchReqId,
-    void Function(ChatModel chatModel)? onSuccess
   })async{
     await executeAsyncWithBaseModel(
         operation: () => baseCrudUseCase.call(
@@ -80,7 +81,6 @@ class ChatCubit extends AsyncCubit<ChatModel>{
             mapper: (json) => ChatModel.fromJson(json),
           ),
         ),
-        successEmitter: (data) => onSuccess?.call(data.data)
     );
   }
 }

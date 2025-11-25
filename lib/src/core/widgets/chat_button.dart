@@ -35,7 +35,7 @@ class ChatButton extends StatelessWidget {
             path: ApiConstants.parentIndividualConversation,
             btnTitle: LocaleKeys.start,
             onConfirm: (context) =>
-                Go.to(ChatScreen(
+                Go.off(ChatScreen(
                   receiverId: user.id ?? 0,
                   receiverName: user.name ?? '',
                   fromHome: 1,
@@ -48,7 +48,7 @@ class ChatButton extends StatelessWidget {
           title: LocaleKeys.clarification,
           path: ApiConstants.appStages,
           onConfirm: (context) =>
-              Go.to(ChatScreen(
+              Go.off(ChatScreen(
                 receiverId: user.id ?? 0,
                 receiverName: user.name ?? '',
                 fromHome: 1,
