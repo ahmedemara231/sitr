@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pagify/helpers/data_and_pagination_data.dart';
 import 'package:pagify/helpers/errors.dart';
+import 'package:pagify/helpers/status_stream.dart';
 import 'package:pagify/pagify.dart';
 import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
@@ -16,11 +19,14 @@ class AppPagify<T> extends StatefulWidget {
   final Future<(List<T>, PaginationData)> Function(BuildContext context, int page) asyncCall;
   final Widget Function(BuildContext context, List<T> data, int index, T element) itemBuilder;
   final PagifyController<T> pagifyController;
+  final FutureOr<void> Function(PagifyAsyncCallStatus)? onUpdateStatus;
+
   const AppPagify({super.key,
     required this.asyncCall,
     required this.itemBuilder,
     required this.pagifyController,
-    this.rankingType = Ranking.listView
+    this.rankingType = Ranking.listView,
+    this.onUpdateStatus,
   });
 
   @override
@@ -40,6 +46,7 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
     if(widget.rankingType == Ranking.listView){
       return Pagify<(List<T>, PaginationData), T>.listView(
           key: widget.key,
+          onUpdateStatus: widget.onUpdateStatus,
           shrinkWrap: true,
           emptyListView: Center(
             child: Column(
@@ -79,6 +86,7 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
     }else{
       return Pagify<(List<T>, PaginationData), T>.gridView(
           key: widget.key,
+          onUpdateStatus: widget.onUpdateStatus,
           controller: widget.pagifyController,
           asyncCall: widget.asyncCall,
           errorBuilder: (e) => Column(

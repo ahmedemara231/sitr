@@ -10,16 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="```&#10;fix(otp): Add 4-digit validation and improve UI stability&#10;&#10;This commit introduces validation for the OTP input field to ensure a 4-digit code is entered. It also includes several stability improvements and minor UI refactors.&#10;&#10;- **fix(otp):**&#10;  - In `otp.dart`, the `Pinput` widget now uses the new `Validators.validateOtpCode` method to ensure the entered code is exactly 4 digits long. [2]&#10;  - A new validator, `validateOtpCode`, has been added to `validators.dart` to check if the OTP code is not empty and has a length of 4. [1]&#10;  - Added a new translation key `the_verification_code_must_consist_of_4_digits` to provide a clear error message to the user. [0, 3, 6]&#10;&#10;- **fix(ui):**&#10;  - In `partner_card.dart`, a null-safe check (`?.`) has been added when accessing `opportunity.gender?.userType?.isFemale` to prevent potential crashes if the gender or user type is null. [7]&#10;  - In `app_pagify.dart`, the `emptyListView` widget is now wrapped in a `Center` widget to properly center the &quot;No Data&quot; animation and text when a list is empty. [8]&#10;&#10;- **refactor(auth):**&#10;  - In `female_fields.dart`, the casting of `initialValue` to `FemaleModel` has been made explicitly nullable (`as FemaleModel?`). This improves type safety and prevents runtime errors if `initialValue` is null when initializing form controllers. [9]&#10;&#10;- **chore(ide):**&#10;  - Updated IDE configuration files (`workspace.xml`). [4]">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/extensions/string_extension.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/extensions/string_extension.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/network/api_endpoints.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/network/api_endpoints.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/chat_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/chat_button.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/data/chat_sheet_manager.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/data/chat_sheet_manager.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/data/execution_loop.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/data/execution_loop.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/enums.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/enums.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/cubits/app_stages_cubit.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/cubits/start_chat.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/cubits/start_chat.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chat_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chat_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/app_pagify.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/app_pagify.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/notifications/presentation/pages/noitifcations_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/notifications/presentation/pages/noitifcations_screen.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,14 +134,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
-    </task>
-    <task id="LOCAL-00082" summary="```&#10;feat(chat): Expand chat stages and request models&#10;&#10;This commit significantly expands the chat functionality by introducing more detailed chat stages, user request statuses, and a wider variety of match requests.&#10;&#10;- **feat(models):**&#10;  - A new enum, `UserRequestStatus`, has been created to track the state of a request (e.g., `pending`, `accepted`, `rejected`, `continueStage`). It includes a `CheckUserRequestStatus` extension for convenience.&#10;  - The `ChatStages` enum has been expanded to include more granular stages of the matching process, such as `sharia_complaint_meeting`, `istikharah`, `inform_parents`, `engagement`, and `individual_parent`. The `newChat` stage has been renamed to `chatting`.&#10;  - The `MatchRequest` enum has been broadened to support a wider range of actions, including `video_call_request`, `admin_meeting_request`, `parent_meeting_request`, `parent_exchange_numbers`, and `parent_individual_approval`.&#10;&#10;- **chore(cleanup):**&#10;  - Removed redundant empty lines in the `zego.dart` configuration for better code formatting.&#10;&#10;&#10;```">
-      <option name="closed" value="true" />
-      <created>1761742261662</created>
-      <option name="number" value="00082" />
-      <option name="presentableId" value="LOCAL-00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1761742261662</updated>
     </task>
     <task id="LOCAL-00083" summary="```&#10;refactor(chat): Decouple chat screen and improve state management&#10;&#10;This commit refactors the chat feature to decouple its state management from static data providers, introduces a dedicated `StartChatCubit` to handle room initialization, and improves the image upload flow.&#10;&#10;- **refactor(chat):**&#10;  - Introduced `StartChatCubit` to manage the lifecycle of starting a chat. It now fetches the `ChatModel` (containing room ID, timer, etc.) and holds it in its state, removing the dependency on the static `ChatsData.chatModel`.&#10;  - The `ChatScreen` now uses a `MultiBlocProvider` to provide the new `StartChatCubit` to its widget tree.&#10;  - The chat room ID, previously accessed from a static variable, is now sourced from `StartChatCubit`'s state. This makes the component more self-contained and testable.&#10;  - The `ChatBottomBar` and `ChatImageViewerWidget` now receive the `StartChatCubit` via `BlocProvider.value` to access the `roomId` for sending messages and uploading files.&#10;  - Removed the static `chatModel` from `ChatsData` and simplified the `startChat` method to just return the fetched `ChatModel`.&#10;&#10;- **refactor(cubits):**&#10;  - `UploadImageCubit`'s `uploadImage` method now includes an `onSuccess` callback, which is triggered by the `successEmitter` in `executeAsync`. This allows the UI to react to a successful upload (e.g., closing the viewer) without needing a `BlocListener`.&#10;  - `RequestCubit`'s `executeRequest` method now uses `POST` instead of `GET` and also includes an `onSuccess` callback for better reactive flow.&#10;&#10;- **refactor(UI):**&#10;  - In `ChatImageViewerWidget`, the image upload is now initiated from within a `BlocBuilder`, which displays a `CustomLoading` indicator while the upload is in progress.&#10;  - The internet connectivity snackbar messages in `app.dart` now correctly receive a `BuildContext`.&#10;&#10;- **fix(chat):**&#10;  - Corrected the `ChatStages` enum value for new chats from `new` back to `chatting` to align with API expectations, while keeping the `new` value for a different stage.&#10;&#10;&#10;```">
       <option name="closed" value="true" />
@@ -535,7 +519,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764104404891</updated>
     </task>
-    <option name="localTasksCounter" value="131" />
+    <task id="LOCAL-00131" summary="```&#10;fix(otp): Add 4-digit validation and improve UI stability&#10;&#10;This commit introduces validation for the OTP input field to ensure a 4-digit code is entered. It also includes several stability improvements and minor UI refactors.&#10;&#10;- **fix(otp):**&#10;  - In `otp.dart`, the `Pinput` widget now uses the new `Validators.validateOtpCode` method to ensure the entered code is exactly 4 digits long. [2]&#10;  - A new validator, `validateOtpCode`, has been added to `validators.dart` to check if the OTP code is not empty and has a length of 4. [1]&#10;  - Added a new translation key `the_verification_code_must_consist_of_4_digits` to provide a clear error message to the user. [0, 3, 6]&#10;&#10;- **fix(ui):**&#10;  - In `partner_card.dart`, a null-safe check (`?.`) has been added when accessing `opportunity.gender?.userType?.isFemale` to prevent potential crashes if the gender or user type is null. [7]&#10;  - In `app_pagify.dart`, the `emptyListView` widget is now wrapped in a `Center` widget to properly center the &quot;No Data&quot; animation and text when a list is empty. [8]&#10;&#10;- **refactor(auth):**&#10;  - In `female_fields.dart`, the casting of `initialValue` to `FemaleModel` has been made explicitly nullable (`as FemaleModel?`). This improves type safety and prevents runtime errors if `initialValue` is null when initializing form controllers. [9]&#10;&#10;- **chore(ide):**&#10;  - Updated IDE configuration files (`workspace.xml`). [4]">
+      <option name="closed" value="true" />
+      <created>1764111178469</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1764111178470</updated>
+    </task>
+    <option name="localTasksCounter" value="132" />
     <servers />
   </component>
   <component name="ToolWindowManager">

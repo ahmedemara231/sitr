@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pagify/helpers/status_stream.dart';
 import 'package:pagify/pagify.dart';
 
 import '../../../../../generated/assets.dart';
@@ -51,6 +52,8 @@ class _NotificationBodyState extends State<NotificationBody> {
     super.dispose();
   }
 
+  final ValueNotifier<bool> _showDeleteAll = ValueNotifier(false);
+
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
@@ -60,30 +63,37 @@ class _NotificationBodyState extends State<NotificationBody> {
       },
       appBarTitle: LocaleKeys.notifications,
       actions: [
-        if(controller.getItemsLength > 1)
-          IconWidget(
-            icon: Assets.svgTrashIcon,
-            onTap: () {
-              showDefaultBottomSheet(
-                child: DeleteSheet(
-                  asyncCall: (context) async {
-                    final res = await NotificationsData.deleteAllNotification();
-                    if (res.isSuccess()) {
-                      controller.clear();
-                      Go.back();
-                    }
-                  },
-                  title: LocaleKeys.areYouSureToDeleteAllNotifications,
-                ),
-              );
-            },
-          ),
+        ValueListenableBuilder(
+            valueListenable: _showDeleteAll,
+            builder: (context, show, child) => show? IconWidget(
+              icon: Assets.svgTrashIcon,
+              onTap: () {
+                showDefaultBottomSheet(
+                  child: DeleteSheet(
+                    asyncCall: (context) async {
+                      final res = await NotificationsData.deleteAllNotification();
+                      if (res.isSuccess()) {
+                        controller.clear();
+                        Go.back();
+                      }
+                    },
+                    title: LocaleKeys.areYouSureToDeleteAllNotifications,
+                  ),
+                );
+              },
+            ) : const SizedBox.shrink(),
+        ),
       ],
       body: ValueListenableBuilder(
         valueListenable: random,
         builder: (context, value, child) => AppPagify<NotificationModel>(
           key: UniqueKey(),
           asyncCall: (context, page) => NotificationsData.getNotifications(page),
+          onUpdateStatus: (state) {
+            if(state.isSuccess){
+              _showDeleteAll.value = controller.getItemsLength >= 2;
+            }
+          },
           itemBuilder: (context, data, index, element) => NotificationCard(
             notificationModel: element,
             onDelete: (id) async {
