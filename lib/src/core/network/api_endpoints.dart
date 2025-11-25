@@ -74,11 +74,11 @@ class ApiConstants {
   static const String opportunityChildren = 'opportunity-children/';
   static const String getChildren = 'children';
   static const String getChildProfile = 'get-child-profile/';
-  static const String pendingChats = 'chats/pending';
-  static const String cancelledChats = 'chats/cancelled';
-  static const String completedChats = 'chats/completed';
-  static const String rejectedChats = 'chats/rejected';
-  static const String currentChats = 'chats/current';
+  static const String pendingChats = 'chats/pending'; // معلقة
+  static const String cancelledChats = 'chats/cancelled'; // ملغية
+  static const String completedChats = 'chats/completed'; // مكتملة
+  static const String rejectedChats = 'chats/rejected'; // مرفوضة
+  static const String currentChats = 'chats/current'; // محادثاتي
   static const String startChat = 'start-chat';
   static const String report = 'user-reports';
   static const String updateChildProfile = 'update-child-profile/';

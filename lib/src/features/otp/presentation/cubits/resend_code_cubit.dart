@@ -16,7 +16,6 @@ class ResendCodeCubit extends AsyncCubit{
               mapper: (json) => null
           ),
         ),
-        successEmitter: (data) => setSuccess(data: data)
     );
   }
 }

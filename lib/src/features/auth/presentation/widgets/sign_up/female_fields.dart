@@ -71,8 +71,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
   void initState() {
     _init();
     _nameCont = TextEditingController(text: widget.initialValue?.name);
-    _liveAfterMarryCont = TextEditingController(text: (widget.initialValue
-        ?)?.preferredResidenceAfterMarriage);
+    _liveAfterMarryCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.preferredResidenceAfterMarriage);
     _parentNameCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.guardianName);
     _parentNumberCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.guardianPhone);
     _phoneCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.phone);

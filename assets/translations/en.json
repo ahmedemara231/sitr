@@ -255,7 +255,7 @@
   "previous_chats": "previous chats",
   "completed": "completed",
   "refused": "refused",
-  "hanging": "hanging",
+  "pending": "pending",
   "cancelled": "Cancelled",
   "chat": "Chat",
   "here_is_the_text_of_the_message_here_is_the_text_of_the_message_here_is_the_text_of_the_message": "Here is the text of the message Here is the text of the message Here is the text of the message",
@@ -295,5 +295,6 @@
   "phone_changed_successfully": "phone changed successfully",
   "if_deleted_all_data_will_be_deleted": "If deleted all data will be deleted",
   "the_complaint_data_has_been_successfully_sent_to_management": "The complaint data has been successfully sent to management",
-  "admin_reply": "Admin reply"
+  "admin_reply": "Admin reply",
+  "the_verification_code_must_consist_of_4_digits": "The verification code must consist of 4 digits"
 }

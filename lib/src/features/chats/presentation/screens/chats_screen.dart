@@ -21,6 +21,7 @@ import '../../data/models/chat_model.dart';
 import '../cubits/get_chats_cubit.dart';
 import '../widgets/chat_card.dart';
 import 'chat_screen.dart';
+import 'dart:developer';
 
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});
@@ -36,7 +37,7 @@ class _ChatsScreenState extends State<ChatsScreen>
     LocaleKeys.completed,
     LocaleKeys.refused,
     LocaleKeys.cancelled,
-    LocaleKeys.hanging
+    LocaleKeys.pending
   ];
 
   late String _chatType = _chatTitles.first;
@@ -88,8 +89,8 @@ class _ChatsScreenState extends State<ChatsScreen>
         child: TabBarView(
           controller: _tabController,
           children: List.generate(
-            _chatTypes.length,
-                (i) => _ChatsBody(chatType: ChatType.values[i]),
+            ChatType.values.length - 1,
+                (i) => _ChatsBody(chatType: ChatType.values[i + 1]),
           ),
         ),
       ) : const _ChatsBody(chatType: ChatType.current)

@@ -7,8 +7,8 @@ enum ChatType {
   current,
   completed,
   rejected,
+  cancelled,
   pending,
-  cancelled
 }
 
 class GetChatsCubit extends AsyncCubit<List<ChatModel>>{

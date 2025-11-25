@@ -754,8 +754,8 @@ abstract class LocaleKeys {
   static const String _refused = 'refused';
   static String get refused => _refused.tr();
 
-  static const String _hanging = 'hanging';
-  static String get hanging => _hanging.tr();
+  static const String _pending = 'pending';
+  static String get pending => _pending.tr();
 
   static const String _cancelled = 'cancelled';
   static String get cancelled => _cancelled.tr();
@@ -876,5 +876,8 @@ abstract class LocaleKeys {
 
   static const String _adminReply = 'admin_reply';
   static String get adminReply => _adminReply.tr();
+
+  static const String _theVerificationCodeMustConsistOf4Digits = 'the_verification_code_must_consist_of_4_digits';
+  static String get theVerificationCodeMustConsistOf4Digits => _theVerificationCodeMustConsistOf4Digits.tr();
 
 }

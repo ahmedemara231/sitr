@@ -41,11 +41,13 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
       return Pagify<(List<T>, PaginationData), T>.listView(
           key: widget.key,
           shrinkWrap: true,
-          emptyListView: Column(
-            children: [
-              Lottie.asset(Assets.dataEmptyBox),
-              AppText(LocaleKeys.notFound)
-            ],
+          emptyListView: Center(
+            child: Column(
+              children: [
+                Lottie.asset(Assets.dataEmptyBox),
+                AppText(LocaleKeys.notFound)
+              ],
+            ),
           ),
           controller: widget.pagifyController,
           asyncCall: widget.asyncCall,

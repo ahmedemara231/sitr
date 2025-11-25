@@ -140,7 +140,7 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
                     defaultPinTheme: defaultPinTheme,
                     controller: pinCont,
                     onChanged: (val) => code = val,
-                    validator: Validators.validateEmpty,
+                    validator: (val) => Validators.validateOtpCode(val)
                   ),
                 ),
               ),

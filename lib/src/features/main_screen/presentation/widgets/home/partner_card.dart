@@ -67,7 +67,7 @@ class PartnerCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       if(_withParent)
-                        if(opportunity.gender!.userType!.isFemale)
+                        if(opportunity.gender?.userType?.isFemale?? false)
                           _buildStatItem(
                             value: opportunity.hijab?.title ?? '',
                             icon: Assets.svgHijab,

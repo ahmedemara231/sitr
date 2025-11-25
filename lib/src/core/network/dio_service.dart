@@ -76,6 +76,7 @@ class DioService implements NetworkService {
               method: networkRequest.asString(),
               headers: networkRequest.headers
           ));
+      log('the status code is ${response}');
       if (mapper != null) {
         return BaseModel.fromJson(response.data, jsonToModel: mapper);
       } else {

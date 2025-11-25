@@ -1,4 +1,5 @@
 import '../../../../../features/auth/models/dowry.dart';
+import '../../../../../features/main_screen/data/models/home_model.dart';
 import '../../../../extensions/object.dart';
 import '../../title_value_shape.dart';
 import '../user_model.dart';
@@ -27,6 +28,7 @@ class IndividualUserModel extends UserModel {
   final TitleValueShape? skinColor;
   final TitleValueShape? religiousCommitment;
   final int? views;
+  final ChildParentInfo? childParentInfo;
 
   IndividualUserModel({
     super.id,
@@ -50,6 +52,7 @@ class IndividualUserModel extends UserModel {
     super.hasChatWith,
     super.isParentMatch,
 
+    this.childParentInfo,
     this.dowry,
     this.nickName,
     this.maritalStatus,
@@ -117,6 +120,8 @@ class IndividualUserModel extends UserModel {
       isNotify: json['is_notify'],
       id: json['id'],
       name: json['name'],
+      childParentInfo: (json['parent_info'] as Object?).isNull? null :
+      ChildParentInfo.fromJson(json['parent_info']),
       parentId: json['parent_id'],
       type: json['type'],
       gender: json['gender'],
@@ -371,5 +376,23 @@ class IndividualUserModel extends UserModel {
     religiousCommitment: religiousCommitment ?? this.religiousCommitment,
     views: views ?? this.views,
     isNotify: isNotify ?? this.isNotify,
+  );
+}
+
+class ChildParentInfo{
+  final int id;
+  final String name;
+  final String avatar;
+
+  ChildParentInfo({
+    required this.id,
+    required this.name,
+    required this.avatar,
+  });
+
+  factory ChildParentInfo.fromJson(Map<String, dynamic> json) => ChildParentInfo(
+      id: json['id'],
+      name: json['name'],
+      avatar: json['avatar']
   );
 }

@@ -60,23 +60,24 @@ class _NotificationBodyState extends State<NotificationBody> {
       },
       appBarTitle: LocaleKeys.notifications,
       actions: [
-        IconWidget(
-          icon: Assets.svgTrashIcon,
-          onTap: () {
-            showDefaultBottomSheet(
-              child: DeleteSheet(
-                asyncCall: (context) async {
-                  final res = await NotificationsData.deleteAllNotification();
-                  if (res.isSuccess()) {
-                    controller.clear();
-                    Go.back();
-                  }
-                },
-                title: LocaleKeys.areYouSureToDeleteAllNotifications,
-              ),
-            );
-          },
-        ),
+        if(controller.getItemsLength > 1)
+          IconWidget(
+            icon: Assets.svgTrashIcon,
+            onTap: () {
+              showDefaultBottomSheet(
+                child: DeleteSheet(
+                  asyncCall: (context) async {
+                    final res = await NotificationsData.deleteAllNotification();
+                    if (res.isSuccess()) {
+                      controller.clear();
+                      Go.back();
+                    }
+                  },
+                  title: LocaleKeys.areYouSureToDeleteAllNotifications,
+                ),
+              );
+            },
+          ),
       ],
       body: ValueListenableBuilder(
         valueListenable: random,

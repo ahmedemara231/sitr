@@ -260,7 +260,7 @@
     "previous chats" : "المحادثات السابقة",
     "completed" : "مكتملة",
     "refused" : "مرفوضة",
-    "hanging" : "معلقة",
+    "pending" : "معلقة",
     "Cancelled" : "ملغية",
     "Chat" : "المحادثة",
     "Here is the text of the message Here is the text of the message Here is the text of the message" : "هنا نص الرسالة هنا نص الرسالة هنا نص الرسالة",
@@ -301,6 +301,8 @@
   "phone changed successfully" : "تم تغيير رقم الجوال بنجاح",
   "If deleted all data will be deleted" : "في حالة الحذف سيتم حذف جميع البيانات",
   "The complaint data has been successfully sent to management" : "لقد تم ارسال بيانات الشكوي للادارة بنجاح",
-  "Admin reply" : "رد الادارة"
+  "Admin reply" : "رد الادارة",
+  "The verification code must consist of 4 digits" : "رمز التحقق لابد ان يكون مكون من 4 ارقام",
+  "" : "لابد اللا يقل العمر عن 18 عام"
 
 }

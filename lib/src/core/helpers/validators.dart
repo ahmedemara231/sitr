@@ -17,6 +17,35 @@ class Validators {
     return null;
   }
 
+  // static String? validateAge(String? value, {String? fieldTitle}) {
+  //   if (value == null || value.isEmpty) {
+  //     return fieldTitle == null
+  //         ? LocaleKeys.fillField.tr(context: Go.context)
+  //         : '${LocaleKeys.filedValidation.tr()} $fieldTitle';
+  //   } else if (int.parse(value) < 18) {
+  //     return LocaleKeys.scripInjectionValidate.tr(
+  //       context: Go.context,
+  //     );
+  //   }
+  //
+  //   return null;
+  // }
+
+  static String? validateOtpCode(String? value, {String? fieldTitle}) {
+    if (value == null || value.isEmpty) {
+      return fieldTitle == null
+          ? LocaleKeys.fillField.tr(context: Go.context)
+          : '${LocaleKeys.filedValidation.tr()} $fieldTitle';
+    } else if (value.length < 4) {
+      return LocaleKeys.theVerificationCodeMustConsistOf4Digits.tr(
+        context: Go.context,
+      );
+    }
+
+    return null;
+  }
+
+
   // static String? validateDowry({required String min, required String max}) {
   //   final num minNum = num.tryParse(min) ?? 0;
   //   final num maxNum = num.tryParse(max) ?? 0;
