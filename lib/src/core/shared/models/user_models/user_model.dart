@@ -57,10 +57,6 @@ class UserModel {
     final bool isParent = json['type']['value'].toString() == 'parent';
     final UserType user = json['gender']['value'].toString().toUserType();
 
-    // log(json['gender']['value']);
-    // log(json['gender']['value'].toString().toUserType().toString());
-    // log(json.toString());
-
     if(isParent){
       return ParentModel.fromJson(json);
 

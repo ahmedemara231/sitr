@@ -1,10 +1,7 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../config/language/locale_keys.g.dart';
-import '../../config/res/config_imports.dart';
 import '../../features/chats/presentation/screens/chat_screen.dart';
 import '../helpers/user_type_enum.dart';
 import '../navigation/navigator.dart';
@@ -13,6 +10,7 @@ import '../shared/models/user_models/user_model.dart';
 import 'buttons/custom_app_buttons/default_button.dart' show AppDefaultButton;
 import 'default_bottom_sheet.dart';
 import 'sheets/tips_sheet.dart';
+
 
 enum ChatButtonActions { startChat, viewTips, none}
 class ChatButton extends StatelessWidget {
@@ -36,7 +34,12 @@ class ChatButton extends StatelessWidget {
             title: LocaleKeys.tipsForTheStageOfSufficientKnowledge,
             path: ApiConstants.parentIndividualConversation,
             btnTitle: LocaleKeys.start,
-            onConfirm: (context) => _chatButtonPossibleActions[ChatButtonActions.startChat]?.call()
+            onConfirm: (context) =>
+                Go.to(ChatScreen(
+                  receiverId: user.id ?? 0,
+                  receiverName: user.name ?? '',
+                  fromHome: 1,
+                )),
         )
     ) :
     showDefaultBottomSheet(
@@ -44,15 +47,12 @@ class ChatButton extends StatelessWidget {
         child: TipsSheet(
           title: LocaleKeys.clarification,
           path: ApiConstants.appStages,
-          onConfirm: (context) => showDefaultBottomSheet(
-              withPadding: false,
-              child: TipsSheet(
-                  title: LocaleKeys.tipsForTheStageOfSufficientKnowledge,
-                  btnTitle: LocaleKeys.start,
-                  path: ApiConstants.chattingStageTips,
-                  onConfirm: (context) => _chatButtonPossibleActions[ChatButtonActions.startChat]?.call()
-              )
-          ),
+          onConfirm: (context) =>
+              Go.to(ChatScreen(
+                receiverId: user.id ?? 0,
+                receiverName: user.name ?? '',
+                fromHome: 1,
+              )),
         )
     ),
 
@@ -63,9 +63,11 @@ class ChatButton extends StatelessWidget {
     if(user.canChat!){
       if(!user.hasChatWith!){
         return ChatButtonActions.viewTips;
+
       }else{
         return ChatButtonActions.startChat;
       }
+
     }else{
       return ChatButtonActions.none;
     }

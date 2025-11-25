@@ -1,3 +1,6 @@
+import '../../config/language/locale_keys.g.dart';
+import '../../core/network/api_endpoints.dart';
+
 enum UserRequestStatus{
   pending(0, 'pending'),
   accepted(1, 'accepted'),
@@ -49,17 +52,18 @@ extension CheckChatStages on ChatStages{
   bool get isIndividualParent => this == ChatStages.individualParent;
 }
 
+
 enum MatchRequestEnum{
   noRequests(-1, 'no_requests'),
-  moveToNext(0, 'next_stage_request'),
-  reject(2, 'reject_request'),
-  extension(1, 'extension_request'),
-  videoCall(3, 'video_call_request'),
-  adminMeeting(4, 'admin_meeting_request'),
-  parentMeeting(5, 'parent_meeting_request'),
-  parentExchangeNumbers(6, 'parent_exchange_numbers'),
-  parentIndividualApproval(7, 'parent_individual_approval'),
-  continueStageRequest(8, 'continue_stage_request');
+  moveToNext(0, ApiConstants.userMoveToNextRequest),
+  reject(2, ApiConstants.rejectRequest),
+  extension(1, ApiConstants.userExtensionRequest),
+  videoCall(3, ApiConstants.videoCallRequest),
+  adminMeeting(4, ApiConstants.adminMeetingRequest),
+  parentMeeting(5, ApiConstants.parentMeetingRequest),
+  parentExchangeNumbers(6, ApiConstants.parentExchangeNumbers),
+  parentIndividualApproval(7, ApiConstants.parentIndividualConversation),
+  continueStageRequest(8, ApiConstants.continueStageRequest);
 
   final int id;
   final String requestName;
@@ -76,3 +80,28 @@ extension CheckMatchRequest on MatchRequestEnum{
   bool get isParentExchangeNumbers => this == MatchRequestEnum.parentExchangeNumbers;
   bool get isParentIndividualApproval => this == MatchRequestEnum.parentIndividualApproval;
 }
+
+
+enum ShowTips{
+  noPage('no_page', ''),
+  chattingStageTips('chatting_stage_tips',ApiConstants.chattingStageTips),
+  shariaComplaintMeetingTips('sharia_complaint_meeting_terms',ApiConstants.shariaComplaintMeetingTips),
+  istikharahTips('istikhara_tips',ApiConstants.istikharaTips),
+  informParentsTips('inform_parents',ApiConstants.informParentsTips),
+  engagementTips('engagement_tips', ApiConstants.engagementTips);
+
+  final String title;
+  final String path;
+  const ShowTips(this.title, this.path);
+}
+
+extension CheckShowTips on ShowTips{
+  bool get isNoPage => this == ShowTips.noPage;
+  bool get isChattingStageTips => this == ShowTips.chattingStageTips;
+  bool get isShariaComplaintMeetingTips => this == ShowTips.shariaComplaintMeetingTips;
+  bool get isIstikharahTips => this == ShowTips.istikharahTips;
+  bool get isInformParentsTips => this == ShowTips.informParentsTips;
+  bool get isEngagementTips => this == ShowTips.engagementTips;
+}
+
+

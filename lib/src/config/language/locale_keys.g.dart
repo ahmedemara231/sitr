@@ -880,4 +880,13 @@ abstract class LocaleKeys {
   static const String _theVerificationCodeMustConsistOf4Digits = 'the_verification_code_must_consist_of_4_digits';
   static String get theVerificationCodeMustConsistOf4Digits => _theVerificationCodeMustConsistOf4Digits.tr();
 
+  static const String _theAgeMustBeAtLeast18YearsOld = 'the_age_must_be_at_least_18_years_old';
+  static String get theAgeMustBeAtLeast18YearsOld => _theAgeMustBeAtLeast18YearsOld.tr();
+
+  static const String _tipsForIstikharahPhase = 'tips_for_istikharah_phase';
+  static String get tipsForIstikharahPhase => _tipsForIstikharahPhase.tr();
+
+  static const String _tipsForTheParentingStage = 'tips_for_the_parenting_stage';
+  static String get tipsForTheParentingStage => _tipsForTheParentingStage.tr();
+
 }

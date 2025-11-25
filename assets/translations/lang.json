@@ -303,6 +303,8 @@
   "The complaint data has been successfully sent to management" : "لقد تم ارسال بيانات الشكوي للادارة بنجاح",
   "Admin reply" : "رد الادارة",
   "The verification code must consist of 4 digits" : "رمز التحقق لابد ان يكون مكون من 4 ارقام",
-  "" : "لابد اللا يقل العمر عن 18 عام"
+  "The age must be at least 18 years old" : "لابد اللا يقل العمر عن 18 عام",
+  "Tips for istikharah phase" : "نصائح لمرحلة الاستخارة",
+  "Tips for the parenting stage" : "نصائح لمرحلة إبلاغ الوالدين"
 
 }

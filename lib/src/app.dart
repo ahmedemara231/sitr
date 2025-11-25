@@ -85,7 +85,8 @@ class Sitr extends StatelessWidget {
                 builder: (context, child) {
                   return InternetInterceptorWidget(
                     loadingWidget: const SplashLogo(),
-                    onChanged: (status) => _manageInternetConnectivity(context, status),
+                    onChanged: (status) {},
+                    // onChanged: (status) => _manageInternetConnectivity(context, status),
                     builder: (status) {
                       return Stack(
                         children: [

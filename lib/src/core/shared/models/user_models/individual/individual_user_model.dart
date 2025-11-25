@@ -118,6 +118,7 @@ class IndividualUserModel extends UserModel {
   factory IndividualUserModel.fromJson(Map<String, dynamic> json) {
     return IndividualUserModel(
       isNotify: json['is_notify'],
+      hasChatWith: json['has_chat_with'],
       id: json['id'],
       name: json['name'],
       childParentInfo: (json['parent_info'] as Object?).isNull? null :

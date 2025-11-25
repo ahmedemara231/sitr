@@ -23,6 +23,30 @@ import '../widgets/sheets/payment_sheet.dart';
 
 
 extension FormatString on String {
+  ShowTips get currentStageTips{
+    return ShowTips.values
+        .firstWhere((element) => element.title == this,
+        orElse: () => ShowTips.chattingStageTips
+    );
+  }
+
+  String get currentStageTipsTitle{
+    if(this == ShowTips.istikharahTips.title){
+      return LocaleKeys.tipsForIstikharahPhase;
+
+    }else if(this == ShowTips.shariaComplaintMeetingTips.title){
+      return LocaleKeys.tipsForShariaComplaintMeeting;
+
+    }else if(this == ShowTips.chattingStageTips.title){
+      return LocaleKeys.tipsForTheStageOfSufficientKnowledge;
+
+    }else if(this == ShowTips.informParentsTips){
+      return LocaleKeys.tipsForTheParentingStage;
+    }
+
+    return '';
+  }
+
 
   ChatStages get getCurrentStageAsStagesEnum => ChatStages.values
       .firstWhere((e) => this == e.stageText);

@@ -296,5 +296,8 @@
   "if_deleted_all_data_will_be_deleted": "في حالة الحذف سيتم حذف جميع البيانات",
   "the_complaint_data_has_been_successfully_sent_to_management": "لقد تم ارسال بيانات الشكوي للادارة بنجاح",
   "admin_reply": "رد الادارة",
-  "the_verification_code_must_consist_of_4_digits": "رمز التحقق لابد ان يكون مكون من 4 ارقام"
+  "the_verification_code_must_consist_of_4_digits": "رمز التحقق لابد ان يكون مكون من 4 ارقام",
+  "the_age_must_be_at_least_18_years_old": "لابد اللا يقل العمر عن 18 عام",
+  "tips_for_istikharah_phase": "نصائح لمرحلة الاستخارة",
+  "tips_for_the_parenting_stage": "نصائح لمرحلة إبلاغ الوالدين"
 }

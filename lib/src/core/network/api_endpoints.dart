@@ -85,6 +85,8 @@ class ApiConstants {
   static const String sendMsg = 'send-message/';
   static const String appStages = 'app-stages';
   static const String chattingStageTips = 'chatting-stage-tips';
+  static const String parentExchangeNumbers = 'parent-exchange-numbers';
+  static const String parentMeetingRequest = 'user-match-request/parent_meeting_request';
   static const String parentIndividualConversation = 'parent-individual-conversation';
   static const String filter = 'filter';
   static const String uploadImage = 'upload-room-file/';
@@ -95,10 +97,14 @@ class ApiConstants {
   static const String userMoveToNextRequest = 'user-match-request/next_stage_request';
   static const String userExtensionRequest = 'user-match-request/extension_request';
   static const String payRequest = 'pay-request/';
+  static const String videoCallRequest = 'video_call_request';
   static const String shariaComplaintMeetingTips = 'sharia-complaint-meeting-tips';
   static const String istikharaTips = 'istikhara-tips';
+  static const String engagementTips = 'engagement-tips';
   static const String continueStageRequest = 'user-match-request/continue_stage_request';
   static const String informParentsTips = 'inform-parents';
   static const String socials = 'socials';
+  static const String adminMeetingRequest = 'admin_meeting_request';
+  static const String matchTipPageSeen = 'match-tip-page-seen';
 
 }
