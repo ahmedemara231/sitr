@@ -167,13 +167,15 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
               _assignToInitial();
               if(type.isFemale){
                 return FemaleFields(
-                    withParent: widget.withParent, initialValue: widget.initialValue,
+                    withParent: widget.withParent,
+                    initialValue: widget.initialValue,
                     onChangeFemaleData: (data) => _listenToData(sharedFormFieldModel.merge(data))
                 );
 
               }else if (type.isMale){
                 return MaleFields(
-                    initialValue: widget.initialValue,withParent: widget.withParent,
+                    initialValue: widget.initialValue,
+                    withParent: widget.withParent,
                     onChangeMaleData: (data) => _listenToData(sharedFormFieldModel.merge(data))
                 );
 

@@ -71,7 +71,8 @@ class _FemaleFieldsState extends State<FemaleFields> {
   void initState() {
     _init();
     _nameCont = TextEditingController(text: widget.initialValue?.name);
-    _liveAfterMarryCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.preferredResidenceAfterMarriage);
+    _liveAfterMarryCont = TextEditingController(text: (widget.initialValue
+        ?)?.preferredResidenceAfterMarriage);
     _parentNameCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.guardianName);
     _parentNumberCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.guardianPhone);
     _phoneCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.phone);
@@ -130,7 +131,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
               ),
             )..insertAll(21, [
             AppDropinityLocal<TitleValueShape>(
-              initialValue: (widget.initialValue as FemaleModel).hijab?.title,
+              initialValue: (widget.initialValue as FemaleModel?)?.hijab?.title,
               hint: LocaleKeys.areYouWaringHijab,
               title: LocaleKeys.areYouWaringHijab,
               values: EnumsData.hijab.data,
@@ -158,7 +159,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 // validator: Validators.validateEmpty,
               ),
             AppDropinity<List<Kinship>, Kinship>.withApiRequest(
-              initialValue: (widget.initialValue as FemaleModel).guardianRelation?.value,
+              initialValue: (widget.initialValue as FemaleModel?)?.guardianRelation?.value,
               hint: LocaleKeys.kinship,
               title: LocaleKeys.kinship,
               asyncCall: (BuildContext ctx, int page) async => await AuthData.getKinships(),
@@ -211,7 +212,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
             ])
             ..insertAll(17, [
               RadioWidget<Answer>(
-                initialValue: (widget.initialValue as FemaleModel).acceptsPolygamy?.toAnswer,
+                initialValue: (widget.initialValue as FemaleModel?)?.acceptsPolygamy?.toAnswer,
                   title: LocaleKeys.doYouAcceptPolygamy,
                   onSubmit: (result) {
                     acceptsPolygamy = result;
@@ -223,7 +224,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
             ])
             ..insertAll(21, [
               AppDropinityLocal<TitleValueShape>(
-                initialValue: (widget.initialValue as FemaleModel).hijab?.title,
+                initialValue: (widget.initialValue as FemaleModel?)?.hijab?.title,
                 hint: LocaleKeys.areYouWaringHijab,
                 title: LocaleKeys.areYouWaringHijab,
                 values: EnumsData.hijab.data,
@@ -253,7 +254,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
               ),
 
               AppDropinity<List<Kinship>, Kinship>.withApiRequest(
-                initialValue: (widget.initialValue as FemaleModel).guardianRelation?.value,
+                initialValue: (widget.initialValue as FemaleModel?)?.guardianRelation?.value,
                 hint: LocaleKeys.kinship,
                 title: LocaleKeys.kinship,
                 asyncCall: (BuildContext ctx, int page) async => await AuthData.getKinships(),
