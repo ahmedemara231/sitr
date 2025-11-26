@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multiple_result/multiple_result.dart';
@@ -70,15 +72,15 @@ abstract class AsyncCubit<T> extends Cubit<AsyncState<T>> {
 
   Future<void> executeAsyncWithBaseModel({
     required Future<Result<BaseModel<T>, Failure>> Function() operation,
-    Function(BaseModel<T>)? successEmitter,
+    FutureOr<void> Function(BaseModel<T>)? onSuccess,
   }) async {
     setLoading();
     final result = await operation();
     result.when(
           (success) {
         setSuccess(data: success.data);
-        if (successEmitter != null) {
-          successEmitter(success);
+        if (onSuccess != null) {
+          onSuccess(success);
         }
       },
           (failure) {

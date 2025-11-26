@@ -27,7 +27,6 @@ class OtpScreen extends StatelessWidget {
   final FutureOr<void> Function(BuildContext context)? onEnterScreen;
   final FutureOr<void> Function(BuildContext context, String code) onConfirmCode;
   final Widget? upperWidget;
-  // final FutureOr<void> Function(BuildContext context) onResendCodePress;
 
   const OtpScreen({super.key,
     required this.phone,
@@ -35,7 +34,6 @@ class OtpScreen extends StatelessWidget {
     required this.onConfirmCode,
     this.onEnterScreen,
     this.upperWidget,
-    // required this.onResendCodePress
   });
 
   @override
@@ -112,13 +110,13 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
         upperWidget: Column(
           spacing: 12.h,
           children: [
-            const AppLogoWidget(),
+            widget.upperWidget ?? const AppLogoWidget(),
             OtpStaticTexts(phone: widget.phone),
           ],
         ).paddingAll(12.r),
         bodyColor: Colors.white,
         body: SizedBox(
-          height: context.height * .7,
+          height: context.height * .75,
           child: Column(
             spacing: 5.h,
             children: [

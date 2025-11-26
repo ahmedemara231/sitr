@@ -15,7 +15,7 @@ class DeleteAccountCubit extends AsyncCubit{
                 body: {'device_id' : NotificationService.deviceToken}
             )
         ),
-        successEmitter: (data) => onSuccess.call()
+        onSuccess: (data) => onSuccess.call()
     );
   }
 }

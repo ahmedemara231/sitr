@@ -26,7 +26,7 @@ class AddComplaintCubit extends AsyncCubit<bool> {
         isFromData: true,
         mapper: (data) => true,
       )),
-      successEmitter: (data) {
+      onSuccess: (data) {
         MessageUtils.showSnackBar(LocaleKeys.successDone);
         2.pop();
       },

@@ -51,7 +51,7 @@ class ChangePhoneManagerCubit extends AsyncCubit{
                 body: _getBody(phase, phone: phone, code: code),
             )
         ),
-        successEmitter: (data) => onSuccess?.call(data)
+        onSuccess: (data) => onSuccess?.call(data)
     );
   }
 }

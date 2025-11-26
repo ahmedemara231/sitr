@@ -25,7 +25,7 @@ class AddChildCubit extends AsyncCubit<UserModel>{
             )
         ),
 
-        successEmitter: (data) => onSuccess.call()
+        onSuccess: (data) => onSuccess.call()
     );
   }
 }

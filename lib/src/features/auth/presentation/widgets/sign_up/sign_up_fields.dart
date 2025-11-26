@@ -233,7 +233,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
         Visibility(
           visible: widget.type.isIndividual,
           child: SignUpTextField(
-            validator: Validators.validateEmpty,
+            validator: Validators.validateAge,
             upperTitle: LocaleKeys.age,
             title: LocaleKeys.pleaseEnterYourAge,
             onChanged: (val) => _listenToData(

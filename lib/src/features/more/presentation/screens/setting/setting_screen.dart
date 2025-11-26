@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../generated/assets.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
+import '../../../../../core/extensions/sized_box_helper.dart';
 import '../../../../../core/navigation/named_routes.dart';
 import '../../../../../core/navigation/navigator.dart';
 import '../../../../../core/shared/models/user_models/individual/individual_user_model.dart';
@@ -55,7 +56,16 @@ class SettingScreen extends StatelessWidget {
               return [
                 MaterialPageRoute(
                   builder: (context) => OtpScreen(
-                    // upperWidget: AppText(LocaleKeys.changePhoneNumber, fontSize: 18.sp, fontWeight: FontWeight.bold,),
+                    upperWidget: Column(
+                      children: [
+                        AppText(
+                          LocaleKeys.changePhoneNumber,
+                          fontSize: 18.sp, fontWeight: FontWeight.bold,
+                        ),
+
+                        12.szH,
+                      ],
+                    ),
                     phone: UserCubit.instance.user.phone ?? '',
                     title: LocaleKeys.changePhoneNumber,
                     onEnterScreen: (context) =>
@@ -77,10 +87,19 @@ class SettingScreen extends StatelessWidget {
               ];
             },
             onGenerateRoute: (setting) {
-              log('the route name is ${setting.name}');
               if(setting.name == NamedRoutes.oldPhoneOtpScreen.name){
                 return MaterialPageRoute(
                     builder: (context) => OtpScreen(
+                      upperWidget: Column(
+                        children: [
+                          AppText(
+                            LocaleKeys.changePhoneNumber,
+                            fontSize: 18.sp, fontWeight: FontWeight.bold,
+                          ),
+
+                          12.szH,
+                        ],
+                      ),
                       phone: UserCubit.instance.user.phone??'',
                       title: LocaleKeys.changePhoneNumber,
                       onEnterScreen: (context) =>
@@ -112,7 +131,17 @@ class SettingScreen extends StatelessWidget {
                     phone: args['phone'],
                     title: args['title'],
                     onEnterScreen: args['onEnterScreen'],
-                    onConfirmCode: args['onConfirmCode']
+                    onConfirmCode: args['onConfirmCode'],
+                    upperWidget: Column(
+                      children: [
+                        AppText(
+                          LocaleKeys.changePhoneNumber,
+                          fontSize: 18.sp, fontWeight: FontWeight.bold,
+                        ),
+
+                        12.szH,
+                      ],
+                    ),
                   ),
                 );
               }

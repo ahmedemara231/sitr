@@ -106,6 +106,7 @@
   "degree_of_commitment": "درجة الالتزام",
   "parent_name": "اسم ولي الامر",
   "please_enter_name": "يرجي ادخال الاسم",
+  "phone_should_be_9_digits": "لابد ان يكون رقم الهاتف ٩ ارقام",
   "parent_number": "رقم ولي الامر",
   "optional": "اختياري",
   "kinship": "صلة القرابة",
@@ -299,5 +300,6 @@
   "the_verification_code_must_consist_of_4_digits": "رمز التحقق لابد ان يكون مكون من 4 ارقام",
   "the_age_must_be_at_least_18_years_old": "لابد اللا يقل العمر عن 18 عام",
   "tips_for_istikharah_phase": "نصائح لمرحلة الاستخارة",
-  "tips_for_the_parenting_stage": "نصائح لمرحلة إبلاغ الوالدين"
+  "tips_for_the_parenting_stage": "نصائح لمرحلة إبلاغ الوالدين",
+  "the_age_must_be_a_number": "العمر لابد ان يكون رقما"
 }

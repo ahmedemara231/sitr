@@ -20,7 +20,7 @@ class ChargeWalletCubit extends AsyncCubit<String>{
             mapper: (data) => data['redirect_url'],
           )
       ),
-      successEmitter: (data) => onSuccess?.call()
+      onSuccess: (data) => onSuccess?.call()
     );
   }
 

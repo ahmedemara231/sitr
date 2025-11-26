@@ -48,7 +48,8 @@ class _BlockedUserScreenState extends State<BlockedUserScreen> {
                                 },
                               ),
                           separatorBuilder: (context, index) => 15.szH,
-                          itemCount: data.length);
+                          itemCount: data.length
+                  );
                 });
           },
         ).paddingAll(16),

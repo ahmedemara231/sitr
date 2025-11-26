@@ -18,7 +18,7 @@ class GetPartnerInfoCubit extends GetUserModelCubit{
           ),
         ),
 
-        successEmitter: (data) => onSuccess?.call(data.data)
+        onSuccess: (data) => onSuccess?.call(data.data)
     );
   }
 }

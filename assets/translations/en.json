@@ -106,6 +106,7 @@
   "degree_of_commitment": "degree of commitment",
   "parent_name": "parent name",
   "please_enter_name": "please enter name",
+  "phone_should_be_9_digits": "phone should be 9 digits",
   "parent_number": "parent number",
   "optional": "optional",
   "kinship": "kinship",
@@ -299,5 +300,6 @@
   "the_verification_code_must_consist_of_4_digits": "The verification code must consist of 4 digits",
   "the_age_must_be_at_least_18_years_old": "The age must be at least 18 years old",
   "tips_for_istikharah_phase": "Tips for istikharah phase",
-  "tips_for_the_parenting_stage": "Tips for the parenting stage"
+  "tips_for_the_parenting_stage": "Tips for the parenting stage",
+  "the_age_must_be_a_number": "the age must be a number"
 }

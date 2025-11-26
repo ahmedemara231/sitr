@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import '../../config/language/locale_keys.g.dart';
+import '../extensions/object.dart';
 import '../navigation/navigator.dart';
  
 class Validators {
@@ -17,19 +18,24 @@ class Validators {
     return null;
   }
 
-  // static String? validateAge(String? value, {String? fieldTitle}) {
-  //   if (value == null || value.isEmpty) {
-  //     return fieldTitle == null
-  //         ? LocaleKeys.fillField.tr(context: Go.context)
-  //         : '${LocaleKeys.filedValidation.tr()} $fieldTitle';
-  //   } else if (int.parse(value) < 18) {
-  //     return LocaleKeys.scripInjectionValidate.tr(
-  //       context: Go.context,
-  //     );
-  //   }
-  //
-  //   return null;
-  // }
+  static String? validateAge(String? value, {String? fieldTitle}) {
+    if (value == null || value.isEmpty) {
+      return fieldTitle == null
+          ? LocaleKeys.fillField.tr(context: Go.context)
+          : '${LocaleKeys.filedValidation.tr()} $fieldTitle';
+
+    } else if (num.parse(value) < 18) {
+      return LocaleKeys.theAgeMustBeAtLeast18YearsOld.tr(
+        context: Go.context,
+      );
+    }else if(num.tryParse(value).isNull){
+      return LocaleKeys.theAgeMustBeANumber.tr(
+        context: Go.context,
+      );
+    }
+
+    return null;
+  }
 
   static String? validateOtpCode(String? value, {String? fieldTitle}) {
     if (value == null || value.isEmpty) {
@@ -80,11 +86,14 @@ class Validators {
   static String? validatePhone(String? value, {String? message}) {
     if (value?.trim().isEmpty ?? true) {
       return message ?? LocaleKeys.fillField;
-    } else if (!RegExp(r'^(5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$')
-        .hasMatch(value!.trim()) ||
+    } else if(value!.length != 9) {
+      return LocaleKeys.phoneShouldBe9Digits;
+    }else if (!RegExp(r'^(5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$')
+        .hasMatch(value.trim()) ||
         value.length < 9) {
       return message ?? LocaleKeys.phoneValidation.tr();
     }
+
     return null;
   }
 

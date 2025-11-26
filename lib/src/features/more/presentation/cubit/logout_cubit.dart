@@ -15,7 +15,7 @@ class LogoutCubit extends AsyncCubit{
               queryParameters: {'device_id' : NotificationService.deviceToken}
             )
         ),
-      successEmitter: (data) => onSuccess.call()
+      onSuccess: (data) => onSuccess.call()
     );
   }
 }

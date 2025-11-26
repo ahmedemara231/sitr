@@ -44,7 +44,7 @@ class ChatCubit extends AsyncCubit<ChatModel>{
             mapper: (json) => ChatModel.fromJson(json),
           ),
         ),
-        successEmitter: (data) => onSuccess.call(data.data)
+        onSuccess: (data) => onSuccess.call(data.data)
     );
   }
 
@@ -62,7 +62,7 @@ class ChatCubit extends AsyncCubit<ChatModel>{
             mapper: (json) => ChatModel.fromJson(json),
           ),
       ),
-      successEmitter: (data) => onSuccess?.call(data.data)
+      onSuccess: (data) => onSuccess?.call(data.data)
     );
   }
 

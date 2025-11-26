@@ -18,7 +18,7 @@ class UploadImageCubit extends AsyncCubit<String>{
           body: {'file' : image}
         )
        ),
-      successEmitter: (data) => onSuccess(data.data)
+      onSuccess: (data) => onSuccess(data.data)
     );
   }
 }

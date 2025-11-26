@@ -17,7 +17,7 @@ class SignUpCubit extends AsyncCubit{
                 body: body.toJson(),
             )
         ),
-      successEmitter: (data) => onSuccess.call(data)
+      onSuccess: (data) => onSuccess.call(data)
     );
   }
 

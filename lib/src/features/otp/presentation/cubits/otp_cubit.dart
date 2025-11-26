@@ -26,7 +26,7 @@ class OtpCubit extends AsyncCubit<UserModel>{
               mapper: (json) => UserModel.fromJson(json)
           ),
         ),
-      successEmitter: (data) => onSuccess?.call(data.data)
+      onSuccess: (data) => onSuccess?.call(data.data)
     );
   }
 }

@@ -28,7 +28,7 @@ class EditProfileCubit extends AsyncCubit<UserModel>{
             )
         ),
 
-        successEmitter: (data) => onSuccess.call()
+        onSuccess: (data) => onSuccess.call()
     );
   }
 }

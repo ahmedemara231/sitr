@@ -111,6 +111,7 @@
     "degree of commitment" : "درجة الالتزام",
     "parent name" : "اسم ولي الامر",
     "please enter name" : "يرجي ادخال الاسم",
+  "phone should be 9 digits" : "لابد ان يكون رقم الهاتف ٩ ارقام",
     "parent number" : "رقم ولي الامر",
     "optional" : "اختياري",
     "kinship" : "صلة القرابة",
@@ -305,6 +306,7 @@
   "The verification code must consist of 4 digits" : "رمز التحقق لابد ان يكون مكون من 4 ارقام",
   "The age must be at least 18 years old" : "لابد اللا يقل العمر عن 18 عام",
   "Tips for istikharah phase" : "نصائح لمرحلة الاستخارة",
-  "Tips for the parenting stage" : "نصائح لمرحلة إبلاغ الوالدين"
+  "Tips for the parenting stage" : "نصائح لمرحلة إبلاغ الوالدين",
+  "the age must be a number" : "العمر لابد ان يكون رقما"
 
 }

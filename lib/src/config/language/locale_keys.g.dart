@@ -322,6 +322,9 @@ abstract class LocaleKeys {
   static const String _pleaseEnterName = 'please_enter_name';
   static String get pleaseEnterName => _pleaseEnterName.tr();
 
+  static const String _phoneShouldBe9Digits = 'phone_should_be_9_digits';
+  static String get phoneShouldBe9Digits => _phoneShouldBe9Digits.tr();
+
   static const String _parentNumber = 'parent_number';
   static String get parentNumber => _parentNumber.tr();
 
@@ -888,5 +891,8 @@ abstract class LocaleKeys {
 
   static const String _tipsForTheParentingStage = 'tips_for_the_parenting_stage';
   static String get tipsForTheParentingStage => _tipsForTheParentingStage.tr();
+
+  static const String _theAgeMustBeANumber = 'the_age_must_be_a_number';
+  static String get theAgeMustBeANumber => _theAgeMustBeANumber.tr();
 
 }

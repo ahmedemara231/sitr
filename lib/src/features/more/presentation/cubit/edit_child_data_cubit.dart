@@ -17,7 +17,7 @@ class EditChildDataCubit extends AsyncCubit<UserModel>{
                 mapper: (data) => UserModel.fromJson(data)
             )
         ),
-        successEmitter: (data) => onSuccess?.call()
+        onSuccess: (data) => onSuccess?.call()
     );
   }
 

@@ -14,7 +14,7 @@ class GetProfileCubit extends GetUserModelCubit{
             mapper: (json) => UserModel.fromJson(json),
           ),
       ),
-      successEmitter: (user) => onSuccess.call(user.data)
+      onSuccess: (user) => onSuccess.call(user.data)
     );
   }
 
