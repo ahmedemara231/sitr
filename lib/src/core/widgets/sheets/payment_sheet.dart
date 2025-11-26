@@ -22,8 +22,9 @@ extension GetPayMethod on int{
     switch(this){
       case 0:
         return PaymentMethod.online;
+
       default:
-        return PaymentMethod.online;
+        return PaymentMethod.wallet;
     }
   }
 }

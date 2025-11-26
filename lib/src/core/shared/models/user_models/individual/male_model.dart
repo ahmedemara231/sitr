@@ -36,6 +36,7 @@ class MaleModel extends IndividualUserModel {
     super.wantChildren,
     super.prohibitedThings,
     super.dowry,
+    super.childParentInfo,
     super.weddingType,
     super.cityId,
     super.educationLevel,
@@ -57,6 +58,9 @@ class MaleModel extends IndividualUserModel {
 
   factory MaleModel.fromJson(Map<String, dynamic> json) {
     return MaleModel(
+      childParentInfo: (json['parent_info'] as Object?).isNull? null :
+      ChildParentInfo.fromJson(json['parent_info']),
+
       canChat: json['can_chat'],
       hasChatWith: json['has_chat_with'],
       isParentMatch: json['is_parent_match'],
@@ -108,6 +112,7 @@ class MaleModel extends IndividualUserModel {
 
       childCustody: (json['child_custody'] as Object?).isNull? null :
       TitleValueShape.fromJson(json['child_custody']),
+
 
       educationLevel: json['education_level'],
       isPrayer: json['is_prayer'],

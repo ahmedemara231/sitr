@@ -121,10 +121,12 @@ class _ChatsBodyState extends State<_ChatsBody> {
                 data.length,
                     (index) => InkWell(
                       onTap: () async => Go.to(ChatScreen(
-                          receiverId: data[index].room?.members?.first.id ?? 0,
-                          receiverName: data[index].room?.members?.first.name ?? '',
-                          fromHome: 1,
-                        )),
+                        showFullChat: widget.chatType == ChatType.current?
+                        true : false,
+                        receiverId: data[index].room?.members?.first.id ?? 0,
+                        receiverName: data[index].room?.members?.first.name ?? '',
+                        fromHome: 1,
+                      )),
 
                       child: ChatCard(
                           url: data[index].room?.members?.first.image ?? '',

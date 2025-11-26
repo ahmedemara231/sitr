@@ -22,6 +22,7 @@ import '../../../../core/navigation/navigator.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/socket_service/client_io.dart';
+import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/custom_messages.dart';
 import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/exeption_view.dart';
@@ -57,11 +58,13 @@ class ChatScreen extends StatelessWidget {
   final int receiverId;
   final String receiverName;
   final int fromHome;
+  final bool showFullChat;
 
   const ChatScreen({super.key,
     required this.receiverId,
     required this.receiverName,
     required this.fromHome,
+    this.showFullChat = true
   });
 
   @override
@@ -74,6 +77,7 @@ class ChatScreen extends StatelessWidget {
           )
         ],
         child: _ChatScreenBody(
+            showFullChat: showFullChat,
             receiverId: receiverId,
             receiverName: receiverName,
             fromHome: fromHome
@@ -86,11 +90,13 @@ class _ChatScreenBody extends StatefulWidget {
   final int receiverId;
   final int fromHome;
   final String receiverName;
+  final bool showFullChat;
 
   const _ChatScreenBody({
     required this.receiverId,
     required this.receiverName,
     required this.fromHome,
+    required this.showFullChat,
   });
 
   @override
@@ -103,12 +109,11 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     required String path,
     required void Function(ChatModel model) onSuccess
   }) => context.read<ChatCubit>().executeRequest(
+      path: path,
       requestModel: RequestModel(
         receiverId: widget.receiverId.toString(),
         fromHome: widget.fromHome.toString(),
-        matchRequestId: context.read<ChatCubit>().matchRequestId.toString(),
       ),
-      path: path,
       onSuccess: onSuccess
   );
 
@@ -123,7 +128,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
               requestName: requestName,
               onAccept: (context) async => _executeReq(
                   context: context,
-                  path: '${ApiConstants.acceptRequest}${context.read<ChatCubit>().userRequest!}',
+                  path: ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
                   onSuccess: (chatModel) => Go.back()
               ),
               onReject:(context) async => _executeReq(
@@ -176,30 +181,52 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     return const SizedBox.shrink();
   }
 
-  Widget? _initBottomBar({
-    required UserRequestStatus status,
-    required ChatStages stage,
-  }){
-    if(stage.isNewChat && status.isPending){
+  Widget _initBottomBar(ChatModel model){
+    final userRequest = model.matchRequest!;
+    final stage = userRequest.stage!.value!.getCurrentStageAsStagesEnum;
+    final userRequestEnum = userRequest.userRequestStatus!.getUserRequestStatusAsEnum;
+
+
+    if(stage.isNewChat && userRequestEnum.isPending){
       return AcceptOrRejectFirstStageWidget(
         onAccept: (context) async => _executeReq(
           context: context,
-          path: ApiConstants.acceptRequest,
+          path: ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
           onSuccess: (chatModel) => context.read<ChatCubit>().startChat(
-            receiverId: widget.receiverId,
-            fromHome: widget.fromHome,
+            requestModel: RequestModel(
+              receiverId: widget.receiverId.toString(),
+              fromHome: widget.fromHome.toString(),
+            )
           ),
         ),
 
         onReject: (context)async => _executeReq(
             context: context,
-            path: ApiConstants.rejectRequest,
+            path: ApiConstants.rejectRequest+context.read<ChatCubit>().userRequest!,
             onSuccess: (chatModel) =>  Go.offAll(const HomeScreen())
         ),
       );
     }
 
-    return null;
+    return ChatBottomBar(
+        onUpload: (url){
+          log('the url is $url');
+          socketType.sendMessage(
+              {
+                'room_id' : model.room?.id,
+                'body' : url,
+                'type' : 'image'
+              }
+          );
+        },
+        onSend: (context, msg) => socketType.sendMessage(
+            {
+              'room_id' : model.room?.id,
+              'body': msg,
+              'type' : 'text',
+            }
+        )
+    );
   }
 
 
@@ -213,13 +240,18 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     final matchRequest = data.matchRequest!.userRequest!.getMatchRequestAsEnum;
     final ShowTips currentTips = data.matchRequest!.tipsPage!.currentStageTips;
 
+    // log('dlksdlsdlskd ${!stage!.isNewChat && !stage.isChatting && userStatus.isPending}');
+    // log('dlksdlsdlskd  ${!stage.isNewChat}');
+    // log('dlksdlsdlskd  ${!stage.isChatting}');
+    // log('dlksdlsdlskd  ${userStatus.statusText}');
+
     if(!currentTips.isNoPage){
       return (){
         _showTipsSheet(
           title: currentTips.title.currentStageTipsTitle,
           path: currentTips.path,
           onConfirm: (context) async{
-            if(currentTips.isShariaComplaintMeetingTips){
+            if(currentTips.isShariaComplaintMeetingTerms){
               ChatSheetManager.show(
                   child: BlocProvider.value(
                     value: context.read<ChatCubit>(),
@@ -279,22 +311,10 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
       };
     }
 
-    else if(!stage!.isNewChat && userStatus.isPending){
+    else if(userStatus.isPending){
       _openAcceptanceSheet(
         requestName: data.matchRequest?.userRequest ?? '',
         requestId: data.matchRequest!.id.toString(),
-      );
-
-
-    }
-
-    else if(stage.isParentsExchangeNumber){
-      ChatSheetManager.show(
-        child: EnterParentPhoneSheet(
-            onSubmit: (context, phone){
-
-            }
-        ),
       );
     }
 
@@ -307,31 +327,38 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
             child: BlocProvider.value(
               value: context.read<ChatCubit>(),
               child: PaymentSheet(
-                  onPay: (context, payMethod)async => context.read<PayRequestCubit>().pay(
-                      path: ApiConstants.payRequest+context.read<ChatCubit>().userRequest!,
-                      matchRequestId: data.matchRequest!.id.toString(),
-                      paymentMethod: payMethod.name,
-                      onSuccess: (url) async{
-                        Object? result = '';
+                onPay: (context, payMethod)async => context.read<PayRequestCubit>().pay(
+                  path: ApiConstants.payRequest+context.read<ChatCubit>().userRequest!,
+                  matchRequestId: data.matchRequest!.id.toString(),
+                  paymentMethod: payMethod.name,
+                  onSuccess: (url) async{
+                    Object? result = '';
+                    
+                    if(payMethod == PaymentMethod.online){
+                      result = await Go.to(SubscriptionScreen(
+                          initialUrl: url!,
+                          title: LocaleKeys.pay
+                      ));
+                    }else if(payMethod == PaymentMethod.wallet){
+                      result = 'success';
+                    }
 
-                        if(payMethod == PaymentMethod.online){
-                          result = await Go.to(SubscriptionScreen(
-                            initialUrl: url!,
-                            title: LocaleKeys.pay
-                          ));
-                        }else if(payMethod == PaymentMethod.wallet){
-                          result = 'success';
-                        }
+                    context.read<ChatCubit>().startChat(
+                        requestModel: RequestModel(
+                            receiverId: widget.receiverId.toString(),
+                            fromHome: widget.fromHome.toString()
+                        )
+                    );
 
-                        if(result == 'success'){
-                          showDefaultBottomSheet(
-                              child: const SuccessSheet(
-                                isInAuth: false,
-                              )
-                          );
-                        }
-                      },
-                  ),
+                    if(result == 'success'){
+                      showDefaultBottomSheet(
+                          child: const SuccessSheet(
+                            isInAuth: false,
+                          )
+                      );
+                    }
+                  },
+                ),
               ),
             ),
           ),
@@ -340,11 +367,25 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
     }
 
-    else if(matchRequest.isParentMeeting){
-      // show parent sheet
+    else if(stage!.isParentsExchangeNumber){
+      ChatSheetManager.show(
+        child: BlocProvider.value(
+          value: context.read<ChatCubit>(),
+          child: EnterParentPhoneSheet(
+              onSubmit: (context, phone)async{
+                await context.read<ChatCubit>().parentsExchangeNumbers(parentPhone: phone);
+                Go.back();
+              }
+          ),
+        ),
+      );
     }
 
-    else if(timer.isEqualZero){
+    else if(matchRequest.isParentMeeting){
+
+    }
+
+    else if(timer.isEqualZero || timer.isNull){
       return (){
         _makeRequestSheet(
           matchReqId: data.matchRequest!.id.toString(),
@@ -352,6 +393,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
       };
 
     }
+
     return (){};
   }
 
@@ -361,10 +403,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     required String path,
     required FutureOr<void> Function(BuildContext context) onConfirm
   }){
-    context.read<ChatCubit>().tipsSeen(
-        matchReqId: context.read<ChatCubit>().matchRequestId.toString(),
-    );
-
+    context.read<ChatCubit>().tipsSeen();
     ChatSheetManager.show(
       child: BlocProvider.value(
         value: context.read<ChatCubit>(),
@@ -379,8 +418,10 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
   Future<void> _startChat()async{
     await context.read<ChatCubit>().startChat(
-        receiverId: widget.receiverId,
-        fromHome: widget.fromHome,
+        requestModel: RequestModel(
+          receiverId: widget.receiverId.toString(),
+          fromHome: widget.fromHome.toString(),
+        ),
         onSuccess: (data) => _manageSuccessState.call(data).call(),
     );
   }
@@ -434,8 +475,10 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
   void _handleInitialState()async{
     _chatController = PagifyController<ChatMessages>();
-     await _startChat();
-     _init();
+    if(widget.showFullChat){
+      await _startChat();
+      _init();
+    }
   }
 
   @override
@@ -456,8 +499,15 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     return MultiBlocListener(
       listeners: [
         BlocListener<ChatNotificationCubit, ChatNotificationState>(
-          listener: (context, state) async =>
-              _showBased(state.notification!),
+          listener: (context, state) async {
+            log('dataaaaa ${state.notification?.data}');
+            if(state.notification?.data['type'] == 'match_rejected_when_timer_ended'){
+              Go.offAll(const HomeScreen());
+
+            }else{
+              _showBased(state.notification!);
+            }
+          }
         ),
 
         // show toast based new stage
@@ -469,11 +519,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
       child: AppScaffold(
         appBarTitle: LocaleKeys.chat,
         isScrollable: false,
-        actions: [
-          // IconButton(onPressed: (){
-          //   log(_chatController.getRandomItem()?.message.body??'');
-          //   log(_chatController.getRandomItem()!.sender.isFromMe.toString());
-          // }, icon: const Icon(Icons.add)),
+        actions: widget.showFullChat? [
           Helpers.zegoService.zegoButton(
             isVideoCall: false,
             icon: const SvgPic(assetName: Assets.svgPhoneIcon),
@@ -482,30 +528,40 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
             ],
           ),
 
-          BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
-              builder: (context, state) => StatusBuilder(
-                data: state,
-                onSuccess: (data, context) =>
-                // context.read<ChatCubit>().currentStage!.value!.getCurrentStageAsStagesEnum.isShariaComplaintMeeting &&
-                //     data.matchRequest!.timer.isNotEqualZero ?
-                context.read<ChatCubit>().currentStage!.value!.getCurrentStageAsStagesEnum.isShariaComplaintMeeting?
-                  Helpers.zegoService.zegoButton(
-                    isVideoCall: true,
-                    icon: const SvgPic(assetName: Assets.svgVideoCall),
-                    invites: [
-                      ZegoUIKitUser(id: widget.receiverId.toString(), name: widget.receiverName)
-                    ],
-                  ) : const SizedBox.shrink(),
-              ),
-          ),
-        ],
+          // if(context.read<ChatCubit>().matchRequest?.callStatus == 'free_available') // مكالمة ببلاش
+          // if(context.read<ChatCubit>().matchRequest?.callStatus == 'not_available')
+          //   BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
+          //     builder: (context, state) => StatusBuilder(
+          //       data: state,
+          //       onSuccess: (data, context) =>
+          //       // context.read<ChatCubit>().currentStage!.value!.getCurrentStageAsStagesEnum.isShariaComplaintMeeting &&
+          //       //     data.matchRequest!.timer.isNotEqualZero ?
+          //       context.read<ChatCubit>().currentStage!.value!.getCurrentStageAsStagesEnum.isShariaComplaintMeeting?
+          //         Helpers.zegoService.zegoButton(
+          //           isVideoCall: true,
+          //           icon: const SvgPic(assetName: Assets.svgVideoCall),
+          //           invites: [
+          //             ZegoUIKitUser(id: widget.receiverId.toString(), name: widget.receiverName)
+          //           ],
+          //           onPressed: context.read<ChatCubit>().matchRequest?.callStatus == 'free_used'? () => _executeReq(
+          //               context: context,
+          //               path: ApiConstants.videoCallRequest,
+          //               onSuccess: (model){}
+          //           ) : null
+          //           // onPressed: (c,v,b) => ,
+          //         ) : const SizedBox.shrink(),
+          //     ),
+          // ),
+        ] : null,
         body: Column(
           children: [
-            BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
-                builder: (context, state) => StatusBuilder(
-                    data: state,
-                    onSuccess: (data, context) => _upperWidget(data)
-                )),
+            if(widget.showFullChat)
+              BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
+                  builder: (context, state) => StatusBuilder(
+                      data: state,
+                      onSuccess: (data, context) => _upperWidget(data)
+                  )),
+
             Expanded(
               child: EasyChat(
                 // itemExtent: 60.h,
@@ -534,36 +590,16 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
             ),
           ],
         ),
-        bottomBar: BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
+        bottomBar: widget.showFullChat? BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
             builder: (context, state) =>
                 IntrinsicHeight(
                   child: StatusBuilder(
                     data: state,
-                    onSuccess: (data, context) =>
-                    _initBottomBar(
-                        status: state.data.matchRequest!.userRequestStatus!.getUserRequestStatusAsEnum,
-                        stage: state.data.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum
-                    ) ?? ChatBottomBar(
-                        onUpload: (url){
-                          socketType.sendMessage(
-                              {
-                                'room_id' : state.data.room?.id,
-                                'body' : url,
-                                'type' : 'image'
-                              }
-                          );
-                        },
-                        onSend: (context, msg) => socketType.sendMessage(
-                          {
-                            'body': msg,
-                            'type' : 'text',
-                            'room_id' : state.data.room?.id,
-                          }
-                        )
-                    ),
+                    onFail: () => AppText(LocaleKeys.exceptionError),
+                    onSuccess: (data, context) => _initBottomBar(state.data),
                   ),
                 )
-        ),
+        ) : const SizedBox.shrink(),
       ),
     );
   }

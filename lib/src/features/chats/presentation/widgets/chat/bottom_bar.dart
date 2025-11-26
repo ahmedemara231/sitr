@@ -91,8 +91,7 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                 Expanded(
                   child: DefaultTextField(
                     controller: _chatCont,
-                    maxLines: 5,          // grows up to 5 lines
-                    // inputType: TextInputType.multiline,
+                    maxLines: 5,
                     action: TextInputAction.newline,
                     title: LocaleKeys.hereIsTheTextOfTheMessageHereIsTheTextOfTheMessageHereIsTheTextOfTheMessage,
                     prefixIcon: IconButton(

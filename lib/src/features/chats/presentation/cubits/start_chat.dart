@@ -27,6 +27,7 @@ class ChatCubit extends AsyncCubit<ChatModel>{
   Room? get currentRoom => state.data.room;
 
 
+
   Future<void> executeRequest({
     required RequestModel requestModel,
     required String path,
@@ -37,7 +38,9 @@ class ChatCubit extends AsyncCubit<ChatModel>{
           CrudBaseParmas(
             api: path,
             httpRequestType: HttpRequestType.post,
-            body: requestModel.toJson(),
+            body: requestModel.toJson()..addAll({
+              "match_request_id" : matchRequestId.toString(),
+            }),
             mapper: (json) => ChatModel.fromJson(json),
           ),
         ),
@@ -46,8 +49,7 @@ class ChatCubit extends AsyncCubit<ChatModel>{
   }
 
   Future<void> startChat({
-    required int receiverId,
-    required int fromHome,
+    required RequestModel requestModel,
     void Function(ChatModel chatModel)? onSuccess
 })async{
     await Helpers.initZegoService();
@@ -56,10 +58,7 @@ class ChatCubit extends AsyncCubit<ChatModel>{
           CrudBaseParmas(
             api: ApiConstants.startChat,
             httpRequestType: HttpRequestType.post,
-            body: {
-              "receiver_id": receiverId,
-              "from_home": fromHome,
-            },
+            body: requestModel.toJson(),
             mapper: (json) => ChatModel.fromJson(json),
           ),
       ),
@@ -67,20 +66,37 @@ class ChatCubit extends AsyncCubit<ChatModel>{
     );
   }
 
-  Future<void> tipsSeen({
-    required String matchReqId,
-  })async{
+  Future<void> tipsSeen()async{
     await executeAsyncWithBaseModel(
         operation: () => baseCrudUseCase.call(
           CrudBaseParmas(
             api: ApiConstants.matchTipPageSeen,
             httpRequestType: HttpRequestType.post,
             body: {
-              "match_request_id" : matchReqId,
+              "match_request_id" : matchRequestId.toString(),
             },
             mapper: (json) => ChatModel.fromJson(json),
           ),
         ),
+    );
+  }
+
+  Future<void> parentsExchangeNumbers({
+    required String parentPhone,
+  })async{
+    await executeAsyncWithBaseModel(
+      operation: () => baseCrudUseCase.call(
+        CrudBaseParmas(
+          api: ApiConstants.parentExchangeNumbers,
+          httpRequestType: HttpRequestType.post,
+          body: {
+            "match_request_id" : matchRequestId.toString(),
+            'parent_country_code' : '966',
+            'parent_phone' : parentPhone,
+          },
+          mapper: (json) => ChatModel.fromJson(json),
+        ),
+      ),
     );
   }
 }

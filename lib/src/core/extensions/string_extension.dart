@@ -37,11 +37,15 @@ extension FormatString on String {
     }else if(this == ShowTips.shariaComplaintMeetingTips.title){
       return LocaleKeys.tipsForShariaComplaintMeeting;
 
+    }else if(this == ShowTips.shariaComplaintMeetingTerms.title){
+      return LocaleKeys.tipsForShariaComplaintMeeting;
+
     }else if(this == ShowTips.chattingStageTips.title){
       return LocaleKeys.tipsForTheStageOfSufficientKnowledge;
 
     }else if(this == ShowTips.informParentsTips.title){
       return LocaleKeys.tipsForTheParentingStage;
+
     }
 
     return '';
@@ -68,7 +72,7 @@ extension FormatString on String {
       return ApiConstants.userMoveToNextRequest;
 
     }else if(this == LocaleKeys.refuseMoveToNextStage){
-      return ApiConstants.rejectAll;
+      return ApiConstants.userRejectRequest;
 
     }else if(this == LocaleKeys.requestForExtensionOfPeriod){
       return ApiConstants.userExtensionRequest;

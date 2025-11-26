@@ -38,13 +38,17 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
-  late final ValueNotifier<String> firstSelection;
-  late final ValueNotifier<String> secondSelection;
+  late ValueNotifier<String> firstSelection;
+  late ValueNotifier<String> secondSelection;
 
-  @override
-  void initState() {
+
+  void _initSelections(){
     firstSelection = ValueNotifier(_partnersOrConsultants.first);
     secondSelection = ValueNotifier(_opportunitiesTitles.first);
+  }
+  @override
+  void initState() {
+    _initSelections();
     firstSelection.addListener(firstSelectionListener);
     super.initState();
   }
@@ -95,7 +99,10 @@ class _MainViewState extends State<MainView> {
       create: (context) => MainViewCubit()..getHomeData(),
       child: BlocBuilder<MainViewCubit, AsyncState<HomeModel>>(
         builder: (context, state) => CenterCardScaffold.withCenteredCard(
-          onRefresh: (context) => context.read<MainViewCubit>().getHomeData(),
+          onRefresh: (context) async{
+            _initSelections();
+            await context.read<MainViewCubit>().getHomeData();
+          },
           bodyTopPadding: 120,
           cardTopPadding: 100,
           upperWidget: SizedBox(

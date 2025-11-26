@@ -59,6 +59,7 @@ class FemaleModel extends IndividualUserModel {
     super.canChat,
     super.hasChatWith,
     super.isParentMatch,
+    super.childParentInfo,
 
     this.hijab,
     this.acceptsPolygamy,
@@ -80,7 +81,11 @@ class FemaleModel extends IndividualUserModel {
       adminApprovalStatus: TitleValueShape.fromJson(json['admin_approval_status']),
       completeRegistration: json['complete_registration'],
 
-      maritalStatus: (json['marital_status'] as Object?).isNull? null :
+        childParentInfo: (json['parent_info'] as Object?).isNull? null :
+        ChildParentInfo.fromJson(json['parent_info']),
+
+
+        maritalStatus: (json['marital_status'] as Object?).isNull? null :
       TitleValueShape.fromJson(json['marital_status']),
 
       weddingType: (json['wedding_type'] as Object?).isNull? null :

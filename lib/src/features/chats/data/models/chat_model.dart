@@ -42,6 +42,7 @@ class MatchRequest {
   final String? userRequest;
   final String? userRequestStatus;
   final String? tipsPage;
+  final String? callStatus;
 
   MatchRequest({
     this.id,
@@ -50,11 +51,13 @@ class MatchRequest {
     this.timer,
     this.userRequest,
     this.userRequestStatus,
+    this.callStatus,
     this.tipsPage,
   });
 
   MatchRequest.fromJson(Map<String, dynamic> json)
       : id = json['id'],
+        callStatus = json['call'],
         tipsPage = json['tips_page'],
         type = json['type'] != null ? Type.fromJson(json['type']) : null,
         stage = json['stage'] != null ? Stage.fromJson(json['stage']) : null,
@@ -65,6 +68,7 @@ class MatchRequest {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     data['id'] = id;
+    data['call'] = callStatus;
     if (type != null) data['type'] = type!.toJson();
     if (stage != null) data['stage'] = stage!.toJson();
     data['timer'] = timer;
@@ -82,6 +86,7 @@ class MatchRequest {
     String? userRequest,
     String? tipsPage,
     String? userRequestStatus,
+    String? callStatus,
   }) {
     return MatchRequest(
       id: id ?? this.id,
@@ -91,6 +96,7 @@ class MatchRequest {
       timer: timer ?? this.timer,
       userRequest: userRequest ?? this.userRequest,
       userRequestStatus: userRequestStatus ?? this.userRequestStatus,
+      callStatus: callStatus ?? this.callStatus,
     );
   }
 }

@@ -10,8 +10,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="```&#10;fix(otp): Add 4-digit validation and improve UI stability&#10;&#10;This commit introduces validation for the OTP input field to ensure a 4-digit code is entered. It also includes several stability improvements and minor UI refactors.&#10;&#10;- **fix(otp):**&#10;  - In `otp.dart`, the `Pinput` widget now uses the new `Validators.validateOtpCode` method to ensure the entered code is exactly 4 digits long. [2]&#10;  - A new validator, `validateOtpCode`, has been added to `validators.dart` to check if the OTP code is not empty and has a length of 4. [1]&#10;  - Added a new translation key `the_verification_code_must_consist_of_4_digits` to provide a clear error message to the user. [0, 3, 6]&#10;&#10;- **fix(ui):**&#10;  - In `partner_card.dart`, a null-safe check (`?.`) has been added when accessing `opportunity.gender?.userType?.isFemale` to prevent potential crashes if the gender or user type is null. [7]&#10;  - In `app_pagify.dart`, the `emptyListView` widget is now wrapped in a `Center` widget to properly center the &quot;No Data&quot; animation and text when a list is empty. [8]&#10;&#10;- **refactor(auth):**&#10;  - In `female_fields.dart`, the casting of `initialValue` to `FemaleModel` has been made explicitly nullable (`as FemaleModel?`). This improves type safety and prevents runtime errors if `initialValue` is null when initializing form controllers. [9]&#10;&#10;- **chore(ide):**&#10;  - Updated IDE configuration files (`workspace.xml`). [4]">
-      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/app_pagify.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/app_pagify.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/notifications/presentation/pages/noitifcations_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/notifications/presentation/pages/noitifcations_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/core/extensions/bool.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/translations/ar.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/ar.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/translations/lang.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/lang.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/config/language/languages.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/config/language/languages.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/extensions/string_extension.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/extensions/string_extension.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/network/api_endpoints.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/network/api_endpoints.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/individual/female_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/individual/female_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/individual/male_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/individual/male_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/sheets/payment_sheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/sheets/payment_sheet.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/view_profile_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/view_profile_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/zego_service/zego.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/zego_service/zego.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/female_fields.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/female_fields.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/sign_up_fields.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/sign_up_fields.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/data/models/chat_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/data/models/chat_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/data/models/request_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/data/models/request_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/enums.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/enums.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/cubits/start_chat.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/cubits/start_chat.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chat_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chat_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chats_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chats_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/chat/bottom_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/chat/bottom_bar.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/sheets/enter_parent_phone.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/sheets/enter_parent_phone.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/view.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,28 +110,28 @@
     <option name="foldersAlwaysOnTop" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Flutter.main.dart.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;eastChatTest&quot;,
-    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/aaita/Desktop/apps/new_crud_satr/assets/svg&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.notifications&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Flutter.main.dart.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "eastChatTest",
+    "io.flutter.reload.alreadyRun": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/aaita/Desktop/apps/new_crud_satr/assets/svg",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.notifications",
+    "show.migrate.to.gradle.popup": "false"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/assets/svg" />
@@ -134,14 +155,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
-    </task>
-    <task id="LOCAL-00083" summary="```&#10;refactor(chat): Decouple chat screen and improve state management&#10;&#10;This commit refactors the chat feature to decouple its state management from static data providers, introduces a dedicated `StartChatCubit` to handle room initialization, and improves the image upload flow.&#10;&#10;- **refactor(chat):**&#10;  - Introduced `StartChatCubit` to manage the lifecycle of starting a chat. It now fetches the `ChatModel` (containing room ID, timer, etc.) and holds it in its state, removing the dependency on the static `ChatsData.chatModel`.&#10;  - The `ChatScreen` now uses a `MultiBlocProvider` to provide the new `StartChatCubit` to its widget tree.&#10;  - The chat room ID, previously accessed from a static variable, is now sourced from `StartChatCubit`'s state. This makes the component more self-contained and testable.&#10;  - The `ChatBottomBar` and `ChatImageViewerWidget` now receive the `StartChatCubit` via `BlocProvider.value` to access the `roomId` for sending messages and uploading files.&#10;  - Removed the static `chatModel` from `ChatsData` and simplified the `startChat` method to just return the fetched `ChatModel`.&#10;&#10;- **refactor(cubits):**&#10;  - `UploadImageCubit`'s `uploadImage` method now includes an `onSuccess` callback, which is triggered by the `successEmitter` in `executeAsync`. This allows the UI to react to a successful upload (e.g., closing the viewer) without needing a `BlocListener`.&#10;  - `RequestCubit`'s `executeRequest` method now uses `POST` instead of `GET` and also includes an `onSuccess` callback for better reactive flow.&#10;&#10;- **refactor(UI):**&#10;  - In `ChatImageViewerWidget`, the image upload is now initiated from within a `BlocBuilder`, which displays a `CustomLoading` indicator while the upload is in progress.&#10;  - The internet connectivity snackbar messages in `app.dart` now correctly receive a `BuildContext`.&#10;&#10;- **fix(chat):**&#10;  - Corrected the `ChatStages` enum value for new chats from `new` back to `chatting` to align with API expectations, while keeping the `new` value for a different stage.&#10;&#10;&#10;```">
-      <option name="closed" value="true" />
-      <created>1761817289195</created>
-      <option name="number" value="00083" />
-      <option name="presentableId" value="LOCAL-00083" />
-      <option name="project" value="LOCAL" />
-      <updated>1761817289196</updated>
     </task>
     <task id="LOCAL-00084" summary="```&#10;refactor(chat): Rename `startChat` to `getChatMessages` for clarity&#10;&#10;This commit refactors the data layer of the chat feature to improve code clarity and prepares for future state management enhancements.&#10;&#10;- **refactor(chat):**&#10;  - Renamed the `startChat` method in `ChatsData` to `getChatMessages`. This new name more accurately reflects that the method is used to fetch the initial chat history and room data, not just to initiate a new chat session.&#10;  - The `path` parameter was removed from this method, as it now consistently calls the `ApiConstants.startChat` endpoint.&#10;  - The `asyncCall` in the `ChatScreen`'s `EasyChat` widget has been updated to use the new `getChatMessages` method.&#10;&#10;- **refactor(UI):**&#10;  - In `ChatScreen`, the `EasyTimerCount` widget is now wrapped in a `StatusBuilder`. This ensures that the timer only attempts to build and access `state.data` after the `StartChatCubit` has successfully fetched the chat model, preventing potential null reference errors during the loading state.&#10;&#10;```">
       <option name="closed" value="true" />
@@ -527,7 +540,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764111178470</updated>
     </task>
-    <option name="localTasksCounter" value="132" />
+    <task id="LOCAL-00132" summary="```&#10;fix(otp): Add 4-digit validation and improve UI stability&#10;&#10;This commit introduces validation for the OTP input field to ensure a 4-digit code is entered. It also includes several stability improvements and minor UI refactors.&#10;&#10;- **fix(otp):**&#10;  - In `otp.dart`, the `Pinput` widget now uses the new `Validators.validateOtpCode` method to ensure the entered code is exactly 4 digits long. [2]&#10;  - A new validator, `validateOtpCode`, has been added to `validators.dart` to check if the OTP code is not empty and has a length of 4. [1]&#10;  - Added a new translation key `the_verification_code_must_consist_of_4_digits` to provide a clear error message to the user. [0, 3, 6]&#10;&#10;- **fix(ui):**&#10;  - In `partner_card.dart`, a null-safe check (`?.`) has been added when accessing `opportunity.gender?.userType?.isFemale` to prevent potential crashes if the gender or user type is null. [7]&#10;  - In `app_pagify.dart`, the `emptyListView` widget is now wrapped in a `Center` widget to properly center the &quot;No Data&quot; animation and text when a list is empty. [8]&#10;&#10;- **refactor(auth):**&#10;  - In `female_fields.dart`, the casting of `initialValue` to `FemaleModel` has been made explicitly nullable (`as FemaleModel?`). This improves type safety and prevents runtime errors if `initialValue` is null when initializing form controllers. [9]&#10;&#10;- **chore(ide):**&#10;  - Updated IDE configuration files (`workspace.xml`). [4]">
+      <option name="closed" value="true" />
+      <created>1764111797830</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
+      <option name="project" value="LOCAL" />
+      <updated>1764111797831</updated>
+    </task>
+    <option name="localTasksCounter" value="133" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -595,7 +616,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/view.dart</url>
-          <line>128</line>
+          <line>135</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
@@ -605,8 +626,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/src/core/widgets/view_profile_widget.dart</url>
-          <line>165</line>
-          <option name="timeStamp" value="33" />
+          <line>75</line>
+          <option name="timeStamp" value="50" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

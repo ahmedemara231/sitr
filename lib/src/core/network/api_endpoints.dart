@@ -91,20 +91,28 @@ class ApiConstants {
   static const String filter = 'filter';
   static const String uploadImage = 'upload-room-file/';
 
-  static const String rejectRequest = 'reject-request/';
-  static const String rejectAll = 'user-match-request/reject-request';
 
   static const String acceptRequest = 'accept-request/';
+  static const String rejectRequest = 'reject-request/';
+
 
   static const String userMoveToNextRequest = 'user-match-request/next_stage_request';
+  static const String userRejectRequest = 'reject-match-request';
   static const String userExtensionRequest = 'user-match-request/extension_request';
+
+
   static const String payRequest = 'pay-request/';
-  static const String videoCallRequest = 'video_call_request';
+  static const String videoCallRequest = 'user-match-request/video_call_request';
+
+
   static const String shariaComplaintMeetingTips = 'sharia-complaint-meeting-tips';
+  static const String shariaComplaintMeetingTerms = 'sharia-complaint-meeting-terms';
   static const String istikharaTips = 'istikhara-tips';
   static const String engagementTips = 'engagement-tips';
   static const String continueStageRequest = 'user-match-request/continue_stage_request';
   static const String informParentsTips = 'inform-parents';
+
+
   static const String socials = 'socials';
   static const String adminMeetingRequest = 'admin_meeting_request';
   static const String matchTipPageSeen = 'match-tip-page-seen';

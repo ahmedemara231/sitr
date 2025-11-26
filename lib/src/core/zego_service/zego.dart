@@ -142,11 +142,13 @@ class ZegoService {
     bool isVideoCall = false,
     required Widget icon,
     required List<ZegoUIKitUser> invites,
+    void Function()? onPressed,
   }) =>
       ZegoSendCallInvitationButton(
         isVideoCall: isVideoCall,
         icon: ButtonIcon(icon: icon),
         iconSize: Size(25.w, 25.h),
+        onPressed: (c, v, b) => onPressed?.call(),
         resourceID: "zegouikit_call",
         invitees: invites,
       );

@@ -87,7 +87,8 @@ extension CheckMatchRequest on MatchRequestEnum{
 enum ShowTips{
   noPage('no_page', ''),
   chattingStageTips('chatting_stage_tips',ApiConstants.chattingStageTips),
-  shariaComplaintMeetingTips('sharia_complaint_meeting_terms',ApiConstants.shariaComplaintMeetingTips),
+  shariaComplaintMeetingTerms('sharia_complaint_meeting_terms',ApiConstants.shariaComplaintMeetingTerms),
+  shariaComplaintMeetingTips('sharia_complaint_meeting_tips',ApiConstants.shariaComplaintMeetingTips),
   istikharahTips('istikhara_tips',ApiConstants.istikharaTips),
   informParentsTips('inform_parents',ApiConstants.informParentsTips),
   engagementTips('engagement_tips', ApiConstants.engagementTips);
@@ -102,6 +103,7 @@ extension CheckShowTips on ShowTips{
   bool get isChattingStageTips => this == ShowTips.chattingStageTips;
   bool get isShariaComplaintMeetingTips => this == ShowTips.shariaComplaintMeetingTips;
   bool get isIstikharahTips => this == ShowTips.istikharahTips;
+  bool get isShariaComplaintMeetingTerms => this == ShowTips.shariaComplaintMeetingTerms;
   bool get isInformParentsTips => this == ShowTips.informParentsTips;
   bool get isEngagementTips => this == ShowTips.engagementTips;
 }

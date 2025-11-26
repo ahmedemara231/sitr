@@ -2,9 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/language/locale_keys.g.dart';
+import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/widgets/app_bottom_sheet.dart';
 import '../../../../../core/widgets/app_text.dart';
-import '../../../../../core/widgets/choose_from_options.dart';
 import '../../../../auth/presentation/widgets/shared/text_field.dart';
 
 class EnterParentPhoneSheet extends StatefulWidget {
@@ -45,10 +45,11 @@ class _EnterParentPhoneSheetState extends State<EnterParentPhoneSheet> {
             SignUpTextField(
                 upperTitle: LocaleKeys.phoneNumber,
                 title: LocaleKeys.pleaseEnterParentPhoneNumber,
+                inputType: TextInputType.phone,
                 controller: controller
             )
           ],
         )
-    );
+    ).paddingBottom(MediaQuery.of(context).viewInsets.bottom);
   }
 }

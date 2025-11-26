@@ -315,7 +315,6 @@ class _SignUpFieldsState extends State<SignUpFields> {
               whenMale: _maleCodeCont,
               whenFemale: _femaleCodeCont,
               whenParent: _parentCodeCont),
-          inputType: TextInputType.number,
           // validator: Validators.validateEmpty,
         ),
       ],

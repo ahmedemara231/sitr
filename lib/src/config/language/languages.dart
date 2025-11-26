@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/navigation/navigator.dart';
+import 'locale_keys.g.dart';
 
 enum Languages {
   english(Locale('en'), 'English', 'en'),
@@ -58,5 +59,18 @@ enum Languages {
         EasyLocalization.of(Go.navigatorKey.currentContext!)!.locale;
     return Languages.values
         .firstWhere((element) => element.locale == currentLocale);
+  }
+}
+
+extension LanguagesExtension on Languages{
+  String toFullTitle(){
+    if(this == Languages.arabic){
+      return LocaleKeys.arabic;
+
+    }else if(this == Languages.english){
+      return LocaleKeys.english;
+    }
+
+    return '';
   }
 }
