@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../config/language/locale_keys.g.dart';
@@ -41,12 +42,7 @@ class TermsAndConditionAndAboutUs extends StatelessWidget {
                     data: state,
                     onSuccess: (data, context) {
                       return SingleChildScrollView(
-                        child: AppText(
-                          data,
-                          color: AppColors.textBlack,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
-                        ),
+                        child: Html(data: data)
                       );
                     });
               },

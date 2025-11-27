@@ -50,6 +50,7 @@ import '../widgets/accept_or_reject_request.dart';
 import '../widgets/chat/bottom_bar.dart';
 import '../widgets/chat/message_widget.dart';
 import '../widgets/chat/timer.dart';
+import '../widgets/sheets/congrats_sheet.dart';
 import '../widgets/sheets/enter_parent_phone.dart';
 import '../widgets/sheets/inform_parent.dart';
 import '../widgets/sheets/shariaa_meeting_skipping.dart';
@@ -210,7 +211,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
     return ChatBottomBar(
         onUpload: (url){
-          log('the url is $url');
+          log('the final url is $url');
           socketType.sendMessage(
               {
                 'room_id' : model.room?.id,
@@ -231,7 +232,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
 
 
-  // 74|WUSv2KY82QB4qAgnY0e24oXkQLQn04v9adtsB2Rt female
+  // 102|sCoXO5y4Op3PEz95TvUhgr0ISe3OVdpRI30A3jaq female
   // 67|IAltRLoGm0Ql9H68MjeoF8QYkofLAmWRXWGqcSpv male
   void Function() _manageSuccessState(ChatModel data) {
     final timer = data.matchRequest!.timer;
@@ -303,6 +304,13 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                   )
               );
 
+            }else if(currentTips.isEngagementTips){
+              ChatSheetManager.show(
+                  child: CongratsSheet(
+                      matchReqId: context.read<ChatCubit>().matchRequestId!
+                  )
+              );
+
             }else{
               Go.back();
             }
@@ -333,7 +341,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                   paymentMethod: payMethod.name,
                   onSuccess: (url) async{
                     Object? result = '';
-                    
+
                     if(payMethod == PaymentMethod.online){
                       result = await Go.to(SubscriptionScreen(
                           initialUrl: url!,
@@ -351,7 +359,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                     );
 
                     if(result == 'success'){
-                      showDefaultBottomSheet(
+                      ChatSheetManager.show(
                           child: const SuccessSheet(
                             isInAuth: false,
                           )
@@ -365,6 +373,20 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
         );
       };
 
+    }
+
+    else if(userStatus.isParentExchangeNumbers){
+      ChatSheetManager.show(
+        child: BlocProvider.value(
+          value: context.read<ChatCubit>(),
+          child: EnterParentPhoneSheet(
+              onSubmit: (context, phone)async{
+                await context.read<ChatCubit>().parentsExchangeNumbers(parentPhone: phone);
+                Go.back();
+              }
+          ),
+        ),
+      );
     }
 
     else if(stage!.isParentsExchangeNumber){
@@ -530,28 +552,27 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
           // if(context.read<ChatCubit>().matchRequest?.callStatus == 'free_available') // مكالمة ببلاش
           // if(context.read<ChatCubit>().matchRequest?.callStatus == 'not_available')
-          //   BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
-          //     builder: (context, state) => StatusBuilder(
-          //       data: state,
-          //       onSuccess: (data, context) =>
-          //       // context.read<ChatCubit>().currentStage!.value!.getCurrentStageAsStagesEnum.isShariaComplaintMeeting &&
-          //       //     data.matchRequest!.timer.isNotEqualZero ?
-          //       context.read<ChatCubit>().currentStage!.value!.getCurrentStageAsStagesEnum.isShariaComplaintMeeting?
-          //         Helpers.zegoService.zegoButton(
-          //           isVideoCall: true,
-          //           icon: const SvgPic(assetName: Assets.svgVideoCall),
-          //           invites: [
-          //             ZegoUIKitUser(id: widget.receiverId.toString(), name: widget.receiverName)
-          //           ],
-          //           onPressed: context.read<ChatCubit>().matchRequest?.callStatus == 'free_used'? () => _executeReq(
-          //               context: context,
-          //               path: ApiConstants.videoCallRequest,
-          //               onSuccess: (model){}
-          //           ) : null
-          //           // onPressed: (c,v,b) => ,
-          //         ) : const SizedBox.shrink(),
-          //     ),
-          // ),
+            BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
+              builder: (context, state) => StatusBuilder(
+                data: state,
+                onSuccess: (data, context) =>
+                // context.read<ChatCubit>().currentStage!.value!.getCurrentStageAsStagesEnum.isShariaComplaintMeeting &&
+                //     data.matchRequest!.timer.isNotEqualZero ?
+                context.read<ChatCubit>().currentStage!.value!.getCurrentStageAsStagesEnum.isShariaComplaintMeeting?
+                  Helpers.zegoService.zegoButton(
+                    isVideoCall: true,
+                    icon: const SvgPic(assetName: Assets.svgVideoCall),
+                    invites: [
+                      ZegoUIKitUser(id: widget.receiverId.toString(), name: widget.receiverName)
+                    ],
+                    onPressed: context.read<ChatCubit>().matchRequest?.callStatus == 'free_used'? () => _executeReq(
+                        context: context,
+                        path: ApiConstants.videoCallRequest,
+                        onSuccess: (model){}
+                    ) : null
+                  ) : const SizedBox.shrink(),
+              ),
+          ),
         ] : null,
         body: Column(
           children: [

@@ -14,7 +14,7 @@ import '../../../../core/widgets/chat_button.dart';
 import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/image_widgets/cached_image.dart';
 import '../../../../core/widgets/parent_children.dart';
-import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
+import '../../../../core/widgets/scaffolds/center_card_scaffold.dart';
 import '../../../../core/widgets/sheets/bloc_success.dart';
 import '../../../../core/widgets/sheets/report_cheet.dart';
 import '../../data/models/partner_info_model.dart';

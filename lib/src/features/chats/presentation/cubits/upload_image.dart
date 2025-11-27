@@ -14,7 +14,7 @@ class UploadImageCubit extends AsyncCubit<String>{
           api: ApiConstants.uploadImage+roomId,
           isFromData: true,
           httpRequestType: HttpRequestType.post,
-          mapper: (json) => json['file_name'],
+          mapper: (json) => json['file_url'],
           body: {'file' : image}
         )
        ),

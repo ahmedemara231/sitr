@@ -114,7 +114,8 @@ class ApiConstants {
 
 
   static const String socials = 'socials';
-  static const String adminMeetingRequest = 'admin_meeting_request';
+  static const String adminMeetingRequest = 'user-match-request/admin_meeting_request';
   static const String matchTipPageSeen = 'match-tip-page-seen';
+  static const String finishChat = 'finish-chat';
 
 }

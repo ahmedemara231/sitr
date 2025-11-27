@@ -14,7 +14,7 @@ import '../../../core/helpers/helpers.dart';
 import '../../../core/helpers/validators.dart';
 import '../../../core/widgets/app_logo_widget.dart';
 import '../../../core/widgets/app_text.dart';
-import '../../../core/widgets/scaffolds/auth_scaffold.dart';
+import '../../../core/widgets/scaffolds/center_card_scaffold.dart';
 import '../../../core/widgets/buttons/app_loading_button.dart';
 import '../models/resend_code_body.dart';
 import 'cubits/resend_code_cubit.dart';

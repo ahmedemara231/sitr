@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class ChatImageViewerWidget extends StatelessWidget {
                     image: image,
                     roomId: context.read<ChatCubit>().state.data.room!.id.toString(),
                     onSuccess: (data){
-                      onUpload.call(state.data);
+                      onUpload.call(data);
                       Go.back();
                     },
                 ),

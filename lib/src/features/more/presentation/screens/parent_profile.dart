@@ -13,7 +13,7 @@ import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/image_widgets/cached_image.dart';
 import '../../../../core/widgets/parent_children_screen.dart';
-import '../../../../core/widgets/scaffolds/auth_scaffold.dart';
+import '../../../../core/widgets/scaffolds/center_card_scaffold.dart';
 import '../../../main_screen/data/models/partner_info_model.dart';
 import '../../../main_screen/presentation/widgets/partner_info/info_widget.dart';
 import '../cubit/get_profile.dart';

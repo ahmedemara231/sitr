@@ -895,4 +895,10 @@ abstract class LocaleKeys {
   static const String _theAgeMustBeANumber = 'the_age_must_be_a_number';
   static String get theAgeMustBeANumber => _theAgeMustBeANumber.tr();
 
+  static const String _tipsForEngagementStage = 'tips_for_engagement_stage';
+  static String get tipsForEngagementStage => _tipsForEngagementStage.tr();
+
+  static const String _theAppsManagementWillContactYouToArrangeAMeetingUnderTheAppsSupervisionMayGodGrantYouSuccess = 'the_apps_management_will_contact_you_to_arrange_a_meeting_under_the_apps_supervision_may_god_grant_you_success';
+  static String get theAppsManagementWillContactYouToArrangeAMeetingUnderTheAppsSupervisionMayGodGrantYouSuccess => _theAppsManagementWillContactYouToArrangeAMeetingUnderTheAppsSupervisionMayGodGrantYouSuccess.tr();
+
 }

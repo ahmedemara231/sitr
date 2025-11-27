@@ -46,6 +46,9 @@ extension FormatString on String {
     }else if(this == ShowTips.informParentsTips.title){
       return LocaleKeys.tipsForTheParentingStage;
 
+    }else if(this == ShowTips.engagementTips.title){
+      return LocaleKeys.tipsForEngagementStage;
+
     }
 
     return '';

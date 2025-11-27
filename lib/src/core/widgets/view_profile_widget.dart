@@ -28,7 +28,7 @@ import 'app_text.dart' show AppText;
 import 'chat_button.dart';
 import 'default_bottom_sheet.dart';
 import 'image_widgets/cached_image.dart';
-import 'scaffolds/auth_scaffold.dart';
+import 'scaffolds/center_card_scaffold.dart';
 import 'sheets/bloc_success.dart';
 import 'sheets/report_cheet.dart';
 
