@@ -20,8 +20,7 @@ class AcceptOrRejectRequestWidget extends StatelessWidget {
     return Column(
       spacing: 10.h,
       children: [
-        // AppText()
-        AppText(LocaleKeys.partnerWantsTo+requestName),
+        AppText('${LocaleKeys.partnerWantsTo} $requestName'),
         AppLoadingButton(asyncCall: onAccept, title: LocaleKeys.accept),
         AppLoadingButton(asyncCall: onReject, title: LocaleKeys.refused),
       ],

@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import '../../config/language/locale_keys.g.dart';
-import '../../features/chats/presentation/screens/chat_screen.dart';
+import '../../features/chats/data/models/request_model.dart';
+import '../../features/chats/presentation/imports.dart';
 import '../helpers/user_type_enum.dart';
 import '../navigation/navigator.dart';
 import '../network/api_endpoints.dart';
@@ -21,9 +21,8 @@ class ChatButton extends StatelessWidget {
   late final Map<ChatButtonActions, FutureOr<void> Function()?> _chatButtonPossibleActions = {
     ChatButtonActions.startChat : () {
       Go.to(ChatScreen(
-        receiverId: user.id ?? 0,
+        requestModel: RequestModel(receiverId: '${user.id}', fromHome: 1.toString()),
         receiverName: user.name ?? '',
-        fromHome: 1,
       ));
     },
 
@@ -36,9 +35,8 @@ class ChatButton extends StatelessWidget {
             btnTitle: LocaleKeys.start,
             onConfirm: (context) =>
                 Go.off(ChatScreen(
-                  receiverId: user.id ?? 0,
+                  requestModel: RequestModel(receiverId: '${user.id}', fromHome: 1.toString()),
                   receiverName: user.name ?? '',
-                  fromHome: 1,
                 )),
         )
     ) :
@@ -49,9 +47,8 @@ class ChatButton extends StatelessWidget {
           path: ApiConstants.appStages,
           onConfirm: (context) =>
               Go.off(ChatScreen(
-                receiverId: user.id ?? 0,
+                requestModel: RequestModel(receiverId: '${user.id}', fromHome: 1.toString()),
                 receiverName: user.name ?? '',
-                fromHome: 1,
               )),
         )
     ),

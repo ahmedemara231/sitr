@@ -9,235 +9,25 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="```&#10;feat(chat): Add engagement stage and finish chat flow&#10;&#10;This commit introduces a new &quot;engagement&quot; stage to the chat flow, allowing users to finalize their interaction and conclude the chat. It also includes several related UI and API enhancements.&#10;&#10;- **feat(chat):**&#10;  - Added a new `finish-chat` API endpoint and a corresponding `CongratsCubit` to handle the finalization of a chat. [0, 9]&#10;  - A new `CongratsSheet` is introduced. When a user reaches the engagement tips (`isEngagementTips`), this sheet is displayed, informing them that the administration will contact them to arrange a meeting. It provides a button to navigate back to the home screen. [4, 11]&#10;  - The chat screen now triggers the `CongratsSheet` when the `isEngagementTips` condition is met. [4]&#10;  - The `EnterParentPhoneSheet` is now shown when the user status is `isParentExchangeNumbers`, allowing parents to exchange numbers at the appropriate stage. [4]&#10;&#10;- **refactor(ui):**&#10;  - Renamed `AuthScaffold` to `CenterCardScaffold` for more generic use, as it is now used across various features like main screen, profile views, and auth. [3, 7, 13, 14, 15, 17, 18]&#10;  - In `terms_andcondition_and_about_us.dart`, the content is now rendered using the `flutter_html` package instead of a simple `AppText` widget, allowing for rich text formatting. [1]&#10;  - The Zego video call button is now correctly displayed during the Sharia-compliant meeting stage. [4]&#10;&#10;- **fix(chat):**&#10;  - In `upload_image.dart`, the `mapper` now correctly parses the `file_url` from the JSON response instead of `file_name`, fixing image uploads in chat. [6]&#10;  - The `onUpload` callback in `chat_image_viewer.dart` now correctly passes the returned data, ensuring the new image URL is sent in the socket message. [12]&#10;&#10;- **chore(i18n):**&#10;  - Added new translation keys for the engagement stage, including `tips_for_engagement_stage` and the confirmation message for the `CongratsSheet`. [5, 8, 10, 16]">
-      <change afterPath="$PROJECT_DIR$/.claude/settings.local.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/markdown.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/studiobot.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/app/src/main/kotlin/com/aait/flutter/sitr/MainActivity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ar.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/en.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_arrow_to_down_left.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_arrow_to_down_right.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_arrow_to_top_left.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_arrow_to_top_right.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_circle_bottom_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_circle_bottom_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_circle_top_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_circle_top_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_download.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_download_minimalistic.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_download_square.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_download_twice_square.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_exit.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_export.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_forward.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_forward_2.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_import.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_login.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_login_2.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_login_3.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_logout_2.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_logout_3.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_maximize.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_maximize_square.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_maximize_square_2.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_maximize_square_3.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_maximize_square_minimalistic.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_minimize.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_minimize_square.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_minimize_square_2.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_minimize_square_3.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_minimize_square_minimalistic.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_recive_square.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_recive_twice_square.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_reorder.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_reply.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_reply_2.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_scale.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_screen_share.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_send_square.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_send_twice_square.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_square_bottom_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_square_bottom_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_square_top_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_square_top_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_undo_left.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_undo_left_round.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_undo_left_round_square.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_undo_left_square.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_undo_right.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_undo_right_round.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_undo_right_round_square.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_undo_right_square.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_upload.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_upload_minimalistic.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_upload_square.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_action_upload_twice_square.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_alt_arrow_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_alt_arrow_left.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_alt_arrow_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_arrow_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_arrow_left.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_arrow_left_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_arrow_left_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_arrow_right.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_arrow_right_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_arrow_right_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_arrow_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_double_alt_arrow_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_double_alt_arrow_left.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_double_alt_arrow_right.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_double_alt_arrow_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_refresh.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_refresh_circle.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_refresh_square.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_restart.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_restart_circle.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_restart_square.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_round_alt_arrow_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_round_alt_arrow_left.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_round_alt_arrow_right.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_round_alt_arrow_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_round_arrow_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_round_arrow_left.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_round_arrow_left_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_round_arrow_left_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_round_arrow_right.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_round_arrow_right_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_round_arrow_right_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_round_arrow_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_round_double_alt_arrow_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_round_double_alt_arrow_left.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_round_double_alt_arrow_right.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_round_double_alt_arrow_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_round_sort_horizontal.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_round_sort_vertical.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_round_transfer_diagonal.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_round_transfer_horizontal.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_round_transfer_vertical.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_sort_horizontal.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_sort_vertical.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_square_alt_arrow_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_square_alt_arrow_left.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_square_alt_arrow_right.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_square_alt_arrow_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_square_arrow_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_square_arrow_left.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_square_arrow_left_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_square_arrow_left_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_square_arrow_right.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_square_arrow_right_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_square_arrow_right_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_square_arrow_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_square_double_alt_arrow_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_square_double_alt_arrow_left.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_square_double_alt_arrow_right.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_square_double_alt_arrow_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_square_sort_horizontal.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_square_sort_vertical.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_square_transfer_horizontal.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_square_transfer_vertical.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_transfer_horizontal.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_arrows_transfer_vertical.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_list_list_arrow_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_list_list_arrow_down_minimalistic.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_list_list_arrow_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_list_list_arrow_up_minimalistic.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_map_location_map_arrow_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_map_location_map_arrow_left.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_map_location_map_arrow_right.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_map_location_map_arrow_square.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_map_location_map_arrow_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_messages_conversation_chat_square_arrow.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/bold_video_audio_sound_playback_speed.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/broken_arrows_square_alt_arrow_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/broken_arrows_square_alt_arrow_left.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/broken_arrows_square_alt_arrow_right.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/broken_arrows_square_alt_arrow_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/broken_arrows_square_arrow_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/broken_arrows_square_arrow_left.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/broken_arrows_square_arrow_left_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/broken_arrows_square_arrow_right.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/broken_arrows_square_arrow_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/broken_arrows_square_double_alt_arrow_down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/broken_arrows_square_double_alt_arrow_left.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/broken_arrows_square_double_alt_arrow_right.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/broken_arrows_square_double_alt_arrow_up.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/icons/broken_messages_conversation_chat_square_arrow.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/alert_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/delete_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/ellipse_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/ellipse_7407.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/group_1000003166_2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/group_1000003168_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/group_1000007270-1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/group_1000007270.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/https_lottiefilescom_animations_successfully-done-no8yok8non.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/image.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/image_12.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/image_14.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/image_6_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/image_7_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/image_8.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/image_9.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/marriage_balloons_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/no_data_1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/pexels-percivalianmuico-2835547.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/rectangle.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/rectangle_144698.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/rectangle_144699.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/rectangle_144731.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/rectangle_30566.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/rectangle_30784.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/المزيد.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/features/home/data/models/home_data_model.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/src/features/more/data/more_data.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/results.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="```&#10;refactor(core): Implement pull-to-refresh and enhance pagination and APIs&#10;&#10;This commit refactors several screens to use a consistent pull-to-refresh mechanism and improves API data handling, particularly for pagination and success/error messages. It also introduces new data models and refactors cubits for better state management and UI feedback.&#10;&#10;- **refactor(core):**&#10;  - Implemented a consistent pull-to-refresh pattern using a `withPullRefresher` extension on `MainView`, `ParentProfileScreen`, `ChatsScreen`, `FilterResult`, `NotificationsScreen`, `ParentDetails`, and `ViewProfileWidget`. [5, 6, 8, 12, 14, 15, 16, 21, 23, 27]&#10;  - Removed the `onRefresh` parameter from `AppScaffold` and `CenterCardScaffold` as pull-to-refresh is now handled by a dedicated widget. [11, 25, 26]&#10;  - Many cubits (`UnBlockUserCubit`, `ContactUsCubit`, `LogoutCubit`, `DeleteAccountCubit`, `AddComplaintCubit`, `EditProfileCubit`, `ChangePhoneManager`) now pass the success message from the API response to the `onSuccess` callback, allowing for dynamic user feedback. [2, 3, 10, 18, 19, 20, 22, 28, 29, 31, 32]&#10;  - The `BlockManagerSheet` now uses the success message from the API and includes an `onPress` callback to update the UI after an action. [30]&#10;&#10;- **refactor(pagination):**&#10;  - Created a new `more_data.dart` data layer to handle paginated fetching for blocked users and complaints. [7]&#10;  - `FetchBlockUserCubit` has been removed and its logic is now handled directly by `AppPagify` using `MoreData.getBlockedUsers`. [1]&#10;  - `ComplaintsAndSuggestionsScreen` and `BlockedUserScreen` now use `AppPagify` for data fetching and display. [24, 33, 34]&#10;  - API calls for fetching notifications, parent children, and filtered results now correctly include the `page` parameter for pagination. [4, 13, 22]&#10;&#10;- **fix(chat):**&#10;  - In `chat_screen.dart`, when sending an image, the message body now correctly uses `url.split(&quot;/&quot;).last` to send only the file name, aligning with API expectations. [0]&#10;  - Removed a redundant `EnterParentPhoneSheet` display block from `chat_screen.dart`. [0]&#10;  - Messages in `MessageWidget` are now selectable and auto-link URLs for better usability, using the `flutter_linkify` package. [23, 27]&#10;&#10;- **feat(data):**&#10;  - Introduced new strongly-typed data models for the home screen response in `home_data_model.dart`, replacing generic `Map&lt;String, dynamic&gt;` parsing. [9]&#10;&#10;- **chore(ide):**&#10;  - Updated IDE configuration files (`workspace.xml`, `deviceStreaming.xml`, `markdown.xml`, `studiobot.xml`). [10, 17, 35, 36, 37]">
+      <change afterPath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/chat_actions.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/imports.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/stage_action.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/timer_action.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/tips_action.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/user_status_action.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/imports.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/extensions/widget_extension.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/extensions/widget_extension.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/network/dio_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/network/dio_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/notification/navigation_types.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/notification/navigation_types.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/notification/notification_routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/notification/notification_routes.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/app.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/network/api_endpoints.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/network/api_endpoints.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/core/notification/notification_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/notification/notification_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/shared/block_user_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/shared/block_user_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/parent_children.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/parent_children.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/pull_refresher.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/pull_refresher.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/scaffolds/app_scaffold.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/scaffolds/app_scaffold.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/scaffolds/center_card_scaffold.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/scaffolds/center_card_scaffold.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/sheets/bloc_success.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/sheets/bloc_success.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/view_profile_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/view_profile_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/cubits/edit_profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/cubits/edit_profile.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/enums.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/enums.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/chat_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/chat_button.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/data/chats_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/data/chats_data.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/data/execution_loop.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/data/socket_events.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chat_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chat_screen.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chats_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chats_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/chat/message_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/chat/message_widget.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/home/cubits/home_cubit/home_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/home/cubits/home_cubit/home_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/main_screen/data/home_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/main_screen/data/home_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/filter_result.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/filter_result.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/parent_details.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/parent_details.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/cubit/block_user_cubit/fetch_block_user_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/cubit/block_user_cubit/fetch_block_user_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/cubit/block_user_cubit/un_block_user_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/cubit/block_user_cubit/un_block_user_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/cubit/change_phone_manager.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/cubit/change_phone_manager.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/cubit/complaint_cubit/add_complaint_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/cubit/complaint_cubit/add_complaint_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/cubit/contact_us_cubit/contact_us_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/cubit/contact_us_cubit/contact_us_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/cubit/delete_account.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/cubit/delete_account.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/cubit/logout_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/cubit/logout_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/blocked_user_screen/blocked_user_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/blocked_user_screen/blocked_user_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/blocked_user_screen/widgets/blocked_user_item.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/blocked_user_screen/widgets/blocked_user_item.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/complaint_and_suggestion/complaints_and_suggestions_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/complaint_and_suggestion/complaints_and_suggestions_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/parent_profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/parent_profile.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/setting/setting_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/setting/setting_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/widgets/change_phone_sheet_body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/widgets/change_phone_sheet_body.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/widgets/more_tap_app_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/widgets/more_tap_app_bar.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/notifications/data/notification_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/notifications/data/notification_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/notifications/presentation/pages/noitifcations_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/notifications/presentation/pages/noitifcations_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/packages/data/packages_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/packages/data/packages_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/packages/presentation/packages_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/packages/presentation/packages_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/accept_or_reject_request.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/accept_or_reject_request.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/sheets/congrats_sheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/sheets/congrats_sheet.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -329,28 +119,28 @@
     "cidr.known.project.marker": "true",
     "com.google.services.firebase.aqiPopupShown": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "eastChatTest",
+    "git-widget-placeholder": "finishChat",
     "io.flutter.reload.alreadyRun": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/aaita/Desktop/apps/new_crud_satr/assets/svg",
+    "last_opened_file_path": "/Users/aaita/Desktop/apps/new_crud_satr/assets/images",
     "settings.editor.selected.configurable": "editor.preferences.yamlOptions",
     "show.migrate.to.gradle.popup": "false"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets/images" />
       <recent name="$PROJECT_DIR$/assets/svg" />
       <recent name="$PROJECT_DIR$/assets/fonts" />
       <recent name="$PROJECT_DIR$/lib/src/core/widgets" />
       <recent name="$PROJECT_DIR$/lib" />
-      <recent name="$PROJECT_DIR$/lib/src/core" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions" />
       <recent name="$PROJECT_DIR$/android/app" />
       <recent name="$PROJECT_DIR$/lib" />
       <recent name="$PROJECT_DIR$/assets/svg" />
       <recent name="$PROJECT_DIR$/assets/translations" />
-      <recent name="$PROJECT_DIR$/lib/src/features/chats/presentation/cubits" />
     </key>
   </component>
   <component name="TaskManager">
@@ -360,14 +150,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
-    </task>
-    <task id="LOCAL-00087" summary="```&#10;refactor(chat): Enhance chat flow, state management, and add video calls&#10;&#10;This commit introduces a major refactoring of the chat feature to improve its robustness, state management, and user experience. It enhances the chat lifecycle, introduces video call functionality, and streamlines how requests and stages are handled.&#10;&#10;- **feat(chat):**&#10;  - **Video Call:** Integrated Zego video call functionality. A video call button now appears in the chat's app bar during the `sharia_complaint_meeting` stage.&#10;  - **Zego Service:** `onUserLogin` in `ZegoService` now returns a boolean to confirm connection status and includes improved connection attempt logging. Zego is now initialized on the splash screen.&#10;  - **Request Handling:** Implemented a new `AcceptOrRejectRequestWidget` to handle incoming requests (like moving to the next stage) via a bottom sheet, triggered by notifications or state changes.&#10;  - **New Chat Stages:** Added a `rejected` stage to the `ChatStages` enum and changed `newChat`'s ID to `-1` to prevent conflicts.&#10;&#10;- **refactor(cubit):**&#10;  - Renamed `StartChatCubit` to `ChatCubit` for clarity, as it now manages the entire chat lifecycle, not just the start.&#10;  - The `RequestCubit` has been removed. Its `executeRequest` logic is now merged into the `ChatCubit`, which can now handle both fetching chat data and executing user actions (accept, reject, etc.). The API call in `executeRequest` now uses a mapper to directly return a `ChatModel`, allowing the UI to react instantly to state changes.&#10;  - Added convenient getters to `ChatCubit` for easier access to enum-typed stage and request statuses (e.g., `currentStageAsEnum`, `userRequestStatusAsEnum`).&#10;&#10;- **refactor(chat-screen):**&#10;  - The `ChatScreen` now uses the unified `ChatCubit`.&#10;  - Logic for handling notifications and state changes has been refined. The screen can now present bottom sheets for accepting/rejecting stage-change requests or for initiating new requests when a stage's timer ends.&#10;  - The `receiverName` is now passed to `ChatScreen` to be used for Zego video call invitations.&#10;  - The old timer logic in `ChatScreen` has been extracted into a reusable `ChatTimerWidget`.&#10;&#10;- **refactor(models):**&#10;  - Renamed `MatchRequest` enum to `MatchRequestEnum` to avoid conflicts with model class names and improve clarity.&#10;&#10;- **fix(ui):**&#10;  - In `AppScaffold`, the `bottomNavigationBar` is now correctly placed outside the `SingleChildScrollView` to prevent it from scrolling with the content.&#10;  - The `ChatRequestsSheet` now correctly initializes with a default selected value to prevent errors.&#10;&#10;- **chore(assets):**&#10;  - Added a new `video_call.svg` icon.&#10;  - Added new i18n keys for partner requests and tips (`partner_wants_to`, `tips_for_sharia_complaint_meeting`).">
-      <option name="closed" value="true" />
-      <created>1762166292341</created>
-      <option name="number" value="00087" />
-      <option name="presentableId" value="LOCAL-00087" />
-      <option name="project" value="LOCAL" />
-      <updated>1762166292347</updated>
     </task>
     <task id="LOCAL-00088" summary="refactor(chat): Extract notification handling logic from ChatScreen&#10;&#10;This commit refactors the `ChatScreen` by extracting the logic for handling incoming chat-related push notifications into a new, reusable method.&#10;&#10;- **refactor(chat):**&#10;  - Created a new private method `_showBased(RemoteMessage notification)` within `ChatScreen`.&#10;  - This method now contains the logic that was previously inside the `BlocListener` for the `ChatNotificationCubit`. It determines which UI element (like a bottom sheet) to show based on the `stage` data within the notification payload.&#10;  - The `BlocListener` has been simplified to a single call to `_showBased(state.notification!)`.&#10;&#10;- **chore(chat):**&#10;  - Added a new, commented-out file `chat_sheet_manager.dart`. This file appears to be a placeholder for a future refactoring where the notification handling logic will be moved into a dedicated manager class, further decoupling it from the UI.">
       <option name="closed" value="true" />
@@ -753,7 +535,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764242574502</updated>
     </task>
-    <option name="localTasksCounter" value="136" />
+    <task id="LOCAL-00136" summary="```&#10;refactor(core): Implement pull-to-refresh and enhance pagination and APIs&#10;&#10;This commit refactors several screens to use a consistent pull-to-refresh mechanism and improves API data handling, particularly for pagination and success/error messages. It also introduces new data models and refactors cubits for better state management and UI feedback.&#10;&#10;- **refactor(core):**&#10;  - Implemented a consistent pull-to-refresh pattern using a `withPullRefresher` extension on `MainView`, `ParentProfileScreen`, `ChatsScreen`, `FilterResult`, `NotificationsScreen`, `ParentDetails`, and `ViewProfileWidget`. [5, 6, 8, 12, 14, 15, 16, 21, 23, 27]&#10;  - Removed the `onRefresh` parameter from `AppScaffold` and `CenterCardScaffold` as pull-to-refresh is now handled by a dedicated widget. [11, 25, 26]&#10;  - Many cubits (`UnBlockUserCubit`, `ContactUsCubit`, `LogoutCubit`, `DeleteAccountCubit`, `AddComplaintCubit`, `EditProfileCubit`, `ChangePhoneManager`) now pass the success message from the API response to the `onSuccess` callback, allowing for dynamic user feedback. [2, 3, 10, 18, 19, 20, 22, 28, 29, 31, 32]&#10;  - The `BlockManagerSheet` now uses the success message from the API and includes an `onPress` callback to update the UI after an action. [30]&#10;&#10;- **refactor(pagination):**&#10;  - Created a new `more_data.dart` data layer to handle paginated fetching for blocked users and complaints. [7]&#10;  - `FetchBlockUserCubit` has been removed and its logic is now handled directly by `AppPagify` using `MoreData.getBlockedUsers`. [1]&#10;  - `ComplaintsAndSuggestionsScreen` and `BlockedUserScreen` now use `AppPagify` for data fetching and display. [24, 33, 34]&#10;  - API calls for fetching notifications, parent children, and filtered results now correctly include the `page` parameter for pagination. [4, 13, 22]&#10;&#10;- **fix(chat):**&#10;  - In `chat_screen.dart`, when sending an image, the message body now correctly uses `url.split(&quot;/&quot;).last` to send only the file name, aligning with API expectations. [0]&#10;  - Removed a redundant `EnterParentPhoneSheet` display block from `chat_screen.dart`. [0]&#10;  - Messages in `MessageWidget` are now selectable and auto-link URLs for better usability, using the `flutter_linkify` package. [23, 27]&#10;&#10;- **feat(data):**&#10;  - Introduced new strongly-typed data models for the home screen response in `home_data_model.dart`, replacing generic `Map&lt;String, dynamic&gt;` parsing. [9]&#10;&#10;- **chore(ide):**&#10;  - Updated IDE configuration files (`workspace.xml`, `deviceStreaming.xml`, `markdown.xml`, `studiobot.xml`). [10, 17, 35, 36, 37]">
+      <option name="closed" value="true" />
+      <created>1764375441102</created>
+      <option name="number" value="00136" />
+      <option name="presentableId" value="LOCAL-00136" />
+      <option name="project" value="LOCAL" />
+      <updated>1764375441102</updated>
+    </task>
+    <option name="localTasksCounter" value="137" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -774,7 +564,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="```&#10;refactor(deps): Replace git-based pagination with local path and clean up dependencies&#10;&#10;This commit refactors dependency management by replacing the git-based `pagify` package with a local path version. It also includes general dependency cleanup and minor code refactoring.&#10;&#10;- **refactor(deps):**&#10;  - The `pagify` dependency in `pubspec.yaml` has been changed from a git URL to a local path (`/Users/aaita/Desktop/apps/pagination_helper`), likely for local development and testing.&#10;  - A commented-out local path for `easy_chat` has been added.&#10;&#10;- **refactor(socket):**&#10;  - In `easy_chat-master/factory.dart`, the `onReceiveMsg` method has been renamed to `onReceiveEvent` for better clarity, reflecting that it handles generic socket events, not just messages.&#10;&#10;- **refactor(ui):**&#10;  - In `AppPagify`, a new `onScrollPositionChanged` callback has been added to the underlying `Pagify` widget to log scroll position changes.&#10;&#10;- **chore(cleanup):**&#10;  - An unused import for `pagify/helpers/add_frame.dart` has been removed from `main_screen/view.dart`.&#10;  - A `TestScreen` widget and its related code have been removed from `app.dart`.&#10;  - Numerous unused dependencies related to audio, video calling (Zego), and device hardware (vibration, proximity) have been removed from the project's dependency files (`.idea/libraries/Flutter_Plugins.xml`, `.idea/libraries/Dart_Packages.xml`)." />
     <MESSAGE value="```&#10;refactor(chat): Overhaul chat implementation with external `easy_chat` package&#10;&#10;This commit completely refactors the chat functionality by removing the local `easy_chat-master` implementation and replacing it with a formal external package dependency. This change simplifies the `ChatScreen`, introduces more robust data models, and enhances the socket connection logic.&#10;&#10;- **refactor(chat):**&#10;  - Removed the entire local `easy_chat-master` directory, including its widgets, models, and socket factory.&#10;  - Added `easy_chat` as a local path dependency in `pubspec.yaml`.&#10;  - The `ChatScreen` has been updated to use the new `easy_chat` package.&#10;  - Socket initialization is now more robust, using a new `ClientIOImpl` from the package with distinct methods for initialization, configuration, and connection.&#10;  - The `socketType` now handles various connection states (`onConnect`, `onDisconnect`, `onReconnect`) and events.&#10;  - Message sending (`onSend`) and file uploads (`onUpload`) are simplified to use the new `socketType.sendMessage` method with a structured payload.&#10;&#10;- **feat(models):**&#10;  - The local `ChatMessages` model has been replaced by the model from the `easy_chat` package. This new model is more structured, separating `Message` (id, type, body) and `Sender` (id, name, image, isFromMe) details.&#10;  - The `ChatModel` and `MessageWidget` have been updated to use these new, more detailed `ChatMessages` and `Sender` models.&#10;  - A new `SocketEvents` class was added locally to define chat-related socket event constants.&#10;&#10;- **chore(deps):**&#10;  - Cleaned up numerous unused dependencies from `.idea/libraries/*.xml` files, including those related to Zego (video calling), audio players, and various hardware plugins." />
     <MESSAGE value="```&#10;fix(chat): Correct socket initialization and message payload&#10;&#10;This commit fixes issues related to socket event ordering and message data mapping in the chat feature.&#10;&#10;- **fix(chat):**&#10;  - In `chat_screen.dart`, the `_init()` method, which sets up socket listeners, has been moved from `initState` to be called after the async `_startChat` method completes. This ensures that the chat room data is available before socket listeners are configured.&#10;  - The `enableOfflineState: true` property has been removed from the `EasyChat` widget configuration.&#10;  - The order of keys in the `onSend` message payload has been adjusted, placing `room_id` last.&#10;&#10;- **fix(socket):**&#10;  - In `client_io.dart`, the `enterChatEvent` and `exitChatEvent` emissions are now dispatched *before* calling the external `onConnect` and `onDisconnect` callbacks. This ensures the room status is updated on the server prior to any client-side connection logic.&#10;&#10;- **fix(models):**&#10;  - In `chat_model.dart`, the JSON parsing for incoming chat messages has been corrected. It now properly maps `v['id']`, `v['name']`, `v['avatar']`, and `v['created_at']` from the nested message object (`v`) instead of trying to access them from the top-level `json` object." />
     <MESSAGE value="```&#10;feat(packages): Enhance package UI and subscription logic&#10;&#10;This commit introduces several improvements to the package subscription flow, enhances the profile view UI, and updates the Firebase configuration.&#10;&#10;- **feat(packages):**&#10;  - Added a `can_subscribe` boolean field to the `Package` model. This field is now parsed from the API response to determine if a package is available for subscription.&#10;  - In `package_widget.dart`, the &quot;Subscribe&quot; button is now disabled (visually and functionally) if `package.canSubscribe` is `false`. The button color changes to `Colors.black12` to indicate the disabled state.&#10;  - The informational text on the `packages_screen.dart` (&quot;In order to register other data...&quot;) is now only displayed when the user is in the authentication flow (`isInAuth`).&#10;&#10;- **refactor(ui):**&#10;  - In the `ViewProfileWidget`, the layout for displaying partner information has been improved by replacing `GridView.count` with `MasonryGridView.count`. This provides a more dynamic and space-efficient grid for variable-height items.&#10;&#10;- **fix(chat):**&#10;  - In `chat_screen.dart`, the initialization order has been corrected. The socket setup (`_init()`) is now called only after the chat data has been successfully fetched in `_startChat`, ensuring that socket listeners are configured with the correct room data.&#10;&#10;- **chore(deps):**&#10;  - Added the `flutter_staggered_grid_view: ^0.7.0` dependency to support the new masonry layout.&#10;&#10;- **chore(firebase):**&#10;  - Updated the Firebase project configuration across `firebase.json`, `google-services.json` (Android), `GoogleService-Info.plist` (iOS), and `firebase_options.dart`. The project ID has been changed from `satr-d9442` to `satr-15348`." />
@@ -799,7 +588,8 @@
     <MESSAGE value="```&#10;feat(chat): Enhance chat flow, UX, and data models&#10;&#10;This commit introduces significant enhancements to the chat module, including a more robust chat flow, improved data models, and a refined user experience. Key changes include decoupling the `match_request_id`, adding new API endpoints, and improving how user data is displayed.&#10;&#10;- **feat(chat):**&#10;  - In `chat_screen.dart`, conditional logic has been added to either show a full chat screen (`showFullChat: true`) or a limited view. This allows for different chat contexts, such as just viewing messages without chat controls. [2]&#10;  - The logic for showing bottom sheets and handling user actions (e.g., paying for a request, exchanging parent numbers) has been significantly refined. Payments now correctly refresh the chat state on success.&#10;  - The `EnterParentPhoneSheet` now correctly handles keyboard overlap and submits the phone number to the new `parentsExchangeNumbers` method in the `ChatCubit`. [4]&#10;  - Added a `callStatus` field to `ChatModel` to manage video call availability. [6]&#10;  - Added a `showFullChat` parameter to `ChatsScreen` to control the behavior when navigating to a `ChatScreen`. [2]&#10;&#10;- **refactor(chat):**&#10;  - The `match_request_id` has been removed from `RequestModel` and is now added dynamically within the `ChatCubit`'s `executeRequest` method. This centralizes request logic and simplifies the model. [0, 15]&#10;  - API requests in `chat_screen.dart` no longer build the path with the request ID manually; they now pass the ID to a more generic function.&#10;  - The `_initBottomBar` logic in `chat_screen.dart` is refactored to be cleaner and more state-driven, directly handling different chat stages and user request statuses from the `ChatModel`.&#10;  - The `tipsSeen` method in `ChatCubit` no longer requires `matchReqId` as a parameter, as it now retrieves it from the cubit's state. [15]&#10;&#10;- **feat(core):**&#10;  - Added a new boolean extension `toNormalLang` in `bool.dart` to convert `true`/`false` values into localized &quot;Yes&quot;/&quot;No&quot; strings for the UI. [3]&#10;  - The `ViewProfileWidget` now provides much richer, localized data, displaying units like &quot;years&quot;, &quot;cm&quot;, &quot;kg&quot;, and using the new boolean extension for clearer labels. It also links to a parent's profile if available. [18]&#10;&#10;- **fix(chat):**&#10;  - In `chat_screen.dart`, notifications for `match_rejected_when_timer_ended` now correctly navigate the user off the chat screen.&#10;  - Corrected the tip sheet logic to use `isShariaComplaintMeetingTerms` for showing the appropriate terms and conditions sheet.&#10;  - The timer check now correctly handles `isNull` in addition to `isEqualZero` to prevent crashes.&#10;&#10;- **refactor(api):**&#10;  - Updated several API endpoints in `api_endpoints.dart` for clarity and consistency (e.g., `userRejectRequest`, `video_call_request`). [5]&#10;  - Added new endpoints like `shariaComplaintMeetingTerms` and `userRejectRequest`. [5]&#10;&#10;- **refactor(ui):**&#10;  - In `enter_parent_phone.dart`, the sheet now uses `paddingBottom` with `viewInsets` to avoid being obscured by the keyboard. [4]&#10;  - On the `main_screen`, the `onRefresh` action now properly re-initializes the filter selections. [9]&#10;&#10;- **chore(i18n):**&#10;  - Updated several Arabic translations in `lang.json` and `ar.json` for better clarity (e.g., &quot;Children Number&quot; to &quot;عدد الابناء&quot;). [10, 16]" />
     <MESSAGE value="```&#10;refactor(core): Standardize async cubit callbacks and enhance validation&#10;&#10;This commit refactors the base `AsyncCubit` to standardize its callback signature, replacing `successEmitter` with a more conventional `onSuccess`. It also improves form validation and enhances the user experience in the OTP and block/unblock flows.&#10;&#10;- **refactor(core):**&#10;  - In `async_cubit.dart`, the `successEmitter` callback has been renamed to `onSuccess` for consistency across all cubits. [29]&#10;  - All cubits extending `AsyncCubit` have been updated to use the new `onSuccess` callback. This includes cubits for authentication, chat, packages, and user profiles. [2, 3, 4, 5, 8, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 25, 26, 31, 32, 33]&#10;  - In the `BlockUserCubit` and `UnBlockUserCubit`, the `onSuccess` action is now handled internally, automatically popping the navigation stack twice (`2.pop()`) upon successful completion, which simplifies the calling code in `bloc_success.dart`. [7, 8, 9]&#10;&#10;- **fix(auth):**&#10;  - In `validators.dart`, `validateAge` now correctly checks that the input is a number and is at least 18. [22]&#10;  - `validatePhone` now enforces that a phone number must be exactly 9 digits long. [22]&#10;  - In `sign_up_fields.dart`, the age field now uses the improved `Validators.validateAge` validator. [6]&#10;&#10;- **feat(otp):**&#10;  - In `setting_screen.dart`, a consistent `upperWidget` showing the &quot;Change Phone Number&quot; title is now passed to all instances of `OtpScreen` within the change phone number flow, improving UI context. [0]&#10;  - The `OtpScreen` in `otp.dart` now correctly displays the passed `upperWidget` above the static OTP texts, replacing the default logo when a custom widget is provided. [12]&#10;&#10;- **chore(i18n):**&#10;  - Added new translation keys for phone and age validation error messages (`phone_should_be_9_digits`, `the_age_must_be_a_number`). [1, 10, 27, 28]&#10;&#10;- **chore(ide):**&#10;  - Updated IDE configuration files (`workspace.xml`). [23]" />
     <MESSAGE value="```&#10;feat(chat): Add engagement stage and finish chat flow&#10;&#10;This commit introduces a new &quot;engagement&quot; stage to the chat flow, allowing users to finalize their interaction and conclude the chat. It also includes several related UI and API enhancements.&#10;&#10;- **feat(chat):**&#10;  - Added a new `finish-chat` API endpoint and a corresponding `CongratsCubit` to handle the finalization of a chat. [0, 9]&#10;  - A new `CongratsSheet` is introduced. When a user reaches the engagement tips (`isEngagementTips`), this sheet is displayed, informing them that the administration will contact them to arrange a meeting. It provides a button to navigate back to the home screen. [4, 11]&#10;  - The chat screen now triggers the `CongratsSheet` when the `isEngagementTips` condition is met. [4]&#10;  - The `EnterParentPhoneSheet` is now shown when the user status is `isParentExchangeNumbers`, allowing parents to exchange numbers at the appropriate stage. [4]&#10;&#10;- **refactor(ui):**&#10;  - Renamed `AuthScaffold` to `CenterCardScaffold` for more generic use, as it is now used across various features like main screen, profile views, and auth. [3, 7, 13, 14, 15, 17, 18]&#10;  - In `terms_andcondition_and_about_us.dart`, the content is now rendered using the `flutter_html` package instead of a simple `AppText` widget, allowing for rich text formatting. [1]&#10;  - The Zego video call button is now correctly displayed during the Sharia-compliant meeting stage. [4]&#10;&#10;- **fix(chat):**&#10;  - In `upload_image.dart`, the `mapper` now correctly parses the `file_url` from the JSON response instead of `file_name`, fixing image uploads in chat. [6]&#10;  - The `onUpload` callback in `chat_image_viewer.dart` now correctly passes the returned data, ensuring the new image URL is sent in the socket message. [12]&#10;&#10;- **chore(i18n):**&#10;  - Added new translation keys for the engagement stage, including `tips_for_engagement_stage` and the confirmation message for the `CongratsSheet`. [5, 8, 10, 16]" />
-    <option name="LAST_COMMIT_MESSAGE" value="```&#10;feat(chat): Add engagement stage and finish chat flow&#10;&#10;This commit introduces a new &quot;engagement&quot; stage to the chat flow, allowing users to finalize their interaction and conclude the chat. It also includes several related UI and API enhancements.&#10;&#10;- **feat(chat):**&#10;  - Added a new `finish-chat` API endpoint and a corresponding `CongratsCubit` to handle the finalization of a chat. [0, 9]&#10;  - A new `CongratsSheet` is introduced. When a user reaches the engagement tips (`isEngagementTips`), this sheet is displayed, informing them that the administration will contact them to arrange a meeting. It provides a button to navigate back to the home screen. [4, 11]&#10;  - The chat screen now triggers the `CongratsSheet` when the `isEngagementTips` condition is met. [4]&#10;  - The `EnterParentPhoneSheet` is now shown when the user status is `isParentExchangeNumbers`, allowing parents to exchange numbers at the appropriate stage. [4]&#10;&#10;- **refactor(ui):**&#10;  - Renamed `AuthScaffold` to `CenterCardScaffold` for more generic use, as it is now used across various features like main screen, profile views, and auth. [3, 7, 13, 14, 15, 17, 18]&#10;  - In `terms_andcondition_and_about_us.dart`, the content is now rendered using the `flutter_html` package instead of a simple `AppText` widget, allowing for rich text formatting. [1]&#10;  - The Zego video call button is now correctly displayed during the Sharia-compliant meeting stage. [4]&#10;&#10;- **fix(chat):**&#10;  - In `upload_image.dart`, the `mapper` now correctly parses the `file_url` from the JSON response instead of `file_name`, fixing image uploads in chat. [6]&#10;  - The `onUpload` callback in `chat_image_viewer.dart` now correctly passes the returned data, ensuring the new image URL is sent in the socket message. [12]&#10;&#10;- **chore(i18n):**&#10;  - Added new translation keys for the engagement stage, including `tips_for_engagement_stage` and the confirmation message for the `CongratsSheet`. [5, 8, 10, 16]" />
+    <MESSAGE value="```&#10;refactor(core): Implement pull-to-refresh and enhance pagination and APIs&#10;&#10;This commit refactors several screens to use a consistent pull-to-refresh mechanism and improves API data handling, particularly for pagination and success/error messages. It also introduces new data models and refactors cubits for better state management and UI feedback.&#10;&#10;- **refactor(core):**&#10;  - Implemented a consistent pull-to-refresh pattern using a `withPullRefresher` extension on `MainView`, `ParentProfileScreen`, `ChatsScreen`, `FilterResult`, `NotificationsScreen`, `ParentDetails`, and `ViewProfileWidget`. [5, 6, 8, 12, 14, 15, 16, 21, 23, 27]&#10;  - Removed the `onRefresh` parameter from `AppScaffold` and `CenterCardScaffold` as pull-to-refresh is now handled by a dedicated widget. [11, 25, 26]&#10;  - Many cubits (`UnBlockUserCubit`, `ContactUsCubit`, `LogoutCubit`, `DeleteAccountCubit`, `AddComplaintCubit`, `EditProfileCubit`, `ChangePhoneManager`) now pass the success message from the API response to the `onSuccess` callback, allowing for dynamic user feedback. [2, 3, 10, 18, 19, 20, 22, 28, 29, 31, 32]&#10;  - The `BlockManagerSheet` now uses the success message from the API and includes an `onPress` callback to update the UI after an action. [30]&#10;&#10;- **refactor(pagination):**&#10;  - Created a new `more_data.dart` data layer to handle paginated fetching for blocked users and complaints. [7]&#10;  - `FetchBlockUserCubit` has been removed and its logic is now handled directly by `AppPagify` using `MoreData.getBlockedUsers`. [1]&#10;  - `ComplaintsAndSuggestionsScreen` and `BlockedUserScreen` now use `AppPagify` for data fetching and display. [24, 33, 34]&#10;  - API calls for fetching notifications, parent children, and filtered results now correctly include the `page` parameter for pagination. [4, 13, 22]&#10;&#10;- **fix(chat):**&#10;  - In `chat_screen.dart`, when sending an image, the message body now correctly uses `url.split(&quot;/&quot;).last` to send only the file name, aligning with API expectations. [0]&#10;  - Removed a redundant `EnterParentPhoneSheet` display block from `chat_screen.dart`. [0]&#10;  - Messages in `MessageWidget` are now selectable and auto-link URLs for better usability, using the `flutter_linkify` package. [23, 27]&#10;&#10;- **feat(data):**&#10;  - Introduced new strongly-typed data models for the home screen response in `home_data_model.dart`, replacing generic `Map&lt;String, dynamic&gt;` parsing. [9]&#10;&#10;- **chore(ide):**&#10;  - Updated IDE configuration files (`workspace.xml`, `deviceStreaming.xml`, `markdown.xml`, `studiobot.xml`). [10, 17, 35, 36, 37]" />
+    <option name="LAST_COMMIT_MESSAGE" value="```&#10;refactor(core): Implement pull-to-refresh and enhance pagination and APIs&#10;&#10;This commit refactors several screens to use a consistent pull-to-refresh mechanism and improves API data handling, particularly for pagination and success/error messages. It also introduces new data models and refactors cubits for better state management and UI feedback.&#10;&#10;- **refactor(core):**&#10;  - Implemented a consistent pull-to-refresh pattern using a `withPullRefresher` extension on `MainView`, `ParentProfileScreen`, `ChatsScreen`, `FilterResult`, `NotificationsScreen`, `ParentDetails`, and `ViewProfileWidget`. [5, 6, 8, 12, 14, 15, 16, 21, 23, 27]&#10;  - Removed the `onRefresh` parameter from `AppScaffold` and `CenterCardScaffold` as pull-to-refresh is now handled by a dedicated widget. [11, 25, 26]&#10;  - Many cubits (`UnBlockUserCubit`, `ContactUsCubit`, `LogoutCubit`, `DeleteAccountCubit`, `AddComplaintCubit`, `EditProfileCubit`, `ChangePhoneManager`) now pass the success message from the API response to the `onSuccess` callback, allowing for dynamic user feedback. [2, 3, 10, 18, 19, 20, 22, 28, 29, 31, 32]&#10;  - The `BlockManagerSheet` now uses the success message from the API and includes an `onPress` callback to update the UI after an action. [30]&#10;&#10;- **refactor(pagination):**&#10;  - Created a new `more_data.dart` data layer to handle paginated fetching for blocked users and complaints. [7]&#10;  - `FetchBlockUserCubit` has been removed and its logic is now handled directly by `AppPagify` using `MoreData.getBlockedUsers`. [1]&#10;  - `ComplaintsAndSuggestionsScreen` and `BlockedUserScreen` now use `AppPagify` for data fetching and display. [24, 33, 34]&#10;  - API calls for fetching notifications, parent children, and filtered results now correctly include the `page` parameter for pagination. [4, 13, 22]&#10;&#10;- **fix(chat):**&#10;  - In `chat_screen.dart`, when sending an image, the message body now correctly uses `url.split(&quot;/&quot;).last` to send only the file name, aligning with API expectations. [0]&#10;  - Removed a redundant `EnterParentPhoneSheet` display block from `chat_screen.dart`. [0]&#10;  - Messages in `MessageWidget` are now selectable and auto-link URLs for better usability, using the `flutter_linkify` package. [23, 27]&#10;&#10;- **feat(data):**&#10;  - Introduced new strongly-typed data models for the home screen response in `home_data_model.dart`, replacing generic `Map&lt;String, dynamic&gt;` parsing. [9]&#10;&#10;- **chore(ide):**&#10;  - Updated IDE configuration files (`workspace.xml`, `deviceStreaming.xml`, `markdown.xml`, `studiobot.xml`). [10, 17, 35, 36, 37]" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -816,7 +606,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/src/app.dart</url>
-          <line>94</line>
+          <line>55</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">

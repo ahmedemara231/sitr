@@ -79,43 +79,43 @@ class ApiConstants {
   static const String completedChats = 'chats/completed'; // مكتملة
   static const String rejectedChats = 'chats/rejected'; // مرفوضة
   static const String currentChats = 'chats/current'; // محادثاتي
-  static const String startChat = 'start-chat';
   static const String report = 'user-reports';
   static const String updateChildProfile = 'update-child-profile/';
   static const String sendMsg = 'send-message/';
-  static const String appStages = 'app-stages';
-  static const String chattingStageTips = 'chatting-stage-tips';
-  static const String parentExchangeNumbers = 'parent-exchange-numbers';
-  static const String parentMeetingRequest = 'user-match-request/parent_meeting_request';
-  static const String parentIndividualConversation = 'parent-individual-conversation';
   static const String filter = 'filter';
+
+
+
+  static const String startChat = 'start-chat';
+  static const String appStages = 'app-stages';
+  static const String parentExchangeNumbers = 'parent-exchange-numbers';
+  static const String parentIndividualConversation = 'parent-individual-conversation';
   static const String uploadImage = 'upload-room-file/';
-
-
-  static const String acceptRequest = 'accept-request/';
-  static const String rejectRequest = 'reject-request/';
-
-
-  static const String userMoveToNextRequest = 'user-match-request/next_stage_request';
-  static const String userRejectRequest = 'reject-match-request';
-  static const String userExtensionRequest = 'user-match-request/extension_request';
-
-
-  static const String payRequest = 'pay-request/';
-  static const String videoCallRequest = 'user-match-request/video_call_request';
-
-
-  static const String shariaComplaintMeetingTips = 'sharia-complaint-meeting-tips';
-  static const String shariaComplaintMeetingTerms = 'sharia-complaint-meeting-terms';
-  static const String istikharaTips = 'istikhara-tips';
-  static const String engagementTips = 'engagement-tips';
-  static const String continueStageRequest = 'user-match-request/continue_stage_request';
-  static const String informParentsTips = 'inform-parents';
-
-
-  static const String socials = 'socials';
-  static const String adminMeetingRequest = 'user-match-request/admin_meeting_request';
   static const String matchTipPageSeen = 'match-tip-page-seen';
   static const String finishChat = 'finish-chat';
+  static const String socials = 'socials';
+
+  // Chat
+  // ============================== Tips ==============================
+  static const String chattingStageTips = 'chatting-stage-tips';
+  static const String shariaComplaintMeetingTerms = 'sharia-complaint-meeting-terms';
+  static const String shariaComplaintMeetingTips = 'sharia-complaint-meeting-tips';
+  static const String istikharaTips = 'istikhara-tips';
+  static const String informParentsTips = 'inform-parents';
+  static const String engagementTips = 'engagement-tips';
+
+// ============================== user request ==============================
+  static const String userMoveToNextRequest = 'user-match-request/next_stage_request';
+  static const String continueStageRequest = 'user-match-request/continue_stage_request';
+  static const String userExtensionRequest = 'user-match-request/extension_request';
+  static const String videoCallRequest = 'user-match-request/video_call_request';
+  static const String adminMeetingRequest = 'user-match-request/admin_meeting_request';
+  static const String parentMeetingRequest = 'user-match-request/parent_meeting_request';
+  static const String userRejectRequest = 'reject-match-request';
+  static const String payRequest = 'pay-request/';
+
+// ============================== acceptance ==============================
+  static const String acceptRequest = 'accept-request/';
+  static const String rejectRequest = 'reject-request/';
 
 }

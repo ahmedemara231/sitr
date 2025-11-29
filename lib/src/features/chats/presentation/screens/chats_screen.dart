@@ -15,9 +15,10 @@ import '../../../../core/widgets/not_contain_data.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../core/widgets/choose_from_options.dart';
 import '../../data/models/chat_model.dart';
+import '../../data/models/request_model.dart';
 import '../cubits/get_chats_cubit.dart';
+import '../imports.dart';
 import '../widgets/chat_card.dart';
-import 'chat_screen.dart';
 
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});
@@ -119,9 +120,11 @@ class _ChatsBodyState extends State<_ChatsBody> {
                         onTap: () async => Go.to(ChatScreen(
                           showFullChat: widget.chatType == ChatType.current?
                           true : false,
-                          receiverId: data[index].room?.members?.first.id ?? 0,
                           receiverName: data[index].room?.members?.first.name ?? '',
-                          fromHome: 1,
+                          requestModel: RequestModel(
+                              receiverId: '${data[index].room?.members?.first.id}',
+                              fromHome: 1.toString()
+                          ),
                         )),
 
                         child: ChatCard(

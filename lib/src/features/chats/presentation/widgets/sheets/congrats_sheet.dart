@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../generated/assets.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/navigation/navigator.dart';
 import '../../../../../core/widgets/app_text.dart';
@@ -18,7 +20,9 @@ class CongratsSheet extends StatelessWidget {
       lazy: false,
       create: (context) => CongratsCubit()..finishChat(matchReqId),
       child: Column(
+        spacing: 10.h,
         children: [
+          Image.asset(Assets.imagesMarriageBalloons),
           AppText(LocaleKeys.theAppsManagementWillContactYouToArrangeAMeetingUnderTheAppsSupervisionMayGodGrantYouSuccess),
           AppDefaultButton.withBackGroundColor(
               title: LocaleKeys.back,
