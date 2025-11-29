@@ -10,16 +10,13 @@ import '../../../../core/extensions/widget_extension.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/navigation/navigator.dart';
-import '../../../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../core/widgets/app_text.dart';
-import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/image_widgets/custom_image_slider.dart';
 import '../../../../core/widgets/not_contain_data.dart';
 import '../../../../core/widgets/scaffolds/center_card_scaffold.dart';
 import '../../../../core/widgets/choose_from_options.dart';
-import '../../../../core/widgets/sheets/chat_requests_sheet.dart';
 import '../../data/models/home_model.dart';
 import '../cubits/home_cubit.dart';
 import '../widgets/home/filter_icon.dart';
@@ -29,9 +26,8 @@ import '../widgets/home/partner_card.dart';
 import 'parent_details.dart';
 import 'partner_details.dart';
 
-
 class MainView extends StatefulWidget {
-  MainView({super.key});
+  const MainView({super.key});
 
   @override
   State<MainView> createState() => _MainViewState();
@@ -99,10 +95,6 @@ class _MainViewState extends State<MainView> {
       create: (context) => MainViewCubit()..getHomeData(),
       child: BlocBuilder<MainViewCubit, AsyncState<HomeModel>>(
         builder: (context, state) => CenterCardScaffold.withCenteredCard(
-          onRefresh: (context) async{
-            _initSelections();
-            await context.read<MainViewCubit>().getHomeData();
-          },
           bodyTopPadding: 120,
           cardTopPadding: 100,
           upperWidget: SizedBox(
@@ -250,6 +242,11 @@ class _MainViewState extends State<MainView> {
               ],
             ),
           )
+        ).withPullRefresher(
+          onRefresh: () async{
+            _initSelections();
+            await context.read<MainViewCubit>().getHomeData();
+          },
         ),
       ),
     );

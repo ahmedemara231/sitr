@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../config/language/locale_keys.g.dart';
 import '../../../../../../config/res/config_imports.dart';
-import '../../../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../../../core/extensions/sized_box_helper.dart';
 import '../../../../../../core/widgets/app_text.dart';
 import '../../../../../../core/widgets/buttons/default_button.dart';
-import '../../../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../../../core/widgets/icon_widget.dart';
-import '../../../../../../core/widgets/sheets/bloc_success.dart';
-import '../../../cubit/block_user_cubit/un_block_user_cubit.dart';
 import '../../../models/block_user_model.dart';
 
 class BlockedUserItem extends StatelessWidget {
   const BlockedUserItem({
-    super.key, required this.blockUserModel, required this.function,
+    super.key, required this.blockUserModel,
+    required this.onDelete,
   });
 
   final BlockUserModel blockUserModel;
-  final dynamic Function(dynamic) function;
+  final dynamic Function(dynamic) onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -43,33 +39,17 @@ class BlockedUserItem extends StatelessWidget {
               fontWeight: FontWeight.w700,
               color: Colors.black),
           const Spacer(),
-          BlocProvider(
-            create: (context) => UnBlockUserCubit(),
-            child: BlocBuilder<UnBlockUserCubit, AsyncState>(
-              builder: (context, state) {
-                return state.isLoading
-                    ? const CircularProgressIndicator(color: AppColors.primary,)
-                    : DefaultButton(
-                  onTap: () async {
-                    showDefaultBottomSheet(
-                      child: BlocManagerSheet(
-                          id: blockUserModel.id ?? 0,
-                          blocManager: BlocManager.unblock
-                      )
-                    );
-                  },
-                  width: 83.w,
-                  height: 22.h,
-                  borderRadius: BorderRadius.circular(11),
-                  title: LocaleKeys.unblock,
-                  textColor: Colors.white,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.redColor,
-                );
-              },
-            ),
-          )
+          DefaultButton(
+            onTap: () async => onDelete.call(context),
+            width: 83.w,
+            height: 22.h,
+            borderRadius: BorderRadius.circular(11),
+            title: LocaleKeys.unblock,
+            textColor: Colors.white,
+            fontSize: 12.sp,
+            fontWeight: FontWeight.w400,
+            color: AppColors.redColor,
+          ),
         ],
       ),
     );

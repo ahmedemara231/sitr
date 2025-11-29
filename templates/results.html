@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duplicate Finder Results</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body { 
+            padding-top: 20px; 
+            background-color: #f8f9fa;
+        }
+        .container { 
+            max-width: 95%; 
+        }
+        .table-container { 
+            max-height: 400px; 
+            overflow-y: auto; 
+            margin-bottom: 20px; 
+            border: 1px solid #dee2e6; 
+            border-radius: 4px;
+            background: white;
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin: 0;
+        }
+        th, td { 
+            padding: 12px; 
+            text-align: left; 
+            border-bottom: 1px solid #dee2e6; 
+        }
+        th { 
+            background-color: #f8f9fa; 
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .section-title {
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .alert {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4 text-center">CSV Processing Results</h1>
+
+        <h2 class="section-title">Original Data</h2>
+        <div class="table-container">
+            {{ original_data | safe }}
+        </div>
+
+        {% if has_duplicates %}
+            <h2 class="section-title">Duplicate Rows Found</h2>
+            <div class="table-container">
+                {{ duplicate_data | safe }}
+            </div>
+            <a href="/download_duplicates?upload_id={{ upload_id }}" class="btn btn-success btn-lg mt-3">
+                <i class="fas fa-download"></i> Download Duplicates CSV
+            </a>
+        {% else %}
+            <div class="alert alert-info mt-5" role="alert">
+                <strong>No duplicate rows found.</strong> All rows in your CSV are unique.
+            </div>
+        {% endif %}
+
+        <div class="mt-4">
+            <a href="/" class="btn btn-secondary">Upload Another CSV</a>
+        </div>
+    </div>
+</body>
+</html>
+
+

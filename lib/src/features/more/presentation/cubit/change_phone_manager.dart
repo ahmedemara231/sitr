@@ -41,7 +41,7 @@ class ChangePhoneManagerCubit extends AsyncCubit{
   Future<void> manage({
     required Phase phase,
     String? phone, String? code,
-    FutureOr<void> Function(dynamic data)? onSuccess
+    FutureOr<void> Function(String msg)? onSuccess
 })async{
     await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call(
@@ -51,7 +51,7 @@ class ChangePhoneManagerCubit extends AsyncCubit{
                 body: _getBody(phase, phone: phone, code: code),
             )
         ),
-        onSuccess: (data) => onSuccess?.call(data)
+        onSuccess: (data) => onSuccess?.call(data.msg)
     );
   }
 }

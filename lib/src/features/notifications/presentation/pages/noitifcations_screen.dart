@@ -8,8 +8,10 @@ import 'package:pagify/pagify.dart';
 import '../../../../../generated/assets.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/extensions/padding_extension.dart';
+import '../../../../core/extensions/widget_extension.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/widgets/app_pagify.dart';
+import '../../../../core/widgets/custom_messages.dart';
 import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/icon_widget.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
@@ -57,10 +59,7 @@ class _NotificationBodyState extends State<NotificationBody> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      onRefresh: (context) {
-        controller = PagifyController<NotificationModel>();
-        random.value = Random().nextDouble();
-      },
+      isScrollable: false,
       appBarTitle: LocaleKeys.notifications,
       actions: [
         ValueListenableBuilder(
@@ -75,6 +74,7 @@ class _NotificationBodyState extends State<NotificationBody> {
                       if (res.isSuccess()) {
                         controller.clear();
                         Go.back();
+                        MessageUtils.showSnackBar(res.getOrThrow().msg);
                       }
                     },
                     title: LocaleKeys.areYouSureToDeleteAllNotifications,
@@ -88,7 +88,7 @@ class _NotificationBodyState extends State<NotificationBody> {
         valueListenable: random,
         builder: (context, value, child) => AppPagify<NotificationModel>(
           key: UniqueKey(),
-          asyncCall: (context, page) => NotificationsData.getNotifications(page),
+          asyncCall: (context, page)async => await NotificationsData.getNotifications(page),
           onUpdateStatus: (state) {
             if(state.isSuccess){
               _showDeleteAll.value = controller.getItemsLength >= 2;
@@ -104,6 +104,7 @@ class _NotificationBodyState extends State<NotificationBody> {
                     if (res.isSuccess()) {
                       controller.removeWhere((e) => e.id == id);
                       Go.back();
+                      MessageUtils.showSnackBar(res.getOrThrow().msg);
                     }
                   },
                   title: LocaleKeys.areYouSureToDeleteThisNotification,
@@ -113,7 +114,10 @@ class _NotificationBodyState extends State<NotificationBody> {
           ).paddingBottom(10.h),
           pagifyController: controller,
         ).defaultScreenPadding(),
-      ),
+      ).withPullRefresher(onRefresh: () {
+        controller = PagifyController<NotificationModel>();
+        random.value = Random().nextDouble();
+      }),
     );
   }
 }

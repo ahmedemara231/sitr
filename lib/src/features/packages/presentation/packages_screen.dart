@@ -1,12 +1,11 @@
-import 'dart:async';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:pagify/pagify.dart';
 import '../../../config/language/locale_keys.g.dart';
+import '../../../core/extensions/context_extension.dart';
+import '../../../core/extensions/widget_extension.dart';
 import '../../../core/widgets/app_pagify.dart';
 import '../../../core/widgets/app_text.dart';
-import '../../../core/widgets/pull_refresher.dart';
 import '../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../core/widgets/sheets/payment_sheet.dart';
 import '../data/packages_data.dart';
@@ -34,24 +33,29 @@ class PackagesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final ValueNotifier<double> random = ValueNotifier(Random().nextDouble());
     return AppScaffold(
+        isScrollable: false,
         appBarTitle: LocaleKeys.packages,
-        onRefresh: (context) => random.value = Random().nextDouble(),
         body: Column(
           children: [
             if(isInAuth)
               AppText(LocaleKeys.inOrderToRegisterOtherDataYouMustSubscribeToOneOfTheAvailablePackages, textAlign: TextAlign.center,),
             ValueListenableBuilder(
               valueListenable: random,
-              builder: (context, val, child) => AppPagify<Package>(
-                  key: UniqueKey(),
-                  asyncCall: (ctx, page) async => await PackagesData.getPackages(),
-                  itemBuilder: (ctx, data, index, element) => PackageWidget(
-                    type: type,
-                    paymentMethods: paymentMethods,
-                    isInAuth: isInAuth,
-                    package: element,
-                  ),
-                  pagifyController: PagifyController<Package>(),
+              builder: (context, val, child) => SizedBox(
+                height: context.height * 0.7,
+                child: AppPagify<Package>(
+                    key: UniqueKey(),
+                    asyncCall: (ctx, page) async => await PackagesData.getPackages(page),
+                    itemBuilder: (ctx, data, index, element) => PackageWidget(
+                      type: type,
+                      paymentMethods: paymentMethods,
+                      isInAuth: isInAuth,
+                      package: element,
+                    ),
+                    pagifyController: PagifyController<Package>(),
+                ).withPullRefresher(
+                  onRefresh: () => random.value = Random().nextDouble(),
+                ),
               ),
             )
           ],

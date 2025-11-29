@@ -40,12 +40,9 @@ extension TextWithIcon on Text {
 }
 
 extension Refresh on Widget{
-  Widget withPullRefresher(BuildContext context, {required FutureOr<void> Function(BuildContext context) onRefresh}){
+  Widget withPullRefresher({required FutureOr<void> Function() onRefresh}){
     return PullRefresherWidget(
-        onRefresh: () async {
-          log('test');
-          await onRefresh.call(context);
-        },
+        onRefresh: () async => await onRefresh.call(),
         child: this
     );
   }

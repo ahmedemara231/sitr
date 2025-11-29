@@ -14,9 +14,11 @@ import '../base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../dropinity/helpers/extensions/object.dart';
 import '../extensions/bool.dart';
 import '../extensions/context_extension.dart';
+import '../extensions/num.dart';
 import '../extensions/padding_extension.dart';
 import '../extensions/sized_box_helper.dart';
 import '../extensions/string_extension.dart';
+import '../extensions/widget_extension.dart';
 import '../helpers/status_builder.dart';
 import '../helpers/user_type_enum.dart';
 import '../navigation/navigator.dart';
@@ -113,11 +115,6 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
           }
       ),
       child: CenterCardScaffold.withCenteredCard(
-        onRefresh: (context) => widget.cubit.getProfile(
-            onSuccess: (userResult) {
-              _onSuccess(userResult);
-            }
-        ),
         upperWidget: BlocBuilder<T, AsyncState<UserModel>>(
           builder: (context, state) => Stack(
             alignment: Alignment.topCenter,
@@ -146,8 +143,9 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                 ProfileAppBarActions(
                     onBlock: (context) => showDefaultBottomSheet(
                       child: BlocManagerSheet(
-                          id: state.data.id!,
-                          blocManager: BlocManager.block
+                        id: state.data.id!,
+                        blocManager: BlocManager.block,
+                        onPress: () => 2.pop(),
                       ),
                     ),
                     onReport: (context) => showDefaultBottomSheet(
@@ -238,6 +236,14 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
             ),
           ),
         ),
+      ).withPullRefresher(
+        onRefresh: (){
+             widget.cubit.getProfile(
+              onSuccess: (userResult) {
+                _onSuccess(userResult);
+              }
+          );
+        }
       ),
     );
   }

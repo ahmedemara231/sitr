@@ -6,7 +6,7 @@ import '../../../../core/notification/notification_service.dart';
 class LogoutCubit extends AsyncCubit{
   LogoutCubit() : super(null);
 
-  Future<void> logout({required void Function() onSuccess})async{
+  Future<void> logout({required void Function(String msg) onSuccess})async{
     await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call(
             CrudBaseParmas(
@@ -15,7 +15,7 @@ class LogoutCubit extends AsyncCubit{
               queryParameters: {'device_id' : NotificationService.deviceToken}
             )
         ),
-      onSuccess: (data) => onSuccess.call()
+      onSuccess: (data) => onSuccess.call(data.msg)
     );
   }
 }

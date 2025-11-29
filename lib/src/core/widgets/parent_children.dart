@@ -51,7 +51,7 @@ class ParentChildren extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppPagify<Opportunity>(
-        asyncCall: (context, page)async => await HomeData.getParentChildren(id),
+        asyncCall: (context, page)async => await HomeData.getParentChildren(id, page),
         itemBuilder: (context, data, index, element) => InkWell(
           onTap: () => Go.to(_individualDetailsScreenRoute(element.id ?? 0)),
           child: BlocProvider(

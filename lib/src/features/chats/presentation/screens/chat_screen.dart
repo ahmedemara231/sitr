@@ -211,11 +211,10 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
     return ChatBottomBar(
         onUpload: (url){
-          log('the final url is $url');
           socketType.sendMessage(
               {
                 'room_id' : model.room?.id,
-                'body' : url,
+                'body' : url.split("/").last,
                 'type' : 'image'
               }
           );
@@ -232,8 +231,8 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
 
 
-  // 102|sCoXO5y4Op3PEz95TvUhgr0ISe3OVdpRI30A3jaq female
-  // 67|IAltRLoGm0Ql9H68MjeoF8QYkofLAmWRXWGqcSpv male
+  // 115|09N2VmQioc78p3SW7mXip38b0i7vd7HVNsNemq6X female
+  // 114|1bMeD26fYHWl2e85f2oUnhlvDynkHOVvcqVVzQVn male
   void Function() _manageSuccessState(ChatModel data) {
     final timer = data.matchRequest!.timer;
     final stage = data.matchRequest!.stage!.value?.getCurrentStageAsStagesEnum;
@@ -375,20 +374,6 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
     }
 
-    else if(userStatus.isParentExchangeNumbers){
-      ChatSheetManager.show(
-        child: BlocProvider.value(
-          value: context.read<ChatCubit>(),
-          child: EnterParentPhoneSheet(
-              onSubmit: (context, phone)async{
-                await context.read<ChatCubit>().parentsExchangeNumbers(parentPhone: phone);
-                Go.back();
-              }
-          ),
-        ),
-      );
-    }
-
     else if(stage!.isParentsExchangeNumber){
       ChatSheetManager.show(
         child: BlocProvider.value(
@@ -521,15 +506,8 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     return MultiBlocListener(
       listeners: [
         BlocListener<ChatNotificationCubit, ChatNotificationState>(
-          listener: (context, state) async {
-            log('dataaaaa ${state.notification?.data}');
-            if(state.notification?.data['type'] == 'match_rejected_when_timer_ended'){
-              Go.offAll(const HomeScreen());
-
-            }else{
-              _showBased(state.notification!);
-            }
-          }
+          listener: (context, state) async =>
+              _showBased(state.notification!),
         ),
 
         // show toast based new stage

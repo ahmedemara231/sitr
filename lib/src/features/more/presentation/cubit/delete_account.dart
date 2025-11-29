@@ -6,7 +6,7 @@ import '../../../../core/notification/notification_service.dart';
 class DeleteAccountCubit extends AsyncCubit{
   DeleteAccountCubit() : super(null);
 
-  Future<void> deleteAccount({required void Function() onSuccess})async{
+  Future<void> deleteAccount({required void Function(String msg) onSuccess})async{
     await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call(
             CrudBaseParmas(
@@ -15,7 +15,7 @@ class DeleteAccountCubit extends AsyncCubit{
                 body: {'device_id' : NotificationService.deviceToken}
             )
         ),
-        onSuccess: (data) => onSuccess.call()
+        onSuccess: (data) => onSuccess.call(data.msg)
     );
   }
 }

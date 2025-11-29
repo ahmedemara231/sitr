@@ -3,9 +3,9 @@ part of 'notification_service.dart';
 enum NotificationType {
   // 🔔 Admin & System Notifications
   adminNotify('admin_notify', navigation: HomeNavigation()),
-  block('block', navigation: UpdateNavigation()),
+  block('block', navigation: BlockNavigation()),
   unblocked('unblocked', navigation: UpdateNavigation()),
-  userUnblockedYou('user_unblocked_you', navigation: UserProfileNavigation()),
+  userUnblockedYou('user_unblocked_you', navigation: UserUnblockedYou()),
 
   // 📋 Complaints
   complaintReply('complaint_reply', navigation: ComplaintNavigation()),
@@ -46,6 +46,7 @@ enum NotificationType {
   adminMeetingRequestRejected('admin_meeting_request_rejected', navigation: MatchRequestNavigation()),
   parentMeetingRequestRejected('parent_meeting_request_rejected', navigation: MatchRequestNavigation()),
   parentIndividualApprovalRejected('parent_individual_approval_rejected', navigation: MatchRequestNavigation()),
+  matchRejectedWhenTimerEnded('match_rejected_when_timer_ended', navigation: HomeNavigation()),
 
   matchRequestCompleted('match_request_completed', navigation: MatchRequestNavigation()),
   chattingTimerEnded('chatting_timer_ended', navigation: MatchRequestNavigation()),

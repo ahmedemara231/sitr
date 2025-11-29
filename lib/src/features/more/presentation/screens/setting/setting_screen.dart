@@ -13,6 +13,7 @@ import '../../../../../core/shared/models/user_models/individual/individual_user
 import '../../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../../core/widgets/app_text.dart';
+import '../../../../../core/widgets/custom_messages.dart';
 import '../../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../../core/widgets/sheets/delete_sheet.dart';
@@ -42,7 +43,10 @@ class SettingScreen extends StatelessWidget {
             initialValue: UserModel.currentUser as IndividualUserModel,
             onClick: (context, user) => context.read<EditProfileCubit>().editProfile(
                 body: user,
-                onSuccess: () {}
+                onSuccess: (msg) {
+                  MessageUtils.showSnackBar(msg);
+                  Go.back();
+                }
             )
         )) : null,
       ),
@@ -186,9 +190,10 @@ class SettingScreen extends StatelessWidget {
                 create: (context) => DeleteAccountCubit(),
                 child: DeleteSheet(
                     asyncCall: (context) => context.read<DeleteAccountCubit>().deleteAccount(
-                        onSuccess: () {
+                        onSuccess: (msg) async{
+                          await UserCubit.instance.logout();
+                          MessageUtils.showSnackBar(msg);
                           Go.offAll(const LoginScreen());
-                          UserCubit.instance.logout();
                         }
                     ),
                     title: LocaleKeys.areYouSureYouWantToDeleteYourAccount,

@@ -6,6 +6,7 @@ import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/padding_extension.dart';
+import '../../../../core/extensions/widget_extension.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/shared/models/user_models/parent/parent_model.dart';
@@ -50,11 +51,6 @@ class _ParentProfileState extends State<ParentProfile> {
       ),
       child: BlocBuilder<GetProfileCubit, AsyncState<UserModel>>(
         builder: (context, state) => CenterCardScaffold.withCenteredCard(
-            onRefresh: (context) => context.read<GetProfileCubit>().getProfile(
-                onSuccess: (user){
-                  _onSuccess(user);
-                }
-            ),
             upperWidget: Stack(
               alignment: Alignment.topCenter,
               children: [
@@ -122,6 +118,14 @@ class _ParentProfileState extends State<ParentProfile> {
                 ),
               ],
             )
+        ).withPullRefresher(
+          onRefresh: () {
+           context.read<GetProfileCubit>().getProfile(
+                onSuccess: (user){
+                  _onSuccess(user);
+                }
+            );
+          }
         ),
       ),
     );

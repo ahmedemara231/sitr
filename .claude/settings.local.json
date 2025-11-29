@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(for file in ./more/presentation/cubit/contact_us_cubit/contact_us_cubit.dart ./more/presentation/cubit/terms_condition_and_about_cubit/terms_condition_and_about_cubit.dart ./more/presentation/cubit/complaint_cubit/complaint_details_cubit.dart ./more/presentation/cubit/complaint_cubit/add_complaint_cubit.dart ./more/presentation/cubit/logout_cubit.dart ./more/presentation/cubit/block_user_cubit/un_block_user_cubit.dart ./more/presentation/cubit/change_notify_cubit.dart ./more/presentation/cubit/delete_account.dart)",
+      "Bash(for file in ./more/presentation/cubit/change_phone_manager.dart ./more/presentation/cubit/get_profile.dart ./more/presentation/cubit/my_package_cubit.dart ./more/presentation/cubit/wallet_cubit/fetch_wallet_cubit.dart ./more/presentation/cubit/wallet_cubit/charge_wallet_cubit.dart ./more/presentation/cubit/edit_child_data_cubit.dart ./more/presentation/cubit/get_child_profile.dart ./packages/presentation/cubits/subscribe_to_package.dart)",
+      "Bash(for file in ./chats/presentation/cubits/start_chat.dart ./chats/presentation/cubits/app_stages_cubit.dart ./chats/presentation/cubits/upload_image.dart ./chats/presentation/cubits/get_tips_cubit.dart ./chats/presentation/cubits/get_chats_cubit.dart ./chats/presentation/cubits/pay_request.dart ./main_screen/presentation/cubits/get_partner_info_cubit.dart ./main_screen/presentation/cubits/home_cubit.dart)",
+      "Bash(./gradlew:*)",
+      "Bash(find:*)",
+      "Bash(keytool:*)",
+      "Bash(flutter clean:*)",
+      "Bash(flutter pub get:*)",
+      "Bash(cat:*)",
+      "Bash(rm:*)",
+      "Bash(flutter build:*)",
+      "Bash(test:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

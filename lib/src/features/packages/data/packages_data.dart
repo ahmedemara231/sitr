@@ -17,11 +17,12 @@ class PackagesData{
     }
   }
 
- static Future<(List<Package>, PaginationData)> getPackages()async{
+ static Future<(List<Package>, PaginationData)> getPackages(int page)async{
   return (await injector<NetworkService>().callApi(
         NetworkRequest(
-            method: RequestMethod.get,
-            path: _getEndPoint(),
+          method: RequestMethod.get,
+          path: _getEndPoint(),
+          queryParameters: {'page' : page}
         ),
 
       mapper: (json) => (

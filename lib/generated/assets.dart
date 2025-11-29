@@ -26,6 +26,7 @@ class Assets {
   static const String imagesComplaint = 'assets/images/complaint.png';
   static const String imagesDeleteIcon = 'assets/images/delete_icon.png';
   static const String imagesLogoutImage = 'assets/images/logout_image.png';
+  static const String imagesMarriageBalloons = 'assets/images/marriage_balloons.png';
   static const String imagesSuccessPartener = 'assets/images/successPartener.png';
   static const String loadingLoading = 'assets/lottie/loading/loading.json';
   static const String loadingLoading2 = 'assets/lottie/loading/loading_2.json';

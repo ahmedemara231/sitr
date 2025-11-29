@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -85,6 +86,12 @@ class DioService implements NetworkService {
   }
 
   dynamic _handleError(DioException error) {
+    log('================================================================================');
+    log(error.type.toString());
+    log(error.response!.statusCode.toString());
+    log(error.response!.statusMessage.toString());
+    log(error.response!.data.toString());
+
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:

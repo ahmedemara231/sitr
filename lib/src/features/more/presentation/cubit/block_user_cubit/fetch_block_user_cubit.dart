@@ -1,27 +1,18 @@
-import '../../../../../config/res/config_imports.dart' show injector;
-import '../../../../../core/base_crud/code/domain/base_domain_imports.dart';
-import '../../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
-import '../../../../../core/network/api_endpoints.dart';
-import '../../../../../core/network/network_service.dart';
-import '../../models/block_user_model.dart';
-
-class FetchBlockUserCubit extends AsyncCubit<List<BlockUserModel>>{
-  FetchBlockUserCubit():super([]);
-  Future<void> fetchBlockUser() async {
-    await executeAsyncWithBaseModel(
-        operation: () async => await baseCrudUseCase.call<List<BlockUserModel>>(CrudBaseParmas(
-          api: ApiConstants.blockUser,
-          httpRequestType: HttpRequestType.get,
-          mapper: (data) => (data['data'] as List)
-                .map<BlockUserModel>(
-                    (e) => BlockUserModel.fromJson(e))
-                .toList()
-        )));
-  }
-
-
-  void removeItemById(int id){
-    final updatedList=state.data.where((element) => element.id!=id).toList();
-    setSuccess(data: updatedList);
-  }
-}
+// import '../../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+// import '../../../data/more_data.dart';
+// import '../../models/block_user_model.dart';
+//
+// class FetchBlockUserCubit extends AsyncCubit<List<BlockUserModel>>{
+//   FetchBlockUserCubit():super([]);
+//   Future<void> fetchBlockUser() async {
+//     await executeAsync(
+//         operation: () async => await BlockUserData.getBlockedUsers()
+//     );
+//   }
+//
+//
+//   void removeItemById(int id){
+//     final updatedList=state.data.where((element) => element.id!=id).toList();
+//     setSuccess(data: updatedList);
+//   }
+// }

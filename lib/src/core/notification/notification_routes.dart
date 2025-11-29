@@ -1,6 +1,7 @@
 part of 'notification_service.dart';
 
 class NotificationRoutes {
+
   static void navigateByType(Map<String, dynamic> data) {
     final String type = data['type'];
     final notificationType = type.getType;
@@ -24,7 +25,7 @@ class HomeNavigation implements NotificationNavigation {
 
   @override
   void navigate({required Map<String, dynamic> data}) {
-    // TODO: Replace with actual home navigation logic
+    Go.offAll(const HomeScreen());
   }
 }
 
@@ -56,24 +57,39 @@ class UserProfileNavigation implements NotificationNavigation {
 
   @override
   void navigate({required Map<String, dynamic> data}) {
-    Go.to(ParentDetailsScreen(id: data['visitor_id']));
+    //لازم اعرف هو individual ولا parent
+    // Go.to();
+    // Go.to((id: data['visitor_id']));
   }
 }
 
-// ----------------- Match Requests -----------------
+// ----------------- Match Requests / Chat -----------------
 class MatchRequestNavigation implements NotificationNavigation {
   const MatchRequestNavigation();
 
   @override
   void navigate({required Map<String, dynamic> data}) {
-    // TODO: Navigate to specific match request or chat details
-    // final requestId = data['request_id'];
+    // final receiver = data;
+    // Go.to(ChatScreen(
+    //     receiverId: receiverId,
+    //     receiverName: receiverName,
+    //     fromHome: fromHome
+    // ));
   }
 }
 
 // ----------------- Packages -----------------
 class PackagesNavigation implements NotificationNavigation {
   const PackagesNavigation();
+
+  @override
+  void navigate({required Map<String, dynamic> data}) {
+    Go.to(const MyPackagesScreen());
+  }
+}
+
+class PackageExpiredNavigation implements NotificationNavigation {
+  const PackageExpiredNavigation();
 
   @override
   void navigate({required Map<String, dynamic> data}) {
@@ -89,6 +105,28 @@ class SetrCodeNavigation implements NotificationNavigation {
   void navigate({required Map<String, dynamic> data}) {
     // TODO: Navigate to Setr code screen or renewal page
     final codeId = data['code_id'];
+  }
+}
+
+
+// ----------------- Blocking -----------------
+class BlockNavigation implements NotificationNavigation {
+  const BlockNavigation();
+
+  @override
+  void navigate({required Map<String, dynamic> data}) {
+    UserCubit.instance.logout();
+    Go.offAll(const LoginScreen());
+  }
+}
+
+class UserUnblockedYou implements NotificationNavigation {
+  const UserUnblockedYou();
+
+  @override
+  void navigate({required Map<String, dynamic> data}) {
+    //لازم اعرف هو individual ولا parent
+    // Go.to();
   }
 }
 

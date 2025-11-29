@@ -7,7 +7,6 @@ enum UserRequestStatus{
   rejected(2, 'rejected'),
   continueStage(3, 'continue_stage'),
   parentMeeting(4, 'parent_meeting'),
-  parentExchangeNumbers(5, 'parent_exchange_numbers'),
   undefined(6, 'undefined');
 
   final int status;
@@ -22,20 +21,27 @@ extension CheckUserRequestStatus on UserRequestStatus{
   bool get isRejected => this == UserRequestStatus.rejected;
   bool get isContinueStage => this == UserRequestStatus.continueStage;
   bool get isParentMeeting => this == UserRequestStatus.parentMeeting;
-  bool get isParentExchangeNumbers => this == UserRequestStatus.parentExchangeNumbers;
   bool get isUndefined => this == UserRequestStatus.undefined;
 }
 
 enum ChatStages{
+  // full individual - DIRECT MATCH
   newChat(-1, 'new'),
   chatting(0, 'chatting'),
   shariaComplaintMeeting(1, 'sharia_complaint_meeting'),
   istikharah(2, 'istikharah'),
   informParents(3, 'inform_parents'),
+
+  // full parent - FULL PARENT MATCH
+  fullParentConversation(8, 'full_parent_conversation'),
+
   parentsExchangeNumber(4, 'parent_exchange_numbers'),
   engagement(5, 'engagement'),
-  individualParent(6, 'individual_parent'),
-  rejected(7, 'rejected');
+
+
+  // parent & individual - PARENT MATCH
+  parentIndividualConversation(6, 'parent_individual_conversation'),
+  parentIndividualApproval(7, 'parent_individual_approval');
 
   final int stage;
   final String stageText;
@@ -51,7 +57,6 @@ extension CheckChatStages on ChatStages{
   bool get isInformParents => this == ChatStages.informParents;
   bool get isParentsExchangeNumber => this == ChatStages.parentsExchangeNumber;
   bool get isEngagement => this == ChatStages.engagement;
-  bool get isIndividualParent => this == ChatStages.individualParent;
 }
 
 

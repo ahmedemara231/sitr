@@ -58,14 +58,14 @@ class ChangePhoneSheetBody extends StatelessWidget {
                         phase: Phase.checkNew,
                         code: code,
                           phone: phone,
-                          onSuccess: (data) async{
+                          onSuccess: (msg) async{
                             Go.back();
                             final newUser = UserCubit.instance.user.copyWith(phone: phone);
                             await UserCubit.instance.updateUser(newUser);
                             showDefaultBottomSheet(child: SuccessSheet(
                                 isInAuth: false,
                               upperText: AppText(
-                                LocaleKeys.phoneChangedSuccessfully,
+                                msg,
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w500,
                               ),

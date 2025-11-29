@@ -5,7 +5,9 @@ import '../../../../../generated/assets.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/extensions/context_extension.dart';
+import '../../../../core/extensions/num.dart';
 import '../../../../core/extensions/padding_extension.dart';
+import '../../../../core/extensions/widget_extension.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/shared/models/user_models/parent/parent_model.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
@@ -32,7 +34,6 @@ class ParentDetailsScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => GetPartnerInfoCubit(id)..getProfile(),
       child: CenterCardScaffold.withCenteredCard(
-        onRefresh: (context) => context.read<GetPartnerInfoCubit>().getProfile(),
           upperWidget: Stack(
             alignment: Alignment.topCenter,
             children: [
@@ -59,8 +60,9 @@ class ParentDetailsScreen extends StatelessWidget {
               ProfileAppBarActions(
                   onBlock: (context) => showDefaultBottomSheet(
                     child: BlocManagerSheet(
-                        id: id,
-                        blocManager: BlocManager.block
+                      id: id,
+                      blocManager: BlocManager.block,
+                      onPress: () => 2.pop(),
                     ),
                   ),
                   onReport: (context) => showDefaultBottomSheet(
@@ -120,6 +122,8 @@ class ParentDetailsScreen extends StatelessWidget {
               ),
 
             ],
+          ).withPullRefresher(
+            onRefresh: () => context.read<GetPartnerInfoCubit>().getProfile(),
           )
       ),
     );

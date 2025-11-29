@@ -6,6 +6,7 @@ import 'package:pagify/pagify.dart';
 
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/extensions/padding_extension.dart';
+import '../../../../core/extensions/widget_extension.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/widgets/app_pagify.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
@@ -22,20 +23,22 @@ class FilterResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final ValueNotifier<double> random = ValueNotifier(Random().nextDouble());
     return AppScaffold(
-        onRefresh: (c) => random.value = Random().nextDouble(),
+        isScrollable: false,
         appBarTitle: LocaleKeys.searchResult,
         body: ValueListenableBuilder(
           valueListenable: random,
           builder: (context, value, child) => AppPagify(
             key: UniqueKey(),
             pagifyController: PagifyController(),
-            asyncCall: (context, page) async => await HomeData.filter(filterModel),
+            asyncCall: (context, page) async => await HomeData.filter(filterModel, page),
             itemBuilder: (context, data, i, opportunity) => InkWell(
               onTap: () => Go.to(IndividualDetailsScreen.opportunity(
                 id: opportunity?.id ?? 0,
               )),
               child: PartnerCard.individual(opportunity: opportunity).paddingBottom(10.h),
-          )),
+          )).withPullRefresher(
+            onRefresh: () => random.value = Random().nextDouble(),
+          ),
         )
     );
   }

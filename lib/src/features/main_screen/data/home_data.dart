@@ -9,12 +9,14 @@ import 'models/filter_model.dart';
 import 'models/home_model.dart';
 
 class HomeData{
-  static Future<(List<Opportunity>, PaginationData)> filter(FilterModel filter)async{
+  static Future<(List<Opportunity>, PaginationData)> filter(FilterModel filter, int page)async{
     return (await injector<NetworkService>().callApi(
         NetworkRequest(
           method: RequestMethod.get,
           path: ApiConstants.filter,
-          queryParameters: filter.toJson()
+          queryParameters: filter.toJson()..addAll({
+            'page' : page
+          })
         ),
         mapper: (data) => (
         (data['data'] as List)
@@ -28,13 +30,14 @@ class HomeData{
     )).data;
   }
 
-  static Future<(List<Opportunity>, PaginationData)> getParentChildren(int? parentId)async{
+  static Future<(List<Opportunity>, PaginationData)> getParentChildren(int? parentId, page)async{
     return (await injector<NetworkService>().callApi(
         NetworkRequest(
-          method: RequestMethod.get,
-          path: parentId.isNull?
-          ApiConstants.getChildren :
-          ApiConstants.opportunityChildren+parentId.toString(),
+            method: RequestMethod.get,
+            path: parentId.isNull?
+            ApiConstants.getChildren :
+            ApiConstants.opportunityChildren+parentId.toString(),
+            queryParameters: {'page' : page}
         ),
         mapper: (data) => (
             (data['data'] as List)

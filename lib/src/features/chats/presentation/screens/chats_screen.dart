@@ -9,11 +9,8 @@ import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/extensions/string_extension.dart';
 import '../../../../core/extensions/widget_extension.dart';
-import '../../../../core/helpers/helpers.dart';
-import '../../../../core/helpers/loading_manager.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/navigation/navigator.dart';
-import '../../../../core/widgets/custom_loading.dart';
 import '../../../../core/widgets/not_contain_data.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../core/widgets/choose_from_options.dart';
@@ -21,7 +18,6 @@ import '../../data/models/chat_model.dart';
 import '../cubits/get_chats_cubit.dart';
 import '../widgets/chat_card.dart';
 import 'chat_screen.dart';
-import 'dart:developer';
 
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});
@@ -115,29 +111,32 @@ class _ChatsBodyState extends State<_ChatsBody> {
       child: BlocBuilder<GetChatsCubit, AsyncState<List<ChatModel>>>(
         builder: (context, state) => StatusBuilder(
           data: state,
-          onSuccess: (data, context) => data.isNotEmpty? Column(
-            spacing: 10.h,
-            children: List.generate(
-                data.length,
-                    (index) => InkWell(
-                      onTap: () async => Go.to(ChatScreen(
-                        showFullChat: widget.chatType == ChatType.current?
-                        true : false,
-                        receiverId: data[index].room?.members?.first.id ?? 0,
-                        receiverName: data[index].room?.members?.first.name ?? '',
-                        fromHome: 1,
-                      )),
+          onSuccess: (data, context) => data.isNotEmpty? SingleChildScrollView(
+            child: Column(
+              children: List.generate(
+                  data.length,
+                      (index) => InkWell(
+                        onTap: () async => Go.to(ChatScreen(
+                          showFullChat: widget.chatType == ChatType.current?
+                          true : false,
+                          receiverId: data[index].room?.members?.first.id ?? 0,
+                          receiverName: data[index].room?.members?.first.name ?? '',
+                          fromHome: 1,
+                        )),
 
-                      child: ChatCard(
-                          url: data[index].room?.members?.first.image ?? '',
-                          time: data[index].room?.lastMessageCreatedDt ?? '',
-                          partnerName: data[index].room?.members?.first.name ?? '',
-                          subTitle: data[index].room!.lastMessageBody.isNotNull?
-                          data[index].room!.lastMessageBody!.isImage?
-                          LocaleKeys.photo : data[index].room!.lastMessageBody! : '',
-                      ),
-                    )
-            ),
+                        child: ChatCard(
+                            url: data[index].room?.members?.first.image ?? '',
+                            time: data[index].room?.lastMessageCreatedDt ?? '',
+                            partnerName: data[index].room?.members?.first.name ?? '',
+                            subTitle: data[index].room!.lastMessageBody.isNotNull?
+                            data[index].room!.lastMessageBody!.isImage?
+                            LocaleKeys.photo : data[index].room!.lastMessageBody! : '',
+                        ).paddingBottom(10.h),
+                      )
+              ),
+            )
+          ).withPullRefresher(
+            onRefresh: () => context.read<GetChatsCubit>().getChat(widget.chatType),
           ) : const NotContainData(),
         ))
     );

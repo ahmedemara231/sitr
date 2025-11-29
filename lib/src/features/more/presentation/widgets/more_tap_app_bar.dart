@@ -15,6 +15,7 @@ import '../../../../core/navigation/navigator.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../core/widgets/app_bottom_sheet.dart';
 import '../../../../core/widgets/app_text.dart';
+import '../../../../core/widgets/custom_messages.dart';
 import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/riyal_price_text.dart';
 import '../../../auth/imports.dart';
@@ -182,12 +183,14 @@ class MoreTabAppBar extends StatelessWidget {
                                 child: AppBottomSheet.large(
                                     cancelBackgroundColor: AppColors.cancelColor,
                                     asyncCall: (context) => context.read<LogoutCubit>().logout(
-                                        onSuccess: () {
-                                          Go.offAll(const LoginScreen());
+                                        onSuccess: (msg) {
                                           UserCubit.instance.logout();
                                           if(Helpers.zegoService.isNotNull){
                                             Helpers.zegoService.onUserLogout();
                                           }
+
+                                          MessageUtils.showSnackBar(msg);
+                                          Go.offAll(const LoginScreen());
                                         }
                                     ),
                                     btnTitle: LocaleKeys.confirm,

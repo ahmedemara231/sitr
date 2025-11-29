@@ -10,15 +10,18 @@ import '../../navigation/navigator.dart';
 import '../../shared/block_user_cubit.dart';
 import '../app_bottom_sheet.dart';
 import '../app_text.dart';
+import '../custom_messages.dart';
 import '../svg_pic.dart';
 
 enum BlocManager {block, unblock}
 class BlocManagerSheet extends StatelessWidget {
   final BlocManager blocManager;
   final int id;
+  final void Function() onPress;
   const BlocManagerSheet({super.key,
     required this.id,
     required this.blocManager,
+    required this.onPress,
   });
 
   @override
@@ -29,9 +32,26 @@ class BlocManagerSheet extends StatelessWidget {
         BlocProvider(create: (context) => UnBlockUserCubit()),
       ],
       child: AppBottomSheet.large(
-          asyncCall: (context) => blocManager == BlocManager.unblock?
-          context.read<UnBlockUserCubit>().unblockUser(userId: id) :
-          context.read<BlockUserCubit>().block(id),
+          asyncCall: (context) async{
+            if(blocManager == BlocManager.unblock){
+              await context.read<UnBlockUserCubit>().unblockUser(
+                userId: id,
+                onSuccess: (msg){
+                  MessageUtils.showSnackBar(msg);
+                }
+              );
+
+            }else{
+              await context.read<BlockUserCubit>().block(
+                  id: id,
+                  onSuccess: (msg){
+                    MessageUtils.showSnackBar(msg);
+                  }
+              );
+            }
+
+            onPress.call();
+          },
           btnTitle: LocaleKeys.confirm,
           cancelBackgroundColor: AppColors.pink,
           upperWidget: Column(

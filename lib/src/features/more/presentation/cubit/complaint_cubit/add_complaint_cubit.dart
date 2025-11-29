@@ -27,7 +27,7 @@ class AddComplaintCubit extends AsyncCubit<bool> {
         mapper: (data) => true,
       )),
       onSuccess: (data) {
-        MessageUtils.showSnackBar(LocaleKeys.successDone);
+        MessageUtils.showSnackBar(data.msg);
         2.pop();
       },
     );

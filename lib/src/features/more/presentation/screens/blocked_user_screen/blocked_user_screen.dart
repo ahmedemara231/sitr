@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pagify/pagify.dart';
 import '../../../../../config/language/locale_keys.g.dart';
-import '../../../../../config/res/config_imports.dart';
-import '../../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
-import '../../../../../core/extensions/padding_extension.dart';
-import '../../../../../core/extensions/sized_box_helper.dart';
-import '../../../../../core/helpers/status_builder.dart';
-import '../../../../../core/widgets/custom_app_bar.dart';
-import '../../../../../core/widgets/not_contain_data.dart';
-import '../../cubit/block_user_cubit/fetch_block_user_cubit.dart';
+import '../../../../../core/navigation/navigator.dart';
+import '../../../../../core/widgets/app_pagify.dart';
+import '../../../../../core/widgets/default_bottom_sheet.dart';
+import '../../../../../core/widgets/scaffolds/app_scaffold.dart';
+import '../../../../../core/widgets/sheets/bloc_success.dart';
+import '../../../data/more_data.dart';
 import '../../models/block_user_model.dart';
 import 'widgets/blocked_user_item.dart';
 
@@ -20,40 +18,36 @@ class BlockedUserScreen extends StatefulWidget {
 }
 
 class _BlockedUserScreenState extends State<BlockedUserScreen> {
+  late final PagifyController<BlockUserModel> _controller;
+
+  @override
+  void initState() {
+    _controller = PagifyController<BlockUserModel>();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => FetchBlockUserCubit()..fetchBlockUser(),
-        ),
-      ],
-      child: Scaffold(
-        backgroundColor: AppColors.whiteScaffoldBackground,
-        appBar: customAppBar(appBarTitle: LocaleKeys.blockedCustomers),
-        body: BlocBuilder<FetchBlockUserCubit, AsyncState<List<BlockUserModel>>>(
-          builder: (context, state) {
-            return StatusBuilder(
-                data: state,
-                onSuccess: (data, context) {
-                  return data.isEmpty
-                      ? const NotContainData()
-                      : ListView.separated(
-                          itemBuilder: (context, index) => BlockedUserItem(
-                                blockUserModel: data[index],
-                                function: (t) {
-                                  context
-                                      .read<FetchBlockUserCubit>()
-                                      .removeItemById(data[index].id ?? 0);
-                                },
-                              ),
-                          separatorBuilder: (context, index) => 15.szH,
-                          itemCount: data.length
-                  );
-                });
-          },
-        ).paddingAll(16),
-      ),
+    return AppScaffold(
+      isScrollable: false,
+        appBarTitle: LocaleKeys.blockedCustomers,
+        body: AppPagify<BlockUserModel>(
+            asyncCall: (context, page) => MoreData.getBlockedUsers(page),
+            itemBuilder: (context, data, index, element) => BlockedUserItem(
+              blockUserModel: element,
+              onDelete: (ctx)  {
+                showDefaultBottomSheet(
+                    child: BlocManagerSheet(
+                      id: element.id ?? 0,
+                      blocManager: BlocManager.unblock,
+                      onPress: () {
+                        _controller.removeAt(index);
+                        Go.back();
+                      }
+                    )
+                );
+               }),
+            pagifyController: _controller
+        )
     );
   }
 }

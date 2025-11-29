@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pagify/pagify.dart';
 import '../../../../../../generated/assets.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
@@ -9,12 +10,15 @@ import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/extensions/sized_box_helper.dart';
 import '../../../../../core/helpers/status_builder.dart';
 import '../../../../../core/navigation/navigator.dart';
+import '../../../../../core/widgets/app_pagify.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../../core/widgets/custom_app_bar.dart';
 import '../../../../../core/widgets/custom_loading.dart';
 import '../../../../../core/widgets/icon_widget.dart';
 import '../../../../../core/widgets/not_contain_data.dart';
+import '../../../../../core/widgets/scaffolds/app_scaffold.dart';
+import '../../../data/more_data.dart';
 import '../../models/complaint_model.dart';
 import '../../models/consultant_model.dart';
 import 'add_complaint_and_suggestion.dart';
@@ -26,50 +30,20 @@ class ComplaintsAndSuggestionsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => FetchComplaintCubit()..fetchComplaint(),
-      child: Scaffold(
-        backgroundColor: AppColors.whiteScaffoldBackground,
-        appBar: customAppBar(appBarTitle: LocaleKeys.complaintsAndSuggestions),
-        body: Column(
-          children: [
-            BlocBuilder<FetchComplaintCubit, AsyncState<List<ComplaintModel>>>(
-              builder: (context, state) {
-                return StatusBuilder(
-                  data: state,
-                  onSuccess: (data,context) {
-                    return Expanded(
-                      child: data.isEmpty?const NotContainData():ListView.separated(
-                        controller: context.read<FetchComplaintCubit>().scrollController,
-                        physics: const AlwaysScrollableScrollPhysics(),
-                          itemBuilder: (context,
-                              index) {
-                            if(index==  state.data.length){
-                              if(state.isLoadingMore){
-                                return CustomLoading.showLoadingView();
-                              }else{
-                                return const SizedBox.shrink();
-                              }
-                            }
-                            return  ComplaintsAndSuggestionsItem(complaintModel: data[index]);
-                          },
-                          separatorBuilder: (context, index) => 10.szH,
-                          itemCount: data.length+1),
-                    );
-                  }
-                );
-              },
-            )
-          ],
-        ).paddingAll(16),
-        bottomNavigationBar: AppLoadingButton(
+    return AppScaffold(
+      appBarTitle: LocaleKeys.complaintsAndSuggestions,
+      body: AppPagify(
+          asyncCall: (context, page) => MoreData.getComplaints(page),
+          itemBuilder: (context, data, i, element) => ComplaintsAndSuggestionsItem(complaintModel: element),
+          pagifyController: PagifyController()
+      ),
+        bottomBar: AppLoadingButton(
             asyncCall: (context) async {
               Go.to(const AddComplaintAndSuggestion());
             },
             title: LocaleKeys.attachNewComplaint)
             .paddingAll(16.r),
-      ),
-    );
+      );
   }
 }
 

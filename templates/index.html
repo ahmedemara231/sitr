@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Duplicate Finder</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body { 
+            padding-top: 50px; 
+            background-color: #f8f9fa;
+        }
+        .container { 
+            max-width: 600px; 
+        }
+        .upload-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4 text-center">CSV Duplicate Finder</h1>
+        <div class="upload-card p-4">
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="file">Choose CSV File:</label>
+                    <input type="file" class="form-control-file" id="file" name="file" accept=".csv" required>
+                    <small class="form-text text-muted">Maximum file size: 16MB</small>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Upload and Process</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+

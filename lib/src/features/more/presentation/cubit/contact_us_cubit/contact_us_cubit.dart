@@ -28,7 +28,7 @@ class ContactUsCubit extends AsyncCubit<bool> {
             },
             mapper: (data) => true)),
         onSuccess: (data) {
-          MessageUtils.showSnackBar(LocaleKeys.successDone);
+          MessageUtils.showSnackBar(data.msg);
           Go.back();
         });
   }

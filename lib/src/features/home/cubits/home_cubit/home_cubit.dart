@@ -21,12 +21,12 @@ class HomeCubit extends Cubit<HomeState> {
     emit(ChangeBottomNavIndex());
   }
 
-  List<Widget> screens = [
+  List<Widget> screens = const[
     MainView(),
-    const NotificationsScreen(),
-    const ChatsScreen(),
-    const PackagesScreen.subscription(),
-    const MoreScreen(),
+    NotificationsScreen(),
+    ChatsScreen(),
+    PackagesScreen.subscription(),
+    MoreScreen(),
   ];
 
 }

@@ -1,9 +1,11 @@
 import 'package:easy_chat/models/chat_message.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/dropinity/helpers/extensions/padding_extension.dart';
+import '../../../../../core/helpers/lancher_helper.dart';
 import '../../../../../core/navigation/navigator.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/view_profile_widget.dart';
@@ -62,17 +64,28 @@ class _MessageBody extends StatelessWidget {
             topRight: message.sender.isFromMe? Radius.zero: Radius.circular(16.r),
           ),
         ),
-        child: message.message.type == 'text'? AppText(
-          message.message.body,
-          fontSize: 14.sp,
-          color: message.sender.isFromMe? Colors.white : Colors.black,
-        ).paddingAll(10.r) : SizedBox.square(
+        child: message.message.type == 'text'?
+        SelectableLinkify(
+          text: message.message.body,
+          onOpen: (link) => LauncherHelper.launchURL(url: link.url),
+          style: TextStyle(
+            fontSize: 14.sp,
+            color: message.sender.isFromMe?
+            Colors.white : Colors.black,
+          ),
+          linkStyle: TextStyle(
+              color: message.sender.isFromMe?
+              Colors.white : Colors.blue
+          ),
+        ).paddingAll(10.r)
+
+            : SizedBox.square(
             dimension: 150.sp,
             child: InkWell(
                 onTap: () => Go.to(
                   message.sender.isFromMe? const ProfileScreen() :
                     ViewProfileWidget<GetPartnerInfoCubit>.viewPartner(
-                      cubit: GetPartnerInfoCubit(message.message.id ?? 0),
+                      cubit: GetPartnerInfoCubit(message.message.id),
                     )
                 ),
                 child: Image.network(message.message.body, fit: BoxFit.fill,))
