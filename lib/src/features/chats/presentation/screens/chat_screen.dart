@@ -50,8 +50,8 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
   Widget _upperWidget(ChatModel model){
     final int? timer = model.matchRequest!.timer;
     if(timer.isNotNull && timer.isNotEqualZero){
-     return ChatTimerWidget(minutes: model.matchRequest?.timer ?? 5);
-   }
+      return ChatTimerWidget(minutes: model.matchRequest?.timer ?? 5);
+    }
 
     return const SizedBox.shrink();
   }
@@ -69,7 +69,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
           requestModel: widget.requestModel,
           path: ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
           onSuccess: (chatModel) => context.read<ChatCubit>().startChat(
-            requestModel: widget.requestModel
+              requestModel: widget.requestModel
           ),
         ),
 
@@ -143,8 +143,8 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
   Future<void> _startChat()async{
     await context.read<ChatCubit>().startChat(
-        requestModel: widget.requestModel,
-        onSuccess: (data) => _manageSuccessState.call(data).call(),
+      requestModel: widget.requestModel,
+      onSuccess: (data) => _manageSuccessState.call(data).call(),
     );
   }
 
@@ -157,22 +157,22 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
   late final PagifyController<ChatMessages> _chatController;
 
   late final SocketHelper socketType = ClientIOImpl(
-    onConnect: (d) => log('socket connected'),
-    onDisconnect: (d) => log('socket disconnected'),
-    onReconnect: (d) => log('socket reconnected'),
-    onReceiveAnyEvent: (e, d) => log('event is received $e $d'),
+      onConnect: (d) => log('socket connected'),
+      onDisconnect: (d) => log('socket disconnected'),
+      onReconnect: (d) => log('socket reconnected'),
+      onReceiveAnyEvent: (e, d) => log('event is received $e $d'),
       extraParams: MessageParamsModel().toJson(),
       url: ConstantManager.socketUrl,
       jsonToChatMessage: (json) => ChatMessages(
-          message: Message(id: json['id'], type: json['type'], body: json['body']),
-          sender: Sender(
-              id: json['sender_id'],
-              name: json['sender_name'],
-              image: json['avatar'],
-              isFromMe: (json['sender_id'] == UserModel.currentUser?.id)
-          ),
-          time: json['created_dt'],
-          // messageState: MessageState.sent
+        message: Message(id: json['id'], type: json['type'], body: json['body']),
+        sender: Sender(
+            id: json['sender_id'],
+            name: json['sender_name'],
+            image: json['avatar'],
+            isFromMe: (json['sender_id'] == UserModel.currentUser?.id)
+        ),
+        time: json['created_dt'],
+        // messageState: MessageState.sent
       ),
       onReceiveMessage: (msg) {
         _chatController.addItem(msg);
@@ -245,26 +245,26 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
           // if(context.read<ChatCubit>().matchRequest?.callStatus == 'free_available') // مكالمة ببلاش
           // if(context.read<ChatCubit>().matchRequest?.callStatus == 'not_available')
-            BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
-              builder: (context, state) => StatusBuilder(
-                data: state,
-                onSuccess: (data, context) =>
-                // context.read<ChatCubit>().currentStage!.value!.getCurrentStageAsStagesEnum.isShariaComplaintMeeting &&
-                //     data.matchRequest!.timer.isNotEqualZero ?
-                context.read<ChatCubit>().currentStage!.value!.getCurrentStageAsStagesEnum.isShariaComplaintMeeting?
-                  Helpers.zegoService.zegoButton(
-                    isVideoCall: true,
-                    icon: const SvgPic(assetName: Assets.svgVideoCall),
-                    invites: [
-                      ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName)
-                    ],
-                    // onPressed: context.read<ChatCubit>().matchRequest?.callStatus == 'free_used'? () => _executeReq(
-                    //     context: context,
-                    //     path: ApiConstants.videoCallRequest,
-                    //     onSuccess: (model){}
-                    // ) : null
-                  ) : const SizedBox.shrink(),
-              ),
+          BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
+            builder: (context, state) => StatusBuilder(
+              data: state,
+              onSuccess: (data, context) =>
+              // context.read<ChatCubit>().currentStage!.value!.getCurrentStageAsStagesEnum.isShariaComplaintMeeting &&
+              //     data.matchRequest!.timer.isNotEqualZero ?
+              context.read<ChatCubit>().currentStage!.value!.getCurrentStageAsStagesEnum.isShariaComplaintMeeting?
+              Helpers.zegoService.zegoButton(
+                isVideoCall: true,
+                icon: const SvgPic(assetName: Assets.svgVideoCall),
+                invites: [
+                  ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName)
+                ],
+                // onPressed: context.read<ChatCubit>().matchRequest?.callStatus == 'free_used'? () => _executeReq(
+                //     context: context,
+                //     path: ApiConstants.videoCallRequest,
+                //     onSuccess: (model){}
+                // ) : null
+              ) : const SizedBox.shrink(),
+            ),
           ),
         ] : null,
         body: Column(
@@ -284,7 +284,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                   child: NotContainData(),
                 ),
                 asyncCall: (context, page) async => await ChatsData.getChatMessages(
-                  requestModel: widget.requestModel
+                    requestModel: widget.requestModel
                 ),
                 errorBuilder: (e) => const ExceptionView(),
                 errorMapper: PagifyErrorMapper(errorWhenDio: (e) => e.response?.data['msg']),

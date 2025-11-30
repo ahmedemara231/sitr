@@ -14,6 +14,7 @@ class TipsAction extends ChatActions{
   void showTipsSheet(BuildContext context, {
     String? title,
     required String path,
+    String? btnTitle,
     required FutureOr<void> Function(BuildContext context) onConfirm
   }){
     context.read<ChatCubit>().tipsSeen();
@@ -21,9 +22,10 @@ class TipsAction extends ChatActions{
         child: BlocProvider.value(
           value: context.read<ChatCubit>(),
           child: TipsSheet(
-              title: title ?? '',
-              path: path,
-              onConfirm: onConfirm
+            title: title ?? '',
+            path: path,
+            onConfirm: onConfirm,
+            btnTitle: btnTitle,
           ),
         )
     );
@@ -35,6 +37,8 @@ class TipsAction extends ChatActions{
         context,
         title: currentTips.title.currentStageTipsTitle,
         path: currentTips.path,
+        btnTitle: currentTips.isChattingStageTips?
+        LocaleKeys.start : null,
         onConfirm: (context) async{
           if(currentTips.isShariaComplaintMeetingTerms){
             ChatSheetManager.show(

@@ -901,4 +901,7 @@ abstract class LocaleKeys {
   static const String _theAppsManagementWillContactYouToArrangeAMeetingUnderTheAppsSupervisionMayGodGrantYouSuccess = 'the_apps_management_will_contact_you_to_arrange_a_meeting_under_the_apps_supervision_may_god_grant_you_success';
   static String get theAppsManagementWillContactYouToArrangeAMeetingUnderTheAppsSupervisionMayGodGrantYouSuccess => _theAppsManagementWillContactYouToArrangeAMeetingUnderTheAppsSupervisionMayGodGrantYouSuccess.tr();
 
+  static const String _onlyLettersAllowed = 'only_letters_allowed';
+  static String get onlyLettersAllowed => _onlyLettersAllowed.tr();
+
 }

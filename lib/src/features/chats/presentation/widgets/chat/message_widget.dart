@@ -8,6 +8,8 @@ import '../../../../../core/dropinity/helpers/extensions/padding_extension.dart'
 import '../../../../../core/helpers/lancher_helper.dart';
 import '../../../../../core/navigation/navigator.dart';
 import '../../../../../core/widgets/app_text.dart';
+import '../../../../../core/widgets/image_widgets/cached_image.dart';
+import '../../../../../core/widgets/image_widgets/image_view.dart';
 import '../../../../../core/widgets/view_profile_widget.dart';
 import '../../../../main_screen/presentation/cubits/get_partner_info_cubit.dart';
 import '../../../../more/presentation/screens/profile.dart';
@@ -28,9 +30,17 @@ class ChatMessageWidget extends StatelessWidget {
         Column(
           spacing: 5.h,
           children: [
-            CircleAvatar(
-              radius: 20.sp,
-              backgroundImage: NetworkImage(message.sender.image),
+            InkWell(
+              onTap: () => Go.to(
+                  message.sender.isFromMe? const ProfileScreen() :
+                  ViewProfileWidget<GetPartnerInfoCubit>.viewPartner(
+                    cubit: GetPartnerInfoCubit(message.sender.id),
+                  )
+              ),
+              child: CircleAvatar(
+                radius: 20.sp,
+                backgroundImage: NetworkImage(message.sender.image),
+              ),
             ),
             AppText(message.time??'', fontSize: 10.sp, color: Colors.grey),
           ],
@@ -78,18 +88,29 @@ class _MessageBody extends StatelessWidget {
               Colors.white : Colors.blue
           ),
         ).paddingAll(10.r)
-
-            : SizedBox.square(
-            dimension: 150.sp,
-            child: InkWell(
-                onTap: () => Go.to(
-                  message.sender.isFromMe? const ProfileScreen() :
-                    ViewProfileWidget<GetPartnerInfoCubit>.viewPartner(
-                      cubit: GetPartnerInfoCubit(message.message.id),
-                    )
-                ),
-                child: Image.network(message.message.body, fit: BoxFit.fill,))
-        )
+            : InkWell(
+          onTap: (){
+            
+            Go.to(ImageView(
+              minScale: 5,
+                maxScale: 10,
+                url: message.message.body
+            ));
+            // PinchZoom(
+            //   child: CachedImage(
+            //     url: image,
+            //     fit: BoxFit.fill,
+            //   ),
+            //   maxScale: 2.5,
+            //   // onZoomStart: (){print('Start zooming');},
+            //   // onZoomEnd: (){print('Stop zooming');},
+            // ),
+          },
+              child: SizedBox.square(
+              dimension: 150.sp,
+              child: Image.network(message.message.body, fit: BoxFit.fill,)
+                      ),
+            )
     );
   }
 }

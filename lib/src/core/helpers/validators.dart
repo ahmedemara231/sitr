@@ -4,6 +4,20 @@ import '../extensions/object.dart';
 import '../navigation/navigator.dart';
  
 class Validators {
+
+  static String? validateChatMessage(String? value, {String? fieldTitle}){
+    final regex = RegExp(r'^[a-zA-Z\u0600-\u06FF\s]+$');
+
+    if(value == null || value.isEmpty){
+      return LocaleKeys.fillField;
+
+    } else if (!regex.hasMatch(value)) {
+      return LocaleKeys.onlyLettersAllowed;
+    }
+
+    return null;
+  }
+
   static String? validateEmpty(String? value, {String? fieldTitle}) {
     if (value == null || value.isEmpty) {
       return fieldTitle == null

@@ -11,6 +11,7 @@ import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/extensions/object.dart';
 import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/helpers/helpers.dart';
+import '../../../../../core/helpers/validators.dart';
 import '../../../../../core/navigation/navigator.dart';
 import '../../../../../core/widgets/svg_pic.dart';
 import '../../../../../core/widgets/text_fields/default_text_field.dart';
@@ -34,6 +35,8 @@ class ChatBottomBar extends StatefulWidget {
 class _ChatBottomBarState extends State<ChatBottomBar> {
   late final TextEditingController _chatCont;
   final ValueNotifier<File?> _selectedImage = ValueNotifier(null);
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -74,10 +77,12 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
               spacing: 10.w,
               children: [
                 InkWell(
-                  onTap: _chatCont.text.isEmpty && _selectedImage.value.isNull ? null : () {
-                    widget.onSend.call(context, _chatCont.text);
-                    _chatCont.clear();
-                    _selectedImage.value = null;
+                  onTap: () {
+                    if(_formKey.currentState!.validate()){
+                      widget.onSend.call(context, _chatCont.text);
+                      _chatCont.clear();
+                      _selectedImage.value = null;
+                    }
                   },
                   child: Container(
                     padding: EdgeInsets.all(10.sp),
@@ -89,17 +94,21 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                   ),
                 ),
                 Expanded(
-                  child: DefaultTextField(
-                    controller: _chatCont,
-                    maxLines: 5,
-                    action: TextInputAction.newline,
-                    title: LocaleKeys.hereIsTheTextOfTheMessageHereIsTheTextOfTheMessageHereIsTheTextOfTheMessage,
-                    prefixIcon: IconButton(
-                        onPressed: () async{
-                          final result = await Helpers.getImageFromCameraOrDevice();
-                          _selectedImage.value = result;
-                        },
-                        icon: const Icon(Icons.camera_alt_sharp, color: AppColors.primary)
+                  child: Form(
+                    key: _formKey,
+                    child: DefaultTextField(
+                      validator: Validators.validateChatMessage,
+                      controller: _chatCont,
+                      maxLines: 5,
+                      action: TextInputAction.newline,
+                      title: LocaleKeys.hereIsTheTextOfTheMessageHereIsTheTextOfTheMessageHereIsTheTextOfTheMessage,
+                      prefixIcon: IconButton(
+                          onPressed: () async{
+                            final result = await Helpers.getImageFromCameraOrDevice();
+                            _selectedImage.value = result;
+                          },
+                          icon: const Icon(Icons.camera_alt_sharp, color: AppColors.primary)
+                      ),
                     ),
                   ),
                 )

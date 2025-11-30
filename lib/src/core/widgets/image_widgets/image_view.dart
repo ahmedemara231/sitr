@@ -1,47 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:pinch_zoom/pinch_zoom.dart';
 
 import '../../../config/res/config_imports.dart';
+import '../scaffolds/app_scaffold.dart';
+import 'cached_image.dart';
 
 class ImageView extends StatelessWidget {
   const ImageView({
     super.key,
-    required this.child,
+    required this.url,
     this.minScale = 0.0,
     this.maxScale = 1.0,
   });
 
-  final Widget child;
+  final String url;
   final double minScale;
   final double maxScale;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      primary: false,
+    return AppScaffold(
       body: SafeArea(
         child: Stack(
-          alignment: Alignment.topLeft,
+          alignment: Alignment.center,
           children: [
             Container(
               constraints: BoxConstraints.expand(
-                height: MediaQuery.of(context).size.height,
+                height: MediaQuery.of(context).size.height / 2,
               ),
-              child: InteractiveViewer(
-                minScale: minScale,
-                maxScale: maxScale,
-                scaleFactor: 1.0,
-                child: child,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(AppPadding.pH12),
-              child: const CloseButton(
-                color: Colors.grey,
+              child: PinchZoom(
+                maxScale: 2.5,
+                child: CachedImage(
+                  url: url,
+                  fit: BoxFit.fill,
+                ),
+                // onZoomStart: (){print('Start zooming');},
+                // onZoomEnd: (){print('Stop zooming');},
               ),
             ),
+
+            // Container(
+            //   constraints: BoxConstraints.expand(
+            //     height: MediaQuery.of(context).size.height,
+            //   ),
+            //   child: InteractiveViewer(
+            //     minScale: minScale,
+            //     maxScale: maxScale,
+            //     scaleFactor: 1.0,
+            //     child: child,
+            //   ),
+            // ),
           ],
         ),
-      ),
+      ), appBarTitle: '',
     );
   }
 }
