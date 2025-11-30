@@ -5,9 +5,11 @@ class UserStatusAction extends ChatActions{
   final BuildContext context;
   final UserRequestStatus status;
   final MatchRequestEnum matchRequest;
+  final int matchReqId;
   final RequestModel requestModel;
 
   UserStatusAction({
+    required this.matchReqId,
     required this.context,
     required this.status,
     required this.matchRequest,
@@ -46,7 +48,7 @@ class UserStatusAction extends ChatActions{
             child: PaymentSheet(
               onPay: (context, payMethod)async => context.read<PayRequestCubit>().pay(
                 path: ApiConstants.payRequest+context.read<ChatCubit>().userRequest!,
-                matchRequestId: matchRequest.id.toString(),
+                matchRequestId: matchReqId.toString(),
                 paymentMethod: payMethod.name,
                 onSuccess: (url) async{
                   Object? result = '';

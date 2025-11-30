@@ -78,7 +78,10 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
               children: [
                 InkWell(
                   onTap: () {
-                    if(_formKey.currentState!.validate()){
+                    if(_chatCont.text.isEmpty){
+                      return;
+
+                    } else if(_formKey.currentState!.validate()){
                       widget.onSend.call(context, _chatCont.text);
                       _chatCont.clear();
                       _selectedImage.value = null;

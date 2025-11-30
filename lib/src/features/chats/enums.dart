@@ -25,6 +25,8 @@ extension CheckUserRequestStatus on UserRequestStatus{
 }
 
 enum ChatStages{
+
+  rejected(-2, 'rejected'),
   // full individual - DIRECT MATCH
   newChat(-1, 'new'),
   chatting(0, 'chatting'),

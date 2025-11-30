@@ -76,7 +76,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
         onReject: (context)async => ChatActions.executeReq(
             requestModel: widget.requestModel,
             context: context,
-            path: ApiConstants.rejectRequest+context.read<ChatCubit>().userRequest!,
+            path: ApiConstants.userRejectRequest+context.read<ChatCubit>().userRequest!,
             onSuccess: (chatModel) =>  Go.offAll(const HomeScreen())
         ),
       );
@@ -128,16 +128,22 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
           context: context,
           status: userStatus,
           matchRequest: matchRequest,
+          matchReqId: context.read<ChatCubit>().matchRequestId!,
           requestModel: widget.requestModel
       );
     }
+
     // based stage
-    if(!stage!.isNewChat){
+    if(stage!.isParentsExchangeNumber){
       return StageAction(context: context, stage: stage);
     }
 
     // timer
-    return TimerAction(context: context, requestModel: widget.requestModel);
+    if(timer.isEqualZero){
+      return TimerAction(context: context, requestModel: widget.requestModel);
+    }
+
+    return NoAction();
   }
 
 
@@ -149,6 +155,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
   }
 
   Future<void> _showBased(RemoteMessage notification)async{
+    log('dataaaa ${notification.data}');
     if((notification.data['action'] as Object?).isNotNull){
       _startChat();
     }
@@ -278,6 +285,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
             Expanded(
               child: EasyChat(
+
                 // itemExtent: 60.h,
                 controller: _chatController,
                 emptyView: const Center(

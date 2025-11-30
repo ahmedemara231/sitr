@@ -111,7 +111,7 @@ class ApiConstants {
   static const String videoCallRequest = 'user-match-request/video_call_request';
   static const String adminMeetingRequest = 'user-match-request/admin_meeting_request';
   static const String parentMeetingRequest = 'user-match-request/parent_meeting_request';
-  static const String userRejectRequest = 'reject-match-request';
+  static const String userRejectRequest = 'reject-match-request/';
   static const String payRequest = 'pay-request/';
 
 // ============================== acceptance ==============================

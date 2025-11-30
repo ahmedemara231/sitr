@@ -63,7 +63,7 @@ class NotificationService {
   }
 
   void _showNotification(RemoteMessage message) async {
-    if (Platform.isIOS) return;
+    // if (Platform.isIOS) return;
     const DarwinNotificationDetails iOSPlatformChannelSpecifics =
         DarwinNotificationDetails(
             presentAlert: true, presentBadge: true, presentSound: true);
@@ -82,9 +82,11 @@ class NotificationService {
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
     final notification = message.notification;
+    NotificationRoutes.navigateByType(message.data);
     await _flutterLocalNotificationsPlugin.show(notification.hashCode,
         notification?.title ?? '', notification?.body, notificationDetails,
         payload: json.encode(message.toMap()));
+
   }
 
   Future<void> _initLocalNotification() async {

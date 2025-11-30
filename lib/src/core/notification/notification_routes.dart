@@ -4,6 +4,7 @@ class NotificationRoutes {
 
   static void navigateByType(Map<String, dynamic> data) {
     final String type = data['type'];
+    log('the type is ${data['type']}');
     final notificationType = type.getType;
     notificationType.navigation.navigate(data: data);
   }
@@ -25,6 +26,7 @@ class HomeNavigation implements NotificationNavigation {
 
   @override
   void navigate({required Map<String, dynamic> data}) {
+    log('GoHome');
     Go.offAll(const HomeScreen());
   }
 }

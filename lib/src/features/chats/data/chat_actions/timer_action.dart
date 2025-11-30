@@ -11,7 +11,6 @@ class TimerAction extends ChatActions{
 
   @override
   Future<void> call() async{
-
     ChatSheetManager.show(
         child: BlocProvider.value(
           value: context.read<ChatCubit>(),
@@ -19,13 +18,14 @@ class TimerAction extends ChatActions{
             onConfirm: (context, selectedVal) async {
               await ChatActions.executeReq(
                   context: context,
+                  requestModel: requestModel,
                   path: selectedVal.pathToRequest,
                   onSuccess: (chatModel){
                     Go.back();
                     if(selectedVal == LocaleKeys.refuseMoveToNextStage){
                       Go.offAll(const HomeScreen());
                     }
-                  }, requestModel: requestModel
+                  },
               );
             },
             titles: [

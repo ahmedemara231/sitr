@@ -55,8 +55,11 @@ extension FormatString on String {
   }
 
 
-  ChatStages get getCurrentStageAsStagesEnum => ChatStages.values
-      .firstWhere((e) => this == e.stageText);
+  ChatStages get getCurrentStageAsStagesEnum {
+    log('the text is $this');
+    return ChatStages.values
+        .firstWhere((e) => this == e.stageText);
+  }
 
   MatchRequestEnum get getMatchRequestAsEnum => MatchRequestEnum.values
       .firstWhere((e) => this == e.requestName.split("/").last);
