@@ -78,8 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     create: (context) => OathCubit()..getOath(),
                                     child: AppBottomSheet.small(
                                         asyncCall: (context) async {
-                                          UserCubit.instance.setUserLoggedIn(user: user, token: user.token??'');
-                                          user.completeRegistration?.manageNavigationBasedCompleteRegisterStatus();
+                                          user.completeRegistration?.manageNavigationBasedCompleteRegisterStatus(user);
                                         },
                                         btnTitle: LocaleKeys.accept,
                                         upperWidget: Column(

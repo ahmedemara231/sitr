@@ -42,8 +42,7 @@ enum ChatStages{
 
 
   // parent & individual - PARENT MATCH
-  parentIndividualConversation(6, 'parent_individual_conversation'),
-  parentIndividualApproval(7, 'parent_individual_approval');
+  parentIndividualConversation(6, 'parent_individual_conversation');
 
   final int stage;
   final String stageText;
@@ -59,6 +58,9 @@ extension CheckChatStages on ChatStages{
   bool get isInformParents => this == ChatStages.informParents;
   bool get isParentsExchangeNumber => this == ChatStages.parentsExchangeNumber;
   bool get isEngagement => this == ChatStages.engagement;
+  bool get isFullParentConversation => this == ChatStages.fullParentConversation;
+  bool get isParentIndividualConversation => this == ChatStages.parentIndividualConversation;
+  bool get isRejected => this == ChatStages.rejected;
 }
 
 
@@ -71,8 +73,9 @@ enum MatchRequestEnum{
   adminMeeting(4, ApiConstants.adminMeetingRequest),
   parentMeeting(5, ApiConstants.parentMeetingRequest),
   parentExchangeNumbers(6, ApiConstants.parentExchangeNumbers),
-  parentIndividualApproval(7, ApiConstants.parentIndividualConversation),
+  parentIndividualApproval(7, 'parent_individual_approval'),
   continueStageRequest(8, ApiConstants.continueStageRequest);
+
 
   final int id;
   final String requestName;
@@ -98,7 +101,8 @@ enum ShowTips{
   shariaComplaintMeetingTips('sharia_complaint_meeting_tips',ApiConstants.shariaComplaintMeetingTips),
   istikharahTips('istikhara_tips',ApiConstants.istikharaTips),
   informParentsTips('inform_parents',ApiConstants.informParentsTips),
-  engagementTips('engagement_tips', ApiConstants.engagementTips);
+  engagementTips('engagement_tips', ApiConstants.engagementTips),
+  parentIndividualConversationTips('parent_individual_conversation', ApiConstants.parentIndividualConversation);
 
   final String title;
   final String path;
@@ -113,6 +117,7 @@ extension CheckShowTips on ShowTips{
   bool get isShariaComplaintMeetingTerms => this == ShowTips.shariaComplaintMeetingTerms;
   bool get isInformParentsTips => this == ShowTips.informParentsTips;
   bool get isEngagementTips => this == ShowTips.engagementTips;
+  bool get isParentIndividualConversationTips => this == ShowTips.parentIndividualConversationTips;
 }
 
 

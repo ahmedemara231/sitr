@@ -72,16 +72,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     phone: signUpBody.phone,
                                     code: code
                                 ),
-                                onSuccess: (data) async {
-                                  await UserCubit.instance.setUserLoggedIn(
-                                      user: data,
-                                      token: data.token ?? ''
-                                  );
+                                onSuccess: (user) async {
+                                  user.completeRegistration!.manageNavigationBasedCompleteRegisterStatus(user);
 
-                                  Go.to(const PackagesScreen.subscription(
-                                      paymentMethods: [PaymentMethod.online],
-                                      isInAuth: true
-                                  ));
+                                  // await UserCubit.instance.setUserLoggedIn(
+                                  //     user: user,
+                                  //     token: user.token ?? ''
+                                  // );
+
+                                  // Go.to(const PackagesScreen.subscription(
+                                  //     paymentMethods: [PaymentMethod.online],
+                                  //     isInAuth: true
+                                  // ));
                                 },
                               ),
                             ),

@@ -18,7 +18,7 @@ class CongratsSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       lazy: false,
-      create: (context) => CongratsCubit()..finishChat(matchReqId),
+      create: (context) => FinishChatCubit()..finishChat(matchReqId),
       child: Column(
         spacing: 10.h,
         children: [

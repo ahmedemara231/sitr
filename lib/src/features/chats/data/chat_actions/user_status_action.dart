@@ -16,9 +16,14 @@ class UserStatusAction extends ChatActions{
     required this.requestModel,
   });
 
+  void _finishChat(BuildContext context){
+    context.read<FinishChatCubit>().finishChat(matchReqId);
+  }
+
   @override
   Future<void> call() async{
-    if(status.isPending){
+    log('matchRequest ${matchRequest.name}');
+    if(!matchRequest.isParentIndividualApproval && status.isPending){
       ChatSheetManager.show(
           child: BlocProvider.value(
             value: context.read<ChatCubit>(),
@@ -33,6 +38,34 @@ class UserStatusAction extends ChatActions{
                   context: context,
                   path: ApiConstants.rejectRequest+context.read<ChatCubit>().userRequest!,
                   onSuccess: (chatModel) => Go.back(), requestModel: requestModel
+              ),
+            ),
+          )
+      );
+
+    }else if (matchRequest.isParentIndividualApproval && status.isPending){
+      ChatSheetManager.show(
+          child: BlocProvider.value(
+            value: context.read<ChatCubit>(),
+            child: AcceptOrRejectRequestWidget(
+              requestName: matchRequest.name,
+              onAccept: (context) async => ChatActions.executeReq(
+                  context: context,
+                  path: ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
+                  onSuccess: (chatModel) {
+                    _finishChat(context);
+                    Go.offAll(const HomeScreen());
+                  },
+                  requestModel: requestModel
+              ),
+              onReject:(context) async => ChatActions.executeReq(
+                  context: context,
+                  path: ApiConstants.rejectRequest+context.read<ChatCubit>().userRequest!,
+                  requestModel: requestModel,
+                  onSuccess: (chatModel) {
+                    _finishChat(context);
+                    Go.offAll(const HomeScreen());
+                  },
               ),
             ),
           )

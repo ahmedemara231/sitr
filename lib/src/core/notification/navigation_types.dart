@@ -22,7 +22,7 @@ enum NotificationType {
   providerRejected('provider_rejected', navigation: UpdateNavigation()),
 
   // 💬 Match Request Notifications (many types)
-  userAcceptedNextStage('user_accepted_next_stage', navigation: MatchRequestNavigation()),
+  userAcceptedNextStage('user_accepted_next_stage', navigation: HomeNavigation()),
   stageChanged('stage_changed', navigation: MatchRequestNavigation()),
   nextStageRequestSent('next_stage_request_sent', navigation: MatchRequestNavigation()),
   continueStageRequestSent('continue_stage_request_sent', navigation: MatchRequestNavigation()),

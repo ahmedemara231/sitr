@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../config/language/languages.dart';
 import '../../config/language/locale_keys.g.dart';
+import '../../config/res/config_imports.dart';
 import '../../features/auth/imports.dart';
 import '../../features/auth/presentation/cubits/add_child.dart';
 import '../../features/auth/presentation/cubits/complete_profile_cubit.dart';
@@ -17,7 +18,9 @@ import '../../features/packages/presentation/packages_screen.dart';
 import '../helpers/user_type_enum.dart';
 import '../navigation/navigator.dart';
 import '../network/api_endpoints.dart';
+import '../network/network_service.dart';
 import '../shared/models/user_models/user_model.dart';
+import '../shared/user_cubit/user_cubit.dart';
 import '../widgets/default_bottom_sheet.dart';
 import '../widgets/sheets/payment_sheet.dart';
 
@@ -48,6 +51,9 @@ extension FormatString on String {
 
     }else if(this == ShowTips.engagementTips.title){
       return LocaleKeys.tipsForEngagementStage;
+
+    }else if(this == ShowTips.parentIndividualConversationTips.title){
+      return LocaleKeys.tipsPorParentIndividualConversation;
 
     }
 
@@ -97,18 +103,22 @@ extension FormatString on String {
     return Languages.english;
   }
 
-  void manageNavigationBasedCompleteRegisterStatus(){
+  void manageNavigationBasedCompleteRegisterStatus(UserModel user)async{
     final CompleteRegisterStatus statusType = toCompleteRegisterStatus();
     if(statusType.isCompleted){
+      await UserCubit.instance.setUserLoggedIn(user: user, token: user.token??'');
       Go.offAll(const HomeScreen());
 
     }else if(statusType.isNotSubscribed){
-      Go.to(const PackagesScreen.subscription(
-          paymentMethods: [PaymentMethod.online],
+      injector<NetworkService>().setToken(user.token ?? '');
+      Go.to( PackagesScreen.subscription(
+          paymentMethods: const [PaymentMethod.online],
+          userType: user.gender?.userType,
           isInAuth: true,
       ));
 
     }else if(statusType.isCompleteChild){
+      injector<NetworkService>().setToken(user.token ?? '');
       Go.to(EnterMaleOrFemaleOrChildDataScreen.showAll(
           scaffoldType: ScaffoldType.centerCard,
           showConditionsAndTerms: true,
@@ -119,6 +129,7 @@ extension FormatString on String {
       ));
 
     }else if(statusType.isHasSetrCode){
+      injector<NetworkService>().setToken(user.token ?? '');
       Go.to(
           UserTypeHelper.currentType!.isParent?
           EnterMaleOrFemaleOrChildDataScreen.showAll(
@@ -141,6 +152,7 @@ extension FormatString on String {
       );
 
     }else if(statusType.isIncomplete){
+      injector<NetworkService>().setToken(user.token ?? '');
       Go.to(EnterMaleOrFemaleOrChildDataScreen.individual(
         scaffoldType: ScaffoldType.centerCard,
         showConditionsAndTerms: true,

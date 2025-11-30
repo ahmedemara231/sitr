@@ -904,4 +904,7 @@ abstract class LocaleKeys {
   static const String _onlyLettersAllowed = 'only_letters_allowed';
   static String get onlyLettersAllowed => _onlyLettersAllowed.tr();
 
+  static const String _tipsPorParentIndividualConversation = 'tips_por_parent_individual_conversation';
+  static String get tipsPorParentIndividualConversation => _tipsPorParentIndividualConversation.tr();
+
 }

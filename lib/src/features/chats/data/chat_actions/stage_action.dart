@@ -24,6 +24,19 @@ class StageAction extends ChatActions{
         ),
       );
     }
+    // else if(stage.isParentsExchangeNumber){
+    //   ChatSheetManager.show(
+    //     child: BlocProvider.value(
+    //       value: context.read<ChatCubit>(),
+    //       child: EnterParentPhoneSheet(
+    //           onSubmit: (context, phone)async{
+    //             await context.read<ChatCubit>().parentsExchangeNumbers(parentPhone: phone);
+    //             Go.back();
+    //           }
+    //       ),
+    //     ),
+    //   );
+    // }
   }
 
 }
