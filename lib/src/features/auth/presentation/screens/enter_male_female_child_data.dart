@@ -132,6 +132,7 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
   }
   void _listenToData(IndividualUserModel updatedModel) => sharedFormFieldModel = updatedModel;
 
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -140,68 +141,72 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
         BlocProvider(create: (context) => AddChildCubit()),
         BlocProvider(create: (context) => EditProfileCubit()),
       ],
-      child: Column(
-        spacing: 10.h,
-        children: [
-          if(widget.showGenderSelection)
-            ChooseGenderWidget(
-              titles: (element) => '${element.translate}  ${element.isFemale? AuthData.childrenNumber.value.femaleNumbers : AuthData.childrenNumber.value.maleNumbers}',
-              // titles: (element) => element.translate,
-              canChoose: true,
-              onSelectGender: (selectedGender) => _mainType.value = selectedGender,
-              genders: const [
-                UserType.male,
-                UserType.female,
-              ],
-            ),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          spacing: 10.h,
+          children: [
+            if(widget.showGenderSelection)
+              ChooseGenderWidget(
+                titles: (element) => '${element.translate}  ${element.isFemale? AuthData.childrenNumber.value.femaleNumbers : AuthData.childrenNumber.value.maleNumbers}',
+                // titles: (element) => element.translate,
+                canChoose: true,
+                onSelectGender: (selectedGender) => _mainType.value = selectedGender,
+                genders: const [
+                  UserType.male,
+                  UserType.female,
+                ],
+              ),
 
-          if(widget.withParent)
-            SelectImageWidget(
-              initialValue: widget.initialValue?.avatar,
-              onSelectImage: (img) => sharedFormFieldModel.copyWith(avatar: img?.path),
-            ),
+            if(widget.withParent)
+              SelectImageWidget(
+                initialValue: widget.initialValue?.avatar,
+                onSelectImage: (img) => sharedFormFieldModel.copyWith(avatar: img?.path),
+              ),
 
-          ValueListenableBuilder(
-            valueListenable: _mainType,
-            builder: (context, type, child) {
-              _assignToInitial();
-              if(type.isFemale){
-                return FemaleFields(
-                    withParent: widget.withParent,
-                    initialValue: widget.initialValue,
-                    onChangeFemaleData: (data) => _listenToData(sharedFormFieldModel.merge(data))
-                );
+            ValueListenableBuilder(
+              valueListenable: _mainType,
+              builder: (context, type, child) {
+                _assignToInitial();
+                if(type.isFemale){
+                  return FemaleFields(
+                      withParent: widget.withParent,
+                      initialValue: widget.initialValue,
+                      onChangeFemaleData: (data) => _listenToData(sharedFormFieldModel.merge(data))
+                  );
 
-              }else if (type.isMale){
-                return MaleFields(
-                    initialValue: widget.initialValue,
-                    withParent: widget.withParent,
-                    onChangeMaleData: (data) => _listenToData(sharedFormFieldModel.merge(data))
-                );
+                }else if (type.isMale){
+                  return MaleFields(
+                      initialValue: widget.initialValue,
+                      withParent: widget.withParent,
+                      onChangeMaleData: (data) => _listenToData(sharedFormFieldModel.merge(data))
+                  );
 
-              }else{
-                return const SizedBox.shrink();
+                }else{
+                  return const SizedBox.shrink();
+                }
               }
-            }
-          ),
-
-          if(widget.showConditionsAndTerms)
-            const ConditionsTermsAcceptance(),
-
-          LoadingButton(
-            height: 45.h,
-            borderRadius: ConstantManager.buttonBorderRadiusNumber,
-            idleWidget: AppText(
-              LocaleKeys.confirm,
-              fontSize: 16.sp,
-              color: Colors.white,
             ),
-            call: (ctx) async => widget.onClick.call(ctx, sharedFormFieldModel)
-          ),
 
-          if (widget.showAlreadyHaveAccount)
-            const AlreadyHaveAccWidget()
-        ],
+            if(widget.showConditionsAndTerms)
+              const ConditionsTermsAcceptance(),
+
+            LoadingButton(
+              height: 45.h,
+              borderRadius: ConstantManager.buttonBorderRadiusNumber,
+              idleWidget: AppText(
+                LocaleKeys.confirm,
+                fontSize: 16.sp,
+                color: Colors.white,
+              ),
+              call: (ctx) async => _formKey.currentState!.validate()?
+              widget.onClick.call(ctx, sharedFormFieldModel) : null
+            ),
+
+            if (widget.showAlreadyHaveAccount)
+              const AlreadyHaveAccWidget()
+          ],
+        ),
       ),
     );
   }

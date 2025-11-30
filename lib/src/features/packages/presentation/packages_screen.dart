@@ -45,7 +45,7 @@ class PackagesScreen extends StatelessWidget {
             ValueListenableBuilder(
               valueListenable: random,
               builder: (context, val, child) => SizedBox(
-                height: context.height * 0.7,
+                height: context.height * 0.8,
                 child: AppPagify<Package>(
                     key: UniqueKey(),
                     asyncCall: (ctx, page) async => await PackagesData.getPackages(page: page, userType: userType),

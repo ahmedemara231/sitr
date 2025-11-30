@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -83,7 +81,7 @@ class SettingScreen extends StatelessWidget {
                           code: code,
                           onSuccess: (data) => showDefaultBottomSheet(
                             context: context,
-                            child: const ChangePhoneSheetBody(),
+                            child:  ChangePhoneSheetBody(),
                           ),
                         ),
                   ),
@@ -116,7 +114,7 @@ class SettingScreen extends StatelessWidget {
                         code: code,
                         onSuccess: (data) => showDefaultBottomSheet(
                             context: context,
-                            child: const ChangePhoneSheetBody()
+                            child:  ChangePhoneSheetBody()
                         ),
                       ),
                     ),
@@ -124,7 +122,7 @@ class SettingScreen extends StatelessWidget {
 
               }else if(setting.name == NamedRoutes.changePhone.name){
                 return ModalBottomSheetRoute(
-                    builder: (context) => const ChangePhoneSheetBody(),
+                    builder: (context) =>  ChangePhoneSheetBody(),
                     isScrollControlled: true
                 );
 

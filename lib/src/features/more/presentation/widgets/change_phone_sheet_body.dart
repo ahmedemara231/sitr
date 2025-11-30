@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/padding_extension.dart';
+import '../../../../core/helpers/validators.dart';
 import '../../../../core/navigation/named_routes.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
@@ -15,7 +16,9 @@ import '../../../../core/widgets/text_fields/default_text_field.dart';
 import '../cubit/change_phone_manager.dart';
 
 class ChangePhoneSheetBody extends StatelessWidget {
-  const ChangePhoneSheetBody({super.key});
+  ChangePhoneSheetBody({super.key});
+
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -28,19 +31,23 @@ class ChangePhoneSheetBody extends StatelessWidget {
         children: [
           AppText(LocaleKeys.pleaseEnterANewMobileNumber, fontWeight: FontWeight.w500, fontSize: 18.sp,),
           AppText(LocaleKeys.enterANewMobileNumberToChangeYourCurrentOne, fontSize: 12.sp, color: Colors.black54,),
-          DefaultTextField.withTitle(
-            upperTitle: LocaleKeys.phoneNumber,
-            inputType: TextInputType.phone,
-            title: LocaleKeys.pleaseEnterYourPhone,
-            fillColor: AppColors.whiteGreyColorProMax,
-            borderColor: Colors.transparent,
-            onChanged: (val) => phone = val ?? '',
+          Form(
+            key: formKey,
+            child: DefaultTextField.withTitle(
+              validator: Validators.validatePhone,
+              upperTitle: LocaleKeys.phoneNumber,
+              inputType: TextInputType.phone,
+              title: LocaleKeys.pleaseEnterYourPhone,
+              fillColor: AppColors.whiteGreyColorProMax,
+              borderColor: Colors.transparent,
+              onChanged: (val) => phone = val ?? '',
+            ),
           ),
           LoadingButton(
             idleWidget: AppText(LocaleKeys.confirm, color: Colors.white, fontWeight: FontWeight.bold),
             height: 45.h,
             borderRadius: ConstantManager.buttonBorderRadiusNumber,
-            call: (context)async => context.read<ChangePhoneManagerCubit>().manage(
+            call: (context)async => formKey.currentState!.validate()? context.read<ChangePhoneManagerCubit>().manage(
                 phase: Phase.sendNew,
                 phone: phone,
                 onSuccess: (data) => Go.offNamed(
@@ -74,7 +81,7 @@ class ChangePhoneSheetBody extends StatelessWidget {
                       )
                   }
                 )
-              ),
+              ) : null,
           ),
         ],
       ).defaultScreenPadding(),

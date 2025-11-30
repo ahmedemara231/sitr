@@ -6,6 +6,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import 'config/language/locale_keys.g.dart';
 import 'config/res/config_imports.dart';
+import 'core/helpers/user_type_enum.dart';
 import 'core/navigation/navigator.dart';
 import 'core/shared/route_observer.dart';
 import 'core/shared/user_cubit/user_cubit.dart' show UserCubit;
@@ -13,6 +14,7 @@ import 'core/widgets/connectivity_interceptor/internet_supporter_widget.dart';
 import 'core/widgets/custom_messages.dart';
 import 'core/widgets/no_internet_widget.dart';
 import 'core/widgets/splash_logo.dart';
+import 'features/auth/imports.dart' show EnterMaleOrFemaleOrChildDataScreen, ScaffoldType;
 import 'features/home/cubits/get_notification_count.dart';
 import 'features/splash/splash_screen.dart';
 
@@ -41,7 +43,7 @@ class Sitr extends StatelessWidget {
                 navigatorKey: Go.navigatorKey,
                 restorationScopeId: 'app',
 
-                // home: EnterMaleOrFemaleOrChildDataScreen.withParent(scaffoldType: ScaffoldType.appScaffold, showConditionsAndTerms: true, onClick: (context, user)async{}),
+                // home: EnterMaleOrFemaleOrChildDataScreen.individual(scaffoldType: ScaffoldType.appScaffold, showConditionsAndTerms: true, onClick: (context, user)async{}, userType: UserType.male,),
                 home: const SplashScreen(),
                 navigatorObservers: [AppNavigationObserver()],
                 builder: (context, child) {
