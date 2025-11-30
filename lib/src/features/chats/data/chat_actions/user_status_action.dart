@@ -20,55 +20,40 @@ class UserStatusAction extends ChatActions{
     context.read<FinishChatCubit>().finishChat(matchReqId);
   }
 
+  void _showAcceptanceSheet(void Function() onSuccess){
+    ChatSheetManager.show(
+        child: BlocProvider.value(
+          value: context.read<ChatCubit>(),
+          child: AcceptOrRejectRequestWidget(
+            requestName: matchRequest.name,
+            onAccept: (context) async => ChatActions.executeReq(
+                context: context,
+                path: ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
+                requestModel: requestModel,
+                onSuccess: (chatModel) => onSuccess.call()
+            ),
+            onReject:(context) async => ChatActions.executeReq(
+                context: context,
+                path: ApiConstants.rejectRequest+context.read<ChatCubit>().userRequest!,
+                requestModel: requestModel,
+                onSuccess: (chatModel) => onSuccess.call()
+            ),
+          ),
+        )
+    );
+  }
+
   @override
   Future<void> call() async{
-    log('matchRequest ${matchRequest.name}');
     if(!matchRequest.isParentIndividualApproval && status.isPending){
-      ChatSheetManager.show(
-          child: BlocProvider.value(
-            value: context.read<ChatCubit>(),
-            child: AcceptOrRejectRequestWidget(
-              requestName: matchRequest.name,
-              onAccept: (context) async => ChatActions.executeReq(
-                  context: context,
-                  path: ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
-                  onSuccess: (chatModel) => Go.back(), requestModel: requestModel
-              ),
-              onReject:(context) async => ChatActions.executeReq(
-                  context: context,
-                  path: ApiConstants.rejectRequest+context.read<ChatCubit>().userRequest!,
-                  onSuccess: (chatModel) => Go.back(), requestModel: requestModel
-              ),
-            ),
-          )
-      );
+      _showAcceptanceSheet(() => Go.back());
 
     }else if (matchRequest.isParentIndividualApproval && status.isPending){
-      ChatSheetManager.show(
-          child: BlocProvider.value(
-            value: context.read<ChatCubit>(),
-            child: AcceptOrRejectRequestWidget(
-              requestName: matchRequest.name,
-              onAccept: (context) async => ChatActions.executeReq(
-                  context: context,
-                  path: ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
-                  onSuccess: (chatModel) {
-                    _finishChat(context);
-                    Go.offAll(const HomeScreen());
-                  },
-                  requestModel: requestModel
-              ),
-              onReject:(context) async => ChatActions.executeReq(
-                  context: context,
-                  path: ApiConstants.rejectRequest+context.read<ChatCubit>().userRequest!,
-                  requestModel: requestModel,
-                  onSuccess: (chatModel) {
-                    _finishChat(context);
-                    Go.offAll(const HomeScreen());
-                  },
-              ),
-            ),
-          )
+      _showAcceptanceSheet(
+            (){
+              _finishChat(context);
+              Go.offAll(const HomeScreen());
+          },
       );
 
     }else if((matchRequest.isExtension || matchRequest.isVideoCall || matchRequest.isAdminMeeting)

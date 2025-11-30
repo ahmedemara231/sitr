@@ -122,6 +122,11 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
       );
     }
 
+    // based stage
+    if(stage!.isParentsExchangeNumber){
+      return StageAction(context: context, stage: stage);
+    }
+
     // acceptance - payment
     if(!userStatus.isUndefined){
       return UserStatusAction(
@@ -131,11 +136,6 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
           matchReqId: context.read<ChatCubit>().matchRequestId!,
           requestModel: widget.requestModel
       );
-    }
-
-    // based stage
-    if(stage!.isParentsExchangeNumber){
-      return StageAction(context: context, stage: stage);
     }
 
     // timer
