@@ -78,7 +78,7 @@ extension FormatString on String {
       return ApiConstants.userMoveToNextRequest;
 
     }else if(this == LocaleKeys.refuseMoveToNextStage){
-      return ApiConstants.userRejectRequest;
+      return ApiConstants.rejectAll;
 
     }else if(this == LocaleKeys.requestForExtensionOfPeriod){
       return ApiConstants.userExtensionRequest;

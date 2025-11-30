@@ -7,6 +7,7 @@ import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/enum.dart';
 import '../../../../core/extensions/object.dart';
 import '../../../../core/extensions/widget_extension.dart';
+import '../../../../core/helpers/helpers.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/navigation/navigator.dart';
@@ -162,9 +163,10 @@ class _MainViewState extends State<MainView> {
                                           (index) {
                                         final opportunity = state.data.opportunities?.male?[index];
                                         return InkWell(
-                                          onTap: () => Go.to(IndividualDetailsScreen.opportunity(
+                                          onTap: () => UserTypeHelper.isAuthenticated? Go.to(IndividualDetailsScreen.opportunity(
                                             id: opportunity.id ?? 0,
-                                          )),
+                                          )) : Helpers.showUnauthenticatedSheet(),
+
                                           child: PartnerCard.individual(opportunity: opportunity!),
                                         );
                                       }
@@ -184,9 +186,9 @@ class _MainViewState extends State<MainView> {
                                           (index) {
                                         final opportunity = state.data.opportunities?.female?[index];
                                         return InkWell(
-                                          onTap: () => Go.to(IndividualDetailsScreen.opportunity(
+                                          onTap: () => UserTypeHelper.isAuthenticated? Go.to(IndividualDetailsScreen.opportunity(
                                             id: opportunity.id ?? 0,
-                                          )),
+                                          )) : Helpers.showUnauthenticatedSheet(),
                                           child: PartnerCard.individual(opportunity: opportunity!),
                                         );
                                       }
@@ -206,7 +208,9 @@ class _MainViewState extends State<MainView> {
                                           (index) {
                                         final opportunity = state.data.opportunities?.parent?[index];
                                         return InkWell(
-                                          onTap: () => Go.to( ParentDetailsScreen(id: opportunity?.id ?? 0)),
+                                          onTap: () => UserTypeHelper.isAuthenticated?
+                                          Go.to(ParentDetailsScreen(id: opportunity?.id ?? 0)):
+                                          Helpers.showUnauthenticatedSheet(),
                                           child: ParentCard(
                                               parentImage: opportunity?.avatar??'',
                                               name: opportunity?.name??'',

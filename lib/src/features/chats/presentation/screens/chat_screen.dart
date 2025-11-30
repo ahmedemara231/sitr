@@ -76,7 +76,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
         onReject: (context)async => ChatActions.executeReq(
             requestModel: widget.requestModel,
             context: context,
-            path: ApiConstants.userRejectRequest+context.read<ChatCubit>().userRequest!,
+            path: ApiConstants.rejectAll,
             onSuccess: (chatModel) =>  Go.offAll(const HomeScreen())
         ),
       );
