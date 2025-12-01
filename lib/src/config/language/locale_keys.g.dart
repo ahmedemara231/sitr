@@ -223,6 +223,9 @@ abstract class LocaleKeys {
   static const String _paymentSucceeded = 'payment_succeeded';
   static String get paymentSucceeded => _paymentSucceeded.tr();
 
+  static const String _youCanNowContinueChatStages = 'you_can_now_continue_chat_stages';
+  static String get youCanNowContinueChatStages => _youCanNowContinueChatStages.tr();
+
   static const String _youCanNowCompleteYourProfile = 'you_can_now_complete_your_profile';
   static String get youCanNowCompleteYourProfile => _youCanNowCompleteYourProfile.tr();
 

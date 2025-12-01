@@ -48,7 +48,7 @@ enum NotificationType {
   parentIndividualApprovalRejected('parent_individual_approval_rejected', navigation: MatchRequestNavigation()),
   matchRejectedWhenTimerEnded('match_rejected_when_timer_ended', navigation: HomeNavigation()),
 
-  matchRequestCompleted('match_request_completed', navigation: MatchRequestNavigation()),
+  matchRequestCompleted('match_request_completed', navigation: HomeNavigation()),
   chattingTimerEnded('chatting_timer_ended', navigation: MatchRequestNavigation()),
   shariaComplaintMeetingTimerEnded('sharia_complaint_meeting_timer_ended', navigation: MatchRequestNavigation()),
   istikharahTimerEnded('istikharah_timer_ended', navigation: MatchRequestNavigation()),

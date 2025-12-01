@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -106,6 +108,21 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
     ];
   }
 
+  double _calcCenterCardPadding(String bio){
+    double height = 40.h;
+    final int lines = bio.calculateRenderedLines(
+        context: context,
+        text: bio, maxWidth: context.width - 50
+    );
+
+    log('lines is $lines');
+    if(lines > 3){
+      height = height + ((lines - 3) * 30);
+    }
+
+    return height;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -114,33 +131,35 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
             _onSuccess(userResult);
           }
       ),
-      child: CenterCardScaffold.withCenteredCard(
-        upperWidget: BlocBuilder<T, AsyncState<UserModel>>(
-          builder: (context, state) => Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              StatusBuilder(
-                data: state,
-                onSuccess: (data, context) => CachedImage(
-                    height: 200.h,
-                    url: state.data.avatar ?? '', fit: BoxFit.fill
+      child: BlocBuilder<T, AsyncState<UserModel>>(
+        builder: (context, state) => CenterCardScaffold.withCenteredCard(
+          upperWidget: StatusBuilder(
+            data: state,
+            onSuccess: (data, context) => Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                StatusBuilder(
+                  data: state,
+                  onSuccess: (data, context) => CachedImage(
+                      height: 200.h,
+                      url: state.data.avatar ?? '', fit: BoxFit.fill
+                  ),
                 ),
-              ),
-              Container(
-                width: context.width,
-                height: 200.h,
-                decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
-                        colors: [Colors.black38, Colors.black26])
+                Container(
+                  width: context.width,
+                  height: 200.h,
+                  decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          colors: [Colors.black38, Colors.black26])
+                  ),
                 ),
-              ),
 
-              if(widget._type.isProfile)
-                const ProfileAppBarActions.withBackButtonOnly()
-              else
-                ProfileAppBarActions(
+                if(widget._type.isProfile)
+                  const ProfileAppBarActions.withBackButtonOnly()
+                else
+                  ProfileAppBarActions(
                     onBlock: (context) => showDefaultBottomSheet(
                       child: BlocManagerSheet(
                         id: state.data.id!,
@@ -153,14 +172,13 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                         id: state.data.id!,
                       ).paddingBottom(MediaQuery.of(context).viewPadding.bottom),
                     ),
-                ),
-            ],
+                  ),
+              ],
+            ),
           ),
-        ),
 
-        cardTopPadding: 150.h,
-        centerCardBody: BlocBuilder<T, AsyncState<UserModel>>(
-          builder: (context, state) => StatusBuilder(
+          cardTopPadding: 150.h,
+          centerCardBody: StatusBuilder(
             data: state,
             onSuccess: (data, context) => SizedBox(
               width: context.width,
@@ -209,11 +227,11 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
               ).paddingAll(12.r),
             ),
           ),
-        ),
 
-        bodyColor: AppColors.whiteGreyColorProMax,
-        body: BlocBuilder<T, AsyncState<UserModel>>(
-          builder: (context, state) => StatusBuilder(
+          bodyColor: AppColors.whiteGreyColorProMax,
+          bodyTopPadding: state.isLoading? 0 :
+          _calcCenterCardPadding((state.data as IndividualUserModel).bio ?? ''),
+          body: StatusBuilder(
             data: state,
             onSuccess: (data, context) => Column(
               spacing: 22.h,
@@ -235,15 +253,15 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
               ],
             ),
           ),
+        ).withPullRefresher(
+            onRefresh: (){
+              widget.cubit.getProfile(
+                  onSuccess: (userResult) {
+                    _onSuccess(userResult);
+                  }
+              );
+            }
         ),
-      ).withPullRefresher(
-        onRefresh: (){
-             widget.cubit.getProfile(
-              onSuccess: (userResult) {
-                _onSuccess(userResult);
-              }
-          );
-        }
       ),
     );
   }

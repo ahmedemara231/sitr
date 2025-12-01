@@ -16,6 +16,8 @@ class ChatScreen extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => ChatCubit()),
+          BlocProvider(create: (context) => FinishChatCubit()),
+          BlocProvider(create: (context) => EndVideoCallCubit()),
           BlocProvider(
             create: (context) => ChatNotificationCubit(injector<ChatNotificationService>()),
           )
@@ -196,7 +198,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
   ), roomId: context.read<ChatCubit>().currentRoom?.id ?? 0
   );
 
-  void _init() async {
+  void _initSocket() async {
     socketType
       ..initSocket()
       ..initConfig()
@@ -207,7 +209,8 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     _chatController = PagifyController<ChatMessages>();
     if(widget.showFullChat){
       await _startChat();
-      _init();
+      await UserCubit.instance.initZego();
+      _initSocket();
     }
   }
 
@@ -251,34 +254,54 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
             ],
           ),
 
-          // if(context.read<ChatCubit>().matchRequest?.callStatus == 'free_available') // مكالمة ببلاش
-          // if(context.read<ChatCubit>().matchRequest?.callStatus == 'not_available')
-          BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
-            builder: (context, state) => StatusBuilder(
-              data: state,
-              onSuccess: (data, context) =>
-              // context.read<ChatCubit>().currentStage!.value!.getCurrentStageAsStagesEnum.isShariaComplaintMeeting &&
-              //     data.matchRequest!.timer.isNotEqualZero ?
-              context.read<ChatCubit>().currentStage!.value!.getCurrentStageAsStagesEnum.isShariaComplaintMeeting?
-              Helpers.zegoService.zegoButton(
-                isVideoCall: true,
-                icon: const SvgPic(assetName: Assets.svgVideoCall),
-                invites: [
-                  ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName)
-                ],
-                // onPressed: context.read<ChatCubit>().matchRequest?.callStatus == 'free_used'? () => _executeReq(
-                //     context: context,
-                //     path: ApiConstants.videoCallRequest,
-                //     onSuccess: (model){}
-                // ) : null
-              ) : const SizedBox.shrink(),
+            BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
+              builder: (context, state) => StatusBuilder(
+                data: state,
+                onSuccess: (data, context) {
+                  final callStatus = context.read<ChatCubit>().matchRequest?.callStatus;
+                  final currentStage = context.read<ChatCubit>().currentStage!.value!.getCurrentStageAsStagesEnum;
+                  if((!(callStatus == 'not_available') || (callStatus == 'free_available') || (callStatus == 'paid_available')) &&
+                      currentStage.isShariaComplaintMeeting){
+                    return Helpers.zegoService.zegoButton( // المحانية موجودة
+                      isVideoCall: true,
+                      icon: const SvgPic(assetName: Assets.svgVideoCall),
+                      invites: [
+                        ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName)
+                      ],
+                      onPressed: (){
+                        if(callStatus == 'free_available' || callStatus == 'paid_available'){
+                          context.read<EndVideoCallCubit>().endVideoCall(
+                              context.read<ChatCubit>().matchRequestId.toString()
+                          );
+
+                        }
+                      }
+                    );
+
+                  }else if(callStatus == 'free_used'){
+                    showDefaultBottomSheet(child:
+                      PaymentSheet(onPay: (context, method)async{
+
+                    }));
+
+                  }else if(callStatus == 'completed'){ // المحانية خلصت
+                    return const SvgPic(assetName: Assets.svgVideoCall, color: Colors.grey);
+
+                  }
+
+                  return const SizedBox.shrink();
+                }
+
+
+              ),
             ),
-          ),
+
         ] : null,
         body: Column(
           children: [
             if(widget.showFullChat)
               Row(
+                spacing: context.width / 5,
                 children: [
                   ChatReportIcon(id: int.parse(widget.requestModel.receiverId)),
                   BlocBuilder<ChatCubit, AsyncState<ChatModel>>(

@@ -45,6 +45,7 @@ class Assets {
   static const String svgCalendar = 'assets/svg/Calendar.svg';
   static const String svgCamera = 'assets/svg/camera.svg';
   static const String svgChatsIcon = 'assets/svg/chatsIcon.svg';
+  static const String svgClock = 'assets/svg/clock.svg';
   static const String svgComplaintIcon = 'assets/svg/complaintIcon.svg';
   static const String svgConsultantPhone = 'assets/svg/consultant_phone.svg';
   static const String svgContactPhone = 'assets/svg/contactPhone.svg';

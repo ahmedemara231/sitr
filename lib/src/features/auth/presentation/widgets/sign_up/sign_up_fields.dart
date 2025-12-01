@@ -17,18 +17,18 @@ class _SignUpFieldsState extends State<SignUpFields> {
   late TextEditingController _maleNameCont;
   late TextEditingController _malePhoneCont;
   late TextEditingController _maleAgeCont;
-  late TextEditingController _maleIdentifyNumberCont;
+  // late TextEditingController _maleIdentifyNumberCont;
   late TextEditingController _maleCodeCont;
 
   late TextEditingController _femaleNameCont;
   late TextEditingController _femalePhoneCont;
   late TextEditingController _femaleAgeCont;
-  late TextEditingController _femaleIdentifyNumberCont;
+  // late TextEditingController _femaleIdentifyNumberCont;
   late TextEditingController _femaleCodeCont;
 
   late TextEditingController _parentNameCont;
   late TextEditingController _parentPhoneCont;
-  late TextEditingController _parentIdentifyNumberCont;
+  // late TextEditingController _parentIdentifyNumberCont;
   late TextEditingController _parentCodeCont;
 
   late TextEditingController _emailCont;
@@ -39,18 +39,18 @@ class _SignUpFieldsState extends State<SignUpFields> {
     _maleNameCont = TextEditingController();
     _malePhoneCont = TextEditingController();
     _maleAgeCont = TextEditingController();
-    _maleIdentifyNumberCont = TextEditingController();
+    // _maleIdentifyNumberCont = TextEditingController();
     _maleCodeCont = TextEditingController();
 
     _femaleNameCont = TextEditingController();
     _femalePhoneCont = TextEditingController();
     _femaleAgeCont = TextEditingController();
-    _femaleIdentifyNumberCont = TextEditingController();
+    // _femaleIdentifyNumberCont = TextEditingController();
     _femaleCodeCont = TextEditingController();
 
     _parentNameCont = TextEditingController();
     _parentPhoneCont = TextEditingController();
-    _parentIdentifyNumberCont = TextEditingController();
+    // _parentIdentifyNumberCont = TextEditingController();
     _parentCodeCont = TextEditingController();
 
     _emailCont = TextEditingController();
@@ -71,18 +71,18 @@ class _SignUpFieldsState extends State<SignUpFields> {
     _maleNameCont.dispose();
     _malePhoneCont.dispose();
     _maleAgeCont.dispose();
-    _maleIdentifyNumberCont.dispose();
+    // _maleIdentifyNumberCont.dispose();
     _maleCodeCont.dispose();
 
     _femaleNameCont.dispose();
     _femalePhoneCont.dispose();
     _femaleAgeCont.dispose();
-    _femaleIdentifyNumberCont.dispose();
+    // _femaleIdentifyNumberCont.dispose();
     _femaleCodeCont.dispose();
 
     _parentNameCont.dispose();
     _parentPhoneCont.dispose();
-    _parentIdentifyNumberCont.dispose();
+    // _parentIdentifyNumberCont.dispose();
     _parentCodeCont.dispose();
 
     _emailCont.dispose();
@@ -116,7 +116,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
         name: _parentNameCont.text,
         phone: _parentPhoneCont.text,
         email: _emailCont.text,
-        identityNumber: _parentIdentifyNumberCont.text,
+        // identityNumber: _parentIdentifyNumberCont.text,
         childrenNumber: _childrenNumberCont.text,
         kinship: _kinship?.id,
         gender: _gender?.name,
@@ -125,22 +125,14 @@ class _SignUpFieldsState extends State<SignUpFields> {
     } else {
       signUpBody = MaleAndFemaleSignUp.initial().copyWith(
         image: _getImageBasedGender,
-        name: _getContBasedUserType(
-                whenMale: _maleNameCont, whenFemale: _femaleNameCont)
-            .text,
-        phone: _getContBasedUserType(
-                whenMale: _malePhoneCont, whenFemale: _femalePhoneCont)
-            .text,
-        age: _getContBasedUserType(
-                whenMale: _maleAgeCont, whenFemale: _femaleAgeCont)
-            .text,
-        identityNumber: _getContBasedUserType(
-                whenMale: _maleIdentifyNumberCont,
-                whenFemale: _femaleIdentifyNumberCont)
-            .text,
-        code: _getContBasedUserType(
-                whenMale: _maleCodeCont, whenFemale: _femaleCodeCont)
-            .text,
+        name: _getContBasedUserType(whenMale: _maleNameCont, whenFemale: _femaleNameCont).text,
+        phone: _getContBasedUserType(whenMale: _malePhoneCont, whenFemale: _femalePhoneCont).text,
+        age: _getContBasedUserType(whenMale: _maleAgeCont, whenFemale: _femaleAgeCont).text,
+        code: _getContBasedUserType(whenMale: _maleCodeCont, whenFemale: _femaleCodeCont).text,
+        // identityNumber: _getContBasedUserType(
+        //         whenMale: _maleIdentifyNumberCont,
+        //         whenFemale: _femaleIdentifyNumberCont)
+        //     .text,
       );
     }
 
@@ -247,23 +239,23 @@ class _SignUpFieldsState extends State<SignUpFields> {
             // validator: Validators.validateEmpty,
           ),
         ),
-        SignUpTextField(
-          validator: Validators.validateEmpty,
-          upperTitle: LocaleKeys.identifyNumber,
-          title: LocaleKeys.pleaseEnterTheNumber,
-          controller: _getContBasedUserType(
-              whenMale: _maleIdentifyNumberCont,
-              whenFemale: _femaleIdentifyNumberCont,
-              whenParent: _parentIdentifyNumberCont),
-          onChanged: (val) => _listenToData(signUpBody.copyWith(
-              identityNumber: _getContBasedUserType(
-                      whenMale: _maleIdentifyNumberCont,
-                      whenFemale: _femaleIdentifyNumberCont,
-                      whenParent: _parentIdentifyNumberCont)
-                  .text)),
-          inputType: TextInputType.number,
-          // validator: Validators.validateEmpty,
-        ),
+        // SignUpTextField(
+        //   validator: Validators.validateEmpty,
+        //   upperTitle: LocaleKeys.identifyNumber,
+        //   title: LocaleKeys.pleaseEnterTheNumber,
+        //   controller: _getContBasedUserType(
+        //       whenMale: _maleIdentifyNumberCont,
+        //       whenFemale: _femaleIdentifyNumberCont,
+        //       whenParent: _parentIdentifyNumberCont),
+        //   onChanged: (val) => _listenToData(signUpBody.copyWith(
+        //       identityNumber: _getContBasedUserType(
+        //               whenMale: _maleIdentifyNumberCont,
+        //               whenFemale: _femaleIdentifyNumberCont,
+        //               whenParent: _parentIdentifyNumberCont)
+        //           .text)),
+        //   inputType: TextInputType.number,
+        //   // validator: Validators.validateEmpty,
+        // ),
         if (widget.type.isParent) ...[
           AppDropinity<List<Kinship>, Kinship>.withApiRequest(
             controller: controller,

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../../../../config/language/locale_keys.g.dart';
@@ -17,7 +15,6 @@ import '../../data/auth_data.dart';
 import '../../data/enums_data.dart';
 import '../../enums/answer.dart';
 import '../shared/text_field.dart';
-import 'drop_down_text_field.dart';
 import 'radio_widget.dart';
 import 'shared_form_fields.dart';
 
@@ -43,7 +40,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
   late TextEditingController _parentNameCont;
   late TextEditingController _parentNumberCont;
   late TextEditingController _phoneCont;
-  late TextEditingController _identifyNumberCont;
+  // late TextEditingController _identifyNumberCont;
   late TextEditingController _ageCont;
 
   final ValueNotifier<String?> wearingHijab = ValueNotifier(null);
@@ -77,7 +74,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
     _parentNameCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.guardianName);
     _parentNumberCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.guardianPhone);
     _phoneCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.phone);
-    _identifyNumberCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.identityNumber);
+    // _identifyNumberCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.identityNumber);
     _ageCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.age.toString());
     super.initState();
   }
@@ -89,7 +86,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
     _parentNameCont.dispose();
     _parentNumberCont.dispose();
     _phoneCont.dispose();
-    _identifyNumberCont.dispose();
+    // _identifyNumberCont.dispose();
     _ageCont.dispose();
     super.dispose();
   }
@@ -193,14 +190,14 @@ class _FemaleFieldsState extends State<FemaleFields> {
               inputType: TextInputType.number,
               validator: (v) => Validators.validateAge(v, fieldTitle: LocaleKeys.age.tr(), isRequired: true),
             ),
-            SignUpTextField(
-              upperTitle: LocaleKeys.identifyNumber,
-              title: LocaleKeys.pleaseEnterTheNumber,
-              controller: _identifyNumberCont,
-              onChanged: (value) => _listenToData(asFemale.copyWith(identityNumber: value)),
-              inputType: TextInputType.number,
-              validator: (v) => Validators.validateIdentityNumber(v, fieldTitle: LocaleKeys.identifyNumber.tr()),
-            ),
+            // SignUpTextField(
+            //   upperTitle: LocaleKeys.identifyNumber,
+            //   title: LocaleKeys.pleaseEnterTheNumber,
+            //   controller: _identifyNumberCont,
+            //   onChanged: (value) => _listenToData(asFemale.copyWith(identityNumber: value)),
+            //   inputType: TextInputType.number,
+            //   validator: (v) => Validators.validateIdentityNumber(v, fieldTitle: LocaleKeys.identifyNumber.tr()),
+            // ),
           ])
             ..insertAll(15, [
               SignUpTextField(

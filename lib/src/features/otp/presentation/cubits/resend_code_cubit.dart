@@ -12,8 +12,7 @@ class ResendCodeCubit extends AsyncCubit{
           CrudBaseParmas(
               api: ApiConstants.resendCode,
               httpRequestType: HttpRequestType.get,
-              body: body.toJson(),
-              mapper: (json) => null
+              queryParameters: body.toJson(),
           ),
         ),
     );

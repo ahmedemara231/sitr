@@ -42,7 +42,8 @@ enum ChatStages{
 
 
   // parent & individual - PARENT MATCH
-  parentIndividualConversation(6, 'parent_individual_conversation');
+  parentIndividualConversation(6, 'parent_individual_conversation'),
+  completed(6, 'completed');
 
   final int stage;
   final String stageText;

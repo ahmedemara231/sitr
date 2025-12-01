@@ -3,8 +3,10 @@ import 'package:easy_timer_count/helpers/time.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../generated/assets.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/widgets/app_text.dart';
+import '../../../../../core/widgets/svg_pic.dart';
 
 class ChatTimerWidget extends StatefulWidget {
   final int minutes;
@@ -46,7 +48,7 @@ class _ChatTimerWidgetState extends State<ChatTimerWidget> {
               spacing: 5.w,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.timelapse, color: Colors.amber),
+                const SvgPic(assetName: Assets.svgClock),
                 AppText(time, fontSize: 22.sp, fontWeight: FontWeight.w500),
               ],
             )

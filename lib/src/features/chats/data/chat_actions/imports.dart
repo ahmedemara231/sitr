@@ -2,11 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/extensions/string_extension.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/network/api_endpoints.dart';
+import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/sheets/chat_requests_sheet.dart';
 import '../../../../core/widgets/sheets/payment_sheet.dart';
 import '../../../../core/widgets/sheets/success_sheet.dart';

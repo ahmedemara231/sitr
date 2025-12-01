@@ -51,7 +51,7 @@ class UserStatusAction extends ChatActions{
     }else if (matchRequest.isParentIndividualApproval && status.isPending){
       _showAcceptanceSheet(
             (){
-              _finishChat(context);
+              // _finishChat(context);
               Go.offAll(const HomeScreen());
           },
       );
@@ -86,8 +86,15 @@ class UserStatusAction extends ChatActions{
 
                   if(result == 'success'){
                     ChatSheetManager.show(
-                        child: const SuccessSheet(
+                        child: SuccessSheet(
                           isInAuth: false,
+                          upperText: Column(
+                            spacing: 10.h,
+                            children: [
+                              AppText(LocaleKeys.paymentSucceeded),
+                              AppText(LocaleKeys.youCanNowContinueChatStages, color: Colors.grey, fontSize: 12.sp),
+                            ],
+                          ),
                         )
                     );
                   }

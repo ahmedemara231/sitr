@@ -76,7 +76,7 @@ class PartnerCard extends StatelessWidget {
                           )else
                             _buildStatItem(
                               value: opportunity.skin?.title ?? '',
-                              icon: Assets.svgMartialStatus,
+                              icon: Assets.svgParentIcon,
                               color: const Color(0xFFF57C00),
                               backgroundColor: const Color(0xFFFFF3E0),
                             )

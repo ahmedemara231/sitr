@@ -49,12 +49,12 @@ class Sitr extends StatelessWidget {
                 builder: (context, child) {
                   return InternetInterceptorWidget(
                     loadingWidget: const SplashLogo(),
-                    onChanged: (status) => _manageInternetConnectivity(context, status),
-                    builder: (status) {
+                    onChanged: (previous, current) => _manageInternetConnectivity(context, current),
+                    builder: (previous, current) {
                       return Stack(
                         children: [
                           child!,
-                          if (status == InternetConnectionStatus.disconnected)
+                          if (current == InternetConnectionStatus.disconnected)
                             const Positioned.fill(
                               child: NoInternetWidget(),
                             ),
@@ -62,10 +62,6 @@ class Sitr extends StatelessWidget {
                       );
                     },
                   );
-
-                  // return OfflineWidget(
-                  //   child: FullScreenLoadingManager(child: child!),
-                  // );
                 },
               ),
             ),

@@ -11,8 +11,7 @@ class ConfigurationInterceptor extends Interceptor {
     options.headers.addAll({
       HttpHeaders.acceptHeader: ContentType.json,
       Headers.contentTypeHeader: Headers.jsonContentType,
-      'lang':
-          Languages.currentLanguage.locale.languageCode
+      'lang': Languages.currentLanguage.locale.languageCode
     });
     handler.next(options);
   }
@@ -28,6 +27,8 @@ class ConfigurationInterceptor extends Interceptor {
   void _handleError(Response response) {
     final errorKey = response.data['key'];
     final errorMessage = response.data['msg'];
+
+    log('response data $errorMessage $errorKey ${response.statusCode}');
 
     final statusCode = _mapErrorKeyToStatusCode(errorKey);
     if (statusCode != null) {

@@ -47,7 +47,7 @@ class UserCubit extends Cubit<UserState> with UserUtils {
     emit(state.copyWith(userModel: user));
   }
 
-  Future<void> _initZego()async{
+  Future<void> initZego()async{
     final bool isConnected = await Helpers.zegoService.onUserLogin(
         currentUserId: UserModel.currentUser!.id.toString(),
         currentUserName: UserModel.currentUser!.name.toString()
@@ -69,7 +69,7 @@ class UserCubit extends Cubit<UserState> with UserUtils {
     log('userMap $userMap, token $token');
     if (token != null && userMap != null) {
       injector<NetworkService>().setToken(token);
-      _initZego();
+      // _initZego();
       emit(
         state.copyWith(
           userModel: UserModel.fromJson(userMap),

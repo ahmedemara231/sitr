@@ -32,7 +32,7 @@ class _MaleFieldsState extends State<MaleFields> {
 
   late TextEditingController _nameCont;
   late TextEditingController _phoneCont;
-  late TextEditingController _identifyNumberCont;
+  // late TextEditingController _identifyNumberCont;
   late TextEditingController _ageCont;
 
   void _init() {
@@ -48,7 +48,7 @@ class _MaleFieldsState extends State<MaleFields> {
     _init();
     _nameCont = TextEditingController(text: widget.initialValue?.name);
     _phoneCont = TextEditingController(text: widget.initialValue?.phone);
-    _identifyNumberCont = TextEditingController(text: widget.initialValue?.identityNumber);
+    // _identifyNumberCont = TextEditingController(text: widget.initialValue?.identityNumber);
     _ageCont = TextEditingController(text: widget.initialValue?.age.toString());
     super.initState();
   }
@@ -57,7 +57,7 @@ class _MaleFieldsState extends State<MaleFields> {
   void dispose() {
     _nameCont.dispose();
     _phoneCont.dispose();
-    _identifyNumberCont.dispose();
+    // _identifyNumberCont.dispose();
     _ageCont.dispose();
     super.dispose();
   }
@@ -114,15 +114,15 @@ class _MaleFieldsState extends State<MaleFields> {
             ..insertAll(
                 7,
                 [
-              SignUpTextField(
-                upperTitle: LocaleKeys.identifyNumber,
-                title: LocaleKeys.pleaseEnterTheNumber,
-                controller: _identifyNumberCont,
-                inputType: TextInputType.number,
-                onChanged: (val) => _listenToData(asMaleModel.copyWith(
-                    identityNumber: _identifyNumberCont.text)),
-                validator: (v) => Validators.validateIdentityNumber(v, fieldTitle: LocaleKeys.identifyNumber.tr()),
-              ),
+              // SignUpTextField(
+              //   upperTitle: LocaleKeys.identifyNumber,
+              //   title: LocaleKeys.pleaseEnterTheNumber,
+              //   controller: _identifyNumberCont,
+              //   inputType: TextInputType.number,
+              //   onChanged: (val) => _listenToData(asMaleModel.copyWith(
+              //       identityNumber: _identifyNumberCont.text)),
+              //   validator: (v) => Validators.validateIdentityNumber(v, fieldTitle: LocaleKeys.identifyNumber.tr()),
+              // ),
               SignUpTextField(
                 upperTitle: LocaleKeys.age,
                 title: LocaleKeys.pleaseEnterYourAge,

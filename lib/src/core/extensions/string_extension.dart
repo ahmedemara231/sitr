@@ -1,6 +1,7 @@
 import 'dart:developer';
 
-import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization/easy_localization.dart' as tr;
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../config/language/languages.dart';
@@ -73,7 +74,70 @@ extension FormatString on String {
   UserRequestStatus get getUserRequestStatusAsEnum => UserRequestStatus.values
       .firstWhere((e) => this == e.statusText);
 
-  bool get isImage =>
+
+  int calculateRenderedLines({
+    required BuildContext context,
+    required String text,
+    required double maxWidth,
+    TextStyle style = const TextStyle(),
+  }) {
+    final TextPainter textPainter = TextPainter(
+      text: TextSpan(text: text, style: style),
+      textDirection: TextDirection.ltr,
+      textAlign: TextAlign.start,
+      maxLines: null,
+    );
+
+    // لازم نحط maxWidth
+    textPainter.layout(maxWidth: maxWidth);
+
+    return textPainter.computeLineMetrics().length;
+  }
+
+
+
+  /// 1) عدد السطور المنطقي (count of '\n' + 1)
+  int get getLinesCount {
+    if (isEmpty) return 0;
+    return split('\n').length;
+  }
+
+  // /// 2) عدد السطور بعد الرندر (wrap) باستخدام TextPainter
+  // ///
+  // /// - [style]: مطلوب (حجم/وزن/خط)
+  // /// - [maxWidth]: مطلوب — المساحة المتاحة لعرض النص (بالـ pixels)
+  // /// - [textDirection]: افتراضي ltr
+  // /// - [textAlign]: افتراضي start
+  // /// - [maxLines]: اذا عايز تحصر بعدد أقصى من السطور
+  // /// - [textScaleFactor]: عادة تأخذ من MediaQuery
+  int renderedLineCount({
+    TextAlign textAlign = TextAlign.start,
+    int? maxLines,
+    double textScaleFactor = 1.0,
+    StrutStyle? strutStyle,
+  }) {
+    if (isEmpty) return 0;
+
+    final tp = TextPainter(
+      text: TextSpan(text: this),
+      textDirection: TextDirection.ltr,
+      textAlign: textAlign,
+      maxLines: maxLines,
+      textScaleFactor: textScaleFactor,
+      strutStyle: strutStyle,
+    );
+
+    // layout with given maxWidth
+    tp.layout();
+
+    // computeLineMetrics gives a LineMetrics per visual line
+    final metrics = tp.computeLineMetrics();
+    return metrics.length;
+  }
+
+
+
+bool get isImage =>
       contains('jpg') ||
           contains('png') ||
           contains('svg') ||
@@ -223,7 +287,7 @@ extension FormatString on String {
   }
 
   String toCurrency() {
-    final formatter = NumberFormat('#,###');
+    final formatter = tr.NumberFormat('#,###');
     return formatter.format(double.parse(this));
   }
 
@@ -248,73 +312,73 @@ extension FormatString on String {
 
 extension FormatDouble on double {
   String toCurrency() {
-    final formatter = NumberFormat('#,###');
+    final formatter = tr.NumberFormat('#,###');
     return formatter.format(this);
   }
 }
 
 extension DateTimeFormatHelper on DateTime {
   String toTime([String? locale]) {
-    return DateFormat('hh:mm a', locale).format(this);
+    return tr.DateFormat('hh:mm a', locale).format(this);
   }
 
   String toTimeWithoutPmAndAm([String? locale]) {
-    return DateFormat('hh:mm', locale).format(this);
+    return tr.DateFormat('hh:mm', locale).format(this);
   }
 
   String toAmAndPm([String? locale]) {
-    return DateFormat('a', locale).format(this);
+    return tr.DateFormat('a', locale).format(this);
   }
 
   String toFullDate({String? locale, String key = '-'}) {
-    return DateFormat('yyyy${key}MM${key}dd').format(this);
+    return tr.DateFormat('yyyy${key}MM${key}dd').format(this);
   }
 
   String toFullDateTime([String? locale]) {
-    return DateFormat('yyyy-MM-dd HH:mm').format(this);
+    return tr.DateFormat('yyyy-MM-dd HH:mm').format(this);
   }
 
   String toDay([String? locale]) {
-    return DateFormat('EEEE').format(this);
+    return tr.DateFormat('EEEE').format(this);
   }
 
   String toMonth([String? locale]) {
-    return DateFormat('MMMM').format(this);
+    return tr.DateFormat('MMMM').format(this);
   }
 
   String toMonthShort([String? locale]) {
-    return DateFormat('MMM').format(this);
+    return tr.DateFormat('MMM').format(this);
   }
 
   String toDayMonth([String? locale]) {
-    return DateFormat('dd MMMM').format(this);
+    return tr.DateFormat('dd MMMM').format(this);
   }
 
   String toDayMonthShort([String? locale]) {
-    return DateFormat('dd MMM').format(this);
+    return tr.DateFormat('dd MMM').format(this);
   }
 
   String toDayMonthYear([String? locale]) {
-    return DateFormat('dd MMMM yyyy').format(this);
+    return tr.DateFormat('dd MMMM yyyy').format(this);
   }
 
   String toDayMonthYearShort([String? locale]) {
-    return DateFormat('dd MMM yyyy').format(this);
+    return tr.DateFormat('dd MMM yyyy').format(this);
   }
 
   String toDayMonthYearTime([String? locale]) {
-    return DateFormat('dd MMMM yyyy HH:mm').format(this);
+    return tr.DateFormat('dd MMMM yyyy HH:mm').format(this);
   }
 
   String toDayMonthYearTimeShort([String? locale]) {
-    return DateFormat('dd MMM yyyy HH:mm').format(this);
+    return tr.DateFormat('dd MMM yyyy HH:mm').format(this);
   }
 
   String toDayMonthYearTimeSeconds([String? locale]) {
-    return DateFormat('dd MMMM yyyy HH:mm:ss').format(this);
+    return tr.DateFormat('dd MMMM yyyy HH:mm:ss').format(this);
   }
 
   String toDayMonthYearTimeSecondsShort([String? locale]) {
-    return DateFormat('dd MMM yyyy HH:mm:ss').format(this);
+    return tr.DateFormat('dd MMM yyyy HH:mm:ss').format(this);
   }
 }
