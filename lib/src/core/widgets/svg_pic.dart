@@ -11,6 +11,6 @@ class SvgPic extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SvgPicture.asset(assetName, color: color,);
+    return SvgPicture.asset(assetName, color: color);
   }
 }

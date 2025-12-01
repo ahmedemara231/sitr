@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
+import '../../../../../core/helpers/validators.dart';
 import '../../../../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../../../../core/shared/models/user_models/individual/male_model.dart';
 import '../../../../../core/shared/models/user_models/user_model.dart';
@@ -93,7 +95,7 @@ class _MaleFieldsState extends State<MaleFields> {
                 controller: _nameCont,
                 onChanged: (val) =>
                     _listenToData(asMaleModel.copyWith(name: _nameCont.text)),
-                // validator: Validators.validateEmpty,
+                validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.name.tr()),
               ),
               ]
             )
@@ -106,7 +108,7 @@ class _MaleFieldsState extends State<MaleFields> {
                   inputType: TextInputType.phone,
                   onChanged: (val) => _listenToData(
                       asMaleModel.copyWith(phone: _phoneCont.text)),
-                  // validator: Validators.validateEmpty,
+                  validator: Validators.validatePhone,
                 ),
             )
             ..insertAll(
@@ -119,7 +121,7 @@ class _MaleFieldsState extends State<MaleFields> {
                 inputType: TextInputType.number,
                 onChanged: (val) => _listenToData(asMaleModel.copyWith(
                     identityNumber: _identifyNumberCont.text)),
-                // validator: Validators.validateEmpty,
+                validator: (v) => Validators.validateIdentityNumber(v, fieldTitle: LocaleKeys.identifyNumber.tr()),
               ),
               SignUpTextField(
                 upperTitle: LocaleKeys.age,
@@ -128,7 +130,7 @@ class _MaleFieldsState extends State<MaleFields> {
                 controller: _ageCont,
                 onChanged: (val) => _listenToData(
                     asMaleModel.copyWith(age: int.tryParse(_ageCont.text))),
-                // validator: Validators.validateEmpty,
+                validator: (v) => Validators.validateAge(v, fieldTitle: LocaleKeys.age.tr(), isRequired: true),
               ),
             ]
             )

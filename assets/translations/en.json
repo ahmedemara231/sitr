@@ -262,6 +262,7 @@
   "here_is_the_text_of_the_message_here_is_the_text_of_the_message_here_is_the_text_of_the_message": "Here is the text of the message Here is the text of the message Here is the text of the message",
   "are_you_sure_to_block_this_user": "are you sure to block this user",
   "are_you_sure_to_report_this_user": "are you sure to report this user",
+  "report_reason": "Report reason",
   "edit_data": "edit data",
   "tips_for_the_stage_of_sufficient_knowledge": "Tips for the stage of sufficient knowledge",
   "clarification": "Clarification",
@@ -281,6 +282,7 @@
   "photo": "Photo",
   "want_to_contact_with_you": "Want to contact with you",
   "partner_wants_to": "partner wants to",
+  "report": "Report",
   "tips_for_sharia_complaint_meeting": "Tips for sharia complaint meeting",
   "optional_stage_you_can_skip_this_stage": "Optional stage you can skip this stage",
   "shariaa_meeting_stage": "Shariaa meeting stage",
@@ -305,5 +307,6 @@
   "tips_for_engagement_stage": "Tips for engagement stage",
   "the_apps_management_will_contact_you_to_arrange_a_meeting_under_the_apps_supervision_may_god_grant_you_success": "The app's management will contact you to arrange a meeting under the app's supervision May God grant you success",
   "only_letters_allowed": "only letters allowed",
-  "tips_por_parent_individual_conversation": "tips por parent individual conversation"
+  "tips_por_parent_individual_conversation": "tips por parent individual conversation",
+  "you_can_not_send_more_than_2_images_in_chat": "you can not send more than 2 images in chat"
 }

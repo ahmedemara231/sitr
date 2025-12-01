@@ -267,6 +267,7 @@
     "Here is the text of the message Here is the text of the message Here is the text of the message" : "هنا نص الرسالة هنا نص الرسالة هنا نص الرسالة",
     "are you sure to block this user" : "هل انت متأكد من حظر المستخدم",
     "are you sure to report this user" : "هل انت متاكد من الابلاغ عن المستخدم",
+  "Report reason" : "سبب الابلاغ",
     "edit data" : "تعديل البيانات",
     "Tips for the stage of sufficient knowledge" : "نصائح في مرحلة الالمام الكافي",
     "Clarification" : "توضيح",
@@ -287,6 +288,7 @@
     "Photo" : "صورة",
     "Want to contact with you" : "يريد التواصل معك",
   "partner wants to"  : "الشريك يريد ان",
+  "Report" : "ابلاغ",
   "Tips for sharia complaint meeting" : "نصائح لمرحلة النظرة الشرعية",
   "Optional stage you can skip this stage" : "مرحلة اختيارية يمكنك تخطي هذه المرحلة",
   "Shariaa meeting stage" : "مرحلة النظرة الشرعية",
@@ -311,5 +313,6 @@
   "Tips for engagement stage" : "نصائح لمرحلة الخطوبة",
   "The app's management will contact you to arrange a meeting under the app's supervision May God grant you success" : "سيتم التواصل معكم من قبل ادارة التطبيق لترتيب لقاء تحت اشراف التطبيق والله يكتب لكم الخير يا رب",
   "only letters allowed" : "مسموح بالحروف فقط",
-  "tips por parent individual conversation" : "نصائح لمحادثة الابن و ولي الامر"
+  "tips por parent individual conversation" : "نصائح لمحادثة الابن و ولي الامر",
+  "you can not send more than 2 images in chat" : "لا يمكنك ارسال اكثر من صورتين في المحادثة"
 }

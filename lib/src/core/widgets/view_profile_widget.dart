@@ -150,8 +150,8 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                     ),
                     onReport: (context) => showDefaultBottomSheet(
                       child: ReportSheet(
-                          id: state.data.id!,
-                      ),
+                        id: state.data.id!,
+                      ).paddingBottom(MediaQuery.of(context).viewPadding.bottom),
                     ),
                 ),
             ],

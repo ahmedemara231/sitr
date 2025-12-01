@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../config/language/locale_keys.g.dart';
+import '../extensions/padding_extension.dart';
 import '../navigation/navigator.dart';
 import 'buttons/app_loading_button.dart';
 import 'buttons/custom_app_buttons/default_button.dart';
@@ -62,7 +63,7 @@ class AppBottomSheet extends StatelessWidget {
               )
           ],
         ),
-      ),
+      )
     );
   }
 }

@@ -775,6 +775,9 @@ abstract class LocaleKeys {
   static const String _areYouSureToReportThisUser = 'are_you_sure_to_report_this_user';
   static String get areYouSureToReportThisUser => _areYouSureToReportThisUser.tr();
 
+  static const String _reportReason = 'report_reason';
+  static String get reportReason => _reportReason.tr();
+
   static const String _editData = 'edit_data';
   static String get editData => _editData.tr();
 
@@ -831,6 +834,9 @@ abstract class LocaleKeys {
 
   static const String _partnerWantsTo = 'partner_wants_to';
   static String get partnerWantsTo => _partnerWantsTo.tr();
+
+  static const String _report = 'report';
+  static String get report => _report.tr();
 
   static const String _tipsForShariaComplaintMeeting = 'tips_for_sharia_complaint_meeting';
   static String get tipsForShariaComplaintMeeting => _tipsForShariaComplaintMeeting.tr();
@@ -906,5 +912,8 @@ abstract class LocaleKeys {
 
   static const String _tipsPorParentIndividualConversation = 'tips_por_parent_individual_conversation';
   static String get tipsPorParentIndividualConversation => _tipsPorParentIndividualConversation.tr();
+
+  static const String _youCanNotSendMoreThan2ImagesInChat = 'you_can_not_send_more_than_2_images_in_chat';
+  static String get youCanNotSendMoreThan2ImagesInChat => _youCanNotSendMoreThan2ImagesInChat.tr();
 
 }

@@ -8,6 +8,7 @@ import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/extensions/enum.dart';
 import '../../../../../core/extensions/string_extension.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
+import '../../../../../core/helpers/validators.dart';
 import '../../../../../core/shared/models/title_value_shape.dart';
 import '../../../../../core/shared/models/user_models/individual/female_model.dart';
 import '../../../../../core/shared/models/user_models/individual/individual_user_model.dart';
@@ -140,8 +141,8 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         upperTitle: LocaleKeys.nickname,
         title: LocaleKeys.pleaseEnterYourName,
         controller: _nickNameCont,
-        onChanged: (val) => _listenToData(model.copyWith(nickName: val) as T)
-        // validator: Validators.validateEmpty,
+        onChanged: (val) => _listenToData(model.copyWith(nickName: val) as T),
+        validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.nickname.tr()),
       ),
       AppDropinityLocal<TitleValueShape>(
           listHeight: 100,
@@ -160,7 +161,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         controller: _tallCont,
         inputType: TextInputType.number,
         onChanged: (val) => _listenToData(model.copyWith(height: val) as T),
-        // validator: Validators.validateEmpty,
+        validator: (v) => Validators.validateNumeric(v, min: 75, max: 250, fieldTitle: LocaleKeys.tall.tr()),
       ),
       SignUpTextField(
         upperTitle: LocaleKeys.weight,
@@ -168,14 +169,14 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         controller: _weightCont,
         inputType: TextInputType.number,
         onChanged: (val) => _listenToData(model.copyWith(weight: val) as T),
-        // validator: Validators.validateEmpty,
+        validator: (v) => Validators.validateNumeric(v, min: 30, max: 300, fieldTitle: LocaleKeys.weight.tr()),
       ),
       SignUpTextField(
         upperTitle: LocaleKeys.currentJob,
         title: LocaleKeys.pleaseEnterTheCurrentJob,
         controller: _currentJobCont,
         onChanged: (val) => _listenToData(model.copyWith(currentJob: val) as T),
-        // validator: Validators.validateEmpty,
+        validator: (v) => Validators.validateString(v, min: 3, max: 100, fieldTitle: LocaleKeys.currentJob.tr()),
       ),
       SignUpTextField(
         upperTitle: LocaleKeys.quickBrief,
@@ -183,7 +184,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         controller: _briefCont,
         inputType: TextInputType.multiline,
         onChanged: (val) => _listenToData(model.copyWith(bio: val) as T),
-        // validator: Validators.validateEmpty,
+        validator: (v) => Validators.validateString(v, min: 3, max: 1000, fieldTitle: LocaleKeys.quickBrief.tr()),
       ),
       RadioWidget<Answer>(
           initialValue: widget.initialValue?.hasChildren?.toAnswer,
@@ -207,7 +208,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
                  inputType: TextInputType.number,
                  onChanged: (val) =>
                      _listenToData(model.copyWith(numOfChildren: val) as T),
-                 // validator: Validators.validateEmpty,
+                 validator: (v) => Validators.validateInteger(v, min: 0, max: 100, fieldTitle: LocaleKeys.childrenNumber.tr()),
                ),
                RadioWidget<TitleValueShape>(
                  initialValue: widget.initialValue?.childCustody,
@@ -235,7 +236,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         controller: _thingsCont,
         onChanged: (val) =>
             _listenToData(model.copyWith(prohibitedThings: val) as T),
-        // validator: Validators.validateEmpty,
+        validator: (v) => Validators.validateString(v, min: 3, max: 1000, fieldTitle: LocaleKeys.thingsIAbsolutelyDoNotAcceptOrWant.tr()),
       ),
 
       DowryWidget(
@@ -269,7 +270,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         controller: _educationalQualificationCont,
         onChanged: (val) =>
             _listenToData(model.copyWith(educationLevel: val) as T),
-        // validator: Validators.validateEmpty,
+        validator: (v) => Validators.validateString(v, fieldTitle: LocaleKeys.educationalQualification.tr()),
       ),
       RadioWidget<Answer>(
         initialValue: widget.initialValue?.isPrayer?.toAnswer,
@@ -285,7 +286,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         controller: _diseasesCont,
         onChanged: (val) =>
             _listenToData(model.copyWith(healthConditions: val) as T),
-        // validator: Validators.validateEmpty,
+        validator: (v) => Validators.validateString(v, min: 3, max: 1000, isRequired: false, fieldTitle: LocaleKeys.diseasesIfExists.tr()),
       ),
       RadioWidget<Languages>(
         initialValue: widget.initialValue?.chatLang?.toLang(),

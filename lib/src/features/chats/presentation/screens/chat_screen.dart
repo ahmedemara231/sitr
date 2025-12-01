@@ -83,6 +83,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     }
 
     return ChatBottomBar(
+        controller: _chatController,
         onUpload: (url){
           socketType.sendMessage(
               {
@@ -277,11 +278,16 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
         body: Column(
           children: [
             if(widget.showFullChat)
-              BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
-                  builder: (context, state) => StatusBuilder(
-                      data: state,
-                      onSuccess: (data, context) => _upperWidget(data)
-                  )),
+              Row(
+                children: [
+                  ChatReportIcon(id: int.parse(widget.requestModel.receiverId)),
+                  BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
+                      builder: (context, state) => StatusBuilder(
+                          data: state,
+                          onSuccess: (data, context) => _upperWidget(data)
+                      )),
+                ],
+              ),
 
             Expanded(
               child: EasyChat(

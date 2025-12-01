@@ -1,9 +1,11 @@
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/extensions/enum.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
+import '../../../../../core/helpers/validators.dart';
 import '../../../../../core/shared/models/title_value_shape.dart';
 import '../../../../../core/shared/models/user_models/individual/female_model.dart';
 import '../../../../../core/shared/models/user_models/individual/individual_user_model.dart';
@@ -115,7 +117,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 title: LocaleKeys.pleaseEnterHome,
                 controller: _liveAfterMarryCont,
                 onChanged: (value) => _listenToData(asFemale.copyWith(preferredResidenceAfterMarriage: value)),
-                // validator: Validators.validateEmpty,
+                validator: (v) => Validators.validateString(v, min: 3, max: 1000, fieldTitle: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage.tr()),
               ),
             )..insert(
               18,
@@ -147,7 +149,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 controller: _parentNameCont,
                 onChanged: (value) => _listenToData(asFemale.copyWith(guardianName: value)),
 
-                // validator: Validators.validateEmpty,
+                validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.parentName.tr()),
               ),
               SignUpTextField(
                 upperTitle: LocaleKeys.parentNumber,
@@ -155,7 +157,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 controller: _parentNumberCont,
                 inputType: TextInputType.phone,
                 onChanged: (value) => _listenToData(asFemale.copyWith(guardianPhone: value)),
-                // validator: Validators.validateEmpty,
+                validator: (v) => Validators.validatePhone(v, message: LocaleKeys.parentNumber.tr()),
               ),
             AppDropinity<List<Kinship>, Kinship>.withApiRequest(
               initialValue: (widget.initialValue as FemaleModel?)?.guardianRelation?.value,
@@ -179,7 +181,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
               title: LocaleKeys.pleaseEnterTheNumber,
               controller: _phoneCont,
               onChanged: (value) => _listenToData(asFemale.copyWith(phone: value)),
-              // validator: Validators.validatePhone,
+              validator: Validators.validatePhone,
               inputType: TextInputType.number,
             ),
           )..insertAll(6, [
@@ -189,7 +191,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
               onChanged: (value) => _listenToData(asFemale.copyWith(age: int.parse(value!))),
               controller: _ageCont,
               inputType: TextInputType.number,
-              // validator: Validators.validateEmpty,
+              validator: (v) => Validators.validateAge(v, fieldTitle: LocaleKeys.age.tr(), isRequired: true),
             ),
             SignUpTextField(
               upperTitle: LocaleKeys.identifyNumber,
@@ -197,7 +199,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
               controller: _identifyNumberCont,
               onChanged: (value) => _listenToData(asFemale.copyWith(identityNumber: value)),
               inputType: TextInputType.number,
-              // validator: Validators.validateEmpty,
+              validator: (v) => Validators.validateIdentityNumber(v, fieldTitle: LocaleKeys.identifyNumber.tr()),
             ),
           ])
             ..insertAll(15, [
@@ -206,7 +208,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 title: LocaleKeys.pleaseEnterTheNumber,
                 controller: _liveAfterMarryCont,
                 onChanged: (value) => _listenToData(asFemale.copyWith(preferredResidenceAfterMarriage: value)),
-                // validator: Validators.validateEmpty,
+                validator: (v) => Validators.validateString(v, min: 3, max: 1000, fieldTitle: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage.tr()),
               ),
             ])
             ..insertAll(17, [
@@ -241,7 +243,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 controller: _parentNameCont,
                 onChanged: (value) => _listenToData(asFemale.copyWith(guardianName: value)),
 
-                // validator: Validators.validateEmpty,
+                validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.parentName.tr()),
               ),
               SignUpTextField(
                 upperTitle: LocaleKeys.parentNumber,
@@ -249,7 +251,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 controller: _parentNumberCont,
                 inputType: TextInputType.phone,
                 onChanged: (value) => _listenToData(asFemale.copyWith(guardianPhone: value)),
-                // validator: Validators.validateEmpty,
+                validator: (v) => Validators.validatePhone(v, message: LocaleKeys.parentNumber.tr()),
               ),
 
               AppDropinity<List<Kinship>, Kinship>.withApiRequest(
@@ -271,7 +273,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 onChanged: (val) => _listenToData(
                     asFemale.copyWith(name: val)
                 ),
-                // validator: Validators.validateEmpty,
+                validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.name.tr()),
               ),
             ),
         );

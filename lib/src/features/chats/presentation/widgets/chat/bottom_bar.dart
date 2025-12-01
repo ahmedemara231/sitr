@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:easy_chat/models/chat_message.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pagify/pagify.dart';
 
 import '../../../../../../generated/assets.dart';
 import '../../../../../config/language/locale_keys.g.dart';
@@ -13,6 +16,7 @@ import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/helpers/helpers.dart';
 import '../../../../../core/helpers/validators.dart';
 import '../../../../../core/navigation/navigator.dart';
+import '../../../../../core/widgets/custom_messages.dart' show MessageUtils;
 import '../../../../../core/widgets/svg_pic.dart';
 import '../../../../../core/widgets/text_fields/default_text_field.dart';
 import '../../cubits/start_chat.dart';
@@ -21,11 +25,12 @@ import '../chat_image_viewer.dart';
 class ChatBottomBar extends StatefulWidget {
   final FutureOr<void> Function(BuildContext context, String message) onSend;
   final void Function(String url) onUpload;
-
+  final PagifyController<ChatMessages> controller;
   const ChatBottomBar({
     super.key,
     required this.onSend,
     required this.onUpload,
+    required this.controller,
   });
 
   @override
@@ -37,6 +42,15 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
   final ValueNotifier<File?> _selectedImage = ValueNotifier(null);
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  int _imagesLength = 0;
+  void _calcImagesLength(){
+    for(ChatMessages msg in widget.controller.items){
+      if(msg.message.type == 'image'){
+        _imagesLength++;
+      }
+    }
+  }
 
   @override
   void initState() {
@@ -107,8 +121,14 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                       title: LocaleKeys.hereIsTheTextOfTheMessageHereIsTheTextOfTheMessageHereIsTheTextOfTheMessage,
                       prefixIcon: IconButton(
                           onPressed: () async{
-                            final result = await Helpers.getImageFromCameraOrDevice();
-                            _selectedImage.value = result;
+                            _calcImagesLength();
+                            if(_imagesLength < 2){
+                              final result = await Helpers.getImageFromCameraOrDevice();
+                              _selectedImage.value = result;
+
+                            }else{
+                              MessageUtils.showSnackBar(LocaleKeys.youCanNotSendMoreThan2ImagesInChat);
+                            }
                           },
                           icon: const Icon(Icons.camera_alt_sharp, color: AppColors.primary)
                       ),
