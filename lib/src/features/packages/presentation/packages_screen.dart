@@ -44,8 +44,7 @@ class PackagesScreen extends StatelessWidget {
               AppText(LocaleKeys.inOrderToRegisterOtherDataYouMustSubscribeToOneOfTheAvailablePackages, textAlign: TextAlign.center,),
             ValueListenableBuilder(
               valueListenable: random,
-              builder: (context, val, child) => SizedBox(
-                height: context.height * 0.8,
+              builder: (context, val, child) => Expanded(
                 child: AppPagify<Package>(
                     key: UniqueKey(),
                     asyncCall: (ctx, page) async => await PackagesData.getPackages(page: page, userType: userType),

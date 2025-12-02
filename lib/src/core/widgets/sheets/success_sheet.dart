@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,6 +27,44 @@ class SuccessSheet extends StatelessWidget {
     this.upperText
   });
 
+  void _manageGender(UserType user){
+    if(user.isParent){
+      Go.to(EnterMaleOrFemaleOrChildDataScreen.showAll(
+          scaffoldType: ScaffoldType.centerCard,
+          showConditionsAndTerms: true,
+          showAlreadyHaveAccount: true,
+          onClick: (context, user) => context.read<AddChildCubit>().addChild(
+            body: user,
+            onSuccess: () {
+              AuthData.childrenNumber.value.increment(user.gender!.userType!);
+              showDefaultBottomSheet(
+                  child: const AddChildSheet()
+              );
+            },
+          )
+      ));
+
+    }else{
+      Go.to(EnterMaleOrFemaleOrChildDataScreen.individual(
+        scaffoldType: ScaffoldType.centerCard,
+        showConditionsAndTerms: true,
+        showAlreadyHaveAccount: true,
+        userType: UserModel.currentUser?.gender?.userType,
+        onClick: (context, user) => context.read<CompleteProfileCubit>().completeProfile(
+          body: user, onSuccess: () => showDefaultBottomSheet(child: const CompleteProfileSheet()),
+        ),
+      ));
+    }
+  }
+
+  void _manageNavigation(){
+    if(AuthData.currentUser.isUnknown){
+      _manageGender(UserTypeHelper.currentType!);
+
+    }else{
+      _manageGender(AuthData.currentUser);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -32,33 +72,7 @@ class SuccessSheet extends StatelessWidget {
       children: [
         AppBottomSheet.small(
             asyncCall: (context) => !isInAuth?
-            Go.back() :
-           Go.to(
-               UserTypeHelper.currentType!.isParent?
-               EnterMaleOrFemaleOrChildDataScreen.showAll(
-                   scaffoldType: ScaffoldType.centerCard,
-                   showConditionsAndTerms: true,
-                   showAlreadyHaveAccount: true,
-                   onClick: (context, user) => context.read<AddChildCubit>().addChild(
-                     body: user,
-                     onSuccess: () {
-                       AuthData.childrenNumber.value.increment(user.gender!.userType!);
-                       showDefaultBottomSheet(
-                           child: const AddChildSheet()
-                       );
-                     },
-                   )
-               ) :
-               EnterMaleOrFemaleOrChildDataScreen.individual(
-                   scaffoldType: ScaffoldType.centerCard,
-                   showConditionsAndTerms: true,
-                   showAlreadyHaveAccount: true,
-                   userType: UserModel.currentUser?.gender?.userType,
-                   onClick: (context, user) => context.read<CompleteProfileCubit>().completeProfile(
-                     body: user, onSuccess: () => showDefaultBottomSheet(child: const CompleteProfileSheet()),
-                   ),
-               )
-           ),
+            Go.back() : _manageNavigation(),
             btnTitle: isInAuth? LocaleKeys.completeProfile : LocaleKeys.back,
             upperWidget: Column(
               children: [

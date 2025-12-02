@@ -4,24 +4,30 @@ import 'package:easy_localization/easy_localization.dart' as tr;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
 import '../../config/language/languages.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../../features/auth/imports.dart';
 import '../../features/auth/presentation/cubits/add_child.dart';
 import '../../features/auth/presentation/cubits/complete_profile_cubit.dart';
+import '../../features/auth/presentation/cubits/oath.dart';
 import '../../features/auth/presentation/enums/complete_register_status.dart';
 import '../../features/auth/presentation/widgets/sign_up/sheets/add_child_sheet.dart';
 import '../../features/auth/presentation/widgets/sign_up/sheets/complete_profile_sheet.dart';
 import '../../features/chats/enums.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/packages/presentation/packages_screen.dart';
+import '../base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import '../helpers/status_builder.dart';
 import '../helpers/user_type_enum.dart';
 import '../navigation/navigator.dart';
 import '../network/api_endpoints.dart';
 import '../network/network_service.dart';
 import '../shared/models/user_models/user_model.dart';
 import '../shared/user_cubit/user_cubit.dart';
+import '../widgets/app_bottom_sheet.dart' show AppBottomSheet;
+import '../widgets/app_text.dart';
 import '../widgets/default_bottom_sheet.dart';
 import '../widgets/sheets/payment_sheet.dart';
 
@@ -170,8 +176,32 @@ bool get isImage =>
   void manageNavigationBasedCompleteRegisterStatus(UserModel user)async{
     final CompleteRegisterStatus statusType = toCompleteRegisterStatus();
     if(statusType.isCompleted){
-      await UserCubit.instance.setUserLoggedIn(user: user, token: user.token??'');
-      Go.offAll(const HomeScreen());
+      showDefaultBottomSheet(
+          enableDrag: false,
+          child: BlocProvider(
+            create: (context) => OathCubit()..getOath(),
+            child: AppBottomSheet.small(
+                asyncCall: (context) async {
+                  await UserCubit.instance.setUserLoggedIn(user: user, token: user.token??'');
+                  Go.offAll(const HomeScreen());
+                },
+                btnTitle: LocaleKeys.accept,
+                upperWidget: Column(
+                  children: [
+                    AppText(LocaleKeys.oath, fontWeight: FontWeight.w500),
+                    BlocBuilder<OathCubit, AsyncState<String>>(
+                        builder: (context, state) => StatusBuilder(
+                            data: state,
+                            onSuccess: (oath, context) => Html(
+                              data: oath,
+                            )
+                        )
+                    ),
+                  ],
+                )
+            ),
+          )
+      );
 
     }else if(statusType.isNotSubscribed){
       injector<NetworkService>().setToken(user.token ?? '');

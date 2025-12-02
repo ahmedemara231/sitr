@@ -13,6 +13,7 @@ extension Check on UserType{
   bool get isFemale => this == UserType.female;
   bool get isIndividual => this == UserType.male || this == UserType.female;
   bool get isParent => this == UserType.parent;
+  bool get isUnknown => this == UserType.unknown;
 }
 
 class UserTypeHelper{

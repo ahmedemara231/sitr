@@ -8,6 +8,7 @@ import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../models/kinship.dart';
 
 class AuthData{
+  static UserType currentUser = UserType.unknown;
   static Future<List<CityModel>> getCities()async{
     List<CityModel> citiesList = [];
     await injector<NetworkService>().callApi(

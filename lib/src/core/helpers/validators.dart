@@ -123,16 +123,18 @@ class Validators {
 
   static String? validatePhone(String? value, {String? message}) {
     if (value?.trim().isEmpty ?? true) {
-      return message ?? LocaleKeys.fillField.tr();
-    } else if (value!.length < 9 || value.length > 10) {
-       return LocaleKeys.phoneValidation.tr();
-    } else if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-       return LocaleKeys.phoneValidation.tr();
+      return message ?? LocaleKeys.fillField;
+    } else if(value!.length != 9) {
+      return LocaleKeys.phoneShouldBe9Digits;
+    }else if (!RegExp(r'^(5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$')
+        .hasMatch(value.trim()) ||
+        value.length < 9) {
+      return message ?? LocaleKeys.phoneValidation.tr();
     }
-    // Removed strict regex for specific prefixes as user requested digits_between:9,10 and numeric only
-    
+
     return null;
   }
+
 
   static String? validateInteger(String? value, {String? fieldTitle, int min = 0, int max = 100, bool isRequired = true}) {
     if (value == null || value.isEmpty) {
