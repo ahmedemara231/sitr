@@ -36,8 +36,8 @@ enum ChatStages{
 
   // full parent - FULL PARENT MATCH
   fullParentConversation(8, 'full_parent_conversation'),
-
   parentsExchangeNumber(4, 'parent_exchange_numbers'),
+
   engagement(5, 'engagement'),
 
 

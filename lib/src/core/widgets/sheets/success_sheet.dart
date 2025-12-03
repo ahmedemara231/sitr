@@ -49,7 +49,7 @@ class SuccessSheet extends StatelessWidget {
         scaffoldType: ScaffoldType.centerCard,
         showConditionsAndTerms: true,
         showAlreadyHaveAccount: true,
-        userType: UserModel.currentUser?.gender?.userType,
+        userType: user,
         onClick: (context, user) => context.read<CompleteProfileCubit>().completeProfile(
           body: user, onSuccess: () => showDefaultBottomSheet(child: const CompleteProfileSheet()),
         ),
@@ -59,9 +59,11 @@ class SuccessSheet extends StatelessWidget {
 
   void _manageNavigation(){
     if(AuthData.currentUser.isUnknown){
+      log('the current user is ${UserTypeHelper.currentType}');
       _manageGender(UserTypeHelper.currentType!);
 
     }else{
+      log('the current user issss ${AuthData.currentUser}');
       _manageGender(AuthData.currentUser);
     }
   }

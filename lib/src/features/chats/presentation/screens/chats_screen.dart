@@ -123,7 +123,7 @@ class _ChatsBodyState extends State<_ChatsBody> {
                           receiverName: data[index].room?.members?.first.name ?? '',
                           requestModel: RequestModel(
                               receiverId: '${data[index].room?.members?.first.id}',
-                              fromHome: 1.toString()
+                              fromHome: 0.toString()
                           ),
                         )),
 

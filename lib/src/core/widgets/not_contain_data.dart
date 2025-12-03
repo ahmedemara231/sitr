@@ -21,24 +21,26 @@ class NotContainData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      spacing: AppMargin.mH10,
-      children: [
-        Visibility(
-          visible: placeHolder != null,
-          replacement: AppAssets.lottie.data.notFound2.lottie(
-            width: width ?? context.width * .8,
-            height: height != null ? (height! * .8) : context.height * .3,
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        spacing: AppMargin.mH10,
+        children: [
+          Visibility(
+            visible: placeHolder != null,
+            replacement: AppAssets.lottie.data.notFound2.lottie(
+              width: width ?? context.width * .8,
+              height: height != null ? (height! * .8) : context.height * .3,
+            ),
+            child: placeHolder ?? const SizedBox.shrink(),
           ),
-          child: placeHolder ?? const SizedBox.shrink(),
-        ),
-        Text(
-          errorMessage ?? LocaleKeys.errorExceptionNotContain,
-          style: const TextStyle().setPrimaryColor.s12.medium,
-        ),
-      ],
+          Text(
+            errorMessage ?? LocaleKeys.errorExceptionNotContain,
+            style: const TextStyle().setPrimaryColor.s12.medium,
+          ),
+        ],
+      ),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/extensions/padding_extension.dart';
+import '../../../../../core/helpers/validators.dart';
 import '../../../../../core/widgets/app_bottom_sheet.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../auth/presentation/widgets/shared/text_field.dart';
@@ -31,10 +32,12 @@ class _EnterParentPhoneSheetState extends State<EnterParentPhoneSheet> {
     super.dispose();
   }
 
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return AppBottomSheet.small(
-        asyncCall: (context) => widget.onSubmit.call(context, controller.text),
+        asyncCall: (context) => _formKey.currentState!.validate()?
+        widget.onSubmit.call(context, controller.text) : null,
         btnTitle: LocaleKeys.confirm,
         upperWidget: Column(
           spacing: 10.h,
@@ -42,11 +45,16 @@ class _EnterParentPhoneSheetState extends State<EnterParentPhoneSheet> {
             AppText(LocaleKeys.pleaseEnterParentPhoneNumber),
             AppText(LocaleKeys.enterTheFollowingOptionExternalCommunicationWillBeEstablished),
 
-            SignUpTextField(
-                upperTitle: LocaleKeys.phoneNumber,
-                title: LocaleKeys.pleaseEnterParentPhoneNumber,
-                inputType: TextInputType.phone,
-                controller: controller
+            Form(
+              key: _formKey,
+              child: SignUpTextField(
+                maxLength: 9,
+                validator: Validators.validatePhone,
+                  upperTitle: LocaleKeys.phoneNumber,
+                  title: LocaleKeys.pleaseEnterParentPhoneNumber,
+                  inputType: TextInputType.phone,
+                  controller: controller
+              ),
             )
           ],
         )

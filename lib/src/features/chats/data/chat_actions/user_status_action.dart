@@ -4,28 +4,30 @@ part of 'imports.dart';
 class UserStatusAction extends ChatActions{
   final BuildContext context;
   final UserRequestStatus status;
-  final MatchRequestEnum matchRequest;
+  final MatchRequestEnum request;
+  final ChatStages stage;
   final int matchReqId;
   final RequestModel requestModel;
 
   UserStatusAction({
     required this.matchReqId,
+    required this.stage,
     required this.context,
     required this.status,
-    required this.matchRequest,
+    required this.request,
     required this.requestModel,
   });
 
-  void _finishChat(BuildContext context){
-    context.read<FinishChatCubit>().finishChat(matchReqId);
-  }
+  // void _finishChat(BuildContext context){
+  //   context.read<FinishChatCubit>().finishChat(matchReqId);
+  // }
 
   void _showAcceptanceSheet(void Function() onSuccess){
     ChatSheetManager.show(
         child: BlocProvider.value(
           value: context.read<ChatCubit>(),
           child: AcceptOrRejectRequestWidget(
-            requestName: matchRequest.name,
+            requestName: request.name,
             onAccept: (context) async => ChatActions.executeReq(
                 context: context,
                 path: ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
@@ -45,18 +47,13 @@ class UserStatusAction extends ChatActions{
 
   @override
   Future<void> call() async{
-    if(!matchRequest.isParentIndividualApproval && status.isPending){
-      _showAcceptanceSheet(() => Go.back());
-
-    }else if (matchRequest.isParentIndividualApproval && status.isPending){
+    if(!stage.isNewChat && status.isPending){
       _showAcceptanceSheet(
-            (){
-              // _finishChat(context);
-              Go.offAll(const HomeScreen());
-          },
+            () => request.isParentIndividualApproval?
+            Go.offAll(const HomeScreen()) : Go.back(),
       );
 
-    }else if((matchRequest.isExtension || matchRequest.isVideoCall || matchRequest.isAdminMeeting)
+    }else if((request.isExtension || request.isVideoCall || request.isAdminMeeting)
         && status.isAccepted){
       ChatSheetManager.show(
         child: BlocProvider(
@@ -80,11 +77,11 @@ class UserStatusAction extends ChatActions{
                     result = 'success';
                   }
 
-                  context.read<ChatCubit>().startChat(
-                      requestModel: requestModel
-                  );
-
                   if(result == 'success'){
+                    context.read<ChatCubit>().startChat(
+                        requestModel: requestModel
+                    );
+
                     ChatSheetManager.show(
                         child: SuccessSheet(
                           isInAuth: false,

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
@@ -52,7 +53,8 @@ class ChatCubit extends AsyncCubit<ChatModel>{
     required RequestModel requestModel,
     void Function(ChatModel chatModel)? onSuccess
 })async{
-    await Helpers.initZegoService();
+    log('start chaaaaattttt from service');
+    // await Helpers.initZegoService();
     await executeAsyncWithBaseModel(
       operation: () => baseCrudUseCase.call(
           CrudBaseParmas(

@@ -134,8 +134,9 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     if(!userStatus.isUndefined){
       return UserStatusAction(
           context: context,
+          stage: stage,
           status: userStatus,
-          matchRequest: matchRequest,
+          request: matchRequest,
           matchReqId: context.read<ChatCubit>().matchRequestId!,
           requestModel: widget.requestModel
       );
@@ -146,11 +147,14 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
       return TimerAction(context: context, requestModel: widget.requestModel);
     }
 
+    // ممكن نبقي نفكر نحط ال stage action هنا
+
     return NoAction();
   }
 
 
   Future<void> _startChat()async{
+    log('start chaaaaattttt');
     await context.read<ChatCubit>().startChat(
       requestModel: widget.requestModel,
       onSuccess: (data) => _manageSuccessState.call(data).call(),
@@ -159,7 +163,10 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
   Future<void> _showBased(RemoteMessage notification)async{
     log('dataaaa ${notification.data}');
+    log('the dataaaa is ${(notification.data['action'] as Object?).isNotNull}');
+
     if((notification.data['action'] as Object?).isNotNull){
+      log('the dataaaa true ${notification.data['action']}');
       _startChat();
     }
   }

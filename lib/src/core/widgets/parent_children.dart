@@ -19,7 +19,7 @@ import 'parent_children_card.dart';
 
 
 enum ChildCard{sub, full}
-class ParentChildren extends StatelessWidget {
+class ParentChildren extends StatefulWidget {
   final int? id;
   final IndividualDetailsType type;
   final ChildCard childCard;
@@ -31,13 +31,18 @@ class ParentChildren extends StatelessWidget {
     this.childCard = ChildCard.full
   });
 
+  @override
+  State<ParentChildren> createState() => _ParentChildrenState();
+}
+
+class _ParentChildrenState extends State<ParentChildren> {
   Widget _individualDetailsScreenRoute(int id){
-    if(type == IndividualDetailsType.myChild){
+    if(widget.type == IndividualDetailsType.myChild){
       return IndividualDetailsScreen.myChildProfile(
         id: id,
       );
 
-    }else if(type == IndividualDetailsType.profile){
+    }else if(widget.type == IndividualDetailsType.profile){
       return IndividualDetailsScreen.profile(
         id: id,
       );
@@ -48,15 +53,18 @@ class ParentChildren extends StatelessWidget {
       );
     }
   }
+
+  final PagifyController<Opportunity> _cont = PagifyController<Opportunity>();
+
   @override
   Widget build(BuildContext context) {
     return AppPagify<Opportunity>(
-        asyncCall: (context, page)async => await HomeData.getParentChildren(id, page),
+        asyncCall: (context, page)async => await HomeData.getParentChildren(widget.id, page),
         itemBuilder: (context, data, index, element) => InkWell(
           onTap: () => Go.to(_individualDetailsScreenRoute(element.id ?? 0)),
           child: BlocProvider(
             create: (context) => GetPartnerInfoCubit(element.id!),
-            child: childCard == ChildCard.sub? ParentChildrenCard(
+            child: widget.childCard == ChildCard.sub? ParentChildrenCard(
                 onEditTap: (context) => context.read<GetPartnerInfoCubit>().getProfile(
                   onSuccess: (user) => Go.to(BlocProvider(
                     create: (context) => EditChildDataCubit(),
@@ -92,7 +100,7 @@ class ParentChildren extends StatelessWidget {
 
 
         ),
-        pagifyController: PagifyController()
+        pagifyController: _cont
     );
   }
 }

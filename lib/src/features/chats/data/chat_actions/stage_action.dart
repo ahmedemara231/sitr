@@ -11,6 +11,7 @@ class StageAction extends ChatActions{
 
   @override
   Future<void> call() async{
+    if(stage.isParentsExchangeNumber){
       ChatSheetManager.show(
         child: BlocProvider.value(
           value: context.read<ChatCubit>(),
@@ -23,4 +24,5 @@ class StageAction extends ChatActions{
         ),
       );
     }
+  }
 }
