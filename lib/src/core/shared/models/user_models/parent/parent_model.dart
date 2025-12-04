@@ -11,6 +11,7 @@ class ParentModel extends UserModel {
 
   ParentModel({
     super.isNotify,
+    super.hasActivePackage,
     super.id,
     super.name,
     super.parentId,
@@ -40,6 +41,7 @@ class ParentModel extends UserModel {
 
   factory ParentModel.fromJson(Map<String, dynamic> json) {
     return ParentModel(
+      hasActivePackage: json['has_active_package'],
       isNotify: json['is_notify'],
       canChat: json['can_chat'],
       hasChatWith: json['has_chat_with'],
@@ -85,6 +87,7 @@ class ParentModel extends UserModel {
   UserModel copyWith({
     bool? isNotify,
     String? email,
+    bool? hasActivePackage,
     Kinship? relation,
     int? numOfChildren,
     int? maleChildrenNum,
@@ -92,8 +95,10 @@ class ParentModel extends UserModel {
     bool? canChat,
     bool? hasChatWith,
     bool? isParentMatch,
+
     int? id, String? name, int? parentId, TitleValueShape? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) {
     return ParentModel(
+      hasActivePackage: hasActivePackage??this.hasActivePackage,
       isNotify: isNotify ?? this.isNotify,
       id: id ?? this.id,
       canChat: canChat??this.canChat,

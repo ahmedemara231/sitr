@@ -201,9 +201,9 @@ class Validators {
 
   static String? validateDropDown<T>(T? value, {String? fieldTitle}) {
     if (value == null) {
-      return fieldTitle != null
-          ? '${LocaleKeys.please.tr()} $fieldTitle'
-          : LocaleKeys.fillField.tr(context: Go.context);
+      return fieldTitle != null ?
+      '${LocaleKeys.please.tr()} $fieldTitle' :
+      LocaleKeys.fillField.tr(context: Go.context);
     } else {
       return null;
     }

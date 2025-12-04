@@ -152,6 +152,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
           values: EnumsData.maritalStatus.data,
           getLabel: (element) => element.title,
         onChanged: (val) => _listenToData(model.copyWith(maritalStatus: val) as T),
+        // validator: (v) => Validators.validateDropDown(v, fieldTitle: LocaleKeys.maritalStatus.tr()),
       ),
 
 
@@ -252,7 +253,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         values: EnumsData.weddingTypes.data,
         getLabel: (element) => element.title,
         onChanged: (val) =>
-            _listenToData(model.copyWith(weddingType: TitleValueShape.fromSingleLabel(val?.value)) as T),
+            _listenToData(model.copyWith(weddingType: TitleValueShape.fromSingleLabel(val.value)) as T),
       ),
 
       AppDropinity<List<CityModel>, CityModel>.withApiRequest(
@@ -262,6 +263,10 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
           asyncCall: (context, page) async => await AuthData.getCities(),
           getLabel: (city) => city.name ?? '',
         onChanged: (val) => _listenToData(model.copyWith(cityId: val) as T),
+        // validator: (v) => Validators.validateDropDown<String>(
+        //     v?.name,
+        //     fieldTitle: LocaleKeys.city.tr()
+        // ),
       ),
 
       SignUpTextField(
@@ -333,6 +338,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         values: EnumsData.religiousCommitment.data,
         getLabel: (element) => element.title,
         onChanged: (value) => _listenToData(model.copyWith(religiousCommitment: TitleValueShape.fromSingleLabel(value?.value)) as T),
+        // validator: (v) => Validators.validateDropDown(v, fieldTitle: LocaleKeys.degreeOfCommitment.tr()),
       ),
     ];
 

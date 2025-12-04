@@ -8,6 +8,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import '../../config/res/config_imports.dart';
 import '../../features/auth/imports.dart';
+import '../../features/chats/data/models/request_model.dart';
+import '../../features/chats/presentation/imports.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/more/presentation/screens/complaint_and_suggestion/complaint_details_screen.dart';
 import '../../features/more/presentation/screens/my_packages.dart';
@@ -64,6 +66,7 @@ class NotificationService {
 
   void _showNotification(RemoteMessage message) async {
     // if (Platform.isIOS) return;
+    log('the remote msg is ${message.data}');
     const DarwinNotificationDetails iOSPlatformChannelSpecifics =
         DarwinNotificationDetails(
             presentAlert: true, presentBadge: true, presentSound: true);

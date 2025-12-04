@@ -9,6 +9,7 @@ import 'individual/male_model.dart';
 import 'parent/parent_model.dart';
 
 class UserModel {
+  final bool hasActivePackage;
   final int? id;
   final String? name;
   final int? parentId;
@@ -31,6 +32,7 @@ class UserModel {
   final bool? isParentMatch;
 
   const UserModel({
+    this.hasActivePackage = false,
     this.id,
     this.name,
     this.parentId,
@@ -122,7 +124,8 @@ class UserModel {
     adminApprovalStatus: null,
     completeRegistration: '',
     token: '',
-    isNotify: false
+    isNotify: false,
+    hasActivePackage: false
   );
 
   Map<String, dynamic> toJson() {
@@ -137,6 +140,7 @@ class UserModel {
       'country_code': countryCode,
       'full_phone': fullPhone,
       'identity_number': identityNumber,
+      'has_active_package' : hasActivePackage,
       'age': age,
       'is_active': isActive,
       'is_blocked': isBlocked,
@@ -165,6 +169,7 @@ class UserModel {
     String? completeRegistration,
     String? token,
     bool? isNotify,
+    bool? hasActivePackage
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -183,6 +188,7 @@ class UserModel {
       adminApprovalStatus: adminApprovalStatus ?? this.adminApprovalStatus,
       completeRegistration: completeRegistration ?? this.completeRegistration,
       token: token ?? this.token,
+      hasActivePackage: hasActivePackage ?? this.hasActivePackage,
       isNotify: isNotify ?? this.isNotify,
     );
   }

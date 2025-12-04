@@ -9,6 +9,7 @@ import 'individual_user_model.dart';
 class MaleModel extends IndividualUserModel {
   MaleModel({
     super.id,
+    super.hasActivePackage,
     super.name,
     super.parentId,
     super.type,
@@ -113,7 +114,7 @@ class MaleModel extends IndividualUserModel {
       childCustody: (json['child_custody'] as Object?).isNull? null :
       TitleValueShape.fromJson(json['child_custody']),
 
-
+      hasActivePackage: json['has_active_package'],
       educationLevel: json['education_level'],
       isPrayer: json['is_prayer'],
       healthConditions: json['health_conditions'],
@@ -128,6 +129,7 @@ class MaleModel extends IndividualUserModel {
 
   @override
   MaleModel copyWith({
+    bool? hasActivePackage,
     bool? canChat,
     bool? hasChatWith,
     bool? isParentMatch,
@@ -157,6 +159,7 @@ class MaleModel extends IndividualUserModel {
     int? views,
     int? id, String? name, int? parentId, TitleValueShape? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) {
     return MaleModel(
+      hasActivePackage: hasActivePackage??this.hasActivePackage,
       canChat: canChat??this.canChat,
       hasChatWith: hasChatWith??this.hasChatWith,
       isParentMatch: isParentMatch??this.isParentMatch,

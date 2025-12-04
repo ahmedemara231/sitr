@@ -138,6 +138,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 wearingHijab.value = value.value;
                 _listenToData(asFemale.copyWith(hijab: TitleValueShape.fromSingleLabel(wearingHijab.value)));
               },
+              // validator: (v) => Validators.validateDropDown(v, fieldTitle: LocaleKeys.areYouWaringHijab.tr()),
             ),
 
               SignUpTextField(
@@ -163,6 +164,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
               asyncCall: (BuildContext ctx, int page) async => await AuthData.getKinships(),
               getLabel: (Kinship element) => element.value,
               onChanged: (value) => _listenToData(asFemale.copyWith(guardianRelation: value)),
+              // validator: (v) => Validators.validateDropDown(v, fieldTitle: LocaleKeys.kinship.tr()),
             ),
             ]),
         );
@@ -231,6 +233,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                   wearingHijab.value = value?.value;
                   _listenToData(asFemale.copyWith(hijab: TitleValueShape.fromSingleLabel(wearingHijab.value)));
                 },
+                // validator: (v) => Validators.validateDropDown(v, fieldTitle: LocaleKeys.areYouWaringHijab.tr()),
               ),
 
 
@@ -258,6 +261,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 asyncCall: (BuildContext ctx, int page) async => await AuthData.getKinships(),
                 getLabel: (Kinship element) => element.value,
                 onChanged: (value) => _listenToData(asFemale.copyWith(guardianRelation: value)),
+                // validator: (v) => Validators.validateDropDown(v, fieldTitle: LocaleKeys.kinship.tr()),
               ),
 
             ])

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../generated/assets.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/padding_extension.dart';
-import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/buttons/custom_app_buttons/default_button.dart';
@@ -16,17 +14,14 @@ import '../../../../core/widgets/image_widgets/cached_image.dart';
 import '../../../../core/widgets/riyal_price_text.dart';
 import '../../../../core/widgets/sheets/payment_sheet.dart';
 import '../../../../core/widgets/sheets/success_sheet.dart';
-import '../../../../core/widgets/svg_pic.dart';
 import '../../models/package.dart';
 import '../cubits/subscribe_to_package.dart';
 import '../packages_screen.dart';
 import '../screens/subscription_screen.dart';
-import 'package:saudi_currency/saudi_currency.dart';
 
 class PackageWidget extends StatelessWidget {
   final Package package;
   final ScreenType type;
-
   final bool isInAuth;
   final List<PaymentMethod>? paymentMethods;
 
@@ -80,15 +75,16 @@ class PackageWidget extends StatelessWidget {
                   child: Builder(
                     builder: (context) {
                       return AppDefaultButton.withBorderColor(
-                          title: type == ScreenType.first?
+                          title: type == ScreenType.subscription?
                           LocaleKeys.subscribeToPackage : LocaleKeys.renewPackage,
+
                           onTap: () => !package.canSubscribe?
                           MessageUtils.showSnackBar(LocaleKeys.youAreAlreadySubscribedInPackage) :
                           showDefaultBottomSheet(
                               child: PaymentSheet(
                                 paymentMethods: paymentMethods,
                                 onPay: (ctx, paymentMethod) async => context.read<PackagesManagerCubit>().subscribeOrRenewPackage(
-                                  packageId: package.id.toString(),
+                                  package: package,
                                   type: type,
                                   paymentMethod: paymentMethod,
                                   onSuccess: (url) async{
@@ -115,7 +111,9 @@ class PackageWidget extends StatelessWidget {
                                                     fontSize: 16.sp,
                                                     fontWeight: FontWeight.bold
                                                 ),
-                                                AppText(LocaleKeys.youCanNowCompleteYourProfile),
+
+                                                if(isInAuth)
+                                                  AppText(LocaleKeys.youCanNowCompleteYourProfile),
                                               ],
                                             ),
                                           )

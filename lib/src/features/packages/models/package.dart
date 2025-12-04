@@ -6,8 +6,9 @@ class Package{
   final int duration;
   final num price;
   final bool canSubscribe;
+  final String userPackageId;
 
-  Package(this.id, this.name, this.type, this.image, this.duration, this.price, this.canSubscribe,);
+  Package(this.id, this.name, this.type, this.image, this.duration, this.price, this.canSubscribe, this.userPackageId,);
 
   factory Package.initial() => Package(
     0,
@@ -16,7 +17,8 @@ class Package{
     '',
     0,
     0.0,
-    false
+    false,
+    ''
   );
 
   factory Package.fromJson(Map<String, dynamic> json) => Package(
@@ -26,7 +28,8 @@ class Package{
     json['image'],
     json['duration'],
     json['price'],
-    json['can_subscribe']??true
+    json['can_subscribe']??true,
+      json['user_package_id'] ?? ''
   );
 }
 

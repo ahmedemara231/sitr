@@ -30,7 +30,7 @@
   "continue_as_a": "المتابعة ك",
   "visitor": "زائر",
   "search": "بحث",
-  "filed_validation": "الرجاء إدخال",
+  "filed_validation": "الرجاء إدخال القيمة صحيحة",
   "scrip_injection_validate": "النص يحتوي على أحرف غير مسموح بها",
   "please": "الرجاء اختيار ",
   "login": "تسجيل الدخول",
@@ -309,5 +309,6 @@
   "the_apps_management_will_contact_you_to_arrange_a_meeting_under_the_apps_supervision_may_god_grant_you_success": "سيتم التواصل معكم من قبل ادارة التطبيق لترتيب لقاء تحت اشراف التطبيق والله يكتب لكم الخير يا رب",
   "only_letters_allowed": "مسموح بالحروف فقط",
   "tips_por_parent_individual_conversation": "نصائح لمحادثة الابن و ولي الامر",
-  "you_can_not_send_more_than_2_images_in_chat": "لا يمكنك ارسال اكثر من صورتين في المحادثة"
+  "you_can_not_send_more_than_2_images_in_chat": "لا يمكنك ارسال اكثر من صورتين في المحادثة",
+  "you_can_not_renew_the_package_now": "لا يمكنك تجديد الباقة الان"
 }

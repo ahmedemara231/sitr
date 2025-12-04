@@ -21,6 +21,7 @@ class AppDropinity<FullResponse, Model> extends StatelessWidget {
   final String hint;
   final String title;
   final String? initialValue;
+  final Model? fullInitialValue;
   final List<Model>? values;
   final FutureOr<void> Function(Model value) onChanged;
   final Future<FullResponse> Function(BuildContext context, int page)? asyncCall;
@@ -29,6 +30,7 @@ class AppDropinity<FullResponse, Model> extends StatelessWidget {
   const AppDropinity({super.key,
     this.listHeight,
     this.controller,
+    this.fullInitialValue,
     this.initialValue,
     required this.hint,
     required this.title,
@@ -40,6 +42,7 @@ class AppDropinity<FullResponse, Model> extends StatelessWidget {
   const AppDropinity.withApiRequest({
     super.key,
     this.listHeight,
+    this.fullInitialValue,
     this.controller,
     this.initialValue,
     required this.hint,
@@ -51,10 +54,12 @@ class AppDropinity<FullResponse, Model> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dropinityController = controller ?? DropinityController();
+
     switch(type){
       case DropinityType.local:
         return Dropinity<void, Model>(
-          controller: controller ?? DropinityController(),
+          controller: dropinityController,
           listHeight: listHeight,
           dropdownTitle: AppText(title, fontWeight: FontWeight.bold, fontSize: 11.sp),
           buttonData: ButtonData(
@@ -80,7 +85,7 @@ class AppDropinity<FullResponse, Model> extends StatelessWidget {
 
       default:
         return Dropinity<FullResponse, Model>.withApiRequest(
-          controller: controller ?? DropinityController(),
+          controller: dropinityController,
           listHeight: listHeight,
           dropdownTitle: AppText(title, fontWeight: FontWeight.bold, fontSize: 11.sp),
           buttonData: ButtonData(
@@ -96,7 +101,9 @@ class AppDropinity<FullResponse, Model> extends StatelessWidget {
             suffixIcon: const Icon(Icons.search),
             title: LocaleKeys.search,
           ),
-          onChanged: onChanged,
+          onChanged: (val) {
+            onChanged.call(val);
+          },
           pagifyData: DropinityPagifyData(
             controller: PagifyController(),
             asyncCall: asyncCall!,

@@ -919,4 +919,7 @@ abstract class LocaleKeys {
   static const String _youCanNotSendMoreThan2ImagesInChat = 'you_can_not_send_more_than_2_images_in_chat';
   static String get youCanNotSendMoreThan2ImagesInChat => _youCanNotSendMoreThan2ImagesInChat.tr();
 
+  static const String _youCanNotRenewThePackageNow = 'you_can_not_renew_the_package_now';
+  static String get youCanNotRenewThePackageNow => _youCanNotRenewThePackageNow.tr();
+
 }

@@ -13,7 +13,7 @@ import '../data/packages_data.dart';
 import '../models/package.dart';
 import 'widgets/package_widget.dart';
 
-enum ScreenType{first, renew}
+enum ScreenType{subscription, renew}
 
 class PackagesScreen extends StatelessWidget {
   final ScreenType type;
@@ -25,11 +25,11 @@ class PackagesScreen extends StatelessWidget {
     this.isInAuth = false,
     this.paymentMethods,
     this.userType,
-  }) : type = ScreenType.first;
+  }) : type = ScreenType.subscription;
+
   const PackagesScreen.renew({super.key,
-    required this.isInAuth,
     this.paymentMethods,
-  }) : type = ScreenType.renew, userType = null;
+  }) : type = ScreenType.renew, userType = null, isInAuth = false;
 
 
   @override

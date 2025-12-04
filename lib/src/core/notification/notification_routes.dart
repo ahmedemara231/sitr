@@ -71,11 +71,15 @@ class MatchRequestNavigation implements NotificationNavigation {
 
   @override
   void navigate({required Map<String, dynamic> data}) {
-    // Go.to(ChatScreen(
-    //     receiverId: receiverId,
-    //     receiverName: receiverName,
-    //     fromHome: fromHome
-    // ));
+    // Go.to(
+    //     ChatScreen(
+    //         requestModel: RequestModel(
+    //             receiverId: receiverId,
+    //             fromHome: 0.toString()
+    //         ),
+    //         receiverName: receiverName
+    //     )
+    // );
   }
 }
 

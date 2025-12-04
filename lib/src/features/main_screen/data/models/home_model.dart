@@ -136,7 +136,9 @@ class Opportunity {
     city = json['city'];
     height = json['height'];
     weight = json['weight'];
-    martialStatus = json['martial_status'];
+    martialStatus = (json['marital_status'] as Object?).isNotNull?
+    TitleValueShape.fromJson(json['marital_status']) :
+    TitleValueShape.initial();
     nickName = json['nick_name'];
     hijab = json['hijab'] != null ? TitleValueShape.fromJson(json['hijab']) : null;
     skin = json['skin_color'] != null ? TitleValueShape.fromJson(json['skin_color']) : null;
