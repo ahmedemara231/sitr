@@ -225,7 +225,7 @@ bool get isImage =>
     }else if(statusType.isHasSetrCode){
       injector<NetworkService>().setToken(user.token ?? '');
       Go.to(
-          UserTypeHelper.currentType!.isParent?
+          user.gender!.userType!.isParent?
           EnterMaleOrFemaleOrChildDataScreen.showAll(
               scaffoldType: ScaffoldType.centerCard,
               showConditionsAndTerms: true,
@@ -238,7 +238,7 @@ bool get isImage =>
             scaffoldType: ScaffoldType.centerCard,
             showConditionsAndTerms: true,
             showAlreadyHaveAccount: true,
-            userType: UserModel.currentUser?.gender?.userType,
+            userType: user.gender!.userType,
             onClick: (context, user) => context.read<CompleteProfileCubit>().completeProfile(
               body: user, onSuccess: () => showDefaultBottomSheet(child: const CompleteProfileSheet()),
             ),
@@ -251,7 +251,7 @@ bool get isImage =>
         scaffoldType: ScaffoldType.centerCard,
         showConditionsAndTerms: true,
         showAlreadyHaveAccount: true,
-        userType: UserModel.currentUser?.gender?.userType,
+        userType: user.gender!.userType,
         onClick: (context, user) => context.read<CompleteProfileCubit>().completeProfile(
           body: user, onSuccess: () => showDefaultBottomSheet(child: const CompleteProfileSheet()),
         ),

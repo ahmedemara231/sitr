@@ -11,17 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="```&#10;refactor(auth): Add oath screen and improve navigation flow&#10;&#10;This commit introduces an &quot;Oath&quot; screen that users must accept after login or registration before proceeding to the home screen. It also refactors the post-subscription navigation and improves form validation.&#10;&#10;- **feat(auth):**&#10;  - A new &quot;Oath&quot; screen is now displayed after a successful login or OTP verification (`login.dart`, `string_extension.dart`).&#10;  - The `OathCubit` fetches the oath text, which is displayed to the user. The user must accept it to proceed.&#10;  - The `manageNavigationBasedCompleteRegisterStatus` extension now shows the oath sheet before navigating to the home screen.&#10;&#10;- **refactor(auth):**&#10;  - In `otp_cubit.dart`, the `currentUser` type in `AuthData` is now set immediately after successful OTP verification, ensuring the user type is available for subsequent navigation logic.&#10;  - The post-subscription navigation logic in `success_sheet.dart` has been refactored to correctly handle navigation for both new and existing users (`isUnknown` vs. known `currentUser`).&#10;&#10;- **fix(validation):**&#10;  - The phone number validation in `validators.dart` has been corrected to strictly enforce a 9-digit length and validate against a specific mobile number format.&#10;  - The report reason text field in `report_cheet.dart` now has an `validateEmpty` validator to ensure a reason is provided.&#10;&#10;- **fix(ui):**&#10;  - In `packages_screen.dart`, the `SizedBox` wrapping the package list has been replaced with an `Expanded` widget to ensure it correctly fills the available vertical space.&#10;&#10;- **chore(ide):**&#10;  - Removed Android Studio's device streaming cache file (`.idea/caches/deviceStreaming.xml`).&#10;  - Updated IDE configuration files (`.idea/workspace.xml`).">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/notification/navigation_types.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/notification/navigation_types.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/not_contain_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/not_contain_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/parent_children.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/parent_children.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/sheets/success_sheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/sheets/success_sheet.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/stage_action.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/stage_action.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/user_status_action.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/user_status_action.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/enums.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/enums.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/cubits/start_chat.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/cubits/start_chat.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chat_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chat_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chats_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chats_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/sheets/enter_parent_phone.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/sheets/enter_parent_phone.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/extensions/string_extension.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/extensions/string_extension.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,28 +89,28 @@
     <option name="foldersAlwaysOnTop" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Flutter.main.dart.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;finishChat&quot;,
-    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/aaita/Desktop/apps/new_crud_satr/assets/svg&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.yamlOptions&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Flutter.main.dart.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "finishChat",
+    "io.flutter.reload.alreadyRun": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/aaita/Desktop/apps/new_crud_satr/assets/svg",
+    "settings.editor.selected.configurable": "editor.preferences.yamlOptions",
+    "show.migrate.to.gradle.popup": "false"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/assets/svg" />
@@ -144,14 +134,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
-    </task>
-    <task id="LOCAL-00098" summary="```&#10;fix(auth): Improve child count tracking and terms validation&#10;&#10;This commit introduces several fixes to the &quot;add child&quot; flow, including accurate child counting and mandatory terms and conditions acceptance. It also enhances the user experience by providing a dedicated &quot;no internet&quot; screen.&#10;&#10;- **fix(auth):**&#10;  - In `enter_male_female_child_data.dart`, the gender selection widget now displays the current count of male and female children next to the gender label.&#10;  - The `ChildrenNumber` model in `auth_data.dart` is refactored to include an `increment` method, simplifying the logic for updating child counts.&#10;  - When a child is successfully added (`success_sheet.dart`, `add_child_sheet.dart`), the `increment` method is now called to update and reflect the new count in the UI.&#10;&#10;- **feat(auth):**&#10;  - The `conditions_terms_acceptance.dart` widget is now wrapped in a `ValidationHost`, making it a mandatory field. Users must now explicitly accept the terms and conditions before they can proceed with sign-up. A validation message (`please accept the conditions and terms`) is shown if the checkbox is not ticked.&#10;&#10;- **feat(ui):**&#10;  - A new `NoInternetWidget` has been created to provide a full-screen, user-friendly message with a Lottie animation when the device is offline.&#10;  - This widget now replaces the generic `ExceptionView` in `app.dart` when the `InternetConnectionStatus` is disconnected, improving the offline user experience.&#10;&#10;- **chore(i18n):**&#10;  - Added new translation keys for &quot;please accept the conditions and terms&quot; in English and Arabic.&#10;  - Corrected a typo in the Arabic translation for &quot;English&quot; (`اللغة الانجليزية`).">
-      <option name="closed" value="true" />
-      <created>1763503142150</created>
-      <option name="number" value="00098" />
-      <option name="presentableId" value="LOCAL-00098" />
-      <option name="project" value="LOCAL" />
-      <updated>1763503142150</updated>
     </task>
     <task id="LOCAL-00099" summary="```&#10;fix(auth): Improve phone number validation and OTP flow&#10;&#10;This commit introduces several fixes to enhance the user experience during the authentication process, particularly around phone number input, OTP verification, and UI consistency.&#10;&#10;- **fix(auth):**&#10;  - The phone number input field in the `LoginScreen` and `SignUpFields` now has a `maxLength` of 9 and 10 characters respectively, ensuring users enter a valid number format.&#10;  - The `SignUpTextField` has been updated to accept a `maxLength` property.&#10;&#10;- **fix(otp):**&#10;  - The OTP resend timer in `otp.dart` has been increased from 3 seconds to 1 minute, providing a more realistic and user-friendly delay.&#10;  - The OTP input field (`Pinput`) is now wrapped in a `Directionality` widget with `TextDirection.ltr` to ensure consistent left-to-right input, regardless of the app's locale.&#10;&#10;- **fix(ui):**&#10;  - The `cancelOnTap` action in `AddChildSheet` now uses `Go.offAll` to navigate to the `LoginScreen`, ensuring the navigation stack is cleared.&#10;  - The background overlay opacity for `DefaultBottomSheet` has been increased from 0.6 to 0.8, making the background darker and the sheet more prominent.&#10;  - The `SplashScreen` is now set as the default home screen in `app.dart`, replacing a commented-out test screen.&#10;&#10;- **chore(i18n):**&#10;  - Improved several Arabic translations in `ar.json` and `lang.json` for better clarity. For example, &quot;Phone is not valid&quot; is now &quot;رقم الجوال غير صحيح&quot; (Mobile number is not valid), and prompts for language selection are more descriptive.">
       <option name="closed" value="true" />
@@ -537,7 +519,15 @@
       <option name="project" value="LOCAL" />
       <updated>1764671098746</updated>
     </task>
-    <option name="localTasksCounter" value="147" />
+    <task id="LOCAL-00147" summary="```&#10;refactor(auth): Add oath screen and improve navigation flow&#10;&#10;This commit introduces an &quot;Oath&quot; screen that users must accept after login or registration before proceeding to the home screen. It also refactors the post-subscription navigation and improves form validation.&#10;&#10;- **feat(auth):**&#10;  - A new &quot;Oath&quot; screen is now displayed after a successful login or OTP verification (`login.dart`, `string_extension.dart`).&#10;  - The `OathCubit` fetches the oath text, which is displayed to the user. The user must accept it to proceed.&#10;  - The `manageNavigationBasedCompleteRegisterStatus` extension now shows the oath sheet before navigating to the home screen.&#10;&#10;- **refactor(auth):**&#10;  - In `otp_cubit.dart`, the `currentUser` type in `AuthData` is now set immediately after successful OTP verification, ensuring the user type is available for subsequent navigation logic.&#10;  - The post-subscription navigation logic in `success_sheet.dart` has been refactored to correctly handle navigation for both new and existing users (`isUnknown` vs. known `currentUser`).&#10;&#10;- **fix(validation):**&#10;  - The phone number validation in `validators.dart` has been corrected to strictly enforce a 9-digit length and validate against a specific mobile number format.&#10;  - The report reason text field in `report_cheet.dart` now has an `validateEmpty` validator to ensure a reason is provided.&#10;&#10;- **fix(ui):**&#10;  - In `packages_screen.dart`, the `SizedBox` wrapping the package list has been replaced with an `Expanded` widget to ensure it correctly fills the available vertical space.&#10;&#10;- **chore(ide):**&#10;  - Removed Android Studio's device streaming cache file (`.idea/caches/deviceStreaming.xml`).&#10;  - Updated IDE configuration files (`.idea/workspace.xml`).">
+      <option name="closed" value="true" />
+      <created>1764755821701</created>
+      <option name="number" value="00147" />
+      <option name="presentableId" value="LOCAL-00147" />
+      <option name="project" value="LOCAL" />
+      <updated>1764755821702</updated>
+    </task>
+    <option name="localTasksCounter" value="148" />
     <servers />
   </component>
   <component name="ToolWindowManager">
