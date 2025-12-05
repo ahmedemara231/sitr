@@ -129,7 +129,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
               ),
             )..insertAll(21, [
             AppDropinityLocal<TitleValueShape>(
-              initialValue: (widget.initialValue as FemaleModel?)?.hijab?.title,
+              initialValue: (widget.initialValue as FemaleModel?)?.hijab,
               hint: LocaleKeys.areYouWaringHijab,
               title: LocaleKeys.areYouWaringHijab,
               values: EnumsData.hijab.data,
@@ -138,7 +138,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 wearingHijab.value = value.value;
                 _listenToData(asFemale.copyWith(hijab: TitleValueShape.fromSingleLabel(wearingHijab.value)));
               },
-              // validator: (v) => Validators.validateDropDown(v, fieldTitle: LocaleKeys.areYouWaringHijab.tr()),
+                validator: (e) => Validators.validateEmpty(e?.title)
             ),
 
               SignUpTextField(
@@ -158,13 +158,13 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 validator: (v) => Validators.validatePhone(v, message: LocaleKeys.parentNumber.tr()),
               ),
             AppDropinity<List<Kinship>, Kinship>.withApiRequest(
-              initialValue: (widget.initialValue as FemaleModel?)?.guardianRelation?.value,
+              initialValue: (widget.initialValue as FemaleModel?)?.guardianRelation,
               hint: LocaleKeys.kinship,
               title: LocaleKeys.kinship,
               asyncCall: (BuildContext ctx, int page) async => await AuthData.getKinships(),
               getLabel: (Kinship element) => element.value,
               onChanged: (value) => _listenToData(asFemale.copyWith(guardianRelation: value)),
-              // validator: (v) => Validators.validateDropDown(v, fieldTitle: LocaleKeys.kinship.tr()),
+                validator: (e) => Validators.validateEmpty(e?.value)
             ),
             ]),
         );
@@ -224,7 +224,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
             ])
             ..insertAll(21, [
               AppDropinityLocal<TitleValueShape>(
-                initialValue: (widget.initialValue as FemaleModel?)?.hijab?.title,
+                initialValue: (widget.initialValue as FemaleModel?)?.hijab,
                 hint: LocaleKeys.areYouWaringHijab,
                 title: LocaleKeys.areYouWaringHijab,
                 values: EnumsData.hijab.data,
@@ -233,7 +233,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                   wearingHijab.value = value?.value;
                   _listenToData(asFemale.copyWith(hijab: TitleValueShape.fromSingleLabel(wearingHijab.value)));
                 },
-                // validator: (v) => Validators.validateDropDown(v, fieldTitle: LocaleKeys.areYouWaringHijab.tr()),
+                  validator: (e) => Validators.validateEmpty(e?.title)
               ),
 
 
@@ -255,13 +255,13 @@ class _FemaleFieldsState extends State<FemaleFields> {
               ),
 
               AppDropinity<List<Kinship>, Kinship>.withApiRequest(
-                initialValue: (widget.initialValue as FemaleModel?)?.guardianRelation?.value,
+                initialValue: (widget.initialValue as FemaleModel?)?.guardianRelation,
                 hint: LocaleKeys.kinship,
                 title: LocaleKeys.kinship,
                 asyncCall: (BuildContext ctx, int page) async => await AuthData.getKinships(),
                 getLabel: (Kinship element) => element.value,
                 onChanged: (value) => _listenToData(asFemale.copyWith(guardianRelation: value)),
-                // validator: (v) => Validators.validateDropDown(v, fieldTitle: LocaleKeys.kinship.tr()),
+                  validator: (e) => Validators.validateEmpty(e?.value)
               ),
 
             ])

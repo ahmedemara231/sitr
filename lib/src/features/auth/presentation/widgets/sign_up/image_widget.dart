@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../generated/assets.dart';
 import '../../../../../config/res/config_imports.dart';
-import '../../../../../core/dropinity/helpers/extensions/padding_extension.dart';
 import '../../../../../core/extensions/object.dart';
+import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/helpers/helpers.dart';
 import '../../../../../core/widgets/svg_pic.dart';
 class SelectImageWidget extends StatelessWidget {

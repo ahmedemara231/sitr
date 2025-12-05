@@ -259,7 +259,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
         if (widget.type.isParent) ...[
           AppDropinity<List<Kinship>, Kinship>.withApiRequest(
             controller: controller,
-            initialValue: _kinship?.value ?? '',
+            initialValue: _kinship,
             asyncCall: (context, page) async => await AuthData.getKinships(),
             getLabel: (e) => e.value,
             hint: LocaleKeys.pleaseEnterTheKinship,
@@ -283,7 +283,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
           AppDropinityLocal<UserType>(
               listHeight: 100,
               hint: _gender?.translate ?? LocaleKeys.pleaseEnterTheGender,
-              initialValue: _gender?.name,
+              initialValue: _gender,
               title: LocaleKeys.gender,
               values: const [UserType.male, UserType.female],
               getLabel: (element) => element.translate,

@@ -6,10 +6,10 @@ class ValidationHost<T> extends FormField<T> {
 
   ValidationHost({super.key,
     required this.builderWidget,
-    this.validationMode = AutovalidateMode.onUserInteraction,
-    required FormFieldSetter<T> onSaved,
     required FormFieldValidator<T> validator,
-    required T initialValue,
+    this.validationMode = AutovalidateMode.onUserInteraction,
+    FormFieldSetter<T>? onSaved,
+    T? initialValue,
   }) : super(
     onSaved: onSaved,
     validator: validator,

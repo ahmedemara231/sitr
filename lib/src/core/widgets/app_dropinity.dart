@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:dropinity/custom_drop_down/dropinity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/helpers/data_and_pagination_data.dart';
@@ -7,7 +8,6 @@ import 'package:pagify/pagify.dart';
 import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
-import '../dropinity/custom_drop_down/dropinity.dart';
 import '../extensions/padding_extension.dart';
 import 'app_text.dart';
 import 'svg_pic.dart';
@@ -16,11 +16,12 @@ typedef AppDropinityLocal<Model> = AppDropinity<void, Model>;
 enum DropinityType{local, api}
 class AppDropinity<FullResponse, Model> extends StatelessWidget {
   final DropinityController? controller;
+  final String? Function(Model?)? validator;
   final double? listHeight;
   final DropinityType type;
   final String hint;
   final String title;
-  final String? initialValue;
+  final Model? initialValue;
   final Model? fullInitialValue;
   final List<Model>? values;
   final FutureOr<void> Function(Model value) onChanged;
@@ -31,6 +32,7 @@ class AppDropinity<FullResponse, Model> extends StatelessWidget {
     this.listHeight,
     this.controller,
     this.fullInitialValue,
+    this.validator,
     this.initialValue,
     required this.hint,
     required this.title,
@@ -44,6 +46,7 @@ class AppDropinity<FullResponse, Model> extends StatelessWidget {
     this.listHeight,
     this.fullInitialValue,
     this.controller,
+    this.validator,
     this.initialValue,
     required this.hint,
     required this.title,
@@ -55,11 +58,11 @@ class AppDropinity<FullResponse, Model> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dropinityController = controller ?? DropinityController();
-
     switch(type){
       case DropinityType.local:
         return Dropinity<void, Model>(
           controller: dropinityController,
+          autoValidateMode: AutovalidateMode.always,
           listHeight: listHeight,
           dropdownTitle: AppText(title, fontWeight: FontWeight.bold, fontSize: 11.sp),
           buttonData: ButtonData(
@@ -85,6 +88,7 @@ class AppDropinity<FullResponse, Model> extends StatelessWidget {
 
       default:
         return Dropinity<FullResponse, Model>.withApiRequest(
+          validator: validator,
           controller: dropinityController,
           listHeight: listHeight,
           dropdownTitle: AppText(title, fontWeight: FontWeight.bold, fontSize: 11.sp),

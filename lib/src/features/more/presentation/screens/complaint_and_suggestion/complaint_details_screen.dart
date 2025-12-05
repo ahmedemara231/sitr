@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
-import '../../../../../core/dropinity/helpers/extensions/object.dart';
+import '../../../../../core/extensions/object.dart';
 import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/extensions/sized_box_helper.dart';
 import '../../../../../core/helpers/status_builder.dart';

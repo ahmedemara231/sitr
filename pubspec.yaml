@@ -88,6 +88,9 @@ dependencies:
   pagify:
     path: /Users/aaita/Desktop/apps/pagination_helper
 
+  dropinity:
+    path: /Users/aaita/Desktop/apps/dropinity
+
   easy_chat:
     path: /Users/aaita/Desktop/apps/easy_chat
   #--------;------------- mine ----------------------

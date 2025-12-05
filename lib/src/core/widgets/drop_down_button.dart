@@ -200,7 +200,7 @@ class CustomDropdownField<T> extends StatelessWidget
             splashColor: Colors.transparent,
           ),
           child: DropdownSearch<T>(
-            validator: validator ?? Validators.validateDropDown,
+            validator: validator,
             onChanged: onChanged,
             selectedItem: selectedItem,
             decoratorProps: DropDownDecoratorProps(

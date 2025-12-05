@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,7 +5,6 @@ import '../../../../../config/language/languages.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/extensions/enum.dart';
 import '../../../../../core/extensions/string_extension.dart';
-import '../../../../../core/helpers/user_type_enum.dart';
 import '../../../../../core/helpers/validators.dart';
 import '../../../../../core/shared/models/title_value_shape.dart';
 import '../../../../../core/shared/models/user_models/individual/female_model.dart';
@@ -16,13 +13,11 @@ import '../../../../../core/shared/models/user_models/individual/male_model.dart
 import '../../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../../core/widgets/app_dropinity.dart';
 import '../../../../../core/widgets/app_text.dart';
-import '../../../models/dowry.dart';
 import '../../data/auth_data.dart';
 import '../../data/enums_data.dart';
 import '../../enums/answer.dart';
 import '../shared/text_field.dart';
 import 'dowry_widget.dart';
-import 'drop_down_text_field.dart';
 import 'radio_widget.dart';
 
 class SharedFormFields<T extends IndividualUserModel> extends StatefulWidget {
@@ -81,7 +76,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
     }
   }
 
-  void _listenToData(T updatedModel, {String? comingVal}) {
+  void _listenToData(T updatedModel) {
     model = updatedModel;
     widget.onChanged.call(model);
   }
@@ -147,12 +142,12 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
       AppDropinityLocal<TitleValueShape>(
           listHeight: 100,
           hint: LocaleKeys.pleaseEnterMartialStatus,
-          initialValue: widget.initialValue?.maritalStatus?.title,
+          initialValue: widget.initialValue?.maritalStatus,
           title: LocaleKeys.maritalStatus,
           values: EnumsData.maritalStatus.data,
           getLabel: (element) => element.title,
-        onChanged: (val) => _listenToData(model.copyWith(maritalStatus: val) as T),
-        // validator: (v) => Validators.validateDropDown(v, fieldTitle: LocaleKeys.maritalStatus.tr()),
+          onChanged: (val) => _listenToData(model.copyWith(maritalStatus: val) as T),
+          validator: (e) => Validators.validateEmpty(e?.title)
       ),
 
 
@@ -248,7 +243,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
       AppDropinityLocal<TitleValueShape>(
         listHeight: 100,
         hint: LocaleKeys.pleaseEnterTheWeddingParty,
-        initialValue: widget.initialValue?.weddingType?.title,
+        initialValue: widget.initialValue?.weddingType,
         title: LocaleKeys.typeOfWeddingParty,
         values: EnumsData.weddingTypes.data,
         getLabel: (element) => element.title,
@@ -257,12 +252,13 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
       ),
 
       AppDropinity<List<CityModel>, CityModel>.withApiRequest(
-        initialValue: widget.initialValue?.cityId?.name,
+        initialValue: widget.initialValue?.cityId,
           hint: LocaleKeys.pleaseEnterTheCity,
           title: LocaleKeys.city,
           asyncCall: (context, page) async => await AuthData.getCities(),
           getLabel: (city) => city.name ?? '',
         onChanged: (val) => _listenToData(model.copyWith(cityId: val) as T),
+          validator: (e) => Validators.validateEmpty(e?.name)
         // validator: (v) => Validators.validateDropDown<String>(
         //     v?.name,
         //     fieldTitle: LocaleKeys.city.tr()
@@ -321,7 +317,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
       AppDropinityLocal<TitleValueShape>(
         listHeight: 100,
         hint: LocaleKeys.pleaseEnterSkinColor,
-        initialValue: widget.initialValue?.skinColor?.title,
+        initialValue: widget.initialValue?.skinColor,
         title: LocaleKeys.skinColor,
         values: EnumsData.skinColors.data,
         getLabel: (element) => element.title,
@@ -333,12 +329,12 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
       AppDropinityLocal<TitleValueShape>(
         listHeight: 100,
         hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
-        initialValue: widget.initialValue?.religiousCommitment?.title,
+        initialValue: widget.initialValue?.religiousCommitment,
         title: LocaleKeys.degreeOfCommitment,
         values: EnumsData.religiousCommitment.data,
         getLabel: (element) => element.title,
         onChanged: (value) => _listenToData(model.copyWith(religiousCommitment: TitleValueShape.fromSingleLabel(value?.value)) as T),
-        // validator: (v) => Validators.validateDropDown(v, fieldTitle: LocaleKeys.degreeOfCommitment.tr()),
+          validator: (e) => Validators.validateEmpty(e?.title)
       ),
     ];
 
