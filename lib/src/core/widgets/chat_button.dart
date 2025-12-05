@@ -26,7 +26,7 @@ class ChatButton extends StatelessWidget {
       ));
     },
 
-    ChatButtonActions.viewTips : () => user.gender!.userType!.isParent?
+    ChatButtonActions.viewTips : () => user.type!.userType!.isParent?
     showDefaultBottomSheet(
         withPadding: false,
         child: TipsSheet(

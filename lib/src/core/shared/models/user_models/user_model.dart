@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:developer';
 import '../../../extensions/object.dart';
 import '../../../extensions/string_extension.dart';
 import '../../../helpers/cache_service.dart';
 import '../../../helpers/user_type_enum.dart';
 import '../title_value_shape.dart';
 import 'individual/female_model.dart';
+import 'individual/individual_user_model.dart';
 import 'individual/male_model.dart';
 import 'parent/parent_model.dart';
 
@@ -13,8 +15,8 @@ class UserModel {
   final int? id;
   final String? name;
   final int? parentId;
-  final TitleValueShape? type;
-  final Gender? gender;
+  final TypeValueShape? type;
+  final GenderValueShape? gender;
   final String? avatar;
   final String? phone;
   final String? countryCode;
@@ -56,22 +58,15 @@ class UserModel {
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
-    final bool isParent = json['type']['value'].toString() == 'parent';
-    final UserType user = json['gender']['value'].toString().toUserType();
+    final bool isParent = json['type']['value'].toString().toUserType().isParent;
+    log('issss parent ${json['type']['value'].toString().toUserType()}');
+    log('issss parent ${json['type']['value'].toString().toUserType().isParent}');
 
     if(isParent){
       return ParentModel.fromJson(json);
 
     }else {
-      if(user.isMale){
-        return MaleModel.fromJson(json);
-
-      }else if(user.isFemale){
-        return FemaleModel.fromJson(json);
-
-      }else{
-        return UserModel.initial();
-      }
+      return IndividualUserModel.fromJson(json);
     }
   }
 
@@ -155,8 +150,8 @@ class UserModel {
     int? id,
     String? name,
     int? parentId,
-    TitleValueShape? type,
-    Gender? gender,
+    TypeValueShape? type,
+    GenderValueShape? gender,
     String? avatar,
     String? phone,
     String? countryCode,
@@ -202,23 +197,53 @@ class UserModel {
 }
 
 
-class Gender {
+class TypeValueShape {
   UserType? userType;
   TitleValueShape? titleValueShape;
 
-  Gender({
+  TypeValueShape({
     this.titleValueShape,
     this.userType,
   });
 
-  Gender.fromJson(dynamic json) {
+  TypeValueShape.fromJson(dynamic json) {
     titleValueShape = TitleValueShape.fromJson(json);
     userType = (json['value'] as String).toUserType();
   }
 
-  Gender copyWith({
+  GenderValueShape copyWith({
     TitleValueShape? titleValueShape,
-  }) => Gender(
+  }) => GenderValueShape(
+      titleValueShape: titleValueShape ?? this.titleValueShape
+  );
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['value'] = titleValueShape?.value;
+    map['title'] = titleValueShape?.title;
+    return map;
+  }
+
+}
+
+
+class GenderValueShape {
+  UserGender? userGender;
+  TitleValueShape? titleValueShape;
+
+  GenderValueShape({
+    this.titleValueShape,
+    this.userGender,
+  });
+
+  GenderValueShape.fromJson(dynamic json) {
+    titleValueShape = TitleValueShape.fromJson(json);
+    userGender = (json['value'] as String).toUserGender();
+  }
+
+  GenderValueShape copyWith({
+    TitleValueShape? titleValueShape,
+  }) => GenderValueShape(
       titleValueShape: titleValueShape ?? this.titleValueShape
   );
 

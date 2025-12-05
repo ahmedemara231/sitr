@@ -28,7 +28,7 @@ class AddChildSheet extends StatelessWidget {
                   onClick: (context, user) => context.read<AddChildCubit>().addChild(
                       body: user,
                       onSuccess: () {
-                        AuthData.childrenNumber.value.increment(user.gender!.userType!);
+                        AuthData.childrenNumber.value.increment(user.gender!.userGender!);
                         showDefaultBottomSheet(child: const AddChildSheet());
                       }
                   )

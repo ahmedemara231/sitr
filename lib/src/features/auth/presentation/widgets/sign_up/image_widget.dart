@@ -35,7 +35,8 @@ class SelectImageWidget extends StatelessWidget {
                   ),
                   child: CircleAvatar(
                     radius: 50.sp,
-                    backgroundImage: value.isNotNull? FileImage(value!) : NetworkImage(initialValue ?? ConstantManager.defaultAvatar),
+                    backgroundImage: value.isNotNull? FileImage(value!) :
+                    NetworkImage(initialValue ?? ConstantManager.defaultAvatar),
                   ).paddingAll(3.r),
                 ),
                 InkWell(

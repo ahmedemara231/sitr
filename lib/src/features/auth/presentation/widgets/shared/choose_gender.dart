@@ -9,10 +9,10 @@ import '../../../../../core/widgets/buttons/custom_app_buttons/default_button.da
 import '../../../../../core/widgets/custom_messages.dart';
 
 class ChooseGenderWidget extends StatefulWidget {
-  final Function(UserType selectedGender) onSelectGender;
-  final List<UserType> genders;
+  final Function(UserGender selectedGender) onSelectGender;
+  final List<UserGender> genders;
   final bool canChoose;
-  final String Function(UserType element) titles;
+  final String Function(UserGender element) titles;
 
   const ChooseGenderWidget({super.key,
     required this.onSelectGender,

@@ -49,8 +49,8 @@ class ParentModel extends UserModel {
       id: json['id'],
       name: json['name'],
       parentId: json['parent_id'],
-      type: TitleValueShape.fromJson(json['type']),
-      gender: Gender.fromJson(json['type']),
+      type: TypeValueShape.fromJson(json['type']),
+      gender: GenderValueShape.fromJson(json['gender']),
       avatar: json['avatar'],
       phone: json['phone'],
       countryCode: json['country_code'],
@@ -96,7 +96,7 @@ class ParentModel extends UserModel {
     bool? hasChatWith,
     bool? isParentMatch,
 
-    int? id, String? name, int? parentId, TitleValueShape? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) {
+    int? id, String? name, int? parentId, TypeValueShape? type, GenderValueShape? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) {
     return ParentModel(
       hasActivePackage: hasActivePackage??this.hasActivePackage,
       isNotify: isNotify ?? this.isNotify,

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/network/api_endpoints.dart';
@@ -28,7 +29,9 @@ class OtpCubit extends AsyncCubit<UserModel>{
           ),
         ),
       onSuccess: (data) {
-          AuthData.currentUser = data.data.gender!.userType!;
+          log('data isss ${data.data.toJson()}');
+          AuthData.unauthorizedUserGender = data.data.gender!.userGender!;
+          AuthData.unauthorizedUserType = data.data.type!.userType!;
           onSuccess?.call(data.data);
       }
     );

@@ -310,5 +310,6 @@
   "only_letters_allowed": "only letters allowed",
   "tips_por_parent_individual_conversation": "tips por parent individual conversation",
   "you_can_not_send_more_than_2_images_in_chat": "you can not send more than 2 images in chat",
-  "you_can_not_renew_the_package_now": "you can not renew the package now"
+  "you_can_not_renew_the_package_now": "you can not renew the package now",
+  "you_can_not_choose_now": "you can not choose now"
 }

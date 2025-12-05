@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import '../../../../../features/auth/models/dowry.dart';
 import '../../../../extensions/object.dart';
 import '../../title_value_shape.dart' show TitleValueShape;
@@ -68,8 +66,8 @@ class MaleModel extends IndividualUserModel {
       id: json['id'],
       name: json['name'],
       parentId: json['parent_id'],
-      type: TitleValueShape.fromJson(json['type']),
-      gender: Gender.fromJson(json['gender']),
+      type: TypeValueShape.fromJson(json['type']),
+      gender: GenderValueShape.fromJson(json['gender']),
       avatar: json['avatar'],
       phone: json['phone'],
       countryCode: json['country_code'],
@@ -129,10 +127,10 @@ class MaleModel extends IndividualUserModel {
 
   @override
   MaleModel copyWith({
-    bool? hasActivePackage,
     bool? canChat,
     bool? hasChatWith,
     bool? isParentMatch,
+    bool? hasActivePackage,
     String? nickName,
     bool? isNotify,
     TitleValueShape? maritalStatus,
@@ -157,7 +155,9 @@ class MaleModel extends IndividualUserModel {
     TitleValueShape? skinColor,
     TitleValueShape? religiousCommitment,
     int? views,
-    int? id, String? name, int? parentId, TitleValueShape? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) {
+    int? id, String? name, int? parentId, TypeValueShape? type, GenderValueShape? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token
+
+  }) {
     return MaleModel(
       hasActivePackage: hasActivePackage??this.hasActivePackage,
       canChat: canChat??this.canChat,

@@ -9,6 +9,7 @@ import '../../config/res/config_imports.dart';
 import '../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../core/helpers/helpers.dart';
 import '../../core/helpers/user_type_enum.dart';
+import '../../core/shared/models/user_models/user_model.dart';
 import '../../core/widgets/app_text.dart';
 import '../../core/widgets/icon_widget.dart';
 import 'cubits/get_notification_count.dart';
@@ -68,7 +69,7 @@ class HomeScreen extends StatelessWidget {
                           cubit.changeBottomNavIndex(index);
 
                           if(index != 0 && index != 4){
-                            if(!UserTypeHelper.isAuthenticated){
+                            if(!UserModel.isAuthenticated){
                               Helpers.showUnauthenticatedSheet();
                             }
                           }

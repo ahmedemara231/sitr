@@ -922,4 +922,7 @@ abstract class LocaleKeys {
   static const String _youCanNotRenewThePackageNow = 'you_can_not_renew_the_package_now';
   static String get youCanNotRenewThePackageNow => _youCanNotRenewThePackageNow.tr();
 
+  static const String _youCanNotChooseNow = 'you_can_not_choose_now';
+  static String get youCanNotChooseNow => _youCanNotChooseNow.tr();
+
 }

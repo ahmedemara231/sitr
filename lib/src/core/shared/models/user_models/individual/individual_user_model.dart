@@ -1,8 +1,14 @@
+import 'dart:developer';
+
 import '../../../../../features/auth/models/dowry.dart';
 import '../../../../../features/main_screen/data/models/home_model.dart';
 import '../../../../extensions/object.dart';
+import '../../../../extensions/string_extension.dart';
+import '../../../../helpers/user_type_enum.dart';
 import '../../title_value_shape.dart';
 import '../user_model.dart';
+import 'female_model.dart';
+import 'male_model.dart';
 
 class IndividualUserModel extends UserModel {
   final String? nickName;
@@ -118,51 +124,20 @@ class IndividualUserModel extends UserModel {
   );
 
   factory IndividualUserModel.fromJson(Map<String, dynamic> json) {
-    return IndividualUserModel(
-      isNotify: json['is_notify'],
-      hasChatWith: json['has_chat_with'],
-      id: json['id'],
-      name: json['name'],
-      childParentInfo: (json['parent_info'] as Object?).isNull? null :
-      ChildParentInfo.fromJson(json['parent_info']),
-      parentId: json['parent_id'],
-      type: json['type'],
-      gender: json['gender'],
-      avatar: json['avatar'],
-      phone: json['phone'],
-      countryCode: json['country_code'],
-      fullPhone: json['full_phone'],
-      identityNumber: json['identity_number'],
-      age: json['age'],
-      isActive: json['is_active'],
-      isBlocked: json['is_blocked'],
-      adminApprovalStatus: json['admin_approval_status'],
-      completeRegistration: json['complete_registration'],
-      token: json['token'],
-      nickName: json['nick_name'],
-      maritalStatus: json['marital_status'],
-      height: json['height'],
-      weight: json['weight'],
-      currentJob: json['current_job'],
-      bio: json['bio'],
-      hasChildren: json['has_children'],
-      numOfChildren: json['num_of_children'],
-      childCustody: json['child_custody'],
-      wantChildren: json['want_children'],
-      prohibitedThings: json['prohibited_things'],
-      dowry: Dowry(from: json['dowry_min'], to: json['dowry_max']),
-      weddingType: json['wedding_type'],
-      cityId: json['city_id'],
-      educationLevel: json['education_level'],
-      isPrayer: json['is_prayer'],
-      healthConditions: json['health_conditions'],
-      chatLang: json['chat_lang'],
-      isSmoker: json['is_smoker'],
-      tribeAffiliation: json['tribe_affiliation'],
-      skinColor: json['skin_color'],
-      religiousCommitment: json['religious_commitment'],
-      views: json['views'],
-    );
+    final UserGender user = json['gender']['value'].toString().toUserGender();
+    log('the gender is $user');
+    log('the gender is ${json['gender']['value']}');
+    log('the gender is ${json['gender']['value'].toString().toUserGender()}');
+
+    if(user.isMale){
+      return MaleModel.fromJson(json);
+
+    }else if(user.isFemale){
+      return FemaleModel.fromJson(json);
+
+    }else{
+      return IndividualUserModel.initial();
+    }
   }
 
   Map<String, dynamic> toJsonBody() => {
@@ -195,7 +170,7 @@ class IndividualUserModel extends UserModel {
     if(isChild){
       return toJsonBody()..addAll({
         'name' : name,
-        'gender' : gender?.userType?.name,
+        'gender' : gender?.userGender?.name,
         'phone' : phone,
         'identity_number' : identityNumber,
         'age' : age,
@@ -334,7 +309,10 @@ class IndividualUserModel extends UserModel {
     TitleValueShape? skinColor,
     TitleValueShape? religiousCommitment,
     int? views,
-    int? id, String? name, int? parentId, TitleValueShape? type, Gender? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) => IndividualUserModel(
+    int? id, String? name, int? parentId, TypeValueShape? type, GenderValueShape? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token
+
+
+  }) => IndividualUserModel(
     id: id?? this.id,
     canChat: canChat??this.canChat,
     hasChatWith: hasChatWith??this.hasChatWith,

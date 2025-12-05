@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../extensions/context_extension.dart';
 import '../extensions/padding_extension.dart';
 import 'app_text.dart';
+import 'custom_messages.dart';
 
 enum OptionsRanking{vertical, horizontal}
 class ChooseFromOptionsWidget extends StatefulWidget {
@@ -14,6 +16,8 @@ class ChooseFromOptionsWidget extends StatefulWidget {
   final double fontSize;
   final FontWeight? fontWeight;
   final EdgeInsetsGeometry? childPadding;
+  final bool canChoose;
+  final double? height;
 
   const ChooseFromOptionsWidget({super.key,
     required this.onSelectOption,
@@ -21,7 +25,9 @@ class ChooseFromOptionsWidget extends StatefulWidget {
     this.ranking = OptionsRanking.horizontal,
     this.fontSize = 10,
     this.fontWeight,
-    this.childPadding
+    this.childPadding,
+    this.height,
+    this.canChoose = true,
   });
 
   @override
@@ -42,14 +48,20 @@ class _ChooseFromOptionsWidgetState extends State<ChooseFromOptionsWidget> {
           widget.titles.length,
               (index) => InkWell(
             onTap: () {
-              final String selectedOption = widget.titles[index];
-              widget.onSelectOption(selectedOption);
-              setState(() => option = selectedOption);
+              if(widget.canChoose){
+                final String selectedOption = widget.titles[index];
+                widget.onSelectOption(selectedOption);
+                setState(() => option = selectedOption);
+
+              }else{
+                MessageUtils.showSnackBar(LocaleKeys.youCanNotChooseNow);
+              }
             },
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 150),
               curve: Curves.linear,
               width: context.width / widget.titles.length,
+              height: widget.height,
               decoration: BoxDecoration(
                 color: option == widget.titles[index] ?
                 AppColors.primary : AppColors.white,

@@ -62,7 +62,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
   void _init() {
     femaleFields = FemaleModel.initial();
     _listenToData(femaleFields.copyWith(
-        gender: Gender(userType: UserType.female)
+        gender: GenderValueShape(userGender: UserGender.female)
     ));
   }
 

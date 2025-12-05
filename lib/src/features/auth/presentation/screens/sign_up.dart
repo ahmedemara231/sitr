@@ -10,11 +10,21 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   SignUpBody signUpBody = SignUpBody.initial();
   final formKey = GlobalKey<FormState>();
-  final ValueNotifier<UserType> type = ValueNotifier(UserType.male);
+  final ValueNotifier<(UserType, UserGender)> userTypeAndGender =
+      ValueNotifier((UserType.individual, UserGender.male));
+
+  void _init(String val){
+    final UserGender gender = val.toUserGender();
+    final UserType type = gender.isMale || gender.isFemale?
+    UserType.individual : UserType.parent;
+
+    log('the data is ${UserGender.male.name == LocaleKeys.male}');
+    log('the data is $type $gender');
+    userTypeAndGender.value = (type, gender);
+  }
 
   @override
   Widget build(BuildContext context) {
-    // log('the gender is ${UserTypeHelper.currentType}');
     return BlocProvider(
       create: (context) => SignUpCubit(),
       child: CenterCardScaffold(
@@ -24,40 +34,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
             spacing: 10.h,
             children: [
               BlocBuilder<SignUpCubit, AsyncState>(
-                builder: (context, state) => ChooseGenderWidget(
-                  titles: (element) => element.translate,
+                builder: (context, state) => ChooseFromOptionsWidget(
+                  height: 50.h,
                   canChoose: !state.isLoading,
-                  onSelectGender: (selectedGender) => type.value = selectedGender,
-                  genders: const [
-                    UserType.male,
-                    UserType.female,
-                    UserType.parent,
+                  onSelectOption: (val) => _init(val),
+                  titles: [
+                    LocaleKeys.male,
+                    LocaleKeys.female,
+                    LocaleKeys.parent,
                   ],
-                ),
+                )
               ),
               10.szH,
 
-              ValueListenableBuilder(
-                valueListenable: type,
+              ValueListenableBuilder<(UserType, UserGender)>(
+                valueListenable: userTypeAndGender,
                 builder: (context, value, child) => Form(
                   key: formKey,
                   child: SignUpFields(
-                      type: type.value,
+                    type: userTypeAndGender.value.$1,
+                      gender: userTypeAndGender.value.$2,
                       onFinish: (data) async => signUpBody = data,
                   ),
                 )
               ),
 
-              BlocListener<SignUpCubit, AsyncState>(
-                listener: (context, state) {
-                  if(state.isSuccess){
-
-                  }
-                },
-                child: AppLoadingButton(
-                  asyncCall: (ctx) async {
-                    if(formKey.currentState?.validate() ?? false){
-                      await ctx.read<SignUpCubit>().signUp(
+              AppLoadingButton(
+                asyncCall: (ctx) async {
+                  if(formKey.currentState?.validate() ?? false){
+                    await ctx.read<SignUpCubit>().signUp(
                         signUpBody,
                         onSuccess: (data) {
                           MessageUtils.showSnackBar(data.msg);
@@ -89,11 +94,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ));
                         }
-                      );
-                    }
-                  },
-                  title: LocaleKeys.confirm,
-                ),
+                    );
+                  }
+                },
+                title: LocaleKeys.confirm,
               ),
               const AlreadyHaveAccWidget()
             ],

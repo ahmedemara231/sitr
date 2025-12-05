@@ -89,7 +89,7 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
       PartnerInfoModel(leading: Assets.svgPrey, title: LocaleKeys.areYouPray, subTitle: user.isPrayer!.toNormalLang()),
       PartnerInfoModel(leading: Assets.svgSmoke, title: LocaleKeys.areYouSmoke, subTitle: user.isSmoker!.toNormalLang()),
 
-      if(userResult.gender?.userType?.isFemale?? false)
+      if(userResult.gender?.userGender?.isFemale?? false)
         ...[
           PartnerInfoModel(leading: Assets.svgParentChildren, title: LocaleKeys.doYouAcceptPolygamy, subTitle: (user as FemaleModel).acceptsPolygamy!.toNormalLang()),
           PartnerInfoModel(leading: Assets.svgHijab, title: LocaleKeys.areYouWaringHijab, subTitle: (user as FemaleModel).hijab?.title),

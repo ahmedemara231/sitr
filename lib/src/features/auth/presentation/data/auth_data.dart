@@ -8,7 +8,8 @@ import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../models/kinship.dart';
 
 class AuthData{
-  static UserType currentUser = UserType.unknown;
+  static UserGender unauthorizedUserGender = UserGender.unknown;
+  static UserType unauthorizedUserType = UserType.unknown;
   static Future<List<CityModel>> getCities()async{
     List<CityModel> citiesList = [];
     await injector<NetworkService>().callApi(
@@ -49,7 +50,7 @@ class ChildrenNumber {
   int maleNumbers;
   int femaleNumbers;
 
-  void increment(UserType user){
+  void increment(UserGender user){
     if(user.isFemale){
       femaleNumbers++;
     }else{

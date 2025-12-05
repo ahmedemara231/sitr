@@ -1,10 +1,12 @@
 part of '../../../imports.dart';
 
 class SignUpFields extends StatefulWidget {
+  final UserGender gender;
   final UserType type;
   final Future<void> Function(SignUpBody body) onFinish;
   const SignUpFields({
     super.key,
+    required this.gender,
     required this.type,
     required this.onFinish,
   });
@@ -62,6 +64,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
 
   @override
   void didUpdateWidget(covariant SignUpFields oldWidget) {
+    log('rebuild test');
     _initSignupBody(widget.type);
     super.didUpdateWidget(oldWidget);
   }
@@ -94,13 +97,13 @@ class _SignUpFieldsState extends State<SignUpFields> {
   File? _maleImage;
   File? _femaleImage;
 
-  UserType? _gender;
+  UserGender? _gender;
   Kinship? _kinship;
 
   File? get _getImageBasedGender {
-    if (widget.type.isMale) {
+    if (widget.gender.isMale) {
       return _maleImage;
-    } else if (widget.type.isFemale) {
+    } else if (widget.gender.isFemale) {
       return _femaleImage;
     }
 
@@ -109,6 +112,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
 
   late SignUpBody signUpBody;
   final DropinityController controller = DropinityController();
+
   void _initSignupBody(UserType newType) {
     if (newType.isParent) {
       signUpBody = ParentSignUp.initial().copyWith(
@@ -138,7 +142,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
 
     _listenToData(signUpBody);
     if (widget.type.isIndividual) {
-      _listenToData(signUpBody.copyWith(gender: widget.type.name));
+      _listenToData(signUpBody.copyWith(gender: widget.gender.name));
     }
   }
 
@@ -147,18 +151,22 @@ class _SignUpFieldsState extends State<SignUpFields> {
     required TextEditingController whenFemale,
     TextEditingController? whenParent,
   }) {
-    switch (widget.type) {
-      case UserType.male:
-        return whenMale;
+    if(widget.type.isIndividual){
+      switch (widget.gender) {
+        case UserGender.male:
+          return whenMale;
 
-      case UserType.female:
-        return whenFemale;
+        case UserGender.female:
+          return whenFemale;
 
-      case UserType.parent:
-        return whenParent ?? TextEditingController();
+        default:
+          return TextEditingController();
+      }
+    }else if(widget.type.isParent){
+      return whenParent ?? TextEditingController();
 
-      default:
-        return TextEditingController();
+    }else{
+      return TextEditingController();
     }
   }
 
@@ -280,12 +288,12 @@ class _SignUpFieldsState extends State<SignUpFields> {
                 .copyWith(childrenNumber: _childrenNumberCont.text)),
             // validator: Validators.validateEmpty,
           ),
-          AppDropinityLocal<UserType>(
+          AppDropinityLocal<UserGender>(
               listHeight: 100,
               hint: _gender?.translate ?? LocaleKeys.pleaseEnterTheGender,
               initialValue: _gender,
               title: LocaleKeys.gender,
-              values: const [UserType.male, UserType.female],
+              values: const [UserGender.male, UserGender.female],
               getLabel: (element) => element.translate,
               onChanged: (val) {
                 _gender = val;

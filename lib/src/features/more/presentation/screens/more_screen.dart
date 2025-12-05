@@ -27,7 +27,7 @@ class MoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<MorItemModel> moreItemsList = [
-      if(UserTypeHelper.isAuthenticated)
+      if(UserModel.isAuthenticated)
         ...[
           MorItemModel(
             icon: Assets.svgUser,
@@ -46,7 +46,7 @@ class MoreScreen extends StatelessWidget {
             onTap: () => Go.to(const MyPackagesScreen()),
           ),
         ],
-      if(UserTypeHelper.isAuthenticated && UserModel.isParent)
+      if(UserModel.isAuthenticated && UserModel.isParent)
         MorItemModel(
           icon: Assets.svgMoreChildren,
           label: LocaleKeys.addedChildren,
@@ -60,7 +60,7 @@ class MoreScreen extends StatelessWidget {
           Go.to(const SuccessPartnersScreen());
         },
       ),
-      if(UserTypeHelper.isAuthenticated)
+      if(UserModel.isAuthenticated)
         ...[
           MorItemModel(
             icon: Assets.svgBlockUser,

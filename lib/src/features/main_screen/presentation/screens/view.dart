@@ -152,7 +152,7 @@ class _MainViewState extends State<MainView> {
                       ValueListenableBuilder(
                           valueListenable: secondSelection,
                           builder: (context, val, child) {
-                            if(val == UserType.male.translate){
+                            if(val == UserGender.male.translate){
                               if(data.opportunities!.male.isNull || data.opportunities!.male!.isEmpty){
                                 return const NotContainData();
                               }else{
@@ -163,7 +163,7 @@ class _MainViewState extends State<MainView> {
                                           (index) {
                                         final opportunity = state.data.opportunities?.male?[index];
                                         return InkWell(
-                                          onTap: () => UserTypeHelper.isAuthenticated? Go.to(IndividualDetailsScreen.opportunity(
+                                          onTap: () => UserModel.isAuthenticated? Go.to(IndividualDetailsScreen.opportunity(
                                             id: opportunity.id ?? 0,
                                           )) : Helpers.showUnauthenticatedSheet(),
 
@@ -174,7 +174,7 @@ class _MainViewState extends State<MainView> {
                                 );
                               }
                             }
-                            else if(val == UserType.female.translate){
+                            else if(val == UserGender.female.translate){
                               if(data.opportunities!.female.isNull || data.opportunities!.female!.isEmpty){
                                 return const NotContainData();
 
@@ -186,7 +186,7 @@ class _MainViewState extends State<MainView> {
                                           (index) {
                                         final opportunity = state.data.opportunities?.female?[index];
                                         return InkWell(
-                                          onTap: () => UserTypeHelper.isAuthenticated? Go.to(IndividualDetailsScreen.opportunity(
+                                          onTap: () => UserModel.isAuthenticated? Go.to(IndividualDetailsScreen.opportunity(
                                             id: opportunity.id ?? 0,
                                           )) : Helpers.showUnauthenticatedSheet(),
                                           child: PartnerCard.individual(opportunity: opportunity!),
@@ -208,7 +208,7 @@ class _MainViewState extends State<MainView> {
                                           (index) {
                                         final opportunity = state.data.opportunities?.parent?[index];
                                         return InkWell(
-                                          onTap: () => UserTypeHelper.isAuthenticated?
+                                          onTap: () => UserModel.isAuthenticated?
                                           Go.to(ParentDetailsScreen(id: opportunity?.id ?? 0)):
                                           Helpers.showUnauthenticatedSheet(),
                                           child: ParentCard(

@@ -8,7 +8,7 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
   final bool _withParent;
   final bool showConditionsAndTerms;
   final bool showAlreadyHaveAccount;
-  final UserType? userType;
+  final UserGender? userType;
   final bool showGenderSelection;
   final Future<void> Function(BuildContext context, IndividualUserModel user) onClick;
 
@@ -67,7 +67,7 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
 }
 
 class _EnterMaleOrFemaleOrChildDataBody extends StatefulWidget {
-  final UserType? userType;
+  final UserGender? userType;
   final IndividualUserModel? initialValue;
   final bool withParent;
   final bool showGenderSelection;
@@ -91,13 +91,13 @@ class _EnterMaleOrFemaleOrChildDataBody extends StatefulWidget {
 
 class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrChildDataBody> {
 
-  late final ValueNotifier<UserType> _mainType;
+  late final ValueNotifier<UserGender> _mainType;
 
   void _init() {
     _mainType = ValueNotifier(
         widget.userType ??
-            widget.initialValue?.gender?.userType ??
-            UserType.male
+            widget.initialValue?.gender?.userGender ??
+            UserGender.male
     );
     _assignToInitial();
   }
@@ -153,8 +153,8 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
                 canChoose: true,
                 onSelectGender: (selectedGender) => _mainType.value = selectedGender,
                 genders: const [
-                  UserType.male,
-                  UserType.female,
+                  UserGender.male,
+                  UserGender.female,
                 ],
               ),
 

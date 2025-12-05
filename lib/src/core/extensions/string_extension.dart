@@ -207,7 +207,7 @@ bool get isImage =>
       injector<NetworkService>().setToken(user.token ?? '');
       Go.to( PackagesScreen.subscription(
           paymentMethods: const [PaymentMethod.online],
-          userType: user.gender?.userType,
+          userType: user.type?.userType,
           isInAuth: true,
       ));
 
@@ -225,7 +225,7 @@ bool get isImage =>
     }else if(statusType.isHasSetrCode){
       injector<NetworkService>().setToken(user.token ?? '');
       Go.to(
-          user.gender!.userType!.isParent?
+          user.type!.userType!.isParent?
           EnterMaleOrFemaleOrChildDataScreen.showAll(
               scaffoldType: ScaffoldType.centerCard,
               showConditionsAndTerms: true,
@@ -238,7 +238,7 @@ bool get isImage =>
             scaffoldType: ScaffoldType.centerCard,
             showConditionsAndTerms: true,
             showAlreadyHaveAccount: true,
-            userType: user.gender!.userType,
+            userType: user.gender!.userGender,
             onClick: (context, user) => context.read<CompleteProfileCubit>().completeProfile(
               body: user, onSuccess: () => showDefaultBottomSheet(child: const CompleteProfileSheet()),
             ),
@@ -251,7 +251,7 @@ bool get isImage =>
         scaffoldType: ScaffoldType.centerCard,
         showConditionsAndTerms: true,
         showAlreadyHaveAccount: true,
-        userType: user.gender!.userType,
+        userType: user.gender!.userGender,
         onClick: (context, user) => context.read<CompleteProfileCubit>().completeProfile(
           body: user, onSuccess: () => showDefaultBottomSheet(child: const CompleteProfileSheet()),
         ),
@@ -284,15 +284,27 @@ bool get isImage =>
     }
   }
 
-  UserType toUserType(){
-    if(this == UserType.male.name){
-      return UserType.male;
+  UserGender toUserGender(){
+    if(this == LocaleKeys.male || this == UserGender.male.name){
+      return UserGender.male;
 
-    }else if(this == UserType.female.name){
-      return UserType.female;
+    }else if(this == LocaleKeys.female || this == UserGender.female.name){
+      return UserGender.female;
+
+    }else{
+      return UserGender.unknown;
+    }
+  }
+
+  UserType toUserType(){
+    if(this == UserType.individual.name){
+      return UserType.individual;
 
     }else if(this == UserType.parent.name){
       return UserType.parent;
+
+    }else if(this == UserType.child.name){
+      return UserType.child;
 
     }else{
       return UserType.unknown;

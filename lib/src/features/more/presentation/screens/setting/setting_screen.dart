@@ -36,7 +36,7 @@ class SettingScreen extends StatelessWidget {
         label: LocaleKeys.profile,
         onTap: () => UserModel.isIndividual? Go.to(EnterMaleOrFemaleOrChildDataScreen.showAll(
             scaffoldType: ScaffoldType.appScaffold,
-            userType: UserModel.currentUser?.gender?.userType,
+            userType: UserModel.currentUser?.gender?.userGender,
             showGenderSelection: false,
             initialValue: UserModel.currentUser as IndividualUserModel,
             onClick: (context, user) => context.read<EditProfileCubit>().editProfile(

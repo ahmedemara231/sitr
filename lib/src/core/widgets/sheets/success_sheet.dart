@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,7 +14,6 @@ import '../../helpers/user_type_enum.dart';
 import '../../navigation/navigator.dart';
 import '../../shared/models/user_models/user_model.dart';
 import '../app_bottom_sheet.dart';
-import '../app_text.dart' show AppText;
 import '../default_bottom_sheet.dart';
 
 class SuccessSheet extends StatelessWidget {
@@ -27,8 +24,11 @@ class SuccessSheet extends StatelessWidget {
     this.upperText
   });
 
-  void _manageGender(UserType user){
-    if(user.isParent){
+  void _manageGender({
+    required UserGender gender,
+    required UserType type,
+}){
+    if(type.isParent){
       Go.to(EnterMaleOrFemaleOrChildDataScreen.showAll(
           scaffoldType: ScaffoldType.centerCard,
           showConditionsAndTerms: true,
@@ -36,7 +36,7 @@ class SuccessSheet extends StatelessWidget {
           onClick: (context, user) => context.read<AddChildCubit>().addChild(
             body: user,
             onSuccess: () {
-              AuthData.childrenNumber.value.increment(user.gender!.userType!);
+              AuthData.childrenNumber.value.increment(user.gender!.userGender!);
               showDefaultBottomSheet(
                   child: const AddChildSheet()
               );
@@ -49,7 +49,7 @@ class SuccessSheet extends StatelessWidget {
         scaffoldType: ScaffoldType.centerCard,
         showConditionsAndTerms: true,
         showAlreadyHaveAccount: true,
-        userType: user,
+        userType: gender,
         onClick: (context, user) => context.read<CompleteProfileCubit>().completeProfile(
           body: user, onSuccess: () => showDefaultBottomSheet(child: const CompleteProfileSheet()),
         ),
@@ -58,13 +58,19 @@ class SuccessSheet extends StatelessWidget {
   }
 
   void _manageNavigation(){
-    if(AuthData.currentUser.isUnknown){
-      log('the current user is ${UserTypeHelper.currentType}');
-      _manageGender(UserTypeHelper.currentType!);
+    if(AuthData.unauthorizedUserGender.isUnknown &&
+        AuthData.unauthorizedUserType.isUnknown){
+      _manageGender(
+          gender: UserModel.currentUser!.gender!.userGender!,
+          type: UserModel.currentUser!.type!.userType!
+      );
+
 
     }else{
-      log('the current user issss ${AuthData.currentUser}');
-      _manageGender(AuthData.currentUser);
+      _manageGender(
+          gender: AuthData.unauthorizedUserGender,
+          type: AuthData.unauthorizedUserType
+      );
     }
   }
   @override

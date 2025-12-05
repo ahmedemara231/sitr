@@ -310,5 +310,6 @@
   "only_letters_allowed": "مسموح بالحروف فقط",
   "tips_por_parent_individual_conversation": "نصائح لمحادثة الابن و ولي الامر",
   "you_can_not_send_more_than_2_images_in_chat": "لا يمكنك ارسال اكثر من صورتين في المحادثة",
-  "you_can_not_renew_the_package_now": "لا يمكنك تجديد الباقة الان"
+  "you_can_not_renew_the_package_now": "لا يمكنك تجديد الباقة الان",
+  "you_can_not_choose_now": "لا يمكن الاختيار الان"
 }

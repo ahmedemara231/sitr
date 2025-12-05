@@ -132,7 +132,7 @@ class Opportunity {
     avatar = json['avatar'];
     age = json['age'];
     type = json['type'] != null ? TitleValueShape.fromJson(json['type']) : null;
-    gender = json['gender'] != null ? Gender.fromJson(json['gender']) : null;
+    gender = json['gender'] != null ? GenderValueShape.fromJson(json['gender']) : null;
     city = json['city'];
     height = json['height'];
     weight = json['weight'];
@@ -151,7 +151,7 @@ class Opportunity {
   String? avatar;
   int? age;
   TitleValueShape? type;
-  Gender? gender;
+  GenderValueShape? gender;
   String? city;
   num? height;
   num? weight;
@@ -163,7 +163,7 @@ Opportunity copyWith({  int? id,
   String? avatar,
   int? age,
   TitleValueShape? type,
-  Gender? gender,
+  GenderValueShape? gender,
   String? city,
   double? height,
   double? weight,
@@ -221,7 +221,7 @@ class Parent {
     name = json['name'];
     avatar = json['avatar'];
     type = json['type'] != null ? TitleValueShape.fromJson(json['type']) : null;
-    gender = json['gender'] != null ? Gender.fromJson(json['gender']) : null;
+    gender = json['gender'] != null ? GenderValueShape.fromJson(json['gender']) : null;
     relation = json['relation'] != null ? Relation.fromJson(json['relation']) : null;
     numOfChildren = json['num_of_children'];
   }
@@ -230,14 +230,14 @@ class Parent {
   String? name;
   String? avatar;
   TitleValueShape? type;
-  Gender? gender;
+  GenderValueShape? gender;
   Relation? relation;
   int? numOfChildren;
 Parent copyWith({  int? id,
   String? name,
   String? avatar,
   TitleValueShape? type,
-  Gender? gender,
+  GenderValueShape? gender,
   Relation? relation,
   int? numOfChildren,
 }) => Parent(  id: id ?? this.id,

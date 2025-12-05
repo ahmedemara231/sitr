@@ -12,6 +12,7 @@ import '../../../../core/helpers/helpers.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/navigation/navigator.dart';
+import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../core/widgets/app_bottom_sheet.dart';
 import '../../../../core/widgets/app_text.dart';
@@ -35,10 +36,10 @@ class MoreTabAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: UserTypeHelper.isAuthenticated? 250.h : 100.h,
+      height: UserModel.isAuthenticated? 250.h : 100.h,
       child: Stack(
         children: [
-          if(UserTypeHelper.isAuthenticated)
+          if(UserModel.isAuthenticated)
             Positioned(
               top: 115.h,
               child: MultiBlocProvider(
@@ -176,7 +177,7 @@ class MoreTabAppBar extends StatelessWidget {
                     8.szW,
                     InkWell(
                       onTap: (){
-                        if(UserTypeHelper.isAuthenticated){
+                        if(UserModel.isAuthenticated){
                           showDefaultBottomSheet(
                               child: BlocProvider(
                                 create: (context) => LogoutCubit(),
