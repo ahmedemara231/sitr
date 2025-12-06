@@ -128,6 +128,17 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 titleBuilder: (i) => AppText(Answer.values[i].translate),
               ),
             )..insertAll(21, [
+
+            // AppDropinity<List<Kinship>, Kinship>.withApiRequest(
+            //     initialValue: (widget.initialValue as FemaleModel?)?.guardianRelation,
+            //     hint: LocaleKeys.kinship,
+            //     title: LocaleKeys.kinship,
+            //     asyncCall: (BuildContext ctx, int page) async => await AuthData.getKinships(),
+            //     getLabel: (Kinship element) => element.value,
+            //     onChanged: (value) => _listenToData(asFemale.copyWith(guardianRelation: value)),
+            //     validator: (e) => Validators.validateEmpty(e?.value)
+            // ),
+
             AppDropinityLocal<TitleValueShape>(
               initialValue: (widget.initialValue as FemaleModel?)?.hijab,
               hint: LocaleKeys.areYouWaringHijab,

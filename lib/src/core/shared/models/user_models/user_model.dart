@@ -59,8 +59,6 @@ class UserModel {
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     final bool isParent = json['type']['value'].toString().toUserType().isParent;
-    log('issss parent ${json['type']['value'].toString().toUserType()}');
-    log('issss parent ${json['type']['value'].toString().toUserType().isParent}');
 
     if(isParent){
       return ParentModel.fromJson(json);

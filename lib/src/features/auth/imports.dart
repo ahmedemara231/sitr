@@ -60,6 +60,7 @@ import 'presentation/cubits/complete_profile_cubit.dart';
 import 'presentation/cubits/edit_profile.dart';
 import 'presentation/cubits/login_cubit.dart';
 import 'presentation/cubits/oath.dart';
+import 'presentation/cubits/personal_data_cubit.dart';
 import 'presentation/cubits/sign_up_cubit.dart';
 import 'presentation/data/auth_data.dart' show AuthData;
 import 'presentation/enums/complete_register_status.dart';

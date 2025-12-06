@@ -13,7 +13,8 @@ import '../complaint_details_screen.dart';
 
 class ComplaintsAndSuggestionsItem extends StatelessWidget {
   const ComplaintsAndSuggestionsItem({
-    super.key, required this.complaintModel,
+    super.key,
+    required this.complaintModel,
   });
 final ComplaintModel complaintModel;
   @override

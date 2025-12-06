@@ -32,7 +32,12 @@ class DeleteSheet extends StatelessWidget {
                 dimension: 200.sp,
                 child: Image.asset(Assets.imagesDeleteIcon)
             ),
-            AppText(title, fontWeight: FontWeight.w500, fontSize: 18.sp,),
+            AppText(
+              title,
+              fontWeight: FontWeight.w500,
+              textAlign: TextAlign.center,
+              fontSize: 18.sp,
+            ),
             if(secondTitle.isNotNull)
               AppText(secondTitle!, color: Colors.black54)
           ],

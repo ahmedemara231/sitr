@@ -5,8 +5,10 @@ import '../../../config/language/locale_keys.g.dart';
 import '../../../core/extensions/context_extension.dart';
 import '../../../core/extensions/widget_extension.dart';
 import '../../../core/helpers/user_type_enum.dart';
+import '../../../core/shared/models/user_models/user_model.dart';
 import '../../../core/widgets/app_pagify.dart';
 import '../../../core/widgets/app_text.dart';
+import '../../../core/widgets/not_contain_data.dart';
 import '../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../core/widgets/sheets/payment_sheet.dart';
 import '../data/packages_data.dart';
@@ -38,7 +40,9 @@ class PackagesScreen extends StatelessWidget {
     return AppScaffold(
         isScrollable: false,
         appBarTitle: LocaleKeys.packages,
-        body: Column(
+        body: UserModel.currentUser?.type?.userType?.isChild ?? false?
+        const NotContainData() :
+        Column(
           children: [
             if(isInAuth)
               AppText(LocaleKeys.inOrderToRegisterOtherDataYouMustSubscribeToOneOfTheAvailablePackages, textAlign: TextAlign.center,),

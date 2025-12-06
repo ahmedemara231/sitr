@@ -541,6 +541,9 @@ abstract class LocaleKeys {
   static const String _pleaseAttachImages = 'please_attach_images';
   static String get pleaseAttachImages => _pleaseAttachImages.tr();
 
+  static const String _pleaseEnterTheText = 'please_enter_the_text';
+  static String get pleaseEnterTheText => _pleaseEnterTheText.tr();
+
   static const String _complaintText = 'complaint_text';
   static String get complaintText => _complaintText.tr();
 
