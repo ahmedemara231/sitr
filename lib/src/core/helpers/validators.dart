@@ -19,7 +19,7 @@ class Validators {
   }
 
   static String? validateEmpty(String? value, {String? fieldTitle}) {
-    if (value == null || value.isEmpty) {
+    if (value == null || value.trim().isEmpty) {
       return fieldTitle == null
           ? LocaleKeys.fillField.tr(context: Go.context)
           : '${LocaleKeys.filedValidation.tr()} $fieldTitle';

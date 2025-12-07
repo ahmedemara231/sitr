@@ -52,7 +52,10 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
   Widget _upperWidget(ChatModel model){
     final int? timer = model.matchRequest!.timer;
     if(timer.isNotNull && timer.isNotEqualZero){
-      return ChatTimerWidget(minutes: model.matchRequest?.timer ?? 5);
+      return ChatTimerWidget(
+        minutes: model.matchRequest?.timer ?? 5,
+        phaseTitle: '',
+      );
     }
 
     return const SizedBox.shrink();

@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../../generated/assets.dart';
-import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/svg_pic.dart';
 
 class ChatTimerWidget extends StatefulWidget {
   final int minutes;
+  final String phaseTitle;
   const ChatTimerWidget({super.key,
     required this.minutes,
+    required this.phaseTitle,
   });
 
   @override
@@ -37,25 +38,35 @@ class _ChatTimerWidgetState extends State<ChatTimerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return EasyTimerCount.builder(
-        controller: _timerCont,
-        duration: EasyTime(minutes: widget.minutes),
-        builder: (time) => Column(
-          spacing: 10.h,
-          children: [
-            // AppText(LocaleKeys.sufficientKnowledge),
-            Row(
-              spacing: 5.w,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SvgPic(assetName: Assets.svgClock),
-                AppText(time, fontSize: 22.sp, fontWeight: FontWeight.w500),
-              ],
-            )
-          ],
+    return Column(
+      children: [
+        AppText(
+            widget.phaseTitle,
+            fontSize: 12.sp,
+            fontWeight: FontWeight.w500,
+            color: Colors.black54
         ),
-        onTimerStarts: (context){},
-        onTimerEnds: (context) {}
+        EasyTimerCount.builder(
+            controller: _timerCont,
+            duration: EasyTime(minutes: widget.minutes),
+            builder: (time) => Column(
+              spacing: 10.h,
+              children: [
+                // AppText(LocaleKeys.sufficientKnowledge),
+                Row(
+                  spacing: 5.w,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SvgPic(assetName: Assets.svgClock),
+                    AppText(time, fontSize: 22.sp, fontWeight: FontWeight.w500),
+                  ],
+                )
+              ],
+            ),
+            onTimerStarts: (context){},
+            onTimerEnds: (context) {}
+        ),
+      ],
     );
   }
 }

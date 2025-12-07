@@ -43,8 +43,8 @@ class Sitr extends StatelessWidget {
                 navigatorKey: Go.navigatorKey,
                 restorationScopeId: 'app',
 
-                home: EnterMaleOrFemaleOrChildDataScreen.individual(scaffoldType: ScaffoldType.appScaffold, showConditionsAndTerms: true, onClick: (context, user)async{}, userType: UserGender.male),
-                // home: const SplashScreen(),
+                // home: EnterMaleOrFemaleOrChildDataScreen.individual(scaffoldType: ScaffoldType.appScaffold, showConditionsAndTerms: true, onClick: (context, user)async{}, userType: UserGender.male),
+                home: const SplashScreen(),
                 navigatorObservers: [AppNavigationObserver()],
                 builder: (context, child) {
                   return InternetInterceptorWidget(
