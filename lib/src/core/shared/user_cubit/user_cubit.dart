@@ -47,18 +47,18 @@ class UserCubit extends Cubit<UserState> with UserUtils {
     emit(state.copyWith(userModel: user));
   }
 
-  Future<void> initZego()async{
-    final bool isConnected = await Helpers.zegoService.onUserLogin(
-        currentUserId: UserModel.currentUser!.id.toString(),
-        currentUserName: UserModel.currentUser!.name.toString()
-    );
-
-    if (isConnected) {
-      log('✅ Zego service initialized successfully');
-    } else {
-      log('⚠️ Zego service failed to initialize');
-    }
-  }
+  // Future<void> zegoOnLogin()async{
+  //   final bool isConnected = await Helpers.zegoService.onUserLogin(
+  //       currentUserId: UserModel.currentUser!.id.toString(),
+  //       currentUserName: UserModel.currentUser!.name.toString()
+  //   );
+  //
+  //   if (isConnected) {
+  //     log('✅ Zego service initialized successfully');
+  //   } else {
+  //     log('⚠️ Zego service failed to initialize');
+  //   }
+  // }
 
   Future<bool> init() async {
     final Map<String, dynamic>? userMap = CacheStorage.read(

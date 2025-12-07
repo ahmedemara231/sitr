@@ -150,14 +150,11 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
       return TimerAction(context: context, requestModel: widget.requestModel);
     }
 
-    // ممكن نبقي نفكر نحط ال stage action هنا
-
     return NoAction();
   }
 
 
   Future<void> _startChat()async{
-    log('start chaaaaattttt');
     await context.read<ChatCubit>().startChat(
       requestModel: widget.requestModel,
       onSuccess: (data) => _manageSuccessState.call(data).call(),
@@ -165,11 +162,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
   }
 
   Future<void> _showBased(RemoteMessage notification)async{
-    log('dataaaa ${notification.data}');
-    log('the dataaaa is ${(notification.data['action'] as Object?).isNotNull}');
-
     if((notification.data['action'] as Object?).isNotNull){
-      log('the dataaaa true ${notification.data['action']}');
       _startChat();
     }
   }
@@ -219,7 +212,8 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     _chatController = PagifyController<ChatMessages>();
     if(widget.showFullChat){
       await _startChat();
-      await UserCubit.instance.initZego();
+      // await UserCubit.instance.zegoOnLogin();
+      await Helpers.initZegoService();
       _initSocket();
     }
   }
@@ -252,16 +246,21 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
         //   MessageUtils.showSnackBar(state.errorMessage!) : null
         // )
       ],
+
       child: AppScaffold(
         appBarTitle: LocaleKeys.chat,
         isScrollable: false,
         actions: widget.showFullChat? [
-          Helpers.zegoService.zegoButton(
-            isVideoCall: false,
-            icon: const SvgPic(assetName: Assets.svgPhoneIcon),
-            invites: [
-              ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName)
-            ],
+
+          ValueListenableBuilder(
+              valueListenable: ZegoService.isConnected,
+              builder: (context, isConnected, child) => isConnected? Helpers.zegoService.zegoButton(
+                isVideoCall: false,
+                icon: const SvgPic(assetName: Assets.svgPhoneIcon),
+                invites: [
+                  ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName)
+                ],
+              ) : CustomLoading.showLoadingView()
           ),
 
             BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
@@ -272,20 +271,23 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                   final currentStage = context.read<ChatCubit>().currentStage!.value!.getCurrentStageAsStagesEnum;
                   if((!(callStatus == 'not_available') || (callStatus == 'free_available') || (callStatus == 'paid_available')) &&
                       currentStage.isShariaComplaintMeeting){
-                    return Helpers.zegoService.zegoButton( // المحانية موجودة
-                      isVideoCall: true,
-                      icon: const SvgPic(assetName: Assets.svgVideoCall),
-                      invites: [
-                        ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName)
-                      ],
-                      onPressed: (){
-                        if(callStatus == 'free_available' || callStatus == 'paid_available'){
-                          context.read<EndVideoCallCubit>().endVideoCall(
-                              context.read<ChatCubit>().matchRequestId.toString()
-                          );
+                    return ValueListenableBuilder(
+                        valueListenable: ZegoService.isConnected,
+                        builder: (context, isConnected, child) => isConnected? Helpers.zegoService.zegoButton( // المحانية موجودة
+                            isVideoCall: true,
+                            icon: const SvgPic(assetName: Assets.svgVideoCall),
+                            invites: [
+                              ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName)
+                            ],
+                            onPressed: (){
+                              if(callStatus == 'free_available' || callStatus == 'paid_available'){
+                                context.read<EndVideoCallCubit>().endVideoCall(
+                                    context.read<ChatCubit>().matchRequestId.toString()
+                                );
 
-                        }
-                      }
+                              }
+                            }
+                        ) : const SizedBox.shrink()
                     );
 
                   }else if(callStatus == 'free_used'){
@@ -324,7 +326,6 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
             Expanded(
               child: EasyChat(
-
                 // itemExtent: 60.h,
                 controller: _chatController,
                 emptyView: const Center(
@@ -335,6 +336,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                 ),
                 errorBuilder: (e) => const ExceptionView(),
                 errorMapper: PagifyErrorMapper(errorWhenDio: (e) => e.response?.data['msg']),
+                loadingBuilder: CustomLoading.showLoadingView(),
                 mapper: (response) => PagifyData(
                     data: response.room!.messages!.data!,
                     paginationData: PaginationData(

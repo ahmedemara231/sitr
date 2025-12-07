@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 import '../../core/zego_service/zego.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../extensions/padding_extension.dart';
 import '../navigation/navigator.dart';
+import '../shared/user_cubit/user_cubit.dart';
 import '../widgets/custom_loading.dart';
 import '../widgets/custom_messages.dart';
 import '../widgets/default_bottom_sheet.dart';
@@ -21,7 +23,7 @@ import 'permission_handler/model.dart';
 
 class Helpers {
   static late ZegoService zegoService;
-  static Future<void> initZegoService() async {
+  static Future<void> initZegoService() async{
       zegoService = ZegoService(
           appId: ConstantManager.zegoAppId,
           appSign: ConstantManager.zegoAppSign,
@@ -29,6 +31,16 @@ class Helpers {
       );
 
       await zegoService.initZego();
+      final isConnected = await zegoService.onUserLogin(
+          currentUserId: UserCubit.instance.user.id.toString(),
+          currentUserName: UserCubit.instance.user.name??''
+      );
+
+      if (isConnected) {
+        log('✅ Zego service initialized successfully');
+      } else {
+        log('⚠️ Zego service failed to initialize');
+      }
   }
 
   static void showUnauthenticatedSheet(){

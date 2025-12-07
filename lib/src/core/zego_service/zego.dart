@@ -17,6 +17,7 @@ class ZegoService {
     required this.navigatorKey,
   });
 
+  static ValueNotifier<bool> isConnected = ValueNotifier(false);
   Future<void> initZego() async {
     ZegoUIKitPrebuiltCallInvitationService().setNavigatorKey(navigatorKey);
     await ZegoUIKit().initLog();
@@ -121,6 +122,7 @@ class ZegoService {
 
       if (connectionState == ZegoSignalingPluginConnectionState.connected) {
         _isSignalingConnected = true;
+        isConnected.value = true;
         log('✅ Signaling connected successfully');
         return true;
       }

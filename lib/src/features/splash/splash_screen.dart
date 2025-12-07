@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _manipulateSplashData()async{
-    await _initZego();
+    // await _initZego();
 
     await Future.delayed(const Duration(seconds: 2));
     final result = await CacheStorage.read(CacheConstant.onBoardingSubmission);
@@ -74,9 +74,9 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  Future<void> _initZego()async{
-    await Helpers.initZegoService();
-  }
+  // Future<void> _initZego()async{
+  //   await Helpers.initZegoService();
+  // }
 
   @override
   Widget build(BuildContext context) {
