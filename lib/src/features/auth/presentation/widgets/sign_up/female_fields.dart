@@ -4,6 +4,7 @@ import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/extensions/enum.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
 import '../../../../../core/helpers/validators.dart';
+import '../../../../../core/network/api_endpoints.dart';
 import '../../../../../core/shared/models/title_value_shape.dart';
 import '../../../../../core/shared/models/user_models/individual/female_model.dart';
 import '../../../../../core/shared/models/user_models/individual/individual_user_model.dart';
@@ -11,8 +12,8 @@ import '../../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../../core/widgets/app_dropinity.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../models/kinship.dart';
+import '../../cubits/personal_data_cubit.dart';
 import '../../data/auth_data.dart';
-import '../../data/enums_data.dart';
 import '../../enums/answer.dart';
 import '../shared/text_field.dart';
 import 'radio_widget.dart';
@@ -139,17 +140,17 @@ class _FemaleFieldsState extends State<FemaleFields> {
             //     validator: (e) => Validators.validateEmpty(e?.value)
             // ),
 
-            AppDropinityLocal<TitleValueShape>(
+            AppDropinity<List<TitleValueShape>, TitleValueShape>.withApiRequest(
               initialValue: (widget.initialValue as FemaleModel?)?.hijab,
               hint: LocaleKeys.areYouWaringHijab,
               title: LocaleKeys.areYouWaringHijab,
-              values: EnumsData.hijab.data,
+              asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.hijabTypes),
               getLabel: (TitleValueShape element) => element.title,
               onChanged: (value) {
                 wearingHijab.value = value.value;
                 _listenToData(asFemale.copyWith(hijab: TitleValueShape.fromSingleLabel(wearingHijab.value)));
               },
-                validator: (e) => Validators.validateEmpty(e?.title)
+              validator: (e) => Validators.validateEmpty(e?.title)
             ),
 
               SignUpTextField(
@@ -234,17 +235,17 @@ class _FemaleFieldsState extends State<FemaleFields> {
               ),
             ])
             ..insertAll(21, [
-              AppDropinityLocal<TitleValueShape>(
+              AppDropinity<List<TitleValueShape>, TitleValueShape>.withApiRequest(
                 initialValue: (widget.initialValue as FemaleModel?)?.hijab,
                 hint: LocaleKeys.areYouWaringHijab,
                 title: LocaleKeys.areYouWaringHijab,
-                values: EnumsData.hijab.data,
+                asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.hijabTypes),
                 getLabel: (TitleValueShape element) => element.title,
                 onChanged: (value) {
                   wearingHijab.value = value?.value;
                   _listenToData(asFemale.copyWith(hijab: TitleValueShape.fromSingleLabel(wearingHijab.value)));
                 },
-                  validator: (e) => Validators.validateEmpty(e?.title)
+                validator: (e) => Validators.validateEmpty(e?.title)
               ),
 
 

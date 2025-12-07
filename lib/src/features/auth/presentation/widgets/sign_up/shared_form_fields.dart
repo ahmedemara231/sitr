@@ -1,11 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/language/languages.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/extensions/enum.dart';
 import '../../../../../core/extensions/string_extension.dart';
 import '../../../../../core/helpers/validators.dart';
+import '../../../../../core/network/api_endpoints.dart';
 import '../../../../../core/shared/models/title_value_shape.dart';
 import '../../../../../core/shared/models/user_models/individual/female_model.dart';
 import '../../../../../core/shared/models/user_models/individual/individual_user_model.dart';
@@ -13,6 +15,7 @@ import '../../../../../core/shared/models/user_models/individual/male_model.dart
 import '../../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../../core/widgets/app_dropinity.dart';
 import '../../../../../core/widgets/app_text.dart';
+import '../../cubits/personal_data_cubit.dart';
 import '../../data/auth_data.dart';
 import '../../data/enums_data.dart';
 import '../../enums/answer.dart';
@@ -139,12 +142,12 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         onChanged: (val) => _listenToData(model.copyWith(nickName: val) as T),
         validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.nickname.tr()),
       ),
-      AppDropinityLocal<TitleValueShape>(
+      AppDropinity<List<TitleValueShape>, TitleValueShape>.withApiRequest(
           listHeight: 100,
           hint: LocaleKeys.pleaseEnterMartialStatus,
           initialValue: widget.initialValue?.maritalStatus,
           title: LocaleKeys.maritalStatus,
-          values: EnumsData.maritalStatus.data,
+          asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.maritalStatuses),
           getLabel: (element) => element.title,
           onChanged: (val) => _listenToData(model.copyWith(maritalStatus: val) as T),
           validator: (e) => Validators.validateEmpty(e?.title)
@@ -206,13 +209,14 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
                      _listenToData(model.copyWith(numOfChildren: val) as T),
                  validator: (v) => Validators.validateInteger(v, min: 0, max: 100, fieldTitle: LocaleKeys.childrenNumber.tr()),
                ),
-               RadioWidget<TitleValueShape>(
+               AppDropinity<List<TitleValueShape>, TitleValueShape>.withApiRequest(
                  initialValue: widget.initialValue?.childCustody,
+                 hint: LocaleKeys.nursery,
                  title: LocaleKeys.nursery,
-                 onSubmit: (result) => _listenToData(model.copyWith(childCustody: result) as T),
-                 values: EnumsData.childCustody.data,
-                 titleBuilder: (i) => AppText(EnumsData.childCustody.data[i].title.tr()),
-                   // titles: (i) => [AppText(LocaleKeys.father), AppText(LocaleKeys.mother)]),
+                 asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.childCustodies),
+                 getLabel: (element) => element.title,
+                 onChanged: (result) => _listenToData(model.copyWith(childCustody: result) as T),
+                 validator: (e) => Validators.validateEmpty(e?.title)
                )
              ],
            ) : const SizedBox.shrink(),
@@ -240,12 +244,12 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         onSelect: (dowryVal) => _listenToData(model.copyWith(dowry: dowryVal) as T)
       ),
 
-      AppDropinityLocal<TitleValueShape>(
+      AppDropinity<List<TitleValueShape>, TitleValueShape>.withApiRequest(
         listHeight: 100,
         hint: LocaleKeys.pleaseEnterTheWeddingParty,
         initialValue: widget.initialValue?.weddingType,
         title: LocaleKeys.typeOfWeddingParty,
-        values: EnumsData.weddingTypes.data,
+        asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.weddingTypes),
         getLabel: (element) => element.title,
         onChanged: (val) =>
             _listenToData(model.copyWith(weddingType: TitleValueShape.fromSingleLabel(val.value)) as T),
@@ -314,27 +318,27 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         titleBuilder: (i) => AppText(Answer.values[i].translate),
       ),
 
-      AppDropinityLocal<TitleValueShape>(
+      AppDropinity<List<TitleValueShape>, TitleValueShape>.withApiRequest(
         listHeight: 100,
         hint: LocaleKeys.pleaseEnterSkinColor,
         initialValue: widget.initialValue?.skinColor,
         title: LocaleKeys.skinColor,
-        values: EnumsData.skinColors.data,
+        asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.skinColors),
         getLabel: (element) => element.title,
         onChanged: (val) => _listenToData(model.copyWith(skinColor: TitleValueShape.fromSingleLabel(val?.value)) as T),
       ),
 
 
 
-      AppDropinityLocal<TitleValueShape>(
+      AppDropinity<List<TitleValueShape>, TitleValueShape>.withApiRequest(
         listHeight: 100,
         hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
         initialValue: widget.initialValue?.religiousCommitment,
         title: LocaleKeys.degreeOfCommitment,
-        values: EnumsData.religiousCommitment.data,
+        asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.religiousCommitments),
         getLabel: (element) => element.title,
         onChanged: (value) => _listenToData(model.copyWith(religiousCommitment: TitleValueShape.fromSingleLabel(value?.value)) as T),
-          validator: (e) => Validators.validateEmpty(e?.title)
+        validator: (e) => Validators.validateEmpty(e?.title)
       ),
     ];
 

@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/helpers/data_and_pagination_data.dart';
 import 'package:pagify/helpers/errors.dart';
-import 'package:pagify/pagify.dart';
 import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../extensions/padding_extension.dart';
 import 'app_text.dart';
+import 'custom_loading.dart';
 import 'svg_pic.dart';
 
 typedef AppDropinityLocal<Model> = AppDropinity<void, Model>;
 enum DropinityType{local, api}
-class AppDropinity<FullResponse, Model> extends StatelessWidget {
+class AppDropinity<FullResponse, Model> extends StatefulWidget {
   final DropinityController? controller;
   final String? Function(Model?)? validator;
   final double? listHeight;
@@ -22,7 +22,6 @@ class AppDropinity<FullResponse, Model> extends StatelessWidget {
   final String hint;
   final String title;
   final Model? initialValue;
-  final Model? fullInitialValue;
   final List<Model>? values;
   final FutureOr<void> Function(Model value) onChanged;
   final Future<FullResponse> Function(BuildContext context, int page)? asyncCall;
@@ -31,7 +30,6 @@ class AppDropinity<FullResponse, Model> extends StatelessWidget {
   const AppDropinity({super.key,
     this.listHeight,
     this.controller,
-    this.fullInitialValue,
     this.validator,
     this.initialValue,
     required this.hint,
@@ -44,7 +42,6 @@ class AppDropinity<FullResponse, Model> extends StatelessWidget {
   const AppDropinity.withApiRequest({
     super.key,
     this.listHeight,
-    this.fullInitialValue,
     this.controller,
     this.validator,
     this.initialValue,
@@ -56,61 +53,81 @@ class AppDropinity<FullResponse, Model> extends StatelessWidget {
 }) : values = null, type = DropinityType.api;
 
   @override
+  State<AppDropinity<FullResponse, Model>> createState() => _AppDropinityState<FullResponse, Model>();
+}
+
+class _AppDropinityState<FullResponse, Model> extends State<AppDropinity<FullResponse,Model>> {
+
+  late final DropinityController dropinityController;
+
+  @override
+  void initState() {
+    dropinityController = widget.controller ?? DropinityController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    dropinityController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final dropinityController = controller ?? DropinityController();
-    switch(type){
+    switch(widget.type){
       case DropinityType.local:
         return Dropinity<void, Model>(
           controller: dropinityController,
           autoValidateMode: AutovalidateMode.always,
-          listHeight: listHeight,
-          dropdownTitle: AppText(title, fontWeight: FontWeight.bold, fontSize: 11.sp),
+          listHeight: widget.listHeight,
+          dropdownTitle: AppText(widget.title, fontWeight: FontWeight.bold, fontSize: 11.sp),
           buttonData: ButtonData(
-              hint: AppText(hint, color: Colors.grey, fontSize: 12.sp,),
-              initialValue: initialValue,
+              hint: AppText(widget.hint, color: Colors.grey, fontSize: 12.sp,),
+              initialValue: widget.initialValue,
               color: Colors.grey[50],
               buttonBorderRadius: ConstantManager.buttonBorderRadius,
-              selectedItemWidget: (e) => AppText(getLabel.call(e!)),
+              selectedItemWidget: (e) => AppText(widget.getLabel.call(e!)),
               collapsedListIcon: const SvgPic(assetName: Assets.svgArrowDown)
           ),
           textFieldData: TextFieldData(
-            onSearch: (pattern, e) => getLabel.call(e!).contains(pattern??''),
+            onSearch: (pattern, e) => widget.getLabel.call(e!).contains(pattern??''),
             suffixIcon: const Icon(Icons.search),
             title: LocaleKeys.search,
           ),
-          onChanged: onChanged,
-          values: values,
+          onChanged: widget.onChanged,
+          values: widget.values,
           valuesData: ValuesData(itemBuilder: (context, i, e) => AppText(
-              getLabel.call(e),
+              widget.getLabel.call(e),
               textAlign: TextAlign.start
           ).paddingBottom(5.h)),
         );
 
       default:
         return Dropinity<FullResponse, Model>.withApiRequest(
-          validator: validator,
+          validator: widget.validator,
           controller: dropinityController,
-          listHeight: listHeight,
-          dropdownTitle: AppText(title, fontWeight: FontWeight.bold, fontSize: 11.sp),
+          listHeight: widget.listHeight,
+          maintainState: false,
+          dropdownTitle: AppText(widget.title, fontWeight: FontWeight.bold, fontSize: 11.sp),
           buttonData: ButtonData(
-              hint: AppText(hint, color: Colors.grey, fontSize: 12.sp,),
-              initialValue: initialValue,
+              hint: AppText(widget.hint, color: Colors.grey, fontSize: 12.sp,),
+              initialValue: widget.initialValue,
               color: Colors.grey[50],
               buttonBorderRadius: ConstantManager.buttonBorderRadius,
-              selectedItemWidget: (e) => AppText(getLabel.call(e!)),
+              selectedItemWidget: (e) => AppText(widget.getLabel.call(e!)),
               collapsedListIcon: const SvgPic(assetName: Assets.svgArrowDown)
           ),
           textFieldData: TextFieldData(
-            onSearch: (pattern, e) => getLabel.call(e!).contains(pattern??''),
+            onSearch: (pattern, e) => widget.getLabel.call(e!).contains(pattern??''),
             suffixIcon: const Icon(Icons.search),
             title: LocaleKeys.search,
           ),
           onChanged: (val) {
-            onChanged.call(val);
+            widget.onChanged.call(val);
           },
           pagifyData: DropinityPagifyData(
-            controller: PagifyController(),
-            asyncCall: asyncCall!,
+            loadingBuilder: CustomLoading.showLoadingView(),
+            asyncCall: widget.asyncCall!,
             mapper: (response) => PagifyData(
                 data: response as List<Model>,
                 paginationData: PaginationData(
@@ -132,7 +149,7 @@ class AppDropinity<FullResponse, Model> extends StatelessWidget {
 
             ),
             itemBuilder: (context, data, index, element) => AppText(
-                getLabel.call(element),
+                widget.getLabel.call(element),
                 textAlign: TextAlign.start
             ).paddingBottom(5.h),
           ),
