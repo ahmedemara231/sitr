@@ -78,7 +78,7 @@ class PackageWidget extends StatelessWidget {
                           title: type == ScreenType.subscription?
                           LocaleKeys.subscribeToPackage : LocaleKeys.renewPackage,
 
-                          onTap: () => !package.canSubscribe?
+                          onTap: () => package.hasActivePackage?
                           MessageUtils.showSnackBar(LocaleKeys.youAreAlreadySubscribedInPackage) :
                           showDefaultBottomSheet(
                               child: PaymentSheet(
@@ -95,6 +95,7 @@ class PackageWidget extends StatelessWidget {
                                           initialUrl: url,
                                           title: LocaleKeys.pay
                                       ));
+
                                     }else if(paymentMethod == PaymentMethod.wallet){
                                       result = 'success';
                                     }

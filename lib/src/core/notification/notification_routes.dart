@@ -21,12 +21,20 @@ abstract interface class NotificationNavigation {
 }
 
 // ----------------- Home -----------------
+
+class NoNavigation implements NotificationNavigation {
+  const NoNavigation();
+
+  @override
+  void navigate({required Map<String, dynamic> data}) {}
+}
+
+
 class HomeNavigation implements NotificationNavigation {
   const HomeNavigation();
 
   @override
   void navigate({required Map<String, dynamic> data}) {
-    log('GoHome');
     Go.offAll(const HomeScreen());
   }
 }

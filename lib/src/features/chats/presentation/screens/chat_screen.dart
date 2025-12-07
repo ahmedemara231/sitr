@@ -19,7 +19,7 @@ class ChatScreen extends StatelessWidget {
           BlocProvider(create: (context) => FinishChatCubit()),
           BlocProvider(create: (context) => EndVideoCallCubit()),
           BlocProvider(
-            create: (context) => ChatNotificationCubit(injector<ChatNotificationService>()),
+            create: (context) => NotificationCubit(injector<ChatNotificationService>()),
           )
         ],
         child: _ChatScreenBody(
@@ -235,7 +235,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [
-        BlocListener<ChatNotificationCubit, ChatNotificationState>(
+        BlocListener<NotificationCubit, NotificationState>(
           listener: (context, state) async =>
               _showBased(state.notification!),
         ),

@@ -9,11 +9,11 @@ import '../../../../core/notification/notification_service.dart';
 import '../../../../core/shared/base_state.dart';
 import '../../data/chat_notification_service.dart';
 
-class ChatNotificationCubit extends Cubit<ChatNotificationState> {
+class NotificationCubit extends Cubit<NotificationState> {
   final ChatNotificationService _notificationService;
   late final StreamSubscription _sub;
 
-  ChatNotificationCubit(this._notificationService) : super(ChatNotificationState.initial()) {
+  NotificationCubit(this._notificationService) : super(NotificationState.initial()) {
     _notificationService.init();
     _sub = _notificationService.notificationStream.listen(_onNotification);
   }
@@ -30,12 +30,12 @@ class ChatNotificationCubit extends Cubit<ChatNotificationState> {
 }
 
 
-final class ChatNotificationState extends Equatable {
+final class NotificationState extends Equatable {
   final RemoteMessage? notification;
   final BaseStatus baseStatus;
   final String errorMessage;
 
-  const ChatNotificationState({
+  const NotificationState({
     required this.baseStatus,
     this.errorMessage = '',
     this.notification,
@@ -44,16 +44,16 @@ final class ChatNotificationState extends Equatable {
   NotificationType get notificationType =>
       (notification?.data['type'] as String).getType;
 
-  factory ChatNotificationState.initial() => const ChatNotificationState(
+  factory NotificationState.initial() => const NotificationState(
     baseStatus: BaseStatus.initial,
     notification: null,
   );
 
-  ChatNotificationState copyWith({
+  NotificationState copyWith({
     BaseStatus? baseStatus,
     String? errorMessage,
     RemoteMessage? notification,
-  }) =>  ChatNotificationState(
+  }) =>  NotificationState(
     baseStatus: baseStatus ?? this.baseStatus,
     errorMessage: errorMessage ?? this.errorMessage,
     notification: notification ?? this.notification,

@@ -5,10 +5,10 @@ class Package{
   final String image;
   final int duration;
   final num price;
-  final bool canSubscribe;
+  final bool hasActivePackage;
   final String userPackageId;
 
-  Package(this.id, this.name, this.type, this.image, this.duration, this.price, this.canSubscribe, this.userPackageId,);
+  Package(this.id, this.name, this.type, this.image, this.duration, this.price, this.hasActivePackage, this.userPackageId,);
 
   factory Package.initial() => Package(
     0,
@@ -28,7 +28,7 @@ class Package{
     json['image'],
     json['duration'],
     json['price'],
-    json['can_subscribe']??true,
+    json['has_active_package']??true,
       json['user_package_id'] ?? ''
   );
 }

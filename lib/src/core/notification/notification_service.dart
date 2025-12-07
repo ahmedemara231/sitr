@@ -8,8 +8,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import '../../config/res/config_imports.dart';
 import '../../features/auth/imports.dart';
-import '../../features/chats/data/models/request_model.dart';
-import '../../features/chats/presentation/imports.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/more/presentation/screens/complaint_and_suggestion/complaint_details_screen.dart';
 import '../../features/more/presentation/screens/my_packages.dart';
@@ -85,7 +83,15 @@ class NotificationService {
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
     final notification = message.notification;
-    NotificationRoutes.navigateByType(message.data);
+
+
+    final type = (message.data['type'] as String).getType;
+    if(type.isParentIndividualApprovalRejected ||
+        type.isMatchRejectedWhenTimerEnded ||
+        type.isMatchRequestCompleted){
+      NotificationRoutes.navigateByType(message.data);
+    }
+
     await _flutterLocalNotificationsPlugin.show(notification.hashCode,
         notification?.title ?? '', notification?.body, notificationDetails,
         payload: json.encode(message.toMap()));

@@ -1,9 +1,16 @@
+import 'dart:developer';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+import '../../../../config/language/languages.dart';
+import '../../../../core/extensions/object.dart';
+
 class NotificationModel {
   String id;
   String type;
   String title;
   String body;
-  NotificationData data;
+  NotificationData? data;
   String createdAt;
 
   NotificationModel({
@@ -15,14 +22,27 @@ class NotificationModel {
     required this.createdAt,
   });
 
+  factory NotificationModel.fromRemoteMessage(RemoteMessage message) {
+    final json = message.data['data'];
+    return NotificationModel(
+      id: json["id"],
+      type: json["type"],
+      createdAt: json["created_at"],
+      title: json["title"],
+      body: Languages.currentIsArabic?
+      json["body_ar"] : json["body_en"],
+      data: NotificationData.fromJson(json["data"]),
+    );
+  }
+
   factory NotificationModel.fromJson(Map<String, dynamic> json) =>
       NotificationModel(
         id: json["id"],
         type: json["type"],
         title: json["title"],
         body: json["body"],
-        data: NotificationData.fromJson(json["data"]),
         createdAt: json["created_at"],
+        data: NotificationData.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -30,7 +50,7 @@ class NotificationModel {
     "type": type,
     "title": title,
     "body": body,
-    "data": data.toJson(),
+    "data": data?.toJson(),
     "created_at": createdAt,
   };
 }
