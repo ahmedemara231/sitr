@@ -32,8 +32,9 @@ class Helpers {
 
       await zegoService.initZego();
       final isConnected = await zegoService.onUserLogin(
-          currentUserId: UserCubit.instance.user.id.toString(),
-          currentUserName: UserCubit.instance.user.name??''
+        currentUserId: UserCubit.instance.user.id.toString(),
+        currentUserName: UserCubit.instance.user.name??'',
+        callDuration: const Duration(minutes: 1)
       );
 
       if (isConnected) {
