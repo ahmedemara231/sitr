@@ -56,7 +56,7 @@ class ApiConstants {
 
   // Settings/Data
   static const String maritalStatuses = 'marital-status';
-  static const String hijabTypes = 'hijab-types';
+  static const String hijabTypes = 'hijab';
   static const String skinColors = 'skin-colors';
   static const String weddingTypes = 'wedding-types';
   static const String childCustodies = 'child-custody';

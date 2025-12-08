@@ -17,8 +17,8 @@ class TitleValueShape extends Equatable{
   );
 
   factory TitleValueShape.fromJson(Map<String, dynamic> json) => TitleValueShape(
-      title: json['title'],
-      value: json['value']
+      title: json['title']??'',
+      value: json['value']??''
   );
 
   Map<String, dynamic> toJson() => {
