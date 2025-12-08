@@ -6,6 +6,9 @@ import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
+import '../extensions/num.dart';
+import '../extensions/object.dart';
+
 class ZegoService {
   final int appId;
   final String appSign;
@@ -33,18 +36,19 @@ class ZegoService {
     bool isSmallViewDraggable = true,
     bool switchLargeOrSmallViewByClick = true,
     void Function(ZegoCallEndEvent, void Function())? onCallEnd,
+    void Function()? onCallStarted,
     Future<bool> Function(ZegoCallHangUpConfirmationEvent, Future<bool> Function())?
-        onHangUpConfirmation,
+    onHangUpConfirmation,
     dynamic Function(ZegoUIKitError)? onError,
     bool addChatButton = false,
     dynamic Function()? onIncomingCallAcceptButtonPressed,
     dynamic Function()? onIncomingCallDeclineButtonPressed,
     dynamic Function(String, ZegoCallUser, String)? onIncomingCallCanceled,
     dynamic Function(String, ZegoCallUser, ZegoCallInvitationType, List<ZegoCallUser>, String)?
-        onIncomingCallReceived,
+    onIncomingCallReceived,
     Future<void> Function(
-            String, ZegoCallUser, ZegoCallInvitationType, List<ZegoCallUser>, String, Future<void> Function())?
-        onIncomingMissedCallClicked,
+        String, ZegoCallUser, ZegoCallInvitationType, List<ZegoCallUser>, String, Future<void> Function())?
+    onIncomingMissedCallClicked,
     dynamic Function()? onIncomingMissedCallDialBackFailed,
   }) async {
     try {
@@ -74,23 +78,25 @@ class ZegoService {
           onError: onError,
         ),
         requireConfig: (data) {
-          final config = (data.invitees.length > 1)
-              ? ZegoCallType.videoCall == data.type
-                  ? ZegoUIKitPrebuiltCallConfig.groupVideoCall()
-                  : ZegoUIKitPrebuiltCallConfig.groupVoiceCall()
+          final config = (data.invitees.length > 1) ?
+          ZegoCallType.videoCall == data.type ?
+          ZegoUIKitPrebuiltCallConfig.groupVideoCall() :
+          ZegoUIKitPrebuiltCallConfig.groupVoiceCall()
               : ZegoCallType.videoCall == data.type
-                  ? ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall()
-                  : ZegoUIKitPrebuiltCallConfig.oneOnOneVoiceCall();
+              ? ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall()
+              : ZegoUIKitPrebuiltCallConfig.oneOnOneVoiceCall();
 
-          config.duration.isVisible = true;
-          if (callDuration != null) {
-            config.duration.onDurationUpdate = (Duration duration) {
-              if (duration.inSeconds == callDuration.inSeconds) {
-                ZegoUIKitPrebuiltCallController().hangUp(navigatorKey.currentState!.context);
-              }
-            };
+          if(ZegoCallType.videoCall == data.type){
+            _endVideoCall(onCallStarted: onCallStarted);
+            if (callDuration.isNotNull) {
+              config.duration.onDurationUpdate = (Duration duration) {
+                if (duration.inSeconds == callDuration!.inSeconds) {
+                  ZegoUIKitPrebuiltCallController().hangUp(navigatorKey.currentState!.context);
+                }
+              };
+            }
           }
-
+          config.duration.isVisible = true;
           config.layout = ZegoLayout.pictureInPicture(
             isSmallViewDraggable: isSmallViewDraggable,
             switchLargeOrSmallViewByClick: switchLargeOrSmallViewByClick,
@@ -104,11 +110,28 @@ class ZegoService {
         },
       );
 
+
       return await _waitForSignalingConnection();
     } on Exception catch (e) {
       log('the error is \${e.toString()}');
       return false;
     }
+  }
+
+  void _endVideoCall({
+    void Function()? onCallStarted,
+  }){
+    ZegoUIKit().getUserJoinStream().listen((joinedUsers) {
+      for(var user in joinedUsers){
+        log('the user ${user.name} is joined');
+        log('the users ${joinedUsers.length}');
+      }
+      log(joinedUsers.length.isNotEqualZero.toString());
+      if(joinedUsers.length.isNotEqualZero){
+        log('end video call');
+        onCallStarted?.call();
+      }
+    });
   }
 
   bool _isSignalingConnected = false;

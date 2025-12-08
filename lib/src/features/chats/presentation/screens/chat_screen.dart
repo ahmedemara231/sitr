@@ -147,7 +147,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
     // timer
     if(timer.isEqualZero){
-      return TimerAction(context: context, requestModel: widget.requestModel);
+      return TimerAction(context: context, requestModel: widget.requestModel, stage: stage);
     }
 
     return NoAction();
@@ -212,8 +212,13 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     _chatController = PagifyController<ChatMessages>();
     if(widget.showFullChat){
       await _startChat();
-      // await UserCubit.instance.zegoOnLogin();
-      await Helpers.initZegoService();
+      await Helpers.initZegoService(
+        onCallStarted: (){
+          context.read<EndVideoCallCubit>().endVideoCall( // برنها وانا فالكول
+              context.read<ChatCubit>().matchRequestId.toString()
+          );
+        }
+      );
       _initSocket();
     }
   }
@@ -279,22 +284,21 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                             invites: [
                               ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName)
                             ],
-                            onPressed: (){
-                              if(callStatus == 'free_available' || callStatus == 'paid_available'){
-                                context.read<EndVideoCallCubit>().endVideoCall(
-                                    context.read<ChatCubit>().matchRequestId.toString()
-                                );
-
-                              }
-                            }
+                            // onPressed: (){
+                            //   if(callStatus == 'free_available' || callStatus == 'paid_available'){
+                            //
+                            //
+                            //   }
+                            // }
                         ) : const SizedBox.shrink()
                     );
 
-                  }else if(callStatus == 'free_used'){
-                    showDefaultBottomSheet(child:
-                      PaymentSheet(onPay: (context, method)async{
-
-                    }));
+                  }else if(callStatus == 'free_used'){ // بتبعت هنا ريكويست اني عايز التانية
+                    context.read<ChatCubit>().executeRequest(
+                        requestModel: widget.requestModel,
+                        path: ApiConstants.videoCallRequest,
+                        onSuccess: (data) => MessageUtils.showSnackBar(LocaleKeys.aVideoCallRequestWasSuccessfullySent)
+                    );
 
                   }else if(callStatus == 'completed'){ // المحانية خلصت
                     return const SvgPic(assetName: Assets.svgVideoCall, color: Colors.grey);

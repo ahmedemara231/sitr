@@ -88,7 +88,9 @@ class NotificationService {
     final type = (message.data['type'] as String).getType;
     if(type.isParentIndividualApprovalRejected ||
         type.isMatchRejectedWhenTimerEnded ||
-        type.isMatchRequestCompleted){
+        type.isMatchRequestCompleted||
+    type.isAccountDeletedByAdmin
+    ){
       NotificationRoutes.navigateByType(message.data);
     }
 

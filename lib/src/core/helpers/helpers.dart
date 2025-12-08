@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+
 import '../../core/zego_service/zego.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,7 +25,9 @@ import 'permission_handler/model.dart';
 
 class Helpers {
   static ZegoService? zegoService;
-  static Future<void> initZegoService() async{
+  static Future<void> initZegoService({
+   required void Function() onCallStarted,
+}) async{
       zegoService = ZegoService(
           appId: ConstantManager.zegoAppId,
           appSign: ConstantManager.zegoAppSign,
@@ -32,8 +36,10 @@ class Helpers {
 
       await zegoService?.initZego();
       final isConnected = await zegoService?.onUserLogin(
+        onCallStarted: onCallStarted,
         currentUserId: UserCubit.instance.user.id.toString(),
         currentUserName: UserCubit.instance.user.name??'',
+
         callDuration: const Duration(minutes: 1)
       );
 

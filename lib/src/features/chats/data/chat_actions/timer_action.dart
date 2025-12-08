@@ -3,10 +3,12 @@ part of 'imports.dart';
 class TimerAction extends ChatActions{
   final BuildContext context;
   final RequestModel requestModel;
+  final ChatStages stage;
 
   TimerAction({
     required this.context,
     required this.requestModel,
+    required this.stage
   });
 
   @override
@@ -31,7 +33,8 @@ class TimerAction extends ChatActions{
             titles: [
               LocaleKeys.moveToNextStage,
               LocaleKeys.refuseMoveToNextStage,
-              LocaleKeys.requestForExtensionOfPeriod
+              if(!stage.isShariaComplaintMeeting)
+                LocaleKeys.requestForExtensionOfPeriod
             ],
           ),
         )

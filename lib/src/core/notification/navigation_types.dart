@@ -3,7 +3,8 @@ part of 'notification_service.dart';
 enum NotificationType {
   // 🔔 Admin & System Notifications
   adminNotify('admin_notify', navigation: NoNavigation()),
-  block('block', navigation: BlockNavigation()),
+  accountDeletedByAdmin('account_deleted_by_admin', navigation: LoginNavigation()),
+  block('block', navigation: LoginNavigation()),
   unblocked('unblocked', navigation: UpdateNavigation()),
   userUnblockedYou('user_unblocked_you', navigation: UserUnblockedYou()),
 
@@ -115,4 +116,5 @@ extension CheckType on NotificationType{
   bool get isParentApprovedToChildren => this == NotificationType.parentApprovedToChildren;
   bool get isPackageExpired => this == NotificationType.packageExpired;
   bool get isSetrCodeExpired => this == NotificationType.setrCodeExpired;
+  bool get isAccountDeletedByAdmin => this == NotificationType.accountDeletedByAdmin;
 }

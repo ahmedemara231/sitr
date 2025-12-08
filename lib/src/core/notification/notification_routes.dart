@@ -123,8 +123,8 @@ class SetrCodeNavigation implements NotificationNavigation {
 
 
 // ----------------- Blocking -----------------
-class BlockNavigation implements NotificationNavigation {
-  const BlockNavigation();
+class LoginNavigation implements NotificationNavigation {
+  const LoginNavigation();
 
   @override
   void navigate({required Map<String, dynamic> data}) {

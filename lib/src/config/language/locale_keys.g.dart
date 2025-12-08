@@ -928,4 +928,7 @@ abstract class LocaleKeys {
   static const String _youCanNotChooseNow = 'you_can_not_choose_now';
   static String get youCanNotChooseNow => _youCanNotChooseNow.tr();
 
+  static const String _aVideoCallRequestWasSuccessfullySent = 'a_video_call_request_was_successfully_sent';
+  static String get aVideoCallRequestWasSuccessfullySent => _aVideoCallRequestWasSuccessfullySent.tr();
+
 }
