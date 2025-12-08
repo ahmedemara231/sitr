@@ -8,7 +8,6 @@ import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../core/helpers/helpers.dart';
-import '../../core/helpers/user_type_enum.dart';
 import '../../core/shared/models/user_models/user_model.dart';
 import '../../core/widgets/app_text.dart';
 import '../../core/widgets/icon_widget.dart';
@@ -20,7 +19,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final countCubit = GetNotificationCountCubit()..getNotificationCount();
     return BlocProvider(
       create: (context) => HomeCubit(),
       child: BlocBuilder<HomeCubit, HomeState>(
@@ -65,7 +63,6 @@ class HomeScreen extends StatelessWidget {
                           fontWeight: FontWeight.w500,),
                         currentIndex: cubit.currentIndex,
                         onTap: (index) {
-                          log('the index is $index');
                           cubit.changeBottomNavIndex(index);
 
                           if(index != 0 && index != 4){
@@ -75,7 +72,6 @@ class HomeScreen extends StatelessWidget {
                           }
 
                           if(index == 1){
-                            log('enter heerrerre');
                             context.read<GetNotificationCountCubit>().reset();
                           }
 

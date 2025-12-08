@@ -16,7 +16,6 @@ class NotificationsData{
           method: RequestMethod.get,
           path: ApiConstants.getNotifications,
           queryParameters: {'page' : page},
-          // body: {'page' : page},
         ),
       mapper: (json) => (
           (json['notifications']['data'] as List)

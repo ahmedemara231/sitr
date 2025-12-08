@@ -22,7 +22,7 @@ import 'permission_handler/handler.dart';
 import 'permission_handler/model.dart';
 
 class Helpers {
-  static late ZegoService zegoService;
+  static ZegoService? zegoService;
   static Future<void> initZegoService() async{
       zegoService = ZegoService(
           appId: ConstantManager.zegoAppId,
@@ -30,14 +30,14 @@ class Helpers {
           navigatorKey: Go.navigatorKey
       );
 
-      await zegoService.initZego();
-      final isConnected = await zegoService.onUserLogin(
+      await zegoService?.initZego();
+      final isConnected = await zegoService?.onUserLogin(
         currentUserId: UserCubit.instance.user.id.toString(),
         currentUserName: UserCubit.instance.user.name??'',
         callDuration: const Duration(minutes: 1)
       );
 
-      if (isConnected) {
+      if (isConnected ?? false) {
         log('✅ Zego service initialized successfully');
       } else {
         log('⚠️ Zego service failed to initialize');
