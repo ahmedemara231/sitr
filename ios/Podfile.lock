@@ -173,6 +173,9 @@ PODS:
   - nanopb/encode (3.30910.0)
   - native_device_orientation (0.0.1):
     - Flutter
+  - "no_screenshot (0.0.1+4)":
+    - Flutter
+    - ScreenProtectorKit (~> 1.3.1)
   - package_info_plus (0.4.5):
     - Flutter
   - path_provider_foundation (0.0.1):
@@ -188,9 +191,10 @@ PODS:
     - Flutter
   - screen_brightness_ios (0.1.0):
     - Flutter
-  - SDWebImage (5.21.3):
-    - SDWebImage/Core (= 5.21.3)
-  - SDWebImage/Core (5.21.3)
+  - ScreenProtectorKit (1.3.1)
+  - SDWebImage (5.21.5):
+    - SDWebImage/Core (= 5.21.5)
+  - SDWebImage/Core (5.21.5)
   - share_plus (0.0.1):
     - Flutter
   - shared_preferences_foundation (0.0.1):
@@ -214,23 +218,23 @@ PODS:
     - Flutter
   - zego_express_engine (3.22.1):
     - Flutter
-  - zego_uikit (0.0.1):
+  - zego_uikit (2.28.34):
     - Flutter
     - Masonry
     - zego_express_engine
     - ZegoUIKitReport (= 0.2.10)
-  - zego_uikit_prebuilt_call (0.0.1):
+  - zego_uikit_prebuilt_call (4.21.0):
     - Flutter
   - zego_uikit_signaling_plugin (0.0.1):
     - Flutter
   - zego_zim (2.23.0):
     - Flutter
-    - ZIM (= 2.23.0)
+    - ZIM (= 2.24.0)
   - zego_zpns (2.6.0):
     - Flutter
     - ZPNs (= 2.6.0)
   - ZegoUIKitReport (0.2.10)
-  - ZIM (2.23.0)
+  - ZIM (2.24.0)
   - ZIPFoundation (0.9.20)
   - ZPNs (2.6.0)
 
@@ -257,6 +261,7 @@ DEPENDENCIES:
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - just_audio (from `.symlinks/plugins/just_audio/darwin`)
   - native_device_orientation (from `.symlinks/plugins/native_device_orientation/ios`)
+  - no_screenshot (from `.symlinks/plugins/no_screenshot/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
@@ -301,6 +306,7 @@ SPEC REPOS:
     - nanopb
     - PromisesObjC
     - RecaptchaInterop
+    - ScreenProtectorKit
     - SDWebImage
     - SwiftyGif
     - TOCropViewController
@@ -354,6 +360,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/just_audio/darwin"
   native_device_orientation:
     :path: ".symlinks/plugins/native_device_orientation/ios"
+  no_screenshot:
+    :path: ".symlinks/plugins/no_screenshot/ios"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_foundation:
@@ -437,6 +445,7 @@ SPEC CHECKSUMS:
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
   native_device_orientation: e3580675687d5034770da198f6839ebf2122ef94
+  no_screenshot: 6d183496405a3ab709a67a54e5cd0f639e94729e
   package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
   path_provider_foundation: bb55f6dbba17d0dccd6737fe6f7f34fbd0376880
   permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
@@ -445,7 +454,8 @@ SPEC CHECKSUMS:
   RecaptchaInterop: 11e0b637842dfb48308d242afc3f448062325aba
   record_ios: f75fa1d57f840012775c0e93a38a7f3ceea1a374
   screen_brightness_ios: 5ed898fa50fa82a26171c086ca5e28228f932576
-  SDWebImage: 16309af6d214ba3f77a7c6f6fdda888cb313a50a
+  ScreenProtectorKit: 83a6281b02c7a5902ee6eac4f5045f674e902ae4
+  SDWebImage: e9c98383c7572d713c1a0d7dd2783b10599b9838
   share_plus: 50da8cb520a8f0f65671c6c6a99b3617ed10a58a
   shared_preferences_foundation: 7036424c3d8ec98dfe75ff1667cb0cd531ec82bb
   sqflite_darwin: 20b2a3a3b70e43edae938624ce550a3cbf66a3d0
@@ -457,13 +467,13 @@ SPEC CHECKSUMS:
   webview_flutter_wkwebview: 8ebf4fded22593026f7dbff1fbff31ea98573c8d
   zego_callkit: 8e3bc2e9fc6895cff1b27841b1de1100344d2613
   zego_express_engine: 2c33d9ea93665061330aad01cb41f8d3202136fc
-  zego_uikit: 0843069d9d4d0e4845abf0ea9b24efa95c1760fa
-  zego_uikit_prebuilt_call: 7fe09774f68ec5344fd16378ff2d3bc2de36c6f8
+  zego_uikit: a3d6c8aa5e7ed74c8e92595d608b80f5a39a9338
+  zego_uikit_prebuilt_call: f15a863305188364a862316529d94aaaa7d70091
   zego_uikit_signaling_plugin: 89c53a021d449903c6e6a0642383bb7e5791e46e
-  zego_zim: a134135a495ddbfbdcc59353288eff96e9cd0416
+  zego_zim: 998ebe1dbd1edb325cd1327354baf5c95635d9ad
   zego_zpns: e2ef9b972e9b6be00b78b32b71c550c426584752
   ZegoUIKitReport: a993f7ccc5d243998a7e601a60e16fcd6c084417
-  ZIM: 7a72983c32831bb57cd05edb180f060263733515
+  ZIM: 6d5706e6a0ad3e6500ccacb8eede4324f878c195
   ZIPFoundation: dfd3d681c4053ff7e2f7350bc4e53b5dba3f5351
   ZPNs: 73bad0046a74e37315201053f9a0e7ac625d9436
 

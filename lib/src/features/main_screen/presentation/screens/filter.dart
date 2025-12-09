@@ -1,5 +1,4 @@
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -8,17 +7,17 @@ import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/enum.dart';
 import '../../../../core/navigation/navigator.dart';
+import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/shared/models/title_value_shape.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
+import '../../../../core/widgets/app_dropinity.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/buttons/custom_app_buttons/default_button.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../auth/presentation/data/auth_data.dart' show AuthData;
-import '../../../auth/presentation/data/enums_data.dart';
 import '../../../auth/presentation/enums/answer.dart';
 import '../../../auth/presentation/widgets/shared/text_field.dart';
 import '../../../auth/presentation/widgets/sign_up/dowry_widget.dart';
-import '../../../auth/presentation/widgets/sign_up/drop_down_text_field.dart';
 import '../../../auth/presentation/widgets/sign_up/radio_widget.dart';
 import '../../data/models/filter_model.dart';
 import 'filter_result.dart' show FilterResultScreen;
@@ -74,12 +73,12 @@ class _FilterScreenState extends State<FilterScreen> {
         child: Column(
           spacing: 12.h,
           children: [
-            DropDownTextField<CityModel>.withApiRequest(
+            AppDropinity<List<CityModel>, CityModel>.withApiRequest(
               hint: LocaleKeys.pleaseEnterTheCity,
               title: LocaleKeys.city,
-              onChanged: (val) => _listenToData(model.copyWith(cityId: val?.id)),
-              request: (BuildContext ctx) async => await AuthData.getCities(),
-              itemBuilder: (city) => AppText(city.name ?? ''),
+              asyncCall: (context, page) async => await AuthData.getCities(),
+              getLabel: (city) => city.name ?? '',
+              onChanged: (val) => _listenToData(model.copyWith(cityId: val.id)),
             ),
 
             SignUpTextField(
@@ -99,13 +98,14 @@ class _FilterScreenState extends State<FilterScreen> {
               // validator: Validators.validateEmpty,
             ),
 
-            DropDownTextField<TitleValueShape>(
+            AppDropinity<List<TitleValueShape>, TitleValueShape>.withApiRequest(
+              listHeight: 100,
               title: LocaleKeys.maritalStatus,
               hint: LocaleKeys.pleaseEnterTheStatus,
-              values: EnumsData.maritalStatus.data,
-              itemBuilder: (v) => AppText(v.title.tr()),
+              asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.maritalStatuses),
+              getLabel: (v) => v.title,
               onChanged: (val) =>
-                  _listenToData(model.copyWith(maritalStatus: val?.value)),
+                  _listenToData(model.copyWith(maritalStatus: val.value)),
             ),
 
             SignUpTextField(
@@ -138,22 +138,24 @@ class _FilterScreenState extends State<FilterScreen> {
                 onSelect: (dowryVal) => _listenToData(model.copyWith(dowry: dowryVal))
             ),
 
-            DropDownTextField<TitleValueShape>(
+            AppDropinity<List<TitleValueShape>, TitleValueShape>.withApiRequest(
+              listHeight: 100,
               hint: LocaleKeys.pleaseEnterSkinColor,
-              values: EnumsData.skinColors.data,
-              itemBuilder: (v) => AppText(v.title.tr()),
               title: LocaleKeys.skinColor,
-              onChanged: (val) => _listenToData(model.copyWith(skinColor: val?.value)),
+              asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.skinColors),
+              getLabel: (v) => v.title,
+              onChanged: (val) => _listenToData(model.copyWith(skinColor: val.value)),
             ),
 
             if(UserModel.isMale)
-              DropDownTextField<TitleValueShape>(
+              AppDropinity<List<TitleValueShape>, TitleValueShape>.withApiRequest(
+              listHeight: 100,
               hint: LocaleKeys.areYouWaringHijab,
-              values: EnumsData.hijab.data,
               title: LocaleKeys.areYouWaringHijab,
-              itemBuilder: (v) => AppText(v.title),
+              asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.hijabTypes),
+              getLabel: (v) => v.title,
               onChanged: (value) {
-                _listenToData(model.copyWith(hijab: value?.value));
+                _listenToData(model.copyWith(hijab: value.value));
               },
             ),
 
@@ -179,14 +181,14 @@ class _FilterScreenState extends State<FilterScreen> {
               titleBuilder: (i) => AppText(Answer.values[i].translate),
             ),
 
-            DropDownTextField<TitleValueShape>(
-              // // initialValue: ,
+            AppDropinity<List<TitleValueShape>, TitleValueShape>.withApiRequest(
+              listHeight: 100,
               hint: LocaleKeys.pleaseEnterTheWeddingParty,
-              values: EnumsData.weddingTypes.data,
               title: LocaleKeys.typeOfWeddingParty,
-              itemBuilder: (v) => AppText(v.title.tr()),
+              asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.weddingTypes),
+              getLabel: (v) => v.title,
               onChanged: (val) =>
-                  _listenToData(model.copyWith(weddingType: val?.value)),
+                  _listenToData(model.copyWith(weddingType: val.value)),
             ),
             RadioWidget<Answer>(
               title: LocaleKeys.wantToHaveChildren,
@@ -196,12 +198,13 @@ class _FilterScreenState extends State<FilterScreen> {
               titleBuilder: (i) => AppText(Answer.values[i].translate),
             ),
 
-            DropDownTextField<TitleValueShape>(
+            AppDropinity<List<TitleValueShape>, TitleValueShape>.withApiRequest(
+              listHeight: 100,
               hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
-              values: EnumsData.religiousCommitment.data,
               title: LocaleKeys.degreeOfCommitment,
-              itemBuilder: (v) => AppText(v.title),
-              onChanged: (value) => _listenToData(model.copyWith(religiousCommitment: value?.value)),
+              asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.religiousCommitments),
+              getLabel: (v) => v.title,
+              onChanged: (value) => _listenToData(model.copyWith(religiousCommitment: value.value)),
             ),
 
             AppDefaultButton.withBackGroundColor(

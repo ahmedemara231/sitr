@@ -18,6 +18,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/url_launcher_ios-6.3.5" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/audioplayers-6.5.1" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_ringtone_player-4.0.0+4" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/no_screenshot-0.3.1" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/record_linux-1.2.1" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_android-2.2.20" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/camera-0.11.2+1" />
@@ -91,7 +92,6 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_local_notifications_windows-1.0.3" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/image_picker-1.2.0" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/shared_preferences_foundation-2.5.5" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/no_screenshot-0.3.1" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

@@ -53,7 +53,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     final int? timer = model.matchRequest!.timer;
     if(timer.isNotNull && timer.isNotEqualZero){
       return ChatTimerWidget(
-        minutes: model.matchRequest?.timer ?? 5,
+        time: model.matchRequest?.timer ?? 5,
         phaseTitle: '',
       );
     }
@@ -145,9 +145,17 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
       );
     }
 
+    if(stage.isParentIndividualConversation){
+      return NoAction();
+    }
+
     // timer
     if(timer.isEqualZero){
-      return TimerAction(context: context, requestModel: widget.requestModel, stage: stage);
+      return TimerAction(
+          context: context,
+          requestModel: widget.requestModel,
+          stage: stage
+      );
     }
 
     return NoAction();

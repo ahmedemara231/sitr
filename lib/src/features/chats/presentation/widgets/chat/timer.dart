@@ -8,10 +8,10 @@ import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/svg_pic.dart';
 
 class ChatTimerWidget extends StatefulWidget {
-  final int minutes;
+  final int time;
   final String phaseTitle;
   const ChatTimerWidget({super.key,
-    required this.minutes,
+    required this.time,
     required this.phaseTitle,
   });
 
@@ -48,7 +48,7 @@ class _ChatTimerWidgetState extends State<ChatTimerWidget> {
         ),
         EasyTimerCount.builder(
             controller: _timerCont,
-            duration: EasyTime(minutes: widget.minutes),
+            duration: EasyTime(seconds: widget.time),
             builder: (time) => Column(
               spacing: 10.h,
               children: [

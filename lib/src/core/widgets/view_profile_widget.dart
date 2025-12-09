@@ -205,7 +205,6 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                             ],
                           ),
                         )
-
                       ],
                     )
                   else
@@ -213,12 +212,13 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         AppText(state.data.name??'', fontWeight: FontWeight.bold),
-                        AppText(
-                          '${LocaleKeys.numberOfProfileVisits}: ${(state.data as IndividualUserModel).views}',
-                          fontSize: 10.sp,
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.bold,
-                        )
+                        if(widget._type.isProfile)
+                          AppText(
+                            '${LocaleKeys.numberOfProfileVisits} : ${(state.data as IndividualUserModel).views}',
+                            fontSize: 10.sp,
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.bold,
+                          )
                       ],
                     ),
 
