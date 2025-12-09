@@ -5,8 +5,10 @@ import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubi
 import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/shared/models/user_models/individual/individual_user_model.dart';
+import '../../../../core/shared/models/user_models/parent/parent_model.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../models/shared_form_fields_model.dart';
+import '../data/auth_data.dart';
 
 class AddChildCubit extends AsyncCubit<UserModel>{
   AddChildCubit() : super(UserModel.initial());
@@ -25,7 +27,12 @@ class AddChildCubit extends AsyncCubit<UserModel>{
             )
         ),
 
-        onSuccess: (data) => onSuccess.call()
+        onSuccess: (data) {
+          final parent = data.data as ParentModel;
+          AuthData.childrenNumber.value.femaleNumbers = parent.femaleChildrenNum??0;
+          AuthData.childrenNumber.value.maleNumbers = parent.maleChildrenNum??0;
+          onSuccess.call();
+        }
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,7 +30,6 @@ class AddChildSheet extends StatelessWidget {
                   onClick: (context, user) => context.read<AddChildCubit>().addChild(
                       body: user,
                       onSuccess: () {
-                        AuthData.childrenNumber.value.increment(user.gender!.userGender!);
                         showDefaultBottomSheet(child: const AddChildSheet());
                       }
                   )
