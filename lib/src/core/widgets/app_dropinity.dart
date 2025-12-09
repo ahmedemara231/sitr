@@ -78,6 +78,7 @@ class _AppDropinityState<FullResponse, Model> extends State<AppDropinity<FullRes
       case DropinityType.local:
         return Dropinity<void, Model>(
           controller: dropinityController,
+          showNoDataAlert: false,
           autoValidateMode: AutovalidateMode.always,
           listHeight: widget.listHeight,
           dropdownTitle: AppText(widget.title, fontWeight: FontWeight.bold, fontSize: 11.sp),
@@ -104,6 +105,7 @@ class _AppDropinityState<FullResponse, Model> extends State<AppDropinity<FullRes
 
       default:
         return Dropinity<FullResponse, Model>.withApiRequest(
+          showNoDataAlert: false,
           validator: widget.validator,
           controller: dropinityController,
           listHeight: widget.listHeight,

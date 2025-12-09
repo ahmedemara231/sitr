@@ -8,10 +8,18 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import '../../config/res/config_imports.dart';
 import '../../features/auth/imports.dart';
+import '../../features/chats/data/models/request_model.dart';
+import '../../features/chats/presentation/imports.dart';
 import '../../features/home/home_screen.dart';
+import '../../features/main_screen/presentation/screens/parent_details.dart';
+import '../../features/main_screen/presentation/screens/partner_details.dart';
 import '../../features/more/presentation/screens/complaint_and_suggestion/complaint_details_screen.dart';
 import '../../features/more/presentation/screens/my_packages.dart';
+import '../../features/more/presentation/screens/profile.dart';
+import '../helpers/user_type_enum.dart';
 import '../navigation/navigator.dart';
+import '../shared/models/title_value_shape.dart';
+import '../shared/models/user_models/user_model.dart';
 import '../shared/user_cubit/user_cubit.dart';
 
 part 'navigation_types.dart';
@@ -65,6 +73,7 @@ class NotificationService {
   void _showNotification(RemoteMessage message) async {
     // if (Platform.isIOS) return;
     log('the remote msg is ${message.data}');
+    log('the remote msg is ${message.notification?.toMap()}');
     const DarwinNotificationDetails iOSPlatformChannelSpecifics =
         DarwinNotificationDetails(
             presentAlert: true, presentBadge: true, presentSound: true);
@@ -84,12 +93,12 @@ class NotificationService {
         iOS: iOSPlatformChannelSpecifics);
     final notification = message.notification;
 
-
     final type = (message.data['type'] as String).getType;
     if(type.isParentIndividualApprovalRejected ||
         type.isMatchRejectedWhenTimerEnded ||
         type.isMatchRequestCompleted||
-    type.isAccountDeletedByAdmin
+    type.isAccountDeletedByAdmin ||
+    type.isBlock
     ){
       NotificationRoutes.navigateByType(message.data);
     }

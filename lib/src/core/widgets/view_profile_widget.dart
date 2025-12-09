@@ -189,7 +189,7 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                   if(user.childParentInfo.isNotNull)
                     Row(
                       children: [
-                        AppText(state.data.name??'', fontWeight: FontWeight.bold),
+                        AppText((state.data as IndividualUserModel).nickName??'', fontWeight: FontWeight.bold),
                         const Spacer(),
                         InkWell(
                           onTap: () => Go.to(ParentDetailsScreen(id: user.childParentInfo?.id ?? 0)),
@@ -211,7 +211,7 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AppText(state.data.name??'', fontWeight: FontWeight.bold),
+                        AppText((state.data as IndividualUserModel).nickName??'', fontWeight: FontWeight.bold),
                         if(widget._type.isProfile)
                           AppText(
                             '${LocaleKeys.numberOfProfileVisits} : ${(state.data as IndividualUserModel).views}',

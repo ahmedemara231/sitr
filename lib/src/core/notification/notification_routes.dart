@@ -56,7 +56,7 @@ class ComplaintNavigation implements NotificationNavigation {
   @override
   void navigate({required Map<String, dynamic> data}) {
     Go.to(ComplaintDetailsScreen(
-        complaintId: data['complaint_id']
+        complaintId: int.parse(data['complaint_id'])
     ));
   }
 }
@@ -67,9 +67,10 @@ class UserProfileNavigation implements NotificationNavigation {
 
   @override
   void navigate({required Map<String, dynamic> data}) {
-    //لازم اعرف هو individual ولا parent
-    // Go.to();
-    // Go.to((id: data['visitor_id']));
+    final type = TypeValueShape.fromJson(data['visitor_type']).userType!;
+    final userId = data['visitor_id'];
+
+    _routeToProfile(type: type, userId: userId);
   }
 }
 
@@ -79,15 +80,15 @@ class MatchRequestNavigation implements NotificationNavigation {
 
   @override
   void navigate({required Map<String, dynamic> data}) {
-    // Go.to(
-    //     ChatScreen(
-    //         requestModel: RequestModel(
-    //             receiverId: receiverId,
-    //             fromHome: 0.toString()
-    //         ),
-    //         receiverName: receiverName
-    //     )
-    // );
+    Go.to(
+        ChatScreen(
+            requestModel: RequestModel(
+                receiverId: data['sender_id'],
+                fromHome: 0.toString()
+            ),
+            receiverName: data['sender_name']
+        )
+    );
   }
 }
 
@@ -138,8 +139,23 @@ class UserUnblockedYou implements NotificationNavigation {
 
   @override
   void navigate({required Map<String, dynamic> data}) {
-    //لازم اعرف هو individual ولا parent
-    // Go.to();
+    final type = TypeValueShape.fromJson(data['user_type']).userType!;
+    final userId = data['user_id'];
+
+    _routeToProfile(type: type, userId: userId);
   }
 }
 
+void _routeToProfile({
+  required UserType type,
+  required String userId,
+}){
+  if(type!.isParent){
+    Go.to(ParentDetailsScreen(id: int.parse(userId)));
+
+  }else{
+    Go.to(
+        IndividualDetailsScreen.opportunity(id: int.parse(userId))
+    );
+  }
+}

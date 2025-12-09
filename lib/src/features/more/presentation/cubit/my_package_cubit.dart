@@ -3,8 +3,8 @@ import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubi
 import '../../../../core/network/api_endpoints.dart';
 import '../../../packages/models/package.dart';
 
-class MyPackageCubit extends AsyncCubit<Package>{
-  MyPackageCubit() : super(Package.initial());
+class MyPackageCubit extends AsyncCubit<List<Package>>{
+  MyPackageCubit() : super([]);
 
   Future<void> getMyPackage()async{
     executeAsyncWithBaseModel(
@@ -12,7 +12,9 @@ class MyPackageCubit extends AsyncCubit<Package>{
           CrudBaseParmas(
             api: ApiConstants.myPackage,
             httpRequestType: HttpRequestType.get,
-            mapper: (json) => Package.fromJson(json),
+            mapper: (json) => (json as List)
+                .map((e) => Package.fromJson(e))
+                .toList(),
           ),
         ),
     );

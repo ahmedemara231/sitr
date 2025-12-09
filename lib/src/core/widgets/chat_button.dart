@@ -30,7 +30,6 @@ class ChatButton extends StatelessWidget {
     showDefaultBottomSheet(
         withPadding: false,
         child: TipsSheet(
-            title: LocaleKeys.tipsForTheStageOfSufficientKnowledge,
             path: ApiConstants.parentIndividualConversation,
             btnTitle: LocaleKeys.start,
             onConfirm: (context) =>
@@ -43,7 +42,6 @@ class ChatButton extends StatelessWidget {
     showDefaultBottomSheet(
       withPadding: false,
         child: TipsSheet(
-          title: LocaleKeys.clarification,
           path: ApiConstants.appStages,
           onConfirm: (context) =>
               Go.off(ChatScreen(

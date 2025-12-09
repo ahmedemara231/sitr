@@ -3,6 +3,7 @@ part of 'notification_service.dart';
 enum NotificationType {
   // 🔔 Admin & System Notifications
   adminNotify('admin_notify', navigation: NoNavigation()),
+  text('text', navigation: MatchRequestNavigation()),
   accountDeletedByAdmin('account_deleted_by_admin', navigation: LoginNavigation()),
   block('block', navigation: LoginNavigation()),
   unblocked('unblocked', navigation: UpdateNavigation()),
@@ -76,6 +77,7 @@ enum NotificationType {
 
 extension CheckType on NotificationType{
   bool get isSystemNotification => this == NotificationType.adminNotify;
+  bool get isBlock => this == NotificationType.block;
   bool get isProfileVisit => this == NotificationType.profileVisit;
   bool get isComplaintReply => this == NotificationType.complaintReply;
   bool get isComplaintInProgress => this == NotificationType.complaintInProgress;
