@@ -10,8 +10,7 @@ class ReminderCubit extends AsyncCubit<String>{
         operation: () => baseCrudUseCase.call(
           CrudBaseParmas(
             api: ApiConstants.istikharaReminder,
-            httpRequestType: HttpRequestType.post,
-            mapper: (json) => json,
+            httpRequestType: HttpRequestType.get,
           ),
         ),
     );
