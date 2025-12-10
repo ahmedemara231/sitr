@@ -313,5 +313,6 @@
   "you_can_not_send_more_than_2_images_in_chat": "لا يمكنك ارسال اكثر من صورتين في المحادثة",
   "you_can_not_renew_the_package_now": "لا يمكنك تجديد الباقة الان",
   "you_can_not_choose_now": "لا يمكن الاختيار الان",
-  "a_video_call_request_was_successfully_sent": "تم ارسال طلب مكالمة فيديو بنجاح"
+  "a_video_call_request_was_successfully_sent": "تم ارسال طلب مكالمة فيديو بنجاح",
+  "reminder": "تنبيه"
 }

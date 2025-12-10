@@ -64,6 +64,14 @@ class TipsAction extends ChatActions{
                 )
             );
 
+          }else if(currentTips.isIstikharahTips){
+            ChatSheetManager.show(
+                child: BlocProvider.value(
+                  value: context.read<ChatCubit>(),
+                  child: const IstikharahReminderSheet(),
+                )
+            );
+
           }else if(currentTips.isInformParentsTips){
             ChatSheetManager.show(
                 child: BlocProvider.value(

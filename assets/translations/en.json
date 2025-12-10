@@ -313,5 +313,6 @@
   "you_can_not_send_more_than_2_images_in_chat": "you can not send more than 2 images in chat",
   "you_can_not_renew_the_package_now": "you can not renew the package now",
   "you_can_not_choose_now": "you can not choose now",
-  "a_video_call_request_was_successfully_sent": "A video call request was successfully sent"
+  "a_video_call_request_was_successfully_sent": "A video call request was successfully sent",
+  "reminder": "Reminder"
 }

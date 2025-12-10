@@ -931,4 +931,7 @@ abstract class LocaleKeys {
   static const String _aVideoCallRequestWasSuccessfullySent = 'a_video_call_request_was_successfully_sent';
   static String get aVideoCallRequestWasSuccessfullySent => _aVideoCallRequestWasSuccessfullySent.tr();
 
+  static const String _reminder = 'reminder';
+  static String get reminder => _reminder.tr();
+
 }

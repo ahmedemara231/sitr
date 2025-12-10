@@ -319,5 +319,6 @@
   "you can not send more than 2 images in chat" : "لا يمكنك ارسال اكثر من صورتين في المحادثة",
   "you can not renew the package now" : "لا يمكنك تجديد الباقة الان",
   "you can not choose now" : "لا يمكن الاختيار الان",
-  "A video call request was successfully sent" : "تم ارسال طلب مكالمة فيديو بنجاح"
+  "A video call request was successfully sent" : "تم ارسال طلب مكالمة فيديو بنجاح",
+  "Reminder" : "تنبيه"
 }

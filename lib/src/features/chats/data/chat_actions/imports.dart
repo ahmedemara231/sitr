@@ -20,6 +20,7 @@ import '../../presentation/cubits/finish_chat_cubit.dart';
 import '../../presentation/cubits/pay_request.dart';
 import '../../presentation/cubits/start_chat.dart';
 import '../../presentation/widgets/accept_or_reject_request.dart';
+import '../../presentation/widgets/istikharah_reminder.dart';
 import '../../presentation/widgets/sheets/congrats_sheet.dart';
 import '../../presentation/widgets/sheets/enter_parent_phone.dart';
 import '../../presentation/widgets/sheets/inform_parent.dart';
