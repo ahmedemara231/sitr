@@ -56,7 +56,8 @@ class ComplaintNavigation implements NotificationNavigation {
   @override
   void navigate({required Map<String, dynamic> data}) {
     Go.to(ComplaintDetailsScreen(
-        complaintId: int.parse(data['complaint_id'])
+        complaintId: (data['complaint_id']) is String?
+        int.parse(data['complaint_id']) : data['complaint_id']
     ));
   }
 }
@@ -82,6 +83,7 @@ class MatchRequestNavigation implements NotificationNavigation {
   void navigate({required Map<String, dynamic> data}) {
     Go.to(
         ChatScreen(
+          // showFullChat: ,
             requestModel: RequestModel(
                 receiverId: data['sender_id'],
                 fromHome: 0.toString()

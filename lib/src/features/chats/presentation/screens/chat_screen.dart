@@ -244,6 +244,13 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     super.dispose();
   }
 
+
+  MainAxisAlignment get _alignmentWhenMe => Languages.currentIsArabic?
+  MainAxisAlignment.start : MainAxisAlignment.end;
+
+  MainAxisAlignment get _alignmentWhenNotMe => Languages.currentIsArabic?
+  MainAxisAlignment.end : MainAxisAlignment.start;
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
@@ -340,6 +347,17 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
               child: EasyChat(
                 // itemExtent: 60.h,
                 controller: _chatController,
+                messageAlignment: (fromMe) => fromMe?
+                _alignmentWhenMe : _alignmentWhenNotMe,
+
+                // fromMe?
+                //
+                // Languages.currentIsArabic?
+                // MainAxisAlignment.start : MainAxisAlignment.end :
+                //
+                // !fromMe?
+                // MainAxisAlignment.end : MainAxisAlignment.start,
+
                 emptyView: const Center(
                   child: NotContainData(),
                 ),

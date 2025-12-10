@@ -16,6 +16,12 @@ class ChatMessageWidget extends StatelessWidget {
   
   const ChatMessageWidget({super.key, required this.message});
 
+  // MainAxisAlignment get _alignmentWhenMe => Languages.currentIsArabic?
+  // MainAxisAlignment.start : MainAxisAlignment.end;
+  //
+  // MainAxisAlignment get _alignmentWhenNotMe => Languages.currentIsArabic?
+  // MainAxisAlignment.end : MainAxisAlignment.start;
+  //
   @override
   Widget build(BuildContext context) {
     return Row(

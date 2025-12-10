@@ -10,6 +10,7 @@ import 'package:pagify/helpers/errors.dart';
 import 'package:pagify/pagify.dart';
 import 'package:zego_uikit/zego_uikit.dart';
 import '../../../../../generated/assets.dart';
+import '../../../config/language/languages.dart';
 import '../../../config/language/locale_keys.g.dart';
 import '../../../config/res/config_imports.dart';
 import '../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';

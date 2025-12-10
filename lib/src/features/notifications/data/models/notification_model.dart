@@ -10,7 +10,7 @@ class NotificationModel {
   String type;
   String title;
   String body;
-  NotificationData? data;
+  Map<String, dynamic>? data;
   String createdAt;
 
   NotificationModel({
@@ -31,7 +31,7 @@ class NotificationModel {
       title: json["title"],
       body: Languages.currentIsArabic?
       json["body_ar"] : json["body_en"],
-      data: NotificationData.fromJson(json["data"]),
+      data: json["data"]
     );
   }
 
@@ -42,7 +42,7 @@ class NotificationModel {
         title: json["title"],
         body: json["body"],
         createdAt: json["created_at"],
-        data: NotificationData.fromJson(json["data"]),
+        data: json["data"]
       );
 
   Map<String, dynamic> toJson() => {
@@ -50,7 +50,7 @@ class NotificationModel {
     "type": type,
     "title": title,
     "body": body,
-    "data": data?.toJson(),
+    "data": data,
     "created_at": createdAt,
   };
 }
