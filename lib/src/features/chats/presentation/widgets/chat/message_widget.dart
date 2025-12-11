@@ -24,7 +24,7 @@ class ChatMessageWidget extends StatelessWidget {
     if(message.sender.isFromMe){
       return const ProfileScreen();
     }else{
-      final Members member = ChatsData.data.room!.members!.first;
+      final Members member = ChatsData.data!.room!.members!.first;
       if(member.userType?.isParent ?? false){
         return ParentDetailsScreen(id: member.id??0);
 

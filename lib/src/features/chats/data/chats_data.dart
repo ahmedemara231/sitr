@@ -8,7 +8,7 @@ import 'models/chat_model.dart';
 import 'models/request_model.dart';
 
 class ChatsData{
-  static late final ChatModel data;
+  static ChatModel? data;
   static Future<ChatModel> getChatMessages({
     required RequestModel requestModel
   })async{
@@ -21,11 +21,11 @@ class ChatsData{
           mapper: (data) => ChatModel.fromJson(data)
       )).data;
 
-    final newList = data.room?.messages?.data?.reversed.toList();
+    final newList = data?.room?.messages?.data?.reversed.toList();
 
-    return data.copyWith(
-      room: data.room?.copyWith(
-        messages: data.room?.messages?.copyWith(
+    return data!.copyWith(
+      room: data?.room?.copyWith(
+        messages: data?.room?.messages?.copyWith(
           data: newList
         ))
     );

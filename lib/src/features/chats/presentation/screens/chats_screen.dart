@@ -179,7 +179,7 @@ class _ChatsBodyState extends State<_ChatsBody> {
                                         labelBackgroundColor: _getLabelBackgroundColor
                                     ),
                                     SizedBox(
-                                      height: context.height - 70,
+                                      height: context.height - 170,
                                       child: ChatView(
                                           requestModel: requestModel,
                                           chatController: PagifyController()
