@@ -125,7 +125,7 @@ class FemaleModel extends IndividualUserModel {
         currentJob: json['current_job'],
         bio: json['bio'],
         hasChildren: json['has_children'],
-        numOfChildren: json['num_of_children'].toString(),
+        numOfChildren: json['num_of_children'],
         wantChildren: json['want_children'],
         prohibitedThings: json['prohibited_things'],
 
@@ -266,7 +266,7 @@ class FemaleModel extends IndividualUserModel {
     String? guardianPhone,
     String? guardianCountryCode,
     Kinship? guardianRelation,
-    String? nickName, TitleValueShape? maritalStatus, String? height, String? weight, String? currentJob, String? bio, bool? hasChildren, String? numOfChildren, TitleValueShape? childCustody, bool? wantChildren, String? prohibitedThings, Dowry? dowry, TitleValueShape? weddingType, CityModel? cityId, String? educationLevel, bool? isPrayer, String? healthConditions, String? chatLang, bool? isSmoker, bool? tribeAffiliation, TitleValueShape? skinColor, TitleValueShape? religiousCommitment, int? views, int? id, String? name, int? parentId, TypeValueShape? type, GenderValueShape? gender, dynamic avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) {
+    String? nickName, TitleValueShape? maritalStatus, String? height, String? weight, String? currentJob, String? bio, bool? hasChildren, int? numOfChildren, TitleValueShape? childCustody, bool? wantChildren, String? prohibitedThings, Dowry? dowry, TitleValueShape? weddingType, CityModel? cityId, String? educationLevel, bool? isPrayer, String? healthConditions, String? chatLang, bool? isSmoker, bool? tribeAffiliation, TitleValueShape? skinColor, TitleValueShape? religiousCommitment, int? views, int? id, String? name, int? parentId, TypeValueShape? type, GenderValueShape? gender, dynamic avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) {
 
     return FemaleModel(
       hasActivePackage: hasActivePackage??this.hasActivePackage,

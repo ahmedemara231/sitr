@@ -19,7 +19,7 @@ class IndividualUserModel extends UserModel {
   final String? currentJob;
   final String? bio;
   final bool? hasChildren;
-  final String? numOfChildren;
+  final int? numOfChildren;
   final TitleValueShape? childCustody;
   final bool? wantChildren;
   final String? prohibitedThings;
@@ -95,7 +95,7 @@ class IndividualUserModel extends UserModel {
     currentJob: '',
     bio: '',
     hasChildren: false,
-    numOfChildren: '',
+    numOfChildren: 0,
     childCustody: TitleValueShape.initial(),
     wantChildren: false,
     prohibitedThings: '',
@@ -126,9 +126,6 @@ class IndividualUserModel extends UserModel {
 
   factory IndividualUserModel.fromJson(Map<String, dynamic> json) {
     final UserGender user = json['gender']['value'].toString().toUserGender();
-    log('the gender is $user');
-    log('the gender is ${json['gender']['value']}');
-    log('the gender is ${json['gender']['value'].toString().toUserGender()}');
 
     if(user.isMale){
       return MaleModel.fromJson(json);
@@ -299,7 +296,7 @@ class IndividualUserModel extends UserModel {
     String? currentJob,
     String? bio,
     bool? hasChildren,
-    String? numOfChildren,
+    int? numOfChildren,
     TitleValueShape? childCustody,
     bool? wantChildren,
     String? prohibitedThings,

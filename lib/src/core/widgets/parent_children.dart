@@ -74,9 +74,9 @@ class _ParentChildrenState extends State<ParentChildren> {
                         showGenderSelection: false,
                         onClick: (context, user)async => await context.read<EditChildDataCubit>().editChildData(
                             user,
-                          onSuccess: () {
+                          onSuccess: (data) {
                               Go.back();
-                              MessageUtils.showSnackBar(LocaleKeys.childDataHasBeenAddedSuccessfully);
+                              MessageUtils.showSnackBar(data.msg);
                           }
                         ),
                         // userType: element.gender?.userType

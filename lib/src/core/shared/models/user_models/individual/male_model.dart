@@ -86,7 +86,7 @@ class MaleModel extends IndividualUserModel {
       currentJob: json['current_job'],
       bio: json['bio'],
       hasChildren: json['has_children'],
-      numOfChildren: json['num_of_children'].toString(),
+      numOfChildren: json['num_of_children'],
 
       wantChildren: json['want_children'],
       prohibitedThings: json['prohibited_things'],
@@ -139,7 +139,7 @@ class MaleModel extends IndividualUserModel {
     String? currentJob,
     String? bio,
     bool? hasChildren,
-    String? numOfChildren,
+    int? numOfChildren,
     TitleValueShape? childCustody,
     bool? wantChildren,
     String? prohibitedThings,

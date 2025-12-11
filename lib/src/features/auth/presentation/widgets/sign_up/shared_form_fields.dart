@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/language/languages.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/extensions/enum.dart';
+import '../../../../../core/extensions/object.dart';
 import '../../../../../core/extensions/string_extension.dart';
 import '../../../../../core/helpers/validators.dart';
 import '../../../../../core/network/api_endpoints.dart';
@@ -106,7 +107,8 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
     _weightCont = TextEditingController(text: widget.initialValue?.weight);
     _currentJobCont = TextEditingController(text: widget.initialValue?.currentJob);
     _briefCont = TextEditingController(text: widget.initialValue?.bio);
-    _childrenNumberCont = TextEditingController(text: widget.initialValue?.numOfChildren);
+    _childrenNumberCont = TextEditingController(text: (widget.initialValue?.numOfChildren).isNull?
+    null : widget.initialValue?.numOfChildren.toString());
     _thingsCont = TextEditingController(text: widget.initialValue?.prohibitedThings);
     _educationalQualificationCont = TextEditingController(text: widget.initialValue?.educationLevel);
     _diseasesCont = TextEditingController(text: widget.initialValue?.healthConditions);
@@ -206,7 +208,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
                  controller: _childrenNumberCont,
                  inputType: TextInputType.number,
                  onChanged: (val) =>
-                     _listenToData(model.copyWith(numOfChildren: val) as T),
+                     _listenToData(model.copyWith(numOfChildren: int.parse(val!)) as T),
                  validator: (v) => Validators.validateInteger(v, min: 0, max: 100, fieldTitle: LocaleKeys.childrenNumber.tr()),
                ),
                AppDropinity<List<TitleValueShape>, TitleValueShape>.withApiRequest(
