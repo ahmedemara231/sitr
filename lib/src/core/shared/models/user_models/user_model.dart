@@ -17,7 +17,7 @@ class UserModel {
   final int? parentId;
   final TypeValueShape? type;
   final GenderValueShape? gender;
-  final String? avatar;
+  final dynamic avatar;
   final String? phone;
   final String? countryCode;
   final String? fullPhone;
@@ -106,7 +106,7 @@ class UserModel {
     parentId: null,
     type: null,
     gender: null,
-    avatar: '',
+    avatar: null,
     phone: '',
     countryCode: '',
     fullPhone: '',
@@ -150,7 +150,7 @@ class UserModel {
     int? parentId,
     TypeValueShape? type,
     GenderValueShape? gender,
-    String? avatar,
+    dynamic avatar,
     String? phone,
     String? countryCode,
     String? fullPhone,

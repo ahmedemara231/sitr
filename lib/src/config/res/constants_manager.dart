@@ -29,8 +29,8 @@ class ConstantManager {
   static const int maxLines = 4;
   static const double snackbarElevation = 4;
   static const int snackbarDuration = 4;
-  static const int connectTimeoutDuration = 180;
-  static const int recieveTimeoutDuration = 180;
+  static const int connectTimeoutDuration = 20;
+  static const int recieveTimeoutDuration = 20;
   static const double customImageSliderAsepctRatio = 3;
   static const String ar = 'ar';
   static const String en = 'en';

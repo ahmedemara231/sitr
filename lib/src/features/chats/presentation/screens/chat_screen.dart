@@ -54,7 +54,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     if(timer.isNotNull && timer.isNotEqualZero){
       return ChatTimerWidget(
         time: model.matchRequest?.timer ?? 5,
-        phaseTitle: '',
+        phaseTitle: model.matchRequest?.stage?.description ??'',
       );
     }
 
@@ -118,6 +118,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     final userStatus = data.matchRequest!.userRequestStatus!.getUserRequestStatusAsEnum;
     final matchRequest = data.matchRequest!.userRequest!.getMatchRequestAsEnum;
     final currentTips = data.matchRequest!.tipsPage!.currentStageTips;
+    final String requestName = data.matchRequest!.requestName!;
 
     // tips
     if(!currentTips.isNoPage){
@@ -137,6 +138,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     if(!userStatus.isUndefined){
       return UserStatusAction(
           context: context,
+          requestName: requestName,
           stage: stage,
           status: userStatus,
           request: matchRequest,
@@ -332,12 +334,13 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
           children: [
             if(widget.showFullChat)
               Row(
-                spacing: context.width / 5,
+                spacing: 70.w,
                 children: [
                   ChatReportIcon(id: int.parse(widget.requestModel.receiverId)),
                   BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
                       builder: (context, state) => StatusBuilder(
                           data: state,
+                          onFail: () => const SizedBox.shrink(),
                           onSuccess: (data, context) => _upperWidget(data)
                       )),
                 ],

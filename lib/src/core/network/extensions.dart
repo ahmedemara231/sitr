@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -21,11 +22,14 @@ extension NetworkRequestExtension on NetworkRequest {
   Future<void> prepareRequestData() async {
     if (_canBeConvertedToFormData) {
       final entries = body!.entries.toList();
+
       for (var i = 0; i < entries.length; i++) {
         final value = entries[i].value;
         if (value is File) {
           isFormData = true;
+          log('the file is $value');
           body![entries[i].key] = value.toMultiPart();
+          log('the file is $value');
         } else if (value is List<File>) {
           isFormData = true;
           body![entries[i].key] = value.toMultiPart();
@@ -35,9 +39,14 @@ extension NetworkRequestExtension on NetworkRequest {
   }
 }
 
+
+
 extension MultiPartFileConverter on File {
   MultipartFile toMultiPart() {
-    return MultipartFile.fromFileSync(path, contentType: BackendConfiguation.type.isPhp ? getTypeOfFile() : null);
+    return MultipartFile.fromFileSync(path,
+        filename: path.split("/").last,
+        contentType: BackendConfiguation.type.isPhp ? getTypeOfFile() : null
+    );
   }
 }
 

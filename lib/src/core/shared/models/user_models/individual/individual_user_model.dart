@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import '../../../../../features/auth/models/dowry.dart';
 import '../../../../../features/main_screen/data/models/home_model.dart';
@@ -116,7 +117,7 @@ class IndividualUserModel extends UserModel {
     parentId: 0,
     type: null,
     gender: null,
-    avatar: '',
+    avatar: null,
     phone: '',
     countryCode: '',
     fullPhone: '',
@@ -164,21 +165,26 @@ class IndividualUserModel extends UserModel {
     "tribe_affiliation": tribeAffiliation,
     "skin_color": skinColor?.value,
     'religious_commitment': religiousCommitment?.value,
+    'avatar' : avatar is File? avatar : 'not File',
   };
 
   Map<String, dynamic> toRequestBodyJson(bool isChild) {
+    final Map<String, dynamic> body;
     if(isChild){
-      return toJsonBody()..addAll({
+      body = toJsonBody()..addAll({
         'name' : name,
         'gender' : gender?.userGender?.name,
         'phone' : phone,
         'identity_number' : identityNumber,
         'age' : age,
       });
-
     }else{
-      return toJsonBody();
+      body = toJsonBody();
     }
+
+    // Remove null values to ensure FormData works correctly with files
+    // body.removeWhere((key, value) => value == null);
+    return body;
   }
 
   @override
@@ -187,7 +193,6 @@ class IndividualUserModel extends UserModel {
       'can_chat' : canChat,
       'has_chat_with' : hasChatWith,
       'is_parent_match' : isParentMatch,
-
       'nick_name': nickName,
       'marital_status': maritalStatus?.toJson(),
       'height': height,
@@ -309,7 +314,7 @@ class IndividualUserModel extends UserModel {
     TitleValueShape? skinColor,
     TitleValueShape? religiousCommitment,
     int? views,
-    int? id, String? name, int? parentId, TypeValueShape? type, GenderValueShape? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token
+    int? id, String? name, int? parentId, TypeValueShape? type, GenderValueShape? gender, dynamic avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token
 
 
   }) => IndividualUserModel(

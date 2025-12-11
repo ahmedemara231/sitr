@@ -21,6 +21,7 @@ class AddChildCubit extends AsyncCubit<UserModel>{
         operation: () async => await baseCrudUseCase.call<UserModel>(
             CrudBaseParmas(
                 api: ApiConstants.addChild,
+                isFromData: true,
                 httpRequestType: HttpRequestType.post,
                 body: body.toRequestBodyJson(true),
                 mapper: (data) => UserModel.fromJson(data)

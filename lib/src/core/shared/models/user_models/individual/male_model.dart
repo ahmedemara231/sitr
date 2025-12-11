@@ -155,7 +155,7 @@ class MaleModel extends IndividualUserModel {
     TitleValueShape? skinColor,
     TitleValueShape? religiousCommitment,
     int? views,
-    int? id, String? name, int? parentId, TypeValueShape? type, GenderValueShape? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token
+    int? id, String? name, int? parentId, TypeValueShape? type, GenderValueShape? gender, dynamic avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token
 
   }) {
     return MaleModel(

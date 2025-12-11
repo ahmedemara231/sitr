@@ -155,7 +155,7 @@ class FemaleModel extends IndividualUserModel {
 
   @override
   Map<String, dynamic> toRequestBodyJson(bool isChild) {
-    return super.toRequestBodyJson(isChild)..addAll({
+    final body = super.toRequestBodyJson(isChild)..addAll({
       'preferred_residence_after_marriage': preferredResidenceAfterMarriage,
       'hijab': hijab?.value,
       'accepts_polygamy': acceptsPolygamy,
@@ -163,6 +163,10 @@ class FemaleModel extends IndividualUserModel {
       'guardian_phone': guardianPhone,
       'guardian_relation_id': guardianRelation?.id.toString(),
     });
+
+    // Remove null values (parent already does this, but re-apply after adding female-specific fields)
+    // body.removeWhere((key, value) => value == null);
+    return body;
   }
 
   @override
@@ -262,7 +266,7 @@ class FemaleModel extends IndividualUserModel {
     String? guardianPhone,
     String? guardianCountryCode,
     Kinship? guardianRelation,
-    String? nickName, TitleValueShape? maritalStatus, String? height, String? weight, String? currentJob, String? bio, bool? hasChildren, String? numOfChildren, TitleValueShape? childCustody, bool? wantChildren, String? prohibitedThings, Dowry? dowry, TitleValueShape? weddingType, CityModel? cityId, String? educationLevel, bool? isPrayer, String? healthConditions, String? chatLang, bool? isSmoker, bool? tribeAffiliation, TitleValueShape? skinColor, TitleValueShape? religiousCommitment, int? views, int? id, String? name, int? parentId, TypeValueShape? type, GenderValueShape? gender, String? avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) {
+    String? nickName, TitleValueShape? maritalStatus, String? height, String? weight, String? currentJob, String? bio, bool? hasChildren, String? numOfChildren, TitleValueShape? childCustody, bool? wantChildren, String? prohibitedThings, Dowry? dowry, TitleValueShape? weddingType, CityModel? cityId, String? educationLevel, bool? isPrayer, String? healthConditions, String? chatLang, bool? isSmoker, bool? tribeAffiliation, TitleValueShape? skinColor, TitleValueShape? religiousCommitment, int? views, int? id, String? name, int? parentId, TypeValueShape? type, GenderValueShape? gender, dynamic avatar, String? phone, String? countryCode, String? fullPhone, String? identityNumber, int? age, bool? isActive, bool? isBlocked, TitleValueShape? adminApprovalStatus, String? completeRegistration, String? token}) {
 
     return FemaleModel(
       hasActivePackage: hasActivePackage??this.hasActivePackage,

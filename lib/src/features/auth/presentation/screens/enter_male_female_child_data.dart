@@ -162,7 +162,12 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
             if(widget.withParent)
               SelectImageWidget(
                 initialValue: widget.initialValue?.avatar,
-                onSelectImage: (img) => sharedFormFieldModel.copyWith(avatar: img?.path),
+                onSelectImage: (img){
+                  log('imageee: ${img}');
+                  _listenToData(sharedFormFieldModel.copyWith(avatar: img));
+
+                  log(sharedFormFieldModel.avatar.toString());
+                },
               ),
 
             ValueListenableBuilder(
@@ -173,7 +178,8 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
                   return FemaleFields(
                       withParent: widget.withParent,
                       initialValue: widget.initialValue,
-                      onChangeFemaleData: (data) => _listenToData(sharedFormFieldModel.merge(data))
+                      onChangeFemaleData: (data) =>
+                          _listenToData(sharedFormFieldModel.merge(data))
                   );
 
                 }else if (type.isMale){
@@ -200,8 +206,9 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
                 fontSize: 16.sp,
                 color: Colors.white,
               ),
-              call: (ctx) async => _formKey.currentState!.validate()?
-              widget.onClick.call(ctx, sharedFormFieldModel) : null
+                call: (ctx) async => widget.onClick.call(ctx, sharedFormFieldModel)
+              // call: (ctx) async => _formKey.currentState!.validate()?
+              // widget.onClick.call(ctx, sharedFormFieldModel) : null
             ),
 
             if (widget.showAlreadyHaveAccount)

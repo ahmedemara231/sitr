@@ -11,7 +11,7 @@ class ChatsData{
   static Future<ChatModel> getChatMessages({
     required RequestModel requestModel
   })async{
-    return (await injector<NetworkService>().callApi(
+    final data = (await injector<NetworkService>().callApi(
           NetworkRequest(
             method: RequestMethod.post,
             path: ApiConstants.startChat,
@@ -19,5 +19,14 @@ class ChatsData{
           ),
           mapper: (data) => ChatModel.fromJson(data)
       )).data;
+
+    final newList = data.room?.messages?.data?.reversed.toList();
+
+    return data.copyWith(
+      room: data.room?.copyWith(
+        messages: data.room?.messages?.copyWith(
+          data: newList
+        ))
+    );
   }
 }

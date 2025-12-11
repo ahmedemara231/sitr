@@ -8,6 +8,7 @@ class UserStatusAction extends ChatActions{
   final ChatStages stage;
   final int matchReqId;
   final RequestModel requestModel;
+  final String requestName;
 
   UserStatusAction({
     required this.matchReqId,
@@ -15,6 +16,7 @@ class UserStatusAction extends ChatActions{
     required this.context,
     required this.status,
     required this.request,
+    required this.requestName,
     required this.requestModel,
   });
 
@@ -27,7 +29,7 @@ class UserStatusAction extends ChatActions{
         child: BlocProvider.value(
           value: context.read<ChatCubit>(),
           child: AcceptOrRejectRequestWidget(
-            requestName: request.name,
+            requestName: requestName,
             onAccept: (context) async => ChatActions.executeReq(
                 context: context,
                 path: ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,

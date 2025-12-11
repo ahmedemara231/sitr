@@ -44,6 +44,7 @@ class DioService implements NetworkService {
   }
 
   @override
+  @override
   void setToken(String token) {
     _dio.options.headers[HttpHeaders.authorizationHeader] = 'Bearer $token';
   }
@@ -59,18 +60,15 @@ class DioService implements NetworkService {
     try {
       await networkRequest.prepareRequestData();
       final response = await _dio.request(networkRequest.path,
-          data: networkRequest.hasBodyAndProgress()
-              ? networkRequest.isFormData
-                  ? FormData.fromMap(networkRequest.body!)
-                  : networkRequest.body
-              : networkRequest.body,
+          data: networkRequest.hasBodyAndProgress() ?
+          networkRequest.isFormData ?
+          FormData.fromMap(networkRequest.body!) :
+          networkRequest.body : networkRequest.body,
           queryParameters: networkRequest.queryParameters,
-          onSendProgress: networkRequest.hasBodyAndProgress()
-              ? networkRequest.onSendProgress
-              : null,
-          onReceiveProgress: networkRequest.hasBodyAndProgress()
-              ? networkRequest.onReceiveProgress
-              : null,
+          onSendProgress: networkRequest.hasBodyAndProgress() ?
+          networkRequest.onSendProgress : null,
+          onReceiveProgress: networkRequest.hasBodyAndProgress() ?
+          networkRequest.onReceiveProgress : null,
           options: Options(
               method: networkRequest.asString(),
               headers: networkRequest.headers
@@ -86,12 +84,6 @@ class DioService implements NetworkService {
   }
 
   dynamic _handleError(DioException error) {
-    log('================================================================================');
-    log(error.type.toString());
-    log(error.response!.statusCode.toString());
-    log(error.response!.statusMessage.toString());
-    log(error.response!.data.toString());
-
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,6 +44,7 @@ class SelectImageWidget extends StatelessWidget {
                   onTap: () async{
                     final selectedImage = await Helpers.getImageFromCameraOrDevice();
                     image.value = selectedImage;
+                    log('imageee: ${image.value}');
                     onSelectImage.call(selectedImage);
                   },
                   child: Container(

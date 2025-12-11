@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart'; 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,9 +14,12 @@ import 'core/shared/route_observer.dart';
 import 'core/shared/user_cubit/user_cubit.dart' show UserCubit;
 import 'core/widgets/connectivity_interceptor/internet_supporter_widget.dart';
 import 'core/widgets/custom_messages.dart';
+import 'core/widgets/default_bottom_sheet.dart';
 import 'core/widgets/no_internet_widget.dart';
 import 'core/widgets/splash_logo.dart';
 import 'features/auth/imports.dart' show EnterMaleOrFemaleOrChildDataScreen, ScaffoldType;
+import 'features/auth/presentation/cubits/add_child.dart';
+import 'features/auth/presentation/widgets/sign_up/sheets/add_child_sheet.dart';
 import 'features/home/cubits/get_notification_count.dart';
 import 'features/splash/splash_screen.dart';
 
@@ -43,7 +48,22 @@ class Sitr extends StatelessWidget {
                 navigatorKey: Go.navigatorKey,
                 restorationScopeId: 'app',
 
-                // home: EnterMaleOrFemaleOrChildDataScreen.individual(scaffoldType: ScaffoldType.appScaffold, showConditionsAndTerms: true, onClick: (context, user)async{}, userType: UserGender.male),
+                // home: BlocProvider(
+                //   create: (context) => AddChildCubit(),
+                //   child: EnterMaleOrFemaleOrChildDataScreen.showAll(
+                //       scaffoldType: ScaffoldType.appScaffold,
+                //       showConditionsAndTerms: true,
+                //       onClick: (context, user)async {
+                //         context.read<AddChildCubit>().addChild(
+                //             body: user,
+                //             onSuccess: () {
+                //               showDefaultBottomSheet(child: const AddChildSheet());
+                //             }
+                //         );
+                //       },
+                //       // onClick: (context, user)async => log('user is ${user.toRequestBodyJson(true)}'),
+                //       userType: UserGender.male),
+                // ),
                 home: const SplashScreen(),
                 navigatorObservers: [AppNavigationObserver()],
                 builder: (context, child) {

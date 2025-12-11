@@ -121,14 +121,16 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                       title: LocaleKeys.hereIsTheTextOfTheMessageHereIsTheTextOfTheMessageHereIsTheTextOfTheMessage,
                       prefixIcon: IconButton(
                           onPressed: () async{
-                            _calcImagesLength();
-                            if(_imagesLength < 2){
-                              final result = await Helpers.getImageFromCameraOrDevice();
-                              _selectedImage.value = result;
-
-                            }else{
-                              MessageUtils.showSnackBar(LocaleKeys.youCanNotSendMoreThan2ImagesInChat);
-                            }
+                            final result = await Helpers.getImageFromCameraOrDevice();
+                            _selectedImage.value = result;
+                            // _calcImagesLength();
+                            // if(_imagesLength < 2){
+                            //   final result = await Helpers.getImageFromCameraOrDevice();
+                            //   _selectedImage.value = result;
+                            //
+                            // }else{
+                            //   MessageUtils.showSnackBar(LocaleKeys.youCanNotSendMoreThan2ImagesInChat);
+                            // }
                           },
                           icon: const Icon(Icons.camera_alt_sharp, color: AppColors.primary)
                       ),
