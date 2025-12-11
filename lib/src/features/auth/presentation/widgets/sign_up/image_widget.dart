@@ -44,7 +44,6 @@ class SelectImageWidget extends StatelessWidget {
                   onTap: () async{
                     final selectedImage = await Helpers.getImageFromCameraOrDevice();
                     image.value = selectedImage;
-                    log('imageee: ${image.value}');
                     onSelectImage.call(selectedImage);
                   },
                   child: Container(

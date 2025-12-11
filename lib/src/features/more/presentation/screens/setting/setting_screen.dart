@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,6 +14,7 @@ import '../../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/custom_messages.dart';
 import '../../../../../core/widgets/default_bottom_sheet.dart';
+import '../../../../../core/widgets/lang_icon.dart';
 import '../../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../../core/widgets/sheets/delete_sheet.dart';
 import '../../../../auth/imports.dart';
@@ -30,6 +32,7 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.locale;
     final List<MorItemModel> moreItemsList = [
       MorItemModel(
         icon: Assets.svgUser,
@@ -205,6 +208,9 @@ class SettingScreen extends StatelessWidget {
     return AppScaffold(
       scaffoldBackgroundColor: AppColors.whiteGreyColorProMax,
         appBarTitle: LocaleKeys.settings,
+        actions: const [
+          LangIcon()
+        ],
         body: Column(
           spacing: 10.h,
           children: List.generate(

@@ -11,8 +11,8 @@ class EditChildDataCubit extends AsyncCubit<UserModel>{
     await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call<UserModel>(
             CrudBaseParmas(
-                api: ApiConstants.addChild,
-                httpRequestType: HttpRequestType.post,
+                api: ApiConstants.updateChildProfile+child.id.toString(),
+                httpRequestType: HttpRequestType.put,
                 body: child.toRequestBodyJson(true),
                 mapper: (data) => UserModel.fromJson(data)
             )

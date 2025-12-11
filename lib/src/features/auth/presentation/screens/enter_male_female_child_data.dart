@@ -163,10 +163,7 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
               SelectImageWidget(
                 initialValue: widget.initialValue?.avatar,
                 onSelectImage: (img){
-                  log('imageee: ${img}');
                   _listenToData(sharedFormFieldModel.copyWith(avatar: img));
-
-                  log(sharedFormFieldModel.avatar.toString());
                 },
               ),
 

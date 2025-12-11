@@ -31,15 +31,9 @@ class _LoginScreenState extends State<LoginScreen> {
       child: CenterCardScaffold(
         upperWidget: Column(
           spacing: 12.h,
-          children: [
-            Row(
-              spacing: context.width / 8,
-              children: const [
-                LangIcon(),
-                AppLogoWidget(),
-              ],
-            ),
-            const LoginStaticTexts()
+          children: const [
+            AppLogoWidget(),
+            LoginStaticTexts()
           ],
         ).paddingAll(12.r),
         bodyColor: AppColors.white,

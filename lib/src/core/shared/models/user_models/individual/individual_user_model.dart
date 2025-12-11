@@ -165,7 +165,8 @@ class IndividualUserModel extends UserModel {
     "tribe_affiliation": tribeAffiliation,
     "skin_color": skinColor?.value,
     'religious_commitment': religiousCommitment?.value,
-    'avatar' : avatar is File? avatar : 'not File',
+    'avatar' : avatar,
+    // 'avatar' : avatar is File? avatar : 'not File',
   };
 
   Map<String, dynamic> toRequestBodyJson(bool isChild) {

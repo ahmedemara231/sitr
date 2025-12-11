@@ -163,17 +163,18 @@ class MoreTabAppBar extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                   color: AppColors.textBlack,
                 ).centerWidget,
-                55.szW,
+                90.szW,
                 Row(
                   children: [
-                    InkWell(
-                      onTap: () {
-                        Go.to(const SettingScreen());
-                      },
-                      child: const CustomIconInsideContainer(
-                        icon: Assets.svgSettingIcon,
+                    if(UserModel.isAuthenticated)
+                      InkWell(
+                        onTap: () {
+                          Go.to(const SettingScreen());
+                        },
+                        child: const CustomIconInsideContainer(
+                          icon: Assets.svgSettingIcon,
+                        ),
                       ),
-                    ),
                     8.szW,
                     InkWell(
                       onTap: (){

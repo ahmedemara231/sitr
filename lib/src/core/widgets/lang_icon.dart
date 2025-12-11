@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../generated/assets.dart';
 import '../../config/language/languages.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
+import '../../features/auth/presentation/cubits/change_lang.dart';
 import '../extensions/context_extension.dart';
 import '../extensions/padding_extension.dart';
 import '../navigation/navigator.dart';
@@ -15,13 +17,12 @@ import 'buttons/app_loading_button.dart';
 import 'default_bottom_sheet.dart';
 
 class LangIcon extends StatelessWidget {
-  final FutureOr<void> Function(BuildContext context, Languages selectedLang)? onSelectLang;
-  const LangIcon({super.key, this.onSelectLang});
+  const LangIcon({super.key});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => showDefaultBottomSheet(child: _LangSheet(onSelectLang: onSelectLang)),
+      onTap: () => showDefaultBottomSheet(child: const _LangSheet()),
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.r),
@@ -34,8 +35,7 @@ class LangIcon extends StatelessWidget {
 }
 
 class _LangSheet extends StatelessWidget {
-  final FutureOr<void> Function(BuildContext context, Languages selectedLang)? onSelectLang;
-  const _LangSheet({required this.onSelectLang});
+  const _LangSheet();
 
   @override
   Widget build(BuildContext context) {
@@ -45,17 +45,14 @@ class _LangSheet extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(top: Radius.circular(12.r))
           ),
-          child: SelectLangWidget(onSelectLang: onSelectLang)
+          child: const SelectLangWidget()
       ),
     );
   }
 }
 
 class SelectLangWidget extends StatefulWidget {
-  final FutureOr<void> Function(BuildContext context, Languages selectedLang)? onSelectLang;
-  const SelectLangWidget({super.key,
-    required this.onSelectLang
-  });
+  const SelectLangWidget({super.key});
 
   @override
   State<SelectLangWidget> createState() => _SelectLangWidgetState();
@@ -103,13 +100,16 @@ class _SelectLangWidgetState extends State<SelectLangWidget> {
                 ),
               ),),
             ),
-            AppLoadingButton(
-                title: LocaleKeys.confirm,
-                asyncCall: (context) async{
-                  Languages.setLocale(language);
-                  await widget.onSelectLang?.call(context, language);
-                  Go.back();
-                },
+            BlocProvider(
+              create: (context) => ChangeLangCubit(),
+              child: AppLoadingButton(
+                  title: LocaleKeys.confirm,
+                  asyncCall: (context) async{
+                    Languages.setLocale(language);
+                    await context.read<ChangeLangCubit>().changeLang(language.languageCode);
+                    Go.back();
+                  },
+              ),
             )
           ],
         )

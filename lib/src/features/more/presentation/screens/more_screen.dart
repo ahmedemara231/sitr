@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../generated/assets.dart' show Assets;
@@ -26,6 +27,7 @@ class MoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.locale;
     final List<MorItemModel> moreItemsList = [
       if(UserModel.isAuthenticated)
         ...[
