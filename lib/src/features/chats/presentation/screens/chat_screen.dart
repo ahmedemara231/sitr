@@ -3,12 +3,10 @@ part of '../imports.dart';
 class ChatScreen extends StatelessWidget {
   final RequestModel requestModel;
   final String receiverName;
-  final bool showFullChat;
 
   const ChatScreen({super.key,
     required this.requestModel,
     required this.receiverName,
-    this.showFullChat = true
   });
 
   @override
@@ -24,7 +22,6 @@ class ChatScreen extends StatelessWidget {
         ],
         child: _ChatScreenBody(
           requestModel: requestModel,
-          showFullChat: showFullChat,
           receiverName: receiverName,
         )
     );
@@ -33,13 +30,13 @@ class ChatScreen extends StatelessWidget {
 
 class _ChatScreenBody extends StatefulWidget {
   final String receiverName;
-  final bool showFullChat;
+  // final bool showFullChat;
   final RequestModel requestModel;
 
   const _ChatScreenBody({
     required this.requestModel,
     required this.receiverName,
-    required this.showFullChat,
+    // required this.showFullChat,
   });
 
   @override
@@ -47,19 +44,6 @@ class _ChatScreenBody extends StatefulWidget {
 }
 
 class _ChatScreenBodyState extends State<_ChatScreenBody> {
-
-
-  Widget _upperWidget(ChatModel model){
-    final int? timer = model.matchRequest!.timer;
-    if(timer.isNotNull && timer.isNotEqualZero){
-      return ChatTimerWidget(
-        time: model.matchRequest?.timer ?? 5,
-        phaseTitle: model.matchRequest?.stage?.description ??'',
-      );
-    }
-
-    return const SizedBox.shrink();
-  }
 
   Widget _initBottomBar(ChatModel model){
     final userRequest = model.matchRequest!;
@@ -109,9 +93,6 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
   }
 
 
-
-  // 115|09N2VmQioc78p3SW7mXip38b0i7vd7HVNsNemq6X female
-  // 114|1bMeD26fYHWl2e85f2oUnhlvDynkHOVvcqVVzQVn male
   ChatActions _manageSuccessState(ChatModel data) {
     final timer = data.matchRequest!.timer;
     final stage = data.matchRequest!.stage!.value?.getCurrentStageAsStagesEnum;
@@ -220,17 +201,15 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
   void _handleInitialState()async{
     _chatController = PagifyController<ChatMessages>();
-    if(widget.showFullChat){
-      await _startChat();
-      await Helpers.initZegoService(
+    await _startChat();
+    await Helpers.initZegoService(
         onCallStarted: (){
           context.read<EndVideoCallCubit>().endVideoCall( // برنها وانا فالكول
               context.read<ChatCubit>().matchRequestId.toString()
           );
         }
-      );
-      _initSocket();
-    }
+    );
+    _initSocket();
   }
 
   @override
@@ -245,13 +224,6 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     socketType.disconnect();
     super.dispose();
   }
-
-
-  MainAxisAlignment get _alignmentWhenMe => Languages.currentIsArabic?
-  MainAxisAlignment.start : MainAxisAlignment.end;
-
-  MainAxisAlignment get _alignmentWhenNotMe => Languages.currentIsArabic?
-  MainAxisAlignment.end : MainAxisAlignment.start;
 
   @override
   Widget build(BuildContext context) {
@@ -272,7 +244,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
       child: AppScaffold(
         appBarTitle: LocaleKeys.chat,
         isScrollable: false,
-        actions: widget.showFullChat? [
+        actions: [
 
           ValueListenableBuilder(
               valueListenable: ZegoService.isConnected,
@@ -329,63 +301,19 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
               ),
             ),
 
-        ] : null,
+        ],
         body: Column(
           children: [
-            if(widget.showFullChat)
-              Row(
-                spacing: 70.w,
-                children: [
-                  ChatReportIcon(id: int.parse(widget.requestModel.receiverId)),
-                  BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
-                      builder: (context, state) => StatusBuilder(
-                          data: state,
-                          onFail: () => const SizedBox.shrink(),
-                          onSuccess: (data, context) => _upperWidget(data)
-                      )),
-                ],
-              ),
-
+            ChatUpperWidget.withTimer(requestId: widget.requestModel.receiverId),
             Expanded(
-              child: EasyChat(
-                // itemExtent: 60.h,
-                controller: _chatController,
-                messageAlignment: (fromMe) => fromMe?
-                _alignmentWhenMe : _alignmentWhenNotMe,
-
-                // fromMe?
-                //
-                // Languages.currentIsArabic?
-                // MainAxisAlignment.start : MainAxisAlignment.end :
-                //
-                // !fromMe?
-                // MainAxisAlignment.end : MainAxisAlignment.start,
-
-                emptyView: const Center(
-                  child: NotContainData(),
-                ),
-                asyncCall: (context, page) async => await ChatsData.getChatMessages(
-                    requestModel: widget.requestModel
-                ),
-                errorBuilder: (e) => const ExceptionView(),
-                errorMapper: PagifyErrorMapper(errorWhenDio: (e) => e.response?.data['msg']),
-                loadingBuilder: CustomLoading.showLoadingView(),
-                mapper: (response) => PagifyData(
-                    data: response.room!.messages!.data!,
-                    paginationData: PaginationData(
-                        perPage: response.room!.messages!.pagination!.perPage,
-                        totalPages: response.room!.messages!.pagination!.totalPages
-                    )
-                ),
-
-
-                rightMessageBuilder: (msg) => ChatMessageWidget(message: msg),
-                leftMessageBuilder: (msg) => ChatMessageWidget(message: msg),
-              ),
+              child: ChatView(
+                requestModel: widget.requestModel,
+                chatController: _chatController,
+              )
             ),
           ],
         ),
-        bottomBar: widget.showFullChat? BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
+        bottomBar: BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
             builder: (context, state) =>
                 IntrinsicHeight(
                   child: StatusBuilder(
@@ -394,7 +322,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                     onSuccess: (data, context) => _initBottomBar(state.data),
                   ),
                 )
-        ) : const SizedBox.shrink(),
+        ),
       ),
     );
   }

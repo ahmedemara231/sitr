@@ -8,10 +8,11 @@ import 'models/chat_model.dart';
 import 'models/request_model.dart';
 
 class ChatsData{
+  static late final ChatModel data;
   static Future<ChatModel> getChatMessages({
     required RequestModel requestModel
   })async{
-    final data = (await injector<NetworkService>().callApi(
+    data = (await injector<NetworkService>().callApi(
           NetworkRequest(
             method: RequestMethod.post,
             path: ApiConstants.startChat,

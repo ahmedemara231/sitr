@@ -1,6 +1,8 @@
 import 'package:easy_chat/models/chat_message.dart';
 import 'package:pagify/helpers/data_and_pagination_data.dart';
 
+import '../../../../core/extensions/string_extension.dart';
+import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/network/log_interceptor.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 
@@ -232,14 +234,17 @@ class Members {
   final String? type;
   final String? name;
   final String? image;
+  final UserType? userType;
 
-  Members({this.id, this.type, this.name, this.image});
+  Members({this.id, this.type, this.name, this.image, this.userType});
 
   Members.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         type = json['type'],
         name = json['name'],
+        userType = (json['user_type'] as String?)?.toUserType(),
         image = json['image'];
+
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};

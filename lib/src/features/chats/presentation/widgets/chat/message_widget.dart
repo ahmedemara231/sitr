@@ -4,18 +4,35 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/extensions/padding_extension.dart';
+import '../../../../../core/helpers/user_type_enum.dart';
 import '../../../../../core/navigation/navigator.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/image_widgets/image_view.dart';
-import '../../../../../core/widgets/view_profile_widget.dart';
-import '../../../../main_screen/presentation/cubits/get_partner_info_cubit.dart';
+
+import '../../../../main_screen/presentation/screens/parent_details.dart';
+import '../../../../main_screen/presentation/screens/partner_details.dart';
 import '../../../../more/presentation/screens/profile.dart';
+import '../../../data/chats_data.dart';
+import '../../../data/models/chat_model.dart';
 
 class ChatMessageWidget extends StatelessWidget {
   final ChatMessages message;
   
   const ChatMessageWidget({super.key, required this.message});
 
+  Widget get _targetProfile{
+    if(message.sender.isFromMe){
+      return const ProfileScreen();
+    }else{
+      final Members member = ChatsData.data.room!.members!.first;
+      if(member.userType?.isParent ?? false){
+        return ParentDetailsScreen(id: member.id??0);
+
+      }else{
+        return IndividualDetailsScreen.opportunity(id: member.id ?? 0);
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -28,12 +45,7 @@ class ChatMessageWidget extends StatelessWidget {
           spacing: 5.h,
           children: [
             InkWell(
-              onTap: () => Go.to(
-                  message.sender.isFromMe? const ProfileScreen() :
-                  ViewProfileWidget<GetPartnerInfoCubit>.viewPartner(
-                    cubit: GetPartnerInfoCubit(message.sender.id),
-                  )
-              ),
+              onTap: () => Go.to(_targetProfile),
               child: CircleAvatar(
                 radius: 20.sp,
                 backgroundImage: NetworkImage(message.sender.image),
@@ -77,43 +89,19 @@ class _MessageBody extends StatelessWidget {
           fontSize: 14.sp,
           color: message.sender.isFromMe?
           Colors.white : Colors.black,
-        ).paddingAll(10.r)
-        // SelectableLinkify(
-        //   text: message.message.body,
-        //   onOpen: (link) => LauncherHelper.launchURL(url: link.url),
-        //   style: TextStyle(
-        //     fontSize: 14.sp,
-        //     color: message.sender.isFromMe?
-        //     Colors.white : Colors.black,
-        //   ),
-        //   linkStyle: TextStyle(
-        //       color: message.sender.isFromMe?
-        //       Colors.white : Colors.blue
-        //   ),
-        // ).paddingAll(10.r)
-            : InkWell(
+        ).paddingAll(10.r) : InkWell(
           onTap: (){
-            
             Go.to(ImageView(
               minScale: 5,
                 maxScale: 10,
                 url: message.message.body
             ));
-            // PinchZoom(
-            //   child: CachedImage(
-            //     url: image,
-            //     fit: BoxFit.fill,
-            //   ),
-            //   maxScale: 2.5,
-            //   // onZoomStart: (){print('Start zooming');},
-            //   // onZoomEnd: (){print('Stop zooming');},
-            // ),
           },
-              child: SizedBox.square(
+          child: SizedBox.square(
               dimension: 150.sp,
               child: Image.network(message.message.body, fit: BoxFit.fill,)
-                      ),
-            )
+          ),
+        )
     ).paddingBottom(10.h);
   }
 }
