@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
-import 'package:easy_chat/models/chat_message.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+
+import '../widgets/chat_builder/chat_message.dart';
 
 class MessageEvents {
   final String receiveMsgEvent;

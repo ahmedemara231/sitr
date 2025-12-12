@@ -411,14 +411,7 @@
         <entry key="dropinity">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../dropinity/lib" />
-            </list>
-          </value>
-        </entry>
-        <entry key="easy_chat">
-          <value>
-            <list>
-              <option value="$PROJECT_DIR$/../easy_chat/lib" />
+              <option value="$USER_HOME$/.pub-cache/git/dropinity-2c40e9ebaee65be6ca40a92822c802a13bbde1a1//lib" />
             </list>
           </value>
         </entry>
@@ -1342,7 +1335,7 @@
         <entry key="pagify">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../pagination_helper/lib" />
+              <option value="$USER_HOME$/.pub-cache/git/pagination_helper-472a7ca79f0cafd3044ae8c0d42c38b39290dfdc//lib" />
             </list>
           </value>
         </entry>
@@ -2238,6 +2231,8 @@
       </option>
     </properties>
     <CLASSES>
+      <root url="file://$USER_HOME$/.pub-cache/git/dropinity-2c40e9ebaee65be6ca40a92822c802a13bbde1a1//lib" />
+      <root url="file://$USER_HOME$/.pub-cache/git/pagination_helper-472a7ca79f0cafd3044ae8c0d42c38b39290dfdc//lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/_fe_analyzer_shared-85.0.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/_flutterfire_internals-1.3.63/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/analyzer-7.7.1/lib" />
@@ -2549,9 +2544,6 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/zego_uikit_signaling_plugin-2.8.19/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/zego_zim-2.24.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/zego_zpns-2.8.0/lib" />
-      <root url="file://$PROJECT_DIR$/../dropinity/lib" />
-      <root url="file://$PROJECT_DIR$/../easy_chat/lib" />
-      <root url="file://$PROJECT_DIR$/../pagination_helper/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_setups/flutter4/bin/cache/pkg/sky_engine/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_setups/flutter4/packages/flutter/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_setups/flutter4/packages/flutter_localizations/lib" />

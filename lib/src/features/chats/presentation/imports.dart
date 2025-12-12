@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-import 'package:easy_chat/easy_chat.dart';
-import 'package:easy_chat/models/chat_message.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,6 +25,7 @@ import '../../../core/shared/models/user_models/user_model.dart';
 import '../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../core/socket_service/client_io.dart';
 import '../../../core/widgets/app_text.dart';
+import '../../../core/widgets/chat_builder/chat_message.dart';
 import '../../../core/widgets/custom_loading.dart';
 import '../../../core/widgets/custom_messages.dart';
 import '../../../core/widgets/default_bottom_sheet.dart';

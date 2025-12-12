@@ -1,11 +1,11 @@
-import 'package:easy_chat/easy_chat.dart';
-import 'package:easy_chat/models/chat_message.dart';
 import 'package:flutter/material.dart';
 import 'package:pagify/helpers/data_and_pagination_data.dart' show PaginationData, PagifyData;
 import 'package:pagify/helpers/errors.dart';
 import 'package:pagify/pagify.dart';
 
 import '../../../../../config/language/languages.dart';
+import '../../../../../core/widgets/chat_builder/chat_message.dart';
+import '../../../../../core/widgets/chat_builder/easy_chat.dart';
 import '../../../../../core/widgets/custom_loading.dart' show CustomLoading;
 import '../../../../../core/widgets/exeption_view.dart';
 import '../../../../../core/widgets/not_contain_data.dart';

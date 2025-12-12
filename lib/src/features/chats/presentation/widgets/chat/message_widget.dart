@@ -1,4 +1,3 @@
-import 'package:easy_chat/models/chat_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -7,6 +6,7 @@ import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
 import '../../../../../core/navigation/navigator.dart';
 import '../../../../../core/widgets/app_text.dart';
+import '../../../../../core/widgets/chat_builder/chat_message.dart';
 import '../../../../../core/widgets/image_widgets/image_view.dart';
 
 import '../../../../main_screen/presentation/screens/parent_details.dart';

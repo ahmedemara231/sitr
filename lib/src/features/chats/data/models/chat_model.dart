@@ -1,10 +1,10 @@
-import 'package:easy_chat/models/chat_message.dart';
 import 'package:pagify/helpers/data_and_pagination_data.dart';
 
 import '../../../../core/extensions/string_extension.dart';
 import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/network/log_interceptor.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
+import '../../../../core/widgets/chat_builder/chat_message.dart';
 
 class ChatModel {
   final MatchRequest? matchRequest;

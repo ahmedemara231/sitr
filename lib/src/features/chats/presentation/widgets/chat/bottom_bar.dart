@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:easy_chat/models/chat_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +15,7 @@ import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/helpers/helpers.dart';
 import '../../../../../core/helpers/validators.dart';
 import '../../../../../core/navigation/navigator.dart';
+import '../../../../../core/widgets/chat_builder/chat_message.dart';
 import '../../../../../core/widgets/custom_messages.dart' show MessageUtils;
 import '../../../../../core/widgets/svg_pic.dart';
 import '../../../../../core/widgets/text_fields/default_text_field.dart';
