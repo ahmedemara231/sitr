@@ -9,6 +9,7 @@ import '../../features/main_screen/presentation/cubits/get_partner_info_cubit.da
 import '../../features/main_screen/presentation/screens/partner_details.dart';
 import '../../features/main_screen/presentation/widgets/home/partner_card.dart';
 import '../../features/more/presentation/cubit/edit_child_data_cubit.dart';
+import '../extensions/num.dart';
 import '../extensions/padding_extension.dart';
 import '../extensions/widget_extension.dart';
 import '../navigation/navigator.dart';
@@ -76,7 +77,7 @@ class _ParentChildrenState extends State<ParentChildren> {
                         onClick: (context, user)async => await context.read<EditChildDataCubit>().editChildData(
                             user,
                           onSuccess: (data) {
-                              Go.back();
+                             2.pop();
                               MessageUtils.showSnackBar(data.msg);
                           }
                         ),

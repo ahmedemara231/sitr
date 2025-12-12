@@ -11,7 +11,6 @@ class EditChildDataCubit extends AsyncCubit<UserModel>{
   EditChildDataCubit() : super(UserModel.initial());
 
   Future<void> editChildData(IndividualUserModel child, {void Function(BaseModel<UserModel>)? onSuccess})async{
-    log('the data is ${child.toRequestBodyJson(true)}');
     await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call<UserModel>(
             CrudBaseParmas(
