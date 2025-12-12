@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
+import '../../../../core/base_crud/code/domain/usecases/pagination_response.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/network/api_endpoints.dart';
@@ -15,7 +16,7 @@ class AddChildCubit extends AsyncCubit<UserModel>{
 
   Future<void> addChild({
     required IndividualUserModel body,
-    required void Function() onSuccess
+    required void Function(BaseModel<UserModel> data) onSuccess
   })async{
     await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call<UserModel>(
@@ -32,7 +33,7 @@ class AddChildCubit extends AsyncCubit<UserModel>{
           final parent = data.data as ParentModel;
           AuthData.childrenNumber.value.femaleNumbers = parent.femaleChildrenNum??0;
           AuthData.childrenNumber.value.maleNumbers = parent.maleChildrenNum??0;
-          onSuccess.call();
+          onSuccess.call(data);
         }
     );
   }

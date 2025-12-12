@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/pagify.dart';
-import '../../config/language/locale_keys.g.dart';
 import '../../features/auth/imports.dart';
 import '../../features/main_screen/data/home_data.dart';
 import '../../features/main_screen/data/models/home_model.dart';
@@ -11,23 +10,25 @@ import '../../features/main_screen/presentation/screens/partner_details.dart';
 import '../../features/main_screen/presentation/widgets/home/partner_card.dart';
 import '../../features/more/presentation/cubit/edit_child_data_cubit.dart';
 import '../extensions/padding_extension.dart';
+import '../extensions/widget_extension.dart';
 import '../navigation/navigator.dart';
 import '../shared/models/user_models/individual/individual_user_model.dart';
 import 'app_pagify.dart';
 import 'custom_messages.dart';
 import 'parent_children_card.dart';
 
-
 enum ChildCard{sub, full}
 class ParentChildren extends StatefulWidget {
   final int? id;
   final IndividualDetailsType type;
   final ChildCard childCard;
+  final PagifyController<Opportunity>? cont;
 
   const ParentChildren({
     super.key,
     this.id,
     required this.type,
+    this.cont,
     this.childCard = ChildCard.full
   });
 
@@ -54,10 +55,10 @@ class _ParentChildrenState extends State<ParentChildren> {
     }
   }
 
-  final PagifyController<Opportunity> _cont = PagifyController<Opportunity>();
 
   @override
   Widget build(BuildContext context) {
+    final PagifyController<Opportunity> childrenCont = widget.cont ?? PagifyController();
     return AppPagify<Opportunity>(
         asyncCall: (context, page)async => await HomeData.getParentChildren(widget.id, page),
         itemBuilder: (context, data, index, element) => InkWell(
@@ -79,19 +80,8 @@ class _ParentChildrenState extends State<ParentChildren> {
                               MessageUtils.showSnackBar(data.msg);
                           }
                         ),
-                        // userType: element.gender?.userType
                     ),
                   )),
-                    // onSuccess: (user) => Go.to(BlocProvider(
-                    //     create: (context) => EditChildDataCubit(),
-                    //   child: EnterMaleOrFemaleOrChildDataScreen.showAll(
-                    //       scaffoldType: ScaffoldType.appScaffold,
-                    //       initialValue: user as IndividualUserModel,
-                    //       showGenderSelection: false,
-                    //       onClick: (context, user)async => await context.read<EditChildDataCubit>().editChildData(user),
-                    //       userType: element.gender?.userType
-                    //   ),
-                    // )),
                 ),
                 name: element.name,
                 url: element.avatar
@@ -100,7 +90,9 @@ class _ParentChildrenState extends State<ParentChildren> {
 
 
         ),
-        pagifyController: _cont
+        pagifyController: childrenCont
+    ).withPullRefresher(
+      onRefresh: () => childrenCont.refresh()
     );
   }
 }

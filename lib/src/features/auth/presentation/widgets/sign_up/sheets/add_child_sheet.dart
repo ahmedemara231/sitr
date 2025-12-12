@@ -1,22 +1,21 @@
-import 'dart:developer';
-
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart' show Lottie;
 import '../../../../../../../generated/assets.dart';
 import '../../../../../../config/language/locale_keys.g.dart';
-import '../../../../../../core/helpers/user_type_enum.dart';
+import '../../../../../../core/extensions/object.dart';
 import '../../../../../../core/navigation/navigator.dart';
 import '../../../../../../core/widgets/app_bottom_sheet.dart';
 import '../../../../../../core/widgets/app_text.dart';
 import '../../../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../imports.dart';
 import '../../../cubits/add_child.dart';
-import '../../../data/auth_data.dart';
 
 class AddChildSheet extends StatelessWidget {
-  const AddChildSheet({super.key});
+  final FutureOr<void> Function()? cancelOnTap;
+  const AddChildSheet({super.key, this.cancelOnTap});
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +28,8 @@ class AddChildSheet extends StatelessWidget {
                   showConditionsAndTerms: true,
                   onClick: (context, user) => context.read<AddChildCubit>().addChild(
                       body: user,
-                      onSuccess: () {
-                        showDefaultBottomSheet(child: const AddChildSheet());
+                      onSuccess: (data) {
+                        showDefaultBottomSheet(child: AddChildSheet(cancelOnTap: cancelOnTap));
                       }
                   )
               ));
@@ -38,7 +37,9 @@ class AddChildSheet extends StatelessWidget {
             btnTitle: LocaleKeys.addAnotherChild,
             cancelBackgroundColor: Colors.black,
             cancelBtnTitle: LocaleKeys.sendOrder,
-            cancelOnTap: () async => Go.offAll(const LoginScreen()),
+            cancelOnTap: () async => cancelOnTap.isNull?
+            Go.offAll(const LoginScreen()) :
+            await cancelOnTap!(),
             upperWidget: Column(
               spacing: 12.h,
               children: [

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
+import '../../../../core/base_crud/code/domain/usecases/pagination_response.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/network/api_endpoints.dart';
@@ -13,7 +14,7 @@ class EditProfileCubit extends AsyncCubit<UserModel>{
 
   Future<void> editProfile({
     required IndividualUserModel body,
-    required void Function(String msg) onSuccess
+    required void Function(BaseModel<UserModel>) onSuccess
   })async{
     await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call<UserModel>(
@@ -28,7 +29,7 @@ class EditProfileCubit extends AsyncCubit<UserModel>{
             )
         ),
 
-        onSuccess: (data) => onSuccess.call(data.msg)
+        onSuccess: (data) => onSuccess.call(data)
     );
   }
 }

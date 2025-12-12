@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,7 +35,7 @@ class SuccessSheet extends StatelessWidget {
           showAlreadyHaveAccount: true,
           onClick: (context, user) => context.read<AddChildCubit>().addChild(
             body: user,
-            onSuccess: () {
+            onSuccess: (data) {
               showDefaultBottomSheet(
                   child: const AddChildSheet()
               );
