@@ -314,5 +314,12 @@
   "you_can_not_renew_the_package_now": "لا يمكنك تجديد الباقة الان",
   "you_can_not_choose_now": "لا يمكن الاختيار الان",
   "a_video_call_request_was_successfully_sent": "تم ارسال طلب مكالمة فيديو بنجاح",
-  "reminder": "تنبيه"
+  "reminder": "تنبيه",
+  "edit_parent_profile": "تعديل بيانات ولي الأمر",
+  "please_enter_identity_number": "يرجي ادخال رقم الهوية",
+  "select_kinship": "اختر صلة القرابة",
+  "please_enter_children_number": "يرجي ادخال عدد الابناء",
+  "please_enter_valid_age": "يرجي ادخال عمر صحيح",
+  "please_enter_valid_number": "يرجي ادخال رقم صحيح",
+  "profile_updated_successfully": "تم تحديث البيانات بنجاح"
 }

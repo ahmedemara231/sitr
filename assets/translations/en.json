@@ -314,5 +314,12 @@
   "you_can_not_renew_the_package_now": "you can not renew the package now",
   "you_can_not_choose_now": "you can not choose now",
   "a_video_call_request_was_successfully_sent": "A video call request was successfully sent",
-  "reminder": "Reminder"
+  "reminder": "Reminder",
+  "edit_parent_profile": "Edit Parent Profile",
+  "please_enter_identity_number": "Please enter identity number",
+  "select_kinship": "Select kinship",
+  "please_enter_children_number": "Please enter children number",
+  "please_enter_valid_age": "Please enter a valid age",
+  "please_enter_valid_number": "Please enter a valid number",
+  "profile_updated_successfully": "Profile updated successfully"
 }

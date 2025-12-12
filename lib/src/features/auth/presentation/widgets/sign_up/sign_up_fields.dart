@@ -286,7 +286,6 @@ class _SignUpFieldsState extends State<SignUpFields> {
             inputType: TextInputType.number,
             onChanged: (val) => _listenToData((signUpBody as ParentSignUp)
                 .copyWith(childrenNumber: _childrenNumberCont.text)),
-            // validator: Validators.validateEmpty,
           ),
           AppDropinityLocal<UserGender>(
               listHeight: 100,

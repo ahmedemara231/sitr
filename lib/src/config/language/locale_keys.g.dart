@@ -934,4 +934,25 @@ abstract class LocaleKeys {
   static const String _reminder = 'reminder';
   static String get reminder => _reminder.tr();
 
+  static const String _editParentProfile = 'edit_parent_profile';
+  static String get editParentProfile => _editParentProfile.tr();
+
+  static const String _pleaseEnterIdentityNumber = 'please_enter_identity_number';
+  static String get pleaseEnterIdentityNumber => _pleaseEnterIdentityNumber.tr();
+
+  static const String _selectKinship = 'select_kinship';
+  static String get selectKinship => _selectKinship.tr();
+
+  static const String _pleaseEnterChildrenNumber = 'please_enter_children_number';
+  static String get pleaseEnterChildrenNumber => _pleaseEnterChildrenNumber.tr();
+
+  static const String _pleaseEnterValidAge = 'please_enter_valid_age';
+  static String get pleaseEnterValidAge => _pleaseEnterValidAge.tr();
+
+  static const String _pleaseEnterValidNumber = 'please_enter_valid_number';
+  static String get pleaseEnterValidNumber => _pleaseEnterValidNumber.tr();
+
+  static const String _profileUpdatedSuccessfully = 'profile_updated_successfully';
+  static String get profileUpdatedSuccessfully => _profileUpdatedSuccessfully.tr();
+
 }

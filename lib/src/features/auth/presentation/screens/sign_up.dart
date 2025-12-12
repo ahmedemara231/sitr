@@ -17,9 +17,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final UserGender gender = val.toUserGender();
     final UserType type = gender.isMale || gender.isFemale?
     UserType.individual : UserType.parent;
-
-    log('the data is ${UserGender.male.name == LocaleKeys.male}');
-    log('the data is $type $gender');
     userTypeAndGender.value = (type, gender);
   }
 

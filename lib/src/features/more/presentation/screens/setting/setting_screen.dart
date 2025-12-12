@@ -25,6 +25,7 @@ import '../../cubit/change_phone_manager.dart';
 import '../../cubit/delete_account.dart';
 import '../../widgets/more_item.dart';
 import '../../widgets/change_phone_sheet_body.dart';
+import '../edit_parent_profile_screen.dart';
 import '../more_screen.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -50,7 +51,7 @@ class SettingScreen extends StatelessWidget {
                   Go.back();
                 }
             )
-        )) : null,
+        )) : Go.to(const EditParentProfileScreen()),
       ),
       MorItemModel(
         icon: Assets.svgSettingPhone,

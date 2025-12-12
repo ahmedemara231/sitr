@@ -320,5 +320,12 @@
   "you can not renew the package now" : "لا يمكنك تجديد الباقة الان",
   "you can not choose now" : "لا يمكن الاختيار الان",
   "A video call request was successfully sent" : "تم ارسال طلب مكالمة فيديو بنجاح",
-  "Reminder" : "تنبيه"
+  "Reminder" : "تنبيه",
+  "editParentProfile #$ Edit Parent Profile" : "تعديل بيانات ولي الأمر",
+  "pleaseEnterIdentityNumber #$ Please enter identity number" : "يرجي ادخال رقم الهوية",
+  "selectKinship #$ Select kinship" : "اختر صلة القرابة",
+  "pleaseEnterChildrenNumber #$ Please enter children number" : "يرجي ادخال عدد الابناء",
+  "pleaseEnterValidAge #$ Please enter a valid age" : "يرجي ادخال عمر صحيح",
+  "pleaseEnterValidNumber #$ Please enter a valid number" : "يرجي ادخال رقم صحيح",
+  "profileUpdatedSuccessfully #$ Profile updated successfully" : "تم تحديث البيانات بنجاح"
 }
