@@ -7,7 +7,7 @@ import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
-import '../../models/shared_form_fields_model.dart';
+import '../../../auth/models/shared_form_fields_model.dart';
 
 class EditProfileCubit extends AsyncCubit<UserModel>{
   EditProfileCubit() : super(UserModel.initial());

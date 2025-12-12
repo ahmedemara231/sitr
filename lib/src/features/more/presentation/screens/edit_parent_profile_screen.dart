@@ -16,7 +16,7 @@ import '../../../../core/widgets/custom_messages.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../auth/models/edit_parent_profile_model.dart';
 import '../../../auth/models/kinship.dart';
-import '../../../auth/presentation/cubits/edit_parent_profile_cubit.dart';
+import '../cubit/edit_parent_profile_cubit.dart';
 import '../../../auth/presentation/data/auth_data.dart';
 import '../../../auth/presentation/widgets/shared/text_field.dart';
 import '../../../auth/presentation/widgets/sign_up/image_widget.dart';

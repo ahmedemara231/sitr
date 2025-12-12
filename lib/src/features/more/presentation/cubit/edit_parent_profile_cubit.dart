@@ -4,7 +4,7 @@ import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubi
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/shared/models/user_models/parent/parent_model.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
-import '../../models/edit_parent_profile_model.dart';
+import '../../../auth/models/edit_parent_profile_model.dart';
 
 class EditParentProfileCubit extends AsyncCubit<UserModel> {
   EditParentProfileCubit() : super(UserModel.initial());

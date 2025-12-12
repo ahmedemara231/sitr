@@ -8,7 +8,7 @@ import '../../../generated/assets.dart';
 import '../../config/language/languages.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
-import '../../features/auth/presentation/cubits/change_lang.dart';
+import '../../features/more/presentation/cubit/change_lang.dart';
 import '../extensions/context_extension.dart';
 import '../extensions/padding_extension.dart';
 import '../navigation/navigator.dart';

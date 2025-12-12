@@ -6,7 +6,7 @@ import '../../../../../core/extensions/context_extension.dart';
 import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/widgets/app_logo_widget.dart';
 import '../../../../../core/widgets/lang_icon.dart';
-import '../../cubits/change_lang.dart';
+import '../../../../more/presentation/cubit/change_lang.dart';
 import 'sign_up_static_texts.dart' show SignUpStaticTexts;
 
 class SignUpUpperWidget extends StatelessWidget {

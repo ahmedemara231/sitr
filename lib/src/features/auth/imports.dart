@@ -57,7 +57,7 @@ import 'models/shared_form_fields_model.dart';
 import 'models/sign_up_body.dart';
 import 'presentation/cubits/add_child.dart';
 import 'presentation/cubits/complete_profile_cubit.dart';
-import 'presentation/cubits/edit_profile.dart';
+import '../more/presentation/cubit/edit_profile.dart';
 import 'presentation/cubits/login_cubit.dart';
 import 'presentation/cubits/oath.dart';
 import 'presentation/cubits/personal_data_cubit.dart';

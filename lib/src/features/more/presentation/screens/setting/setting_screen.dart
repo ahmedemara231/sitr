@@ -18,7 +18,7 @@ import '../../../../../core/widgets/lang_icon.dart';
 import '../../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../../core/widgets/sheets/delete_sheet.dart';
 import '../../../../auth/imports.dart';
-import '../../../../auth/presentation/cubits/edit_profile.dart';
+import '../../cubit/edit_profile.dart';
 import '../../../../home/home_screen.dart';
 import '../../../../otp/presentation/otp.dart';
 import '../../cubit/change_phone_manager.dart';
