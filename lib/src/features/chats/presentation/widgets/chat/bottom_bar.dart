@@ -122,15 +122,15 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                       prefixIcon: IconButton(
                           onPressed: () async{
                             final result = await Helpers.getImageFromCameraOrDevice();
-                            _selectedImage.value = result;
-                            // _calcImagesLength();
-                            // if(_imagesLength < 2){
-                            //   final result = await Helpers.getImageFromCameraOrDevice();
-                            //   _selectedImage.value = result;
-                            //
-                            // }else{
-                            //   MessageUtils.showSnackBar(LocaleKeys.youCanNotSendMoreThan2ImagesInChat);
-                            // }
+                            // _selectedImage.value = result;
+                            _calcImagesLength();
+                            if(_imagesLength < 2){
+                              final result = await Helpers.getImageFromCameraOrDevice();
+                              _selectedImage.value = result;
+
+                            }else{
+                              MessageUtils.showSnackBar(LocaleKeys.youCanNotSendMoreThan2ImagesInChat);
+                            }
                           },
                           icon: const Icon(Icons.camera_alt_sharp, color: AppColors.primary)
                       ),

@@ -211,7 +211,7 @@ class SettingScreen extends StatelessWidget {
       scaffoldBackgroundColor: AppColors.whiteGreyColorProMax,
         appBarTitle: LocaleKeys.settings,
         actions: const [
-          LangIcon()
+          LangIcon(withRequest: true)
         ],
         body: Column(
           spacing: 10.h,

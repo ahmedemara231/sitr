@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,12 +16,13 @@ import 'buttons/app_loading_button.dart';
 import 'default_bottom_sheet.dart';
 
 class LangIcon extends StatelessWidget {
-  const LangIcon({super.key});
+  final bool withRequest;
+  const LangIcon({super.key, required this.withRequest});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => showDefaultBottomSheet(child: const _LangSheet()),
+      onTap: () => showDefaultBottomSheet(child: _LangSheet(withRequest: withRequest)),
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.r),
@@ -35,7 +35,9 @@ class LangIcon extends StatelessWidget {
 }
 
 class _LangSheet extends StatelessWidget {
-  const _LangSheet();
+  final bool withRequest;
+
+  const _LangSheet({required this.withRequest});
 
   @override
   Widget build(BuildContext context) {
@@ -45,14 +47,15 @@ class _LangSheet extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(top: Radius.circular(12.r))
           ),
-          child: const SelectLangWidget()
+          child: SelectLangWidget(withRequest: withRequest)
       ),
     );
   }
 }
 
 class SelectLangWidget extends StatefulWidget {
-  const SelectLangWidget({super.key});
+  final bool withRequest;
+  const SelectLangWidget({super.key, required this.withRequest});
 
   @override
   State<SelectLangWidget> createState() => _SelectLangWidgetState();
@@ -105,8 +108,10 @@ class _SelectLangWidgetState extends State<SelectLangWidget> {
               child: AppLoadingButton(
                   title: LocaleKeys.confirm,
                   asyncCall: (context) async{
+                    if(widget.withRequest){
+                      await context.read<ChangeLangCubit>().changeLang(language.languageCode);
+                    }
                     Languages.setLocale(language);
-                    await context.read<ChangeLangCubit>().changeLang(language.languageCode);
                     Go.back();
                   },
               ),
