@@ -955,4 +955,7 @@ abstract class LocaleKeys {
   static const String _profileUpdatedSuccessfully = 'profile_updated_successfully';
   static String get profileUpdatedSuccessfully => _profileUpdatedSuccessfully.tr();
 
+  static const String _waitingForConnection = 'waiting_for_connection';
+  static String get waitingForConnection => _waitingForConnection.tr();
+
 }

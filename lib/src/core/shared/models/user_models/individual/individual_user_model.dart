@@ -163,12 +163,13 @@ class IndividualUserModel extends UserModel {
     "skin_color": skinColor?.value,
     'religious_commitment': religiousCommitment?.value,
     'avatar' : avatar,
-    // 'avatar' : avatar is File? avatar : 'not File',
-  };
 
-  Map<String, dynamic> toRequestBodyJson(bool isChild) {
+    // بشيلها لو مش file عشان الباك كان عايز اني ابعتها في حالة اني عدلت عليها بس
+  }..removeWhere((key, value) => key == 'avatar' && value is! File);
+
+  Map<String, dynamic> toRequestBodyJson(bool fullData) {
     final Map<String, dynamic> body;
-    if(isChild){
+    if(fullData){
       body = toJsonBody()..addAll({
         'name' : name,
         'gender' : gender?.userGender?.name,
@@ -180,8 +181,7 @@ class IndividualUserModel extends UserModel {
       body = toJsonBody();
     }
 
-    // Remove null values to ensure FormData works correctly with files
-    // body.removeWhere((key, value) => value == null);
+    log('the body is $body');
     return body;
   }
 

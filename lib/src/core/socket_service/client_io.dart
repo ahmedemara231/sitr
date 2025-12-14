@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
+import '../../config/language/locale_keys.g.dart';
 import '../widgets/chat_builder/chat_message.dart';
+import '../widgets/custom_messages.dart';
 
 class MessageEvents {
   final String receiveMsgEvent;
@@ -197,7 +199,8 @@ class ClientIOImpl extends SocketHelper{
       socket.emit(event, [data]);
 
     }else{
-      throw Exception('the socket is not connected');
+      MessageUtils.showSnackBar(LocaleKeys.waitingForConnection);
+      // throw Exception('the socket is not connected');
     }
   }
 }

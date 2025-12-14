@@ -327,5 +327,6 @@
   "pleaseEnterChildrenNumber #$ Please enter children number" : "يرجي ادخال عدد الابناء",
   "pleaseEnterValidAge #$ Please enter a valid age" : "يرجي ادخال عمر صحيح",
   "pleaseEnterValidNumber #$ Please enter a valid number" : "يرجي ادخال رقم صحيح",
-  "profileUpdatedSuccessfully #$ Profile updated successfully" : "تم تحديث البيانات بنجاح"
+  "profileUpdatedSuccessfully #$ Profile updated successfully" : "تم تحديث البيانات بنجاح",
+  "Waiting for connection" : "انتظر لاعادة الاتصال"
 }

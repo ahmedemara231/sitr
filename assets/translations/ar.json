@@ -321,5 +321,6 @@
   "please_enter_children_number": "يرجي ادخال عدد الابناء",
   "please_enter_valid_age": "يرجي ادخال عمر صحيح",
   "please_enter_valid_number": "يرجي ادخال رقم صحيح",
-  "profile_updated_successfully": "تم تحديث البيانات بنجاح"
+  "profile_updated_successfully": "تم تحديث البيانات بنجاح",
+  "waiting_for_connection": "انتظر لاعادة الاتصال"
 }

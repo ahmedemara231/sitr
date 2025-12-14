@@ -46,8 +46,8 @@ class SettingScreen extends StatelessWidget {
             onClick: (context, user) => context.read<EditProfileCubit>().editProfile(
                 body: user,
                 onSuccess: (data) {
-                  MessageUtils.showSnackBar(data.msg);
                   UserCubit.instance.updateUser(data.data);
+                  MessageUtils.showSnackBar(data.msg);
                   Go.back();
                 }
             )
