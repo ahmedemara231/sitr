@@ -204,13 +204,11 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     await _startChat();
     await Helpers.initZegoService(
         onCallStarted: (){
-          EndVideoCallCubit.instance.endVideoCall( // برنها وانا فالكول
-              ChatsData.data!.matchRequest!.id.toString()
-          );
-
-          // context.read<EndVideoCallCubit>().endVideoCall( // برنها وانا فالكول
-          //     context.read<ChatCubit>().matchRequestId.toString()
-          // );
+          if(EndVideoCallCubit.instance.state.data.matchRequest?.callStatus == 'free_available'){
+            EndVideoCallCubit.instance.endVideoCall( // برنها وانا فالكول
+                ChatsData.data!.matchRequest!.id.toString()
+            );
+          }
         }
     );
     _initSocket();

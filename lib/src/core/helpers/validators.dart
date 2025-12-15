@@ -2,13 +2,13 @@ import 'package:easy_localization/easy_localization.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../extensions/object.dart';
 import '../navigation/navigator.dart';
- 
+
 class Validators {
 
   static String? validateChatMessage(String? value, {String? fieldTitle}){
     final regex = RegExp(r'^[a-zA-Z\u0600-\u06FF\s]+$');
 
-    if(!regex.hasMatch(value) || value.trim().isEmpty) {
+    if(value.isNull || value!.trim().isEmpty || !regex.hasMatch(value)) {
       return LocaleKeys.onlyLettersAllowed;
     }
 
@@ -35,8 +35,8 @@ class Validators {
           ? LocaleKeys.fillField.tr(context: Go.context)
           : '${LocaleKeys.filedValidation.tr()} $fieldTitle';
     } else if (value.length > 50) {
-       return fieldTitle != null 
-          ? '$fieldTitle ${LocaleKeys.filedValidation.tr()}' 
+      return fieldTitle != null
+          ? '$fieldTitle ${LocaleKeys.filedValidation.tr()}'
           : LocaleKeys.filedValidation.tr();
     }
     return null;
@@ -48,7 +48,7 @@ class Validators {
           ? LocaleKeys.fillField.tr(context: Go.context)
           : '${LocaleKeys.filedValidation.tr()} $fieldTitle';
     } else if (value.length < 10 || value.length > 255) {
-       return LocaleKeys.filedValidation.tr();
+      return LocaleKeys.filedValidation.tr();
     }
     return null;
   }
@@ -108,12 +108,12 @@ class Validators {
         context: Go.context,
       );
     } else if (!RegExp(
-            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.["
-            r'a-zA-Z]+')
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.["
+        r'a-zA-Z]+')
         .hasMatch(value)) {
       return LocaleKeys.mailValidation.tr(context: Go.context);
     } else if (value.length > 50) {
-       return LocaleKeys.mailValidation.tr(context: Go.context);
+      return LocaleKeys.mailValidation.tr(context: Go.context);
     }
     return null;
   }
@@ -136,18 +136,18 @@ class Validators {
   static String? validateInteger(String? value, {String? fieldTitle, int min = 0, int max = 100, bool isRequired = true}) {
     if (value == null || value.isEmpty) {
       if (isRequired) {
-         return fieldTitle == null
-          ? LocaleKeys.fillField.tr(context: Go.context)
-          : '${LocaleKeys.filedValidation.tr()} $fieldTitle';
+        return fieldTitle == null
+            ? LocaleKeys.fillField.tr(context: Go.context)
+            : '${LocaleKeys.filedValidation.tr()} $fieldTitle';
       }
       return null;
     }
     final numValue = int.tryParse(value);
     if (numValue == null) {
-       return LocaleKeys.filedValidation.tr();
+      return LocaleKeys.filedValidation.tr();
     }
     if (numValue < min || numValue > max) {
-       return LocaleKeys.filedValidation.tr();
+      return LocaleKeys.filedValidation.tr();
     }
     return null;
   }
@@ -155,18 +155,18 @@ class Validators {
   static String? validateNumeric(String? value, {String? fieldTitle, double min = 0, double max = 1000000, bool isRequired = true}) {
     if (value == null || value.isEmpty) {
       if (isRequired) {
-         return fieldTitle == null
-          ? LocaleKeys.fillField.tr(context: Go.context)
-          : '${LocaleKeys.filedValidation.tr()} $fieldTitle';
+        return fieldTitle == null
+            ? LocaleKeys.fillField.tr(context: Go.context)
+            : '${LocaleKeys.filedValidation.tr()} $fieldTitle';
       }
       return null;
     }
     final numValue = num.tryParse(value);
     if (numValue == null) {
-       return LocaleKeys.filedValidation.tr();
+      return LocaleKeys.filedValidation.tr();
     }
     if (numValue < min || numValue > max) {
-       return LocaleKeys.filedValidation.tr();
+      return LocaleKeys.filedValidation.tr();
     }
     return null;
   }
@@ -174,14 +174,14 @@ class Validators {
   static String? validateString(String? value, {String? fieldTitle, int min = 0, int max = 255, bool isRequired = true}) {
     if (value == null || value.isEmpty) {
       if (isRequired) {
-         return fieldTitle == null
-          ? LocaleKeys.fillField.tr(context: Go.context)
-          : '${LocaleKeys.filedValidation.tr()} $fieldTitle';
+        return fieldTitle == null
+            ? LocaleKeys.fillField.tr(context: Go.context)
+            : '${LocaleKeys.filedValidation.tr()} $fieldTitle';
       }
       return null;
     }
     if (value.length < min || value.length > max) {
-       return LocaleKeys.filedValidation.tr();
+      return LocaleKeys.filedValidation.tr();
     }
     return null;
   }
@@ -196,13 +196,13 @@ class Validators {
     }
   }
 
-  // static String? validateDropDown<T>(T? value, {String? fieldTitle}) {
-  //   if (value == null) {
-  //     return fieldTitle != null ?
-  //     '${LocaleKeys.please.tr()} $fieldTitle' :
-  //     LocaleKeys.fillField.tr(context: Go.context);
-  //   } else {
-  //     return null;
-  //   }
-  // }
+// static String? validateDropDown<T>(T? value, {String? fieldTitle}) {
+//   if (value == null) {
+//     return fieldTitle != null ?
+//     '${LocaleKeys.please.tr()} $fieldTitle' :
+//     LocaleKeys.fillField.tr(context: Go.context);
+//   } else {
+//     return null;
+//   }
+// }
 }

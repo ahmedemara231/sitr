@@ -91,7 +91,10 @@ class _AppSheetButtons extends StatelessWidget {
       children: [
         Expanded(
             child: AppLoadingButton(
-                asyncCall: (context) async => await asyncCall.call(context),
+                asyncCall: (context) async {
+                  await asyncCall.call(context);
+                  Go.back();
+                },
                 title: title
             )
         ),
