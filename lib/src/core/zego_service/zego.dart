@@ -126,9 +126,9 @@ class ZegoService {
         log('the user ${user.name} is joined');
         log('the users ${joinedUsers.length}');
       }
+
       log(joinedUsers.length.isNotEqualZero.toString());
       if(joinedUsers.length.isNotEqualZero){
-        log('end video call');
         onCallStarted?.call();
       }
     });

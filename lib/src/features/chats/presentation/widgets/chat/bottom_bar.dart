@@ -46,7 +46,7 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
   int _imagesLength = 0;
   void _calcImagesLength(){
     for(ChatMessages msg in widget.controller.items){
-      if(msg.message.type == 'image'){
+      if(msg.message.type == 'image' && msg.sender.isFromMe){
         _imagesLength++;
       }
     }
@@ -121,8 +121,6 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                       title: LocaleKeys.hereIsTheTextOfTheMessageHereIsTheTextOfTheMessageHereIsTheTextOfTheMessage,
                       prefixIcon: IconButton(
                           onPressed: () async{
-                            final result = await Helpers.getImageFromCameraOrDevice();
-                            // _selectedImage.value = result;
                             _calcImagesLength();
                             if(_imagesLength < 2){
                               final result = await Helpers.getImageFromCameraOrDevice();

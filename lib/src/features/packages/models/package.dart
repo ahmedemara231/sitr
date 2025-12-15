@@ -6,30 +6,50 @@ class Package{
   final int duration;
   final num price;
   final bool hasActivePackage;
-  final String userPackageId;
+  final int packageId;
 
-  Package(this.id, this.name, this.type, this.image, this.duration, this.price, this.hasActivePackage, this.userPackageId,);
+  Package({
+    required this.id,
+    required this.name,
+    required this.type,
+    required this.image,
+    required this.duration,
+    required this.price,
+    required this.hasActivePackage,
+    required this.packageId,
+});
 
   factory Package.initial() => Package(
-    0,
-    '',
-    PackageType.initial(),
-    '',
-    0,
-    0.0,
-    false,
-    ''
+    id: 0,
+    name: '',
+    type: PackageType.initial(),
+    image: '',
+    duration: 0,
+    price: 0,
+    hasActivePackage: false,
+    packageId: 0,
   );
 
+  // factory Package.fromJson(Map<String, dynamic> json) => Package(
+  //   json['id'], // the user package id in body in renew
+  //   json['name'],
+  //   PackageType.fromJson(json['type']),
+  //   json['image'],
+  //   json['duration'],
+  //   json['price'],
+  //   json['has_active_package']??true,
+  //     json['package_id'] ?? 0 // sent as package id in renew
+  // );
+
   factory Package.fromJson(Map<String, dynamic> json) => Package(
-    json['id'],
-    json['name'],
-    PackageType.fromJson(json['type']),
-    json['image'],
-    json['duration'],
-    json['price'],
-    json['has_active_package']??true,
-      json['user_package_id'] ?? ''
+    id: json['id'], // user package id
+    name: json['name'],
+    type: PackageType.fromJson(json['type']),
+    image: json['image'],
+    duration: json['duration'],
+    price: json['price'],
+    hasActivePackage: json['has_active_package']??true,
+    packageId: json['package_id'] ?? 0 // package id
   );
 }
 

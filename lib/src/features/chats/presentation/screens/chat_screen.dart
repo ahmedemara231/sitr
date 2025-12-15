@@ -204,9 +204,13 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     await _startChat();
     await Helpers.initZegoService(
         onCallStarted: (){
-          context.read<EndVideoCallCubit>().endVideoCall( // برنها وانا فالكول
-              context.read<ChatCubit>().matchRequestId.toString()
+          EndVideoCallCubit.instance.endVideoCall( // برنها وانا فالكول
+              ChatsData.data!.matchRequest!.id.toString()
           );
+
+          // context.read<EndVideoCallCubit>().endVideoCall( // برنها وانا فالكول
+          //     context.read<ChatCubit>().matchRequestId.toString()
+          // );
         }
     );
     _initSocket();
@@ -223,6 +227,14 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     _chatController.dispose();
     socketType.disconnect();
     super.dispose();
+  }
+
+  void _makeVideoReq(){
+    context.read<ChatCubit>().executeRequest(
+        requestModel: widget.requestModel,
+        path: ApiConstants.videoCallRequest,
+        onSuccess: (data) => MessageUtils.showSnackBar(LocaleKeys.aVideoCallRequestWasSuccessfullySent)
+    );
   }
 
   @override
@@ -262,8 +274,10 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                 data: state,
                 onSuccess: (data, context) {
                   final callStatus = context.read<ChatCubit>().matchRequest?.callStatus;
+                  // log('the call status is ${callStatus}');
+
                   final currentStage = context.read<ChatCubit>().currentStage!.value!.getCurrentStageAsStagesEnum;
-                  if((!(callStatus == 'not_available') || (callStatus == 'free_available') || (callStatus == 'paid_available')) &&
+                  if(((callStatus == 'free_available') || (callStatus == 'paid_available')) &&
                       currentStage.isShariaComplaintMeeting){
                     return ValueListenableBuilder(
                         valueListenable: ZegoService.isConnected,
@@ -273,20 +287,20 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                             invites: [
                               ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName)
                             ],
-                            // onPressed: (){
-                            //   if(callStatus == 'free_available' || callStatus == 'paid_available'){
-                            //
-                            //
-                            //   }
-                            // }
+                            onPressed: (){
+
+                              _makeVideoReq();
+                              // if(callStatus == 'free_available' || callStatus == 'paid_available'){
+                              //   _makeVideoReq();
+                              // }
+                            }
                         ) : const SizedBox.shrink()
                     );
 
-                  }else if(callStatus == 'free_used'){ // بتبعت هنا ريكويست اني عايز التانية
-                    context.read<ChatCubit>().executeRequest(
-                        requestModel: widget.requestModel,
-                        path: ApiConstants.videoCallRequest,
-                        onSuccess: (data) => MessageUtils.showSnackBar(LocaleKeys.aVideoCallRequestWasSuccessfullySent)
+                  }else if(callStatus == 'free_used'){
+                    return InkWell(
+                        onTap: () => _makeVideoReq(),
+                        child: const Icon(Icons.video_call)
                     );
 
                   }else if(callStatus == 'completed'){ // المحانية خلصت
@@ -294,6 +308,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
                   }
 
+                  // not available
                   return const SizedBox.shrink();
                 }
 

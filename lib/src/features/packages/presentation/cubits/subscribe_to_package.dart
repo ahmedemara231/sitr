@@ -24,9 +24,11 @@ class PackagesManagerCubit extends AsyncCubit<String>{
 
                 httpRequestType: HttpRequestType.post,
                 body: {
-                  'package_id': package.id,
+                  if(type == ScreenType.renew)
+                    'user_package_id' : package.id,
+
+                  'package_id': package.packageId,
                   'payment_method': paymentMethod.name,
-                  'user_package_id' : package.userPackageId
                 },
 
                 mapper: (data) => paymentMethod == PaymentMethod.online?

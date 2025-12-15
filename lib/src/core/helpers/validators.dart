@@ -7,11 +7,8 @@ class Validators {
 
   static String? validateChatMessage(String? value, {String? fieldTitle}){
     final regex = RegExp(r'^[a-zA-Z\u0600-\u06FF\s]+$');
-    if(value!.isEmpty){
-      return null;
-    }
 
-    if(!regex.hasMatch(value)) {
+    if(!regex.hasMatch(value) || value.trim().isEmpty) {
       return LocaleKeys.onlyLettersAllowed;
     }
 
