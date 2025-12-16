@@ -27,7 +27,8 @@ class PackagesManagerCubit extends AsyncCubit<String>{
                   if(type == ScreenType.renew)
                     'user_package_id' : package.id,
 
-                  'package_id': package.packageId,
+                  'package_id': type == ScreenType.renew?
+                  package.packageId : package.id,
                   'payment_method': paymentMethod.name,
                 },
 
