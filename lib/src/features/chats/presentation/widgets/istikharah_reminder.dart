@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../config/language/locale_keys.g.dart';
@@ -26,7 +27,7 @@ class IstikharahReminderSheet extends StatelessWidget {
             spacing: 10.h,
             children: [
               AppText(data.title, color: AppColors.primary),
-              AppText(data.tips),
+              Html(data: data.tips),
               AppDefaultButton.withBackGroundColor(
                   title: LocaleKeys.confirm,
                   onTap: () => Go.back()

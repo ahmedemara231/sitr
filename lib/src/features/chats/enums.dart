@@ -1,4 +1,3 @@
-import '../../config/language/locale_keys.g.dart';
 import '../../core/network/api_endpoints.dart';
 
 enum UserRequestStatus{
@@ -7,7 +6,8 @@ enum UserRequestStatus{
   rejected(2, 'rejected'),
   continueStage(3, 'continue_stage'),
   parentMeeting(4, 'parent_meeting'),
-  undefined(6, 'undefined');
+  undefined(6, 'undefined'),
+  parentExchangeNumbers(7, 'parent_exchange_numbers');
 
   final int status;
   final String statusText;
@@ -22,6 +22,7 @@ extension CheckUserRequestStatus on UserRequestStatus{
   bool get isContinueStage => this == UserRequestStatus.continueStage;
   bool get isParentMeeting => this == UserRequestStatus.parentMeeting;
   bool get isUndefined => this == UserRequestStatus.undefined;
+  bool get isParentExchangeNumbers => this == UserRequestStatus.parentExchangeNumbers;
 }
 
 enum ChatStages{
@@ -73,7 +74,6 @@ enum MatchRequestEnum{
   videoCall(3, ApiConstants.videoCallRequest),
   adminMeeting(4, ApiConstants.adminMeetingRequest),
   parentMeeting(5, ApiConstants.parentMeetingRequest),
-  parentExchangeNumbers(6, ApiConstants.parentExchangeNumbers),
   continueStageRequest(8, ApiConstants.continueStageRequest),
 
   parentIndividualApproval(7, 'parent_individual_approval'); // عشان التاني مش بيوافق علي حاجة
@@ -91,7 +91,6 @@ extension CheckMatchRequest on MatchRequestEnum{
   bool get isVideoCall => this == MatchRequestEnum.videoCall;
   bool get isAdminMeeting => this == MatchRequestEnum.adminMeeting;
   bool get isParentMeeting => this == MatchRequestEnum.parentMeeting;
-  bool get isParentExchangeNumbers => this == MatchRequestEnum.parentExchangeNumbers;
   bool get isParentIndividualApproval => this == MatchRequestEnum.parentIndividualApproval;
 }
 

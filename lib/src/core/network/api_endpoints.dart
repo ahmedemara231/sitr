@@ -114,15 +114,18 @@ class ApiConstants {
   static const String engagementTips = 'engagement-tips';
 
 // ============================== user request ==============================
-  static const String userMoveToNextRequest = 'user-match-request/next_stage_request';
-  static const String continueStageRequest = 'user-match-request/continue_stage_request';
-  static const String userExtensionRequest = 'user-match-request/extension_request';
-  static const String videoCallRequest = 'user-match-request/video_call_request';
-  static const String adminMeetingRequest = 'user-match-request/admin_meeting_request';
-  static const String parentMeetingRequest = 'user-match-request/parent_meeting_request';
+
+  static const String matchRequestAnd = 'user-match-request/';
+  static const String userMoveToNextRequest = 'next_stage_request';
+  static const String continueStageRequest = 'continue_stage_request';
+  static const String userExtensionRequest = 'extension_request';
+  static const String videoCallRequest = 'video_call_request';
+  static const String adminMeetingRequest = 'admin_meeting_request';
+  static const String parentMeetingRequest = 'parent_meeting_request';
+
+
   static const String istikharaReminder = 'istikhara-reminder';
 
-  // static const String userRejectRequest = 'reject-match-request/';
   static const String rejectAll = 'reject-match-request';
   static const String payRequest = 'pay-request/';
   static const String endVideoCall = 'end-video-call';

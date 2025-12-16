@@ -20,9 +20,17 @@ class UserStatusAction extends ChatActions{
     required this.requestModel,
   });
 
-  // void _finishChat(BuildContext context){
-  //   context.read<FinishChatCubit>().finishChat(matchReqId);
-  // }
+  void _executeReq(BuildContext context,{
+    required String path,
+    required void Function() onSuccess
+  }){
+    ChatActions.executeReq(
+        context: context,
+        path: path,
+        requestModel: requestModel,
+        onSuccess: (chatModel) => onSuccess.call()
+    );
+  }
 
   void _showAcceptanceSheet(void Function() onSuccess){
     ChatSheetManager.show(
@@ -30,18 +38,15 @@ class UserStatusAction extends ChatActions{
           value: context.read<ChatCubit>(),
           child: AcceptOrRejectRequestWidget(
             requestName: requestName,
-            onAccept: (context) async => ChatActions.executeReq(
-                context: context,
-                path: ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
-                requestModel: requestModel,
-                onSuccess: (chatModel) => onSuccess.call()
+            onAccept: (context) async => _executeReq(
+                context, path: ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
+                onSuccess: onSuccess
             ),
-            onReject:(context) async => ChatActions.executeReq(
-                context: context,
+            onReject:(context) async => _executeReq(
+                context,
                 path: ApiConstants.rejectRequest+context.read<ChatCubit>().userRequest!,
-                requestModel: requestModel,
-                onSuccess: (chatModel) => onSuccess.call()
-            ),
+                onSuccess: onSuccess
+            )
           ),
         )
     );
@@ -55,7 +60,22 @@ class UserStatusAction extends ChatActions{
             Go.offAll(const HomeScreen()) : Go.back(),
       );
 
-    }else if((request.isExtension || request.isVideoCall || request.isAdminMeeting)
+    }
+    // else if(status.isParentExchangeNumbers){
+    //   ChatSheetManager.show(
+    //     child: BlocProvider.value(
+    //       value: context.read<ChatCubit>(),
+    //       child: EnterParentPhoneSheet(
+    //           onSubmit: (context, phone)async{
+    //             await context.read<ChatCubit>().parentsExchangeNumbers(parentPhone: phone);
+    //             Go.back();
+    //           }
+    //       ),
+    //     ),
+    //   );
+    //
+    // }
+    else if((request.isExtension || request.isVideoCall || request.isAdminMeeting)
         && status.isAccepted){
       ChatSheetManager.show(
         child: BlocProvider(
@@ -110,22 +130,21 @@ class UserStatusAction extends ChatActions{
             value: context.read<ChatCubit>(),
             child: InformParentSheet(
                 onSubmit: (context, val)async{
+                  String path = ApiConstants.matchRequestAnd;
                   if(val == LocaleKeys.enterParentPhoneNumber){
-                    await ChatActions.executeReq(
-                      context: context,
-                      path: ApiConstants.parentMeetingRequest,
-                      requestModel: requestModel,
-                      onSuccess: (chatModel) => Go.back(),
-                    );
+                    path = path+ApiConstants.parentMeetingRequest;
 
                   }else if(val == LocaleKeys.requestForADialogueSessionUnderTheSupervisionOfTheApplication){
-                    await ChatActions.executeReq(
-                      context: context,
-                      path: ApiConstants.adminMeetingRequest,
-                      requestModel: requestModel,
-                      onSuccess: (chatModel) => Go.back(),
-                    );
+                    path = path+ApiConstants.adminMeetingRequest;
+
                   }
+
+                  await ChatActions.executeReq(
+                    context: context,
+                    path: path,
+                    requestModel: requestModel,
+                    onSuccess: (chatModel) => Go.back(),
+                  );
 
                   return;
                 }

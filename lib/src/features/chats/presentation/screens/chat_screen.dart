@@ -95,7 +95,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
   ChatActions _manageSuccessState(ChatModel data) {
     final timer = data.matchRequest!.timer;
-    final stage = data.matchRequest!.stage!.value?.getCurrentStageAsStagesEnum;
+    final stage = data.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum;
     final userStatus = data.matchRequest!.userRequestStatus!.getUserRequestStatusAsEnum;
     final matchRequest = data.matchRequest!.userRequest!.getMatchRequestAsEnum;
     final currentTips = data.matchRequest!.tipsPage!.currentStageTips;
@@ -111,7 +111,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     }
 
     // based stage
-    if(stage!.isParentsExchangeNumber){
+    if(stage.isParentsExchangeNumber){
       return StageAction(context: context, stage: stage);
     }
 
@@ -204,11 +204,12 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     await _startChat();
     await Helpers.initZegoService(
         onCallStarted: (){
-          if(EndVideoCallCubit.instance.state.data.matchRequest?.callStatus == 'free_available'){
-            EndVideoCallCubit.instance.endVideoCall( // برنها وانا فالكول
-                ChatsData.data!.matchRequest!.id.toString()
-            );
-          }
+          // if(EndVideoCallCubit.instance.state.data.matchRequest?.callStatus == 'free_available'){
+          //   log('end video call');
+          //   EndVideoCallCubit.instance.endVideoCall( // برنها وانا فالكول
+          //       ChatsData.data!.matchRequest!.id.toString()
+          //   );
+          // }
         }
     );
     _initSocket();
@@ -230,7 +231,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
   void _makeVideoReq(){
     context.read<ChatCubit>().executeRequest(
         requestModel: widget.requestModel,
-        path: ApiConstants.videoCallRequest,
+        path: ApiConstants.matchRequestAnd+ApiConstants.videoCallRequest,
         onSuccess: (data) => MessageUtils.showSnackBar(LocaleKeys.aVideoCallRequestWasSuccessfullySent)
     );
   }
@@ -274,9 +275,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                   final callStatus = context.read<ChatCubit>().matchRequest?.callStatus;
                   // log('the call status is ${callStatus}');
 
-                  final currentStage = context.read<ChatCubit>().currentStage!.value!.getCurrentStageAsStagesEnum;
-                  if(((callStatus == 'free_available') || (callStatus == 'paid_available')) &&
-                      currentStage.isShariaComplaintMeeting){
+                  if(((callStatus == 'free_available') || (callStatus == 'paid_available'))){
                     return ValueListenableBuilder(
                         valueListenable: ZegoService.isConnected,
                         builder: (context, isConnected, child) => isConnected? Helpers.zegoService!.zegoButton( // المحانية موجودة
@@ -286,11 +285,13 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                               ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName)
                             ],
                             onPressed: (){
-
                               _makeVideoReq();
-                              // if(callStatus == 'free_available' || callStatus == 'paid_available'){
-                              //   _makeVideoReq();
-                              // }
+                              if(callStatus == 'free_available'){
+                                log('end video call');
+                                context.read<EndVideoCallCubit>().endVideoCall( // برنها وانا فالكول
+                                    ChatsData.data!.matchRequest!.id.toString()
+                                );
+                              }
                             }
                         ) : const SizedBox.shrink()
                     );

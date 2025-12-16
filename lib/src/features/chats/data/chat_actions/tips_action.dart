@@ -43,22 +43,20 @@ class TipsAction extends ChatActions{
                   value: context.read<ChatCubit>(),
                   child: ShariaaMeetingSkipping(
                       onSubmit: (context, val) async{
+                        String path = ApiConstants.matchRequestAnd;
                         if(val == LocaleKeys.moveToNextStage){
-                          await ChatActions.executeReq(
-                            context: context,
-                            path: ApiConstants.userMoveToNextRequest,
-                            onSuccess: (chatModel) => Go.back(),
-                            requestModel: requestModel,
-                          );
+                          path = path+ApiConstants.userMoveToNextRequest;
 
                         }else{
-                          await ChatActions.executeReq(
-                            context: context,
-                            path: ApiConstants.continueStageRequest,
-                            onSuccess: (chatModel) => Go.back(),
-                            requestModel: requestModel,
-                          );
+                          path = path+ApiConstants.continueStageRequest;
                         }
+
+                        await ChatActions.executeReq(
+                          context: context,
+                          path: path,
+                          onSuccess: (chatModel) => Go.back(),
+                          requestModel: requestModel,
+                        );
                       }
                   ),
                 )
@@ -78,22 +76,20 @@ class TipsAction extends ChatActions{
                   value: context.read<ChatCubit>(),
                   child: InformParentSheet(
                       onSubmit: (context, val)async{
+                        String path = ApiConstants.matchRequestAnd;
                         if(val == LocaleKeys.enterParentPhoneNumber){
-                          await ChatActions.executeReq(
-                            context: context,
-                            path: ApiConstants.parentMeetingRequest,
-                            requestModel: requestModel,
-                            onSuccess: (chatModel) => Go.back(),
-                          );
+                          path = path+ApiConstants.parentMeetingRequest;
 
-                        }else if(val == LocaleKeys.requestForADialogueSessionUnderTheSupervisionOfTheApplication){
-                          await ChatActions.executeReq(
-                            context: context,
-                            path: ApiConstants.adminMeetingRequest,
-                            requestModel: requestModel,
-                            onSuccess: (chatModel) => Go.back(),
-                          );
+                        }else{
+                          path = path+ApiConstants.adminMeetingRequest;
                         }
+
+                        await ChatActions.executeReq(
+                          context: context,
+                          path: path,
+                          requestModel: requestModel,
+                          onSuccess: (chatModel) => Go.back(),
+                        );
 
                         return;
                       }

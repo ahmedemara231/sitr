@@ -69,16 +69,21 @@ extension FormatString on String {
 
 
   ChatStages get getCurrentStageAsStagesEnum {
-    log('the text is $this');
     return ChatStages.values
-        .firstWhere((e) => this == e.stageText);
+        .firstWhere((e) => this == e.stageText,
+        orElse: () => ChatStages.chatting
+    );
   }
 
   MatchRequestEnum get getMatchRequestAsEnum => MatchRequestEnum.values
-      .firstWhere((e) => this == e.requestName.split("/").last);
+      .firstWhere((e) => this == e.requestName,
+    orElse: () => MatchRequestEnum.noRequests
+  );
 
   UserRequestStatus get getUserRequestStatusAsEnum => UserRequestStatus.values
-      .firstWhere((e) => this == e.statusText);
+      .firstWhere((e) => this == e.statusText,
+      orElse: () => UserRequestStatus.undefined
+  );
 
 
   int calculateRenderedLines({
@@ -151,13 +156,13 @@ bool get isImage =>
 
   String get pathToRequest{
     if(this == LocaleKeys.moveToNextStage){
-      return ApiConstants.userMoveToNextRequest;
+      return ApiConstants.matchRequestAnd+ApiConstants.userMoveToNextRequest;
 
     }else if(this == LocaleKeys.refuseMoveToNextStage){
       return ApiConstants.rejectAll;
 
     }else if(this == LocaleKeys.requestForExtensionOfPeriod){
-      return ApiConstants.userExtensionRequest;
+      return ApiConstants.matchRequestAnd+ApiConstants.userExtensionRequest;
 
     }else{
       log('this is $this');
