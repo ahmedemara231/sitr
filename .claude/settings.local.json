@@ -3,7 +3,10 @@
     "allow": [
       "Bash(do echo \"Checking $file:\")",
       "Bash(for file in Icon-*.png)",
-      "Bash(make:*)"
+      "Bash(make:*)",
+      "Bash(flutter --version:*)",
+      "Bash(./gradlew :app:checkDebugAarMetadata:*)",
+      "Bash(flutter build:*)"
     ],
     "deny": [],
     "ask": []

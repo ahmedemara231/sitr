@@ -195,6 +195,7 @@ class SettingScreen extends StatelessWidget {
                     asyncCall: (context) => context.read<DeleteAccountCubit>().deleteAccount(
                         onSuccess: (msg) async{
                           await UserCubit.instance.logout();
+                          Go.back(); // Close the bottom sheet first
                           MessageUtils.showSnackBar(msg);
                           Go.offAll(const LoginScreen());
                         }

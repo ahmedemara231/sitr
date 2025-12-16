@@ -19,6 +19,7 @@ android {
         isCoreLibraryDesugaringEnabled = true
     }
 
+
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
@@ -26,7 +27,6 @@ android {
     defaultConfig {
         applicationId = "com.aait.flutter.sitr"
 
-        // ✅ الصياغة الصحيحة في Kotlin DSL
         minSdk = flutter.minSdkVersion
         targetSdk = 36
 
@@ -35,21 +35,21 @@ android {
     }
 
     buildTypes {
-    release {
-        signingConfig = signingConfigs.getByName("debug")
+        release {
+            signingConfig = signingConfigs.getByName("debug")
 
-        // لازم الاتنين ميتفتحوش الا عند التسليم والرفع الاستور لانهم وظيفتهم لتقليل حجم التطبيق ودمج الكلاسات ويحذف الللغات واللاي اوت اللي مش مستخدم
-        isMinifyEnabled = false
-        isShrinkResources = false   // ✅ أضف السطر ده
-        proguardFiles(
-            getDefaultProguardFile("proguard-android-optimize.txt"),
-            "proguard-rules.pro"
-        )
+            // لازم الاتنين ميتفتحوش الا عند التسليم والرفع الاستور لانهم وظيفتهم لتقليل حجم التطبيق ودمج الكلاسات ويحذف الللغات واللاي اوت اللي مش مستخدم
+            isMinifyEnabled = false
+            isShrinkResources = false   // ✅ أضف السطر ده
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+        debug {
+            signingConfig = signingConfigs.getByName("debug")
+        }
     }
-    debug {
-        signingConfig = signingConfigs.getByName("debug")
-    }
-}
 
 }
 
