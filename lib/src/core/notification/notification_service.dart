@@ -21,6 +21,8 @@ import '../navigation/navigator.dart';
 import '../shared/models/title_value_shape.dart';
 import '../shared/models/user_models/user_model.dart';
 import '../shared/user_cubit/user_cubit.dart';
+import '../widgets/parent_children.dart';
+import '../widgets/parent_children_screen.dart';
 
 part 'navigation_types.dart';
 part 'notification_routes.dart';

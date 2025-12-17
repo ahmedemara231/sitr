@@ -40,17 +40,17 @@ class ParentChildrenView extends StatelessWidget {
                 onClick: (context, user) async => await context.read<AddChildCubit>().addChild(
                     body: user,
                     onSuccess: (data) {
-                      final user = data.data as IndividualUserModel;
-                      final Opportunity opportunity = Opportunity(
-                        id: user.id,
-                        name: user.name,
-                        avatar: user.avatar,
-                      );
+                      // final user = data.data as IndividualUserModel;
+                      // final Opportunity opportunity = Opportunity(
+                      //   id: user.id,
+                      //   name: user.name,
+                      //   avatar: user.avatar,
+                      // );
 
                       showDefaultBottomSheet(
                           child: AddChildSheet(cancelOnTap: () {
-                            cont.addItem(opportunity);
-                            2.pop();
+                            // cont.addItem(opportunity);
+                            3.pop();
                           })
                       );
                     }

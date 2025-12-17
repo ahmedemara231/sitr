@@ -228,11 +228,18 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     super.dispose();
   }
 
-  void _makeVideoReq(){
-    context.read<ChatCubit>().executeRequest(
+  Future<void> _makeVideoReq()async{
+    await context.read<ChatCubit>().executeRequest(
         requestModel: widget.requestModel,
         path: ApiConstants.matchRequestAnd+ApiConstants.videoCallRequest,
         onSuccess: (data) => MessageUtils.showSnackBar(LocaleKeys.aVideoCallRequestWasSuccessfullySent)
+    );
+  }
+
+ Future <void> _endVideoCall()async{
+    log('end video call');
+    await context.read<EndVideoCallCubit>().endVideoCall( // برنها وانا فالكول
+        ChatsData.data!.matchRequest!.id.toString()
     );
   }
 
@@ -256,10 +263,10 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
         appBarTitle: LocaleKeys.chat,
         isScrollable: false,
         actions: [
-
           ValueListenableBuilder(
               valueListenable: ZegoService.isConnected,
-              builder: (context, isConnected, child) => isConnected? Helpers.zegoService!.zegoButton(
+              builder: (context, isConnected, child) => isConnected?
+              Helpers.zegoService!.zegoButton(
                 isVideoCall: false,
                 icon: const SvgPic(assetName: Assets.svgPhoneIcon),
                 invites: [
@@ -284,14 +291,12 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                             invites: [
                               ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName)
                             ],
-                            onPressed: (){
-                              _makeVideoReq();
+                            onPressed: ()async{
                               if(callStatus == 'free_available'){
-                                log('end video call');
-                                context.read<EndVideoCallCubit>().endVideoCall( // برنها وانا فالكول
-                                    ChatsData.data!.matchRequest!.id.toString()
-                                );
+                                await _makeVideoReq();
                               }
+
+                              await _endVideoCall();
                             }
                         ) : const SizedBox.shrink()
                     );

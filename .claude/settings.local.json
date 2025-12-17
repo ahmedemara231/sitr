@@ -6,7 +6,9 @@
       "Bash(make:*)",
       "Bash(flutter --version:*)",
       "Bash(./gradlew :app:checkDebugAarMetadata:*)",
-      "Bash(flutter build:*)"
+      "Bash(flutter build:*)",
+      "Bash(./gradlew:*)",
+      "Bash(ls:*)"
     ],
     "deny": [],
     "ask": []

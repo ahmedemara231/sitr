@@ -135,6 +135,7 @@ flutter:
     - assets/lottie/network/
     - assets/lottie/success/
     - assets/translations/
+    - shorebird.yaml
 
 
   fonts:

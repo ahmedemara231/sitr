@@ -20,11 +20,11 @@ class UserStatusAction extends ChatActions{
     required this.requestModel,
   });
 
-  void _executeReq(BuildContext context,{
+  Future<void> _executeReq(BuildContext context,{
     required String path,
     required void Function() onSuccess
-  }){
-    ChatActions.executeReq(
+  })async{
+    await ChatActions.executeReq(
         context: context,
         path: path,
         requestModel: requestModel,
@@ -38,11 +38,11 @@ class UserStatusAction extends ChatActions{
           value: context.read<ChatCubit>(),
           child: AcceptOrRejectRequestWidget(
             requestName: requestName,
-            onAccept: (context) async => _executeReq(
+            onAccept: (context) async => await _executeReq(
                 context, path: ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
                 onSuccess: onSuccess
             ),
-            onReject:(context) async => _executeReq(
+            onReject:(context) async => await _executeReq(
                 context,
                 path: ApiConstants.rejectRequest+context.read<ChatCubit>().userRequest!,
                 onSuccess: onSuccess

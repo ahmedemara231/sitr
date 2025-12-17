@@ -148,6 +148,16 @@ class UserUnblockedYou implements NotificationNavigation {
   }
 }
 
+class AdminActionWithChild implements NotificationNavigation {
+  const AdminActionWithChild();
+
+  @override
+  void navigate({required Map<String, dynamic> data}) {
+    Go.to(const ParentChildrenView());
+  }
+}
+
+
 void _routeToProfile({
   required UserType type,
   required String userId,

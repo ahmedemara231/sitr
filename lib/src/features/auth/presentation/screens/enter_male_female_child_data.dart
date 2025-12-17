@@ -12,7 +12,6 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
   final bool showGenderSelection;
   final Future<void> Function(BuildContext context, IndividualUserModel user) onClick;
 
-
   const EnterMaleOrFemaleOrChildDataScreen.showAll({
     super.key,
     this.showGenderSelection = true,
