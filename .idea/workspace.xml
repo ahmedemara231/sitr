@@ -9,7 +9,36 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="```&#10;feat(notifications): Handle admin actions on children and enhance UX&#10;&#10;This commit introduces a new notification flow to handle administrative actions (approval/rejection) related to a parent's children. It also includes several UX improvements and build configuration updates.&#10;&#10;- **feat(notifications):**&#10;  - In `notification_routes.dart` and `navigation_types.dart`, new notification types `admin_approved_child` and `admin_rejected_child` have been added.&#10;  - A new navigation class, `AdminActionWithChild`, has been created to handle these notifications by navigating the user to the `ParentChildrenView` screen, allowing them to see the updated status of their children's accounts.&#10;&#10;- **refactor(ux):**&#10;  - The &quot;add child&quot; flow has been improved.&#10;    - In `add_child_sheet.dart`, the navigation now uses `Go.to` instead of `Go.off` to present the child data entry screen, preserving the navigation stack.&#10;    - In `parent_children_screen.dart`, after a child is successfully added, the navigation now correctly pops multiple screens (`3.pop()`) to return to the parent's view. Logic for adding the new child to the local list has been commented out, likely to rely on a fresh data fetch.&#10;  - In `app_bottom_sheet.dart`, the automatic `Go.back()` call has been removed from the `AppLoadingButton`'s `asyncCall`. This gives the caller more control over the navigation flow after the async operation completes.&#10;&#10;- **fix(chat):**&#10;  - In `chat_screen.dart`, the video call logic has been refined. A call to `_endVideoCall()` is now correctly made *after* a Zego call is initiated, ensuring the backend state is updated.&#10;  - In `user_status_action.dart`, the request execution method (`_executeReq`) is now `async` to properly await the completion of chat actions.&#10;&#10;- **chore(build):**&#10;  - Added macOS network client and unsigned executable memory entitlements in `macos/Runner/Release.entitlements` to support new capabilities.&#10;  - Added `shorebird.yaml` to the asset list in `pubspec.yaml`.&#10;  - Allowed new `gradlew` and `ls` commands in `.claude/settings.local.json` for CI/CD operations.&#10;  - Ignored IDE configuration files (`.idea/workspace.xml`, `.idea/libraries/Dart_Packages.xml`)." />
+    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="```&#10;feat(auth): Improve &quot;add child&quot; navigation flow&#10;&#10;This commit refactors the navigation flow when a parent adds a new child, ensuring a smoother user experience.&#10;&#10;- **feat(auth):**&#10;  - In `add_child_sheet.dart`, the bottom sheet is now programmatically closed (`2.pop()`) before navigating to the child data entry screen.&#10;  - This prevents the sheet from remaining visible in the background and ensures a cleaner transition for the user.&#10;- **chore(ide):**&#10;  - Ignored changes in `.idea/workspace.xml`.">
+      <change afterPath="$PROJECT_DIR$/.idea/AndroidProjectSystem.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/.kotlin/errors/errors-1765967214986.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/android/.kotlin/errors/errors-1765967354719.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shorebird.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.claude/settings.local.json" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/settings.local.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/extensions/string_extension.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/extensions/string_extension.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/parent_children_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/parent_children_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/imports.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/imports.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/cubits/add_child.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/cubits/add_child.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/data/auth_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/data/auth_data.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/screens/enter_male_female_child_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/screens/enter_male_female_child_data.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/screens/sign_up.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/screens/sign_up.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/otp/presentation/cubits/otp_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/otp/presentation/cubits/otp_cubit.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/splash/splash_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/splash/splash_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +46,29 @@
   </component>
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=PhysicalDevice, isTemplate=false, identifier=serial=RK8W800PNXX)]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$USER_HOME$/Downloads/flutter_setups/flutter4/packages/flutter_tools/gradle">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="gradle" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
   </component>
   <component name="FileEditorManager">
     <leaf>
@@ -64,6 +116,13 @@
     &quot;second&quot;: &quot;c1d13d60-3f83-4a7f-b8f8-32d92528ad16&quot;
   }
 }</component>
+  <component name="GradleScriptDefinitionsStorage" workingDir="$USER_HOME$/Downloads/flutter_setups/flutter4/packages/flutter_tools/gradle" gradleHome="$USER_HOME$/.gradle/wrapper/dists/gradle-9.0-milestone-1-bin/3vdepk4s12bybhohyuvjcm1bd/gradle-9.0-milestone-1" javaHome="/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home" gradleVersion="9.0-milestone-1">
+    <option name="jvmArguments">
+      <list>
+        <option value="-Didea.gradle.download.sources.force=true" />
+      </list>
+    </option>
+  </component>
   <component name="ProblemsViewState">
     <option name="autoscrollToSource" value="true" />
   </component>
@@ -86,29 +145,32 @@
     <option name="foldersAlwaysOnTop" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Flutter.main.dart.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;ShowUsagesActions.previewPropertyKey&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;finishChat&quot;,
-    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/aaita/Desktop/apps/new_crud_satr/lib/src/core/widgets&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;flutter.settings&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Flutter.main.dart.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "ShowUsagesActions.previewPropertyKey": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "finishChat",
+    "io.flutter.reload.alreadyRun": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/aaita/Desktop/apps/new_crud_satr/lib/src/core/widgets",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "flutter.settings",
+    "show.migrate.to.gradle.popup": "false"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib/src/core/widgets" />
@@ -125,6 +187,80 @@
       <recent name="$PROJECT_DIR$/assets/svg" />
     </key>
   </component>
+  <component name="RunManager" selected="Flutter.main.dart">
+    <configuration name="appp_android" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="appp_android" />
+      <option name="ANDROID_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="ALLOW_ASSUME_VERIFIED" value="false" />
+      <option name="CLEAR_APP_STORAGE" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="RESTORE_ENABLED" value="false" />
+      <option name="RESTORE_FILE" value="" />
+      <option name="RESTORE_FRESH_INSTALL_ONLY" value="false" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Hybrid>
+      <Java>
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Java>
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="" />
@@ -132,14 +268,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
-    </task>
-    <task id="LOCAL-00134" summary="```&#10;refactor(core): Standardize async cubit callbacks and enhance validation&#10;&#10;This commit refactors the base `AsyncCubit` to standardize its callback signature, replacing `successEmitter` with a more conventional `onSuccess`. It also improves form validation and enhances the user experience in the OTP and block/unblock flows.&#10;&#10;- **refactor(core):**&#10;  - In `async_cubit.dart`, the `successEmitter` callback has been renamed to `onSuccess` for consistency across all cubits. [29]&#10;  - All cubits extending `AsyncCubit` have been updated to use the new `onSuccess` callback. This includes cubits for authentication, chat, packages, and user profiles. [2, 3, 4, 5, 8, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21, 23, 24, 25, 26, 31, 32, 33]&#10;  - In the `BlockUserCubit` and `UnBlockUserCubit`, the `onSuccess` action is now handled internally, automatically popping the navigation stack twice (`2.pop()`) upon successful completion, which simplifies the calling code in `bloc_success.dart`. [7, 8, 9]&#10;&#10;- **fix(auth):**&#10;  - In `validators.dart`, `validateAge` now correctly checks that the input is a number and is at least 18. [22]&#10;  - `validatePhone` now enforces that a phone number must be exactly 9 digits long. [22]&#10;  - In `sign_up_fields.dart`, the age field now uses the improved `Validators.validateAge` validator. [6]&#10;&#10;- **feat(otp):**&#10;  - In `setting_screen.dart`, a consistent `upperWidget` showing the &quot;Change Phone Number&quot; title is now passed to all instances of `OtpScreen` within the change phone number flow, improving UI context. [0]&#10;  - The `OtpScreen` in `otp.dart` now correctly displays the passed `upperWidget` above the static OTP texts, replacing the default logo when a custom widget is provided. [12]&#10;&#10;- **chore(i18n):**&#10;  - Added new translation keys for phone and age validation error messages (`phone_should_be_9_digits`, `the_age_must_be_a_number`). [1, 10, 27, 28]&#10;&#10;- **chore(ide):**&#10;  - Updated IDE configuration files (`workspace.xml`). [23]">
-      <option name="closed" value="true" />
-      <created>1764186619952</created>
-      <option name="number" value="00134" />
-      <option name="presentableId" value="LOCAL-00134" />
-      <option name="project" value="LOCAL" />
-      <updated>1764186619952</updated>
     </task>
     <task id="LOCAL-00135" summary="```&#10;feat(chat): Add engagement stage and finish chat flow&#10;&#10;This commit introduces a new &quot;engagement&quot; stage to the chat flow, allowing users to finalize their interaction and conclude the chat. It also includes several related UI and API enhancements.&#10;&#10;- **feat(chat):**&#10;  - Added a new `finish-chat` API endpoint and a corresponding `CongratsCubit` to handle the finalization of a chat. [0, 9]&#10;  - A new `CongratsSheet` is introduced. When a user reaches the engagement tips (`isEngagementTips`), this sheet is displayed, informing them that the administration will contact them to arrange a meeting. It provides a button to navigate back to the home screen. [4, 11]&#10;  - The chat screen now triggers the `CongratsSheet` when the `isEngagementTips` condition is met. [4]&#10;  - The `EnterParentPhoneSheet` is now shown when the user status is `isParentExchangeNumbers`, allowing parents to exchange numbers at the appropriate stage. [4]&#10;&#10;- **refactor(ui):**&#10;  - Renamed `AuthScaffold` to `CenterCardScaffold` for more generic use, as it is now used across various features like main screen, profile views, and auth. [3, 7, 13, 14, 15, 17, 18]&#10;  - In `terms_andcondition_and_about_us.dart`, the content is now rendered using the `flutter_html` package instead of a simple `AppText` widget, allowing for rich text formatting. [1]&#10;  - The Zego video call button is now correctly displayed during the Sharia-compliant meeting stage. [4]&#10;&#10;- **fix(chat):**&#10;  - In `upload_image.dart`, the `mapper` now correctly parses the `file_url` from the JSON response instead of `file_name`, fixing image uploads in chat. [6]&#10;  - The `onUpload` callback in `chat_image_viewer.dart` now correctly passes the returned data, ensuring the new image URL is sent in the socket message. [12]&#10;&#10;- **chore(i18n):**&#10;  - Added new translation keys for the engagement stage, including `tips_for_engagement_stage` and the confirmation message for the `CongratsSheet`. [5, 8, 10, 16]">
       <option name="closed" value="true" />
@@ -525,7 +653,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765986345050</updated>
     </task>
-    <option name="localTasksCounter" value="183" />
+    <task id="LOCAL-00183" summary="```&#10;feat(auth): Improve &quot;add child&quot; navigation flow&#10;&#10;This commit refactors the navigation flow when a parent adds a new child, ensuring a smoother user experience.&#10;&#10;- **feat(auth):**&#10;  - In `add_child_sheet.dart`, the bottom sheet is now programmatically closed (`2.pop()`) before navigating to the child data entry screen.&#10;  - This prevents the sheet from remaining visible in the background and ensures a cleaner transition for the user.&#10;- **chore(ide):**&#10;  - Ignored changes in `.idea/workspace.xml`.">
+      <option name="closed" value="true" />
+      <created>1765986946294</created>
+      <option name="number" value="00183" />
+      <option name="presentableId" value="LOCAL-00183" />
+      <option name="project" value="LOCAL" />
+      <updated>1765986946294</updated>
+    </task>
+    <option name="localTasksCounter" value="184" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -546,7 +682,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Refactor: Improve package handling and remove unused code&#10;&#10;This commit refactors package management, enhances data models, and cleans up the codebase by removing unused dependencies and commented-out code.&#10;&#10;- **refactor(packages):**&#10;  - Renamed `ScreenType.first` to `ScreenType.subscription` for better clarity in `packages_screen.dart`.&#10;  - The `subscribeOrRenewPackage` cubit method now accepts the entire `Package` object instead of just the ID, passing the `user_package_id` in renewal requests.&#10;  - Added the `userPackageId` field to the `Package` model to support renewal logic.&#10;&#10;- **refactor(models):**&#10;  - Added a `hasActivePackage` boolean field to `UserModel` and its subclasses (`IndividualUserModel`, `MaleModel`, `FemaleModel`, `ParentModel`) to track user subscription status.&#10;&#10;- **fix(dropdown):**&#10;  - In `app_dropinity.dart`, ensured the `onChanged` callback is always called when a value is selected in API-driven dropdowns.&#10;  - In `home_model.dart`, corrected the JSON parsing for `marital_status` to handle potential null values gracefully.&#10;&#10;- **chore(cleanup):**&#10;  - Removed the `objectbox_flutter_libs` dependency and its registrations from `windows`, `linux`, and `macos` platform-specific files.&#10;  - Commented out unused validator logic in `shared_form_fields.dart` and `female_fields.dart`.&#10;  - Removed commented-out navigation logic in `notification_routes.dart`." />
     <MESSAGE value="refactor(auth): Separate UserType and UserGender for clarity&#10;&#10;This commit refactors the user model by separating the concept of `UserType` (e.g., `individual`, `parent`) from `UserGender` (e.g., `male`, `female`). This improves model clarity, simplifies logic, and enhances type safety throughout the authentication and profile management flows.&#10;&#10;- **refactor(models):**&#10;  - Introduced a `UserGender` enum (`male`, `female`, `unknown`) to specifically handle gender.&#10;  - Renamed the existing `UserType` enum to represent roles like `individual`, `parent`, and `child`.&#10;  - The `UserModel` and its subclasses (`IndividualUserModel`, `MaleModel`, `FemaleModel`, `ParentModel`) now use distinct `type` and `gender` fields with the new enums (`TypeValueShape` and `GenderValueShape`).&#10;  - Corrected the `fromJson` factory constructors in user models to properly deserialize based on the new `type` and `gender` values, ensuring the correct model is instantiated.&#10;&#10;- **refactor(auth):**&#10;  - Updated the Sign-Up screen (`sign_up.dart`) to manage `UserType` and `UserGender` as a combined state, correctly setting the user's role based on their gender selection (e.g., selecting &quot;Male&quot; or &quot;Female&quot; sets the type to `individual`).&#10;  - Replaced the `ChooseGenderWidget` with a more generic `ChooseFromOptionsWidget` to accommodate the new logic.&#10;  - In `otp_cubit.dart`, both `unauthorizedUserGender` and `unauthorizedUserType` are now stored in `AuthData` after OTP verification.&#10;  - Post-subscription navigation logic in `success_sheet.dart` now correctly uses both `gender` and `type` to direct users.&#10;&#10;- **fix(navigation):**&#10;  - Corrected navigation logic in `string_extension.dart`'s `manageNavigationBasedCompleteRegisterStatus` to use `user.type` instead of the old `user.gender.userType` for determining flow.&#10;  - Updated profile editing navigation in `setting_screen.dart` to pass `user.gender.userGender`.&#10;&#10;- **chore(i18n):**&#10;  - Added a new translation key `you_can_not_choose_now` for cases where the gender/type selection is disabled." />
     <MESSAGE value="```&#10;feat(auth): Introduce PersonalDataCubit and refine UI&#10;&#10;This commit introduces a new `PersonalDataCubit` to handle fetching generic, list-based data from API endpoints. It also includes several UI refinements and fixes across the application.&#10;&#10;- **feat(auth):**&#10;  - Added a new `PersonalDataCubit` for fetching lists of `TitleValueShape` models from dynamic API paths. This simplifies loading data for dropdowns and other UI elements.&#10;  - The `PersonalDataCubit` is now provided in `EnterMaleOrFemaleOrChildDataScreen`.&#10;&#10;- **fix(ui):**&#10;  - In `packages_screen.dart`, the package list is now hidden for users with a `child` account type, displaying a `NotContainData` widget instead.&#10;  - The title text in `delete_sheet.dart` is now center-aligned to improve layout consistency.&#10;&#10;- **chore(cleanup):**&#10;  - Commented out a block of test code in `app.dart` that was forcing the app to start on the `EnterMaleOrFemaleOrChildDataScreen`.&#10;  - Removed commented-out code for a dropdown (`AppDropinity`) in `female_fields.dart`.&#10;&#10;- **chore(i18n):**&#10;  - Added new translation keys (`please_enter_the_text`) for form validation in `ar.json`, `en.json`, and `lang.json`." />
     <MESSAGE value="```&#10;refactor(voip): Centralize and improve Zego initialization&#10;&#10;This commit refactors the Zego (voice/video call) service initialization by centralizing it and ensuring it only occurs once after a successful user login. It also introduces a connection status listener to manage UI elements based on the service's availability.&#10;&#10;- **refactor(voip):**&#10;  - In `helpers.dart`, the `initZegoService` method now immediately attempts to log the user into the Zego service upon initialization. This streamlines the setup process by combining initialization and login.&#10;  - Zego initialization (`Helpers.initZegoService()`) is now called directly from `chat_screen.dart` when the chat is opened, instead of being called from the `SplashScreen` or `UserCubit`.&#10;  - In `zego.dart`, a new static `ValueNotifier&lt;bool&gt;` named `isConnected` has been added to track the signaling connection state globally.&#10;  - The `initZego` call has been removed from `splash_screen.dart` to prevent premature initialization before user data is available.&#10;  - The `initZego` (now `zegoOnLogin`) method in `user_cubit.dart` has been commented out as its responsibility has been moved.&#10;&#10;- **fix(ui):**&#10;  - In `chat_screen.dart`, the voice and video call buttons are now wrapped in a `ValueListenableBuilder` that listens to `ZegoService.isConnected`.&#10;  - The call buttons will now display a `CustomLoading` indicator until the Zego service is connected, preventing users from attempting a call before the service is ready.&#10;  - A `loadingBuilder` has been added to the `EasyChat` widget to show a loading indicator while the initial chat messages are being fetched.&#10;&#10;- **chore(cleanup):**&#10;  - Removed several `log` statements from `chat_screen.dart` and `helpers.dart` for a cleaner console output." />
@@ -571,7 +706,8 @@
     <MESSAGE value="```&#10;fix(packages): Correct package ID logic for subscriptions&#10;&#10;This commit fixes a bug in the package subscription and renewal logic to ensure the correct package identifier is sent to the API.&#10;&#10;- **fix(packages):**&#10;  - In `subscribe_to_package.dart`, the API request body for subscribing to a package has been corrected.&#10;    - When renewing (`ScreenType.renew`), the `package_id` parameter now correctly sends `package.packageId`.&#10;    - When performing a new subscription, it now correctly sends `package.id`.&#10;  - This resolves an issue where the wrong identifier was being used depending on the subscription context (new vs. renew), ensuring the API processes the request correctly.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in `.idea/workspace.xml`." />
     <MESSAGE value="```&#10;refactor(chat): Standardize API request paths and improve robustness&#10;&#10;This commit refactors how API request paths are constructed for chat actions, standardizing them to prevent errors. It also improves the robustness of enum parsing and enhances the UI for displaying tips.&#10;&#10;- **refactor(api):**&#10;  - In `api_endpoints.dart`, a base path `matchRequestAnd` (`user-match-request/`) has been introduced.&#10;  - All chat-related request constants (e.g., `userMoveToNextRequest`, `videoCallRequest`) are now relative paths.&#10;  - In `user_status_action.dart`, `tips_action.dart`, `chat_screen.dart`, and `string_extension.dart`, API calls now prepend the `matchRequestAnd` base path, ensuring consistent and correct endpoint URLs.&#10;&#10;- **fix(chat):**&#10;  - In `string_extension.dart`, the enum parsers (`getCurrentStageAsStagesEnum`, `getMatchRequestAsEnum`, `getUserRequestStatusAsEnum`) have been made more robust by adding an `orElse` clause. This prevents crashes by returning a default enum value if an unknown string is received from the API.&#10;  - In `chat_screen.dart`, a nullable check on the stage value (`stage!.value!`) has been corrected to prevent potential null pointer exceptions when determining the current stage.&#10;&#10;- **fix(video-call):**&#10;  - In `chat_screen.dart`, the logic for consuming a free video call has been corrected. The `endVideoCall` cubit is now triggered immediately after the user initiates a free video call request, ensuring the call status is updated correctly on the backend.&#10;&#10;- **feat(ui):**&#10;  - In `istikharah_reminder.dart`, the widget now uses the `Html` widget to render tips. This allows for rich text formatting (like newlines) in the reminder text, improving readability.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in `.idea/workspace.xml`." />
     <MESSAGE value="```&#10;feat(notifications): Handle admin actions on children and enhance UX&#10;&#10;This commit introduces a new notification flow to handle administrative actions (approval/rejection) related to a parent's children. It also includes several UX improvements and build configuration updates.&#10;&#10;- **feat(notifications):**&#10;  - In `notification_routes.dart` and `navigation_types.dart`, new notification types `admin_approved_child` and `admin_rejected_child` have been added.&#10;  - A new navigation class, `AdminActionWithChild`, has been created to handle these notifications by navigating the user to the `ParentChildrenView` screen, allowing them to see the updated status of their children's accounts.&#10;&#10;- **refactor(ux):**&#10;  - The &quot;add child&quot; flow has been improved.&#10;    - In `add_child_sheet.dart`, the navigation now uses `Go.to` instead of `Go.off` to present the child data entry screen, preserving the navigation stack.&#10;    - In `parent_children_screen.dart`, after a child is successfully added, the navigation now correctly pops multiple screens (`3.pop()`) to return to the parent's view. Logic for adding the new child to the local list has been commented out, likely to rely on a fresh data fetch.&#10;  - In `app_bottom_sheet.dart`, the automatic `Go.back()` call has been removed from the `AppLoadingButton`'s `asyncCall`. This gives the caller more control over the navigation flow after the async operation completes.&#10;&#10;- **fix(chat):**&#10;  - In `chat_screen.dart`, the video call logic has been refined. A call to `_endVideoCall()` is now correctly made *after* a Zego call is initiated, ensuring the backend state is updated.&#10;  - In `user_status_action.dart`, the request execution method (`_executeReq`) is now `async` to properly await the completion of chat actions.&#10;&#10;- **chore(build):**&#10;  - Added macOS network client and unsigned executable memory entitlements in `macos/Runner/Release.entitlements` to support new capabilities.&#10;  - Added `shorebird.yaml` to the asset list in `pubspec.yaml`.&#10;  - Allowed new `gradlew` and `ls` commands in `.claude/settings.local.json` for CI/CD operations.&#10;  - Ignored IDE configuration files (`.idea/workspace.xml`, `.idea/libraries/Dart_Packages.xml`)." />
-    <option name="LAST_COMMIT_MESSAGE" value="```&#10;feat(notifications): Handle admin actions on children and enhance UX&#10;&#10;This commit introduces a new notification flow to handle administrative actions (approval/rejection) related to a parent's children. It also includes several UX improvements and build configuration updates.&#10;&#10;- **feat(notifications):**&#10;  - In `notification_routes.dart` and `navigation_types.dart`, new notification types `admin_approved_child` and `admin_rejected_child` have been added.&#10;  - A new navigation class, `AdminActionWithChild`, has been created to handle these notifications by navigating the user to the `ParentChildrenView` screen, allowing them to see the updated status of their children's accounts.&#10;&#10;- **refactor(ux):**&#10;  - The &quot;add child&quot; flow has been improved.&#10;    - In `add_child_sheet.dart`, the navigation now uses `Go.to` instead of `Go.off` to present the child data entry screen, preserving the navigation stack.&#10;    - In `parent_children_screen.dart`, after a child is successfully added, the navigation now correctly pops multiple screens (`3.pop()`) to return to the parent's view. Logic for adding the new child to the local list has been commented out, likely to rely on a fresh data fetch.&#10;  - In `app_bottom_sheet.dart`, the automatic `Go.back()` call has been removed from the `AppLoadingButton`'s `asyncCall`. This gives the caller more control over the navigation flow after the async operation completes.&#10;&#10;- **fix(chat):**&#10;  - In `chat_screen.dart`, the video call logic has been refined. A call to `_endVideoCall()` is now correctly made *after* a Zego call is initiated, ensuring the backend state is updated.&#10;  - In `user_status_action.dart`, the request execution method (`_executeReq`) is now `async` to properly await the completion of chat actions.&#10;&#10;- **chore(build):**&#10;  - Added macOS network client and unsigned executable memory entitlements in `macos/Runner/Release.entitlements` to support new capabilities.&#10;  - Added `shorebird.yaml` to the asset list in `pubspec.yaml`.&#10;  - Allowed new `gradlew` and `ls` commands in `.claude/settings.local.json` for CI/CD operations.&#10;  - Ignored IDE configuration files (`.idea/workspace.xml`, `.idea/libraries/Dart_Packages.xml`)." />
+    <MESSAGE value="```&#10;feat(auth): Improve &quot;add child&quot; navigation flow&#10;&#10;This commit refactors the navigation flow when a parent adds a new child, ensuring a smoother user experience.&#10;&#10;- **feat(auth):**&#10;  - In `add_child_sheet.dart`, the bottom sheet is now programmatically closed (`2.pop()`) before navigating to the child data entry screen.&#10;  - This prevents the sheet from remaining visible in the background and ensures a cleaner transition for the user.&#10;- **chore(ide):**&#10;  - Ignored changes in `.idea/workspace.xml`." />
+    <option name="LAST_COMMIT_MESSAGE" value="```&#10;feat(auth): Improve &quot;add child&quot; navigation flow&#10;&#10;This commit refactors the navigation flow when a parent adds a new child, ensuring a smoother user experience.&#10;&#10;- **feat(auth):**&#10;  - In `add_child_sheet.dart`, the bottom sheet is now programmatically closed (`2.pop()`) before navigating to the child data entry screen.&#10;  - This prevents the sheet from remaining visible in the background and ensures a cleaner transition for the user.&#10;- **chore(ide):**&#10;  - Ignored changes in `.idea/workspace.xml`." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -655,6 +791,16 @@
           <url>file://$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chat_screen.dart</url>
           <line>113</line>
           <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/src/core/extensions/string_extension.dart</url>
+          <line>211</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/src/core/widgets/view_profile_widget.dart</url>
+          <line>232</line>
+          <option name="timeStamp" value="39" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

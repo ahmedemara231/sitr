@@ -76,16 +76,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                                 onSuccess: (user) async {
                                   user.completeRegistration!.manageNavigationBasedCompleteRegisterStatus(user);
-
-                                  // await UserCubit.instance.setUserLoggedIn(
-                                  //     user: user,
-                                  //     token: user.token ?? ''
-                                  // );
-
-                                  // Go.to(const PackagesScreen.subscription(
-                                  //     paymentMethods: [PaymentMethod.online],
-                                  //     isInAuth: true
-                                  // ));
                                 },
                               ),
                             ),

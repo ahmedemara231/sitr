@@ -179,7 +179,8 @@ bool get isImage =>
   }
 
   void manageNavigationBasedCompleteRegisterStatus(UserModel user)async{
-    final CompleteRegisterStatus statusType = toCompleteRegisterStatus();
+    final CompleteRegisterStatus statusType = user.completeRegistration!._toCompleteRegisterStatus();
+    await UserCubit.instance.init();
     if(statusType.isCompleted){
       showDefaultBottomSheet(
           enableDrag: false,
@@ -187,7 +188,6 @@ bool get isImage =>
             create: (context) => OathCubit()..getOath(),
             child: AppBottomSheet.small(
                 asyncCall: (context) async {
-                  await UserCubit.instance.setUserLoggedIn(user: user, token: user.token??'');
                   Go.offAll(const HomeScreen());
                 },
                 btnTitle: LocaleKeys.accept,
@@ -217,7 +217,6 @@ bool get isImage =>
       ));
 
     }else if(statusType.isCompleteChild){
-      injector<NetworkService>().setToken(user.token ?? '');
       Go.to(EnterMaleOrFemaleOrChildDataScreen.showAll(
           scaffoldType: ScaffoldType.centerCard,
           showConditionsAndTerms: true,
@@ -228,7 +227,6 @@ bool get isImage =>
       ));
 
     }else if(statusType.isHasSetrCode){
-      injector<NetworkService>().setToken(user.token ?? '');
       Go.to(
           user.type!.userType!.isParent?
           EnterMaleOrFemaleOrChildDataScreen.showAll(
@@ -251,7 +249,6 @@ bool get isImage =>
       );
 
     }else if(statusType.isIncomplete){
-      injector<NetworkService>().setToken(user.token ?? '');
       Go.to(EnterMaleOrFemaleOrChildDataScreen.individual(
         scaffoldType: ScaffoldType.centerCard,
         showConditionsAndTerms: true,
@@ -268,7 +265,8 @@ bool get isImage =>
   }
 
 
-  CompleteRegisterStatus toCompleteRegisterStatus(){
+  CompleteRegisterStatus _toCompleteRegisterStatus(){
+    log('complete register state is $this');
     if(this == CompleteRegisterStatus.completed.status){
       return CompleteRegisterStatus.completed;
 

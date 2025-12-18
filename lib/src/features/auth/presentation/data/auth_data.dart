@@ -62,25 +62,17 @@ class AuthData{
   }
 
 
-  static ValueNotifier<ChildrenNumber> childrenNumber = ValueNotifier(ChildrenNumber());
+  // static ValueNotifier<ChildrenNumber> childrenNumber = ValueNotifier(ChildrenNumber());
 }
 
-class ChildrenNumber {
-  int maleNumbers;
-  int femaleNumbers;
-
-  void increment(UserGender user){
-    if(user.isFemale){
-      femaleNumbers++;
-    }else{
-      maleNumbers++;
-    }
-  }
-
-  int get total => maleNumbers + femaleNumbers;
-
-  ChildrenNumber({
-    this.maleNumbers = 0,
-    this.femaleNumbers = 0,
-  });
-}
+// class ChildrenNumber {
+//   int maleNumbers;
+//   int femaleNumbers;
+//
+//   int get total => maleNumbers + femaleNumbers;
+//
+//   ChildrenNumber({
+//     this.maleNumbers = 0,
+//     this.femaleNumbers = 0,
+//   });
+// }

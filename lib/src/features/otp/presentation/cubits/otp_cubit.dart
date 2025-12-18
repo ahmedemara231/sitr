@@ -4,6 +4,7 @@ import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
+import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../auth/presentation/data/auth_data.dart';
 import '../../models/otp_body.dart';
 
@@ -28,10 +29,11 @@ class OtpCubit extends AsyncCubit<UserModel>{
               mapper: (json) => UserModel.fromJson(json)
           ),
         ),
-      onSuccess: (data) {
-          log('data isss ${data.data.toJson()}');
+      onSuccess: (data)async {
           AuthData.unauthorizedUserGender = data.data.gender!.userGender!;
           AuthData.unauthorizedUserType = data.data.type!.userType!;
+
+          await UserCubit.instance.setUserLoggedIn(user: data.data, token: data.data.token??'');
           onSuccess?.call(data.data);
       }
     );

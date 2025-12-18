@@ -13,6 +13,8 @@ import '../extensions/padding_extension.dart';
 import '../navigation/navigator.dart';
 import '../shared/models/user_models/individual/female_model.dart';
 import '../shared/models/user_models/individual/individual_user_model.dart';
+import '../shared/models/user_models/parent/parent_model.dart';
+import '../shared/user_cubit/user_cubit.dart';
 import 'buttons/custom_app_buttons/default_button.dart' show AppDefaultButton;
 import 'default_bottom_sheet.dart';
 import 'parent_children.dart' show ParentChildren, ChildCard;

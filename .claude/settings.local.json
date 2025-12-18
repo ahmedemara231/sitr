@@ -8,7 +8,8 @@
       "Bash(./gradlew :app:checkDebugAarMetadata:*)",
       "Bash(flutter build:*)",
       "Bash(./gradlew:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(./android/gradlew:*)"
     ],
     "deny": [],
     "ask": []

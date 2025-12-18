@@ -4,10 +4,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../generated/assets.dart';
 import '../../config/res/config_imports.dart';
 import '../../core/extensions/object.dart';
+import '../../core/extensions/string_extension.dart';
 import '../../core/helpers/cache_service.dart';
 import '../../core/helpers/helpers.dart';
 import '../../core/navigation/navigator.dart';
 import '../../core/notification/notification_service.dart';
+import '../../core/shared/models/user_models/user_model.dart';
 import '../../core/shared/user_cubit/user_cubit.dart';
 import '../../core/widgets/splash_logo.dart';
 import '../../core/zego_service/zego.dart';
@@ -57,15 +59,21 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
+  void _handleAuthorizedState()async{
+    final result =  await CacheStorage.read('user', isDecoded: true);
+    final user = UserModel.fromJson(result);
+    UserCubit.instance.user.completeRegistration?.manageNavigationBasedCompleteRegisterStatus(user);
+  }
+
   Future<void> _manipulateLoginState()async{
     final result =  (await CacheStorage.read('user', isDecoded: true) as Object?).isNotNull;
     switch(result){
       case true:
         // Go.offAll(const LoginScreen());
 
-        await UserCubit.instance.init();
-        Go.offAll(const HomeScreen());
-        // UserCubit.instance.user.completeRegistration?.manageNavigationBasedCompleteRegisterStatus();
+        // await UserCubit.instance.init();
+        // Go.offAll(const HomeScreen());
+        _handleAuthorizedState();
         break;
 
       default:

@@ -8,6 +8,7 @@ import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../../../core/shared/models/user_models/parent/parent_model.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
+import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../models/shared_form_fields_model.dart';
 import '../data/auth_data.dart';
 
@@ -29,10 +30,17 @@ class AddChildCubit extends AsyncCubit<UserModel>{
             )
         ),
 
-        onSuccess: (data) {
+        onSuccess: (data)async {
+          // final parent = data.data as ParentModel;
+          // AuthData.childrenNumber.value.femaleNumbers = parent.femaleChildrenNum??0;
+          // AuthData.childrenNumber.value.maleNumbers = parent.maleChildrenNum??0;
           final parent = data.data as ParentModel;
-          AuthData.childrenNumber.value.femaleNumbers = parent.femaleChildrenNum??0;
-          AuthData.childrenNumber.value.maleNumbers = parent.maleChildrenNum??0;
+          final oldParent = UserCubit.instance.user as ParentModel;
+          final newParent = oldParent.copyWith(
+              femaleChildrenNum: parent.femaleChildrenNum,
+              maleChildrenNum: parent.maleChildrenNum
+          );
+          await UserCubit.instance.updateUser(newParent);
           onSuccess.call(data);
         }
     );

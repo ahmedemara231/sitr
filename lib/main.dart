@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'firebase_options.dart';
 import 'src/app.dart';
 import 'src/config/language/languages.dart';
@@ -63,17 +64,29 @@ void main() async {
     ErrorWidget.builder =
         (FlutterErrorDetails details) => const ExceptionView();
   }
-  runApp(
-    EasyLocalization(
-      supportedLocales: Languages.suppoerLocales,
-      path: 'assets/translations',
-      saveLocale: true,
-      startLocale: Languages.getDeviceLocaleFromPlatform().locale,
-      fallbackLocale: const Locale('ar'),
-      child: const RootRestorationScope(
-          restorationId:'app',
-          child: Sitr()
-      ),
-    ),
+  _initSentry();
+}
+
+void _initSentry()async{
+  await SentryFlutter.init(
+        (options) {
+      options.dsn = 'https://cb95fd92d19a9f57924ae8dba99d9df4@o4508946921291776.ingest.us.sentry.io/4510555526070272';
+      // Adds request headers and IP for users, for more info visit:
+      // https://docs.sentry.io/platforms/dart/guides/flutter/data-management/data-collected/
+      options.sendDefaultPii = true;
+    },
+      appRunner: () => runApp(
+        EasyLocalization(
+          supportedLocales: Languages.suppoerLocales,
+          path: 'assets/translations',
+          saveLocale: true,
+          startLocale: Languages.getDeviceLocaleFromPlatform().locale,
+          fallbackLocale: const Locale('ar'),
+          child: const RootRestorationScope(
+              restorationId:'app',
+              child: Sitr()
+          ),
+        ),
+      )
   );
 }

@@ -26,6 +26,7 @@ import '../../core/shared/models/title_value_shape.dart';
 import '../../core/shared/models/user_models/individual/female_model.dart';
 import '../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../core/shared/models/user_models/individual/male_model.dart';
+import '../../core/shared/models/user_models/parent/parent_model.dart';
 import '../../core/shared/models/user_models/user_model.dart';
 import '../../core/shared/user_cubit/user_cubit.dart';
 import '../../core/widgets/app_bottom_sheet.dart';
