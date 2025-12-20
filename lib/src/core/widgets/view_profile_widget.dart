@@ -181,7 +181,7 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
           centerCardBody: StatusBuilder(
             data: state,
             onSuccess: (data, context) => SizedBox(
-              width: context.width,
+              width: double.infinity,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 10.h,
@@ -214,7 +214,7 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                         AppText((state.data as IndividualUserModel).nickName??'', fontWeight: FontWeight.bold),
                         if(widget._type.isProfile)
                           AppText(
-                            '${LocaleKeys.numberOfProfileVisits} : ${(state.data as IndividualUserModel).views}',
+                            '${LocaleKeys.numberOfProfileVisits} : ${state.data.views}',
                             fontSize: 10.sp,
                             color: AppColors.primary,
                             fontWeight: FontWeight.bold,

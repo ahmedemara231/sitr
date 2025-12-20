@@ -10,34 +10,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="```&#10;feat(auth): Improve &quot;add child&quot; navigation flow&#10;&#10;This commit refactors the navigation flow when a parent adds a new child, ensuring a smoother user experience.&#10;&#10;- **feat(auth):**&#10;  - In `add_child_sheet.dart`, the bottom sheet is now programmatically closed (`2.pop()`) before navigating to the child data entry screen.&#10;  - This prevents the sheet from remaining visible in the background and ensures a cleaner transition for the user.&#10;- **chore(ide):**&#10;  - Ignored changes in `.idea/workspace.xml`.">
-      <change afterPath="$PROJECT_DIR$/.idea/AndroidProjectSystem.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/.kotlin/errors/errors-1765967214986.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/.kotlin/errors/errors-1765967354719.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shorebird.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.claude/settings.local.json" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/settings.local.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/appp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/appp.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/extensions/string_extension.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/extensions/string_extension.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/parent_children_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/parent_children_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/individual/individual_user_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/individual/individual_user_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/parent/parent_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/parent/parent_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/user_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/user_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/view_profile_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/view_profile_widget.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/features/auth/imports.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/imports.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/cubits/add_child.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/cubits/add_child.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/data/auth_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/data/auth_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/screens/enter_male_female_child_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/screens/enter_male_female_child_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/screens/sign_up.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/screens/sign_up.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/otp/presentation/cubits/otp_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/otp/presentation/cubits/otp_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/splash/splash_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/splash/splash_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/parent_profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/parent_profile.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,6 +84,12 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "ahmedemara231"
+  }
+}]]></component>
   <component name="GitLabMergeRequestFiltersHistory">{
   &quot;lastFilter&quot;: {
     &quot;state&quot;: &quot;OPENED&quot;,
@@ -116,13 +106,13 @@
     &quot;second&quot;: &quot;c1d13d60-3f83-4a7f-b8f8-32d92528ad16&quot;
   }
 }</component>
-  <component name="GradleScriptDefinitionsStorage" workingDir="$USER_HOME$/Downloads/flutter_setups/flutter4/packages/flutter_tools/gradle" gradleHome="$USER_HOME$/.gradle/wrapper/dists/gradle-9.0-milestone-1-bin/3vdepk4s12bybhohyuvjcm1bd/gradle-9.0-milestone-1" javaHome="/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home" gradleVersion="9.0-milestone-1">
-    <option name="jvmArguments">
-      <list>
-        <option value="-Didea.gradle.download.sources.force=true" />
-      </list>
-    </option>
-  </component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/flutter/flutter.git",
+    "accountId": "bd97c308-8af7-4c94-93db-4c0582174744"
+  }
+}]]></component>
+  <component name="GradleScriptDefinitionsStorage" workingDir="$USER_HOME$/Downloads/flutter_setups/flutter4/packages/flutter_tools/gradle" gradleHome="$USER_HOME$/.gradle/wrapper/dists/gradle-9.0-milestone-1-bin/3vdepk4s12bybhohyuvjcm1bd/gradle-9.0-milestone-1" javaHome="/Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home" gradleVersion="9.0-milestone-1" />
   <component name="ProblemsViewState">
     <option name="autoscrollToSource" value="true" />
   </component>
@@ -145,32 +135,32 @@
     <option name="foldersAlwaysOnTop" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Flutter.main.dart.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "ShowUsagesActions.previewPropertyKey": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "com.google.services.firebase.aqiPopupShown": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "finishChat",
-    "io.flutter.reload.alreadyRun": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/aaita/Desktop/apps/new_crud_satr/lib/src/core/widgets",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.17",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "flutter.settings",
-    "show.migrate.to.gradle.popup": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Flutter.main.dart.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;ShowUsagesActions.previewPropertyKey&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;finishChat&quot;,
+    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/aaita/Desktop/apps/new_crud_satr/lib/src/core/widgets&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;flutter.settings&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib/src/core/widgets" />
@@ -268,14 +258,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
-    </task>
-    <task id="LOCAL-00135" summary="```&#10;feat(chat): Add engagement stage and finish chat flow&#10;&#10;This commit introduces a new &quot;engagement&quot; stage to the chat flow, allowing users to finalize their interaction and conclude the chat. It also includes several related UI and API enhancements.&#10;&#10;- **feat(chat):**&#10;  - Added a new `finish-chat` API endpoint and a corresponding `CongratsCubit` to handle the finalization of a chat. [0, 9]&#10;  - A new `CongratsSheet` is introduced. When a user reaches the engagement tips (`isEngagementTips`), this sheet is displayed, informing them that the administration will contact them to arrange a meeting. It provides a button to navigate back to the home screen. [4, 11]&#10;  - The chat screen now triggers the `CongratsSheet` when the `isEngagementTips` condition is met. [4]&#10;  - The `EnterParentPhoneSheet` is now shown when the user status is `isParentExchangeNumbers`, allowing parents to exchange numbers at the appropriate stage. [4]&#10;&#10;- **refactor(ui):**&#10;  - Renamed `AuthScaffold` to `CenterCardScaffold` for more generic use, as it is now used across various features like main screen, profile views, and auth. [3, 7, 13, 14, 15, 17, 18]&#10;  - In `terms_andcondition_and_about_us.dart`, the content is now rendered using the `flutter_html` package instead of a simple `AppText` widget, allowing for rich text formatting. [1]&#10;  - The Zego video call button is now correctly displayed during the Sharia-compliant meeting stage. [4]&#10;&#10;- **fix(chat):**&#10;  - In `upload_image.dart`, the `mapper` now correctly parses the `file_url` from the JSON response instead of `file_name`, fixing image uploads in chat. [6]&#10;  - The `onUpload` callback in `chat_image_viewer.dart` now correctly passes the returned data, ensuring the new image URL is sent in the socket message. [12]&#10;&#10;- **chore(i18n):**&#10;  - Added new translation keys for the engagement stage, including `tips_for_engagement_stage` and the confirmation message for the `CongratsSheet`. [5, 8, 10, 16]">
-      <option name="closed" value="true" />
-      <created>1764242574501</created>
-      <option name="number" value="00135" />
-      <option name="presentableId" value="LOCAL-00135" />
-      <option name="project" value="LOCAL" />
-      <updated>1764242574502</updated>
     </task>
     <task id="LOCAL-00136" summary="```&#10;refactor(core): Implement pull-to-refresh and enhance pagination and APIs&#10;&#10;This commit refactors several screens to use a consistent pull-to-refresh mechanism and improves API data handling, particularly for pagination and success/error messages. It also introduces new data models and refactors cubits for better state management and UI feedback.&#10;&#10;- **refactor(core):**&#10;  - Implemented a consistent pull-to-refresh pattern using a `withPullRefresher` extension on `MainView`, `ParentProfileScreen`, `ChatsScreen`, `FilterResult`, `NotificationsScreen`, `ParentDetails`, and `ViewProfileWidget`. [5, 6, 8, 12, 14, 15, 16, 21, 23, 27]&#10;  - Removed the `onRefresh` parameter from `AppScaffold` and `CenterCardScaffold` as pull-to-refresh is now handled by a dedicated widget. [11, 25, 26]&#10;  - Many cubits (`UnBlockUserCubit`, `ContactUsCubit`, `LogoutCubit`, `DeleteAccountCubit`, `AddComplaintCubit`, `EditProfileCubit`, `ChangePhoneManager`) now pass the success message from the API response to the `onSuccess` callback, allowing for dynamic user feedback. [2, 3, 10, 18, 19, 20, 22, 28, 29, 31, 32]&#10;  - The `BlockManagerSheet` now uses the success message from the API and includes an `onPress` callback to update the UI after an action. [30]&#10;&#10;- **refactor(pagination):**&#10;  - Created a new `more_data.dart` data layer to handle paginated fetching for blocked users and complaints. [7]&#10;  - `FetchBlockUserCubit` has been removed and its logic is now handled directly by `AppPagify` using `MoreData.getBlockedUsers`. [1]&#10;  - `ComplaintsAndSuggestionsScreen` and `BlockedUserScreen` now use `AppPagify` for data fetching and display. [24, 33, 34]&#10;  - API calls for fetching notifications, parent children, and filtered results now correctly include the `page` parameter for pagination. [4, 13, 22]&#10;&#10;- **fix(chat):**&#10;  - In `chat_screen.dart`, when sending an image, the message body now correctly uses `url.split(&quot;/&quot;).last` to send only the file name, aligning with API expectations. [0]&#10;  - Removed a redundant `EnterParentPhoneSheet` display block from `chat_screen.dart`. [0]&#10;  - Messages in `MessageWidget` are now selectable and auto-link URLs for better usability, using the `flutter_linkify` package. [23, 27]&#10;&#10;- **feat(data):**&#10;  - Introduced new strongly-typed data models for the home screen response in `home_data_model.dart`, replacing generic `Map&lt;String, dynamic&gt;` parsing. [9]&#10;&#10;- **chore(ide):**&#10;  - Updated IDE configuration files (`workspace.xml`, `deviceStreaming.xml`, `markdown.xml`, `studiobot.xml`). [10, 17, 35, 36, 37]">
       <option name="closed" value="true" />
@@ -661,7 +643,15 @@
       <option name="project" value="LOCAL" />
       <updated>1765986946294</updated>
     </task>
-    <option name="localTasksCounter" value="184" />
+    <task id="LOCAL-00184" summary="```&#10;feat(auth): Improve &quot;add child&quot; navigation flow&#10;&#10;This commit refactors the navigation flow when a parent adds a new child, ensuring a smoother user experience.&#10;&#10;- **feat(auth):**&#10;  - In `add_child_sheet.dart`, the bottom sheet is now programmatically closed (`2.pop()`) before navigating to the child data entry screen.&#10;  - This prevents the sheet from remaining visible in the background and ensures a cleaner transition for the user.&#10;- **chore(ide):**&#10;  - Ignored changes in `.idea/workspace.xml`.">
+      <option name="closed" value="true" />
+      <created>1766059468895</created>
+      <option name="number" value="00184" />
+      <option name="presentableId" value="LOCAL-00184" />
+      <option name="project" value="LOCAL" />
+      <updated>1766059468895</updated>
+    </task>
+    <option name="localTasksCounter" value="185" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -719,7 +709,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/src/core/shared/models/user_models/user_model.dart</url>
-          <line>256</line>
+          <line>258</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">

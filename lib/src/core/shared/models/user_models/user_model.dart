@@ -32,6 +32,7 @@ class UserModel {
   final bool? canChat;
   final bool? hasChatWith;
   final bool? isParentMatch;
+  final int? views;
 
   const UserModel({
     this.hasActivePackage = false,
@@ -55,6 +56,7 @@ class UserModel {
     this.canChat,
     this.hasChatWith,
     this.isParentMatch,
+    this.views,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {

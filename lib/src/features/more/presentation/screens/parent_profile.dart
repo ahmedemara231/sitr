@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../generated/assets.dart' show Assets;
 import '../../../../config/language/locale_keys.g.dart';
+import '../../../../config/res/config_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/padding_extension.dart';
@@ -78,18 +79,28 @@ class _ParentProfileState extends State<ParentProfile> {
               data: state,
               onSuccess: (data, context) => Container(
                 height: 100,
+                width: double.infinity,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(12.r)
                 ),
-                child: Align(
-                    alignment: Alignment.centerRight,
-                    child: AppText(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppText(
                         data.name ?? '',
                         fontSize: 20.sp,
                         fontWeight: FontWeight.bold
-                    ).paddingSymmetric(horizontal: 12.w)
-                ),
+                    ),
+
+                    AppText(
+                      '${LocaleKeys.numberOfProfileVisits} : ${state.data.views}',
+                      fontSize: 10.sp,
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.bold,
+                    )
+                  ],
+                ).paddingSymmetric(horizontal: 12.w),
               ),
             ),
             body: Column(

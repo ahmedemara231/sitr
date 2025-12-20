@@ -34,7 +34,6 @@ class IndividualUserModel extends UserModel {
   final bool? tribeAffiliation;
   final TitleValueShape? skinColor;
   final TitleValueShape? religiousCommitment;
-  final int? views;
   final ChildParentInfo? childParentInfo;
 
   IndividualUserModel({
@@ -59,6 +58,7 @@ class IndividualUserModel extends UserModel {
     super.canChat,
     super.hasChatWith,
     super.isParentMatch,
+    super.views,
 
     this.childParentInfo,
     this.dowry,
@@ -83,7 +83,6 @@ class IndividualUserModel extends UserModel {
     this.tribeAffiliation,
     this.skinColor,
     this.religiousCommitment,
-    this.views,
   });
 
   factory IndividualUserModel.initial() => IndividualUserModel(

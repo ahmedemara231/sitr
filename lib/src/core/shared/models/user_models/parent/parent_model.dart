@@ -31,6 +31,7 @@ class ParentModel extends UserModel {
     super.canChat,
     super.hasChatWith,
     super.isParentMatch,
+    super.views,
 
     this.email,
     this.relation,
@@ -41,6 +42,7 @@ class ParentModel extends UserModel {
 
   factory ParentModel.fromJson(Map<String, dynamic> json) {
     return ParentModel(
+      views: json['views'],
       hasActivePackage: json['has_active_package'],
       isNotify: json['is_notify'],
       canChat: json['can_chat'],

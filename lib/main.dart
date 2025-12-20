@@ -64,6 +64,7 @@ void main() async {
     ErrorWidget.builder =
         (FlutterErrorDetails details) => const ExceptionView();
   }
+
   _initSentry();
 }
 
