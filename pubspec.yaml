@@ -46,9 +46,9 @@ dependencies:
   webview_flutter: ^4.13.0
   internet_connection_checker: ^3.0.1
 
-  zego_uikit_prebuilt_call: ^4.21.0
-  zego_uikit_signaling_plugin: ^2.8.19
-  zego_uikit: ^2.28.32
+  zego_uikit_prebuilt_call: ^4.22.2
+  zego_uikit_signaling_plugin: ^2.8.20
+  zego_uikit: ^2.28.38
 
 
   #--------------------- State Management & Utilities -----------------------

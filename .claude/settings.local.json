@@ -12,7 +12,8 @@
       "Bash(./android/gradlew:*)",
       "Bash(rm:*)",
       "Bash(pod install:*)",
-      "Bash(flutter pub get:*)"
+      "Bash(flutter pub get:*)",
+      "Bash(flutter pub:*)"
     ],
     "deny": [],
     "ask": []

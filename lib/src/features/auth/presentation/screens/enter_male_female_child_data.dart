@@ -147,22 +147,15 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
           spacing: 10.h,
           children: [
             if(widget.showGenderSelection)
-              InkWell(
-                onTap: () {
-                  log('message"""" ${(UserModel.currentUser as ParentModel).maleChildrenNum}');
-                  log('message"""" ${(UserModel.currentUser as ParentModel).femaleChildrenNum}');
-                  log('message"""" ${(UserModel.currentUser as ParentModel).toJson()}');
-                },
-                child: ChooseGenderWidget(
-                  // titles: (element) => element.translate,
-                  titles: (element) => '${element.translate}  ${element.isFemale? (UserModel.currentUser as ParentModel).femaleChildrenNum : (UserModel.currentUser as ParentModel).maleChildrenNum}',
-                  canChoose: true,
-                  onSelectGender: (selectedGender) => _mainType.value = selectedGender,
-                  genders: const [
-                    UserGender.male,
-                    UserGender.female,
-                  ],
-                ),
+              ChooseGenderWidget(
+                // titles: (element) => element.translate,
+                titles: (element) => '${element.translate}  ${element.isFemale? (UserModel.currentUser as ParentModel).femaleChildrenNum : (UserModel.currentUser as ParentModel).maleChildrenNum}',
+                canChoose: true,
+                onSelectGender: (selectedGender) => _mainType.value = selectedGender,
+                genders: const [
+                  UserGender.male,
+                  UserGender.female,
+                ],
               ),
 
             if(widget.withParent)

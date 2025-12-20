@@ -223,23 +223,23 @@ PODS:
     - Flutter
   - zego_express_engine (3.22.1):
     - Flutter
-  - zego_uikit (2.28.34):
+  - zego_uikit (2.28.37):
     - Flutter
     - Masonry
     - zego_express_engine
     - ZegoUIKitReport (= 0.2.10)
-  - zego_uikit_prebuilt_call (4.21.0):
+  - zego_uikit_prebuilt_call (4.22.2):
     - Flutter
-  - zego_uikit_signaling_plugin (0.0.1):
+  - zego_uikit_signaling_plugin (2.8.19):
     - Flutter
-  - zego_zim (2.23.0):
+  - zego_zim (2.25.0):
     - Flutter
-    - ZIM (= 2.24.0)
+    - ZIM (= 2.25.0)
   - zego_zpns (2.6.0):
     - Flutter
     - ZPNs (= 2.6.0)
   - ZegoUIKitReport (0.2.10)
-  - ZIM (2.24.0)
+  - ZIM (2.25.0)
   - ZIPFoundation (0.9.20)
   - ZPNs (2.6.0)
 
@@ -478,13 +478,13 @@ SPEC CHECKSUMS:
   webview_flutter_wkwebview: 8ebf4fded22593026f7dbff1fbff31ea98573c8d
   zego_callkit: 8e3bc2e9fc6895cff1b27841b1de1100344d2613
   zego_express_engine: 2c33d9ea93665061330aad01cb41f8d3202136fc
-  zego_uikit: a3d6c8aa5e7ed74c8e92595d608b80f5a39a9338
-  zego_uikit_prebuilt_call: f15a863305188364a862316529d94aaaa7d70091
-  zego_uikit_signaling_plugin: 89c53a021d449903c6e6a0642383bb7e5791e46e
-  zego_zim: 998ebe1dbd1edb325cd1327354baf5c95635d9ad
+  zego_uikit: 6064a39817a431fa567c112fd5b722aa737cd82a
+  zego_uikit_prebuilt_call: be5d85deb992269ed89736b02f07dca47da56360
+  zego_uikit_signaling_plugin: ffced40608c89b1ac0241a6194dacb9bc5af19b7
+  zego_zim: 51534d092fcbaf994e8fd8cbc1269f00c7ead6fd
   zego_zpns: e2ef9b972e9b6be00b78b32b71c550c426584752
   ZegoUIKitReport: a993f7ccc5d243998a7e601a60e16fcd6c084417
-  ZIM: 6d5706e6a0ad3e6500ccacb8eede4324f878c195
+  ZIM: 75fde45d5cb5802f9dedba9c3de0798fde559643
   ZIPFoundation: dfd3d681c4053ff7e2f7350bc4e53b5dba3f5351
   ZPNs: 73bad0046a74e37315201053f9a0e7ac625d9436
 
