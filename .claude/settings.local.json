@@ -9,7 +9,10 @@
       "Bash(flutter build:*)",
       "Bash(./gradlew:*)",
       "Bash(ls:*)",
-      "Bash(./android/gradlew:*)"
+      "Bash(./android/gradlew:*)",
+      "Bash(rm:*)",
+      "Bash(pod install:*)",
+      "Bash(flutter pub get:*)"
     ],
     "deny": [],
     "ask": []

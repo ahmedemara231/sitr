@@ -6,14 +6,12 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/shared_preferences_windows-2.4.1" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/camera_web-0.3.5" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/file_selector_windows-0.9.3+4" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_messaging-16.0.3" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/image_cropper-9.1.0" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/vibration-3.1.4" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_auth-6.1.1" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_auth_web-6.0.4" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_secure_storage-9.2.4" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/just_audio-0.10.5" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_core-4.2.0" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/zego_zpns-2.8.0" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/url_launcher_ios-6.3.5" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/audioplayers-6.5.1" />
@@ -30,7 +28,6 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/shared_preferences-2.5.3" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/file_selector_macos-0.9.4+5" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_app_check-0.4.1+1" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_messaging_web-4.0.3" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_linux-2.2.1" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/connectivity_plus-6.1.5" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/jni-0.14.2" />
@@ -58,7 +55,6 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/webview_flutter-4.13.0" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/zego_callkit-1.0.0+5" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/audioplayers_web-5.1.1" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_core_web-3.2.0" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_secure_storage_windows-3.1.2" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/file_selector_android-0.5.2+1" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/sqflite-2.4.2" />
@@ -94,6 +90,10 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_local_notifications_windows-1.0.3" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/image_picker-1.2.0" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/shared_preferences_foundation-2.5.5" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_core_web-3.3.1" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_messaging-16.1.0" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_core-4.3.0" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_messaging_web-4.1.1" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
