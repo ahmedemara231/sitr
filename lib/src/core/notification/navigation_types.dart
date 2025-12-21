@@ -66,12 +66,15 @@ enum NotificationType {
   parentIndividualTimerEnded('parent_individual_timer_ended', navigation: MatchRequestNavigation()),
   parentApprovedIndividual('parent_approved_individual', navigation: MatchRequestNavigation()),
   parentApprovedToChildren('parent_approved_to_children', navigation: MatchRequestNavigation()),
+  adminAddedChild('admin_added_child', navigation: AdminActionWithChild()),
 
   // action with Children
   adminRejectChild('admin_rejected_child', navigation: AdminActionWithChild()),
   adminApprovedChild('admin_approved_child', navigation: AdminActionWithChild()),
 
   // 💰 Package and Code
+  adminAssignedPackage('admin_assigned_package', navigation: PackagesNavigation()),
+  adminAssignedSetrCode('admin_assigned_setr_code', navigation: NoNavigation()),
   packageExpired('package_expired', navigation: PackagesNavigation()),
   setrCodeExpired('setr_code_expired', navigation: SetrCodeNavigation());
 
