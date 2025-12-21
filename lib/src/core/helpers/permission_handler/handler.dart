@@ -78,48 +78,41 @@ class PermissionHandler{
 
     // iOS-specific: If permission is denied, treat as permanently denied
     // because requesting again will immediately return permanentlyDenied
-    if(Platform.isIOS && permissionStatus == PermissionStatus.denied) {
-      log('iOS: Permission already denied once, treating as permanently denied');
-      await onPermissionDeniedForever?.call(permission);
-      if(openSetting){
-        await openAppSettings();
-      }
-      return;
-    }
+    if(permissionStatus == PermissionStatus.denied) {
+      log('Requesting permission...');
+      final PermissionStatus status = await permission.request();
+      log('Permission request result: $status');
 
-    log('Requesting permission...');
-    final PermissionStatus status = await permission.request();
-    log('Permission request result: $status');
+      switch(status) {
+        case PermissionStatus.granted:
+          await onPermissionGranted?.call(permission);
+          break;
 
-    switch(status) {
-      case PermissionStatus.granted:
-        await onPermissionGranted?.call(permission);
-        break;
-
-      case PermissionStatus.denied:
+        case PermissionStatus.denied:
         // First denial - on Android this is normal, on iOS this shouldn't happen
         // because we handle denied status above
-        await onPermissionDenied?.call(permission);
-        break;
+          await onPermissionDenied?.call(permission);
+          break;
 
-      case PermissionStatus.permanentlyDenied:
-        await onPermissionDeniedForever?.call(permission);
-        if(openSetting){
-          await openAppSettings();
-        }
-        break;
+        case PermissionStatus.permanentlyDenied:
+          await onPermissionDeniedForever?.call(permission);
+          if(openSetting){
+            await openAppSettings();
+          }
+          break;
 
-      case PermissionStatus.limited:
-        await onPermissionLimited?.call(permission);
-        break;
+        case PermissionStatus.limited:
+          await onPermissionLimited?.call(permission);
+          break;
 
-      case PermissionStatus.restricted:
+        case PermissionStatus.restricted:
         // iOS: Permission restricted by parental controls or device management
-        await onPermissionDeniedForever?.call(permission);
-        break;
+          await onPermissionDeniedForever?.call(permission);
+          break;
 
-      default:
-        return;
+        default:
+          return;
+      }
     }
   }
 }
