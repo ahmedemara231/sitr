@@ -8,6 +8,7 @@ enum NotificationType {
   block('block', navigation: LoginNavigation()),
   unblocked('unblocked', navigation: UpdateNavigation()),
   userUnblockedYou('user_unblocked_you', navigation: UserUnblockedYou()),
+  adminProfileUpdated('admin_profile_updated', navigation: ProfileNavigation()),
 
   // 📋 Complaints
   complaintReply('complaint_reply', navigation: ComplaintNavigation()),

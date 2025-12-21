@@ -39,6 +39,15 @@ class HomeNavigation implements NotificationNavigation {
   }
 }
 
+class ProfileNavigation implements NotificationNavigation {
+  const ProfileNavigation();
+
+  @override
+  void navigate({required Map<String, dynamic> data}) {
+    Go.to(const ProfileScreen());
+  }
+}
+
 // ----------------- Update / Profile Approval -----------------
 class UpdateNavigation implements NotificationNavigation {
   const UpdateNavigation();
