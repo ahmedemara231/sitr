@@ -40,17 +40,13 @@ class _LoadingButtonState extends State<LoadingButton> {
 
   EasyButtonState _easyButtonState = EasyButtonState.idle;
 
-  bool isLoading = false;
   Future<void> asyncCall(BuildContext context)async{
     try {
-      isLoading = true;
       _changeState(EasyButtonState.loading);
       await widget.call(context);
-      isLoading = false;
       _changeState(EasyButtonState.idle);
 
     } finally {
-      isLoading = false;
       _changeState(EasyButtonState.idle);
     }
   }
@@ -58,7 +54,7 @@ class _LoadingButtonState extends State<LoadingButton> {
   @override
   Widget build(BuildContext context) {
     return EasyButton(
-        state: isLoading? EasyButtonState.loading : EasyButtonState.idle,
+        state: _easyButtonState,
         buttonColor: widget.btnColor,
         borderRadius: widget.borderRadius,
         contentGap: widget.contentGap,

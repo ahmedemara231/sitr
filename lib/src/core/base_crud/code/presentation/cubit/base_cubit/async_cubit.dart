@@ -74,24 +74,45 @@ abstract class AsyncCubit<T> extends Cubit<AsyncState<T>> {
     );
   }
 
-  StreamSubscription? _streamSubscription;
   Future<void> executeAsyncWithBaseModel({
     required Future<Result<BaseModel<T>, Failure>> Function() operation,
-    Function(BaseModel<T>)? onSuccess,
-    bool enableInternetInterceptor = false,
+    FutureOr<void> Function(BaseModel<T>)? onSuccess,
   }) async {
-    if(enableInternetInterceptor){
-      _basicOperationWithInternetInterceptor(
-          operation: operation,
-          successEmitter: onSuccess
-      );
-    }else{
-      _basicOperation(
-          operation: operation,
-          successEmitter: onSuccess
-      );
-    }
+    setLoading();
+    final result = await operation();
+    result.when(
+          (success) {
+        setSuccess(data: success.data);
+        if (onSuccess != null) {
+          onSuccess(success);
+        }
+      },
+          (failure) {
+        MessageUtils.showSnackBar(failure.message);
+        setError(errorMessage: failure.message);
+      },
+    );
   }
+
+
+  StreamSubscription? _streamSubscription;
+  // Future<void> executeAsyncWithBaseModel({
+  //   required Future<Result<BaseModel<T>, Failure>> Function() operation,
+  //   Function(BaseModel<T>)? onSuccess,
+  //   bool enableInternetInterceptor = false,
+  // }) async {
+  //   if(enableInternetInterceptor){
+  //     _basicOperationWithInternetInterceptor(
+  //         operation: operation,
+  //         successEmitter: onSuccess
+  //     );
+  //   }else{
+  //     _basicOperation(
+  //         operation: operation,
+  //         successEmitter: onSuccess
+  //     );
+  //   }
+  // }
 
 
   void _basicOperationWithInternetInterceptor({
