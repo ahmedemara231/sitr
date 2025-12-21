@@ -40,7 +40,7 @@ class Helpers {
         currentUserId: UserCubit.instance.user.id.toString(),
         currentUserName: UserCubit.instance.user.name??'',
 
-        callDuration: const Duration(minutes: 1)
+        callDuration: const Duration(minutes: 3)
       );
 
       if (isConnected ?? false) {
@@ -106,13 +106,18 @@ class Helpers {
     Permission permission, {
     required FutureOr<void> Function(Permission permission)? onGranted,
     required FutureOr<void> Function(Permission permission)? onDenied,
+    FutureOr<void> Function(Permission permission)? onDeniedForever,
+    FutureOr<void> Function(Permission permission)? onLimited,
+    bool openSettingsOnPermanentDenial = false,
   }) async {
     await PermissionHandler().checkPermission(
+      openSetting: openSettingsOnPermanentDenial,
         permissionManagerModel: PermissionModel(
       permissions: [permission],
       onGranted: onGranted,
       onDenied: onDenied,
-      onDeniedForever: onDenied,
+      onDeniedForever: onDeniedForever ?? onDenied,
+      onPermissionLimited: onLimited ?? onGranted,
     ));
   }
 
@@ -129,34 +134,63 @@ class Helpers {
                   leading: const Icon(Icons.photo_library),
                   title: Text(LocaleKeys.photoLibrary),
                   onTap: () async {
-                    checkPermission(Permission.photos, onGranted: (permission) async {
-                      final currentImage =
-                          await picker.pickImage(source: ImageSource.gallery);
-                      if (currentImage != null) {
-                        image = File(currentImage.path);
-                      }
-                      Go.back();
-                    }, onDenied: (permission) {
-                      MessageUtils.showSnackBar(
-                          LocaleKeys.unableToAccessPhotosPleaseOpenIt);
-                    });
+                    checkPermission(
+                      Platform.isIOS?
+                      Permission.storage :
+                      Permission.photos,
+                      onGranted: (permission) async {
+                        final currentImage =
+                            await picker.pickImage(source: ImageSource.gallery);
+                        if (currentImage != null) {
+                          image = File(currentImage.path);
+                        }
+                        Go.back();
+                      },
+                      onDenied: (permission) {
+                        MessageUtils.showSnackBar(
+                            LocaleKeys.unableToAccessPhotosPleaseOpenIt);
+                      },
+                      onDeniedForever: (permission) {
+                        MessageUtils.showSnackBar(
+                            LocaleKeys.unableToAccessPhotosPleaseOpenIt);
+                        openAppSettings();
+                      },
+                      onLimited: (permission) async {
+                        // iOS limited photo access - treat as granted
+                        final currentImage =
+                            await picker.pickImage(source: ImageSource.gallery);
+                        if (currentImage != null) {
+                          image = File(currentImage.path);
+                        }
+                        Go.back();
+                      },
+                    );
                   },
                 ),
                 ListTile(
                   leading: const Icon(Icons.photo_camera),
                   title: Text(LocaleKeys.camera),
                   onTap: () async {
-                    checkPermission(Permission.camera, onGranted: (permission) async {
-                      final currentImage =
-                          await picker.pickImage(source: ImageSource.camera);
-                      if (currentImage != null) {
-                        image = File(currentImage.path);
-                      }
-                      Go.back();
-                    }, onDenied: (permission) {
-                      MessageUtils.showSnackBar(
-                          LocaleKeys.unableToAccessCameraPleaseOpenIt);
-                    });
+                    checkPermission(
+                      Permission.camera,
+                      onGranted: (permission) async {
+                        final currentImage =
+                            await picker.pickImage(source: ImageSource.camera);
+                        if (currentImage != null) {
+                          image = File(currentImage.path);
+                        }
+                        Go.back();
+                      },
+                      onDenied: (permission) {
+                        MessageUtils.showSnackBar(
+                            LocaleKeys.unableToAccessCameraPleaseOpenIt);
+                      },
+                      onDeniedForever: (permission) {
+                        MessageUtils.showSnackBar(
+                            LocaleKeys.unableToAccessCameraPleaseOpenIt);
+                        openAppSettings();
+                      },
+                    );
                   },
                 ),
               ],

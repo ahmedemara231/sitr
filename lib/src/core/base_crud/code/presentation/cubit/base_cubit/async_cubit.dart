@@ -1,10 +1,14 @@
 import 'dart:async';
+import 'dart:developer';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multiple_result/multiple_result.dart';
+import '../../../../../../config/language/locale_keys.g.dart';
 import '../../../../../../config/res/config_imports.dart';
 import '../../../../../error/failure.dart';
+import '../../../../../extensions/object.dart';
 import '../../../../../shared/base_state.dart';
 import '../../../../../widgets/custom_messages.dart';
 import '../../../domain/base_domain_imports.dart';
@@ -70,17 +74,63 @@ abstract class AsyncCubit<T> extends Cubit<AsyncState<T>> {
     );
   }
 
+  StreamSubscription? _streamSubscription;
   Future<void> executeAsyncWithBaseModel({
     required Future<Result<BaseModel<T>, Failure>> Function() operation,
-    FutureOr<void> Function(BaseModel<T>)? onSuccess,
+    Function(BaseModel<T>)? onSuccess,
+    bool enableInternetInterceptor = false,
   }) async {
+    if(enableInternetInterceptor){
+      _basicOperationWithInternetInterceptor(
+          operation: operation,
+          successEmitter: onSuccess
+      );
+    }else{
+      _basicOperation(
+          operation: operation,
+          successEmitter: onSuccess
+      );
+    }
+  }
+
+
+  void _basicOperationWithInternetInterceptor({
+    required Future<Result<BaseModel<T>, Failure>> Function() operation,
+    Function(BaseModel<T>)? successEmitter,
+  }){
+    // Make the initial API call
+    // _basicOperation(
+    //     operation: operation,
+    //     successEmitter: successEmitter
+    // );
+
+    _streamSubscription = Connectivity().onConnectivityChanged.listen((status){
+      log('the current state is $status');
+      if(status.contains(ConnectivityResult.none)){
+        MessageUtils.showSnackBar(LocaleKeys.theInternetConnectionIsDisabled);
+        emit(state.error(errorMessage: LocaleKeys.theInternetConnectionIsDisabled));
+
+      }else{
+        MessageUtils.showSnackBar(LocaleKeys.theInternetConnectionIsRestored);
+        _basicOperation(
+            operation: operation,
+            successEmitter: successEmitter
+        );
+      }
+    });
+  }
+
+  Future<void> _basicOperation({
+    required Future<Result<BaseModel<T>, Failure>> Function() operation,
+    Function(BaseModel<T>)? successEmitter,
+  })async{
     setLoading();
     final result = await operation();
     result.when(
           (success) {
         setSuccess(data: success.data);
-        if (onSuccess != null) {
-          onSuccess(success);
+        if (successEmitter != null) {
+          successEmitter(success);
         }
       },
           (failure) {
@@ -88,6 +138,12 @@ abstract class AsyncCubit<T> extends Cubit<AsyncState<T>> {
         setError(errorMessage: failure.message);
       },
     );
+  }
+
+  @override
+  Future<void> close() {
+    _streamSubscription?.cancel();
+    return super.close();
   }
 
   @override

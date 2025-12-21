@@ -155,7 +155,7 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
 
               EasyTimerCount.builder(
                   controller: _timeCont,
-                  duration: const EasyTime(seconds: 3),
+                  duration: const EasyTime(minutes: 1),
                   builder: (time) => Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

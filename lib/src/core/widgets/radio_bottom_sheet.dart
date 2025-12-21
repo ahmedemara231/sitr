@@ -5,6 +5,7 @@ import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../extensions/padding_extension.dart';
 import 'app_text.dart';
+import 'buttons/app_loading_button.dart';
 import 'buttons/custom_app_buttons/loading_button.dart';
 
 // T is the dataType
@@ -73,14 +74,10 @@ class _RadioBottomSheetState<T> extends State<RadioBottomSheet<T>> {
                       groupValue: groupValue,
                       onChanged: _changeValue,
                     ),
-                    LoadingButton(
-                      idleWidget: AppText(
-                          widget.btnTitle?? LocaleKeys.confirm,
-                        color: groupValue == null?
-                        Colors.grey[300] : widget.btnColor ?? AppColors.primary,
-                      ),
+                    AppLoadingButton(
+                      title: widget.btnTitle?? LocaleKeys.confirm,
                       height: widget.btnHeight?? 40.h,
-                      call: (BuildContext context) async => groupValue == null? null :
+                      asyncCall: (BuildContext context) async => groupValue == null? null :
                       await widget.onSubmit(groupValue!),
                     ),
                   ],

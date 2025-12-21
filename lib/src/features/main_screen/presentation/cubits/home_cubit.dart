@@ -7,8 +7,9 @@ class MainViewCubit extends AsyncCubit<HomeModel>{
   MainViewCubit() : super(HomeModel());
   
   Future<void> getHomeData()async{
-    executeAsyncWithBaseModel(
-        operation: () => baseCrudUseCase.call(
+    await executeAsyncWithBaseModel(
+      // enableInternetInterceptor: true,
+      operation: () => baseCrudUseCase.call(
           CrudBaseParmas(
             api: ApiConstants.home,
             httpRequestType: HttpRequestType.get,

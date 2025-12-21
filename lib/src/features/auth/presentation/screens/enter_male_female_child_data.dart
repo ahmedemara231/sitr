@@ -194,15 +194,11 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
             if(widget.showConditionsAndTerms)
               const ConditionsTermsAcceptance(),
 
-            LoadingButton(
+            AppLoadingButton(
               height: 45.h,
               borderRadius: ConstantManager.buttonBorderRadiusNumber,
-              idleWidget: AppText(
-                LocaleKeys.confirm,
-                fontSize: 16.sp,
-                color: Colors.white,
-              ),
-                call: (ctx) async => widget.onClick.call(ctx, sharedFormFieldModel)
+              title: LocaleKeys.confirm,
+                asyncCall: (ctx) async => widget.onClick.call(ctx, sharedFormFieldModel)
               // call: (ctx) async => _formKey.currentState!.validate()?
               // widget.onClick.call(ctx, sharedFormFieldModel) : null
             ),

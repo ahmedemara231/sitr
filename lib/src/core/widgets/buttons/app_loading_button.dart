@@ -32,17 +32,15 @@ class AppLoadingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LoadingButton(
-      borderRadius: borderRadius ?? ConstantManager.buttonBorderRadiusNumber,
-      height: height ?? 45.h,
-      width: width ?? double.infinity,
-      btnColor: buttonColor ?? AppColors.primary,
-      idleWidget: AppText(
-        title,
-        fontSize: fontSize ?? 14.sp,
-        fontWeight: fontWeight ?? FontWeight.bold,
-        color: textColor ?? Colors.white,
-      ),
-      call: (BuildContext context) async => await asyncCall.call(context),
+        title: title,
+        width: width,
+        height: height,
+        borderRadius: borderRadius,
+        fontSize: fontSize,
+        textColor: textColor,
+        color: buttonColor,
+        fontWeight: fontWeight,
+        onTap: (context) => asyncCall.call(context)
     );
   }
 }

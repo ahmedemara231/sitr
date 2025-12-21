@@ -66,23 +66,23 @@ class Sitr extends StatelessWidget {
                 // ),
                 home: const SplashScreen(),
                 navigatorObservers: [AppNavigationObserver()],
-                builder: (context, child) {
-                  return InternetInterceptorWidget(
-                    loadingWidget: const SplashLogo(),
-                    onChanged: (previous, current) => _manageInternetConnectivity(context, current),
-                    builder: (previous, current) {
-                      return Stack(
-                        children: [
-                          child!,
-                          if (current == InternetConnectionStatus.disconnected)
-                            const Positioned.fill(
-                              child: NoInternetWidget(),
-                            ),
-                        ],
-                      );
-                    },
-                  );
-                },
+                // builder: (context, child) {
+                //   return InternetInterceptorWidget(
+                //     loadingWidget: const SplashLogo(),
+                //     onChanged: (previous, current) => _manageInternetConnectivity(context, current),
+                //     builder: (previous, current) {
+                //       return Stack(
+                //         children: [
+                //           child!,
+                //           if (current == InternetConnectionStatus.disconnected)
+                //             const Positioned.fill(
+                //               child: NoInternetWidget(),
+                //             ),
+                //         ],
+                //       );
+                //     },
+                //   );
+                // },
               ),
             ),
           ),

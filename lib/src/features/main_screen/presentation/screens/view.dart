@@ -123,7 +123,7 @@ class _MainViewState extends State<MainView> {
                 data: state,
                 onSuccess: (data, context) => ImageSlider(
                     height: context.height / 5,
-                    images: state.data.banners!.map((e) => e.image??'').toList()
+                    images: state.data.banners?.map((e) => e.image??'').toList() ?? []
                 )
             ),
           body: StatusBuilder(
@@ -153,7 +153,7 @@ class _MainViewState extends State<MainView> {
                           valueListenable: secondSelection,
                           builder: (context, val, child) {
                             if(val == UserGender.male.translate){
-                              if(data.opportunities!.male.isNull || data.opportunities!.male!.isEmpty){
+                              if(data.opportunities?.male?.isEmpty ?? true){
                                 return const NotContainData();
                               }else{
                                 return Column(
@@ -175,7 +175,7 @@ class _MainViewState extends State<MainView> {
                               }
                             }
                             else if(val == UserGender.female.translate){
-                              if(data.opportunities!.female.isNull || data.opportunities!.female!.isEmpty){
+                              if(data.opportunities?.female?.isEmpty ?? true){
                                 return const NotContainData();
 
                               }else{
@@ -197,7 +197,7 @@ class _MainViewState extends State<MainView> {
                               }
                             }
                             else{
-                              if(data.opportunities!.parent.isNull || data.opportunities!.parent!.isEmpty){
+                              if(data.opportunities?.parent?.isEmpty ?? true){
                                 return const NotContainData();
 
                               }else{

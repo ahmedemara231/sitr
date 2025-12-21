@@ -43,8 +43,10 @@ class SelectImageWidget extends StatelessWidget {
                 InkWell(
                   onTap: () async{
                     final selectedImage = await Helpers.getImageFromCameraOrDevice();
-                    image.value = selectedImage;
-                    onSelectImage.call(selectedImage);
+                    if(selectedImage.isNotNull){
+                      image.value = selectedImage;
+                      onSelectImage.call(selectedImage);
+                    }
                   },
                   child: Container(
                     padding: EdgeInsets.all(5.r),
