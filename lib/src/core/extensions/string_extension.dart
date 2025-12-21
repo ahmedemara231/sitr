@@ -179,8 +179,8 @@ bool get isImage =>
   }
 
   void manageNavigationBasedCompleteRegisterStatus(UserModel user)async{
-    final CompleteRegisterStatus statusType = user.completeRegistration!._toCompleteRegisterStatus();
-    await UserCubit.instance.init();
+    final CompleteRegisterStatus statusType = user.completeRegistration!.toCompleteRegisterStatus();
+    // await UserCubit.instance.init();
     if(statusType.isCompleted){
       showDefaultBottomSheet(
           enableDrag: false,
@@ -210,14 +210,14 @@ bool get isImage =>
 
     }else if(statusType.isNotSubscribed){
       injector<NetworkService>().setToken(user.token ?? '');
-      Go.to( PackagesScreen.subscription(
+      Go.off( PackagesScreen.subscription(
           paymentMethods: const [PaymentMethod.online],
           userType: user.type?.userType,
           isInAuth: true,
       ));
 
     }else if(statusType.isCompleteChild){
-      Go.to(EnterMaleOrFemaleOrChildDataScreen.showAll(
+      Go.off(EnterMaleOrFemaleOrChildDataScreen.showAll(
           scaffoldType: ScaffoldType.centerCard,
           showConditionsAndTerms: true,
           showAlreadyHaveAccount: true,
@@ -227,7 +227,7 @@ bool get isImage =>
       ));
 
     }else if(statusType.isHasSetrCode){
-      Go.to(
+      Go.off(
           user.type!.userType!.isParent?
           EnterMaleOrFemaleOrChildDataScreen.showAll(
               scaffoldType: ScaffoldType.centerCard,
@@ -249,7 +249,7 @@ bool get isImage =>
       );
 
     }else if(statusType.isIncomplete){
-      Go.to(EnterMaleOrFemaleOrChildDataScreen.individual(
+      Go.off(EnterMaleOrFemaleOrChildDataScreen.individual(
         scaffoldType: ScaffoldType.centerCard,
         showConditionsAndTerms: true,
         showAlreadyHaveAccount: true,
@@ -265,7 +265,7 @@ bool get isImage =>
   }
 
 
-  CompleteRegisterStatus _toCompleteRegisterStatus(){
+  CompleteRegisterStatus toCompleteRegisterStatus(){
     log('complete register state is $this');
     if(this == CompleteRegisterStatus.completed.status){
       return CompleteRegisterStatus.completed;
