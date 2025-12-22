@@ -9,11 +9,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="```&#10;chore(version): Increment build number&#10;&#10;This commit increments the application build number.&#10;&#10;- **chore(version):**&#10;  - The application build number in `pubspec.yaml` has been incremented from `1.0.0+2` to `1.0.0+3`.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`).">
+    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="```&#10;refactor(auth): Improve navigation flow post-authentication&#10;&#10;This commit refactors the navigation logic that follows user authentication, particularly after OTP verification and on the splash screen. The changes ensure a more streamlined and correct redirection based on the user's registration and login status.&#10;&#10;- **refactor(auth):**&#10;  - In `otp_cubit.dart`, the user's data is now only set to a logged-in state (`UserCubit.instance.setUserLoggedIn`) if their registration status is fully `completed`. This prevents incompletely registered users from being treated as fully authenticated.&#10;  - The `manageNavigationBasedCompleteRegisterStatus` extension in `string_extension.dart` now uses `Go.off` instead of `Go.to` for navigation. This replaces the current screen in the navigation stack, preventing users from navigating back to intermediate auth steps (e.g., package selection, data completion).&#10;&#10;- **refactor(navigation):**&#10;  - The `_toCompleteRegisterStatus` method in `string_extension.dart` has been made public (`toCompleteRegisterStatus`) for broader use.&#10;  - The call to `UserCubit.instance.init()` within `manageNavigationBasedCompleteRegisterStatus` has been commented out to avoid redundant initializations.&#10;&#10;- **fix(splash):**&#10;  - In `splash_screen.dart`, the logic for handling an authorized user has been corrected. It now properly initializes the `UserCubit` and navigates directly to the `HomeScreen`, fixing a flow where users might get stuck.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`).">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/extensions/string_extension.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/extensions/string_extension.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/otp/presentation/cubits/otp_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/otp/presentation/cubits/otp_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/splash/splash_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/splash/splash_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/extensions/widget_extension.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/extensions/widget_extension.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/navigation/navigator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/navigation/navigator.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,32 +127,32 @@
     <option name="foldersAlwaysOnTop" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Flutter.main.dart.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;ShowUsagesActions.previewPropertyKey&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;finishChat&quot;,
-    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/aaita/Desktop/apps/new_crud_satr/lib/src/core/widgets&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;flutter.settings&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Flutter.main.dart.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "ShowUsagesActions.previewPropertyKey": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "finishChat",
+    "io.flutter.reload.alreadyRun": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/aaita/Desktop/apps/new_crud_satr/lib/src/core/widgets",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "flutter.settings",
+    "show.migrate.to.gradle.popup": "false"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lib/src/core/widgets" />
@@ -251,14 +250,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
-    </task>
-    <task id="LOCAL-00146" summary="```&#10;refactor(auth): Add oath screen and improve navigation flow&#10;&#10;This commit introduces an &quot;Oath&quot; screen that users must accept after login or registration before proceeding to the home screen. It also refactors the post-subscription navigation and improves form validation.&#10;&#10;- **feat(auth):**&#10;  - A new &quot;Oath&quot; screen is now displayed after a successful login or OTP verification (`login.dart`, `string_extension.dart`).&#10;  - The `OathCubit` fetches the oath text, which is displayed to the user. The user must accept it to proceed.&#10;  - The `manageNavigationBasedCompleteRegisterStatus` extension now shows the oath sheet before navigating to the home screen.&#10;&#10;- **refactor(auth):**&#10;  - In `otp_cubit.dart`, the `currentUser` type in `AuthData` is now set immediately after successful OTP verification, ensuring the user type is available for subsequent navigation logic.&#10;  - The post-subscription navigation logic in `success_sheet.dart` has been refactored to correctly handle navigation for both new and existing users (`isUnknown` vs. known `currentUser`).&#10;&#10;- **fix(validation):**&#10;  - The phone number validation in `validators.dart` has been corrected to strictly enforce a 9-digit length and validate against a specific mobile number format.&#10;  - The report reason text field in `report_cheet.dart` now has an `validateEmpty` validator to ensure a reason is provided.&#10;&#10;- **fix(ui):**&#10;  - In `packages_screen.dart`, the `SizedBox` wrapping the package list has been replaced with an `Expanded` widget to ensure it correctly fills the available vertical space.&#10;&#10;- **chore(ide):**&#10;  - Removed Android Studio's device streaming cache file (`.idea/caches/deviceStreaming.xml`).&#10;  - Updated IDE configuration files (`.idea/workspace.xml`).">
-      <option name="closed" value="true" />
-      <created>1764671098745</created>
-      <option name="number" value="00146" />
-      <option name="presentableId" value="LOCAL-00146" />
-      <option name="project" value="LOCAL" />
-      <updated>1764671098746</updated>
     </task>
     <task id="LOCAL-00147" summary="```&#10;refactor(auth): Add oath screen and improve navigation flow&#10;&#10;This commit introduces an &quot;Oath&quot; screen that users must accept after login or registration before proceeding to the home screen. It also refactors the post-subscription navigation and improves form validation.&#10;&#10;- **feat(auth):**&#10;  - A new &quot;Oath&quot; screen is now displayed after a successful login or OTP verification (`login.dart`, `string_extension.dart`).&#10;  - The `OathCubit` fetches the oath text, which is displayed to the user. The user must accept it to proceed.&#10;  - The `manageNavigationBasedCompleteRegisterStatus` extension now shows the oath sheet before navigating to the home screen.&#10;&#10;- **refactor(auth):**&#10;  - In `otp_cubit.dart`, the `currentUser` type in `AuthData` is now set immediately after successful OTP verification, ensuring the user type is available for subsequent navigation logic.&#10;  - The post-subscription navigation logic in `success_sheet.dart` has been refactored to correctly handle navigation for both new and existing users (`isUnknown` vs. known `currentUser`).&#10;&#10;- **fix(validation):**&#10;  - The phone number validation in `validators.dart` has been corrected to strictly enforce a 9-digit length and validate against a specific mobile number format.&#10;  - The report reason text field in `report_cheet.dart` now has an `validateEmpty` validator to ensure a reason is provided.&#10;&#10;- **fix(ui):**&#10;  - In `packages_screen.dart`, the `SizedBox` wrapping the package list has been replaced with an `Expanded` widget to ensure it correctly fills the available vertical space.&#10;&#10;- **chore(ide):**&#10;  - Removed Android Studio's device streaming cache file (`.idea/caches/deviceStreaming.xml`).&#10;  - Updated IDE configuration files (`.idea/workspace.xml`).">
       <option name="closed" value="true" />
@@ -644,7 +635,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766332921474</updated>
     </task>
-    <option name="localTasksCounter" value="195" />
+    <task id="LOCAL-00195" summary="```&#10;refactor(auth): Improve navigation flow post-authentication&#10;&#10;This commit refactors the navigation logic that follows user authentication, particularly after OTP verification and on the splash screen. The changes ensure a more streamlined and correct redirection based on the user's registration and login status.&#10;&#10;- **refactor(auth):**&#10;  - In `otp_cubit.dart`, the user's data is now only set to a logged-in state (`UserCubit.instance.setUserLoggedIn`) if their registration status is fully `completed`. This prevents incompletely registered users from being treated as fully authenticated.&#10;  - The `manageNavigationBasedCompleteRegisterStatus` extension in `string_extension.dart` now uses `Go.off` instead of `Go.to` for navigation. This replaces the current screen in the navigation stack, preventing users from navigating back to intermediate auth steps (e.g., package selection, data completion).&#10;&#10;- **refactor(navigation):**&#10;  - The `_toCompleteRegisterStatus` method in `string_extension.dart` has been made public (`toCompleteRegisterStatus`) for broader use.&#10;  - The call to `UserCubit.instance.init()` within `manageNavigationBasedCompleteRegisterStatus` has been commented out to avoid redundant initializations.&#10;&#10;- **fix(splash):**&#10;  - In `splash_screen.dart`, the logic for handling an authorized user has been corrected. It now properly initializes the `UserCubit` and navigates directly to the `HomeScreen`, fixing a flow where users might get stuck.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`).">
+      <option name="closed" value="true" />
+      <created>1766353592576</created>
+      <option name="number" value="00195" />
+      <option name="presentableId" value="LOCAL-00195" />
+      <option name="project" value="LOCAL" />
+      <updated>1766353592576</updated>
+    </task>
+    <option name="localTasksCounter" value="196" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -665,7 +664,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="```&#10;feat(auth): Synchronize children count after adding a new child&#10;&#10;This commit ensures that the local state for the number of male and female children is updated immediately after a new child is successfully added via the API.&#10;&#10;- **feat(auth):**&#10;  - In `add_child.dart`, the `onSuccess` callback of the `addChild` method now receives the parent data from the API response.&#10;  - It uses this data to update `AuthData.childrenNumber` with the new counts for `femaleNumbers` and `maleNumbers`, ensuring the UI reflects the correct state.&#10;&#10;- **chore(cleanup):**&#10;  - Removed the manual increment logic from `success_sheet.dart` and `add_child_sheet.dart`. The child count is now authoritatively set from the API response in `AddChildCubit`, preventing potential state desynchronization." />
     <MESSAGE value="```&#10;feat(chat): Add Istikharah reminder feature&#10;&#10;This commit introduces a new &quot;Istikharah Reminder&quot; feature within the chat. When a user selects the Istikharah tip, a sheet is displayed with a reminder message fetched from a new API endpoint.&#10;&#10;- **feat(chat):**&#10;  - In `tips_action.dart`, a new condition `currentTips.isIstikharahTips` has been added. When true, it triggers the display of the new `IstikharahReminderSheet`.&#10;  - A new widget, `IstikharahReminderSheet`, has been created to show the reminder message.&#10;  - A corresponding `ReminderCubit` has been implemented to fetch the reminder text from the new `istikhara-reminder` API endpoint.&#10;&#10;- **chore(api):**&#10;  - Added the new API endpoint `istikhara-reminder` to `api_endpoints.dart`.&#10;&#10;- **chore(i18n):**&#10;  - Added a new translation key `reminder` for the title of the new sheet in `ar.json`, `en.json`, and `lang.json`." />
     <MESSAGE value="feat(chat): Add RTL support and enhance notifications&#10;&#10;This commit introduces Right-to-Left (RTL) language support for message alignment in the chat screen and improves the notification handling logic.&#10;&#10;- **feat(chat):**&#10;  - In `chat_screen.dart`, message alignment now dynamically adjusts based on the current language (Arabic/English), ensuring correct layout in RTL and LTR contexts.&#10;&#10;- **refactor(notifications):**&#10;  - The `NotificationModel` has been updated to use a generic `Map&lt;String, dynamic&gt;` for its `data` payload instead of a strongly-typed `NotificationData` object. This makes notification handling more flexible.&#10;  - Navigation logic in `notification_card.dart` and `notification_routes.dart` has been updated to correctly handle the new data structure and parse IDs, ensuring reliable navigation from notifications.&#10;&#10;- **refactor(chat):**&#10;  - The `ReminderCubit` and `IstikharahReminderSheet` have been updated to fetch and display a `TipModel` object from the API, rather than just a raw string." />
     <MESSAGE value="feat(file-upload): Enhance file upload and chat functionality&#10;&#10;This commit improves file upload handling, particularly for avatars, and introduces several enhancements and fixes to the chat screen and user data models.&#10;&#10;- **feat(file-upload):**&#10;  - In `core/network/extensions.dart`, the `toMultiPart()` method now explicitly sets the `filename` from the file path. This fixes an issue where files were being sent to the backend without a name.&#10;  - User models (`UserModel`, `IndividualUserModel`, `FemaleModel`, `MaleModel`, `ParentModel`) now define the `avatar` field as `dynamic` instead of `String` to correctly handle both `File` objects for uploads and `String` URLs from the API.&#10;  - The `toRequestBodyJson` methods in the user models have been updated to correctly handle `File` objects for the `avatar` field.&#10;&#10;- **feat(chat):**&#10;  - The `requestName` is now fetched and passed to the `UserStatusAction` to display the correct user name in acceptance/rejection prompts.&#10;  - In `chat_screen.dart`, the timer widget now displays the `phaseTitle` (stage description).&#10;  - Messages in the chat are now reversed in `chats_data.dart` to display in the correct chronological order.&#10;&#10;- **refactor(network):**&#10;  - The Dio `connectTimeout` and `receiveTimeout` durations in `constants_manager.dart` have been reduced from 180 to 20 seconds for faster failure detection.&#10;&#10;- **fix(auth):**&#10;  - The `AddChildCubit` now correctly sets `isFromData: true` to ensure child data, including the avatar, is sent as `FormData`." />
@@ -690,7 +688,8 @@
     <MESSAGE value="refactor(core): Simplify async logic and state management&#10;&#10;This commit refactors the asynchronous operation handling in the base cubit and simplifies state management in the loading button.&#10;&#10;- **refactor(core):**&#10;  - In `async_cubit.dart`, the `executeAsyncWithBaseModel` method has been simplified. The logic for handling internet interception has been removed, and the primary implementation now directly handles the future, sets loading/success/error states, and invokes the `onSuccess` callback. The previous, more complex implementation has been commented out.&#10;  - In `loading_button.dart`, the redundant `isLoading` boolean has been removed. State management is now handled exclusively by the `_easyButtonState` variable, which is passed directly to the `EasyButton`'s `state` property, cleaning up the widget's internal logic.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`)." />
     <MESSAGE value="```&#10;feat(notifications): Add new notification types for admin actions&#10;&#10;This commit introduces new notification types to handle specific actions performed by administrators, such as adding a child, assigning a package, or assigning a SETR code. It also includes a version bump for the application.&#10;&#10;- **feat(notifications):**&#10;  - In `navigation_types.dart`, three new notification types have been added:&#10;    - `admin_added_child`: Navigates to `AdminActionWithChild`.&#10;    - `admin_assigned_package`: Navigates to `PackagesNavigation`.&#10;    - `admin_assigned_setr_code`: Does not trigger navigation (`NoNavigation`).&#10;&#10;- **chore(version):**&#10;  - The application build number in `pubspec.yaml` has been incremented from `1.0.0+1` to `1.0.0+2`.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`)." />
     <MESSAGE value="```&#10;chore(version): Increment build number&#10;&#10;This commit increments the application build number.&#10;&#10;- **chore(version):**&#10;  - The application build number in `pubspec.yaml` has been incremented from `1.0.0+2` to `1.0.0+3`.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`)." />
-    <option name="LAST_COMMIT_MESSAGE" value="```&#10;chore(version): Increment build number&#10;&#10;This commit increments the application build number.&#10;&#10;- **chore(version):**&#10;  - The application build number in `pubspec.yaml` has been incremented from `1.0.0+2` to `1.0.0+3`.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`)." />
+    <MESSAGE value="```&#10;refactor(auth): Improve navigation flow post-authentication&#10;&#10;This commit refactors the navigation logic that follows user authentication, particularly after OTP verification and on the splash screen. The changes ensure a more streamlined and correct redirection based on the user's registration and login status.&#10;&#10;- **refactor(auth):**&#10;  - In `otp_cubit.dart`, the user's data is now only set to a logged-in state (`UserCubit.instance.setUserLoggedIn`) if their registration status is fully `completed`. This prevents incompletely registered users from being treated as fully authenticated.&#10;  - The `manageNavigationBasedCompleteRegisterStatus` extension in `string_extension.dart` now uses `Go.off` instead of `Go.to` for navigation. This replaces the current screen in the navigation stack, preventing users from navigating back to intermediate auth steps (e.g., package selection, data completion).&#10;&#10;- **refactor(navigation):**&#10;  - The `_toCompleteRegisterStatus` method in `string_extension.dart` has been made public (`toCompleteRegisterStatus`) for broader use.&#10;  - The call to `UserCubit.instance.init()` within `manageNavigationBasedCompleteRegisterStatus` has been commented out to avoid redundant initializations.&#10;&#10;- **fix(splash):**&#10;  - In `splash_screen.dart`, the logic for handling an authorized user has been corrected. It now properly initializes the `UserCubit` and navigates directly to the `HomeScreen`, fixing a flow where users might get stuck.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`)." />
+    <option name="LAST_COMMIT_MESSAGE" value="```&#10;refactor(auth): Improve navigation flow post-authentication&#10;&#10;This commit refactors the navigation logic that follows user authentication, particularly after OTP verification and on the splash screen. The changes ensure a more streamlined and correct redirection based on the user's registration and login status.&#10;&#10;- **refactor(auth):**&#10;  - In `otp_cubit.dart`, the user's data is now only set to a logged-in state (`UserCubit.instance.setUserLoggedIn`) if their registration status is fully `completed`. This prevents incompletely registered users from being treated as fully authenticated.&#10;  - The `manageNavigationBasedCompleteRegisterStatus` extension in `string_extension.dart` now uses `Go.off` instead of `Go.to` for navigation. This replaces the current screen in the navigation stack, preventing users from navigating back to intermediate auth steps (e.g., package selection, data completion).&#10;&#10;- **refactor(navigation):**&#10;  - The `_toCompleteRegisterStatus` method in `string_extension.dart` has been made public (`toCompleteRegisterStatus`) for broader use.&#10;  - The call to `UserCubit.instance.init()` within `manageNavigationBasedCompleteRegisterStatus` has been commented out to avoid redundant initializations.&#10;&#10;- **fix(splash):**&#10;  - In `splash_screen.dart`, the logic for handling an authorized user has been corrected. It now properly initializes the `UserCubit` and navigates directly to the `HomeScreen`, fixing a flow where users might get stuck.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`)." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
+import '../../features/splash/splash_screen.dart';
 import 'Constants/imports_constants.dart';
 import 'Helper/Interfaces/helper_imports.dart';
 import 'named_routes.dart';
