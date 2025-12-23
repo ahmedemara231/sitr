@@ -141,6 +141,7 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
         BlocProvider(create: (context) => EditProfileCubit()),
         BlocProvider(create: (context) => PersonalDataCubit()),
       ],
+
       child: Form(
         key: _formKey,
         child: Column(
