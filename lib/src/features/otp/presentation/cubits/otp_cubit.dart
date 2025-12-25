@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
+import '../../../../config/res/config_imports.dart' show injector;
 import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/extensions/string_extension.dart';
 import '../../../../core/network/api_endpoints.dart';
+import '../../../../core/network/network_service.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../auth/presentation/data/auth_data.dart';
@@ -37,6 +39,8 @@ class OtpCubit extends AsyncCubit<UserModel>{
 
           if(data.data.completeRegistration?.toCompleteRegisterStatus().isCompleted ?? false){
             await UserCubit.instance.setUserLoggedIn(user: data.data, token: data.data.token??'');
+          }else{
+            injector<NetworkService>().setToken(data.data.token??'');
           }
 
           onSuccess?.call(data.data);

@@ -3,6 +3,7 @@ import 'dart:developer';
 import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../../core/base_crud/code/domain/usecases/pagination_response.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import '../../../../core/helpers/helpers.dart';
 import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/shared/models/user_models/individual/individual_user_model.dart';
@@ -31,16 +32,11 @@ class AddChildCubit extends AsyncCubit<UserModel>{
         ),
 
         onSuccess: (data)async {
-          // final parent = data.data as ParentModel;
-          // AuthData.childrenNumber.value.femaleNumbers = parent.femaleChildrenNum??0;
-          // AuthData.childrenNumber.value.maleNumbers = parent.maleChildrenNum??0;
           final parent = data.data as ParentModel;
-          final oldParent = UserCubit.instance.user as ParentModel;
-          final newParent = oldParent.copyWith(
-              femaleChildrenNum: parent.femaleChildrenNum,
-              maleChildrenNum: parent.maleChildrenNum
+          AuthData.childrenNumber.value.setMaleAndFemaleNum(
+              males: parent.maleChildrenNum??0,
+              females: parent.femaleChildrenNum??0
           );
-          await UserCubit.instance.updateUser(newParent);
           onSuccess.call(data);
         }
     );

@@ -122,7 +122,6 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
     }
   }
 
-  // UserModel get _currentUser => UserModel.currentUser ?? UserModel.initial();
 
   @override
   void initState() {
@@ -150,7 +149,7 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
             if(widget.showGenderSelection)
               ChooseGenderWidget(
                 titles: (element) => element.translate,
-                // titles: (element) => '${element.translate}  ${element.isFemale? (UserModel.currentUser as ParentModel).femaleChildrenNum : (UserModel.currentUser as ParentModel).maleChildrenNum}',
+                // titles: (element) => '${element.translate}  ${element.isFemale? AuthData.childrenNumber.value.getFemaleNumber : AuthData.childrenNumber.value.getMaleNumber}',
                 canChoose: true,
                 onSelectGender: (selectedGender) => _mainType.value = selectedGender,
                 genders: const [
