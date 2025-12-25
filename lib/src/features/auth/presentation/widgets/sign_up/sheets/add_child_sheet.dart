@@ -18,7 +18,9 @@ import '../../../cubits/add_child.dart';
 
 class AddChildSheet extends StatelessWidget {
   final FutureOr<void> Function()? cancelOnTap;
-  const AddChildSheet({super.key, this.cancelOnTap});
+  final int? maleNum;
+  final int? femaleNum;
+  const AddChildSheet({super.key, this.cancelOnTap, this.maleNum, this.femaleNum});
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +31,10 @@ class AddChildSheet extends StatelessWidget {
               2.pop();
               Go.to(EnterMaleOrFemaleOrChildDataScreen.showAll(
                   scaffoldType: ScaffoldType.centerCard,
+                  maleNum: maleNum,
+                  femaleNum: femaleNum,
                   onClick: (context, user) => context.read<AddChildCubit>().addChild(
                       body: user,
-                      onSuccess: (data) {
-                        showDefaultBottomSheet(child: AddChildSheet(cancelOnTap: cancelOnTap));
-                      }
                   )
               ));
             },

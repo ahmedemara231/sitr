@@ -10,6 +10,9 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
   final bool showAlreadyHaveAccount;
   final UserGender? userType;
   final bool showGenderSelection;
+  final int? maleNum;
+  final int? femaleNum;
+
   final Future<void> Function(BuildContext context, IndividualUserModel user) onClick;
 
   const EnterMaleOrFemaleOrChildDataScreen.showAll({
@@ -18,6 +21,8 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
     required this.scaffoldType,
     this.initialValue,
     required this.onClick,
+    this.maleNum = 0,
+    this.femaleNum = 0,
     this.showConditionsAndTerms = false,
     this.showAlreadyHaveAccount = false,
     this.userType,
@@ -32,7 +37,7 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
     this.showConditionsAndTerms = false,
     this.showAlreadyHaveAccount = false,
     required this.userType,
-  }) : _withParent = false;
+  }) : _withParent = false, maleNum = null, femaleNum = null;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +45,8 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
     AppScaffold(
         appBarTitle: LocaleKeys.profile,
         body: _EnterMaleOrFemaleOrChildDataBody(
+          maleNum: maleNum,
+          femaleNum: femaleNum,
           userType: userType,
           withParent: _withParent,
           showGenderSelection: showGenderSelection,
@@ -53,6 +60,8 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
         upperWidget: const SignUpUpperWidget(),
         bodyColor: AppColors.white,
         body: _EnterMaleOrFemaleOrChildDataBody(
+          maleNum: maleNum,
+          femaleNum: femaleNum,
           withParent: _withParent,
           showGenderSelection: showGenderSelection,
           userType: userType,
@@ -72,6 +81,8 @@ class _EnterMaleOrFemaleOrChildDataBody extends StatefulWidget {
   final bool showGenderSelection;
   final bool showConditionsAndTerms;
   final bool showAlreadyHaveAccount;
+  final int? maleNum;
+  final int? femaleNum;
   final Future<void> Function(BuildContext context, IndividualUserModel user) onClick;
 
   const _EnterMaleOrFemaleOrChildDataBody({
@@ -80,6 +91,8 @@ class _EnterMaleOrFemaleOrChildDataBody extends StatefulWidget {
     required this.userType,
     required this.showGenderSelection,
     required this.onClick,
+    required this.maleNum,
+    required this.femaleNum,
     this.showConditionsAndTerms = false,
     this.showAlreadyHaveAccount = false,
   });
@@ -148,8 +161,9 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
           children: [
             if(widget.showGenderSelection)
               ChooseGenderWidget(
-                titles: (element) => element.translate,
+                // titles: (element) => element.translate,
                 // titles: (element) => '${element.translate}  ${element.isFemale? AuthData.childrenNumber.value.getFemaleNumber : AuthData.childrenNumber.value.getMaleNumber}',
+                titles: (element) => '${element.translate}  ${element.isFemale? widget.femaleNum : widget.maleNum}',
                 canChoose: true,
                 onSelectGender: (selectedGender) => _mainType.value = selectedGender,
                 genders: const [

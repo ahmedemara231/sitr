@@ -222,7 +222,7 @@ bool get isImage =>
           showConditionsAndTerms: true,
           showAlreadyHaveAccount: true,
           onClick: (context, user) => context.read<AddChildCubit>().addChild(
-            body: user, onSuccess: (data) => showDefaultBottomSheet(child: const AddChildSheet()),
+            body: user,
           )
       ));
 
@@ -234,7 +234,7 @@ bool get isImage =>
               showConditionsAndTerms: true,
               showAlreadyHaveAccount: true,
               onClick: (context, user) => context.read<AddChildCubit>().addChild(
-                body: user, onSuccess: (data) => showDefaultBottomSheet(child: const AddChildSheet()),
+                body: user,
               )
           ) :
           EnterMaleOrFemaleOrChildDataScreen.individual(

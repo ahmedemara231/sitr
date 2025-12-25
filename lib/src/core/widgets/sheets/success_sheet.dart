@@ -35,11 +35,11 @@ class SuccessSheet extends StatelessWidget {
           showAlreadyHaveAccount: true,
           onClick: (context, user) => context.read<AddChildCubit>().addChild(
             body: user,
-            onSuccess: (data) {
-              showDefaultBottomSheet(
-                  child: const AddChildSheet()
-              );
-            },
+            // onSuccess: (data) {
+            //   showDefaultBottomSheet(
+            //       child: const AddChildSheet()
+            //   );
+            // },
           )
       ));
 

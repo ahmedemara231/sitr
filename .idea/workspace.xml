@@ -11,11 +11,12 @@
   <component name="ChangeListManager">
     <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="```&#10;chore(version): Increment build number&#10;&#10;This commit increments the application's build number.&#10;&#10;- **chore(version):**&#10;  - The build number in `pubspec.yaml` has been incremented from `1.0.0+3` to `1.0.0+4`.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`).">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/extensions/string_extension.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/extensions/string_extension.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/parent_children_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/parent_children_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/sheets/success_sheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/sheets/success_sheet.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/cubits/add_child.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/cubits/add_child.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/data/auth_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/data/auth_data.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/screens/enter_male_female_child_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/screens/enter_male_female_child_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/otp/presentation/cubits/otp_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/otp/presentation/cubits/otp_cubit.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/sheets/add_child_sheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/sheets/add_child_sheet.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +153,7 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.17",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "flutter.settings",
+    "settings.editor.selected.configurable": "editor.preferences.jsonOptions",
     "show.migrate.to.gradle.popup": "false"
   }
 }]]></component>
@@ -253,14 +254,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
-    </task>
-    <task id="LOCAL-00152" summary="```&#10;feat(auth): Introduce PersonalDataCubit and refine UI&#10;&#10;This commit introduces a new `PersonalDataCubit` to handle fetching generic, list-based data from API endpoints. It also includes several UI refinements and fixes across the application.&#10;&#10;- **feat(auth):**&#10;  - Added a new `PersonalDataCubit` for fetching lists of `TitleValueShape` models from dynamic API paths. This simplifies loading data for dropdowns and other UI elements.&#10;  - The `PersonalDataCubit` is now provided in `EnterMaleOrFemaleOrChildDataScreen`.&#10;&#10;- **fix(ui):**&#10;  - In `packages_screen.dart`, the package list is now hidden for users with a `child` account type, displaying a `NotContainData` widget instead.&#10;  - The title text in `delete_sheet.dart` is now center-aligned to improve layout consistency.&#10;&#10;- **chore(cleanup):**&#10;  - Commented out a block of test code in `app.dart` that was forcing the app to start on the `EnterMaleOrFemaleOrChildDataScreen`.&#10;  - Removed commented-out code for a dropdown (`AppDropinity`) in `female_fields.dart`.&#10;&#10;- **chore(i18n):**&#10;  - Added new translation keys (`please_enter_the_text`) for form validation in `ar.json`, `en.json`, and `lang.json`.">
-      <option name="closed" value="true" />
-      <created>1765117887561</created>
-      <option name="number" value="00152" />
-      <option name="presentableId" value="LOCAL-00152" />
-      <option name="project" value="LOCAL" />
-      <updated>1765117887561</updated>
     </task>
     <task id="LOCAL-00153" summary="```&#10;feat(auth): Introduce PersonalDataCubit and refine UI&#10;&#10;This commit introduces a new `PersonalDataCubit` to handle fetching generic, list-based data from API endpoints. It also includes several UI refinements and fixes across the application.&#10;&#10;- **feat(auth):**&#10;  - Added a new `PersonalDataCubit` for fetching lists of `TitleValueShape` models from dynamic API paths. This simplifies loading data for dropdowns and other UI elements.&#10;  - The `PersonalDataCubit` is now provided in `EnterMaleOrFemaleOrChildDataScreen`.&#10;&#10;- **fix(ui):**&#10;  - In `packages_screen.dart`, the package list is now hidden for users with a `child` account type, displaying a `NotContainData` widget instead.&#10;  - The title text in `delete_sheet.dart` is now center-aligned to improve layout consistency.&#10;&#10;- **chore(cleanup):**&#10;  - Commented out a block of test code in `app.dart` that was forcing the app to start on the `EnterMaleOrFemaleOrChildDataScreen`.&#10;  - Removed commented-out code for a dropdown (`AppDropinity`) in `female_fields.dart`.&#10;&#10;- **chore(i18n):**&#10;  - Added new translation keys (`please_enter_the_text`) for form validation in `ar.json`, `en.json`, and `lang.json`.">
       <option name="closed" value="true" />
@@ -646,7 +639,15 @@
       <option name="project" value="LOCAL" />
       <updated>1766697977461</updated>
     </task>
-    <option name="localTasksCounter" value="201" />
+    <task id="LOCAL-00201" summary="```&#10;chore(version): Increment build number&#10;&#10;This commit increments the application's build number.&#10;&#10;- **chore(version):**&#10;  - The build number in `pubspec.yaml` has been incremented from `1.0.0+3` to `1.0.0+4`.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`).">
+      <option name="closed" value="true" />
+      <created>1766701854634</created>
+      <option name="number" value="00201" />
+      <option name="presentableId" value="LOCAL-00201" />
+      <option name="project" value="LOCAL" />
+      <updated>1766701854635</updated>
+    </task>
+    <option name="localTasksCounter" value="202" />
     <servers />
   </component>
   <component name="ToolWindowManager">

@@ -1,24 +1,20 @@
-import 'dart:developer';
-
+import 'dart:async';
 import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
-import '../../../../core/base_crud/code/domain/usecases/pagination_response.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
-import '../../../../core/helpers/helpers.dart';
-import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../../../core/shared/models/user_models/parent/parent_model.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
-import '../../models/shared_form_fields_model.dart';
-import '../data/auth_data.dart';
+import '../../../../core/widgets/default_bottom_sheet.dart';
+import '../widgets/sign_up/sheets/add_child_sheet.dart';
 
 class AddChildCubit extends AsyncCubit<UserModel>{
   AddChildCubit() : super(UserModel.initial());
 
   Future<void> addChild({
     required IndividualUserModel body,
-    required void Function(BaseModel<UserModel> data) onSuccess
+    FutureOr<void> Function()? cancelOnTap,
   })async{
     await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call<UserModel>(
@@ -33,11 +29,21 @@ class AddChildCubit extends AsyncCubit<UserModel>{
 
         onSuccess: (data)async {
           final parent = data.data as ParentModel;
-          AuthData.childrenNumber.value.setMaleAndFemaleNum(
-              males: parent.maleChildrenNum??0,
-              females: parent.femaleChildrenNum??0
-          );
-          onSuccess.call(data);
+          if(UserModel.isAuthenticated){
+            final oldParent = UserCubit.instance.user as ParentModel;
+            final newParent = oldParent.copyWith(
+                femaleChildrenNum: parent.femaleChildrenNum,
+                maleChildrenNum: parent.maleChildrenNum
+            );
+
+            UserCubit.instance.updateUser(newParent);
+          }
+
+          showDefaultBottomSheet(child: AddChildSheet(
+            maleNum: parent.maleChildrenNum,
+            femaleNum: parent.femaleChildrenNum,
+            cancelOnTap: cancelOnTap,
+          ));
         }
     );
   }

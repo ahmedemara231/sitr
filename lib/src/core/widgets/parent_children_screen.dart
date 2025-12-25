@@ -14,6 +14,7 @@ import '../navigation/navigator.dart';
 import '../shared/models/user_models/individual/female_model.dart';
 import '../shared/models/user_models/individual/individual_user_model.dart';
 import '../shared/models/user_models/parent/parent_model.dart';
+import '../shared/models/user_models/user_model.dart';
 import '../shared/user_cubit/user_cubit.dart';
 import 'buttons/custom_app_buttons/default_button.dart' show AppDefaultButton;
 import 'default_bottom_sheet.dart';
@@ -39,13 +40,11 @@ class ParentChildrenView extends StatelessWidget {
             create: (context) => AddChildCubit(),
             child: EnterMaleOrFemaleOrChildDataScreen.showAll(
                 scaffoldType: ScaffoldType.appScaffold,
+                maleNum: (UserModel.currentUser as ParentModel).maleChildrenNum,
+                femaleNum: (UserModel.currentUser as ParentModel).femaleChildrenNum,
                 onClick: (context, user) async => await context.read<AddChildCubit>().addChild(
                     body: user,
-                    onSuccess: (data) {
-                      showDefaultBottomSheet(
-                          child: AddChildSheet(cancelOnTap: () => 3.pop())
-                      );
-                    }
+                    cancelOnTap: () => 3.pop()
                 ),
             ),
           ),)
