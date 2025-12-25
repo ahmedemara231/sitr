@@ -12,8 +12,10 @@ import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../../core/widgets/custom_app_bar.dart';
 import '../../../../../core/widgets/custom_messages.dart';
+import '../../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../../core/widgets/riyal_price_text.dart';
 import '../../../../../core/widgets/svg_pic.dart';
+import '../../../../auth/presentation/widgets/sign_up/sheets/charge_wallet.dart';
 import '../../cubit/wallet_cubit/charge_wallet_cubit.dart';
 import '../../cubit/wallet_cubit/fetch_wallet_cubit.dart';
 
@@ -42,24 +44,24 @@ class WalletScreen extends StatelessWidget {
               color: AppColors.darkGray,
             ),
             16.szH,
-            RiyalPriceText(
-              price: balance.toString(),
-              priceTextStyle: TextStyle(color: Colors.black, fontSize: 16.sp,),
-              currencyTextStyle: TextStyle(fontSize: 16.sp,),
-            )
-            // BlocBuilder<FetchWalletCubit, AsyncState<num>>(
-            //   builder: (context, state) {
-            //     return StatusBuilder(
-            //         data: state,
-            //         onSuccess: (data, context) {
-            //           return RiyalPriceText(
-            //             price: data.toString(),
-            //             priceTextStyle: TextStyle(color: Colors.black, fontSize: 16.sp,),
-            //             currencyTextStyle: TextStyle(fontSize: 16.sp,),
-            //           );
-            //         });
-            //   },
-            // ),
+            // RiyalPriceText(
+            //   price: balance.toString(),
+            //   priceTextStyle: TextStyle(color: Colors.black, fontSize: 16.sp,),
+            //   currencyTextStyle: TextStyle(fontSize: 16.sp,),
+            // )
+            BlocBuilder<FetchWalletCubit, AsyncState<num>>(
+              builder: (context, state) {
+                return StatusBuilder(
+                    data: state,
+                    onSuccess: (data, context) {
+                      return RiyalPriceText(
+                        price: data.toString(),
+                        priceTextStyle: TextStyle(color: Colors.black, fontSize: 16.sp,),
+                        currencyTextStyle: TextStyle(fontSize: 16.sp,),
+                      );
+                    });
+              },
+            ),
           ],
         ),
       ),
@@ -67,13 +69,10 @@ class WalletScreen extends StatelessWidget {
         padding: EdgeInsets.all(16.r),
         child: AppLoadingButton(
             asyncCall: (context) async {
-              await context.read<ChargeWalletCubit>().chargeWallet(
-                  2000,
-                  onSuccess: (){
-                    MessageUtils.showSnackBar(LocaleKeys.successDone);
-                    Go.back('success');
-                  }
-              );
+              final result = await showDefaultBottomSheet(child: const ChargeWalletSheet());
+              if(result == 'success'){
+                context.read<FetchWalletCubit>().fetchWallet();
+              }
             },
             title: LocaleKeys.rechargeWallet),
       ),

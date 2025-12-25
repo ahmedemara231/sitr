@@ -10,17 +10,17 @@ import '../../../../../core/widgets/custom_messages.dart';
 class ChargeWalletCubit extends AsyncCubit<String>{
   ChargeWalletCubit() : super('');
 
-  Future<void> chargeWallet(double amount, {void Function()? onSuccess})async{
+  Future<void> chargeWallet(String amount, {required void Function(String url) onSuccess})async{
     await executeAsyncWithBaseModel(
       operation: () async => await baseCrudUseCase.call(
           CrudBaseParmas(
             api: ApiConstants.chargeWallet,
             httpRequestType: HttpRequestType.post,
-            body: {'amount':amount,},
+            body: {'amount' : amount},
             mapper: (data) => data['redirect_url'],
           )
       ),
-      onSuccess: (data) => onSuccess?.call()
+      onSuccess: (data) => onSuccess.call(data.data)
     );
   }
 

@@ -958,4 +958,13 @@ abstract class LocaleKeys {
   static const String _waitingForConnection = 'waiting_for_connection';
   static String get waitingForConnection => _waitingForConnection.tr();
 
+  static const String _chargeWallet = 'charge_wallet';
+  static String get chargeWallet => _chargeWallet.tr();
+
+  static const String _enterAmount = 'enter_amount';
+  static String get enterAmount => _enterAmount.tr();
+
+  static const String _walletChargedSuccessfully = 'wallet_charged_successfully';
+  static String get walletChargedSuccessfully => _walletChargedSuccessfully.tr();
+
 }

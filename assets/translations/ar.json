@@ -322,5 +322,8 @@
   "please_enter_valid_age": "يرجي ادخال عمر صحيح",
   "please_enter_valid_number": "يرجي ادخال رقم صحيح",
   "profile_updated_successfully": "تم تحديث البيانات بنجاح",
-  "waiting_for_connection": "انتظر لاعادة الاتصال"
+  "waiting_for_connection": "انتظر لاعادة الاتصال",
+  "charge_wallet": "اشحن المحفظة",
+  "enter_amount": "ادخل القيمة",
+  "wallet_charged_successfully": "لقد تم شحن المحفظة بنجاح"
 }

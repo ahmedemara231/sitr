@@ -322,5 +322,8 @@
   "please_enter_valid_age": "Please enter a valid age",
   "please_enter_valid_number": "Please enter a valid number",
   "profile_updated_successfully": "Profile updated successfully",
-  "waiting_for_connection": "Waiting for connection"
+  "waiting_for_connection": "Waiting for connection",
+  "charge_wallet": "charge wallet",
+  "enter_amount": "enter amount",
+  "wallet_charged_successfully": "Wallet charged successfully"
 }

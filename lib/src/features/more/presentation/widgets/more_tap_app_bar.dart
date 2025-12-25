@@ -63,7 +63,7 @@ class MoreTabAppBar extends StatelessWidget {
                       ),
                       child: GestureDetector(
                         onTap: () async{
-                          final result = await Go.to(BlocProvider.value(
+                          Go.to(BlocProvider.value(
                               value: context.read<FetchWalletCubit>(),
                               child: BlocProvider.value(
                                   value: context.read<ChargeWalletCubit>(),
@@ -72,14 +72,14 @@ class MoreTabAppBar extends StatelessWidget {
                                         balance: context.read<FetchWalletCubit>().state.data.toInt(),
                                       )))));
 
-                          if(result == 'success'){
-                            final result = await Go.to(SubscriptionScreen(
-                                initialUrl: context.read<ChargeWalletCubit>().state.data)
-                            );
-                            if(result == 'success'){
-                              context.read<FetchWalletCubit>().fetchWallet();
-                            }
-                          }
+                          // if(result == 'success'){
+                          //   final result = await Go.to(SubscriptionScreen(
+                          //       initialUrl: context.read<ChargeWalletCubit>().state.data)
+                          //   );
+                          //   if(result == 'success'){
+                          //     context.read<FetchWalletCubit>().fetchWallet();
+                          //   }
+                          // }
                         },
                         child: Container(
                           alignment: Alignment.center,

@@ -328,5 +328,8 @@
   "pleaseEnterValidAge #$ Please enter a valid age" : "يرجي ادخال عمر صحيح",
   "pleaseEnterValidNumber #$ Please enter a valid number" : "يرجي ادخال رقم صحيح",
   "profileUpdatedSuccessfully #$ Profile updated successfully" : "تم تحديث البيانات بنجاح",
-  "Waiting for connection" : "انتظر لاعادة الاتصال"
+  "Waiting for connection" : "انتظر لاعادة الاتصال",
+  "charge wallet" : "اشحن المحفظة",
+  "enter amount" : "ادخل القيمة",
+  "Wallet charged successfully" : "لقد تم شحن المحفظة بنجاح"
 }
