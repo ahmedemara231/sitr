@@ -212,9 +212,8 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
               height: 45.h,
               borderRadius: ConstantManager.buttonBorderRadiusNumber,
               title: LocaleKeys.confirm,
-                asyncCall: (ctx) async => widget.onClick.call(ctx, sharedFormFieldModel)
-              // call: (ctx) async => _formKey.currentState!.validate()?
-              // widget.onClick.call(ctx, sharedFormFieldModel) : null
+                asyncCall: (ctx) async => _formKey.currentState!.validate()?
+                widget.onClick.call(ctx, sharedFormFieldModel) : null
             ),
 
             if (widget.showAlreadyHaveAccount)
