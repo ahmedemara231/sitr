@@ -117,7 +117,7 @@ flutter_launcher_icons:
   min_sdk_android: 21 # android min sdk min:16, default 21
 
 dependency_overrides:
-  zego_express_engine: 3.22.1
+  zego_express_engine: ^3.23.0
 
 dev_dependencies:
   sentry_dart_plugin: ^3.2.0

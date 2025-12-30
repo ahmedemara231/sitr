@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/helpers/data_and_pagination_data.dart' show PaginationData, PagifyData;
 import 'package:pagify/helpers/errors.dart';
 import 'package:pagify/pagify.dart';
@@ -35,7 +36,7 @@ class _ChatViewState extends State<ChatView> {
   @override
   Widget build(BuildContext context) {
     return EasyChat(
-      // itemExtent: 60.h,
+      itemExtent: 60.h,
       controller: widget.chatController,
       messageAlignment: (fromMe) => fromMe?
       _alignmentWhenMe : _alignmentWhenNotMe,

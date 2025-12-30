@@ -16,14 +16,31 @@ import '../../../../core/widgets/sheets/success_sheet.dart';
 import '../../../../core/widgets/text_fields/default_text_field.dart';
 import '../cubit/change_phone_manager.dart';
 
-class ChangePhoneSheetBody extends StatelessWidget {
+class ChangePhoneSheetBody extends StatefulWidget {
   ChangePhoneSheetBody({super.key});
 
+  @override
+  State<ChangePhoneSheetBody> createState() => _ChangePhoneSheetBodyState();
+}
+
+class _ChangePhoneSheetBodyState extends State<ChangePhoneSheetBody> {
   final formKey = GlobalKey<FormState>();
+  late final TextEditingController phoneController;
+
+  @override
+  void initState() {
+    phoneController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    phoneController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    String phone = '';
     return Container(
       color: Colors.white,
       child: Column(
@@ -41,7 +58,7 @@ class ChangePhoneSheetBody extends StatelessWidget {
               title: LocaleKeys.pleaseEnterYourPhone,
               fillColor: AppColors.whiteGreyColorProMax,
               borderColor: Colors.transparent,
-              onChanged: (val) => phone = val ?? '',
+              controller: phoneController,
             ),
           ),
           AppLoadingButton(
@@ -50,25 +67,25 @@ class ChangePhoneSheetBody extends StatelessWidget {
             borderRadius: ConstantManager.buttonBorderRadiusNumber,
             asyncCall: (context)async => formKey.currentState!.validate()? context.read<ChangePhoneManagerCubit>().manage(
                 phase: Phase.sendNew,
-                phone: phone,
+                phone: phoneController.text,
                 onSuccess: (data) => Go.offNamed(
                   context,
                   NamedRoutes.newPhoneOtpScreen,
                     arguments: {
-                      'phone' : phone,
+                      'phone' : phoneController.text,
                       'title' : LocaleKeys.changePhoneNumber,
                       'onEnterScreen': (BuildContext context) =>
                           context.read<ChangePhoneManagerCubit>().manage(
                             phase: Phase.sendNew,
-                            phone: phone,
+                            phone: phoneController.text,
                           ),
                       'onConfirmCode': (BuildContext context, code) => context.read<ChangePhoneManagerCubit>().manage(
                         phase: Phase.checkNew,
                         code: code,
-                          phone: phone,
+                          phone: phoneController.text,
                           onSuccess: (msg) async{
                             Go.back();
-                            final newUser = UserCubit.instance.user.copyWith(phone: phone);
+                            final newUser = UserCubit.instance.user.copyWith(phone: phoneController.text);
                             await UserCubit.instance.updateUser(newUser);
                             showDefaultBottomSheet(child: SuccessSheet(
                                 isInAuth: false,

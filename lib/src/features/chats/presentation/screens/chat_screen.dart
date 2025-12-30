@@ -30,13 +30,11 @@ class ChatScreen extends StatelessWidget {
 
 class _ChatScreenBody extends StatefulWidget {
   final String receiverName;
-  // final bool showFullChat;
   final RequestModel requestModel;
 
   const _ChatScreenBody({
     required this.requestModel,
     required this.receiverName,
-    // required this.showFullChat,
   });
 
   @override
