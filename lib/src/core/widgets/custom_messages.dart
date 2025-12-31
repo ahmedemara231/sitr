@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../config/res/config_imports.dart';
 import '../navigation/navigator.dart';
 
 class MessageUtils {
+  static void showTopMsg(String msg, {BuildContext? context}){
+    showTopSnackBar(
+      Overlay.of(context??Go.context),
+      CustomSnackBar.info(
+        message: msg,
+      ),
+    );
+  }
+
   static void showSnackBar(
     String message, {
     Color? backgroundColor,

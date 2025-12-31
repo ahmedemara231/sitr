@@ -88,6 +88,8 @@ abstract class AsyncCubit<T> extends Cubit<AsyncState<T>> {
         }
       },
           (failure) {
+            // MessageUtils.showTopMsg(failure.message);
+
         MessageUtils.showSnackBar(failure.message);
         setError(errorMessage: failure.message);
       },

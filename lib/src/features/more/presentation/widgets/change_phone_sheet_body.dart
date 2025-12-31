@@ -17,7 +17,7 @@ import '../../../../core/widgets/text_fields/default_text_field.dart';
 import '../cubit/change_phone_manager.dart';
 
 class ChangePhoneSheetBody extends StatefulWidget {
-  ChangePhoneSheetBody({super.key});
+  const ChangePhoneSheetBody({super.key});
 
   @override
   State<ChangePhoneSheetBody> createState() => _ChangePhoneSheetBodyState();

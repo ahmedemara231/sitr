@@ -17,6 +17,7 @@ Future showDefaultBottomSheet({
   return showModalBottomSheet(
     enableDrag: enableDrag ?? true,
     isDismissible: false,
+    useRootNavigator: false,
     isScrollControlled: true,
     context: context ?? Go.context,
     backgroundColor: backgroundColor?? Colors.white,
