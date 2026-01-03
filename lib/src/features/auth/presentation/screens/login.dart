@@ -73,32 +73,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             body: OtpBody(phone: _phoneCont.text, code: code),
                             onSuccess: (user)async {
                               user.completeRegistration!.manageNavigationBasedCompleteRegisterStatus(user);
-
-                              // showDefaultBottomSheet(
-                              //     enableDrag: false,
-                              //     child: BlocProvider(
-                              //       create: (context) => OathCubit()..getOath(),
-                              //       child: AppBottomSheet.small(
-                              //           asyncCall: (context) async {
-                              //             user.completeRegistration?.manageNavigationBasedCompleteRegisterStatus(user);
-                              //           },
-                              //           btnTitle: LocaleKeys.accept,
-                              //           upperWidget: Column(
-                              //             children: [
-                              //               AppText(LocaleKeys.oath, fontWeight: FontWeight.w500),
-                              //               BlocBuilder<OathCubit, AsyncState<String>>(
-                              //                   builder: (context, state) => StatusBuilder(
-                              //                       data: state,
-                              //                       onSuccess: (oath, context) => Html(
-                              //                         data: oath,
-                              //                       )
-                              //                   )
-                              //               ),
-                              //             ],
-                              //           )
-                              //       ),
-                              //     )
-                              // );
                             }
                         ),
                       ),

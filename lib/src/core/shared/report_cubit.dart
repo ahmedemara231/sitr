@@ -12,7 +12,7 @@ class ReportCubit extends AsyncCubit{
     required String report,
     FutureOr<void> Function()? onSuccess
   })async{
-    await executeAsync(
+    await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call(
             CrudBaseParmas(
               api: ApiConstants.report,
@@ -24,7 +24,7 @@ class ReportCubit extends AsyncCubit{
             )
         ),
 
-        successEmitter: (data) => onSuccess?.call()
+        onSuccess: (data) => onSuccess?.call()
     );
   }
 }

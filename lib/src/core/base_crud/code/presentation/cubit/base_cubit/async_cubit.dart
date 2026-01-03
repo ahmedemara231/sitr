@@ -34,9 +34,9 @@ abstract class AsyncCubit<T> extends Cubit<AsyncState<T>> {
   }
 
   void setError({String? errorMessage, bool showToast = false}) {
-    if (showToast && errorMessage != null) {
-      MessageUtils.showSnackBar(errorMessage);
-    }
+    // if (showToast && errorMessage != null) {
+    //   MessageUtils.showSnackBar(errorMessage);
+    // }
     emit(state.error(errorMessage: errorMessage));
   }
 
@@ -54,26 +54,6 @@ abstract class AsyncCubit<T> extends Cubit<AsyncState<T>> {
 
   bool get isLoading => state.isLoading;
 
-  Future<void> executeAsync({
-    required Future<Result<T, Failure>> Function() operation,
-    Function(T)? successEmitter,
-  }) async {
-    setLoading();
-    final result = await operation();
-    result.when(
-          (success) {
-        setSuccess(data: success);
-        if (successEmitter != null) {
-          successEmitter(success);
-        }
-      },
-          (failure) {
-        MessageUtils.showSnackBar(failure.message);
-        setError(errorMessage: failure.message);
-      },
-    );
-  }
-
   Future<void> executeAsyncWithBaseModel({
     required Future<Result<BaseModel<T>, Failure>> Function() operation,
     FutureOr<void> Function(BaseModel<T>)? onSuccess,
@@ -88,10 +68,8 @@ abstract class AsyncCubit<T> extends Cubit<AsyncState<T>> {
         }
       },
           (failure) {
-            // MessageUtils.showTopMsg(failure.message);
-
-        MessageUtils.showSnackBar(failure.message);
-        setError(errorMessage: failure.message);
+            MessageUtils.showTopMsg(failure.message, state: MsgState.error);
+            setError(errorMessage: failure.message);
       },
     );
   }
