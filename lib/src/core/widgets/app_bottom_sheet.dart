@@ -1,10 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../config/language/locale_keys.g.dart';
-import '../extensions/padding_extension.dart';
 import '../navigation/navigator.dart';
 import 'buttons/app_loading_button.dart';
 import 'buttons/custom_app_buttons/default_button.dart';
@@ -37,33 +34,31 @@ class AppBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IntrinsicHeight(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(12.r)),
-          color: Colors.white,
-        ),
-        child: Column(
-          spacing: 10.h,
-          children: [
-            upperWidget,
-      
-            if(size == AppBottomSheetSize.small)
-              AppLoadingButton(
-                  asyncCall: (context) async => await asyncCall.call(context),
-                  title: btnTitle
-              )
-            else
-              _AppSheetButtons(
-                asyncCall: asyncCall,
-                title: btnTitle,
-                cancelBackgroundColor: cancelBackgroundColor,
-                cancelBtnTitle: cancelBtnTitle,
-                cancelOnTap: cancelOnTap,
-              )
-          ],
-        ),
-      )
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(12.r)),
+        color: Colors.white,
+      ),
+      child: Column(
+        spacing: 10.h,
+        children: [
+          upperWidget,
+
+          if(size == AppBottomSheetSize.small)
+            AppLoadingButton(
+                asyncCall: (context) async => await asyncCall.call(context),
+                title: btnTitle
+            )
+          else
+            _AppSheetButtons(
+              asyncCall: asyncCall,
+              title: btnTitle,
+              cancelBackgroundColor: cancelBackgroundColor,
+              cancelBtnTitle: cancelBtnTitle,
+              cancelOnTap: cancelOnTap,
+            )
+        ],
+      ),
     );
   }
 }
@@ -99,6 +94,7 @@ class _AppSheetButtons extends StatelessWidget {
         ),
         Expanded(
           child: AppDefaultButton.withBackGroundColor(
+              borderColor: Colors.white,
               title: cancelBtnTitle ?? LocaleKeys.cancel,
               backgroundColor: cancelBackgroundColor,
               onTap: cancelOnTap ?? () => Go.back()

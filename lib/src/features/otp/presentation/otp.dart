@@ -106,7 +106,7 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
   @override
   Widget build(BuildContext context) {
     return CenterCardScaffold(
-      showBackButton: false,
+        showBackButton: true,
         upperWidget: Column(
           spacing: 12.h,
           children: [

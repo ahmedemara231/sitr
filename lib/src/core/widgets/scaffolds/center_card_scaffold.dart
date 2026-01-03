@@ -22,8 +22,7 @@ class CenterCardScaffold extends StatelessWidget {
   final double? cardTopPadding;
   final Color? bodyColor;
   final EdgeInsetsGeometry? upperWidgetPadding;
-  // final Future<void> Function(BuildContext context)? onRefresh;
-  final bool showBackButton;
+  final bool? showBackButton;
 
   const CenterCardScaffold({
     super.key,
@@ -31,7 +30,7 @@ class CenterCardScaffold extends StatelessWidget {
     required this.upperWidget,
     this.bodyColor,
     this.upperWidgetPadding,
-    this.showBackButton = false
+    this.showBackButton
   }) : centerCardBody = null, cardProperties = null, bodyTopPadding = null, cardTopPadding = null;
 
   const CenterCardScaffold.withCenteredCard({
@@ -42,7 +41,7 @@ class CenterCardScaffold extends StatelessWidget {
     this.cardProperties,
     this.bodyTopPadding,
     this.cardTopPadding,
-    this.showBackButton = true,
+    this.showBackButton,
     this.bodyColor,
     this.upperWidgetPadding,
 });
@@ -77,7 +76,7 @@ class ScreenChildren extends StatelessWidget {
   final double? cardTopPadding;
   final Color? bodyColor;
   final EdgeInsetsGeometry? upperWidgetPadding;
-  final bool showBackButton;
+  final bool? showBackButton;
 
   const ScreenChildren({super.key,
     required this.body,
@@ -88,7 +87,7 @@ class ScreenChildren extends StatelessWidget {
     this.cardTopPadding,
     required this.bodyColor,
     required this.upperWidgetPadding,
-    this.showBackButton = true
+    this.showBackButton
   });
 
   @override
@@ -107,7 +106,7 @@ class ScreenChildren extends StatelessWidget {
                       child: Stack(
                         children: [
                           upperWidget,
-                          if(ModalRoute.of(context)!.canPop && showBackButton)
+                          if(showBackButton ?? ModalRoute.of(context)!.canPop)
                             const AppBackButton(),
                         ],
                       ),

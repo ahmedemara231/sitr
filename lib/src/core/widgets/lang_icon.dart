@@ -22,7 +22,7 @@ class LangIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => showDefaultBottomSheet(child: _LangSheet(withRequest: withRequest)),
+      onTap: () => showDefaultBottomSheet(child: LangSheet(withRequest: withRequest)),
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.r),
@@ -34,10 +34,10 @@ class LangIcon extends StatelessWidget {
   }
 }
 
-class _LangSheet extends StatelessWidget {
+class LangSheet extends StatelessWidget {
   final bool withRequest;
 
-  const _LangSheet({required this.withRequest});
+  const LangSheet({required this.withRequest});
 
   @override
   Widget build(BuildContext context) {

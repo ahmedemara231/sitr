@@ -325,5 +325,6 @@
   "waiting_for_connection": "Waiting for connection",
   "charge_wallet": "charge wallet",
   "enter_amount": "enter amount",
-  "wallet_charged_successfully": "Wallet charged successfully"
+  "wallet_charged_successfully": "Wallet charged successfully",
+  "change_language": "change language"
 }

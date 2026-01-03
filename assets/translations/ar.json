@@ -325,5 +325,6 @@
   "waiting_for_connection": "انتظر لاعادة الاتصال",
   "charge_wallet": "اشحن المحفظة",
   "enter_amount": "ادخل القيمة",
-  "wallet_charged_successfully": "لقد تم شحن المحفظة بنجاح"
+  "wallet_charged_successfully": "لقد تم شحن المحفظة بنجاح",
+  "change_language": "تغيير اللغة"
 }

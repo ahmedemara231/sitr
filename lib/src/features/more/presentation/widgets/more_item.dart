@@ -61,7 +61,7 @@ class MoreItem extends StatelessWidget {
 }
 
 class _SwitchIcon extends StatelessWidget {
-  const _SwitchIcon({super.key});
+  const _SwitchIcon();
 
   void _checkNotificationPermission(BuildContext context){
     PermissionHandler().checkPermission(

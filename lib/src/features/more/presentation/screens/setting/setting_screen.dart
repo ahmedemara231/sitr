@@ -119,7 +119,7 @@ class SettingScreen extends StatelessWidget {
                         code: code,
                         onSuccess: (data) => showDefaultBottomSheet(
                             context: context,
-                            child:  const ChangePhoneSheetBody()
+                            child: const ChangePhoneSheetBody()
                         ),
                       ),
                     ),
@@ -179,11 +179,15 @@ class SettingScreen extends StatelessWidget {
         )),
       ),
 
+      MorItemModel(
+        icon: Assets.svgLangIcon,
+        label: LocaleKeys.changeLanguage,
+        onTap: () => showDefaultBottomSheet(child: const LangSheet(withRequest: true)),
+      ),
       MorItemModel.withSwitch(
         icon: Assets.svgNotificationIcon,
         label: LocaleKeys.notifications,
       ),
-
       MorItemModel(
         icon: Assets.svgTrashIcon,
         label: LocaleKeys.deleteAccount,
@@ -211,9 +215,6 @@ class SettingScreen extends StatelessWidget {
     return AppScaffold(
       scaffoldBackgroundColor: AppColors.whiteGreyColorProMax,
         appBarTitle: LocaleKeys.settings,
-        actions: const [
-          LangIcon(withRequest: true)
-        ],
         body: Column(
           spacing: 10.h,
           children: List.generate(

@@ -967,4 +967,7 @@ abstract class LocaleKeys {
   static const String _walletChargedSuccessfully = 'wallet_charged_successfully';
   static String get walletChargedSuccessfully => _walletChargedSuccessfully.tr();
 
+  static const String _changeLanguage = 'change_language';
+  static String get changeLanguage => _changeLanguage.tr();
+
 }

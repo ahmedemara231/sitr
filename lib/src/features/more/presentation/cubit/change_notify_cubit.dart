@@ -6,7 +6,7 @@ import '../../../../core/shared/base_state.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
 
 class ChangeNotifyCubit extends AsyncCubit<bool>{
-  ChangeNotifyCubit() : super(UserCubit.instance.user.isNotify ?? false);
+  ChangeNotifyCubit() : super(UserCubit.instance.user.isNotify ?? true);
 
   void changeNotifyLocally(){
     final old = state.data;
