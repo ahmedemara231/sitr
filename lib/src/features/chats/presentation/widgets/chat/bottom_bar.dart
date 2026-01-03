@@ -1,12 +1,9 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_ai_toolkit/flutter_ai_toolkit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/pagify.dart';
-
 import '../../../../../../generated/assets.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
@@ -15,6 +12,7 @@ import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/helpers/helpers.dart';
 import '../../../../../core/helpers/validators.dart';
 import '../../../../../core/navigation/navigator.dart';
+import '../../../../../core/notification/notification_service.dart';
 import '../../../../../core/widgets/chat_builder/chat_message.dart';
 import '../../../../../core/widgets/custom_messages.dart' show MessageUtils;
 import '../../../../../core/widgets/svg_pic.dart';

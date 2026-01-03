@@ -9,6 +9,7 @@ import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../core/helpers/helpers.dart';
+import '../../core/notification/notification_service.dart';
 import '../../core/shared/models/user_models/user_model.dart';
 import '../../core/widgets/app_text.dart';
 import '../../core/widgets/icon_widget.dart';
@@ -18,8 +19,20 @@ import 'cubits/home_cubit/home_cubit.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+  void _initApp() async {
+    NotificationNavigator(
+      onRoutingMessage: (message) {
+        NotificationRoutes.navigateByType(message.data);
+      },
+      onNoInitialMessage: () {},
+    );
+    await injector<NotificationService>()
+        .setupNotifications();
+  }
+
   @override
   Widget build(BuildContext context) {
+    _initApp();
     context.locale;
     return BlocProvider(
       create: (context) => HomeCubit(),

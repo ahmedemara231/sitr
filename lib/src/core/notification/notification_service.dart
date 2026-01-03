@@ -150,7 +150,7 @@ class NotificationService {
     NotificationNavigator._instance?.onRoutingMessage(message);
   }
 
-  Future<void> _saveFcmToken() async {
+  Future<void> saveFcmToken() async {
     final token = await FirebaseMessaging.instance.getToken();
     deviceToken = token ?? '';
     log('Firebase Fcm token : ${token.toString()}');
@@ -166,7 +166,7 @@ class NotificationService {
 
   Future<void> setupNotifications() async {
     await Future.wait([
-      _saveFcmToken(),
+      // saveFcmToken(),
       _setForegroundNotificationOptions(),
       _registerNotification(),
       _requestPermissions(),

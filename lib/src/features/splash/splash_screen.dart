@@ -22,25 +22,14 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    _initApp();
     _manipulateSplashData();
     super.initState();
   }
 
-  void _initApp() async {
-    NotificationNavigator(
-      onRoutingMessage: (message) {
-        NotificationRoutes.navigateByType(message.data);
-      },
-      onNoInitialMessage: () {},
-    );
-    await injector<NotificationService>()
-        .setupNotifications();
-  }
+
 
   void _manipulateSplashData()async{
-    // await _initZego();
-
+    await NotificationService().saveFcmToken();
     await Future.delayed(const Duration(seconds: 2));
     final result = await CacheStorage.read(CacheConstant.onBoardingSubmission);
     switch(result){
@@ -54,21 +43,12 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  void _handleAuthorizedState()async{
-    final result =  await CacheStorage.read('user', isDecoded: true);
-    final user = UserModel.fromJson(result);
-    UserCubit.instance.user.completeRegistration?.manageNavigationBasedCompleteRegisterStatus(user);
-  }
-
   Future<void> _manipulateLoginState()async{
     final result =  (await CacheStorage.read('user', isDecoded: true) as Object?).isNotNull;
     switch(result){
       case true:
-        // Go.offAll(const LoginScreen());
-
         await UserCubit.instance.init();
         Go.offAll(const HomeScreen());
-        // _handleAuthorizedState();
         break;
 
       default:
@@ -76,10 +56,6 @@ class _SplashScreenState extends State<SplashScreen> {
         break;
     }
   }
-
-  // Future<void> _initZego()async{
-  //   await Helpers.initZegoService();
-  // }
 
   @override
   Widget build(BuildContext context) {
