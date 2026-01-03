@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -39,6 +41,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
           onPageStarted: (url) {
             setState(() => _isLoading = true);
             // ✅ Detect payment success or failure based on URL
+            log('the url is $url');
             if (url.contains('success') || url.contains('payment/success')) {
               Go.back('success');
             } else if (url.contains('fail') || url.contains('payment/failure')) {

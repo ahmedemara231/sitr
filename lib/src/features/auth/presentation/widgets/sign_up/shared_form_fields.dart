@@ -235,6 +235,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
       SignUpTextField(
         upperTitle: LocaleKeys.thingsIAbsolutelyDoNotAcceptOrWant,
         title: LocaleKeys.pleaseEnterTheThings,
+        inputType: TextInputType.multiline,
         controller: _thingsCont,
         onChanged: (val) =>
             _listenToData(model.copyWith(prohibitedThings: val) as T),

@@ -44,11 +44,6 @@ class WalletScreen extends StatelessWidget {
               color: AppColors.darkGray,
             ),
             16.szH,
-            // RiyalPriceText(
-            //   price: balance.toString(),
-            //   priceTextStyle: TextStyle(color: Colors.black, fontSize: 16.sp,),
-            //   currencyTextStyle: TextStyle(fontSize: 16.sp,),
-            // )
             BlocBuilder<FetchWalletCubit, AsyncState<num>>(
               builder: (context, state) {
                 return StatusBuilder(
