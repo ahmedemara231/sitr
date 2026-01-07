@@ -115,9 +115,6 @@ extension GetPayMethodAsString on PaymentMethod{
 
       case PaymentMethod.wallet:
         return LocaleKeys.wallet;
-
-      // default:
-      //   return '';
     }
   }
 }

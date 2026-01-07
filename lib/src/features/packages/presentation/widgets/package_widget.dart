@@ -77,7 +77,6 @@ class PackageWidget extends StatelessWidget {
                       return AppDefaultButton.withBorderColor(
                           title: type == ScreenType.subscription?
                           LocaleKeys.subscribeToPackage : LocaleKeys.renewPackage,
-
                           onTap: () => package.hasActivePackage?
                           MessageUtils.showSnackBar(LocaleKeys.youAreAlreadySubscribedInPackage) :
                           showDefaultBottomSheet(

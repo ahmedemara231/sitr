@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
-import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../core/zego_service/zego.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,13 +13,19 @@ import 'package:share_plus/share_plus.dart';
 import '../../config/language/languages.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
+import '../../features/packages/presentation/screens/subscription_screen.dart';
 import '../extensions/padding_extension.dart';
 import '../navigation/navigator.dart';
+import '../shared/get_paymeny_brands_cubit.dart';
 import '../shared/user_cubit/user_cubit.dart';
+import '../widgets/app_text.dart';
 import '../widgets/custom_loading.dart';
 import '../widgets/custom_messages.dart';
 import '../widgets/default_bottom_sheet.dart';
+import '../widgets/image_widgets/cached_image.dart';
+import '../widgets/radio_bottom_sheet.dart';
 import '../widgets/sheets/login_when_visitor.dart';
+import '../widgets/sheets/success_sheet.dart';
 import 'permission_handler/handler.dart';
 import 'permission_handler/model.dart';
 
@@ -48,6 +54,48 @@ class Helpers {
       } else {
         log('⚠️ Zego service failed to initialize');
       }
+  }
+
+  static Future<void> executeOnlinePayment(BuildContext context, {
+  void Function(BuildContext context)? onFinish,
+  required Future<void> Function(BuildContext context, int brandId, void Function(String url) onSuccess) onPay
+  })async{
+      await context.read<PaymentBrands>().get(
+          onSuccess: (data) => showDefaultBottomSheet(
+              child: RadioSelectionWidget<int>(
+                  selectedBackgroundColor: AppColors.primary.withOpacity(.2),
+                  title: LocaleKeys.choosePaymentMethod,
+                  onSubmit: (ctx, brandId) async => await onPay.call(context, brandId, (url) async{
+                    final result = await Go.to(SubscriptionScreen(initialUrl: url));
+                    if(result == 'success'){
+                      await showDefaultBottomSheet(
+                          child: SuccessSheet(
+                            isInAuth: false,
+                            upperText: Text(LocaleKeys.walletChargedSuccessfully),
+                          ));
+                      Go.back('success');
+                      onFinish?.call(context);
+                    }
+                  }),
+                  values: data.map((e) => e.id??0).toList(),
+                  showSubmitButton: true,
+                  titles: List.generate(
+                      data.length,
+                          (i) => Expanded(child: Row(
+                        spacing: 10.w,
+                        children: [
+                          CachedImage(
+                              width: 50.w,
+                              height: 50.h,
+                              url: data[i].image??''
+                          ),
+                          AppText(data[i].name??''),
+                        ],
+                      ))
+                  )
+              )
+          )
+      );
   }
 
   static void showUnauthenticatedSheet(){
