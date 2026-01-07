@@ -1,3 +1,5 @@
+import 'package:dropinity/helpers/extensions/padding_extension.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,11 +8,9 @@ import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/extensions/align_helper.dart';
-import '../../../../core/extensions/object.dart';
 import '../../../../core/extensions/sized_box_helper.dart';
 import '../../../../core/helpers/helpers.dart';
 import '../../../../core/helpers/status_builder.dart';
-import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
@@ -20,7 +20,6 @@ import '../../../../core/widgets/custom_messages.dart';
 import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/riyal_price_text.dart';
 import '../../../auth/imports.dart';
-import '../../../packages/presentation/screens/subscription_screen.dart';
 import '../cubit/logout_cubit.dart';
 import '../cubit/wallet_cubit/charge_wallet_cubit.dart';
 import '../cubit/wallet_cubit/fetch_wallet_cubit.dart';
@@ -35,6 +34,7 @@ class MoreTabAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.locale;
     return SizedBox(
       height: UserModel.isAuthenticated? 250.h : 100.h,
       child: Stack(
@@ -133,7 +133,7 @@ class MoreTabAppBar extends StatelessWidget {
                                   fontSize: 13.sp,
                                   fontWeight: FontWeight.w400,
                                   color: Colors.black,
-                                ),
+                                ).paddingAll(5.r),
                               )
                             ],
                           ),

@@ -35,6 +35,7 @@ class ApiConstants {
   static const String addComplaint = 'new-complaint';
   static const String marriageConsultants = 'marriage-consultants';
   static const String complaints = 'complaints';
+  static const String getPaymentBrands = 'payment-brands';
   static const String chargeWallet = 'charge-wallet';
   static const String contactStore = 'contact-us-store';
   static const String activate = 'activate';

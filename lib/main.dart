@@ -29,9 +29,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait(
     [
-      // Firebase.initializeApp(
-      //   options: DefaultFirebaseOptions.currentPlatform,
-      // ),
       EasyLocalization.ensureInitialized(),
       CacheStorage.init(),
       ScreenUtil.ensureScreenSize(),

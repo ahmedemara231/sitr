@@ -326,5 +326,6 @@
   "charge_wallet": "اشحن المحفظة",
   "enter_amount": "ادخل القيمة",
   "wallet_charged_successfully": "لقد تم شحن المحفظة بنجاح",
-  "change_language": "تغيير اللغة"
+  "change_language": "تغيير اللغة",
+  "choose_payment_method": "اختر وسيلة دفع من الوسائل المتاحة"
 }

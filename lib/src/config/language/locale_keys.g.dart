@@ -970,4 +970,7 @@ abstract class LocaleKeys {
   static const String _changeLanguage = 'change_language';
   static String get changeLanguage => _changeLanguage.tr();
 
+  static const String _choosePaymentMethod = 'choose_payment_method';
+  static String get choosePaymentMethod => _choosePaymentMethod.tr();
+
 }

@@ -326,5 +326,6 @@
   "charge_wallet": "charge wallet",
   "enter_amount": "enter amount",
   "wallet_charged_successfully": "Wallet charged successfully",
-  "change_language": "change language"
+  "change_language": "change language",
+  "choose_payment_method": "choose payment method"
 }
