@@ -251,14 +251,6 @@
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
     </task>
-    <task id="LOCAL-00162" summary="```&#10;feat(chat): Add Istikharah reminder feature&#10;&#10;This commit introduces a new &quot;Istikharah Reminder&quot; feature within the chat. When a user selects the Istikharah tip, a sheet is displayed with a reminder message fetched from a new API endpoint.&#10;&#10;- **feat(chat):**&#10;  - In `tips_action.dart`, a new condition `currentTips.isIstikharahTips` has been added. When true, it triggers the display of the new `IstikharahReminderSheet`.&#10;  - A new widget, `IstikharahReminderSheet`, has been created to show the reminder message.&#10;  - A corresponding `ReminderCubit` has been implemented to fetch the reminder text from the new `istikhara-reminder` API endpoint.&#10;&#10;- **chore(api):**&#10;  - Added the new API endpoint `istikhara-reminder` to `api_endpoints.dart`.&#10;&#10;- **chore(i18n):**&#10;  - Added a new translation key `reminder` for the title of the new sheet in `ar.json`, `en.json`, and `lang.json`.">
-      <option name="closed" value="true" />
-      <created>1765353366749</created>
-      <option name="number" value="00162" />
-      <option name="presentableId" value="LOCAL-00162" />
-      <option name="project" value="LOCAL" />
-      <updated>1765353366749</updated>
-    </task>
     <task id="LOCAL-00163" summary="```&#10;fix(chat): Correct API request method for Istikharah reminder&#10;&#10;This commit fixes a bug in the Istikharah reminder feature by changing the HTTP request method from POST to GET.&#10;&#10;- **fix(chat):**  - In `reminder_cubit.dart`, the `httpRequestType` for fetching the Istikharah reminder has been corrected from `HttpRequestType.post` to `HttpRequestType.get` to align with the API endpoint's requirements.&#10;  - The unused `mapper` function has also been removed.">
       <option name="closed" value="true" />
       <created>1765354251488</created>
@@ -643,7 +635,15 @@
       <option name="project" value="LOCAL" />
       <updated>1767810944086</updated>
     </task>
-    <option name="localTasksCounter" value="211" />
+    <task id="LOCAL-00211" summary="```&#10;refactor(core): Replace loading button and enhance permissions and connectivity&#10;&#10;This commit replaces the deprecated `easy_loading_button` with `rounded_loading_button_plus`, creating a custom `LoadingButton` implementation for better control and consistency. It also enhances the permission handling logic for better reliability, especially on iOS, and introduces an optional internet connectivity interceptor in the base cubit.&#10;&#10;- **refactor(core):**&#10;  - Replaced `easy_loading_button` with `rounded_loading_button_plus` and added `connectivity_plus` to `pubspec.yaml`.&#10;  - Created a new `CustomAnimatedButton` and a refactored `LoadingButton` to provide a consistent, app-wide loading button experience.&#10;  - Replaced old `LoadingButton` usages with the new `AppLoadingButton` across various features (`auth`, `more`, `widgets`).&#10;  - In `async_cubit.dart`, added an optional `enableInternetInterceptor` to `executeAsyncWithBaseModel`. When enabled, it uses `connectivity_plus` to listen for network changes and can re-trigger operations when the connection is restored.&#10;  - The main internet interceptor widget in `app.dart` has been commented out in favor of the more granular cubit-level control.&#10;&#10;- **refactor(permissions):**&#10;  - Significantly improved the permission handling logic in `permission_handler/handler.dart`.&#10;  - The handler now checks the permission status *before* requesting it, properly handling `granted`, `limited`, and `permanentlyDenied` states without re-requesting.&#10;  - Added specific logic for iOS where a `denied` status is treated as permanently denied on subsequent checks.&#10;  - Updated `helpers.dart` to pass more callbacks (`onDeniedForever`, `onLimited`) to the new handler, ensuring UI can react appropriately (e.g., by opening app settings).&#10;&#10;- **fix(auth):**&#10;  - In `image_widget.dart`, added a null check (`isNotNull`) to ensure an image is only processed if one was actually selected by the user.&#10;&#10;- **chore(ios):**&#10;  - Added `CODE_SIGN_IDENTITY`, `CODE_SIGN_STYLE`, and `PROVISIONING_PROFILE_SPECIFIER` settings to the iOS project file (`project.pbxproj`), likely for development build configuration.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in IDE configuration files (`.idea/workspace.xml`, `.idea/libraries/Dart_Packages.xml`, `.idea/caches/deviceStreaming.xml`, `.idea/libraries/Flutter_Plugins.xml`).">
+      <option name="closed" value="true" />
+      <created>1767812453679</created>
+      <option name="number" value="00211" />
+      <option name="presentableId" value="LOCAL-00211" />
+      <option name="project" value="LOCAL" />
+      <updated>1767812453680</updated>
+    </task>
+    <option name="localTasksCounter" value="212" />
     <servers />
   </component>
   <component name="ToolWindowManager">

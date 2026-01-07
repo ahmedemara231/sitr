@@ -20,6 +20,7 @@ import '../../../../../../core/widgets/radio_bottom_sheet.dart';
 import '../../../../../../core/widgets/sheets/success_sheet.dart';
 import '../../../../../../core/widgets/text_fields/default_text_field.dart';
 import '../../../../../more/presentation/cubit/wallet_cubit/charge_wallet_cubit.dart';
+import '../../../../../more/presentation/cubit/wallet_cubit/fetch_wallet_cubit.dart';
 import '../../../../../packages/presentation/screens/subscription_screen.dart';
 
 class ChargeWalletSheet extends StatefulWidget {
@@ -47,11 +48,8 @@ class ChargeWalletSheetState extends State<ChargeWalletSheet> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => ChargeWalletCubit()),
-        BlocProvider(create: (context) => PaymentBrands()),
-      ],
+    return BlocProvider(
+      create: (context) => ChargeWalletCubit(),
       child: Column(
         spacing: 10.h,
         children: [
@@ -71,7 +69,9 @@ class ChargeWalletSheetState extends State<ChargeWalletSheet> {
 
 
           PayButton(
-              onPay: (brandId, onSuccess) async => await context.read<ChargeWalletCubit>().chargeWallet(
+              formKey: _formKey,
+              onFinish: (context) => Go.back('success'),
+              onPay: (context, brandId, onSuccess) async => await context.read<ChargeWalletCubit>().chargeWallet(
                   _amountCont.text,
                   brandId,
                   onSuccess: (url)async => onSuccess.call(url)
