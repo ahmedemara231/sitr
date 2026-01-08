@@ -78,10 +78,10 @@ class UserStatusAction extends ChatActions{
     else if((request.isExtension || request.isVideoCall || request.isAdminMeeting)
         && status.isAccepted){
       ChatSheetManager.show(
-        child: BlocProvider(
-          create: (context) => PayRequestCubit(),
-          child: BlocProvider.value(
-            value: context.read<ChatCubit>(),
+        child: BlocProvider.value(
+          value: context.read<ChatCubit>(),
+          child: BlocProvider(
+            create: (context) => PayRequestCubit(),
             child: PaymentSheet(
               onPay: (context, payMethod)async => payMethod == PaymentMethod.online?
               ChatSheetManager.show(

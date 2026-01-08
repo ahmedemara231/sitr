@@ -265,6 +265,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
               valueListenable: ZegoService.isConnected,
               builder: (context, isConnected, child) => isConnected?
               Helpers.zegoService!.zegoButton(
+                context: context,
                 isVideoCall: false,
                 icon: const SvgPic(assetName: Assets.svgPhoneIcon),
                 invites: [
@@ -284,6 +285,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                     return ValueListenableBuilder(
                         valueListenable: ZegoService.isConnected,
                         builder: (context, isConnected, child) => isConnected? Helpers.zegoService!.zegoButton( // المحانية موجودة
+                            context: context,
                             isVideoCall: true,
                             icon: const SvgPic(assetName: Assets.svgVideoCall),
                             invites: [

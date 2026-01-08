@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:pip_view/pip_view.dart';
 import 'config/language/locale_keys.g.dart';
 import 'config/res/config_imports.dart';
 import 'core/navigation/navigator.dart';
@@ -37,7 +38,9 @@ class Sitr extends StatelessWidget {
               builder: (context, child) {
                 return Overlay(
                   initialEntries: [
-                    OverlayEntry(builder: (context) => child!),
+                    OverlayEntry(builder: (context) => PIPView(
+                        builder: (context, isFloating) => child!
+                    )),
                   ],
                 );
               },

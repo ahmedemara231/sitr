@@ -2,12 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pip_view/pip_view.dart';
 import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
 import '../extensions/num.dart';
 import '../extensions/object.dart';
+import '../widgets/app_text.dart';
 
 class ZegoService {
   final int appId;
@@ -86,6 +88,28 @@ class ZegoService {
               ? ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall()
               : ZegoUIKitPrebuiltCallConfig.oneOnOneVoiceCall();
 
+          config.topMenuBar.buttons = [
+            ZegoCallMenuBarButtonName.minimizingButton,
+            ZegoCallMenuBarButtonName.switchCameraButton,
+          ];
+
+          config.bottomMenuBarConfig.buttons = [
+            ZegoCallMenuBarButtonName.toggleMicrophoneButton,
+            ZegoCallMenuBarButtonName.toggleCameraButton,
+            ZegoCallMenuBarButtonName.hangUpButton,
+          ];
+
+          config.layout = ZegoLayout.pictureInPicture(
+            isSmallViewDraggable: isSmallViewDraggable,
+            switchLargeOrSmallViewByClick: switchLargeOrSmallViewByClick,
+          );
+
+          if (addChatButton) {
+            config.bottomMenuBarConfig.buttons.add(ZegoCallMenuBarButtonName.chatButton);
+          }
+
+
+          config.duration.isVisible = true;
           if(ZegoCallType.videoCall == data.type){
             _endVideoCall(onCallStarted: onCallStarted);
             if (callDuration.isNotNull) {
@@ -95,15 +119,13 @@ class ZegoService {
                 }
               };
             }
-          }
-          config.duration.isVisible = true;
-          config.layout = ZegoLayout.pictureInPicture(
-            isSmallViewDraggable: isSmallViewDraggable,
-            switchLargeOrSmallViewByClick: switchLargeOrSmallViewByClick,
-          );
 
-          if (addChatButton) {
-            config.bottomMenuBarConfig.buttons.add(ZegoCallMenuBarButtonName.chatButton);
+            // Add PIP minimize button for video calls
+            // config.topMenuBarConfig.buttons.insert(
+            //   0,
+            //   ZegoCallMenuBarButtonName.minimizingButton,
+            //
+            // );
           }
 
           return config;
@@ -168,12 +190,15 @@ class ZegoService {
     required Widget icon,
     required List<ZegoUIKitUser> invites,
     void Function()? onPressed,
+    required BuildContext context,
   }) =>
       ZegoSendCallInvitationButton(
         isVideoCall: isVideoCall,
         icon: ButtonIcon(icon: icon),
         iconSize: Size(25.w, 25.h),
-        onPressed: (c, v, b) => onPressed?.call(),
+        onPressed: (c, v, b) {
+          onPressed?.call();
+        },
         resourceID: "zegouikit_call",
         invitees: invites,
       );
