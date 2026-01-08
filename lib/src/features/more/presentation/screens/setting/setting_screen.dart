@@ -10,10 +10,10 @@ import '../../../../../core/navigation/named_routes.dart';
 import '../../../../../core/navigation/navigator.dart';
 import '../../../../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../../../../core/shared/models/user_models/user_model.dart';
+import '../../../../chats/data/chat_sheet_manager.dart';
 import '../../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/custom_messages.dart';
-import '../../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../../core/widgets/lang_icon.dart';
 import '../../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../../core/widgets/sheets/delete_sheet.dart';
@@ -84,8 +84,7 @@ class SettingScreen extends StatelessWidget {
                         context.read<ChangePhoneManagerCubit>().manage(
                           phase: Phase.checkOld,
                           code: code,
-                          onSuccess: (data) => showDefaultBottomSheet(
-                            context: context,
+                          onSuccess: (data) => ChatSheetManager.show(
                             child:  const ChangePhoneSheetBody(),
                           ),
                         ),
@@ -117,8 +116,7 @@ class SettingScreen extends StatelessWidget {
                       onConfirmCode: (context, code) => context.read<ChangePhoneManagerCubit>().manage(
                         phase: Phase.checkOld,
                         code: code,
-                        onSuccess: (data) => showDefaultBottomSheet(
-                            context: context,
+                        onSuccess: (data) => ChatSheetManager.show(
                             child: const ChangePhoneSheetBody()
                         ),
                       ),
@@ -182,7 +180,7 @@ class SettingScreen extends StatelessWidget {
       MorItemModel(
         icon: Assets.svgLangIcon,
         label: LocaleKeys.changeLanguage,
-        onTap: () => showDefaultBottomSheet(child: const LangSheet(withRequest: true)),
+        onTap: () => ChatSheetManager.show(child: const LangSheet(withRequest: true)),
       ),
       MorItemModel.withSwitch(
         icon: Assets.svgNotificationIcon,
@@ -192,7 +190,7 @@ class SettingScreen extends StatelessWidget {
         icon: Assets.svgTrashIcon,
         label: LocaleKeys.deleteAccount,
         onTap: (){
-          showDefaultBottomSheet(
+          ChatSheetManager.show(
               child: BlocProvider(
                 create: (context) => DeleteAccountCubit(),
                 child: DeleteSheet(

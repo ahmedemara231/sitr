@@ -8,11 +8,11 @@ import '../../../../../core/base_crud/code/presentation/cubit/base_cubit/async_c
 import '../../../../../core/extensions/sized_box_helper.dart';
 import '../../../../../core/helpers/status_builder.dart';
 import '../../../../../core/navigation/navigator.dart';
+import '../../../../chats/data/chat_sheet_manager.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../../core/widgets/custom_app_bar.dart';
 import '../../../../../core/widgets/custom_messages.dart';
-import '../../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../../core/widgets/riyal_price_text.dart';
 import '../../../../../core/widgets/svg_pic.dart';
 import '../../../../auth/presentation/widgets/sign_up/sheets/charge_wallet.dart';
@@ -64,10 +64,10 @@ class WalletScreen extends StatelessWidget {
         padding: EdgeInsets.all(16.r),
         child: AppLoadingButton(
             asyncCall: (context) async {
-              final result = await showDefaultBottomSheet(child: const ChargeWalletSheet());
-              if(result == 'success'){
-                context.read<FetchWalletCubit>().fetchWallet();
-              }
+              ChatSheetManager.show(child: BlocProvider.value(
+                  value: context.read<FetchWalletCubit>(),
+                  child: const ChargeWalletSheet()
+              ));
             },
             title: LocaleKeys.rechargeWallet),
       ),

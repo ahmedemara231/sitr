@@ -5,19 +5,18 @@ import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/padding_extension.dart';
-import '../../../../core/navigation/navigator.dart';
+import '../../../../core/helpers/helpers.dart';
+import '../../../../core/shared/get_paymeny_brands_cubit.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/buttons/custom_app_buttons/default_button.dart';
 import '../../../../core/widgets/custom_messages.dart';
-import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/image_widgets/cached_image.dart';
 import '../../../../core/widgets/riyal_price_text.dart';
 import '../../../../core/widgets/sheets/payment_sheet.dart';
-import '../../../../core/widgets/sheets/success_sheet.dart';
+import '../../../chats/data/chat_sheet_manager.dart';
 import '../../models/package.dart';
 import '../cubits/subscribe_to_package.dart';
 import '../packages_screen.dart';
-import '../screens/subscription_screen.dart';
 
 class PackageWidget extends StatelessWidget {
   final Package package;
@@ -31,6 +30,28 @@ class PackageWidget extends StatelessWidget {
     this.paymentMethods,
     this.isInAuth = false,
   });
+
+  Future<void> _subscribeOrRenew(BuildContext context, {
+    required PaymentMethod method,
+    int? bId,
+    void Function(String url)? onSuccessOnline,
+    void Function()? onSuccessWallet,
+  })async{
+    await context.read<PackagesManagerCubit>().subscribeOrRenewPackage(
+        brandId: bId,
+        package: package,
+        type: type,
+        paymentMethod: method,
+        onSuccess: (url) async{
+          if(method == PaymentMethod.online){
+            onSuccessOnline?.call(url);
+
+          }else{
+            onSuccessWallet?.call();
+          }
+        }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,59 +93,75 @@ class PackageWidget extends StatelessWidget {
                 height: 40.h,
                 child: BlocProvider(
                   create: (context) => PackagesManagerCubit(),
-                  child: Builder(
-                    builder: (context) {
-                      return AppDefaultButton.withBorderColor(
-                          title: type == ScreenType.subscription?
-                          LocaleKeys.subscribeToPackage : LocaleKeys.renewPackage,
-                          onTap: () => package.hasActivePackage?
-                          MessageUtils.showSnackBar(LocaleKeys.youAreAlreadySubscribedInPackage) :
-                          showDefaultBottomSheet(
-                              child: PaymentSheet(
-                                paymentMethods: paymentMethods,
-                                onPay: (ctx, paymentMethod) async => context.read<PackagesManagerCubit>().subscribeOrRenewPackage(
-                                  package: package,
-                                  type: type,
-                                  paymentMethod: paymentMethod,
-                                  onSuccess: (url) async{
-                                    Object? result = '';
+                  child: AppDefaultButton.withBorderColor(
+                      title: type == ScreenType.subscription?
+                      LocaleKeys.subscribeToPackage : LocaleKeys.renewPackage,
+                      onTap: () async => package.hasActivePackage?
+                      MessageUtils.showSnackBar(LocaleKeys.youAreAlreadySubscribedInPackage) :
+                      ChatSheetManager.show(
+                        child: Helpers.handlePaymentSheet(
+                          bloc: PackagesManagerCubit(),
+                          isInAuth: isInAuth,
+                          paymentMethods: paymentMethods,
+                          onPayWallet: (ctx, onSuccess) async => await _subscribeOrRenew(
+                              ctx,
+                              method: PaymentMethod.wallet,
+                              onSuccessWallet: () => onSuccess.call()
+                          ),
+                          onPayOnline: (ctx, bId, onSuccess) async => await _subscribeOrRenew(
+                              ctx,
+                              method: PaymentMethod.online,
+                              bId: bId,
+                              onSuccessOnline: onSuccess
+                          ),
+                          upperWidget: Column(
+                            spacing: 10.h,
+                            children: [
+                              AppText(
+                                  LocaleKeys.paymentSucceeded,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.bold
+                              ),
+                              if(isInAuth)
+                                AppText(LocaleKeys.youCanNowCompleteYourProfile),
+                            ],
+                          ),
+                        )
+                      )
 
-                                    if(paymentMethod == PaymentMethod.online){
-                                      result = await Go.to(SubscriptionScreen(
-                                          initialUrl: url,
-                                          title: LocaleKeys.pay
-                                      ));
-
-                                    }else if(paymentMethod == PaymentMethod.wallet){
-                                      result = 'success';
-                                    }
-
-                                    if(result == 'success'){
-                                      showDefaultBottomSheet(
-                                          child: SuccessSheet(
-                                            isInAuth: isInAuth,
-                                            upperText: Column(
-                                              spacing: 10.h,
-                                              children: [
-                                                AppText(
-                                                    LocaleKeys.paymentSucceeded,
-                                                    fontSize: 16.sp,
-                                                    fontWeight: FontWeight.bold
-                                                ),
-
-                                                if(isInAuth)
-                                                  AppText(LocaleKeys.youCanNowCompleteYourProfile),
-                                              ],
-                                            ),
-                                          )
-                                      );
-                                    }
-                                  }
-                                )
-                              )
-                          )
-                      );
-                    }
+                      // showDefaultBottomSheet(
+                      //     child: PaymentSheet(
+                      //       paymentMethods: paymentMethods,
+                      //       onPay: (ctx, paymentMethod) async =>
+                      //       paymentMethod == PaymentMethod.online?
+                      //       Helpers.executeOnlinePayment(
+                      //         context,
+                      //         upperWidget: Column(
+                      //           spacing: 10.h,
+                      //           children: [
+                      //             AppText(
+                      //                 LocaleKeys.paymentSucceeded,
+                      //                 fontSize: 16.sp,
+                      //                 fontWeight: FontWeight.bold
+                      //             ),
+                      //
+                      //             if(isInAuth)
+                      //               AppText(LocaleKeys.youCanNowCompleteYourProfile),
+                      //           ],
+                      //         ),
+                      //         onPay: (context, brandId, Function(String url) onSuccess) async
+                      //             => _makePackagePayment(
+                      //                 context,
+                      //                 brandId: brandId,
+                      //                 paymentMethod: paymentMethod,
+                      //                 onSuccess: (String url) => onSuccess.call(url)
+                      //             ),
+                      //       ) : _makePackagePayment(
+                      //           context,
+                      //           paymentMethod: paymentMethod,
+                      //       )
+                      //     )
+                      // )
                   ),
                 ),
               )

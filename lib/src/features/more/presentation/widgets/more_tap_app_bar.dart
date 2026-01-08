@@ -13,11 +13,11 @@ import '../../../../core/helpers/helpers.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
+import '../../../chats/data/chat_sheet_manager.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../core/widgets/app_bottom_sheet.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/custom_messages.dart';
-import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/riyal_price_text.dart';
 import '../../../auth/imports.dart';
 import '../cubit/logout_cubit.dart';
@@ -179,7 +179,7 @@ class MoreTabAppBar extends StatelessWidget {
                     InkWell(
                       onTap: (){
                         if(UserModel.isAuthenticated){
-                          showDefaultBottomSheet(
+                          ChatSheetManager.show(
                               child: BlocProvider(
                                 create: (context) => LogoutCubit(),
                                 child: AppBottomSheet.large(

@@ -14,11 +14,11 @@ import '../../../../core/extensions/widget_extension.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/widgets/app_pagify.dart';
 import '../../../../core/widgets/custom_messages.dart';
-import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/icon_widget.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../core/widgets/sheets/delete_sheet.dart';
 import '../../../chats/data/chat_notification_service.dart';
+import '../../../chats/data/chat_sheet_manager.dart';
 import '../../../chats/presentation/cubits/notification_cubit.dart';
 import '../../data/models/notification_model.dart';
 import '../../data/notification_data.dart';
@@ -74,7 +74,7 @@ class _NotificationBodyState extends State<NotificationBody> {
                 builder: (context, show, child) => show? IconWidget(
                   icon: Assets.svgTrashIcon,
                   onTap: () {
-                    showDefaultBottomSheet(
+                    ChatSheetManager.show(
                       child: DeleteSheet(
                         asyncCall: (context) async {
                           final res = await NotificationsData.deleteAllNotification();
@@ -104,7 +104,7 @@ class _NotificationBodyState extends State<NotificationBody> {
               itemBuilder: (context, data, index, element) => NotificationCard(
                 notificationModel: element,
                 onDelete: (id) async {
-                  showDefaultBottomSheet(
+                  ChatSheetManager.show(
                     child: DeleteSheet(
                       asyncCall: (context) async {
                         final res = await NotificationsData.deleteNotification(id);

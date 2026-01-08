@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/extensions/string_extension.dart';
+import '../../../../core/helpers/helpers.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/widgets/app_text.dart';

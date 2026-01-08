@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pagify/pagify.dart';
+import '../../../../chats/data/chat_sheet_manager.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/navigation/navigator.dart';
 import '../../../../../core/widgets/app_pagify.dart';
-import '../../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../../core/widgets/sheets/bloc_success.dart';
 import '../../../data/more_data.dart';
@@ -35,7 +35,7 @@ class _BlockedUserScreenState extends State<BlockedUserScreen> {
             itemBuilder: (context, data, index, element) => BlockedUserItem(
               blockUserModel: element,
               onDelete: (ctx)  {
-                showDefaultBottomSheet(
+                ChatSheetManager.show(
                     child: BlocManagerSheet(
                       id: element.id ?? 0,
                       blocManager: BlocManager.unblock,

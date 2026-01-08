@@ -4,7 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:path/path.dart' as Go;
+import 'package:path/path.dart' as Goo;
 import '../../../../../../generated/assets.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
@@ -13,11 +13,12 @@ import '../../../../../core/extensions/form_field_validation.dart';
 import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/extensions/sized_box_helper.dart';
 import '../../../../../core/helpers/validators.dart';
+import '../../../../../core/navigation/navigator.dart';
+import '../../../../chats/data/chat_sheet_manager.dart';
 import '../../../../../core/widgets/app_bottom_sheet.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../../core/widgets/custom_app_bar.dart';
-import '../../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../../core/widgets/icon_widget.dart';
 import '../../../../../core/widgets/image_widgets/upload_image.dart';
 import '../../../../../core/widgets/sheets/success_sheet.dart';
@@ -110,9 +111,10 @@ class _AddComplaintAndSuggestionState extends State<AddComplaintAndSuggestion> {
           bottomNavigationBar: BlocConsumer<AddComplaintCubit, AsyncState>(
             listener: (context, state) {
               if(state.isSuccess){
-                showDefaultBottomSheet(
+                ChatSheetManager.show(
                     child: SuccessSheet(
                       isInAuth: false,
+                      onTap: () => Go.back(),
                       upperText: AppText(
                         LocaleKeys.theComplaintDataHasBeenSuccessfullySentToManagement,
                         fontSize: 16.sp,

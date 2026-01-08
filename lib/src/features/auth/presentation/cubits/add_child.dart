@@ -6,7 +6,7 @@ import '../../../../core/shared/models/user_models/individual/individual_user_mo
 import '../../../../core/shared/models/user_models/parent/parent_model.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
-import '../../../../core/widgets/default_bottom_sheet.dart';
+import '../../../chats/data/chat_sheet_manager.dart';
 import '../widgets/sign_up/sheets/add_child_sheet.dart';
 
 class AddChildCubit extends AsyncCubit<UserModel>{
@@ -39,7 +39,7 @@ class AddChildCubit extends AsyncCubit<UserModel>{
             UserCubit.instance.updateUser(newParent);
           }
 
-          showDefaultBottomSheet(child: AddChildSheet(
+          ChatSheetManager.show(child: AddChildSheet(
             maleNum: parent.maleChildrenNum,
             femaleNum: parent.femaleChildrenNum,
             cancelOnTap: cancelOnTap,

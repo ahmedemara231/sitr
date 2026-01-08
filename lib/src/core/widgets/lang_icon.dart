@@ -7,13 +7,13 @@ import '../../../generated/assets.dart';
 import '../../config/language/languages.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
+import '../../features/chats/data/chat_sheet_manager.dart';
 import '../../features/more/presentation/cubit/change_lang.dart';
 import '../extensions/context_extension.dart';
 import '../extensions/padding_extension.dart';
 import '../navigation/navigator.dart';
 import 'app_text.dart';
 import 'buttons/app_loading_button.dart';
-import 'default_bottom_sheet.dart';
 
 class LangIcon extends StatelessWidget {
   final bool withRequest;
@@ -22,7 +22,7 @@ class LangIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => showDefaultBottomSheet(child: LangSheet(withRequest: withRequest)),
+      onTap: () => ChatSheetManager.show(child: LangSheet(withRequest: withRequest)),
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12.r),

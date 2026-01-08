@@ -18,6 +18,7 @@ import '../extensions/context_extension.dart';
 import '../extensions/num.dart';
 import '../extensions/object.dart';
 import '../extensions/padding_extension.dart';
+import '../../features/chats/data/chat_sheet_manager.dart';
 import '../extensions/sized_box_helper.dart';
 import '../extensions/string_extension.dart';
 import '../extensions/widget_extension.dart';
@@ -30,7 +31,6 @@ import '../shared/models/user_models/individual/individual_user_model.dart';
 import '../shared/models/user_models/user_model.dart';
 import 'app_text.dart' show AppText;
 import 'chat_button.dart';
-import 'default_bottom_sheet.dart';
 import 'image_widgets/cached_image.dart';
 import 'scaffolds/center_card_scaffold.dart';
 import 'sheets/bloc_success.dart';
@@ -160,14 +160,14 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                   const ProfileAppBarActions.withBackButtonOnly()
                 else
                   ProfileAppBarActions(
-                    onBlock: (context) => showDefaultBottomSheet(
+                    onBlock: (context) => ChatSheetManager.show(
                       child: BlocManagerSheet(
                         id: state.data.id!,
                         blocManager: BlocManager.block,
                         onPress: () => 2.pop(),
                       ),
                     ),
-                    onReport: (context) => showDefaultBottomSheet(
+                    onReport: (context) => ChatSheetManager.show(
                       child: ReportSheet(
                         id: state.data.id!,
                       ).paddingBottom(MediaQuery.of(context).viewPadding.bottom),

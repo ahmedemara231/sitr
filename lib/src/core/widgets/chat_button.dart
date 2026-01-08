@@ -4,11 +4,11 @@ import '../../config/language/locale_keys.g.dart';
 import '../../features/chats/data/models/request_model.dart';
 import '../../features/chats/presentation/imports.dart';
 import '../helpers/user_type_enum.dart';
+import '../../features/chats/data/chat_sheet_manager.dart';
 import '../navigation/navigator.dart';
 import '../network/api_endpoints.dart';
 import '../shared/models/user_models/user_model.dart';
 import 'buttons/custom_app_buttons/default_button.dart' show AppDefaultButton;
-import 'default_bottom_sheet.dart';
 import 'sheets/tips_sheet.dart';
 
 
@@ -27,8 +27,7 @@ class ChatButton extends StatelessWidget {
     },
 
     ChatButtonActions.viewTips : () => user.type!.userType!.isParent?
-    showDefaultBottomSheet(
-        withPadding: false,
+    ChatSheetManager.show(
         child: TipsSheet(
             path: ApiConstants.parentIndividualConversation,
             btnTitle: LocaleKeys.start,
@@ -39,8 +38,7 @@ class ChatButton extends StatelessWidget {
                 )),
         )
     ) :
-    showDefaultBottomSheet(
-      withPadding: false,
+    ChatSheetManager.show(
         child: TipsSheet(
           path: ApiConstants.appStages,
           onConfirm: (context) =>

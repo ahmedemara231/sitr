@@ -13,7 +13,9 @@ import 'package:share_plus/share_plus.dart';
 import '../../config/language/languages.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
+import '../../features/chats/data/chat_sheet_manager.dart';
 import '../../features/packages/presentation/screens/subscription_screen.dart';
+import '../base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../extensions/padding_extension.dart';
 import '../navigation/navigator.dart';
 import '../shared/get_paymeny_brands_cubit.dart';
@@ -21,10 +23,10 @@ import '../shared/user_cubit/user_cubit.dart';
 import '../widgets/app_text.dart';
 import '../widgets/custom_loading.dart';
 import '../widgets/custom_messages.dart';
-import '../widgets/default_bottom_sheet.dart';
 import '../widgets/image_widgets/cached_image.dart';
 import '../widgets/radio_bottom_sheet.dart';
 import '../widgets/sheets/login_when_visitor.dart';
+import '../widgets/sheets/payment_sheet.dart';
 import '../widgets/sheets/success_sheet.dart';
 import 'permission_handler/handler.dart';
 import 'permission_handler/model.dart';
@@ -45,8 +47,7 @@ class Helpers {
         onCallStarted: onCallStarted,
         currentUserId: UserCubit.instance.user.id.toString(),
         currentUserName: UserCubit.instance.user.name??'',
-
-        callDuration: const Duration(minutes: 3)
+        callDuration: const Duration(minutes: 5)
       );
 
       if (isConnected ?? false) {
@@ -56,52 +57,119 @@ class Helpers {
       }
   }
 
-  static Future<void> executeOnlinePayment(BuildContext context, {
-  void Function(BuildContext context)? onFinish,
-  required Future<void> Function(BuildContext context, int brandId, void Function(String url) onSuccess) onPay
+  static Widget handlePaymentSheet<T extends AsyncCubit>({
+    List<PaymentMethod>? paymentMethods,
+    required bool isInAuth,
+    required Future<void> Function(BuildContext context, int brandId, void Function(String url) onSuccess) onPayOnline,
+    Future<void> Function(BuildContext context, void Function() onSuccess)? onPayWallet,
+    required T bloc,
+    required Widget upperWidget,
+    void Function(BuildContext context)? onFinish,
+  }){
+    return BlocProvider(
+      create: (context) => PaymentBrandsCubit(),
+      child: Builder(
+          builder: (context) {
+            return PaymentSheet(
+              paymentMethods: paymentMethods,
+              onPay: (ctx, paymentMethod) async =>
+              paymentMethod == PaymentMethod.online?
+              executeOnlinePayment<T>(
+                context,
+                upperWidget: upperWidget,
+                bloc: bloc,
+                onFinish: onFinish,
+                onPay: onPayOnline, isInAuth: isInAuth,
+              ) : _executeWalletPayment(
+                  context,
+                  onFinish: onFinish,
+                  onPayWallet: onPayWallet,
+                  isInAuth: isInAuth
+              ),
+            );
+          }
+      ),
+    );
+  }
+
+  static void _executeWalletPayment(BuildContext context, {
+    required bool isInAuth,
+    Future<void> Function(BuildContext context, void Function() onSuccess)? onPayWallet,
+    void Function(BuildContext context)? onFinish,
   })async{
-      await context.read<PaymentBrands>().get(
-          onSuccess: (data) => showDefaultBottomSheet(
-              child: RadioSelectionWidget<int>(
-                  selectedBackgroundColor: AppColors.primary.withOpacity(.2),
-                  title: LocaleKeys.choosePaymentMethod,
-                  onSubmit: (ctx, brandId) async => await onPay.call(context, brandId, (url) async{
-                    final result = await Go.to(SubscriptionScreen(initialUrl: url));
-                    if(result == 'success'){
-                      await showDefaultBottomSheet(
-                          child: SuccessSheet(
-                            isInAuth: false,
-                            upperText: Text(LocaleKeys.walletChargedSuccessfully),
-                          ));
-                      Go.back('success');
-                      onFinish?.call(context);
-                    }
-                  }),
-                  values: data.map((e) => e.id??0).toList(),
-                  showSubmitButton: true,
-                  titles: List.generate(
-                      data.length,
-                          (i) => Expanded(child: Row(
-                        spacing: 10.w,
-                        children: [
-                          CachedImage(
-                              width: 50.w,
-                              height: 50.h,
-                              url: data[i].image??''
-                          ),
-                          AppText(data[i].name??''),
-                        ],
-                      ))
-                  )
+    await onPayWallet?.call(context, (){
+      _onPaymentSuccess(
+          context,
+          onFinish: onFinish,
+          isInAuth: isInAuth,
+          upperWidget: null
+      );
+    });
+  }
+
+  static Future<void> executeOnlinePayment<T extends AsyncCubit>(BuildContext context, {
+    void Function(BuildContext context)? onFinish,
+    bool isInAuth = false,
+    required Future<void> Function(BuildContext context, int brandId, void Function(String url) onSuccess) onPay,
+    required Widget upperWidget,
+    required T bloc,
+  })async{
+      await context.read<PaymentBrandsCubit>().get(
+          onSuccess: (data) => ChatSheetManager.show(
+              child:  BlocProvider<T>(
+                create: (context) => bloc,
+                child: RadioSelectionWidget<int>(
+                    selectedBackgroundColor: AppColors.primary.withOpacity(.2),
+                    title: LocaleKeys.choosePaymentMethod,
+                    onSubmit: (ctx, brandId) async => await onPay.call(ctx, brandId, (url) async{
+                      final result = await Go.to(SubscriptionScreen(initialUrl: url));
+                      if(result == 'success'){
+                        _onPaymentSuccess(
+                            context,
+                            onFinish: onFinish,
+                            upperWidget: upperWidget,
+                            isInAuth: isInAuth
+                        );
+                      }
+                    }),
+                    values: data.map((e) => e.id??0).toList(),
+                    showSubmitButton: true,
+                    titles: List.generate(
+                        data.length,
+                            (i) => Expanded(child: Row(
+                          spacing: 10.w,
+                          children: [
+                            CachedImage(
+                                width: 50.w,
+                                height: 50.h,
+                                url: data[i].image??''
+                            ),
+                            AppText(data[i].name??''),
+                          ],
+                        ))
+                    )
+                ),
               )
           )
       );
   }
 
+  static void _onPaymentSuccess(BuildContext context,{
+    required Widget? upperWidget,
+    required bool isInAuth,
+    void Function(BuildContext context)? onFinish,
+  })async{
+      await ChatSheetManager.show(
+      child: SuccessSheet(
+        isInAuth: isInAuth,
+        upperText: upperWidget,
+        onTap: () => onFinish?.call(context),
+      ));
+  }
+
   static void showUnauthenticatedSheet(){
     WidgetsBinding.instance.addPostFrameCallback(
-            (_) => showDefaultBottomSheet(
-              enableDrag: false,
+            (_) => ChatSheetManager.show(
             child: const LoginWhenVisitorSheet()
         )
     );

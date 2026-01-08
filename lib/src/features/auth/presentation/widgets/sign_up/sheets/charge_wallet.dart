@@ -11,6 +11,7 @@ import '../../../../../../core/widgets/app_text.dart';
 import '../../../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../../../core/widgets/text_fields/default_text_field.dart';
 import '../../../../../more/presentation/cubit/wallet_cubit/charge_wallet_cubit.dart';
+import '../../../../../more/presentation/cubit/wallet_cubit/fetch_wallet_cubit.dart';
 
 class ChargeWalletSheet extends StatefulWidget {
   const ChargeWalletSheet({super.key});
@@ -55,19 +56,24 @@ class ChargeWalletSheetState extends State<ChargeWalletSheet> {
         MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => ChargeWalletCubit()),
-            BlocProvider(create: (context) => PaymentBrands()),
+            BlocProvider(create: (context) => PaymentBrandsCubit()),
           ],
           child: AppLoadingButton(
               asyncCall: (context) async{
                 if(_formKey.currentState!.validate()){
                   await Helpers.executeOnlinePayment(
-                      context,
-                      onFinish: (context) => Go.back('success'),
-                      onPay: (context, brandId, onSuccess) async => await context.read<ChargeWalletCubit>().chargeWallet(
-                          _amountCont.text,
-                          brandId,
-                          onSuccess: (url) => onSuccess.call(url)
-                      )
+                    context,
+                    bloc: ChargeWalletCubit(),
+                    upperWidget: Text(LocaleKeys.walletChargedSuccessfully),
+                    onFinish: (context) {
+                      context.read<FetchWalletCubit>().fetchWallet();
+                      Go.back('success');
+                    },
+                    onPay: (context, brandId, onSuccess) async => await context.read<ChargeWalletCubit>().chargeWallet(
+                        _amountCont.text,
+                        brandId,
+                        onSuccess: (url) => onSuccess.call(url)
+                      ),
                   );
                 }
               },

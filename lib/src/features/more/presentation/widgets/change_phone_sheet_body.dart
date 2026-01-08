@@ -8,10 +8,10 @@ import '../../../../core/helpers/validators.dart';
 import '../../../../core/navigation/named_routes.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
+import '../../../chats/data/chat_sheet_manager.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../core/widgets/buttons/custom_app_buttons/loading_button.dart';
-import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/sheets/success_sheet.dart';
 import '../../../../core/widgets/text_fields/default_text_field.dart';
 import '../cubit/change_phone_manager.dart';
@@ -87,8 +87,9 @@ class _ChangePhoneSheetBodyState extends State<ChangePhoneSheetBody> {
                             Go.back();
                             final newUser = UserCubit.instance.user.copyWith(phone: phoneController.text);
                             await UserCubit.instance.updateUser(newUser);
-                            showDefaultBottomSheet(child: SuccessSheet(
+                            ChatSheetManager.show(child: SuccessSheet(
                                 isInAuth: false,
+                              onTap: () => Go.back(),
                               upperText: AppText(
                                 msg,
                                 fontSize: 16.sp,

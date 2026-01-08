@@ -6,18 +6,20 @@ import '../../../core/widgets/default_bottom_sheet.dart';
 class ChatSheetManager {
   static bool isOpened = false;
 
-  static Future<void> show({required Widget child}) async {
+  static Future<dynamic> show({required Widget child}) async {
     if (isOpened) {
       Go.back();
       await Future.delayed(const Duration(milliseconds: 300));
     }
 
-    await _manageSheet(child);
+    return await _manageSheet(child);
   }
 
-  static Future<void> _manageSheet(Widget child) async {
+  static Future<dynamic> _manageSheet(Widget child) async {
     isOpened = true;
-    await showDefaultBottomSheet(enableDrag: true, child: child);
+    final result = await
+    showDefaultBottomSheet(enableDrag: true, child: child);
     isOpened = false;
+    return result;
   }
 }

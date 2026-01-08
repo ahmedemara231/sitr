@@ -8,20 +8,21 @@ import '../../../features/auth/imports.dart' show EnterMaleOrFemaleOrChildDataSc
 import '../../../features/auth/presentation/cubits/add_child.dart';
 import '../../../features/auth/presentation/cubits/complete_profile_cubit.dart';
 import '../../../features/auth/presentation/data/auth_data.dart';
-import '../../../features/auth/presentation/widgets/sign_up/sheets/add_child_sheet.dart';
 import '../../../features/auth/presentation/widgets/sign_up/sheets/complete_profile_sheet.dart';
+import '../../../features/chats/data/chat_sheet_manager.dart';
 import '../../helpers/user_type_enum.dart';
 import '../../navigation/navigator.dart';
 import '../../shared/models/user_models/user_model.dart';
 import '../app_bottom_sheet.dart';
-import '../default_bottom_sheet.dart';
 
 class SuccessSheet extends StatelessWidget {
   final bool isInAuth;
   final Widget? upperText;
+  final void Function() onTap;
   const SuccessSheet({super.key,
     required this.isInAuth,
-    this.upperText
+    this.upperText,
+    required this.onTap,
   });
 
   void _manageGender({
@@ -35,11 +36,6 @@ class SuccessSheet extends StatelessWidget {
           showAlreadyHaveAccount: true,
           onClick: (context, user) => context.read<AddChildCubit>().addChild(
             body: user,
-            // onSuccess: (data) {
-            //   showDefaultBottomSheet(
-            //       child: const AddChildSheet()
-            //   );
-            // },
           )
       ));
 
@@ -50,7 +46,7 @@ class SuccessSheet extends StatelessWidget {
         showAlreadyHaveAccount: true,
         userType: gender,
         onClick: (context, user) => context.read<CompleteProfileCubit>().completeProfile(
-          body: user, onSuccess: () => showDefaultBottomSheet(child: const CompleteProfileSheet()),
+          body: user, onSuccess: () => ChatSheetManager.show(child: const CompleteProfileSheet()),
         ),
       ));
     }
@@ -79,7 +75,7 @@ class SuccessSheet extends StatelessWidget {
       children: [
         AppBottomSheet.small(
             asyncCall: (context) => !isInAuth?
-            Go.back() : _manageNavigation(),
+            onTap.call() : _manageNavigation(),
             btnTitle: isInAuth? LocaleKeys.completeProfile : LocaleKeys.back,
             upperWidget: Column(
               children: [

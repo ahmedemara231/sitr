@@ -15,6 +15,7 @@ import '../../features/auth/presentation/cubits/oath.dart';
 import '../../features/auth/presentation/enums/complete_register_status.dart';
 import '../../features/auth/presentation/widgets/sign_up/sheets/add_child_sheet.dart';
 import '../../features/auth/presentation/widgets/sign_up/sheets/complete_profile_sheet.dart';
+import '../../features/chats/data/chat_sheet_manager.dart';
 import '../../features/chats/enums.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/packages/presentation/packages_screen.dart';
@@ -28,7 +29,6 @@ import '../shared/models/user_models/user_model.dart';
 import '../shared/user_cubit/user_cubit.dart';
 import '../widgets/app_bottom_sheet.dart' show AppBottomSheet;
 import '../widgets/app_text.dart';
-import '../widgets/default_bottom_sheet.dart';
 import '../widgets/sheets/payment_sheet.dart';
 
 
@@ -182,8 +182,7 @@ bool get isImage =>
     final CompleteRegisterStatus statusType = user.completeRegistration!.toCompleteRegisterStatus();
     // await UserCubit.instance.init();
     if(statusType.isCompleted){
-      showDefaultBottomSheet(
-          enableDrag: false,
+      ChatSheetManager.show(
           child: BlocProvider(
             create: (context) => OathCubit()..getOath(),
             child: AppBottomSheet.small(
@@ -210,7 +209,7 @@ bool get isImage =>
 
     }else if(statusType.isNotSubscribed){
       injector<NetworkService>().setToken(user.token ?? '');
-      Go.off( PackagesScreen.subscription(
+      Go.off(PackagesScreen.subscription(
           paymentMethods: const [PaymentMethod.online],
           userType: user.type?.userType,
           isInAuth: true,
@@ -243,7 +242,7 @@ bool get isImage =>
             showAlreadyHaveAccount: true,
             userType: user.gender!.userGender,
             onClick: (context, user) => context.read<CompleteProfileCubit>().completeProfile(
-              body: user, onSuccess: () => showDefaultBottomSheet(child: const CompleteProfileSheet()),
+              body: user, onSuccess: () => ChatSheetManager.show(child: const CompleteProfileSheet()),
             ),
           )
       );
@@ -255,7 +254,7 @@ bool get isImage =>
         showAlreadyHaveAccount: true,
         userType: user.gender!.userGender,
         onClick: (context, user) => context.read<CompleteProfileCubit>().completeProfile(
-          body: user, onSuccess: () => showDefaultBottomSheet(child: const CompleteProfileSheet()),
+          body: user, onSuccess: () => ChatSheetManager.show(child: const CompleteProfileSheet()),
         ),
       ));
 

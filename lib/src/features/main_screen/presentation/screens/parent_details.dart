@@ -13,12 +13,12 @@ import '../../../../core/shared/models/user_models/parent/parent_model.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/chat_button.dart';
-import '../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../core/widgets/image_widgets/cached_image.dart';
 import '../../../../core/widgets/parent_children.dart';
 import '../../../../core/widgets/scaffolds/center_card_scaffold.dart';
 import '../../../../core/widgets/sheets/bloc_success.dart';
 import '../../../../core/widgets/sheets/report_cheet.dart';
+import '../../../chats/data/chat_sheet_manager.dart';
 import '../../data/models/partner_info_model.dart';
 import '../cubits/get_partner_info_cubit.dart';
 import '../widgets/app_bar_actions.dart';
@@ -58,14 +58,14 @@ class ParentDetailsScreen extends StatelessWidget {
               ),
 
               ProfileAppBarActions(
-                  onBlock: (context) => showDefaultBottomSheet(
+                  onBlock: (context) => ChatSheetManager.show(
                     child: BlocManagerSheet(
                       id: id,
                       blocManager: BlocManager.block,
                       onPress: () => 2.pop(),
                     ),
                   ),
-                  onReport: (context) => showDefaultBottomSheet(
+                  onReport: (context) => ChatSheetManager.show(
                     child: ReportSheet(id: id)
                   ),
               ),

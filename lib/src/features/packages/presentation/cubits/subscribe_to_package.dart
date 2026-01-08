@@ -12,7 +12,8 @@ class PackagesManagerCubit extends AsyncCubit<String>{
     required Package package,
     required PaymentMethod paymentMethod,
     required ScreenType type,
-    void Function(String url)? onSuccess
+    void Function(String url)? onSuccess,
+    final int? brandId,
   })async{
     setLoading();
     await executeAsyncWithBaseModel(
@@ -24,6 +25,7 @@ class PackagesManagerCubit extends AsyncCubit<String>{
 
                 httpRequestType: HttpRequestType.post,
                 body: {
+                  'brand_id' : brandId,
                   if(type == ScreenType.renew)
                     'user_package_id' : package.id,
 

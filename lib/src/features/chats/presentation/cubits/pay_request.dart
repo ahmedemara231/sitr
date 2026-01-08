@@ -8,6 +8,7 @@ class PayRequestCubit extends AsyncCubit<String>{
     required String path,
     required String matchRequestId,
     required String paymentMethod,
+    int? brandId,
     required Function(String? url) onSuccess,
 })async{
     await executeAsyncWithBaseModel(
@@ -16,6 +17,7 @@ class PayRequestCubit extends AsyncCubit<String>{
             api: path,
             httpRequestType: HttpRequestType.post,
             body: {
+              'brand_id' : brandId,
               'match_request_id' : matchRequestId,
               'payment_method' : paymentMethod,
             },

@@ -6,8 +6,8 @@ import '../extensions/num.dart';
 import '../network/api_endpoints.dart';
 import 'models/payment_brand.dart';
 
-class PaymentBrands extends AsyncCubit<List<PaymentBrand>>{
-  PaymentBrands() : super([]);
+class PaymentBrandsCubit extends AsyncCubit<List<PaymentBrand>>{
+  PaymentBrandsCubit() : super([]);
 
   Future<void> get({required void Function(List<PaymentBrand> data) onSuccess})async{
     await executeAsyncWithBaseModel(
