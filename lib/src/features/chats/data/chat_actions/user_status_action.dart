@@ -32,34 +32,21 @@ class UserStatusAction extends ChatActions{
     );
   }
 
-  Future<void> _pay({
-    required PaymentMethod payMethod,
-    int? brandId,
-    required void Function(String? url) onSuccess
-  })async{
-    context.read<PayRequestCubit>().pay(
-        path: ApiConstants.payRequest+context.read<ChatCubit>().userRequest!,
-        brandId: brandId,
-        matchRequestId: matchReqId.toString(),
-        paymentMethod: payMethod.name,
-        onSuccess: onSuccess
-    );
-  }
   void _showAcceptanceSheet(void Function() onSuccess){
     ChatSheetManager.show(
         child: BlocProvider.value(
           value: context.read<ChatCubit>(),
           child: AcceptOrRejectRequestWidget(
-            requestName: requestName,
-            onAccept: (context) async => await _executeReq(
-                context, path: ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
-                onSuccess: onSuccess
-            ),
-            onReject:(context) async => await _executeReq(
-                context,
-                path: ApiConstants.rejectRequest+context.read<ChatCubit>().userRequest!,
-                onSuccess: onSuccess
-            )
+              requestName: requestName,
+              onAccept: (context) async => await _executeReq(
+                  context, path: ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
+                  onSuccess: onSuccess
+              ),
+              onReject:(context) async => await _executeReq(
+                  context,
+                  path: ApiConstants.rejectRequest+context.read<ChatCubit>().userRequest!,
+                  onSuccess: onSuccess
+              )
           ),
         )
     );
@@ -70,7 +57,7 @@ class UserStatusAction extends ChatActions{
     if(!stage.isNewChat && status.isPending){
       _showAcceptanceSheet(
             () => request.isParentIndividualApproval?
-            Go.offAll(const HomeScreen()) : Go.back(),
+        Go.offAll(const HomeScreen()) : Go.back(),
       );
 
     }
@@ -95,70 +82,69 @@ class UserStatusAction extends ChatActions{
           create: (context) => PayRequestCubit(),
           child: BlocProvider.value(
             value: context.read<ChatCubit>(),
-            child: Helpers.handlePaymentSheet(
-              bloc: PayRequestCubit(),
-              isInAuth: false,
-              upperWidget: AppText(LocaleKeys.youCanNowContinueChatStages, color: Colors.grey, fontSize: 12.sp),
-              onPayOnline: (ctx, bId, onSuccess) async => await _pay(
-                payMethod: PaymentMethod.online,
-                onSuccess: (url) => onSuccess.call(url??''),
-                brandId: bId
-              ),
-              onPayWallet: (ctx, onSuccess) async => await _pay(
-                  payMethod: PaymentMethod.wallet,
-                  onSuccess: (url) => onSuccess.call(),
+            child: PaymentSheet(
+              onPay: (context, payMethod)async => payMethod == PaymentMethod.online?
+              ChatSheetManager.show(
+                  child: ShowBrandsSheet(
+                    onPay: (context, brandId) => context.read<PayRequestCubit>().pay(
+                      path: ApiConstants.payRequest+context.read<ChatCubit>().userRequest!,
+                      matchRequestId: matchReqId.toString(),
+                      paymentMethod: payMethod.name,
+                      onSuccess: (url) async{
+                        Object? result = '';
+                        result = await Go.to(SubscriptionScreen(
+                            initialUrl: url!,
+                            title: LocaleKeys.pay
+                        ));
+
+                        if(result == 'success'){
+                          context.read<ChatCubit>().startChat(
+                              requestModel: requestModel
+                          );
+
+                          ChatSheetManager.show(
+                              child: SuccessSheet(
+                                isInAuth: false,
+                                upperText: Column(
+                                  spacing: 10.h,
+                                  children: [
+                                    AppText(LocaleKeys.paymentSucceeded),
+                                    AppText(LocaleKeys.youCanNowContinueChatStages, color: Colors.grey, fontSize: 12.sp),
+                                  ],
+                                ),
+                              )
+                          );
+                        }
+                      },
+                    ),
+                  )
+              ) : context.read<PayRequestCubit>().pay(
+                path: ApiConstants.payRequest+context.read<ChatCubit>().userRequest!,
+                matchRequestId: matchReqId.toString(),
+                paymentMethod: payMethod.name,
+                onSuccess: (url) async{
+                    context.read<ChatCubit>().startChat(
+                        requestModel: requestModel
+                    );
+
+                    ChatSheetManager.show(
+                        child: SuccessSheet(
+                          isInAuth: false,
+                          upperText: Column(
+                            spacing: 10.h,
+                            children: [
+                              AppText(LocaleKeys.paymentSucceeded),
+                              AppText(LocaleKeys.youCanNowContinueChatStages, color: Colors.grey, fontSize: 12.sp),
+                            ],
+                          ),
+                        )
+                    );
+                },
               ),
             ),
           ),
         ),
       );
-      
-      // ChatSheetManager.show(
-      //   child: BlocProvider(
-      //     create: (context) => PayRequestCubit(),
-      //     child: BlocProvider.value(
-      //       value: context.read<ChatCubit>(),
-      //       child: PaymentSheet(
-      //         onPay: (context, payMethod)async => context.read<PayRequestCubit>().pay(
-      //           path: ApiConstants.payRequest+context.read<ChatCubit>().userRequest!,
-      //           matchRequestId: matchReqId.toString(),
-      //           paymentMethod: payMethod.name,
-      //           onSuccess: (url) async{
-      //             Object? result = '';
-      //
-      //             if(payMethod == PaymentMethod.online){
-      //               result = await Go.to(SubscriptionScreen(
-      //                   initialUrl: url!,
-      //                   title: LocaleKeys.pay
-      //               ));
-      //             }else if(payMethod == PaymentMethod.wallet){
-      //               result = 'success';
-      //             }
-      //
-      //             if(result == 'success'){
-      //               context.read<ChatCubit>().startChat(
-      //                   requestModel: requestModel
-      //               );
-      //
-      //               ChatSheetManager.show(
-      //                   child: SuccessSheet(
-      //                     isInAuth: false,
-      //                     upperText: Column(
-      //                       spacing: 10.h,
-      //                       children: [
-      //                         AppText(LocaleKeys.paymentSucceeded),
-      //                         AppText(LocaleKeys.youCanNowContinueChatStages, color: Colors.grey, fontSize: 12.sp),
-      //                       ],
-      //                     ),
-      //                   )
-      //               );
-      //             }
-      //           },
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      // );
 
     }else if(status.isParentMeeting){
       ChatSheetManager.show(

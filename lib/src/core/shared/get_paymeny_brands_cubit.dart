@@ -9,7 +9,7 @@ import 'models/payment_brand.dart';
 class PaymentBrandsCubit extends AsyncCubit<List<PaymentBrand>>{
   PaymentBrandsCubit() : super([]);
 
-  Future<void> get({required void Function(List<PaymentBrand> data) onSuccess})async{
+  Future<void> get()async{
     await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call(
             CrudBaseParmas(
@@ -18,8 +18,6 @@ class PaymentBrandsCubit extends AsyncCubit<List<PaymentBrand>>{
               mapper: (json) => (json as List).map((e) => PaymentBrand.fromJson(e)).toList()
             )
         ),
-
-      onSuccess: (data) => onSuccess.call(data.data)
     );
   }
 }

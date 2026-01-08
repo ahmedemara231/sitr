@@ -114,7 +114,6 @@ class _AddComplaintAndSuggestionState extends State<AddComplaintAndSuggestion> {
                 ChatSheetManager.show(
                     child: SuccessSheet(
                       isInAuth: false,
-                      onTap: () => Go.back(),
                       upperText: AppText(
                         LocaleKeys.theComplaintDataHasBeenSuccessfullySentToManagement,
                         fontSize: 16.sp,

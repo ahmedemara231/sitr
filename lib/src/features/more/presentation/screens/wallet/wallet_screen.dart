@@ -8,6 +8,7 @@ import '../../../../../core/base_crud/code/presentation/cubit/base_cubit/async_c
 import '../../../../../core/extensions/sized_box_helper.dart';
 import '../../../../../core/helpers/status_builder.dart';
 import '../../../../../core/navigation/navigator.dart';
+import '../../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../chats/data/chat_sheet_manager.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/buttons/app_loading_button.dart';
@@ -64,13 +65,14 @@ class WalletScreen extends StatelessWidget {
         padding: EdgeInsets.all(16.r),
         child: AppLoadingButton(
             asyncCall: (context) async {
-              ChatSheetManager.show(child: BlocProvider.value(
-                  value: context.read<FetchWalletCubit>(),
-                  child: const ChargeWalletSheet()
-              ));
+              final result = await showDefaultBottomSheet(child: const ChargeWalletSheet());
+              if(result == 'success'){
+                context.read<FetchWalletCubit>().fetchWallet();
+              }
             },
             title: LocaleKeys.rechargeWallet),
       ),
+
     );
   }
 }

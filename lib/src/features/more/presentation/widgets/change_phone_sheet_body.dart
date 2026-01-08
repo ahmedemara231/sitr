@@ -89,7 +89,6 @@ class _ChangePhoneSheetBodyState extends State<ChangePhoneSheetBody> {
                             await UserCubit.instance.updateUser(newUser);
                             ChatSheetManager.show(child: SuccessSheet(
                                 isInAuth: false,
-                              onTap: () => Go.back(),
                               upperText: AppText(
                                 msg,
                                 fontSize: 16.sp,
