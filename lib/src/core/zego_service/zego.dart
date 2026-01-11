@@ -7,6 +7,7 @@ import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
 
+import '../../features/home/home_screen.dart';
 import '../extensions/num.dart';
 import '../extensions/object.dart';
 import '../widgets/app_text.dart';
@@ -54,11 +55,35 @@ class ZegoService {
     dynamic Function()? onIncomingMissedCallDialBackFailed,
   }) async {
     try {
+      /*
+      * ZegoCallPrebuiltConfigQuery? requireConfig,
+    ZegoUIKitPrebuiltCallEvents? events,
+
+    /// invitation abouts.
+    ZegoCallInvitationConfig? config,
+    ZegoCallRingtoneConfig? ringtoneConfig,
+    ZegoCallInvitationUIConfig? uiConfig,
+    ZegoCallInvitationNotificationConfig? notificationConfig,
+    ZegoCallInvitationInnerText? innerText,
+    ZegoUIKitPrebuiltCallInvitationEvents? invitationEvents,
+
+       this.foregroundBuilder,
+    this.pageBuilder,
+    this.backgroundBuilder,
+    this.showAvatar = true,
+    this.showCentralName = true,
+    this.showCallingText = true,
+    this.useVideoViewAspectFill = false,*/
       await ZegoUIKitPrebuiltCallInvitationService().init(
         appID: appId,
         appSign: appSign,
         userID: currentUserId,
         userName: currentUserName,
+        // uiConfig: ZegoCallInvitationUIConfig(
+        //   inviter: ZegoCallInvitationInviterUIConfig(
+        //     minimized: ZegoCallInvitationInviterMinimizedUIConfig()
+        //   )
+        // ),
         plugins: [ZegoUIKitSignalingPlugin()],
         invitationEvents: ZegoUIKitPrebuiltCallInvitationEvents(
           onIncomingCallAcceptButtonPressed: onIncomingCallAcceptButtonPressed,
@@ -88,20 +113,29 @@ class ZegoService {
               ? ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall()
               : ZegoUIKitPrebuiltCallConfig.oneOnOneVoiceCall();
 
-          config.topMenuBar.buttons = [
-            ZegoCallMenuBarButtonName.minimizingButton,
-            ZegoCallMenuBarButtonName.switchCameraButton,
-          ];
+          /// show minimizing button
+          config.topMenuBar.isVisible = true;
+          config.topMenuBar.buttons.insert(0, ZegoCallMenuBarButtonName.minimizingButton);
 
-          config.bottomMenuBarConfig.buttons = [
-            ZegoCallMenuBarButtonName.toggleMicrophoneButton,
-            ZegoCallMenuBarButtonName.toggleCameraButton,
-            ZegoCallMenuBarButtonName.hangUpButton,
-          ];
+          config.topMenuBar.buttons.insert(0, ZegoCallMenuBarButtonName.pipButton);
+          config.pip.enableWhenBackground = true;
+          // من برا قبل ما يخش الكول
+          // config.topMenuBar.buttons = [
+          //   ZegoCallMenuBarButtonName.minimizingButton,
+          //   ZegoCallMenuBarButtonName.switchCameraButton,
+          // ];
+
+          // config.bottomMenuBarConfig.buttons = [
+          //   ZegoCallMenuBarButtonName.toggleMicrophoneButton,
+          //   ZegoCallMenuBarButtonName.toggleCameraButton,
+          //   ZegoCallMenuBarButtonName.hangUpButton,
+          // ];
 
           config.layout = ZegoLayout.pictureInPicture(
-            isSmallViewDraggable: isSmallViewDraggable,
-            switchLargeOrSmallViewByClick: switchLargeOrSmallViewByClick,
+              isSmallViewDraggable: true,
+              switchLargeOrSmallViewByClick: true,
+              isSmallViewsScrollable: true,
+              showNewScreenSharingViewInFullscreenMode: true,
           );
 
           if (addChatButton) {
@@ -119,13 +153,6 @@ class ZegoService {
                 }
               };
             }
-
-            // Add PIP minimize button for video calls
-            // config.topMenuBarConfig.buttons.insert(
-            //   0,
-            //   ZegoCallMenuBarButtonName.minimizingButton,
-            //
-            // );
           }
 
           return config;
@@ -191,15 +218,14 @@ class ZegoService {
     required List<ZegoUIKitUser> invites,
     void Function()? onPressed,
     required BuildContext context,
-  }) =>
-      ZegoSendCallInvitationButton(
-        isVideoCall: isVideoCall,
-        icon: ButtonIcon(icon: icon),
-        iconSize: Size(25.w, 25.h),
-        onPressed: (c, v, b) {
-          onPressed?.call();
-        },
-        resourceID: "zegouikit_call",
-        invitees: invites,
-      );
+  }) => ZegoSendCallInvitationButton(
+    isVideoCall: isVideoCall,
+    icon: ButtonIcon(icon: icon),
+    iconSize: Size(25.w, 25.h),
+    onPressed: (c, v, b) {
+      onPressed?.call();
+    },
+    resourceID: "zegouikit_call",
+    invitees: invites,
+  );
 }

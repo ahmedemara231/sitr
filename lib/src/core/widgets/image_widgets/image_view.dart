@@ -21,36 +21,19 @@ class ImageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppScaffold(
       body: SafeArea(
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Container(
-              constraints: BoxConstraints.expand(
-                height: MediaQuery.of(context).size.height / 2,
-              ),
-              child: PinchZoom(
-                maxScale: 2.5,
-                child: CachedImage(
-                  url: url,
-                  fit: BoxFit.fill,
-                ),
-                // onZoomStart: (){print('Start zooming');},
-                // onZoomEnd: (){print('Stop zooming');},
-              ),
+        child: Container(
+          constraints: BoxConstraints.expand(
+            height: MediaQuery.of(context).size.height / 2,
+          ),
+          child: PinchZoom(
+            maxScale: 2.5,
+            child: CachedImage(
+              url: url,
+              fit: BoxFit.fill,
             ),
-
-            // Container(
-            //   constraints: BoxConstraints.expand(
-            //     height: MediaQuery.of(context).size.height,
-            //   ),
-            //   child: InteractiveViewer(
-            //     minScale: minScale,
-            //     maxScale: maxScale,
-            //     scaleFactor: 1.0,
-            //     child: child,
-            //   ),
-            // ),
-          ],
+            // onZoomStart: (){print('Start zooming');},
+            // onZoomEnd: (){print('Stop zooming');},
+          ),
         ),
       ), appBarTitle: '',
     );

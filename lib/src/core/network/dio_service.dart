@@ -88,6 +88,7 @@ class DioService implements NetworkService {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
+      case DioExceptionType.connectionError:
         throw NoInternetConnectionException(LocaleKeys.checkInternet);
       case DioExceptionType.badResponse:
         switch (error.response!.statusCode) {

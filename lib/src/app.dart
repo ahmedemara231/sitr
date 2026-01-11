@@ -1,9 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:pip_view/pip_view.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'config/language/locale_keys.g.dart';
 import 'config/res/config_imports.dart';
 import 'core/navigation/navigator.dart';
@@ -38,13 +39,18 @@ class Sitr extends StatelessWidget {
               builder: (context, child) {
                 return Overlay(
                   initialEntries: [
-                    OverlayEntry(builder: (context) => PIPView(
-                        builder: (context, isFloating) => child!
+                    OverlayEntry(builder: (context) => Stack(
+                      children: [
+                        child!,
+                        ZegoUIKitPrebuiltCallMiniOverlayPage(
+                          contextQuery: () => Go.context
+                        ),
+                      ],
                     )),
                   ],
                 );
               },
-              home: const SplashScreen(),
+              home: const ZegoUIKitPrebuiltCallMiniPopScope(child: SplashScreen()),
               navigatorObservers: [AppNavigationObserver()],
               // builder: (context, child) {
               //   return InternetInterceptorWidget(

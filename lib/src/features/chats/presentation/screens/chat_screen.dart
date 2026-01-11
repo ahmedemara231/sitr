@@ -279,8 +279,6 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                 data: state,
                 onSuccess: (data, context) {
                   final callStatus = context.read<ChatCubit>().matchRequest?.callStatus;
-                  // log('the call status is ${callStatus}');
-
                   if(((callStatus == 'free_available') || (callStatus == 'paid_available'))){
                     return ValueListenableBuilder(
                         valueListenable: ZegoService.isConnected,
@@ -291,13 +289,13 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                             invites: [
                               ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName)
                             ],
-                            onPressed: ()async{
-                              if(callStatus == 'free_available'){
-                                await _makeVideoReq();
-                              }
-
-                              await _endVideoCall();
-                            }
+                            // onPressed: ()async{
+                            //   if(callStatus == 'free_available'){
+                            //     await _makeVideoReq();
+                            //   }
+                            //
+                            //   await _endVideoCall();
+                            // }
                         ) : const SizedBox.shrink()
                     );
 

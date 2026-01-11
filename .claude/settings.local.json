@@ -14,7 +14,10 @@
       "Bash(pod install:*)",
       "Bash(flutter pub get:*)",
       "Bash(flutter pub:*)",
-      "Bash(flutter analyze:*)"
+      "Bash(flutter analyze:*)",
+      "Bash(flutter clean:*)",
+      "Bash(cat:*)",
+      "Bash(kill:*)"
     ],
     "deny": [],
     "ask": []
