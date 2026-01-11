@@ -289,13 +289,13 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                             invites: [
                               ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName)
                             ],
-                            // onPressed: ()async{
-                            //   if(callStatus == 'free_available'){
-                            //     await _makeVideoReq();
-                            //   }
-                            //
-                            //   await _endVideoCall();
-                            // }
+                            onPressed: ()async{
+                              if(callStatus == 'free_available'){
+                                await _makeVideoReq();
+                              }
+
+                              await _endVideoCall();
+                            }
                         ) : const SizedBox.shrink()
                     );
 
