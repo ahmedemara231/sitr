@@ -60,57 +60,57 @@ class ZegoService {
         appSign: appSign,
         userID: currentUserId,
         userName: currentUserName,
-        uiConfig: ZegoCallInvitationUIConfig(
-          inviter: ZegoCallInvitationInviterUIConfig(
-            showAvatar: true,
-            showCentralName: true,
-            showCallingText: true,
-          ),
-          // Invitee (receiver) UI settings
-          invitee: ZegoCallInvitationInviteeUIConfig(
-            showAvatar: true,
-            showCentralName: true,
-            showCallingText: true,
-          ),
-
-          // inviter: ZegoCallInvitationInviterUIConfig(
-          //   backgroundBuilder: (
-          //       BuildContext context,
-          //       Size size,
-          //       ZegoCallingBuilderInfo info,
-          //       ) {
-          //     return Container();
-          //   },
-          // ),
-          // invitee: ZegoCallInvitationInviteeUIConfig(
-          //   backgroundBuilder: (
-          //       BuildContext context,
-          //       Size size,
-          //       ZegoCallingBuilderInfo info,
-          //       ) {
-          //     return Container(
-          //       width: size.width,
-          //       height: size.height,
-          //       decoration: BoxDecoration(color: Colors.blue.withOpacity(0.5)),
-          //       child: Center(
-          //         child: Text(
-          //           'inviter:${info.inviter.name}, invitees:${info.invitees.map((e) => '${e.name},')}',
-          //           style: const TextStyle(
-          //             color: Colors.white,
-          //             fontSize: 12,
-          //             decoration: TextDecoration.none,
-          //           ),
-          //         ),
-          //       ),
-          //     );
-          //   },
-          // ),
-        ),
+        // uiConfig: ZegoCallInvitationUIConfig(
+        //   inviter: ZegoCallInvitationInviterUIConfig(
+        //     showAvatar: true,
+        //     showCentralName: true,
+        //     showCallingText: true,
+        //   ),
+        //   // Invitee (receiver) UI settings
+        //   invitee: ZegoCallInvitationInviteeUIConfig(
+        //     showAvatar: true,
+        //     showCentralName: true,
+        //     showCallingText: true,
+        //   ),
+        //
+        //   // inviter: ZegoCallInvitationInviterUIConfig(
+        //   //   backgroundBuilder: (
+        //   //       BuildContext context,
+        //   //       Size size,
+        //   //       ZegoCallingBuilderInfo info,
+        //   //       ) {
+        //   //     return Container();
+        //   //   },
+        //   // ),
+        //   // invitee: ZegoCallInvitationInviteeUIConfig(
+        //   //   backgroundBuilder: (
+        //   //       BuildContext context,
+        //   //       Size size,
+        //   //       ZegoCallingBuilderInfo info,
+        //   //       ) {
+        //   //     return Container(
+        //   //       width: size.width,
+        //   //       height: size.height,
+        //   //       decoration: BoxDecoration(color: Colors.blue.withOpacity(0.5)),
+        //   //       child: Center(
+        //   //         child: Text(
+        //   //           'inviter:${info.inviter.name}, invitees:${info.invitees.map((e) => '${e.name},')}',
+        //   //           style: const TextStyle(
+        //   //             color: Colors.white,
+        //   //             fontSize: 12,
+        //   //             decoration: TextDecoration.none,
+        //   //           ),
+        //   //         ),
+        //   //       ),
+        //   //     );
+        //   //   },
+        //   // ),
+        // ),
         notificationConfig: ZegoCallInvitationNotificationConfig(
           androidNotificationConfig: ZegoCallAndroidNotificationConfig(
               channelID: 'high_importance_channel',
-              showOnLockedScreen: true,
-              showOnFullScreen: true,
+              // showOnLockedScreen: true,
+              // showOnFullScreen: true,
             callChannel: ZegoCallAndroidNotificationChannelConfig(
               channelID: "high_importance_channel",
               channelName: "High Importance Notifications",
@@ -160,6 +160,9 @@ class ZegoService {
               : ZegoCallType.videoCall == data.type
               ? ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall()
               : ZegoUIKitPrebuiltCallConfig.oneOnOneVoiceCall();
+
+          config.rootNavigator = true;
+          config.screenSharing = ZegoCallScreenSharingConfig(defaultFullScreen: true);
 
           /// show minimizing button
           config.topMenuBar.isVisible = true;

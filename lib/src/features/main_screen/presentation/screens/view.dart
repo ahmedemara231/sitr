@@ -5,8 +5,6 @@ import 'package:pagify/pagify.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/extensions/context_extension.dart';
-import '../../../../core/extensions/enum.dart';
-import '../../../../core/extensions/object.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/extensions/string_extension.dart';
 import '../../../../core/extensions/widget_extension.dart';
@@ -19,7 +17,6 @@ import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../core/widgets/app_pagify.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/image_widgets/custom_image_slider.dart';
-import '../../../../core/widgets/not_contain_data.dart';
 import '../../../../core/widgets/scaffolds/center_card_scaffold.dart';
 import '../../../../core/widgets/choose_from_options.dart';
 import '../../data/home_data.dart';
@@ -29,7 +26,6 @@ import '../widgets/home/filter_icon.dart';
 import '../widgets/home/mariage_consultant.dart';
 import '../widgets/home/parent_card.dart';
 import '../widgets/home/partner_card.dart';
-import 'parent_details.dart';
 import 'partner_details.dart';
 
 class MainView extends StatefulWidget {
@@ -48,8 +44,34 @@ class _MainViewState extends State<MainView> {
     firstSelection = ValueNotifier(_partnersOrConsultants.first);
     secondSelection = ValueNotifier(_opportunitiesTitles.first);
   }
+
+  bool current = false;
+  late final ScrollController screenScrollCont = ScrollController();
+  late final ScrollController paginationScrollCont = ScrollController();
+  late ScrollPhysics screenPhysics = const AlwaysScrollableScrollPhysics();
+  late ScrollPhysics paginationPhysics = const AlwaysScrollableScrollPhysics();
+
+  void screenListener(){
+    if(screenScrollCont.position.pixels == screenScrollCont.position.maxScrollExtent){
+      setState(() {
+        screenPhysics = const NeverScrollableScrollPhysics();
+        paginationPhysics = const AlwaysScrollableScrollPhysics();
+      });
+    }
+  }
+
+  void paginationListener(){
+    if(paginationScrollCont.position.pixels == paginationScrollCont.position.minScrollExtent){
+      paginationPhysics = const NeverScrollableScrollPhysics();
+      screenPhysics = const AlwaysScrollableScrollPhysics();
+    }
+  }
+
   @override
   void initState() {
+    screenScrollCont.addListener(screenListener);
+    paginationScrollCont.addListener(paginationListener);
+
     _initSelections();
     firstSelection.addListener(firstSelectionListener);
     super.initState();
@@ -101,6 +123,8 @@ class _MainViewState extends State<MainView> {
       create: (context) => MainViewCubit()..getHomeData(),
       child: BlocBuilder<MainViewCubit, AsyncState<HomeModel>>(
         builder: (context, state) => CenterCardScaffold.withCenteredCard(
+          // scrollController: screenScrollCont,
+          // physics: screenPhysics,
           bodyTopPadding: 120,
           cardTopPadding: 100,
           upperWidget: SizedBox(
@@ -174,6 +198,7 @@ class _MainViewState extends State<MainView> {
                                     childrenNumber: element?.numOfChildren ?? 0
                                 ).paddingBottom(16.h),
                               ),
+                              // scrollController: paginationScrollCont,
                               pagifyController: PagifyController()
                           ),
                         ),

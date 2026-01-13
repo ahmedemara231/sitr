@@ -1,39 +1,53 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.aait.flutter.sitr">
 
+    <!-- INTERNET -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
 
-    <!-- For Android 12 and below -->
+    <!-- CAMERA & MICROPHONE (for audio/video calls) -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+
+    <!-- NETWORK & WIFI STATE -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <!-- STORAGE (optional if needed) -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <!-- For Android 13+ -->
+    <!-- Android 13+ Media permissions -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
 
-    <!-- Optional permissions -->
+    <!-- NOTIFICATIONS -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
 
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <!-- BACKGROUND / FOREGROUND SERVICES -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-
+    <!-- WAKELOCK -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- VIBRATE (optional) -->
     <uses-permission android:name="android.permission.VIBRATE"/>
 
-    <!--for bring app to foreground from background in Android 10 -->
+    <!-- SYSTEM_ALERT_WINDOW (for overlay UI on some OEMs) -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.PICTURE_IN_PICTURE"/>
 
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <!-- BOOT COMPLETED (if you plan auto restart on reboot) -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
-    
+
+    <!-- IGNORE BATTERY OPTIMIZATIONS (optional, request in runtime) -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"/>
+
+    <!-- FOREGROUND SERVICE TYPES (API 34+) -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA"/>
+
 
 
     <queries>

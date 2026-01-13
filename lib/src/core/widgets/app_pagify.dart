@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pagify/helpers/data_and_pagination_data.dart';
@@ -11,11 +10,11 @@ import '../../config/language/locale_keys.g.dart';
 import 'app_text.dart';
 import 'custom_loading.dart';
 import 'exeption_view.dart';
-import 'dart:developer';
 
 enum Ranking{listView, gridView}
 class AppPagify<T> extends StatefulWidget {
   final Ranking rankingType;
+  final ScrollController? scrollController;
   final Future<(List<T>, PaginationData)> Function(BuildContext context, int page) asyncCall;
   final Widget Function(BuildContext context, List<T> data, int index, T element) itemBuilder;
   final PagifyController<T> pagifyController;
@@ -25,6 +24,7 @@ class AppPagify<T> extends StatefulWidget {
     required this.asyncCall,
     required this.itemBuilder,
     required this.pagifyController,
+    this.scrollController,
     this.rankingType = Ranking.listView,
     this.onUpdateStatus,
   });
@@ -58,6 +58,7 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
           ),
           controller: widget.pagifyController,
           asyncCall: widget.asyncCall,
+          scrollController: widget.scrollController,
           loadingBuilder: CustomLoading.showLoadingView(),
           mapper: (data) => PagifyData(
               data: data.$1,
@@ -89,6 +90,7 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
           onUpdateStatus: widget.onUpdateStatus,
           controller: widget.pagifyController,
           asyncCall: widget.asyncCall,
+          scrollController: widget.scrollController,
           errorBuilder: (e) => Column(
             children: [
               Lottie.asset(Assets.errorApiError),

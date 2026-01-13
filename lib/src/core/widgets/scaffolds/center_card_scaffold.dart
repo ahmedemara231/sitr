@@ -4,7 +4,6 @@ import '../../../config/res/config_imports.dart';
 import '../../extensions/context_extension.dart';
 import '../../extensions/object.dart';
 import '../../extensions/padding_extension.dart';
-import '../pull_refresher.dart';
 import 'app_scaffold.dart' show AppBackButton;
 
 class CardProperties{
@@ -14,6 +13,8 @@ class CardProperties{
 
 enum UpperView{appBar, upperWidget}
 class CenterCardScaffold extends StatelessWidget {
+  final ScrollPhysics? physics;
+  final ScrollController? scrollController;
   final CardProperties? cardProperties;
   final Widget upperWidget;
   final Widget body;
@@ -29,8 +30,10 @@ class CenterCardScaffold extends StatelessWidget {
     required this.body,
     required this.upperWidget,
     this.bodyColor,
+    this.physics,
     this.upperWidgetPadding,
-    this.showBackButton
+    this.showBackButton,
+    this.scrollController,
   }) : centerCardBody = null, cardProperties = null, bodyTopPadding = null, cardTopPadding = null;
 
   const CenterCardScaffold.withCenteredCard({
@@ -38,11 +41,13 @@ class CenterCardScaffold extends StatelessWidget {
     required this.upperWidget,
     required this.body,
     required this.centerCardBody,
+    this.physics,
     this.cardProperties,
     this.bodyTopPadding,
     this.cardTopPadding,
     this.showBackButton,
     this.bodyColor,
+    this.scrollController,
     this.upperWidgetPadding,
 });
 
@@ -52,12 +57,14 @@ class CenterCardScaffold extends StatelessWidget {
       backgroundColor: AppColors.scaffoldBackground,
       body: SafeArea(
         child: ScreenChildren(
+          physics: physics,
           showBackButton: showBackButton,
           upperWidgetPadding: upperWidgetPadding,
           cardProperties: cardProperties,
           bodyColor: bodyColor,
           upperWidget: upperWidget,
           body: body,
+          scrollController: scrollController,
           centerCardBody: centerCardBody,
           topPadding: bodyTopPadding,
           cardTopPadding: cardTopPadding,
@@ -68,6 +75,8 @@ class CenterCardScaffold extends StatelessWidget {
 }
 
 class ScreenChildren extends StatelessWidget {
+  final ScrollPhysics? physics;
+  final ScrollController? scrollController;
   final Widget upperWidget;
   final Widget body;
   final Widget? centerCardBody;
@@ -82,7 +91,9 @@ class ScreenChildren extends StatelessWidget {
     required this.body,
     required this.upperWidget,
     this.centerCardBody,
+    this.scrollController,
     this.cardProperties,
+    this.physics,
     this.topPadding,
     this.cardTopPadding,
     required this.bodyColor,
@@ -93,6 +104,8 @@ class ScreenChildren extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      controller: scrollController,
+      physics: physics,
       children: [
         Stack(
           children: [

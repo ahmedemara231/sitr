@@ -259,7 +259,8 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                 isVideoCall: false,
                 icon: const SvgPic(assetName: Assets.svgPhoneIcon),
                 invites: [
-                  ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName)
+                  ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName),
+                  ZegoUIKitUser(id: UserCubit.instance.user.id.toString(), name: UserCubit.instance.user.name!)
                 ],
               ) : CustomLoading.showLoadingView()
           ),
@@ -277,7 +278,8 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                             isVideoCall: true,
                             icon: const SvgPic(assetName: Assets.svgVideoCall),
                             invites: [
-                              ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName)
+                              ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName),
+                              ZegoUIKitUser(id: UserCubit.instance.user.id.toString(), name: UserCubit.instance.user.name!)
                             ],
                             onPressed: ()async{
                               if(callStatus == 'free_available'){

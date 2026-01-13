@@ -42,7 +42,7 @@ class Helpers {
         navigatorKey: Go.navigatorKey
     );
 
-    await zegoService?.initZego();
+    await zegoService!.initZego();
     _handleZpns();
   }
 

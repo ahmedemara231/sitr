@@ -94,12 +94,12 @@ dependencies:
   #--------------------- mine ----------------------
   easy_timer_count: ^0.0.2
   pagify:
-    git: https://github.com/ahmedemara231/pagination_helper
-#    path: /Users/aaita/Desktop/apps/pagination_helper
+#    git: https://github.com/ahmedemara231/pagination_helper
+    path: /Users/aaita/Desktop/apps/pagination_helper
 
   dropinity:
-    git: https://github.com/ahmedemara231/dropinity
-#    path: /Users/aaita/Desktop/apps/dropinity
+#    git: https://github.com/ahmedemara231/dropinity
+    path: /Users/aaita/Desktop/apps/dropinity
 
 #  easy_chat:
 #    path: /Users/aaita/Desktop/apps/easy_chat
