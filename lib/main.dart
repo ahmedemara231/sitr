@@ -29,6 +29,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait(
     [
+      Helpers.initZegoData(),
       EasyLocalization.ensureInitialized(),
       CacheStorage.init(),
       ScreenUtil.ensureScreenSize(),

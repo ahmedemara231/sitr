@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pagify/pagify.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/enum.dart';
 import '../../../../core/extensions/object.dart';
+import '../../../../core/extensions/padding_extension.dart';
+import '../../../../core/extensions/string_extension.dart';
 import '../../../../core/extensions/widget_extension.dart';
 import '../../../../core/helpers/helpers.dart';
 import '../../../../core/helpers/status_builder.dart';
@@ -13,11 +16,13 @@ import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
+import '../../../../core/widgets/app_pagify.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/image_widgets/custom_image_slider.dart';
 import '../../../../core/widgets/not_contain_data.dart';
 import '../../../../core/widgets/scaffolds/center_card_scaffold.dart';
 import '../../../../core/widgets/choose_from_options.dart';
+import '../../data/home_data.dart';
 import '../../data/models/home_model.dart';
 import '../cubits/home_cubit.dart';
 import '../widgets/home/filter_icon.dart';
@@ -150,81 +155,106 @@ class _MainViewState extends State<MainView> {
                       ),
 
                       ValueListenableBuilder(
-                          valueListenable: secondSelection,
-                          builder: (context, val, child) {
-                            if(val == UserGender.male.translate){
-                              if(data.opportunities?.male?.isEmpty ?? true){
-                                return const NotContainData();
-                              }else{
-                                return Column(
-                                  spacing: 10.h,
-                                  children: List.generate(
-                                      state.data.opportunities?.male?.length ?? 0,
-                                          (index) {
-                                        final opportunity = state.data.opportunities?.male?[index];
-                                        return InkWell(
-                                          onTap: () => UserModel.isAuthenticated? Go.to(IndividualDetailsScreen.opportunity(
-                                            id: opportunity.id ?? 0,
-                                          )) : Helpers.showUnauthenticatedSheet(),
+                        valueListenable: secondSelection,
+                        builder: (context, val, child) => SizedBox(
+                          height: context.height - 200,
+                          child: AppPagify(
+                              key: UniqueKey(),
+                              asyncCall: (context, page) => HomeData.getOpportunities(val.toUserGender(), page),
+                              itemBuilder: (context, data, i, element) => InkWell(
+                                onTap: () => UserModel.isAuthenticated? Go.to(IndividualDetailsScreen.opportunity(
+                                  id: element.id ?? 0,
+                                )) : Helpers.showUnauthenticatedSheet(),
 
-                                          child: PartnerCard.individual(opportunity: opportunity!),
-                                        );
-                                      }
-                                  ),
-                                );
-                              }
-                            }
-                            else if(val == UserGender.female.translate){
-                              if(data.opportunities?.female?.isEmpty ?? true){
-                                return const NotContainData();
+                                child: !val.toUserType().isParent?
+                                PartnerCard.individual(opportunity: element).paddingBottom(16.h) : ParentCard(
+                                    parentImage: element?.avatar??'',
+                                    name: element?.name??'',
+                                    kinship: element?.relation?.name ?? '',
+                                    childrenNumber: element?.numOfChildren ?? 0
+                                ).paddingBottom(16.h),
+                              ),
+                              pagifyController: PagifyController()
+                          ),
+                        ),
+                      )
 
-                              }else{
-                                return Column(
-                                  spacing: 10.h,
-                                  children: List.generate(
-                                      state.data.opportunities?.female?.length ?? 0,
-                                          (index) {
-                                        final opportunity = state.data.opportunities?.female?[index];
-                                        return InkWell(
-                                          onTap: () => UserModel.isAuthenticated? Go.to(IndividualDetailsScreen.opportunity(
-                                            id: opportunity.id ?? 0,
-                                          )) : Helpers.showUnauthenticatedSheet(),
-                                          child: PartnerCard.individual(opportunity: opportunity!),
-                                        );
-                                      }
-                                  ),
-                                );
-                              }
-                            }
-                            else{
-                              if(data.opportunities?.parent?.isEmpty ?? true){
-                                return const NotContainData();
-
-                              }else{
-                                return Column(
-                                  spacing: 10.h,
-                                  children: List.generate(
-                                      state.data.opportunities?.parent?.length ?? 0,
-                                          (index) {
-                                        final opportunity = state.data.opportunities?.parent?[index];
-                                        return InkWell(
-                                          onTap: () => UserModel.isAuthenticated?
-                                          Go.to(ParentDetailsScreen(id: opportunity?.id ?? 0)):
-                                          Helpers.showUnauthenticatedSheet(),
-                                          child: ParentCard(
-                                              parentImage: opportunity?.avatar??'',
-                                              name: opportunity?.name??'',
-                                              kinship: opportunity?.relation?.name ?? '',
-                                              childrenNumber: opportunity?.numOfChildren ?? 0
-                                          ),
-                                        );
-                                      }
-                                  ),
-                                );
-                              }
-                            }
-                          }
-                      ),
+                      // ValueListenableBuilder(
+                      //     valueListenable: secondSelection,
+                      //     builder: (context, val, child) {
+                      //       if(val == UserGender.male.translate){
+                      //         if(data.opportunities?.male?.isEmpty ?? true){
+                      //           return const NotContainData();
+                      //         }else{
+                      //           return Column(
+                      //             spacing: 10.h,
+                      //             children: List.generate(
+                      //                 state.data.opportunities?.male?.length ?? 0,
+                      //                     (index) {
+                      //                   final opportunity = state.data.opportunities?.male?[index];
+                      //                   return InkWell(
+                      //                     onTap: () => UserModel.isAuthenticated? Go.to(IndividualDetailsScreen.opportunity(
+                      //                       id: opportunity.id ?? 0,
+                      //                     )) : Helpers.showUnauthenticatedSheet(),
+                      //
+                      //                     child: PartnerCard.individual(opportunity: opportunity!),
+                      //                   );
+                      //                 }
+                      //             ),
+                      //           );
+                      //         }
+                      //       }
+                      //       else if(val == UserGender.female.translate){
+                      //         if(data.opportunities?.female?.isEmpty ?? true){
+                      //           return const NotContainData();
+                      //
+                      //         }else{
+                      //           return Column(
+                      //             spacing: 10.h,
+                      //             children: List.generate(
+                      //                 state.data.opportunities?.female?.length ?? 0,
+                      //                     (index) {
+                      //                   final opportunity = state.data.opportunities?.female?[index];
+                      //                   return InkWell(
+                      //                     onTap: () => UserModel.isAuthenticated? Go.to(IndividualDetailsScreen.opportunity(
+                      //                       id: opportunity.id ?? 0,
+                      //                     )) : Helpers.showUnauthenticatedSheet(),
+                      //                     child: PartnerCard.individual(opportunity: opportunity!),
+                      //                   );
+                      //                 }
+                      //             ),
+                      //           );
+                      //         }
+                      //       }
+                      //       else{
+                      //         if(data.opportunities?.parent?.isEmpty ?? true){
+                      //           return const NotContainData();
+                      //
+                      //         }else{
+                      //           return Column(
+                      //             spacing: 10.h,
+                      //             children: List.generate(
+                      //                 state.data.opportunities?.parent?.length ?? 0,
+                      //                     (index) {
+                      //                   final opportunity = state.data.opportunities?.parent?[index];
+                      //                   return InkWell(
+                      //                     onTap: () => UserModel.isAuthenticated?
+                      //                     Go.to(ParentDetailsScreen(id: opportunity?.id ?? 0)):
+                      //                     Helpers.showUnauthenticatedSheet(),
+                      //                     child: ParentCard(
+                      //                         parentImage: opportunity?.avatar??'',
+                      //                         name: opportunity?.name??'',
+                      //                         kinship: opportunity?.relation?.name ?? '',
+                      //                         childrenNumber: opportunity?.numOfChildren ?? 0
+                      //                     ),
+                      //                   );
+                      //                 }
+                      //             ),
+                      //           );
+                      //         }
+                      //       }
+                      //     }
+                      // ),
                     ],
                   ) :
                   Column(

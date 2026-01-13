@@ -200,16 +200,6 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
   void _handleInitialState()async{
     _chatController = PagifyController<ChatMessages>();
     await _startChat();
-    await Helpers.initZegoService(
-        onCallStarted: (){
-          // if(EndVideoCallCubit.instance.state.data.matchRequest?.callStatus == 'free_available'){
-          //   log('end video call');
-          //   EndVideoCallCubit.instance.endVideoCall( // برنها وانا فالكول
-          //       ChatsData.data!.matchRequest!.id.toString()
-          //   );
-          // }
-        }
-    );
     _initSocket();
   }
 

@@ -16,9 +16,14 @@ import '../../core/widgets/icon_widget.dart';
 import 'cubits/get_notification_count.dart';
 import 'cubits/home_cubit/home_cubit.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   void _initApp() async {
     NotificationNavigator(
       onRoutingMessage: (message) {
@@ -30,9 +35,28 @@ class HomeScreen extends StatelessWidget {
         .setupNotifications();
   }
 
+  void _initZego()async{
+    await Helpers.initZegoService(
+        onCallStarted: (){
+          // if(EndVideoCallCubit.instance.state.data.matchRequest?.callStatus == 'free_available'){
+          //   log('end video call');
+          //   EndVideoCallCubit.instance.endVideoCall( // برنها وانا فالكول
+          //       ChatsData.data!.matchRequest!.id.toString()
+          //   );
+          // }
+        }
+    );
+  }
+
+  @override
+  void initState() {
+    _initApp();
+    _initZego();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    _initApp();
     context.locale;
     return BlocProvider(
       create: (context) => HomeCubit(),

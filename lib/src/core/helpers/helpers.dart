@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zego_zpns/zego_zpns.dart';
 import '../../core/zego_service/zego.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,20 +34,51 @@ import 'permission_handler/model.dart';
 
 class Helpers {
   static ZegoService? zegoService;
+
+  static Future<void> initZegoData()async{
+    zegoService = ZegoService(
+        appId: ConstantManager.zegoAppId,
+        appSign: ConstantManager.zegoAppSign,
+        navigatorKey: Go.navigatorKey
+    );
+
+    await zegoService?.initZego();
+    _handleZpns();
+  }
+
+  static void _handleZpns(){
+    ZPNs.getInstance().applyNotificationPermission();
+    final ZPNsConfig zpnsConfig = ZPNsConfig();
+    zpnsConfig.enableFCMPush = true;
+    ZPNs.setPushConfig(zpnsConfig);
+    ZPNs.getInstance().registerPush();
+  }
+
+  void _handleRegisterPush(){
+    ZPNs.getInstance().registerPush(
+        iOSEnvironment: ZPNsIOSEnvironment.Automatic,
+        iOSNotificationArrivedConfig: ZPNsIOSNotificationArrivedConfig()
+          ..isPresentBadge = true
+          ..isPresentSound=true
+          ..isPresentAlert=true,
+        enableIOSVoIP: true
+    )
+        .catchError((onError) {
+      if (onError is PlatformException) {
+        // Notice exception here
+        log(onError.message ?? "");
+      }
+    });
+  }
+
   static Future<void> initZegoService({
    required void Function() onCallStarted,
 }) async{
-      zegoService = ZegoService(
-          appId: ConstantManager.zegoAppId,
-          appSign: ConstantManager.zegoAppSign,
-          navigatorKey: Go.navigatorKey
-      );
-
-      await zegoService?.initZego();
       final isConnected = await zegoService?.onUserLogin(
         onCallStarted: onCallStarted,
         currentUserId: UserCubit.instance.user.id.toString(),
         currentUserName: UserCubit.instance.user.name??'',
+        // onIncomingCallAcceptButtonPressed: () async => await NativeMethods,
         callDuration: const Duration(minutes: 5)
       );
 

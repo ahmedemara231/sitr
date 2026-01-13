@@ -60,12 +60,28 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>This app needs access to your media library.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs access to your camera for video calls and taking photos.</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>This app needs access to local network for video calls.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app needs access to your microphone for voice and video calls.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app needs permission to save photos to your photo library.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to your photo library to select and share images.</string>
+	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
+	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
 		<string>fetch</string>
+		<string>audio</string>
+		<string>voip</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
@@ -78,20 +94,6 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>This app needs access to your camera for video calls and taking photos.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>This app needs access to your microphone for voice and video calls.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app needs access to your photo library to select and share images.</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>This app needs permission to save photos to your photo library.</string>
-	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
-	<true/>
-	<key>NSLocalNetworkUsageDescription</key>
-	<string>This app needs access to local network for video calls.</string>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>This app needs access to your media library.</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>

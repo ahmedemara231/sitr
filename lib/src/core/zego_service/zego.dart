@@ -55,35 +55,80 @@ class ZegoService {
     dynamic Function()? onIncomingMissedCallDialBackFailed,
   }) async {
     try {
-      /*
-      * ZegoCallPrebuiltConfigQuery? requireConfig,
-    ZegoUIKitPrebuiltCallEvents? events,
-
-    /// invitation abouts.
-    ZegoCallInvitationConfig? config,
-    ZegoCallRingtoneConfig? ringtoneConfig,
-    ZegoCallInvitationUIConfig? uiConfig,
-    ZegoCallInvitationNotificationConfig? notificationConfig,
-    ZegoCallInvitationInnerText? innerText,
-    ZegoUIKitPrebuiltCallInvitationEvents? invitationEvents,
-
-       this.foregroundBuilder,
-    this.pageBuilder,
-    this.backgroundBuilder,
-    this.showAvatar = true,
-    this.showCentralName = true,
-    this.showCallingText = true,
-    this.useVideoViewAspectFill = false,*/
       await ZegoUIKitPrebuiltCallInvitationService().init(
         appID: appId,
         appSign: appSign,
         userID: currentUserId,
         userName: currentUserName,
-        // uiConfig: ZegoCallInvitationUIConfig(
-        //   inviter: ZegoCallInvitationInviterUIConfig(
-        //     minimized: ZegoCallInvitationInviterMinimizedUIConfig()
-        //   )
-        // ),
+        uiConfig: ZegoCallInvitationUIConfig(
+          inviter: ZegoCallInvitationInviterUIConfig(
+            showAvatar: true,
+            showCentralName: true,
+            showCallingText: true,
+          ),
+          // Invitee (receiver) UI settings
+          invitee: ZegoCallInvitationInviteeUIConfig(
+            showAvatar: true,
+            showCentralName: true,
+            showCallingText: true,
+          ),
+
+          // inviter: ZegoCallInvitationInviterUIConfig(
+          //   backgroundBuilder: (
+          //       BuildContext context,
+          //       Size size,
+          //       ZegoCallingBuilderInfo info,
+          //       ) {
+          //     return Container();
+          //   },
+          // ),
+          // invitee: ZegoCallInvitationInviteeUIConfig(
+          //   backgroundBuilder: (
+          //       BuildContext context,
+          //       Size size,
+          //       ZegoCallingBuilderInfo info,
+          //       ) {
+          //     return Container(
+          //       width: size.width,
+          //       height: size.height,
+          //       decoration: BoxDecoration(color: Colors.blue.withOpacity(0.5)),
+          //       child: Center(
+          //         child: Text(
+          //           'inviter:${info.inviter.name}, invitees:${info.invitees.map((e) => '${e.name},')}',
+          //           style: const TextStyle(
+          //             color: Colors.white,
+          //             fontSize: 12,
+          //             decoration: TextDecoration.none,
+          //           ),
+          //         ),
+          //       ),
+          //     );
+          //   },
+          // ),
+        ),
+        notificationConfig: ZegoCallInvitationNotificationConfig(
+          androidNotificationConfig: ZegoCallAndroidNotificationConfig(
+              channelID: 'high_importance_channel',
+              showOnLockedScreen: true,
+              showOnFullScreen: true,
+            callChannel: ZegoCallAndroidNotificationChannelConfig(
+              channelID: "high_importance_channel",
+              channelName: "High Importance Notifications",
+              sound: "call",
+              icon: "call",
+            ),
+            missedCallChannel: ZegoCallAndroidNotificationChannelConfig(
+              channelID: "high_importance_channel",
+              channelName: "High Importance Notifications",
+              sound: "missed_call",
+              icon: "missed_call",
+              vibrate: false,
+            ),
+          ),
+          iOSNotificationConfig: ZegoCallIOSNotificationConfig(
+            systemCallingIconName: 'CallKitIcon',
+          ),
+        ),
         plugins: [ZegoUIKitSignalingPlugin()],
         invitationEvents: ZegoUIKitPrebuiltCallInvitationEvents(
           onIncomingCallAcceptButtonPressed: onIncomingCallAcceptButtonPressed,
@@ -94,6 +139,9 @@ class ZegoService {
           onIncomingMissedCallDialBackFailed: onIncomingMissedCallDialBackFailed,
         ),
         config: ZegoCallInvitationConfig(
+          offline: ZegoCallInvitationOfflineConfig(
+            autoEnterAcceptedOfflineCall: false,
+          ),
           missedCall: ZegoCallInvitationMissedCallConfig(
             enabled: true,
             enableDialBack: true,
@@ -132,10 +180,10 @@ class ZegoService {
           // ];
 
           config.layout = ZegoLayout.pictureInPicture(
-              isSmallViewDraggable: true,
-              switchLargeOrSmallViewByClick: true,
-              isSmallViewsScrollable: true,
-              showNewScreenSharingViewInFullscreenMode: true,
+            isSmallViewDraggable: true,
+            switchLargeOrSmallViewByClick: true,
+            isSmallViewsScrollable: true,
+            showNewScreenSharingViewInFullscreenMode: true,
           );
 
           if (addChatButton) {
@@ -160,11 +208,18 @@ class ZegoService {
       );
 
 
+      // _handleOffline();
       return await _waitForSignalingConnection();
     } on Exception catch (e) {
-      log('the error is \${e.toString()}');
+      log('the error is ${e.toString()}');
       return false;
     }
+  }
+
+  void _handleOffline(){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ZegoUIKitPrebuiltCallInvitationService().enterAcceptedOfflineCall();
+    });
   }
 
   void _endVideoCall({
@@ -183,7 +238,6 @@ class ZegoService {
     });
   }
 
-  bool _isSignalingConnected = false;
   Future<bool> _waitForSignalingConnection() async {
     log('✅ Signaling connection test');
     int attempts = 0;
@@ -193,14 +247,13 @@ class ZegoService {
       final connectionState = ZegoUIKitSignalingPlugin().getConnectionState();
 
       if (connectionState == ZegoSignalingPluginConnectionState.connected) {
-        _isSignalingConnected = true;
         isConnected.value = true;
         log('✅ Signaling connected successfully');
         return true;
       }
 
-      log('⏳ Waiting for signaling connection... (\${attempts + 1}/\$maxAttempts)');
-      await Future.delayed(const Duration(milliseconds: 500));
+      log('⏳ Waiting for signaling connection... (${attempts + 1} / $maxAttempts)');
+      await Future.delayed(const Duration(seconds: 1));
       attempts++;
     }
 

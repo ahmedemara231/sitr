@@ -10,8 +10,8 @@ class FemaleModel extends IndividualUserModel {
   final TitleValueShape? hijab;
   final bool? acceptsPolygamy;
   final String? preferredResidenceAfterMarriage;
-  final String? guardianName;
-  final String? guardianPhone;
+  // final String? guardianName;
+  // final String? guardianPhone;
   final String? guardianCountryCode;
   final Kinship? guardianRelation;
 
@@ -65,8 +65,8 @@ class FemaleModel extends IndividualUserModel {
     this.hijab,
     this.acceptsPolygamy,
     this.preferredResidenceAfterMarriage,
-    this.guardianName,
-    this.guardianPhone,
+    // this.guardianName,
+    // this.guardianPhone,
     this.guardianCountryCode,
     this.guardianRelation,
   });
@@ -145,8 +145,8 @@ class FemaleModel extends IndividualUserModel {
         TitleValueShape.fromJson(json['hijab']) : null,
         acceptsPolygamy: json['accepts_polygamy'],
         preferredResidenceAfterMarriage: json['preferred_residence_after_marriage'],
-        guardianName: json['guardian_name'],
-        guardianPhone: json['guardian_phone'],
+        // guardianName: json['guardian_name'],
+        // guardianPhone: json['guardian_phone'],
         guardianCountryCode: json['guardian_country_code'],
         guardianRelation: (json['guardian_relation'] as Object?).isNotNull?
         Kinship.fromJson(json['guardian_relation']) : null
@@ -159,8 +159,8 @@ class FemaleModel extends IndividualUserModel {
       'preferred_residence_after_marriage': preferredResidenceAfterMarriage,
       'hijab': hijab?.value,
       'accepts_polygamy': acceptsPolygamy,
-      'guardian_name': guardianName,
-      'guardian_phone': guardianPhone,
+      // 'guardian_name': guardianName,
+      // 'guardian_phone': guardianPhone,
       'guardian_relation_id': guardianRelation?.id.toString(),
     });
 
@@ -174,8 +174,8 @@ class FemaleModel extends IndividualUserModel {
     'hijab': hijab,
     'accepts_polygamy': acceptsPolygamy,
     'preferred_residence_after_marriage': preferredResidenceAfterMarriage,
-    'guardian_name': guardianName,
-    'guardian_phone': guardianPhone,
+    // 'guardian_name': guardianName,
+    // 'guardian_phone': guardianPhone,
     'guardian_country_code': guardianCountryCode,
     'guardian_relation': guardianRelation,
   });
@@ -186,10 +186,10 @@ class FemaleModel extends IndividualUserModel {
       canChat: _mergeHelper(otherFemaleModelValue: otherModel.canChat, currentValue: canChat),
       hasChatWith: _mergeHelper(otherFemaleModelValue: otherModel.hasChatWith, currentValue: hasChatWith),
       isParentMatch: _mergeHelper(otherFemaleModelValue: otherModel.isParentMatch, currentValue: isParentMatch),
-      guardianName: _mergeHelper(otherFemaleModelValue: (otherModel as FemaleModel).guardianName, currentValue: guardianName),
-      hijab: _mergeHelper(otherFemaleModelValue: otherModel.hijab, currentValue: hijab),
+      // guardianName: _mergeHelper(otherFemaleModelValue: (otherModel as FemaleModel).guardianName, currentValue: guardianName),
+      // guardianPhone: _mergeHelper(otherFemaleModelValue: otherModel.guardianPhone, currentValue: guardianPhone),
+      hijab: _mergeHelper(otherFemaleModelValue: (otherModel as FemaleModel).hijab, currentValue: hijab),
       acceptsPolygamy: _mergeHelper(otherFemaleModelValue: otherModel.acceptsPolygamy, currentValue: acceptsPolygamy),
-      guardianPhone: _mergeHelper(otherFemaleModelValue: otherModel.guardianPhone, currentValue: guardianPhone),
       guardianCountryCode: _mergeHelper(otherFemaleModelValue: otherModel.guardianCountryCode, currentValue: guardianCountryCode),
       guardianRelation: _mergeHelper(otherFemaleModelValue: otherModel.guardianRelation, currentValue: guardianRelation),
       preferredResidenceAfterMarriage: _mergeHelper(otherFemaleModelValue: otherModel.preferredResidenceAfterMarriage, currentValue: preferredResidenceAfterMarriage),
@@ -316,8 +316,8 @@ class FemaleModel extends IndividualUserModel {
       hijab: hijab ?? this.hijab,
       acceptsPolygamy: acceptsPolygamy ?? this.acceptsPolygamy,
       preferredResidenceAfterMarriage: preferredResidenceAfterMarriage ?? this.preferredResidenceAfterMarriage,
-      guardianName: guardianName ?? this.guardianName,
-      guardianPhone: guardianPhone ?? this.guardianPhone,
+      // guardianName: guardianName ?? this.guardianName,
+      // guardianPhone: guardianPhone ?? this.guardianPhone,
       guardianCountryCode: guardianCountryCode ?? this.guardianCountryCode,
       guardianRelation: guardianRelation ?? this.guardianRelation,
     );

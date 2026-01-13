@@ -38,8 +38,8 @@ class _FemaleFieldsState extends State<FemaleFields> {
 
   late TextEditingController _nameCont;
   late TextEditingController _liveAfterMarryCont;
-  late TextEditingController _parentNameCont;
-  late TextEditingController _parentNumberCont;
+  // late TextEditingController _parentNameCont;
+  // late TextEditingController _parentNumberCont;
   late TextEditingController _phoneCont;
   // late TextEditingController _identifyNumberCont;
   late TextEditingController _ageCont;
@@ -72,8 +72,8 @@ class _FemaleFieldsState extends State<FemaleFields> {
     _init();
     _nameCont = TextEditingController(text: widget.initialValue?.name);
     _liveAfterMarryCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.preferredResidenceAfterMarriage);
-    _parentNameCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.guardianName);
-    _parentNumberCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.guardianPhone);
+    // _parentNameCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.guardianName);
+    // _parentNumberCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.guardianPhone);
     _phoneCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.phone);
     // _identifyNumberCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.identityNumber);
     _ageCont = TextEditingController(text: (widget.initialValue as FemaleModel?)?.age.toString());
@@ -84,8 +84,8 @@ class _FemaleFieldsState extends State<FemaleFields> {
   void dispose() {
     _nameCont.dispose();
     _liveAfterMarryCont.dispose();
-    _parentNameCont.dispose();
-    _parentNumberCont.dispose();
+    // _parentNameCont.dispose();
+    // _parentNumberCont.dispose();
     _phoneCont.dispose();
     // _identifyNumberCont.dispose();
     _ageCont.dispose();
@@ -153,22 +153,22 @@ class _FemaleFieldsState extends State<FemaleFields> {
               validator: (e) => Validators.validateEmpty(e?.title)
             ),
 
-              SignUpTextField(
-                upperTitle: LocaleKeys.parentName,
-                title: LocaleKeys.pleaseEnterName,
-                controller: _parentNameCont,
-                onChanged: (value) => _listenToData(asFemale.copyWith(guardianName: value)),
-
-                validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.parentName.tr()),
-              ),
-              SignUpTextField(
-                upperTitle: LocaleKeys.parentNumber,
-                title: LocaleKeys.pleaseEnterTheNumber,
-                controller: _parentNumberCont,
-                inputType: TextInputType.phone,
-                onChanged: (value) => _listenToData(asFemale.copyWith(guardianPhone: value)),
-                validator: (v) => Validators.validatePhone(v, message: LocaleKeys.parentNumber.tr()),
-              ),
+              // SignUpTextField(
+              //   upperTitle: LocaleKeys.parentName,
+              //   title: LocaleKeys.pleaseEnterName,
+              //   controller: _parentNameCont,
+              //   onChanged: (value) => _listenToData(asFemale.copyWith(guardianName: value)),
+              //
+              //   validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.parentName.tr()),
+              // ),
+              // SignUpTextField(
+              //   upperTitle: LocaleKeys.parentNumber,
+              //   title: LocaleKeys.pleaseEnterTheNumber,
+              //   controller: _parentNumberCont,
+              //   inputType: TextInputType.phone,
+              //   onChanged: (value) => _listenToData(asFemale.copyWith(guardianPhone: value)),
+              //   validator: (v) => Validators.validatePhone(v, message: LocaleKeys.parentNumber.tr()),
+              // ),
             AppDropinity<List<Kinship>, Kinship>.withApiRequest(
               initialValue: (widget.initialValue as FemaleModel?)?.guardianRelation,
               hint: LocaleKeys.kinship,
@@ -249,22 +249,22 @@ class _FemaleFieldsState extends State<FemaleFields> {
               ),
 
 
-              SignUpTextField(
-                upperTitle: LocaleKeys.parentName,
-                title: LocaleKeys.pleaseEnterName,
-                controller: _parentNameCont,
-                onChanged: (value) => _listenToData(asFemale.copyWith(guardianName: value)),
-
-                validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.parentName.tr()),
-              ),
-              SignUpTextField(
-                upperTitle: LocaleKeys.parentNumber,
-                title: LocaleKeys.pleaseEnterTheNumber,
-                controller: _parentNumberCont,
-                inputType: TextInputType.phone,
-                onChanged: (value) => _listenToData(asFemale.copyWith(guardianPhone: value)),
-                validator: (v) => Validators.validatePhone(v, message: LocaleKeys.parentNumber.tr()),
-              ),
+              // SignUpTextField(
+              //   upperTitle: LocaleKeys.parentName,
+              //   title: LocaleKeys.pleaseEnterName,
+              //   controller: _parentNameCont,
+              //   onChanged: (value) => _listenToData(asFemale.copyWith(guardianName: value)),
+              //
+              //   validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.parentName.tr()),
+              // ),
+              // SignUpTextField(
+              //   upperTitle: LocaleKeys.parentNumber,
+              //   title: LocaleKeys.pleaseEnterTheNumber,
+              //   controller: _parentNumberCont,
+              //   inputType: TextInputType.phone,
+              //   onChanged: (value) => _listenToData(asFemale.copyWith(guardianPhone: value)),
+              //   validator: (v) => Validators.validatePhone(v, message: LocaleKeys.parentNumber.tr()),
+              // ),
 
               AppDropinity<List<Kinship>, Kinship>.withApiRequest(
                 initialValue: (widget.initialValue as FemaleModel?)?.guardianRelation,

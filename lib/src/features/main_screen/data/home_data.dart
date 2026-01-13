@@ -2,6 +2,7 @@ import 'package:pagify/helpers/data_and_pagination_data.dart';
 
 import '../../../config/res/config_imports.dart';
 import '../../../core/extensions/object.dart';
+import '../../../core/helpers/user_type_enum.dart';
 import '../../../core/network/api_endpoints.dart';
 import '../../../core/network/network_request.dart';
 import '../../../core/network/network_service.dart';
@@ -48,6 +49,31 @@ class HomeData{
             totalPages: data['pagination']['total_pages']
         ),
         )
+    )).data;
+  }
+
+// Opportunities? opportunities
+  static Future<(List<Opportunity>, PaginationData)> getOpportunities(UserGender type, int page)async{
+    return (await injector<NetworkService>().callApi(
+        NetworkRequest(
+            method: RequestMethod.get,
+            path: ApiConstants.opportunities,
+            queryParameters: {
+              'type' : type,
+              'page' : page
+            }
+        ),
+        mapper: (data) {
+          final String selectedType = type == UserGender.unknown? 'parent' : type.name;
+          return (
+          (data[selectedType]['data'] as List)
+              .map((e) => Opportunity.fromJson(e))
+              .toList(),
+          PaginationData(
+              perPage: data[selectedType]['pagination']['per_page'],
+              totalPages: data[selectedType]['pagination']['total_pages']
+          ));
+        }
     )).data;
   }
 }

@@ -12,6 +12,7 @@ class ApiConstants {
   static const String princesDetails = 'EmiratesPrince/GetById/';
   static const String allGovernorate = 'Governorate/GetAll';
   static const String womanSection = 'WomanSection';
+  static const String opportunities = 'opportunities';
 
 // ---------------------- Media_Center -----------------------------------
   static const String allNews = 'Home/GetAllNews';

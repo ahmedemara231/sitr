@@ -38,6 +38,8 @@ android {
         release {
             signingConfig = signingConfigs.getByName("debug")
 
+            // from zego
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             // لازم الاتنين ميتفتحوش الا عند التسليم والرفع الاستور لانهم وظيفتهم لتقليل حجم التطبيق ودمج الكلاسات ويحذف الللغات واللاي اوت اللي مش مستخدم
             isMinifyEnabled = false
             isShrinkResources = false   // ✅ أضف السطر ده

@@ -3,6 +3,7 @@ import '../../config/res/config_imports.dart';
 import '../../core/extensions/object.dart';
 import '../../core/extensions/string_extension.dart';
 import '../../core/helpers/cache_service.dart';
+import '../../core/helpers/helpers.dart';
 import '../../core/navigation/navigator.dart';
 import '../../core/notification/notification_service.dart';
 import '../../core/shared/models/user_models/user_model.dart';
@@ -25,7 +26,6 @@ class _SplashScreenState extends State<SplashScreen> {
     _manipulateSplashData();
     super.initState();
   }
-
 
   void _manipulateSplashData()async{
     await NotificationService().saveFcmToken();
