@@ -38,6 +38,7 @@ android {
         release {
             signingConfig = signingConfigs.getByName("debug")
 
+
             // from zego
 //            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             // لازم الاتنين ميتفتحوش الا عند التسليم والرفع الاستور لانهم وظيفتهم لتقليل حجم التطبيق ودمج الكلاسات ويحذف الللغات واللاي اوت اللي مش مستخدم
@@ -47,6 +48,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
         }
         debug {
             signingConfig = signingConfigs.getByName("debug")

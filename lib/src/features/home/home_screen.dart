@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
@@ -44,6 +45,25 @@ class _HomeScreenState extends State<HomeScreen> {
           //       ChatsData.data!.matchRequest!.id.toString()
           //   );
           // }
+        },
+        onCallEnd: (event, defaultAction) {
+          log('Call ended with reason: ${event.reason}');
+
+          // Handle different call end reasons
+          // switch (event.reason) {
+          //   case ZegoCallEndReason.localHangUp:
+          //     log('Local user hung up');
+          //     break;
+          //   case ZegoCallEndReason.remoteHangUp:
+          //     log('Remote user hung up');
+          //     break;
+          //   case ZegoCallEndReason.kickOut:
+          //     log('User was kicked out by: ${event.kickerUserID}');
+          //     break;
+          // }
+
+          // Call the default action to return to previous page
+          defaultAction();
         }
     );
   }

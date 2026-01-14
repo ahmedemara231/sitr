@@ -13,6 +13,7 @@ import 'exeption_view.dart';
 
 enum Ranking{listView, gridView}
 class AppPagify<T> extends StatefulWidget {
+  final ScrollPhysics? physics;
   final Ranking rankingType;
   final ScrollController? scrollController;
   final Future<(List<T>, PaginationData)> Function(BuildContext context, int page) asyncCall;
@@ -24,6 +25,7 @@ class AppPagify<T> extends StatefulWidget {
     required this.asyncCall,
     required this.itemBuilder,
     required this.pagifyController,
+    this.physics,
     this.scrollController,
     this.rankingType = Ranking.listView,
     this.onUpdateStatus,
@@ -46,6 +48,7 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
     if(widget.rankingType == Ranking.listView){
       return Pagify<(List<T>, PaginationData), T>.listView(
           key: widget.key,
+          physics: widget.physics,
           onUpdateStatus: widget.onUpdateStatus,
           shrinkWrap: true,
           emptyListView: Center(
@@ -91,6 +94,7 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
           controller: widget.pagifyController,
           asyncCall: widget.asyncCall,
           scrollController: widget.scrollController,
+          physics: widget.physics,
           errorBuilder: (e) => Column(
             children: [
               Lottie.asset(Assets.errorApiError),

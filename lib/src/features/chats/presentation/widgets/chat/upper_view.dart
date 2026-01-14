@@ -45,28 +45,32 @@ class ChatUpperWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Row(
-      spacing: 70.w,
+    return Stack(
       children: [
-        ChatReportIcon(id: int.parse(requestId)),
-        if(_afterReportIcon == UpperWidgetAfterReportIcon.timer)
+        Align(
+            alignment: Alignment.centerLeft,
+            child: ChatReportIcon(id: int.parse(requestId))
+        ),
+        Align(
+          alignment: Alignment.center,
+          child: _afterReportIcon == UpperWidgetAfterReportIcon.timer?
           BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
-            builder: (context, state) => StatusBuilder(
-                data: state,
-                onFail: () => const SizedBox.shrink(),
-                onSuccess: (data, context) => _upperWidget(data)
-            ))
-        else
+              builder: (context, state) => StatusBuilder(
+                  data: state,
+                  onFail: () => const SizedBox.shrink(),
+                  onSuccess: (data, context) => _upperWidget(data)
+              )) :
           Container(
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.r),
-                color: labelBackgroundColor?.withOpacity(.1),
-          ),
+              borderRadius: BorderRadius.circular(12.r),
+              color: labelBackgroundColor?.withOpacity(.1),
+            ),
 
             child: AppText(label!, color: labelBackgroundColor).paddingSymmetric(
-              vertical: 10.h,
-              horizontal: 20.w
+                vertical: 10.h,
+                horizontal: 20.w
             ),
+          ),
         )
       ],
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../config/language/languages.dart';
 import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
@@ -38,25 +39,77 @@ class ChatMessageWidget extends StatelessWidget {
     return Row(
       spacing: 10.w,
       children: [
-        if(!message.sender.isFromMe)
-          _MessageBody(message: message),
-
-        Column(
-          spacing: 5.h,
-          children: [
-            InkWell(
-              onTap: () => Go.to(_targetProfile),
-              child: CircleAvatar(
-                radius: 20.sp,
-                backgroundImage: NetworkImage(message.sender.image),
-              ),
+        if(!message.sender.isFromMe && Languages.currentIsArabic)
+          ...[
+            _MessageBody(message: message),
+            Column(
+              spacing: 5.h,
+              children: [
+                InkWell(
+                  onTap: () => Go.to(_targetProfile),
+                  child: CircleAvatar(
+                    radius: 20.sp,
+                    backgroundImage: NetworkImage(message.sender.image),
+                  ),
+                ),
+                AppText(message.time??'', fontSize: 10.sp, color: Colors.grey),
+              ],
             ),
-            AppText(message.time??'', fontSize: 10.sp, color: Colors.grey),
+          ]
+        else if(!message.sender.isFromMe && Languages.currentIsEnglish)
+          ...[
+            Column(
+              spacing: 5.h,
+              children: [
+                InkWell(
+                  onTap: () => Go.to(_targetProfile),
+                  child: CircleAvatar(
+                    radius: 20.sp,
+                    backgroundImage: NetworkImage(message.sender.image),
+                  ),
+                ),
+                AppText(message.time??'', fontSize: 10.sp, color: Colors.grey),
+              ],
+            ),
+            _MessageBody(message: message),
           ],
-        ),
 
-        if(message.sender.isFromMe)
-          _MessageBody(message: message),
+
+        if(message.sender.isFromMe && Languages.currentIsArabic)
+          ...[
+            Column(
+              spacing: 5.h,
+              children: [
+                InkWell(
+                  onTap: () => Go.to(_targetProfile),
+                  child: CircleAvatar(
+                    radius: 20.sp,
+                    backgroundImage: NetworkImage(message.sender.image),
+                  ),
+                ),
+                AppText(message.time??'', fontSize: 10.sp, color: Colors.grey),
+              ],
+            ),
+            _MessageBody(message: message),
+          ]
+
+        else if(message.sender.isFromMe && Languages.currentIsEnglish)
+          ...[
+            _MessageBody(message: message),
+            Column(
+              spacing: 5.h,
+              children: [
+                InkWell(
+                  onTap: () => Go.to(_targetProfile),
+                  child: CircleAvatar(
+                    radius: 20.sp,
+                    backgroundImage: NetworkImage(message.sender.image),
+                  ),
+                ),
+                AppText(message.time??'', fontSize: 10.sp, color: Colors.grey),
+              ],
+            ),
+          ]
       ],
     );
   }

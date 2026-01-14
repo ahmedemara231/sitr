@@ -109,8 +109,8 @@ class ZegoService {
         notificationConfig: ZegoCallInvitationNotificationConfig(
           androidNotificationConfig: ZegoCallAndroidNotificationConfig(
               channelID: 'high_importance_channel',
-              // showOnLockedScreen: true,
-              // showOnFullScreen: true,
+              showOnLockedScreen: true,
+              showOnFullScreen: true,
             callChannel: ZegoCallAndroidNotificationChannelConfig(
               channelID: "high_importance_channel",
               channelName: "High Importance Notifications",
@@ -139,6 +139,7 @@ class ZegoService {
           onIncomingMissedCallDialBackFailed: onIncomingMissedCallDialBackFailed,
         ),
         config: ZegoCallInvitationConfig(
+          endCallWhenInitiatorLeave: true,
           offline: ZegoCallInvitationOfflineConfig(
             autoEnterAcceptedOfflineCall: false,
           ),
@@ -281,7 +282,7 @@ class ZegoService {
     onPressed: (c, v, b) {
       onPressed?.call();
     },
-    resourceID: "zegouikit_call",
+    resourceID: "satr-id",
     invitees: invites,
   );
 }

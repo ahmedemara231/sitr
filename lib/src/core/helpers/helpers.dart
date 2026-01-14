@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zego_zpns/zego_zpns.dart';
+import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import '../../core/zego_service/zego.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -73,9 +74,11 @@ class Helpers {
 
   static Future<void> initZegoService({
    required void Function() onCallStarted,
+   void Function(ZegoCallEndEvent, void Function())? onCallEnd,
 }) async{
       final isConnected = await zegoService?.onUserLogin(
         onCallStarted: onCallStarted,
+        onCallEnd: onCallEnd,
         currentUserId: UserCubit.instance.user.id.toString(),
         currentUserName: UserCubit.instance.user.name??'',
         // onIncomingCallAcceptButtonPressed: () async => await NativeMethods,

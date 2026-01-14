@@ -15,7 +15,6 @@ import '../../../data/models/request_model.dart';
 import 'message_widget.dart';
 
 class ChatView extends StatefulWidget {
-
   final RequestModel requestModel;
   final PagifyController<ChatMessages> chatController;
   const ChatView({super.key, required this.requestModel, required this.chatController});

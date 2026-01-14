@@ -222,7 +222,6 @@ class IndividualUserModel extends UserModel {
       canChat: _mergeHelper(otherMaleModelValue: otherModel.canChat, currentValue: canChat),
       hasChatWith: _mergeHelper(otherMaleModelValue: otherModel.hasChatWith, currentValue: hasChatWith),
       isParentMatch: _mergeHelper(otherMaleModelValue: otherModel.isParentMatch, currentValue: isParentMatch),
-
       id: _mergeHelper(otherMaleModelValue: otherModel.id, currentValue: id),
       name: _mergeHelper(otherMaleModelValue: otherModel.name, currentValue: name),
       parentId: _mergeHelper(otherMaleModelValue: otherModel.parentId, currentValue: parentId),

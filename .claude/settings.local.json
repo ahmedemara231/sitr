@@ -21,7 +21,9 @@
       "Bash(python3:*)",
       "WebSearch",
       "WebFetch(domain:www.zegocloud.com)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(echo:*)",
+      "WebFetch(domain:drive.google.com)"
     ],
     "deny": [],
     "ask": []

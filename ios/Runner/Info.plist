@@ -82,7 +82,12 @@
 		<string>fetch</string>
 		<string>audio</string>
 		<string>voip</string>
+		<string>processing</string>
 	</array>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+    <array>
+        <string>com.aait.flutter.sitr</string>
+    </array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
