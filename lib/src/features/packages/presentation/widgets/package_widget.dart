@@ -100,23 +100,22 @@ class PackageWidget extends StatelessWidget {
                                                 ));
                                                 if(result == 'success'){
                                                   ChatSheetManager.show(
-                                                              child: SuccessSheet(
-                                                                isInAuth: isInAuth,
-                                                                upperText: Column(
-                                                                  spacing: 10.h,
-                                                                  children: [
-                                                                    AppText(
-                                                                        LocaleKeys.paymentSucceeded,
-                                                                        fontSize: 16.sp,
-                                                                        fontWeight: FontWeight.bold
-                                                                    ),
-
-                                                                    if(isInAuth)
-                                                                      AppText(LocaleKeys.youCanNowCompleteYourProfile),
-                                                                  ],
-                                                                ),
-                                                              )
-                                                          );
+                                                      child: SuccessSheet(
+                                                        isInAuth: isInAuth,
+                                                        upperText: Column(
+                                                          spacing: 10.h,
+                                                          children: [
+                                                            AppText(
+                                                                LocaleKeys.paymentSucceeded,
+                                                                fontSize: 16.sp,
+                                                                fontWeight: FontWeight.bold
+                                                            ),
+                                                            if(isInAuth)
+                                                              AppText(LocaleKeys.youCanNowCompleteYourProfile),
+                                                          ],
+                                                        ),
+                                                      )
+                                                  );
                                                 }
                                               }
                                               ) ,
@@ -145,8 +144,7 @@ class PackageWidget extends StatelessWidget {
                                                     ),
                                                   )
                                               );
-                                      }
-                                      ),
+                                      }),
                                 )
                             )
                         );

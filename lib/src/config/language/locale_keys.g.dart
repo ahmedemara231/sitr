@@ -973,4 +973,7 @@ abstract class LocaleKeys {
   static const String _choosePaymentMethod = 'choose_payment_method';
   static String get choosePaymentMethod => _choosePaymentMethod.tr();
 
+  static const String _thePhoneMustStartsWith5 = 'the_phone_must_starts_with_5';
+  static String get thePhoneMustStartsWith5 => _thePhoneMustStartsWith5.tr();
+
 }

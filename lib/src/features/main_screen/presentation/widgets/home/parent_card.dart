@@ -39,7 +39,7 @@ class ParentCard extends StatelessWidget {
       child: Row(
         children: [
           SizedBox.square(
-              dimension: 80.sp,
+              dimension: 65.sp,
               child: HomeImage(url: parentImage)
           ),
           const SizedBox(width: 16),

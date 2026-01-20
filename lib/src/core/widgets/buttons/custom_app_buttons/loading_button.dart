@@ -4,7 +4,7 @@ import 'package:easy_loading_button/easy_loading_button.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../app_text.dart';
 
-class LoadingButton extends StatefulWidget {
+class LoadingButton extends StatelessWidget {
   final Future<void> Function(BuildContext context) call;
   final Color btnColor;
   final double borderRadius;
@@ -27,15 +27,8 @@ class LoadingButton extends StatefulWidget {
     )
   });
 
-  @override
-  State<LoadingButton> createState() => _LoadingButtonState();
-}
-
-class _LoadingButtonState extends State<LoadingButton> {
   void _changeState(EasyButtonState state){
-    setState(() {
-      _easyButtonState = state;
-    });
+    _easyButtonState = state;
   }
 
   EasyButtonState _easyButtonState = EasyButtonState.idle;
@@ -43,7 +36,7 @@ class _LoadingButtonState extends State<LoadingButton> {
   Future<void> asyncCall(BuildContext context)async{
     try {
       _changeState(EasyButtonState.loading);
-      await widget.call(context);
+      await call(context);
       _changeState(EasyButtonState.idle);
 
     } finally {
@@ -55,23 +48,22 @@ class _LoadingButtonState extends State<LoadingButton> {
   Widget build(BuildContext context) {
     return EasyButton(
         state: _easyButtonState,
-        buttonColor: widget.btnColor,
-        borderRadius: widget.borderRadius,
-        contentGap: widget.contentGap,
-        height: widget.height,
-        width: widget.width,
+        buttonColor: btnColor,
+        borderRadius: borderRadius,
+        contentGap: contentGap,
+        height: height,
+        width: width,
         useWidthAnimation: true,
         useEqualLoadingStateWidgetDimension: true,
         onPressed: () async=> await asyncCall(context),
-        idleStateWidget: widget.idleWidget,
+        idleStateWidget: idleWidget,
         loadingStateWidget: SizedBox.square(
             dimension: 20,
-            child: widget.loadingWidget
+            child: loadingWidget
         )
     );
   }
 }
-
 
 // import 'dart:async';
 // import 'dart:developer';

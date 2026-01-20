@@ -85,37 +85,40 @@ class UserStatusAction extends ChatActions{
             child: PaymentSheet(
               onPay: (context, payMethod)async => payMethod == PaymentMethod.online?
               ChatSheetManager.show(
-                  child: ShowBrandsSheet(
-                    onPay: (context, brandId) => context.read<PayRequestCubit>().pay(
-                      path: ApiConstants.payRequest+context.read<ChatCubit>().userRequest!,
-                      matchRequestId: matchReqId.toString(),
-                      paymentMethod: payMethod.name,
-                      onSuccess: (url) async{
-                        Object? result = '';
-                        result = await Go.to(SubscriptionScreen(
-                            initialUrl: url!,
-                            title: LocaleKeys.pay
-                        ));
+                  child: BlocProvider.value(
+                    value: context.read<PayRequestCubit>(),
+                    child: ShowBrandsSheet(
+                      onPay: (context, brandId) => context.read<PayRequestCubit>().pay(
+                        path: ApiConstants.payRequest+context.read<ChatCubit>().userRequest!,
+                        matchRequestId: matchReqId.toString(),
+                        paymentMethod: payMethod.name,
+                        onSuccess: (url) async{
+                          Object? result = '';
+                          result = await Go.to(SubscriptionScreen(
+                              initialUrl: url!,
+                              title: LocaleKeys.pay
+                          ));
 
-                        if(result == 'success'){
-                          context.read<ChatCubit>().startChat(
-                              requestModel: requestModel
-                          );
+                          if(result == 'success'){
+                            context.read<ChatCubit>().startChat(
+                                requestModel: requestModel
+                            );
 
-                          ChatSheetManager.show(
-                              child: SuccessSheet(
-                                isInAuth: false,
-                                upperText: Column(
-                                  spacing: 10.h,
-                                  children: [
-                                    AppText(LocaleKeys.paymentSucceeded),
-                                    AppText(LocaleKeys.youCanNowContinueChatStages, color: Colors.grey, fontSize: 12.sp),
-                                  ],
-                                ),
-                              )
-                          );
-                        }
-                      },
+                            ChatSheetManager.show(
+                                child: SuccessSheet(
+                                  isInAuth: false,
+                                  upperText: Column(
+                                    spacing: 10.h,
+                                    children: [
+                                      AppText(LocaleKeys.paymentSucceeded),
+                                      AppText(LocaleKeys.youCanNowContinueChatStages, color: Colors.grey, fontSize: 12.sp),
+                                    ],
+                                  ),
+                                )
+                            );
+                          }
+                        },
+                      ),
                     ),
                   )
               ) : context.read<PayRequestCubit>().pay(

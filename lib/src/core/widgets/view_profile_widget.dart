@@ -101,8 +101,6 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
       PartnerInfoModel(leading: Assets.svgHospital, title: LocaleKeys.diseasesIfExists, subTitle: user.healthConditions),
       PartnerInfoModel(leading: Assets.svgTranslation, title: LocaleKeys.inChatYouPrefer, subTitle: user.chatLang!.toLang().toFullTitle()),
 
-      PartnerInfoModel(leading: Assets.svgRecycing, title: LocaleKeys.thingsIAbsolutelyDoNotAcceptOrWant, subTitle: user.prohibitedThings),
-
       if(widget._type.isProfile)
         PartnerInfoModel(leading: Assets.svgProfilePhone, title: LocaleKeys.phoneNumber, subTitle: user.phone),
     ];
@@ -248,6 +246,13 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                   itemBuilder: (BuildContext context, int index) => InfoWidget(partnerInfoModel: partnerInfo[index]),
                 ),
 
+                InfoWidget(
+                    partnerInfoModel: PartnerInfoModel(
+                        leading: Assets.svgRecycing,
+                        title: LocaleKeys.thingsIAbsolutelyDoNotAcceptOrWant,
+                        subTitle: user.prohibitedThings
+                    )
+                ),
                 if(widget._type.isPartnerProfile)
                   ChatButton(user: state.data),
               ],

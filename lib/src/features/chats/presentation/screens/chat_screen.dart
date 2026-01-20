@@ -248,7 +248,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
       ],
 
       child: AppScaffold(
-        appBarTitle: LocaleKeys.chat,
+        appBarTitle: '${LocaleKeys.chat} (${context.read<ChatCubit>().currentStage?.text})',
         isScrollable: false,
         actions: [
           ValueListenableBuilder(

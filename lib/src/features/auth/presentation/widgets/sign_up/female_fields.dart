@@ -169,15 +169,15 @@ class _FemaleFieldsState extends State<FemaleFields> {
               //   onChanged: (value) => _listenToData(asFemale.copyWith(guardianPhone: value)),
               //   validator: (v) => Validators.validatePhone(v, message: LocaleKeys.parentNumber.tr()),
               // ),
-            AppDropinity<List<Kinship>, Kinship>.withApiRequest(
-              initialValue: (widget.initialValue as FemaleModel?)?.guardianRelation,
-              hint: LocaleKeys.kinship,
-              title: LocaleKeys.kinship,
-              asyncCall: (BuildContext ctx, int page) async => await AuthData.getKinships(),
-              getLabel: (Kinship element) => element.value,
-              onChanged: (value) => _listenToData(asFemale.copyWith(guardianRelation: value)),
-                validator: (e) => Validators.validateEmpty(e?.value)
-            ),
+            // AppDropinity<List<Kinship>, Kinship>.withApiRequest(
+            //   initialValue: (widget.initialValue as FemaleModel?)?.guardianRelation,
+            //   hint: LocaleKeys.kinship,
+            //   title: LocaleKeys.kinship,
+            //   asyncCall: (BuildContext ctx, int page) async => await AuthData.getKinships(),
+            //   getLabel: (Kinship element) => element.value,
+            //   onChanged: (value) => _listenToData(asFemale.copyWith(guardianRelation: value)),
+            //     // validator: (e) => Validators.validateEmpty(e?.value)
+            // ),
             ]),
         );
 
@@ -266,15 +266,15 @@ class _FemaleFieldsState extends State<FemaleFields> {
               //   validator: (v) => Validators.validatePhone(v, message: LocaleKeys.parentNumber.tr()),
               // ),
 
-              AppDropinity<List<Kinship>, Kinship>.withApiRequest(
-                initialValue: (widget.initialValue as FemaleModel?)?.guardianRelation,
-                hint: LocaleKeys.kinship,
-                title: LocaleKeys.kinship,
-                asyncCall: (BuildContext ctx, int page) async => await AuthData.getKinships(),
-                getLabel: (Kinship element) => element.value,
-                onChanged: (value) => _listenToData(asFemale.copyWith(guardianRelation: value)),
-                  validator: (e) => Validators.validateEmpty(e?.value)
-              ),
+              // AppDropinity<List<Kinship>, Kinship>.withApiRequest(
+              //   initialValue: (widget.initialValue as FemaleModel?)?.guardianRelation,
+              //   hint: LocaleKeys.kinship,
+              //   title: LocaleKeys.kinship,
+              //   asyncCall: (BuildContext ctx, int page) async => await AuthData.getKinships(),
+              //   getLabel: (Kinship element) => element.value,
+              //   onChanged: (value) => _listenToData(asFemale.copyWith(guardianRelation: value)),
+              //     // validator: (e) => Validators.validateEmpty(e?.value)
+              // ),
 
             ])
             ..insert(

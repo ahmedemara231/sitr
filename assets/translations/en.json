@@ -327,5 +327,6 @@
   "enter_amount": "enter amount",
   "wallet_charged_successfully": "Wallet charged successfully",
   "change_language": "change language",
-  "choose_payment_method": "choose payment method"
+  "choose_payment_method": "choose payment method",
+  "the_phone_must_starts_with_5": "the phone must starts with 5"
 }

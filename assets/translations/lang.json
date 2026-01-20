@@ -333,5 +333,6 @@
   "enter amount" : "ادخل القيمة",
   "Wallet charged successfully" : "لقد تم شحن المحفظة بنجاح",
   "change language" : "تغيير اللغة",
-  "choose payment method" : "اختر وسيلة دفع من الوسائل المتاحة"
+  "choose payment method" : "اختر وسيلة دفع من الوسائل المتاحة",
+  "the phone must starts with 5" : "رقم الهاتف لابد ان يبدأ ب 5"
 }

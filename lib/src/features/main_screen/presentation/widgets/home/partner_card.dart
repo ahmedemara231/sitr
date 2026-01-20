@@ -43,7 +43,7 @@ class PartnerCard extends StatelessWidget {
       child: Row(
         children: [
           SizedBox.square(
-              dimension: 80.sp,
+              dimension: 65.sp,
               child: HomeImage(url: opportunity.avatar ?? ConstantManager.defaultAvatar)
           ),
           const SizedBox(width: 16),

@@ -129,7 +129,10 @@ class Validators {
   static String? validatePhone(String? value, {String? message}) {
     if (value?.trim().isEmpty ?? true) {
       return message ?? LocaleKeys.fillField;
-    } else if(value!.length != 9) {
+    } else if(!value!.startsWith('5')){
+      return LocaleKeys.thePhoneMustStartsWith5;
+
+    }else if(value.length != 9) {
       return LocaleKeys.phoneShouldBe9Digits;
     }else if (!RegExp(r'^(5)(5|0|3|6|4|9|1|8|7)([0-9]{7})$')
         .hasMatch(value.trim()) ||

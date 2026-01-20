@@ -81,7 +81,6 @@ class Helpers {
         onCallEnd: onCallEnd,
         currentUserId: UserCubit.instance.user.id.toString(),
         currentUserName: UserCubit.instance.user.name??'',
-        // onIncomingCallAcceptButtonPressed: () async => await NativeMethods,
         callDuration: const Duration(minutes: 5)
       );
 

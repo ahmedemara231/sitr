@@ -73,7 +73,7 @@ class NotificationService {
   }
 
   void _showNotification(RemoteMessage message) async {
-    // if (Platform.isIOS) return;
+    if (Platform.isIOS) return;
     log('the remote msg is ${message.data}');
     log('the remote msg is ${message.notification?.toMap()}');
     const DarwinNotificationDetails iOSPlatformChannelSpecifics =
@@ -94,16 +94,6 @@ class NotificationService {
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
     final notification = message.notification;
-
-    final type = (message.data['type'] as String).getType;
-    if(type.isParentIndividualApprovalRejected ||
-        type.isMatchRejectedWhenTimerEnded ||
-        type.isMatchRequestCompleted||
-    type.isAccountDeletedByAdmin ||
-    type.isBlock
-    ){
-      NotificationRoutes.navigateByType(message.data);
-    }
 
     await _flutterLocalNotificationsPlugin.show(notification.hashCode,
         notification?.title ?? '', notification?.body, notificationDetails,
@@ -180,6 +170,15 @@ class NotificationService {
     FirebaseMessaging.onBackgroundMessage(backgroundHandler);
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
       _showNotification(event);
+      final type = (event.data['type'] as String).getType;
+      if(type.isParentIndividualApprovalRejected ||
+          type.isMatchRejectedWhenTimerEnded ||
+          type.isMatchRequestCompleted||
+          type.isAccountDeletedByAdmin ||
+          type.isBlock
+      ){
+        NotificationRoutes.navigateByType(event.data);
+      }
     });
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage event) {
       _handleNotificationsTap(event);

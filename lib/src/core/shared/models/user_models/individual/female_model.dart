@@ -12,8 +12,8 @@ class FemaleModel extends IndividualUserModel {
   final String? preferredResidenceAfterMarriage;
   // final String? guardianName;
   // final String? guardianPhone;
+  // final Kinship? guardianRelation;
   final String? guardianCountryCode;
-  final Kinship? guardianRelation;
 
   FemaleModel({
     super.id,
@@ -68,7 +68,7 @@ class FemaleModel extends IndividualUserModel {
     // this.guardianName,
     // this.guardianPhone,
     this.guardianCountryCode,
-    this.guardianRelation,
+    // this.guardianRelation,
   });
 
   factory FemaleModel.initial() => FemaleModel();
@@ -147,9 +147,9 @@ class FemaleModel extends IndividualUserModel {
         preferredResidenceAfterMarriage: json['preferred_residence_after_marriage'],
         // guardianName: json['guardian_name'],
         // guardianPhone: json['guardian_phone'],
+        // guardianRelation: (json['guardian_relation'] as Object?).isNotNull?
+        // Kinship.fromJson(json['guardian_relation']) : null
         guardianCountryCode: json['guardian_country_code'],
-        guardianRelation: (json['guardian_relation'] as Object?).isNotNull?
-        Kinship.fromJson(json['guardian_relation']) : null
     );
   }
 
@@ -161,7 +161,7 @@ class FemaleModel extends IndividualUserModel {
       'accepts_polygamy': acceptsPolygamy,
       // 'guardian_name': guardianName,
       // 'guardian_phone': guardianPhone,
-      'guardian_relation_id': guardianRelation?.id.toString(),
+      // 'guardian_relation_id': guardianRelation?.id.toString(),
     });
 
     // Remove null values (parent already does this, but re-apply after adding female-specific fields)
@@ -176,8 +176,8 @@ class FemaleModel extends IndividualUserModel {
     'preferred_residence_after_marriage': preferredResidenceAfterMarriage,
     // 'guardian_name': guardianName,
     // 'guardian_phone': guardianPhone,
+    // 'guardian_relation': guardianRelation,
     'guardian_country_code': guardianCountryCode,
-    'guardian_relation': guardianRelation,
   });
 
   @override
@@ -191,7 +191,7 @@ class FemaleModel extends IndividualUserModel {
       hijab: _mergeHelper(otherFemaleModelValue: (otherModel as FemaleModel).hijab, currentValue: hijab),
       acceptsPolygamy: _mergeHelper(otherFemaleModelValue: otherModel.acceptsPolygamy, currentValue: acceptsPolygamy),
       guardianCountryCode: _mergeHelper(otherFemaleModelValue: otherModel.guardianCountryCode, currentValue: guardianCountryCode),
-      guardianRelation: _mergeHelper(otherFemaleModelValue: otherModel.guardianRelation, currentValue: guardianRelation),
+      // guardianRelation: _mergeHelper(otherFemaleModelValue: otherModel.guardianRelation, currentValue: guardianRelation),
       preferredResidenceAfterMarriage: _mergeHelper(otherFemaleModelValue: otherModel.preferredResidenceAfterMarriage, currentValue: preferredResidenceAfterMarriage),
       isNotify: _mergeHelper(otherFemaleModelValue: otherModel.isNotify, currentValue: isNotify),
       id: _mergeHelper(otherFemaleModelValue: otherModel.id, currentValue: id),
@@ -319,7 +319,7 @@ class FemaleModel extends IndividualUserModel {
       // guardianName: guardianName ?? this.guardianName,
       // guardianPhone: guardianPhone ?? this.guardianPhone,
       guardianCountryCode: guardianCountryCode ?? this.guardianCountryCode,
-      guardianRelation: guardianRelation ?? this.guardianRelation,
+      // guardianRelation: guardianRelation ?? this.guardianRelation,
     );
   }
 }
