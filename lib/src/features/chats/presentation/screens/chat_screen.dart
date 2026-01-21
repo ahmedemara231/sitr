@@ -248,7 +248,11 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
       ],
 
       child: AppScaffold(
-        appBarTitle: '${LocaleKeys.chat} (${context.read<ChatCubit>().currentStage?.text})',
+        customTitle: BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
+          builder: (context, state) => StatusBuilder(
+              data: state,
+              onSuccess: (data, context) => AppText('${LocaleKeys.chat} (${context.read<ChatCubit>().currentStage?.text})', fontWeight: FontWeight.bold, fontSize: 16.sp, color: Colors.black,)),
+        ),
         isScrollable: false,
         actions: [
           ValueListenableBuilder(

@@ -11,7 +11,8 @@ import '../app_text.dart';
 import '../pull_refresher.dart';
 
 class AppScaffold extends StatelessWidget {
-  final String appBarTitle;
+  final String? appBarTitle;
+  final Widget? customTitle;
   final Widget body;
   final Color? scaffoldBackgroundColor;
   final Widget? bottomBar;
@@ -22,8 +23,9 @@ class AppScaffold extends StatelessWidget {
   // final FutureOr<void> Function(BuildContext context)? onRefresh;
 
   const AppScaffold({super.key,
-    required this.appBarTitle,
     required this.body,
+    this.appBarTitle,
+    this.customTitle,
     this.scaffoldBackgroundColor,
     this.bottomBar,
     this.bottomWidget,
@@ -42,7 +44,7 @@ class AppScaffold extends StatelessWidget {
             actionsPadding: EdgeInsets.all(10.r),
             backgroundColor: AppColors.whiteGreyColor,
             centerTitle: true,
-            title: AppText(appBarTitle, fontWeight: FontWeight.bold, fontSize: 16.sp, color: Colors.black,),
+            title: customTitle??AppText(appBarTitle??'', fontWeight: FontWeight.bold, fontSize: 16.sp, color: Colors.black,),
             leading: ModalRoute.of(context)!.canPop?
             const AppBackButton() : null,
             bottom: bottomWidget,

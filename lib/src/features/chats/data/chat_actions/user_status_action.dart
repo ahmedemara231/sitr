@@ -77,21 +77,25 @@ class UserStatusAction extends ChatActions{
     // }
     else if((request.isExtension || request.isVideoCall || request.isAdminMeeting)
         && status.isAccepted){
+      final chatCubit = context.read<ChatCubit>();
+      final userRequest = chatCubit.userRequest!;
+
       ChatSheetManager.show(
         child: BlocProvider.value(
-          value: context.read<ChatCubit>(),
+          value: chatCubit,
           child: BlocProvider(
             create: (context) => PayRequestCubit(),
             child: PaymentSheet(
-              onPay: (context, payMethod)async => payMethod == PaymentMethod.online?
-              ChatSheetManager.show(
-                  child: BlocProvider.value(
-                    value: context.read<PayRequestCubit>(),
+              onPay: (ctx, payMethod)async {
+                final payRequestCubit = ctx.read<PayRequestCubit>();
+                if(payMethod == PaymentMethod.online) {
+                  ChatSheetManager.show(
                     child: ShowBrandsSheet(
-                      onPay: (context, brandId) => context.read<PayRequestCubit>().pay(
-                        path: ApiConstants.payRequest+context.read<ChatCubit>().userRequest!,
+                      onPay: (_, brandId) => payRequestCubit.pay(
+                        path: ApiConstants.payRequest + userRequest,
                         matchRequestId: matchReqId.toString(),
                         paymentMethod: payMethod.name,
+                        brandId: brandId,
                         onSuccess: (url) async{
                           Object? result = '';
                           result = await Go.to(SubscriptionScreen(
@@ -100,7 +104,7 @@ class UserStatusAction extends ChatActions{
                           ));
 
                           if(result == 'success'){
-                            context.read<ChatCubit>().startChat(
+                            chatCubit.startChat(
                                 requestModel: requestModel
                             );
 
@@ -119,31 +123,34 @@ class UserStatusAction extends ChatActions{
                           }
                         },
                       ),
-                    ),
-                  )
-              ) : context.read<PayRequestCubit>().pay(
-                path: ApiConstants.payRequest+context.read<ChatCubit>().userRequest!,
-                matchRequestId: matchReqId.toString(),
-                paymentMethod: payMethod.name,
-                onSuccess: (url) async{
-                    context.read<ChatCubit>().startChat(
-                        requestModel: requestModel
-                    );
+                    )
+                  );
+                } else {
+                  payRequestCubit.pay(
+                    path: ApiConstants.payRequest + userRequest,
+                    matchRequestId: matchReqId.toString(),
+                    paymentMethod: payMethod.name,
+                    onSuccess: (url) async{
+                      chatCubit.startChat(
+                          requestModel: requestModel
+                      );
 
-                    ChatSheetManager.show(
-                        child: SuccessSheet(
-                          isInAuth: false,
-                          upperText: Column(
-                            spacing: 10.h,
-                            children: [
-                              AppText(LocaleKeys.paymentSucceeded),
-                              AppText(LocaleKeys.youCanNowContinueChatStages, color: Colors.grey, fontSize: 12.sp),
-                            ],
-                          ),
-                        )
-                    );
-                },
-              ),
+                      ChatSheetManager.show(
+                          child: SuccessSheet(
+                            isInAuth: false,
+                            upperText: Column(
+                              spacing: 10.h,
+                              children: [
+                                AppText(LocaleKeys.paymentSucceeded),
+                                AppText(LocaleKeys.youCanNowContinueChatStages, color: Colors.grey, fontSize: 12.sp),
+                              ],
+                            ),
+                          )
+                      );
+                    },
+                  );
+                }
+              },
             ),
           ),
         ),

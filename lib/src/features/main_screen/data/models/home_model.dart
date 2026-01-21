@@ -1,4 +1,6 @@
 import '../../../../core/extensions/object.dart';
+import '../../../../core/extensions/string_extension.dart';
+import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/shared/models/title_value_shape.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 
@@ -109,54 +111,76 @@ Opportunities copyWith({
 
 }
 
-class Opportunity {
-  Opportunity({
-    this.martialStatus,
-    this.nickName,
-      this.id,
-      this.name,
-      this.avatar,
-      this.age,
-      this.type,
-      this.gender,
-      this.city,
-      this.height,
-      this.weight,
-    this.hijab,
-    this.skin,
-  });
-
-  Opportunity.fromJson(dynamic json) {
-    id = json['id'];
-    name = json['name'];
-    avatar = json['avatar'];
-    age = json['age'];
-    type = json['type'] != null ? TitleValueShape.fromJson(json['type']) : null;
-    gender = json['gender'] != null ? GenderValueShape.fromJson(json['gender']) : null;
-    city = json['city'];
-    height = json['height'];
-    weight = json['weight'];
-    martialStatus = (json['marital_status'] as Object?).isNotNull?
-    TitleValueShape.fromJson(json['marital_status']) :
-    TitleValueShape.initial();
-    nickName = json['nick_name'];
-    hijab = json['hijab'] != null ? TitleValueShape.fromJson(json['hijab']) : null;
-    skin = json['skin_color'] != null ? TitleValueShape.fromJson(json['skin_color']) : null;
-  }
-
+class OpportunityModel{
   int? id;
-  TitleValueShape? skin;
-  TitleValueShape? hijab;
   String? name;
   String? avatar;
-  int? age;
   TitleValueShape? type;
   GenderValueShape? gender;
+
+  OpportunityModel({
+    this.id,
+    this.name,
+    this.avatar,
+    this.type,
+    this.gender,
+  });
+
+  factory OpportunityModel.fromJson(Map<String, dynamic> json) {
+    if(TitleValueShape.fromJson(json['type']).value.toUserType().isParent){
+      return Parent.fromJson(json);
+
+    }else{
+      return Opportunity.fromJson(json);
+    }
+  }
+}
+class Opportunity extends OpportunityModel{
+
+  TitleValueShape? skin;
+  TitleValueShape? hijab;
+  int? age;
   String? city;
   num? height;
   num? weight;
   TitleValueShape? martialStatus;
   String? nickName;
+
+  Opportunity({
+    super.id,
+    super.name,
+    super.avatar,
+    super.type,
+    super.gender,
+    this.martialStatus,
+    this.nickName,
+    this.age,
+    this.city,
+    this.height,
+    this.weight,
+    this.hijab,
+    this.skin,
+  });
+
+  factory Opportunity.fromJson(dynamic json) {
+    return Opportunity(
+      id: json['id'],
+      name: json['name'],
+      avatar: json['avatar'],
+      age: json['age'],
+      type: json['type'] != null ? TitleValueShape.fromJson(json['type']) : null,
+      gender: json['gender'] != null ? GenderValueShape.fromJson(json['gender']) : null,
+      city: json['city'],
+      height: json['height'],
+      weight: json['weight'],
+      martialStatus: (json['marital_status'] as Object?).isNotNull?
+      TitleValueShape.fromJson(json['marital_status']) :
+      TitleValueShape.initial(),
+      nickName: json['nick_name'],
+      hijab: json['hijab'] != null ? TitleValueShape.fromJson(json['hijab']) : null,
+      skin: json['skin_color'] != null ? TitleValueShape.fromJson(json['skin_color']) : null,
+    );
+  }
 
 Opportunity copyWith({  int? id,
   String? name,
@@ -205,13 +229,13 @@ Opportunity copyWith({  int? id,
 
 }
 
-class Parent {
+class Parent extends OpportunityModel{
   Parent({
-      this.id,
-      this.name,
-      this.avatar,
-      this.type,
-      this.gender,
+      super.id,
+      super.name,
+      super.avatar,
+      super.type,
+      super.gender,
       this.relation,
       this.numOfChildren,
   });
@@ -226,28 +250,10 @@ class Parent {
     numOfChildren = json['num_of_children'];
   }
 
-  int? id;
-  String? name;
-  String? avatar;
-  TitleValueShape? type;
-  GenderValueShape? gender;
   Relation? relation;
   int? numOfChildren;
-Parent copyWith({  int? id,
-  String? name,
-  String? avatar,
-  TitleValueShape? type,
-  GenderValueShape? gender,
-  Relation? relation,
-  int? numOfChildren,
-}) => Parent(  id: id ?? this.id,
-  name: name ?? this.name,
-  avatar: avatar ?? this.avatar,
-  type: type ?? this.type,
-  gender: gender ?? this.gender,
-  relation: relation ?? this.relation,
-  numOfChildren: numOfChildren ?? this.numOfChildren,
-);
+
+  @override
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;

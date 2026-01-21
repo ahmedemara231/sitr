@@ -53,7 +53,7 @@ class HomeData{
   }
 
 // Opportunities? opportunities
-  static Future<(List<Opportunity>, PaginationData)> getOpportunities(UserGender type, int page)async{
+  static Future<(List<OpportunityModel>, PaginationData)> getOpportunities(UserGender type, int page)async{
     return (await injector<NetworkService>().callApi(
         NetworkRequest(
             method: RequestMethod.get,
@@ -67,7 +67,7 @@ class HomeData{
           final String selectedType = type == UserGender.unknown? 'parent' : type.name;
           return (
           (data[selectedType]['data'] as List)
-              .map((e) => Opportunity.fromJson(e))
+              .map((e) => OpportunityModel.fromJson(e))
               .toList(),
           PaginationData(
               perPage: data[selectedType]['pagination']['per_page'],

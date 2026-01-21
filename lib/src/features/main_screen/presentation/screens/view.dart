@@ -26,6 +26,7 @@ import '../widgets/home/filter_icon.dart';
 import '../widgets/home/mariage_consultant.dart';
 import '../widgets/home/parent_card.dart';
 import '../widgets/home/partner_card.dart';
+import 'parent_details.dart';
 import 'partner_details.dart';
 
 class MainView extends StatefulWidget {
@@ -182,21 +183,25 @@ class _MainViewState extends State<MainView> {
                             valueListenable: secondSelection,
                             builder: (context, val, child) => SizedBox(
                               height: context.height - 200,
-                              child: AppPagify(
+                              child: AppPagify<OpportunityModel>(
                                   key: UniqueKey(),
                                   asyncCall: (context, page) => HomeData.getOpportunities(val.toUserGender(), page),
                                   itemBuilder: (context, data, i, element) => InkWell(
-                                    onTap: () => UserModel.isAuthenticated? Go.to(IndividualDetailsScreen.opportunity(
-                                      id: element.id ?? 0,
-                                    )) : Helpers.showUnauthenticatedSheet(),
-
-                                    child: !val.toUserType().isParent?
-                                    PartnerCard.individual(opportunity: element).paddingBottom(16.h) : ParentCard(
-                                        parentImage: element?.avatar??'',
-                                        name: element?.name??'',
-                                        kinship: element?.relation?.name ?? '',
-                                        childrenNumber: element?.numOfChildren ?? 0
-                                    ).paddingBottom(16.h),
+                                    onTap: () => UserModel.isAuthenticated? Go.to(
+                                        !(val.toUserGender().isMale || val.toUserGender().isFemale)?
+                                        ParentDetailsScreen(id: element.id??0) :
+                                        IndividualDetailsScreen.opportunity(
+                                          id: element.id ?? 0,
+                                        )
+                                    ) : Helpers.showUnauthenticatedSheet(),
+                                    child: !(val.toUserGender().isMale || val.toUserGender().isFemale)?
+                                    ParentCard(
+                                        parentImage: (element as Parent).avatar ??'',
+                                        name: element.name??'',
+                                        kinship: element.relation?.name??'',
+                                        childrenNumber: element.numOfChildren??0
+                                    ):
+                                    PartnerCard.individual(opportunity: element as Opportunity).paddingBottom(16.h)
                                   ),
                                   // scrollController: paginationScrollCont,
                                   pagifyController: PagifyController()
