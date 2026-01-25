@@ -126,7 +126,7 @@ class UserStatusAction extends ChatActions{
                     )
                   );
                 } else {
-                  payRequestCubit.pay(
+                  await payRequestCubit.pay(
                     path: ApiConstants.payRequest + userRequest,
                     matchRequestId: matchReqId.toString(),
                     paymentMethod: payMethod.name,

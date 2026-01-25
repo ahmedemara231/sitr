@@ -27,7 +27,7 @@ class CongratsSheet extends StatelessWidget {
           AppDefaultButton.withBackGroundColor(
               title: LocaleKeys.back,
               onTap: () {
-                Go.offAll(const HomeScreen());
+                Go.back();
               }
           )
         ],

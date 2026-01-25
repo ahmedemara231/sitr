@@ -4,11 +4,38 @@ import '../../../../core/network/api_endpoints.dart';
 import '../../data/models/chat_model.dart';
 
 enum ChatType {
-  current,
-  completed,
-  rejected,
-  cancelled,
-  pending,
+  current(0),
+  completed(1),
+  rejected(2),
+  cancelled(3),
+  pending(4);
+
+  final int i;
+  const ChatType(this.i);
+}
+
+extension ConvertToChatType on String{
+  ChatType get getChatType{
+    switch(this){
+      case 'current':
+        return ChatType.current;
+
+      case 'completed':
+        return ChatType.completed;
+
+      case 'rejected':
+        return ChatType.rejected;
+
+      case 'cancelled':
+        return ChatType.cancelled;
+
+      case 'pending':
+        return ChatType.pending;
+
+      default:
+        return ChatType.current;
+    }
+  }
 }
 
 class GetChatsCubit extends AsyncCubit<List<ChatModel>>{

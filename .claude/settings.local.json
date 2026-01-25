@@ -23,7 +23,8 @@
       "WebFetch(domain:www.zegocloud.com)",
       "WebFetch(domain:github.com)",
       "Bash(echo:*)",
-      "WebFetch(domain:drive.google.com)"
+      "WebFetch(domain:drive.google.com)",
+      "Bash(pkill:*)"
     ],
     "deny": [],
     "ask": []

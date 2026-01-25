@@ -151,8 +151,10 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
   }
 
   Future<void> _showBased(RemoteMessage notification)async{
+    final type = (notification.data['type'] as String).getType;
     if((notification.data['action'] as Object?).isNotNull){
       _startChat();
+
     }
   }
 

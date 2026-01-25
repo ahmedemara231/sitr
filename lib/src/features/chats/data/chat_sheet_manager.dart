@@ -17,8 +17,7 @@ class ChatSheetManager {
 
   static Future<dynamic> _manageSheet(Widget child) async {
     isOpened = true;
-    final result = await
-    showDefaultBottomSheet(enableDrag: true, child: child);
+    final result = await showDefaultBottomSheet(enableDrag: true, child: child);
     isOpened = false;
     return result;
   }

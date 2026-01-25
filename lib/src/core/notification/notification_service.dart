@@ -4,12 +4,16 @@ import 'dart:developer' show log;
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../../features/auth/imports.dart';
 import '../../features/chats/data/models/request_model.dart';
+import '../../features/chats/presentation/cubits/get_chats_cubit.dart';
 import '../../features/chats/presentation/imports.dart';
+import '../../features/chats/presentation/screens/chats_screen.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/main_screen/presentation/screens/parent_details.dart';
 import '../../features/main_screen/presentation/screens/partner_details.dart';
@@ -171,12 +175,9 @@ class NotificationService {
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
       _showNotification(event);
       final type = (event.data['type'] as String).getType;
-      if(type.isParentIndividualApprovalRejected ||
-          type.isMatchRejectedWhenTimerEnded ||
-          type.isMatchRequestCompleted||
-          type.isAccountDeletedByAdmin ||
-          type.isBlock
-      ){
+      if(type.isAccountDeletedByAdmin || type.isBlock ||
+          type.isParentIndividualApprovalRejected ||
+          type.isMatchRejectedWhenTimerEnded){
         NotificationRoutes.navigateByType(event.data);
       }
     });

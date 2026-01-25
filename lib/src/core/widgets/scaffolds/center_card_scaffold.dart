@@ -153,3 +153,96 @@ class ScreenChildren extends StatelessWidget {
   }
 }
 
+/// A sliver-based variant of CenterCardScaffold that supports nested scrolling.
+/// This allows inner scrollable widgets (like paginated lists) to take full screen
+/// when the header content is scrolled away.
+class SliverCenterCardScaffold extends StatelessWidget {
+  final CardProperties? cardProperties;
+  final Widget upperWidget;
+  final Widget Function(BuildContext context) bodyBuilder;
+  final Widget? centerCardBody;
+  final double? bodyTopPadding;
+  final double? cardTopPadding;
+  final Color? bodyColor;
+  final EdgeInsetsGeometry? upperWidgetPadding;
+  final bool? showBackButton;
+  final Widget? headerContent;
+
+  const SliverCenterCardScaffold({
+    super.key,
+    required this.upperWidget,
+    required this.bodyBuilder,
+    this.centerCardBody,
+    this.cardProperties,
+    this.bodyTopPadding,
+    this.cardTopPadding,
+    this.showBackButton,
+    this.bodyColor,
+    this.upperWidgetPadding,
+    this.headerContent,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.scaffoldBackground,
+      body: SafeArea(
+        child: NestedScrollView(
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+            SliverToBoxAdapter(
+              child: Stack(
+                children: [
+                  Column(
+                    children: [
+                      Container(
+                        width: context.width,
+                        color: AppColors.whiteGreyColor,
+                        child: Padding(
+                          padding: upperWidgetPadding ?? EdgeInsets.zero,
+                          child: Stack(
+                            children: [
+                              upperWidget,
+                              if (showBackButton ?? ModalRoute.of(context)!.canPop)
+                                const AppBackButton(),
+                            ],
+                          ),
+                        ),
+                      ),
+                      if (headerContent != null)
+                        Container(
+                          width: context.width,
+                          decoration: BoxDecoration(
+                            color: bodyColor,
+                            borderRadius: BorderRadius.vertical(top: Radius.circular(22.r)),
+                          ),
+                          child: centerCardBody.isNotNull
+                              ? headerContent!.defaultScreenPadding().paddingTop(bodyTopPadding ?? 40.h)
+                              : headerContent!.defaultScreenPadding(),
+                        ),
+                    ],
+                  ),
+                  if (centerCardBody.isNotNull)
+                    Container(
+                      decoration: BoxDecoration(
+                        color: cardProperties?.color ?? Colors.white,
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      child: centerCardBody,
+                    ).paddingTop(cardTopPadding ?? 100.h).paddingSymmetric(horizontal: 12.w),
+                ],
+              ),
+            ),
+          ],
+          body: Container(
+            decoration: BoxDecoration(
+              color: bodyColor,
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: bodyBuilder(context),
+          ),
+        ),
+      ),
+    );
+  }
+}
+

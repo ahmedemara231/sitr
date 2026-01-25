@@ -80,71 +80,74 @@ class PackageWidget extends StatelessWidget {
                             onTap: () => package.hasActivePackage?
                             MessageUtils.showSnackBar(LocaleKeys.youAreAlreadySubscribedInPackage) :
                             ChatSheetManager.show(
-                                child: PaymentSheet(
-                                  paymentMethods: paymentMethods,
-                                  onPay: (ctx, paymentMethod) async => paymentMethod == PaymentMethod.online?
-                                  ChatSheetManager.show(
-                                      child: BlocProvider(
-                                        create: (context) => PackagesManagerCubit(),
-                                        child: ShowBrandsSheet(
-                                          onPay: (context, brandId) => context.read<PackagesManagerCubit>().subscribeOrRenewPackage(
-                                              package: package,
-                                              type: type,
-                                              brandId: brandId,
-                                              paymentMethod: PaymentMethod.online,
-                                              onSuccess: (url) async{
-                                                Object? result = '';
-                                                result = await Go.to(SubscriptionScreen(
-                                                    initialUrl: url,
-                                                    title: LocaleKeys.pay
-                                                ));
-                                                if(result == 'success'){
-                                                  ChatSheetManager.show(
-                                                      child: SuccessSheet(
-                                                        isInAuth: isInAuth,
-                                                        upperText: Column(
-                                                          spacing: 10.h,
-                                                          children: [
-                                                            AppText(
-                                                                LocaleKeys.paymentSucceeded,
-                                                                fontSize: 16.sp,
-                                                                fontWeight: FontWeight.bold
-                                                            ),
-                                                            if(isInAuth)
-                                                              AppText(LocaleKeys.youCanNowCompleteYourProfile),
-                                                          ],
-                                                        ),
-                                                      )
-                                                  );
-                                                }
-                                              }
-                                              ) ,
-                                        ),
-                                      )
-                                  ) : context.read<PackagesManagerCubit>().subscribeOrRenewPackage(
-                                      package: package,
-                                      type: type,
-                                      paymentMethod: PaymentMethod.wallet,
-                                      onSuccess: (url) async{
-                                        ChatSheetManager.show(
-                                                  child: SuccessSheet(
-                                                    isInAuth: isInAuth,
-                                                    upperText: Column(
-                                                      spacing: 10.h,
-                                                      children: [
-                                                        AppText(
-                                                            LocaleKeys.paymentSucceeded,
-                                                            fontSize: 16.sp,
-                                                            fontWeight: FontWeight.bold
-                                                        ),
+                                child: BlocProvider(
+                                  create: (context) => PackagesManagerCubit(),
+                                  child: PaymentSheet(
+                                    paymentMethods: paymentMethods,
+                                    onPay: (ctx, paymentMethod) async => paymentMethod == PaymentMethod.online?
+                                    ChatSheetManager.show(
+                                        child: BlocProvider.value(
+                                          value: ctx.read<PackagesManagerCubit>(),
+                                          child: ShowBrandsSheet(
+                                            onPay: (context, brandId) => context.read<PackagesManagerCubit>().subscribeOrRenewPackage(
+                                                package: package,
+                                                type: type,
+                                                brandId: brandId,
+                                                paymentMethod: PaymentMethod.online,
+                                                onSuccess: (url) async{
+                                                  Object? result = '';
+                                                  result = await Go.to(SubscriptionScreen(
+                                                      initialUrl: url,
+                                                      title: LocaleKeys.pay
+                                                  ));
+                                                  if(result == 'success'){
+                                                    ChatSheetManager.show(
+                                                        child: SuccessSheet(
+                                                          isInAuth: isInAuth,
+                                                          upperText: Column(
+                                                            spacing: 10.h,
+                                                            children: [
+                                                              AppText(
+                                                                  LocaleKeys.paymentSucceeded,
+                                                                  fontSize: 16.sp,
+                                                                  fontWeight: FontWeight.bold
+                                                              ),
+                                                              if(isInAuth)
+                                                                AppText(LocaleKeys.youCanNowCompleteYourProfile),
+                                                            ],
+                                                          ),
+                                                        )
+                                                    );
+                                                  }
+                                                }),
+                                          ),
+                                        )
+                                    ) :
+                                    ctx.read<PackagesManagerCubit>().subscribeOrRenewPackage(
+                                        package: package,
+                                        type: type,
+                                        paymentMethod: PaymentMethod.wallet,
+                                        onSuccess: (url) async{
+                                          ChatSheetManager.show(
+                                                    child: SuccessSheet(
+                                                      isInAuth: isInAuth,
+                                                      upperText: Column(
+                                                        spacing: 10.h,
+                                                        children: [
+                                                          AppText(
+                                                              LocaleKeys.paymentSucceeded,
+                                                              fontSize: 16.sp,
+                                                              fontWeight: FontWeight.bold
+                                                          ),
 
-                                                        if(isInAuth)
-                                                          AppText(LocaleKeys.youCanNowCompleteYourProfile),
-                                                      ],
-                                                    ),
-                                                  )
-                                              );
-                                      }),
+                                                          if(isInAuth)
+                                                            AppText(LocaleKeys.youCanNowCompleteYourProfile),
+                                                        ],
+                                                      ),
+                                                    )
+                                                );
+                                        }),
+                                  ),
                                 )
                             )
                         );

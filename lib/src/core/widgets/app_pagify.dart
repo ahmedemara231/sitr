@@ -9,6 +9,7 @@ import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
 import 'app_text.dart';
 import 'custom_loading.dart';
+import 'custom_messages.dart';
 import 'exeption_view.dart';
 
 enum Ranking{listView, gridView}
@@ -20,6 +21,7 @@ class AppPagify<T> extends StatefulWidget {
   final Widget Function(BuildContext context, List<T> data, int index, T element) itemBuilder;
   final PagifyController<T> pagifyController;
   final FutureOr<void> Function(PagifyAsyncCallStatus)? onUpdateStatus;
+  final bool shrinkWrap;
 
   const AppPagify({super.key,
     required this.asyncCall,
@@ -29,6 +31,7 @@ class AppPagify<T> extends StatefulWidget {
     this.scrollController,
     this.rankingType = Ranking.listView,
     this.onUpdateStatus,
+    this.shrinkWrap = true,
   });
 
   @override
@@ -50,7 +53,7 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
           key: widget.key,
           physics: widget.physics,
           onUpdateStatus: widget.onUpdateStatus,
-          shrinkWrap: true,
+          shrinkWrap: widget.shrinkWrap,
           emptyListView: Center(
             child: Column(
               children: [
@@ -71,6 +74,8 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
               )
           ),
           errorBuilder: (e) => const ExceptionView(),
+
+          onError: (c, page, e) => MessageUtils.showTopMsg(e.msg, state: MsgState.error),
           errorMapper: PagifyErrorMapper(
               errorWhenDio: (e) {
                 final String? msg = e.response?.data['msg'];

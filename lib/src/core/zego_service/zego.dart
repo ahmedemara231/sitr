@@ -167,10 +167,13 @@ class ZegoService {
 
           /// show minimizing button
           config.topMenuBar.isVisible = true;
-          config.topMenuBar.buttons.insert(0, ZegoCallMenuBarButtonName.minimizingButton);
-
-          config.topMenuBar.buttons.insert(0, ZegoCallMenuBarButtonName.pipButton);
           config.pip.enableWhenBackground = true;
+          config.pip.iOS.support = true;
+
+          config.topMenuBar.buttons
+            ..insert(0, ZegoCallMenuBarButtonName.minimizingButton)
+            ..insert(0, ZegoCallMenuBarButtonName.pipButton)
+            ..insert(0, ZegoCallMenuBarButtonName.showMemberListButton);
           // من برا قبل ما يخش الكول
           // config.topMenuBar.buttons = [
           //   ZegoCallMenuBarButtonName.minimizingButton,

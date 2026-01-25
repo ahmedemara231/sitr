@@ -5,7 +5,7 @@ class NotificationRoutes {
   static void navigateByType(Map<String, dynamic> data) {
     final String type = data['type'];
     log('the type is ${data['type']}');
-    final notificationType = type.getType;
+    final NotificationType notificationType = type.getType;
     notificationType.navigation.navigate(data: data);
   }
 }
@@ -36,6 +36,18 @@ class HomeNavigation implements NotificationNavigation {
   @override
   void navigate({required Map<String, dynamic> data}) {
     Go.offAll(const HomeScreen());
+  }
+}
+
+class FinishedChatNavigation implements NotificationNavigation {
+  const FinishedChatNavigation();
+
+  @override
+  void navigate({required Map<String, dynamic> data}) {
+    final tabIndex = (data['chat_status'] as String).getChatType.index;
+    Go.off(ChatsScreen(key: chatsKey));
+    chatsKey.currentState!..changeChatsType(LocaleKeys.previousChats)
+      ..tabController.animateTo(tabIndex);
   }
 }
 
@@ -94,10 +106,10 @@ class MatchRequestNavigation implements NotificationNavigation {
         ChatScreen(
           // showFullChat: ,
             requestModel: RequestModel(
-                receiverId: data['sender_id'],
+                receiverId: (data['sender_id']).toString(),
                 fromHome: 0.toString()
             ),
-            receiverName: data['sender_name']
+            receiverName: data['user_name']
         )
     );
   }

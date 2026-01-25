@@ -23,14 +23,16 @@ import '../widgets/chat/chat_view.dart';
 import '../widgets/chat/upper_view.dart';
 import '../widgets/chat_card.dart';
 
+GlobalKey<ChatsScreenState> chatsKey = GlobalKey<ChatsScreenState>();
+
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});
 
   @override
-  State<ChatsScreen> createState() => _ChatsScreenState();
+  State<ChatsScreen> createState() => ChatsScreenState();
 }
 
-class _ChatsScreenState extends State<ChatsScreen>
+class ChatsScreenState extends State<ChatsScreen>
     with SingleTickerProviderStateMixin{
   final List<String> _chatTitles = [LocaleKeys.myChats, LocaleKeys.previousChats];
   final List<String> _chatTypes = [
@@ -42,11 +44,15 @@ class _ChatsScreenState extends State<ChatsScreen>
 
   late String _chatType = _chatTitles.first;
 
-  late final TabController _tabController;
+  late final TabController tabController;
+
+  void changeChatsType(String val){
+    setState(() => _chatType = val);
+  }
 
   @override
   void initState() {
-    _tabController = TabController(length: _chatTypes.length, vsync: this);
+    tabController = TabController(length: _chatTypes.length, vsync: this);
     super.initState();
   }
   @override
@@ -60,8 +66,7 @@ class _ChatsScreenState extends State<ChatsScreen>
               spacing: 20.h,
               children: [
                 ChooseFromOptionsWidget(
-                  onSelectOption: (val) =>
-                      setState(() => _chatType = val),
+                  onSelectOption: (val) => changeChatsType(val),
                   titles: _chatTitles,
                   fontSize: 16,
                   childPadding: EdgeInsets.symmetric(vertical: 16.h),
@@ -69,7 +74,7 @@ class _ChatsScreenState extends State<ChatsScreen>
 
                 if(_chatType == _chatTitles.last)
                   TabBar(
-                    controller: _tabController,
+                    controller: tabController,
                     indicatorColor: AppColors.primary,
                     labelStyle: TextStyle(fontFamily: ConstantManager.fontFamily, fontSize: 12.sp, color: AppColors.primary),
                     tabs: List.generate(
@@ -87,7 +92,7 @@ class _ChatsScreenState extends State<ChatsScreen>
       SizedBox(
         height: context.height * 0.5,
         child: TabBarView(
-          controller: _tabController,
+          controller: tabController,
           children: List.generate(
             ChatType.values.length - 1,
                 (i) => _ChatsBody(chatType: ChatType.values[i + 1]),

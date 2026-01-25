@@ -98,12 +98,13 @@ class TipsAction extends ChatActions{
             );
 
           }else if(currentTips.isEngagementTips){
-            ChatSheetManager.show(
+            await ChatSheetManager.show(
                 child: CongratsSheet(
                     matchReqId: context.read<ChatCubit>().matchRequestId!
                 )
             );
 
+            Go.offAll(const HomeScreen());
           }else{
             Go.back();
           }
