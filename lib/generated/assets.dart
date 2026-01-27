@@ -15,6 +15,7 @@ class Assets {
   static const String errorError3 = 'assets/lottie/error/error_3.json';
   static const String errorError4 = 'assets/lottie/error/error_4.json';
   static const String fontsRiyal = 'assets/fonts/riyal.ttf';
+  static const String imagesAlert = 'assets/images/alert.png';
   static const String imagesAppLogo = 'assets/images/app_logo.png';
   static const String imagesArrowDown = 'assets/images/arrow_down.png';
   static const String imagesAttachComplaintImage = 'assets/images/attachComplaintImage.png';
@@ -33,6 +34,7 @@ class Assets {
   static const String loadingLoading3 = 'assets/lottie/loading/loading_3.json';
   static const String loadingLoading4 = 'assets/lottie/loading/loading_4.json';
   static const String networkNoInternet = 'assets/lottie/network/no_internet.json';
+  static const String newCrudSatrShorebird = 'shorebird.yaml';
   static const String successDone = 'assets/lottie/success/done.json';
   static const String successSuccess = 'assets/lottie/success/success.json';
   static const String successSuccessfullOrder = 'assets/lottie/success/successfull_order.json';

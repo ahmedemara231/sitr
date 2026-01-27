@@ -13,10 +13,13 @@ class AppText extends StatelessWidget {
   final TextOverflow? overflow;
   final int? maxLines;
   final double? height;
+  final TextDecoration? decoration;
+
   const AppText(
       this.text, {
         super.key, this.icon,
         this.color, this.withIcon = false,
+        this.decoration,
         this.fontSize,
         this.fontWeight = FontWeight.normal,
         this.overflow,
@@ -30,6 +33,7 @@ class AppText extends StatelessWidget {
     super.key,
     required this.icon,
     required this.text,
+    this.decoration,
     this.withIcon = true,
     this.color,
     this.fontSize,
@@ -54,6 +58,7 @@ class AppText extends StatelessWidget {
               overflow: overflow,
               maxLines: maxLines,
               style: TextStyle(
+                decoration: decoration,
                 color: color,
                 fontSize: fontSize ?? FontSize.s16,
                 fontWeight: fontWeight,
@@ -72,6 +77,7 @@ class AppText extends StatelessWidget {
             color: color,
             fontSize: fontSize,
             fontWeight: fontWeight,
+              decoration: decoration,
             height: height,
             fontFamily: ConstantManager.fontFamily
           ),

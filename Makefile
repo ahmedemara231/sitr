@@ -29,6 +29,18 @@ openXcode:
 translations:
 	dart run generate/strings/main.dart
 
+# Fix Gradle lock issues
+gradleFix:
+	@echo "Stopping Gradle daemons..."
+	-cd android && ./gradlew --stop
+	@echo "Killing Gradle and Java processes..."
+	-pkill -9 -f gradle
+	-pkill -9 -f java
+	@echo "Removing lock files..."
+	-find android/.gradle -name "*.lock" -delete 2>/dev/null
+	-find ~/.gradle -name "*.lock" -delete 2>/dev/null
+	@echo "Gradle locks cleared!"
+
 # put:
 #     export PATH="$PATH:/path/to/your/app/bin"
 

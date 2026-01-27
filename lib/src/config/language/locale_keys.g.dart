@@ -976,4 +976,10 @@ abstract class LocaleKeys {
   static const String _thePhoneMustStartsWith5 = 'the_phone_must_starts_with_5';
   static String get thePhoneMustStartsWith5 => _thePhoneMustStartsWith5.tr();
 
+  static const String _endChat = 'end_chat';
+  static String get endChat => _endChat.tr();
+
+  static const String _areYouSureToEndChat = 'are_you_sure_to_end_chat';
+  static String get areYouSureToEndChat => _areYouSureToEndChat.tr();
+
 }
