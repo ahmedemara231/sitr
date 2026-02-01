@@ -187,8 +187,8 @@ class SliverCenterCardScaffold extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBackground,
       body: SafeArea(
-        child: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+        child: CustomScrollView(
+          slivers: [
             SliverToBoxAdapter(
               child: Stack(
                 children: [
@@ -232,14 +232,17 @@ class SliverCenterCardScaffold extends StatelessWidget {
                 ],
               ),
             ),
-          ],
-          body: Container(
-            decoration: BoxDecoration(
-              color: bodyColor,
+            SliverFillRemaining(
+              hasScrollBody: true,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: bodyColor,
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: bodyBuilder(context),
+              ),
             ),
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: bodyBuilder(context),
-          ),
+          ],
         ),
       ),
     );

@@ -141,7 +141,7 @@ class ZegoService {
         config: ZegoCallInvitationConfig(
           endCallWhenInitiatorLeave: true,
           offline: ZegoCallInvitationOfflineConfig(
-            autoEnterAcceptedOfflineCall: false,
+            autoEnterAcceptedOfflineCall: true,
           ),
           missedCall: ZegoCallInvitationMissedCallConfig(
             enabled: true,
@@ -215,7 +215,7 @@ class ZegoService {
       );
 
 
-      // _handleOffline();
+      _handleOffline();
       return await _waitForSignalingConnection();
     } on Exception catch (e) {
       log('the error is ${e.toString()}');

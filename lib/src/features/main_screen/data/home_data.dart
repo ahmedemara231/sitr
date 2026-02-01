@@ -53,27 +53,27 @@ class HomeData{
   }
 
 // Opportunities? opportunities
-  static Future<(List<OpportunityModel>, PaginationData)> getOpportunities(UserGender type, int page)async{
-    return (await injector<NetworkService>().callApi(
-        NetworkRequest(
-            method: RequestMethod.get,
-            path: ApiConstants.opportunities,
-            queryParameters: {
-              'type' : type,
-              'page' : page
-            }
-        ),
-        mapper: (data) {
-          final String selectedType = type == UserGender.unknown? 'parent' : type.name;
-          return (
-          (data[selectedType]['data'] as List)
-              .map((e) => OpportunityModel.fromJson(e))
-              .toList(),
-          PaginationData(
-              perPage: data[selectedType]['pagination']['per_page'],
-              totalPages: data[selectedType]['pagination']['total_pages']
-          ));
-        }
-    )).data;
-  }
+//   static Future<(List<OpportunityModel>, PaginationData)> getOpportunities(UserGender type, int page)async{
+//     return (await injector<NetworkService>().callApi(
+//         NetworkRequest(
+//             method: RequestMethod.get,
+//             path: ApiConstants.opportunities,
+//             queryParameters: {
+//               'type' : type,
+//               'page' : page
+//             }
+//         ),
+//         mapper: (data) {
+//           final String selectedType = type == UserGender.unknown? 'parent' : type.name;
+//           return (
+//           (data[selectedType]['data'] as List)
+//               .map((e) => OpportunityModel.fromJson(e))
+//               .toList(),
+//           PaginationData(
+//               perPage: data[selectedType]['pagination']['per_page'],
+//               totalPages: data[selectedType]['pagination']['total_pages']
+//           ));
+//         }
+//     )).data;
+//   }
 }
