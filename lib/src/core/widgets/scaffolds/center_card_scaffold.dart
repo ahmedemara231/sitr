@@ -157,6 +157,7 @@ class ScreenChildren extends StatelessWidget {
 /// This allows inner scrollable widgets (like paginated lists) to take full screen
 /// when the header content is scrolled away.
 class SliverCenterCardScaffold extends StatelessWidget {
+  final ScrollController? scrollController;
   final CardProperties? cardProperties;
   final Widget upperWidget;
   final Widget Function(BuildContext context) bodyBuilder;
@@ -172,6 +173,7 @@ class SliverCenterCardScaffold extends StatelessWidget {
     super.key,
     required this.upperWidget,
     required this.bodyBuilder,
+    this.scrollController,
     this.centerCardBody,
     this.cardProperties,
     this.bodyTopPadding,
@@ -188,6 +190,7 @@ class SliverCenterCardScaffold extends StatelessWidget {
       backgroundColor: AppColors.scaffoldBackground,
       body: SafeArea(
         child: CustomScrollView(
+          controller: scrollController,
           slivers: [
             SliverToBoxAdapter(
               child: Stack(
@@ -232,8 +235,7 @@ class SliverCenterCardScaffold extends StatelessWidget {
                 ],
               ),
             ),
-            SliverFillRemaining(
-              hasScrollBody: true,
+            SliverToBoxAdapter(
               child: Container(
                 decoration: BoxDecoration(
                   color: bodyColor,

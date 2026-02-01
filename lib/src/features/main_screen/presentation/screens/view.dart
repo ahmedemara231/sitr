@@ -7,7 +7,6 @@ import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubi
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/extensions/string_extension.dart';
-import '../../../../core/extensions/widget_extension.dart';
 import '../../../../core/helpers/helpers.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/helpers/user_type_enum.dart';
@@ -15,6 +14,7 @@ import '../../../../core/navigation/navigator.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../core/widgets/app_text.dart';
+import '../../../../core/widgets/custom_loading.dart';
 import '../../../../core/widgets/image_widgets/custom_image_slider.dart';
 import '../../../../core/widgets/not_contain_data.dart';
 import '../../../../core/widgets/scaffolds/center_card_scaffold.dart';
@@ -29,59 +29,76 @@ import '../widgets/home/partner_card.dart';
 import 'parent_details.dart';
 import 'partner_details.dart';
 
-class MainView extends StatefulWidget {
+class MainView extends StatelessWidget {
   const MainView({super.key});
 
   @override
-  State<MainView> createState() => _MainViewState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+        create: (context) => GetOpportunitiesCubit()..getOpportunities(type: LocaleKeys.female.toUserGender(), page: 1),
+        child: const MainViewBody()
+    );
+  }
 }
 
-class _MainViewState extends State<MainView> {
+class MainViewBody extends StatefulWidget {
+  const MainViewBody({super.key});
+
+  @override
+  State<MainViewBody> createState() => _MainViewBodyState();
+}
+
+class _MainViewBodyState extends State<MainViewBody> {
   late ValueNotifier<String> firstSelection;
   late ValueNotifier<String> secondSelection;
-
 
   void _initSelections(){
     firstSelection = ValueNotifier(_partnersOrConsultants.first);
     secondSelection = ValueNotifier(_opportunitiesTitles.first);
   }
 
-  bool current = false;
-  late final ScrollController screenScrollCont = ScrollController();
-  late final ScrollController paginationScrollCont = ScrollController();
-  late ScrollPhysics screenPhysics = const AlwaysScrollableScrollPhysics();
-  late ScrollPhysics paginationPhysics = const AlwaysScrollableScrollPhysics();
+  int _page = 1;
+  late final ScrollController _scrollController = ScrollController()..addListener(_onScroll);
 
-  void screenListener(){
-    if(screenScrollCont.position.pixels == screenScrollCont.position.maxScrollExtent){
-      setState(() {
-        screenPhysics = const NeverScrollableScrollPhysics();
-        paginationPhysics = const AlwaysScrollableScrollPhysics();
-      });
-    }
-  }
-
-  void paginationListener(){
-    if(paginationScrollCont.position.pixels == paginationScrollCont.position.minScrollExtent){
-      paginationPhysics = const NeverScrollableScrollPhysics();
-      screenPhysics = const AlwaysScrollableScrollPhysics();
+  void _onScroll(){
+    if(_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200){
+      final cubit = context.read<GetOpportunitiesCubit>();
+      if(cubit.canLoadMore){
+        _page++;
+        cubit.getOpportunities(
+            type: secondSelection.value.toUserGender(),
+            page: _page
+        );
+      }
     }
   }
 
   @override
   void initState() {
-    screenScrollCont.addListener(screenListener);
-    paginationScrollCont.addListener(paginationListener);
-
     _initSelections();
-    firstSelection.addListener(firstSelectionListener);
+    firstSelection.addListener(_firstSelectionListener);
+    secondSelection.addListener(_secondSelectionListener);
     super.initState();
   }
 
-  void firstSelectionListener(){
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _firstSelectionListener(){
     if(firstSelection.value == _partnersOrConsultants.first){
       secondSelection.value = _opportunitiesTitles.first;
     }
+  }
+
+  void _secondSelectionListener(){
+    _page = 1;
+    context.read<GetOpportunitiesCubit>().getOpportunities(
+        type: secondSelection.value.toUserGender(),
+        page: 1
+    );
   }
 
   List<String> get _partnersOrConsultants => [
@@ -96,21 +113,17 @@ class _MainViewState extends State<MainView> {
         LocaleKeys.female,
         LocaleKeys.parents
       ];
-
     }else if(UserModel.isMale){
       return [
         LocaleKeys.female,
         LocaleKeys.parents
       ];
-
     }else if(UserModel.isFemale){
       return [
         LocaleKeys.male,
         LocaleKeys.parents
       ];
-
     }
-
     return [
       LocaleKeys.male,
       LocaleKeys.female,
@@ -118,19 +131,15 @@ class _MainViewState extends State<MainView> {
     ];
   }
 
-  // late final PagifyController<OpportunityModel> _cont = PagifyController<OpportunityModel>();
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => GetOpportunitiesCubit()),
         BlocProvider(create: (context) => MainViewCubit()..getHomeData()),
       ],
       child: BlocBuilder<MainViewCubit, AsyncState<HomeModel>>(
-        builder: (context, state) => CenterCardScaffold.withCenteredCard(
-          // scrollController: screenScrollCont,
-          // physics: screenPhysics,
+        builder: (context, state) => SliverCenterCardScaffold(
+            scrollController: _scrollController,
             bodyTopPadding: 120,
             cardTopPadding: 100,
             upperWidget: SizedBox(
@@ -146,7 +155,6 @@ class _MainViewState extends State<MainView> {
                       AppText(UserCubit.instance.user.name??'', fontWeight: FontWeight.bold, fontSize: 16.sp),
                     ],
                   ),
-
                   const Spacer(),
                   const FilterButton(),
                 ],
@@ -161,7 +169,7 @@ class _MainViewState extends State<MainView> {
                     images: state.data.banners?.map((e) => e.image??'').toList() ?? []
                 )
             ),
-            body: StatusBuilder(
+            headerContent: StatusBuilder(
               data: state,
               onSuccess: (data, context) => Column(
                 children: [
@@ -172,108 +180,81 @@ class _MainViewState extends State<MainView> {
                     titles: _partnersOrConsultants,
                   ),
                   ValueListenableBuilder(
-                      valueListenable: firstSelection,
-                      builder: (context, value, child) => value == _partnersOrConsultants.first?
-                      Column(
-                        children: [
-                          ChooseFromOptionsWidget(
-                            fontWeight: FontWeight.w500,
-                            onSelectOption: (selectedOption) => secondSelection.value = selectedOption,
-                            childPadding: EdgeInsets.symmetric(vertical: 12.h),
-                            titles: _opportunitiesTitles,
-                            fontSize: 14.sp,
-                          ),
-
-                          ValueListenableBuilder(
-                            valueListenable: secondSelection,
-                            builder: (context, val, child) => SizedBox(
-                              height: context.height - 200,
-                              child: BlocBuilder<GetOpportunitiesCubit, AsyncState<(List<OpportunityModel>, PaginationData)>>(
-                                builder: (context, state) => StatusBuilder(
-                                  data: state,
-                                  onSuccess: (data, context) => data.$1.isEmpty? const NotContainData() :
-                                  Column(
-                                    children: List.generate(
-                                        data.$1.length,
-                                        (index) {
-                                          final element = data.$1[index];
-                                          return InkWell(
-                                              onTap: () => UserModel.isAuthenticated? Go.to(
-                                                  !(val.toUserGender().isMale || val.toUserGender().isFemale)?
-                                                  ParentDetailsScreen(id: element.id??0) :
-                                                  IndividualDetailsScreen.opportunity(
-                                                    id: element.id ?? 0,
-                                                  )
-                                              ) : Helpers.showUnauthenticatedSheet(),
-                                              child: !(val.toUserGender().isMale || val.toUserGender().isFemale)?
-                                              ParentCard(
-                                                  parentImage: (element as Parent).avatar ??'',
-                                                  name: element.name??'',
-                                                  kinship: element.relation?.name??'',
-                                                  childrenNumber: element.numOfChildren??0
-                                              ):
-                                              PartnerCard.individual(opportunity: element as Opportunity).paddingBottom(16.h)
-                                          );
-                                        }
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              // child: AppPagify<OpportunityModel>(
-                              //     key: UniqueKey(),
-                              //     physics: const NeverScrollableScrollPhysics(),
-                              //     asyncCall: (context, page) => HomeData.getOpportunities(val.toUserGender(), page),
-                              //     itemBuilder: (context, data, i, element) => InkWell(
-                              //       onTap: () => UserModel.isAuthenticated? Go.to(
-                              //           !(val.toUserGender().isMale || val.toUserGender().isFemale)?
-                              //           ParentDetailsScreen(id: element.id??0) :
-                              //           IndividualDetailsScreen.opportunity(
-                              //             id: element.id ?? 0,
-                              //           )
-                              //       ) : Helpers.showUnauthenticatedSheet(),
-                              //       child: !(val.toUserGender().isMale || val.toUserGender().isFemale)?
-                              //       ParentCard(
-                              //           parentImage: (element as Parent).avatar ??'',
-                              //           name: element.name??'',
-                              //           kinship: element.relation?.name??'',
-                              //           childrenNumber: element.numOfChildren??0
-                              //       ):
-                              //       PartnerCard.individual(opportunity: element as Opportunity).paddingBottom(16.h)
-                              //     ),
-                              //     // scrollController: paginationScrollCont,
-                              //     pagifyController: PagifyController()
-                              // ),
-                            ),
-                          )
-                        ],
-                      ) :
-                      Column(
-                        spacing: 10.h,
-                        children: List.generate(
-                            state.data.marriageConsultants?.length ?? 0,
-                                (i) {
-                              final marriageConsultant = state.data.marriageConsultants?[i];
-                              return MarriageConsultantCard(
-                                  name: marriageConsultant?.name ?? '',
-                                  phone: marriageConsultant?.phone ?? '',
-                                  parentImage: marriageConsultant?.image ?? '',
-                                  description: marriageConsultant?.description ?? ''
-                              );
-                            }
-                        ),
-                      )
+                    valueListenable: firstSelection,
+                    builder: (context, value, child) => value == _partnersOrConsultants.first?
+                      ChooseFromOptionsWidget(
+                        fontWeight: FontWeight.w500,
+                        onSelectOption: (selectedOption) => secondSelection.value = selectedOption,
+                        childPadding: EdgeInsets.symmetric(vertical: 12.h),
+                        titles: _opportunitiesTitles,
+                        fontSize: 14.sp,
+                      ) : const SizedBox.shrink(),
                   ),
                 ],
               ),
-            )
-        ).withPullRefresher(
-          onRefresh: () async{
-            _initSelections();
-            await context.read<MainViewCubit>().getHomeData();
-          },
+            ),
+            bodyBuilder: (context) => ValueListenableBuilder(
+              valueListenable: firstSelection,
+              builder: (context, value, child) => value == _partnersOrConsultants.first?
+                BlocBuilder<GetOpportunitiesCubit, AsyncState<(List<OpportunityModel>, PaginationData)>>(
+                  builder: (context, oppState) => StatusBuilder(
+                    data: oppState,
+                    onSuccess: (data, context) => data.$1.isEmpty? const NotContainData() :
+                    ValueListenableBuilder(
+                      valueListenable: secondSelection,
+                      builder: (context, val, child) => Column(
+                        children: [
+                          ...List.generate(
+                              data.$1.length,
+                              (index) {
+                                final element = data.$1[index];
+                                return InkWell(
+                                    onTap: () => UserModel.isAuthenticated? Go.to(
+                                        !(val.toUserGender().isMale || val.toUserGender().isFemale)?
+                                        ParentDetailsScreen(id: element.id??0) :
+                                        IndividualDetailsScreen.opportunity(
+                                          id: element.id ?? 0,
+                                        )
+                                    ) : Helpers.showUnauthenticatedSheet(),
+                                    child: !(val.toUserGender().isMale || val.toUserGender().isFemale)?
+                                    ParentCard(
+                                        parentImage: (element as Parent).avatar ??'',
+                                        name: element.name??'',
+                                        kinship: element.relation?.name??'',
+                                        childrenNumber: element.numOfChildren??0
+                                    ):
+                                    PartnerCard.individual(opportunity: element as Opportunity).paddingBottom(16.h)
+                                );
+                              }
+                          ),
+                          if(oppState.isLoadingMore)
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 16.h),
+                              child:  CustomLoading.showLoadingView(),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ) :
+                Column(
+                  spacing: 10.h,
+                  children: List.generate(
+                      state.data.marriageConsultants?.length ?? 0,
+                          (i) {
+                        final marriageConsultant = state.data.marriageConsultants?[i];
+                        return MarriageConsultantCard(
+                            name: marriageConsultant?.name ?? '',
+                            phone: marriageConsultant?.phone ?? '',
+                            parentImage: marriageConsultant?.image ?? '',
+                            description: marriageConsultant?.description ?? ''
+                        );
+                      }
+                  ),
+                ),
+            ),
         ),
       ),
     );
   }
 }
-
