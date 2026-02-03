@@ -29,84 +29,23 @@ import '../widgets/home/partner_card.dart';
 import 'parent_details.dart';
 import 'partner_details.dart';
 
-class MainView extends StatelessWidget {
+class MainView extends StatefulWidget {
   const MainView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => GetOpportunitiesCubit()..getOpportunities(type: LocaleKeys.female.toUserGender(), page: 1),
-        child: const MainViewBody()
-    );
-  }
+  State<MainView> createState() => _MainViewState();
 }
 
-class MainViewBody extends StatefulWidget {
-  const MainViewBody({super.key});
+class _MainViewState extends State<MainView> {
+  late final ValueNotifier<String> firstSelection;
+  late final ValueNotifier<String> secondSelection;
 
-  @override
-  State<MainViewBody> createState() => _MainViewBodyState();
-}
-
-class _MainViewBodyState extends State<MainViewBody> {
-  late ValueNotifier<String> firstSelection;
-  late ValueNotifier<String> secondSelection;
-
-  void _initSelections(){
-    firstSelection = ValueNotifier(_partnersOrConsultants.first);
-    secondSelection = ValueNotifier(_opportunitiesTitles.first);
-  }
-
-  int _page = 1;
-  late final ScrollController _scrollController = ScrollController()..addListener(_onScroll);
-
-  void _onScroll(){
-    if(_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200){
-      final cubit = context.read<GetOpportunitiesCubit>();
-      if(cubit.canLoadMore){
-        _page++;
-        cubit.getOpportunities(
-            type: secondSelection.value.toUserGender(),
-            page: _page
-        );
-      }
-    }
-  }
-
-  @override
-  void initState() {
-    _initSelections();
-    firstSelection.addListener(_firstSelectionListener);
-    secondSelection.addListener(_secondSelectionListener);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  void _firstSelectionListener(){
-    if(firstSelection.value == _partnersOrConsultants.first){
-      secondSelection.value = _opportunitiesTitles.first;
-    }
-  }
-
-  void _secondSelectionListener(){
-    _page = 1;
-    context.read<GetOpportunitiesCubit>().getOpportunities(
-        type: secondSelection.value.toUserGender(),
-        page: 1
-    );
-  }
-
-  List<String> get _partnersOrConsultants => [
+  List<String> get partnersOrConsultants => [
     LocaleKeys.searchForLifePartner,
     LocaleKeys.mediatorsAndServices
   ];
 
-  List<String> get _opportunitiesTitles {
+  List<String> get opportunitiesTitles {
     if(UserModel.isParent){
       return [
         LocaleKeys.male,
@@ -129,6 +68,97 @@ class _MainViewBodyState extends State<MainViewBody> {
       LocaleKeys.female,
       LocaleKeys.parents
     ];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    firstSelection = ValueNotifier(partnersOrConsultants.first);
+    secondSelection = ValueNotifier(opportunitiesTitles.first);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+        create: (context) => GetOpportunitiesCubit()..getOpportunities(
+            type: secondSelection.value.toUserGender(),
+            page: 1
+        ),
+        child: MainViewBody(
+          firstSelection: firstSelection,
+          secondSelection: secondSelection,
+          partnersOrConsultants: partnersOrConsultants,
+          opportunitiesTitles: opportunitiesTitles,
+        )
+    );
+  }
+}
+
+class MainViewBody extends StatefulWidget {
+  final ValueNotifier<String> firstSelection;
+  final ValueNotifier<String> secondSelection;
+  final List<String> partnersOrConsultants;
+  final List<String> opportunitiesTitles;
+
+  const MainViewBody({
+    super.key,
+    required this.firstSelection,
+    required this.secondSelection,
+    required this.partnersOrConsultants,
+    required this.opportunitiesTitles,
+  });
+
+  @override
+  State<MainViewBody> createState() => _MainViewBodyState();
+}
+
+class _MainViewBodyState extends State<MainViewBody> {
+  int _page = 1;
+  late final ScrollController _scrollController = ScrollController()..addListener(_onScroll);
+
+  ValueNotifier<String> get firstSelection => widget.firstSelection;
+  ValueNotifier<String> get secondSelection => widget.secondSelection;
+  List<String> get _partnersOrConsultants => widget.partnersOrConsultants;
+  List<String> get _opportunitiesTitles => widget.opportunitiesTitles;
+
+  void _onScroll(){
+    if(_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200){
+      final cubit = context.read<GetOpportunitiesCubit>();
+      if(cubit.canLoadMore){
+        _page++;
+        cubit.getOpportunities(
+            type: secondSelection.value.toUserGender(),
+            page: _page
+        );
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    firstSelection.addListener(_firstSelectionListener);
+    secondSelection.addListener(_secondSelectionListener);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _firstSelectionListener(){
+    if(firstSelection.value == _partnersOrConsultants.first){
+      secondSelection.value = _opportunitiesTitles.first;
+    }
+  }
+
+  void _secondSelectionListener(){
+    _page = 1;
+    context.read<GetOpportunitiesCubit>().getOpportunities(
+        type: secondSelection.value.toUserGender(),
+        page: 1
+    );
   }
 
   @override

@@ -11,6 +11,7 @@ import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../../features/auth/imports.dart';
 import '../../features/chats/data/models/request_model.dart';
+import '../../features/chats/enums.dart';
 import '../../features/chats/presentation/cubits/get_chats_cubit.dart';
 import '../../features/chats/presentation/imports.dart';
 import '../../features/chats/presentation/screens/chats_screen.dart';
@@ -20,8 +21,13 @@ import '../../features/main_screen/presentation/screens/partner_details.dart';
 import '../../features/more/presentation/screens/complaint_and_suggestion/complaint_details_screen.dart';
 import '../../features/more/presentation/screens/my_packages.dart';
 import '../../features/more/presentation/screens/profile.dart';
+import '../extensions/object.dart';
+import '../extensions/string_extension.dart';
 import '../helpers/user_type_enum.dart';
 import '../navigation/navigator.dart';
+import '../network/api_endpoints.dart';
+import '../network/network_request.dart';
+import '../network/network_service.dart';
 import '../shared/models/title_value_shape.dart';
 import '../shared/models/user_models/user_model.dart';
 import '../shared/user_cubit/user_cubit.dart';
@@ -76,6 +82,9 @@ class NotificationService {
         ?.createNotificationChannel(_channel);
   }
 
+  static final String acceptChat = 'accept_chat';
+  static final String rejectChat = 'reject_chat';
+
   void _showNotification(RemoteMessage message) async {
     if (Platform.isIOS) return;
     log('the remote msg is ${message.data}');
@@ -93,6 +102,7 @@ class NotificationService {
       icon: '@mipmap/ic_launcher',
       importance: Importance.high,
       priority: Priority.max,
+      actions: _getActions(message),
     );
     final notificationDetails = NotificationDetails(
         android: androidPlatformChannelSpecifics,
@@ -102,7 +112,6 @@ class NotificationService {
     await _flutterLocalNotificationsPlugin.show(notification.hashCode,
         notification?.title ?? '', notification?.body, notificationDetails,
         payload: json.encode(message.toMap()));
-
   }
 
   Future<void> _initLocalNotification() async {
@@ -123,11 +132,91 @@ class NotificationService {
     );
     await _flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onDidReceiveNotificationResponse: (NotificationResponse? payload) {
-      if (payload?.payload != null) {
-        _handleNotificationsTap(
-            RemoteMessage.fromMap(json.decode(payload?.payload ?? '')));
-      }
+          _handleActions(payload);
+          _handleNotificationsTap(
+              RemoteMessage.fromMap(json.decode(payload!.payload ?? ''))
+          );
     });
+  }
+
+  List<AndroidNotificationAction> _getActions(RemoteMessage message){
+    final UserRequestStatus status = (message.data['status'] as String).getUserRequestStatusAsEnum;
+    final ChatStages stage = (message.data['stage'] as String).getCurrentStageAsStagesEnum;
+
+    if(stage.isNewChat && status.isPending){
+      return [
+        AndroidNotificationAction(
+          acceptChat,
+          LocaleKeys.accept,
+          showsUserInterface: true,
+        ),
+        AndroidNotificationAction(
+          rejectChat,
+          LocaleKeys.refused,
+          showsUserInterface: true,
+        ),
+      ];
+
+    }else{
+      return [];
+    }
+  }
+
+  Future<void> _handleActions(NotificationResponse? payload) async {
+    log('_handleActions called with actionId: ${payload?.actionId}');
+    if(payload?.actionId == null || payload!.actionId!.isEmpty) {
+      log('_handleActions: actionId is null or empty, returning');
+      return;
+    }
+
+    final decodedPayload = json.decode(payload.payload ?? '{}');
+    log('_handleActions decoded payload: $decodedPayload');
+
+    // RemoteMessage.toMap() puts data directly at 'data' key
+    final messageData = decodedPayload['data'] as Map<String, dynamic>?;
+    log('_handleActions messageData: $messageData');
+    if(messageData == null) {
+      log('_handleActions: messageData is null, returning');
+      return;
+    }
+
+    final userRequest = messageData['user_request'] as String?;
+    final matchRequestId = (messageData['match_request_id'] ?? messageData['match_request'])?.toString();
+    final senderId = messageData['sender_id']?.toString();
+    log('_handleActions: userRequest=$userRequest, matchRequestId=$matchRequestId, senderId=$senderId');
+    if(userRequest == null || matchRequestId == null || senderId == null) {
+      log('_handleActions: missing required fields, returning');
+      return;
+    }
+
+    final String path;
+    if(payload.actionId == acceptChat){
+      path = ApiConstants.acceptRequest + userRequest;
+    }else if(payload.actionId == rejectChat){
+      path = ApiConstants.rejectRequest + userRequest;
+    }else{
+      log('_handleActions: unknown actionId ${payload.actionId}, returning');
+      return;
+    }
+
+    log('_handleActions: calling API with path=$path');
+    try {
+      final networkService = injector<NetworkService>();
+      await networkService.callApi(
+        NetworkRequest(
+          path: path,
+          method: RequestMethod.post,
+          body: {
+            'receiver_id': senderId,
+            'from_home': '0',
+            'match_request_id': matchRequestId,
+          },
+        ),
+      );
+      log('_handleActions: API call succeeded');
+    } catch (e) {
+      log('_handleActions: API call failed with error: $e');
+    }
   }
 
   Future<void> _registerNotification() async {
