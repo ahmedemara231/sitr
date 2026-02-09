@@ -52,12 +52,12 @@ class Sitr extends StatelessWidget {
                   ],
                 );
               },
-              home: EnterMaleOrFemaleOrChildDataScreen.individual(
-                  scaffoldType: ScaffoldType.appScaffold,
-                  onClick: (ctx, user)async{},
-                  userType: UserGender.male
-              ),
-              // home: const ZegoUIKitPrebuiltCallMiniPopScope(child: SplashScreen()),
+              // home: EnterMaleOrFemaleOrChildDataScreen.individual(
+              //     scaffoldType: ScaffoldType.appScaffold,
+              //     onClick: (ctx, user)async{},
+              //     userType: UserGender.male
+              // ),
+              home: const ZegoUIKitPrebuiltCallMiniPopScope(child: SplashScreen()),
               navigatorObservers: [AppNavigationObserver()],
               // builder: (context, child) {
               //   return InternetInterceptorWidget(
