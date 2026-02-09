@@ -66,7 +66,8 @@ class _ParentChildrenState extends State<ParentChildren> {
           onTap: () => Go.to(_individualDetailsScreenRoute(element.id ?? 0)),
           child: BlocProvider(
             create: (context) => GetPartnerInfoCubit(element.id!),
-            child: widget.childCard == ChildCard.sub? ParentChildrenCard(
+            child: widget.childCard == ChildCard.sub?
+            ParentChildrenCard(
                 onEditTap: (context) => context.read<GetPartnerInfoCubit>().getProfile(
                   onSuccess: (user) => Go.to(BlocProvider(
                     create: (context) => EditChildDataCubit(),
@@ -86,7 +87,8 @@ class _ParentChildrenState extends State<ParentChildren> {
                 ),
                 name: element.name,
                 url: element.avatar
-            ).paddingBottom(16.h) : PartnerCard.withParent(opportunity: element).paddingBottom(10.h),
+            ).paddingBottom(16.h) :
+            PartnerCard.withParent(opportunity: element).paddingBottom(10.h),
           ),
 
 

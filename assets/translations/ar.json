@@ -330,5 +330,7 @@
   "choose_payment_method": "اختر وسيلة دفع من الوسائل المتاحة",
   "the_phone_must_starts_with_5": "رقم الهاتف لابد ان يبدأ ب 5",
   "end_chat": "انهاء المحادثة",
-  "are_you_sure_to_end_chat": "هل انت متأكد من انهاء المحادثة؟"
+  "are_you_sure_to_end_chat": "هل انت متأكد من انهاء المحادثة؟",
+  "delete": "حذف",
+  "are_you_sure_to_delete": "هل انت متأكد من مسح"
 }

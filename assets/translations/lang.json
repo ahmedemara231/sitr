@@ -336,5 +336,7 @@
   "choose payment method" : "اختر وسيلة دفع من الوسائل المتاحة",
   "the phone must starts with 5" : "رقم الهاتف لابد ان يبدأ ب 5",
   "End Chat" : "انهاء المحادثة",
-  "Are you sure to end chat" : "هل انت متأكد من انهاء المحادثة؟"
+  "Are you sure to end chat" : "هل انت متأكد من انهاء المحادثة؟",
+  "Delete" : "حذف",
+  "Are you sure to delete" : "هل انت متأكد من مسح"
 }

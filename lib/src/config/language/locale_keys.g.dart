@@ -982,4 +982,10 @@ abstract class LocaleKeys {
   static const String _areYouSureToEndChat = 'are_you_sure_to_end_chat';
   static String get areYouSureToEndChat => _areYouSureToEndChat.tr();
 
+  static const String _delete = 'delete';
+  static String get delete => _delete.tr();
+
+  static const String _areYouSureToDelete = 'are_you_sure_to_delete';
+  static String get areYouSureToDelete => _areYouSureToDelete.tr();
+
 }

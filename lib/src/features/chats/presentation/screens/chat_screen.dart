@@ -226,7 +226,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     );
   }
 
- Future <void> _endVideoCall()async{
+  Future <void> _endVideoCall()async{
     log('end video call');
     await context.read<EndVideoCallCubit>().endVideoCall( // برنها وانا فالكول
         ChatsData.data!.matchRequest!.id.toString()
@@ -257,21 +257,26 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
         ),
         isScrollable: false,
         actions: [
-          ValueListenableBuilder(
-              valueListenable: ZegoService.isConnected,
-              builder: (context, isConnected, child) => isConnected?
-              Helpers.zegoService!.zegoButton(
-                context: context,
-                isVideoCall: false,
-                icon: const SvgPic(assetName: Assets.svgPhoneIcon),
-                invites: [
-                  ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName),
-                ],
-              ) : CustomLoading.showLoadingView()
+          BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
+            builder: (context, state) => StatusBuilder(
+              data: state,
+              onSuccess: (data, context) => !data.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum.isNewChat?
+              ValueListenableBuilder(
+                  valueListenable: ZegoService.isConnected,
+                  builder: (context, isConnected, child) => isConnected?
+                  Helpers.zegoService!.zegoButton(
+                    context: context,
+                    isVideoCall: false,
+                    icon: const SvgPic(assetName: Assets.svgPhoneIcon),
+                    invites: [
+                      ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName),
+                    ],
+                  ) : CustomLoading.showLoadingView()
+              ) : const SizedBox.shrink(),
+            ),
           ),
-
-            BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
-              builder: (context, state) => StatusBuilder(
+          BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
+            builder: (context, state) => StatusBuilder(
                 data: state,
                 onSuccess: (data, context) {
                   final callStatus = context.read<ChatCubit>().matchRequest?.callStatus;
@@ -311,18 +316,17 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                 }
 
 
-              ),
             ),
-
+          ),
         ],
         body: Column(
           children: [
             ChatUpperWidget.withTimer(requestId: widget.requestModel.receiverId),
             Expanded(
-              child: ChatView(
-                requestModel: widget.requestModel,
-                chatController: _chatController,
-              )
+                child: ChatView(
+                  requestModel: widget.requestModel,
+                  chatController: _chatController,
+                )
             ),
           ],
         ),

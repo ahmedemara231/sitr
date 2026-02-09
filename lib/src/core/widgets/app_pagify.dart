@@ -64,7 +64,6 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
           ),
           controller: widget.pagifyController,
           asyncCall: widget.asyncCall,
-          scrollController: widget.scrollController,
           loadingBuilder: CustomLoading.showLoadingView(),
           mapper: (data) => PagifyData(
               data: data.$1,
@@ -98,7 +97,6 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
           onUpdateStatus: widget.onUpdateStatus,
           controller: widget.pagifyController,
           asyncCall: widget.asyncCall,
-          scrollController: widget.scrollController,
           physics: widget.physics,
           errorBuilder: (e) => Column(
             children: [

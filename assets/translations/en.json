@@ -330,5 +330,7 @@
   "choose_payment_method": "choose payment method",
   "the_phone_must_starts_with_5": "the phone must starts with 5",
   "end_chat": "End Chat",
-  "are_you_sure_to_end_chat": "Are you sure to end chat"
+  "are_you_sure_to_end_chat": "Are you sure to end chat",
+  "delete": "Delete",
+  "are_you_sure_to_delete": "Are you sure to delete"
 }

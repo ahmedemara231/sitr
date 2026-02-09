@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dropinity/helpers/extensions/padding_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -7,7 +8,9 @@ import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import 'app_text.dart';
 import 'buttons/app_loading_button.dart';
-import 'buttons/custom_app_buttons/loading_button.dart';
+import 'buttons/default_button.dart';
+import 'default_bottom_sheet.dart';
+import 'sheets/delete_sheet.dart';
 
 class ParentChildrenCard extends StatelessWidget {
   final FutureOr<void> Function(BuildContext context) onEditTap;
@@ -27,21 +30,45 @@ class ParentChildrenCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.r),
         color: Colors.white,
       ),
-      child: ListTile(
-        leading: CircleAvatar(
-          radius: 30.sp,
-          backgroundImage: NetworkImage(url ?? ConstantManager.defaultAvatar),
-        ),
-        title: AppText(name ?? ''),
-        trailing: SizedBox(
-          width: 100.w,
-          height: 40.h,
-          child: AppLoadingButton(
-            borderRadius: ConstantManager.buttonBorderRadiusNumber,
-            asyncCall: (context) async => await onEditTap.call(context),
-            title: LocaleKeys.editData,
+      child: Column(
+        children: [
+          ListTile(
+            leading: CircleAvatar(
+              radius: 30.sp,
+              backgroundImage: NetworkImage(url ?? ConstantManager.defaultAvatar),
+            ),
+            title: AppText(name ?? ''),
           ),
-        )
+
+          Row(
+            spacing: 10.w,
+            children: [
+              Expanded(
+                flex: 2,
+                child: AppLoadingButton(
+                  borderRadius: ConstantManager.buttonBorderRadiusNumber,
+                  textColor: Colors.white,
+                  title: LocaleKeys.editData,
+                  fontSize: 8.sp,
+                  height: 30.h,
+                  asyncCall: (context) async => await onEditTap.call(context),
+                ),
+              ),
+
+              Expanded(
+                child: DefaultButton(
+                  onTap: () => showDefaultBottomSheet(child: DeleteSheet(asyncCall: (ctx){}, title: '${LocaleKeys.areYouSureToDelete} $name')),
+                  height: 30.h,
+                  fontSize: 8.sp,
+                  color: AppColors.pink,
+                  borderRadius: BorderRadius.circular(30.r),
+                  title: LocaleKeys.delete,
+                  textColor: Colors.white,
+                ),
+              ),
+            ],
+          ).paddingAll(20.r)
+        ],
       ),
     );
   }
