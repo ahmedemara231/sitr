@@ -7,10 +7,12 @@ import 'package:pip_view/pip_view.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'config/language/locale_keys.g.dart';
 import 'config/res/config_imports.dart';
+import 'core/helpers/user_type_enum.dart';
 import 'core/navigation/navigator.dart';
 import 'core/shared/route_observer.dart';
 import 'core/shared/user_cubit/user_cubit.dart' show UserCubit;
 import 'core/widgets/custom_messages.dart';
+import 'features/auth/imports.dart';
 import 'features/home/cubits/get_notification_count.dart';
 import 'features/splash/splash_screen.dart';
 
@@ -50,7 +52,12 @@ class Sitr extends StatelessWidget {
                   ],
                 );
               },
-              home: const ZegoUIKitPrebuiltCallMiniPopScope(child: SplashScreen()),
+              home: EnterMaleOrFemaleOrChildDataScreen.individual(
+                  scaffoldType: ScaffoldType.appScaffold,
+                  onClick: (ctx, user)async{},
+                  userType: UserGender.male
+              ),
+              // home: const ZegoUIKitPrebuiltCallMiniPopScope(child: SplashScreen()),
               navigatorObservers: [AppNavigationObserver()],
               // builder: (context, child) {
               //   return InternetInterceptorWidget(

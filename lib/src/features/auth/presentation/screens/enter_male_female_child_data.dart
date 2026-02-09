@@ -17,10 +17,10 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
 
   const EnterMaleOrFemaleOrChildDataScreen.showAll({
     super.key,
-    this.showGenderSelection = true,
     required this.scaffoldType,
-    this.initialValue,
     required this.onClick,
+    this.showGenderSelection = true,
+    this.initialValue,
     this.maleNum = 0,
     this.femaleNum = 0,
     this.showConditionsAndTerms = false,

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,6 +55,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
   late TextEditingController _educationalQualificationCont;
   late TextEditingController _diseasesCont;
   late final ValueNotifier<Answer?> childrenExits = ValueNotifier(null);
+  late final ValueNotifier<String> martialStatus = ValueNotifier('');
 
   late T model;
 
@@ -151,7 +154,10 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
           title: LocaleKeys.maritalStatus,
           asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.maritalStatuses),
           getLabel: (element) => element.title,
-          onChanged: (val) => _listenToData(model.copyWith(maritalStatus: val) as T),
+          onChanged: (val) {
+            _listenToData(model.copyWith(maritalStatus: val) as T);
+            martialStatus.value = val.value;
+          },
           validator: (e) => Validators.validateEmpty(e?.title)
       ),
 
@@ -187,15 +193,21 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         onChanged: (val) => _listenToData(model.copyWith(bio: val) as T),
         validator: (v) => Validators.validateString(v, min: 3, max: 1000, fieldTitle: LocaleKeys.quickBrief.tr()),
       ),
-      RadioWidget<Answer>(
-          initialValue: widget.initialValue?.hasChildren?.toAnswer,
-          title: LocaleKeys.childrenExists,
-          onSubmit: (result) {
-            childrenExits.value = result;
-            _listenToData(model.copyWith(hasChildren: result.toBool) as T);
-          },
-          values: Answer.values,
-          titleBuilder: (i) => AppText(Answer.values[i].translate),
+      // if(model.maritalStatus?.value == 'single')
+
+      ValueListenableBuilder(
+          valueListenable: martialStatus,
+          builder: (context, value, child) => value.isNotEmpty && value != 'single'?
+          RadioWidget<Answer>(
+            initialValue: widget.initialValue?.hasChildren?.toAnswer,
+            title: LocaleKeys.childrenExists,
+            onSubmit: (result) {
+              childrenExits.value = result;
+              _listenToData(model.copyWith(hasChildren: result.toBool) as T);
+            },
+            values: Answer.values,
+            titleBuilder: (i) => AppText(Answer.values[i].translate),
+          ) : const SizedBox.shrink(),
       ),
       ValueListenableBuilder(
            valueListenable: childrenExits,
