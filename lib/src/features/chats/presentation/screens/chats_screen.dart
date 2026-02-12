@@ -197,7 +197,6 @@ class _ChatsBodyState extends State<_ChatsBody> {
 
                           Go.to(targetScreen);
                         },
-
                         child: ChatCard(
                             url: data[index].room?.members?.first.image ?? '',
                             time: data[index].room?.lastMessageCreatedDt ?? '',

@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:dropinity/helpers/extensions/padding_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
+import '../../features/more/presentation/cubit/delete_child_cubit.dart';
 import 'app_text.dart';
 import 'buttons/app_loading_button.dart';
 import 'buttons/default_button.dart';
@@ -14,11 +16,13 @@ import 'sheets/delete_sheet.dart';
 
 class ParentChildrenCard extends StatelessWidget {
   final FutureOr<void> Function(BuildContext context) onEditTap;
+  final FutureOr<void> Function(BuildContext context) onDeleteTap;
   final String? name;
   final String? url;
 
   const ParentChildrenCard({super.key,
     required this.onEditTap,
+    required this.onDeleteTap,
     required this.name,
     required this.url,
   });
@@ -57,7 +61,7 @@ class ParentChildrenCard extends StatelessWidget {
 
               Expanded(
                 child: DefaultButton(
-                  onTap: () => showDefaultBottomSheet(child: DeleteSheet(asyncCall: (ctx){}, title: '${LocaleKeys.areYouSureToDelete} $name')),
+                  onTap: () => onDeleteTap.call(context),
                   height: 30.h,
                   fontSize: 8.sp,
                   color: AppColors.pink,

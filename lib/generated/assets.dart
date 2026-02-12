@@ -54,6 +54,7 @@ class Assets {
   static const String svgContactUsIcon = 'assets/svg/contactUsIcon.svg';
   static const String svgDeleteIcon = 'assets/svg/delete_icon.svg';
   static const String svgEducationalQualification = 'assets/svg/educational_qualification.svg';
+  static const String svgEndChatIcon = 'assets/svg/end_chat_icon.svg';
   static const String svgFacebook = 'assets/svg/facebook.svg';
   static const String svgForbidden = 'assets/svg/forbidden.svg';
   static const String svgGreyBackground = 'assets/svg/grey_background.svg';

@@ -84,7 +84,7 @@ class ComplaintDetailsScreen extends StatelessWidget {
                         12.szH,
                         if(data!.adminReply.isNotNull && data.adminReply!.isNotEmpty)
                           Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               AppText(LocaleKeys.adminReply),
                               AppText(

@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/pagify.dart';
+import '../../config/language/locale_keys.g.dart';
 import '../../features/auth/imports.dart';
 import '../../features/main_screen/data/home_data.dart';
 import '../../features/main_screen/data/models/home_model.dart';
 import '../../features/main_screen/presentation/cubits/get_partner_info_cubit.dart';
 import '../../features/main_screen/presentation/screens/partner_details.dart';
 import '../../features/main_screen/presentation/widgets/home/partner_card.dart';
+import '../../features/more/presentation/cubit/delete_child_cubit.dart';
 import '../../features/more/presentation/cubit/edit_child_data_cubit.dart';
 import '../extensions/num.dart';
 import '../extensions/padding_extension.dart';
@@ -16,7 +18,9 @@ import '../navigation/navigator.dart';
 import '../shared/models/user_models/individual/individual_user_model.dart';
 import 'app_pagify.dart';
 import 'custom_messages.dart';
+import 'default_bottom_sheet.dart';
 import 'parent_children_card.dart';
+import 'sheets/delete_sheet.dart';
 
 enum ChildCard{sub, full}
 class ParentChildren extends StatefulWidget {
@@ -64,8 +68,11 @@ class _ParentChildrenState extends State<ParentChildren> {
         asyncCall: (context, page)async => await HomeData.getParentChildren(widget.id, page),
         itemBuilder: (context, data, index, element) => InkWell(
           onTap: () => Go.to(_individualDetailsScreenRoute(element.id ?? 0)),
-          child: BlocProvider(
-            create: (context) => GetPartnerInfoCubit(element.id!),
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (context) => GetPartnerInfoCubit(element.id!)),
+              BlocProvider(create: (context) => DeleteChildCubit()),
+            ],
             child: widget.childCard == ChildCard.sub?
             ParentChildrenCard(
                 onEditTap: (context) => context.read<GetPartnerInfoCubit>().getProfile(
@@ -84,6 +91,21 @@ class _ParentChildrenState extends State<ParentChildren> {
                         ),
                     ),
                   )),
+                ),
+                onDeleteTap: (context) => showDefaultBottomSheet(
+                    child: BlocProvider(
+                      create: (context) => DeleteChildCubit(),
+                      child: DeleteSheet(
+                          asyncCall: (ctx) => ctx.read<DeleteChildCubit>().execute(
+                              id: element.id??0,
+                              onSuccess: (msg) {
+                                Go.back();
+                                MessageUtils.showSnackBar(msg);
+                                childrenCont.refresh();
+                              }
+                          ),
+                          title: '${LocaleKeys.areYouSureToDelete} ${element.name}'),
+                    )
                 ),
                 name: element.name,
                 url: element.avatar

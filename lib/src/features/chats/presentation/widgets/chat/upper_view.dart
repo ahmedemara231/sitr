@@ -15,6 +15,7 @@ import '../../../../../core/network/api_endpoints.dart';
 import '../../../../../core/widgets/app_bottom_sheet.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/default_bottom_sheet.dart';
+import '../../../../../core/widgets/svg_pic.dart';
 import '../../../../home/home_screen.dart';
 import '../../../data/chat_actions/imports.dart';
 import '../../../data/models/chat_model.dart';
@@ -38,8 +39,7 @@ class ChatUpperWidget extends StatelessWidget {
     required this.requestId,
     required this.label,
     required this.labelBackgroundColor,
-  }) :
-        _afterReportIcon = UpperWidgetAfterReportIcon.reason;
+  }) : _afterReportIcon = UpperWidgetAfterReportIcon.reason;
 
   Widget _upperWidget(ChatModel model){
     final int? timer = model.matchRequest!.timer;
@@ -55,67 +55,83 @@ class ChatUpperWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    5.pop();
+    return Stack(
       children: [
-        ChatReportIcon(id: int.parse(requestId)),
-        _afterReportIcon == UpperWidgetAfterReportIcon.timer?
-        BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
-            builder: (context, state) => StatusBuilder(
-                data: state,
-                onFail: () => const SizedBox.shrink(),
-                onSuccess: (data, context) => _upperWidget(data)
-            )) :
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12.r),
-            color: labelBackgroundColor?.withOpacity(.1),
-          ),
-        
-          child: AppText(label!, color: labelBackgroundColor).paddingSymmetric(
-              vertical: 10.h,
-              horizontal: 20.w
-          ),
-        ),
-
-
-        BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
-          builder: (context, state) => InkWell(
-            onTap: () => WidgetsBinding.instance.addPostFrameCallback(
-                    (_) => showDefaultBottomSheet(
-                        child: AppBottomSheet.large(
-                          asyncCall: (ctx) async{
+        Align(
+            alignment: Alignment.topRight,
+            child: ChatReportIcon(id: int.parse(requestId))),
+        if(_afterReportIcon == UpperWidgetAfterReportIcon.timer)
+          ...[
+            Center(
+              child: BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
+                  builder: (context, state) => StatusBuilder(
+                      data: state,
+                      onFail: () => const SizedBox.shrink(),
+                      onSuccess: (data, context) => _upperWidget(data)
+                  )),
+            ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
+                builder: (context, state) => InkWell(
+                  onTap: () => WidgetsBinding.instance.addPostFrameCallback(
+                          (_) => showDefaultBottomSheet(
+                          child: AppBottomSheet.large(
+                            asyncCall: (ctx) async{
                               await ChatActions.executeReq(
                                 context: context,
                                 requestModel: RequestModel(
                                     receiverId: state.data.room!.members!.first.id.toString(),
                                     fromHome: 1.toString()
                                 ),
-                                path: ApiConstants.rejectAll,
+                                path: ApiConstants.forceReject,
                                 onSuccess: (chatModel){
                                   Go.offAll(const HomeScreen());
                                 },
                               );
                             },
-                          btnTitle: LocaleKeys.endChat,
-                          upperWidget: Column(
-                            spacing: 10.h,
-                            children: [
-                              Image.asset(Assets.imagesAlert),
-                              AppText(LocaleKeys.areYouSureToEndChat),
-                            ],
-                          ),
-                          cancelBackgroundColor: Colors.red.withOpacity(.4),
-                        )
-                    )
-            ),
-            child: AppText(
-                LocaleKeys.endChat,
-                color: AppColors.primary,
-                decoration: TextDecoration.underline
+                            btnTitle: LocaleKeys.endChat,
+                            upperWidget: Column(
+                              spacing: 10.h,
+                              children: [
+                                Image.asset(Assets.imagesAlert),
+                                AppText(LocaleKeys.areYouSureToEndChat),
+                              ],
+                            ),
+                            cancelBackgroundColor: Colors.red.withOpacity(.4),
+                          )
+                      )
+                  ),
+                  child: Row(
+                    spacing: 5.w,
+                    children: [
+                      SvgPic(assetName: Assets.svgEndChatIcon, size: 20.sp,),
+                      AppText(
+                        LocaleKeys.endChat,
+                        color: AppColors.redColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ]
+        else
+          Center(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12.r),
+                color: labelBackgroundColor?.withOpacity(.1),
+              ),
+
+              child: AppText(label!, color: labelBackgroundColor).paddingSymmetric(
+                  vertical: 10.h,
+                  horizontal: 20.w
+              ),
             ),
           ),
-        )
       ],
     );
   }

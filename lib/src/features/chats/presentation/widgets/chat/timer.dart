@@ -35,7 +35,6 @@ class _ChatTimerWidgetState extends State<ChatTimerWidget> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -57,8 +56,8 @@ class _ChatTimerWidgetState extends State<ChatTimerWidget> {
                   spacing: 5.w,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SvgPic(assetName: Assets.svgClock),
-                    AppText(time, fontSize: 22.sp, fontWeight: FontWeight.w500),
+                    SvgPic(assetName: Assets.svgClock, size: 16.sp),
+                    AppText(time, fontSize: 16.sp, fontWeight: FontWeight.w500),
                   ],
                 )
               ],

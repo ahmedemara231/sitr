@@ -82,6 +82,7 @@ class ApiConstants {
   static const String changeLang = 'change-lang';
   static const String editProfile = 'update-profile';
   static const String addChild = 'add-child';
+  static const String deleteChild = 'delete-child/';
   static const String opportunityChildren = 'opportunity-children/';
   static const String getChildren = 'children';
   static const String getChildProfile = 'get-child-profile/';
@@ -124,6 +125,7 @@ class ApiConstants {
   static const String videoCallRequest = 'video_call_request';
   static const String adminMeetingRequest = 'admin_meeting_request';
   static const String parentMeetingRequest = 'parent_meeting_request';
+  static const String forceReject = 'force-reject-match';
 
 
   static const String istikharaReminder = 'istikhara-reminder';

@@ -115,6 +115,15 @@ class MatchRequestNavigation implements NotificationNavigation {
   }
 }
 
+class NotificationsNavigation implements NotificationNavigation {
+  const NotificationsNavigation();
+
+  @override
+  void navigate({required Map<String, dynamic> data}) {
+    return;
+  }
+}
+
 // ----------------- Packages -----------------
 class PackagesNavigation implements NotificationNavigation {
   const PackagesNavigation();

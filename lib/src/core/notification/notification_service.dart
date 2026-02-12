@@ -139,7 +139,7 @@ class NotificationService {
     });
   }
 
-  List<AndroidNotificationAction> _getActions(RemoteMessage message){
+  List<AndroidNotificationAction> _tryingToMakeActions(RemoteMessage message){
     final UserRequestStatus status = (message.data['status'] as String).getUserRequestStatusAsEnum;
     final ChatStages stage = (message.data['stage'] as String).getCurrentStageAsStagesEnum;
 
@@ -158,6 +158,13 @@ class NotificationService {
       ];
 
     }else{
+      return [];
+    }
+  }
+  List<AndroidNotificationAction> _getActions(RemoteMessage message){
+    try {
+      return _tryingToMakeActions(message);
+    } on Exception{
       return [];
     }
   }

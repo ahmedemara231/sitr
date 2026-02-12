@@ -2,7 +2,7 @@ part of 'notification_service.dart';
 
 enum NotificationType {
   // 🔔 Admin & System Notifications
-  adminNotify('admin_notify', navigation: NoNavigation()),
+  adminNotify('admin_notify', navigation: NotificationsNavigation()),
   text('text', navigation: MatchRequestNavigation()),
   accountDeletedByAdmin('account_deleted_by_admin', navigation: LoginNavigation()),
   block('block', navigation: LoginNavigation()),

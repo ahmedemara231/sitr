@@ -55,7 +55,14 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
   late TextEditingController _educationalQualificationCont;
   late TextEditingController _diseasesCont;
   late final ValueNotifier<Answer?> childrenExits = ValueNotifier(null);
-  late final ValueNotifier<String> martialStatus = ValueNotifier('');
+  late final ValueNotifier<String> martialStatus = ValueNotifier('')..addListener(_martialStatusListener);
+
+  void _martialStatusListener(){
+    if(martialStatus.value == 'single'){
+      childrenExits.value = Answer.no;
+      log('the children exists is ${childrenExits.value}');
+    }
+  }
 
   late T model;
 
