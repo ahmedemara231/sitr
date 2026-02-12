@@ -14,7 +14,7 @@ class InformParentSheet extends StatelessWidget {
 
   final List<String> options = [
     LocaleKeys.enterParentPhoneNumber,
-    LocaleKeys.requestForADialogueSessionUnderTheSupervisionOfTheApplication
+    // LocaleKeys.requestForADialogueSessionUnderTheSupervisionOfTheApplication
   ];
 
   @override

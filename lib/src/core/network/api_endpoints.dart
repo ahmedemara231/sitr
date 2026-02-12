@@ -129,6 +129,7 @@ class ApiConstants {
 
 
   static const String istikharaReminder = 'istikhara-reminder';
+  static const String istikharaDua = 'istikhara-dua';
 
   static const String rejectAll = 'reject-match-request';
   static const String payRequest = 'pay-request/';

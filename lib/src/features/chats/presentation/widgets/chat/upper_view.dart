@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../../generated/assets.dart';
+import '../../../../../config/language/languages.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
@@ -55,11 +56,11 @@ class ChatUpperWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    5.pop();
     return Stack(
       children: [
         Align(
-            alignment: Alignment.topRight,
+            alignment: Languages.currentIsArabic?
+            Alignment.topRight : Alignment.topLeft,
             child: ChatReportIcon(id: int.parse(requestId))),
         if(_afterReportIcon == UpperWidgetAfterReportIcon.timer)
           ...[
@@ -72,7 +73,8 @@ class ChatUpperWidget extends StatelessWidget {
                   )),
             ),
             Align(
-              alignment: Alignment.topLeft,
+              alignment: Languages.currentIsArabic?
+              Alignment.topLeft : Alignment.topRight,
               child: BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
                 builder: (context, state) => InkWell(
                   onTap: () => WidgetsBinding.instance.addPostFrameCallback(
@@ -104,6 +106,7 @@ class ChatUpperWidget extends StatelessWidget {
                       )
                   ),
                   child: Row(
+                    mainAxisSize: MainAxisSize.min,
                     spacing: 5.w,
                     children: [
                       SvgPic(assetName: Assets.svgEndChatIcon, size: 20.sp,),

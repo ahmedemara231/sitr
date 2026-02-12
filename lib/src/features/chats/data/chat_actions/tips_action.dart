@@ -63,13 +63,20 @@ class TipsAction extends ChatActions{
             );
 
           }else if(currentTips.isIstikharahTips){
-            ChatSheetManager.show(
+            await ChatSheetManager.show(
                 child: BlocProvider.value(
                   value: context.read<ChatCubit>(),
-                  child: const IstikharahReminderSheet(),
+                  child: const IstikharahRemindersSheet(
+                    path: ApiConstants.istikharaReminder,
+                  ),
                 )
             );
 
+            await ChatSheetManager.show(
+                child: const IstikharahRemindersSheet(
+                  path: ApiConstants.istikharaDua,
+                )
+            );
           }else if(currentTips.isInformParentsTips){
             ChatSheetManager.show(
                 child: BlocProvider.value(

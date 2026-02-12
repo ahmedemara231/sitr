@@ -13,13 +13,14 @@ import '../../../../core/widgets/buttons/custom_app_buttons/default_button.dart'
 import '../../data/models/tip_model.dart';
 import '../cubits/reminder_cubit.dart';
 
-class IstikharahReminderSheet extends StatelessWidget {
-  const IstikharahReminderSheet({super.key});
+class IstikharahRemindersSheet extends StatelessWidget {
+  final String path;
+  const IstikharahRemindersSheet({super.key, required this.path});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ReminderCubit()..getReminder(),
+      create: (context) => ReminderCubit()..getReminder(path),
       child: BlocBuilder<ReminderCubit, AsyncState<TipModel>>(
         builder: (context, state) => StatusBuilder(
           data: state,
@@ -30,7 +31,7 @@ class IstikharahReminderSheet extends StatelessWidget {
               Html(data: data.tips),
               AppDefaultButton.withBackGroundColor(
                   title: LocaleKeys.confirm,
-                  onTap: () => Go.back()
+                  onTap: () => Go.back(),
               )
             ],
           ),
