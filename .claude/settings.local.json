@@ -28,7 +28,8 @@
       "Bash(xargs cat:*)",
       "Bash(grep:*)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "Bash(sips --help:*)"
+      "Bash(sips --help:*)",
+      "WebFetch(domain:pub.dev)"
     ],
     "deny": [],
     "ask": []

@@ -26,6 +26,7 @@ class Assets {
   static const String imagesBoardingThird = 'assets/images/boarding_third.png';
   static const String imagesComplaint = 'assets/images/complaint.png';
   static const String imagesDeleteIcon = 'assets/images/delete_icon.png';
+  static const String imagesLogo = 'assets/images/logo.png';
   static const String imagesLogoutImage = 'assets/images/logout_image.png';
   static const String imagesMarriageBalloons = 'assets/images/marriage_balloons.png';
   static const String imagesSuccessPartener = 'assets/images/successPartener.png';

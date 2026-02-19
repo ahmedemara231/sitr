@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../generated/assets.dart';
 import '../../../config/language/locale_keys.g.dart';
 import '../../../config/res/config_imports.dart';
+import '../../../features/home/home_screen.dart';
 import '../../../features/more/presentation/cubit/block_user_cubit/un_block_user_cubit.dart';
 import '../../extensions/num.dart';
 import '../../navigation/navigator.dart';
@@ -46,6 +47,7 @@ class BlocManagerSheet extends StatelessWidget {
                   id: id,
                   onSuccess: (msg){
                     MessageUtils.showSnackBar(msg);
+                    Go.offAll(const HomeScreen());
                   }
               );
             }

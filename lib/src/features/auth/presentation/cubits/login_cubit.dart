@@ -8,6 +8,7 @@ class LoginCubit extends AsyncCubit{
 
   Future<void> login(LoginBody body, {required void Function(String msg) onSuccess})async{
     await executeAsyncWithBaseModel(
+
         operation: () async => await baseCrudUseCase.call(
           CrudBaseParmas(
                 api: ApiConstants.login,

@@ -89,10 +89,10 @@ class UserProfileNavigation implements NotificationNavigation {
 
   @override
   void navigate({required Map<String, dynamic> data}) {
-    final type = TypeValueShape.fromJson(data['visitor_type']).userType!;
+    final UserType type = (data['visitor_type'] as String).toUserType()!;
     final userId = data['visitor_id'];
 
-    _routeToProfile(type: type, userId: userId);
+    _routeToProfile(type: type, userId: userId.toString());
   }
 }
 
@@ -171,10 +171,10 @@ class UserUnblockedYou implements NotificationNavigation {
 
   @override
   void navigate({required Map<String, dynamic> data}) {
-    final type = TypeValueShape.fromJson(data['user_type']).userType!;
+    final UserType type = (data['user_type'] as String).toUserType()!;
     final userId = data['user_id'];
 
-    _routeToProfile(type: type, userId: userId);
+    _routeToProfile(type: type, userId: userId.toString());
   }
 }
 

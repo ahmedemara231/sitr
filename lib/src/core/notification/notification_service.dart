@@ -42,6 +42,70 @@ Future<void> backgroundHandler(RemoteMessage message) async {
   log('========= >>> backGroundMessage ${message.data}');
 }
 
+@pragma('vm:entry-point')
+void onDidReceiveBackgroundNotificationResponse(NotificationResponse response) {
+  log('Background notification action: ${response.actionId}');
+  handleNotificationAction(response);
+}
+
+Future<void> handleNotificationAction(NotificationResponse? payload) async {
+  log('handleNotificationAction called with actionId: ${payload?.actionId}');
+  if (payload?.actionId == null || payload!.actionId!.isEmpty) {
+    log('handleNotificationAction: actionId is null or empty, returning');
+    return;
+  }
+
+  final decodedPayload = json.decode(payload.payload ?? '{}');
+  log('handleNotificationAction decoded payload: $decodedPayload');
+
+  final messageData = decodedPayload['data'] as Map<String, dynamic>?;
+  log('handleNotificationAction messageData: $messageData');
+  if (messageData == null) {
+    log('handleNotificationAction: messageData is null, returning');
+    return;
+  }
+
+  final userRequest = messageData['user_request'] as String?;
+  final matchRequestId =
+      (messageData['match_request_id'] ?? messageData['match_request'])
+          ?.toString();
+  final senderId = messageData['sender_id']?.toString();
+  log('handleNotificationAction: userRequest=$userRequest, matchRequestId=$matchRequestId, senderId=$senderId');
+  if (userRequest == null || matchRequestId == null || senderId == null) {
+    log('handleNotificationAction: missing required fields, returning');
+    return;
+  }
+
+  final String path;
+  if (payload.actionId == NotificationService.acceptChat) {
+    path = ApiConstants.acceptRequest + userRequest;
+  } else if (payload.actionId == NotificationService.rejectChat) {
+    path = ApiConstants.rejectRequest + userRequest;
+  } else {
+    log('handleNotificationAction: unknown actionId ${payload.actionId}, returning');
+    return;
+  }
+
+  log('handleNotificationAction: calling API with path=$path');
+  try {
+    final networkService = injector<NetworkService>();
+    await networkService.callApi(
+      NetworkRequest(
+        path: path,
+        method: RequestMethod.post,
+        body: {
+          'receiver_id': senderId,
+          'from_home': '0',
+          'match_request_id': matchRequestId,
+        },
+      ),
+    );
+    log('handleNotificationAction: API call succeeded');
+  } catch (e) {
+    log('handleNotificationAction: API call failed with error: $e');
+  }
+}
+
 class NotificationService {
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -84,14 +148,19 @@ class NotificationService {
 
   static final String acceptChat = 'accept_chat';
   static final String rejectChat = 'reject_chat';
+  static const String _chatActionsCategoryId = 'chat_actions_category';
 
   void _showNotification(RemoteMessage message) async {
-    if (Platform.isIOS) return;
     log('the remote msg is ${message.data}');
     log('the remote msg is ${message.notification?.toMap()}');
-    const DarwinNotificationDetails iOSPlatformChannelSpecifics =
+    final bool hasActions = _shouldShowActions(message);
+    final DarwinNotificationDetails iOSPlatformChannelSpecifics =
         DarwinNotificationDetails(
-            presentAlert: true, presentBadge: true, presentSound: true);
+            presentAlert: true,
+            presentBadge: true,
+            presentSound: true,
+            categoryIdentifier: hasActions ? _chatActionsCategoryId : '',
+        );
     final AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
       _channel.id,
@@ -118,14 +187,31 @@ class NotificationService {
     const AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    const DarwinInitializationSettings initializationSettingsIOS =
+    final DarwinInitializationSettings initializationSettingsIOS =
         DarwinInitializationSettings(
-      requestAlertPermission: false,
-      requestBadgePermission: false,
-      requestSoundPermission: false,
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+      notificationCategories: [
+        DarwinNotificationCategory(
+          _chatActionsCategoryId,
+          actions: [
+            DarwinNotificationAction.plain(
+              acceptChat,
+              LocaleKeys.accept,
+              options: {DarwinNotificationActionOption.foreground},
+            ),
+            DarwinNotificationAction.plain(
+              rejectChat,
+              LocaleKeys.refused,
+              options: {DarwinNotificationActionOption.destructive, DarwinNotificationActionOption.foreground},
+            ),
+          ],
+        ),
+      ],
     );
 
-    const InitializationSettings initializationSettings =
+    final InitializationSettings initializationSettings =
         InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS,
@@ -136,7 +222,20 @@ class NotificationService {
           _handleNotificationsTap(
               RemoteMessage.fromMap(json.decode(payload!.payload ?? ''))
           );
-    });
+    },
+        onDidReceiveBackgroundNotificationResponse:
+            onDidReceiveBackgroundNotificationResponse,
+    );
+  }
+
+  bool _shouldShowActions(RemoteMessage message) {
+    try {
+      final UserRequestStatus status = (message.data['status'] as String).getUserRequestStatusAsEnum;
+      final ChatStages stage = (message.data['stage'] as String).getCurrentStageAsStagesEnum;
+      return stage.isNewChat && status.isPending;
+    } on Exception {
+      return false;
+    }
   }
 
   List<AndroidNotificationAction> _tryingToMakeActions(RemoteMessage message){
@@ -170,60 +269,7 @@ class NotificationService {
   }
 
   Future<void> _handleActions(NotificationResponse? payload) async {
-    log('_handleActions called with actionId: ${payload?.actionId}');
-    if(payload?.actionId == null || payload!.actionId!.isEmpty) {
-      log('_handleActions: actionId is null or empty, returning');
-      return;
-    }
-
-    final decodedPayload = json.decode(payload.payload ?? '{}');
-    log('_handleActions decoded payload: $decodedPayload');
-
-    // RemoteMessage.toMap() puts data directly at 'data' key
-    final messageData = decodedPayload['data'] as Map<String, dynamic>?;
-    log('_handleActions messageData: $messageData');
-    if(messageData == null) {
-      log('_handleActions: messageData is null, returning');
-      return;
-    }
-
-    final userRequest = messageData['user_request'] as String?;
-    final matchRequestId = (messageData['match_request_id'] ?? messageData['match_request'])?.toString();
-    final senderId = messageData['sender_id']?.toString();
-    log('_handleActions: userRequest=$userRequest, matchRequestId=$matchRequestId, senderId=$senderId');
-    if(userRequest == null || matchRequestId == null || senderId == null) {
-      log('_handleActions: missing required fields, returning');
-      return;
-    }
-
-    final String path;
-    if(payload.actionId == acceptChat){
-      path = ApiConstants.acceptRequest + userRequest;
-    }else if(payload.actionId == rejectChat){
-      path = ApiConstants.rejectRequest + userRequest;
-    }else{
-      log('_handleActions: unknown actionId ${payload.actionId}, returning');
-      return;
-    }
-
-    log('_handleActions: calling API with path=$path');
-    try {
-      final networkService = injector<NetworkService>();
-      await networkService.callApi(
-        NetworkRequest(
-          path: path,
-          method: RequestMethod.post,
-          body: {
-            'receiver_id': senderId,
-            'from_home': '0',
-            'match_request_id': matchRequestId,
-          },
-        ),
-      );
-      log('_handleActions: API call succeeded');
-    } catch (e) {
-      log('_handleActions: API call failed with error: $e');
-    }
+    await handleNotificationAction(payload);
   }
 
   Future<void> _registerNotification() async {
@@ -247,10 +293,12 @@ class NotificationService {
   }
 
   Future<void> _setForegroundNotificationOptions() async {
+    // Disable FCM's built-in foreground presentation on iOS so that
+    // flutter_local_notifications handles it instead (with action buttons).
     FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
+      alert: false,
+      badge: false,
+      sound: false,
     );
   }
 
