@@ -8,9 +8,11 @@ import '../../../../core/widgets/buttons/app_loading_button.dart';
 class AcceptOrRejectFirstStageWidget extends StatelessWidget {
   final Future<void> Function(BuildContext context) onAccept;
   final Future<void> Function(BuildContext context) onReject;
+  final bool showTitle;
   const AcceptOrRejectFirstStageWidget({super.key,
     required this.onAccept,
     required this.onReject,
+    this.showTitle = true,
   });
 
   @override
@@ -25,18 +27,21 @@ class AcceptOrRejectFirstStageWidget extends StatelessWidget {
       child: Column(
         spacing: 10.h,
         children: [
-          AppText(LocaleKeys.wantToContactWithYou),
+          if(showTitle)
+            AppText(LocaleKeys.wantToContactWithYou),
           Row(
             spacing: 10.w,
             children: [
               Expanded(
                 child: AppLoadingButton(
+                    height: 35.h,
                     title: LocaleKeys.accept,
                     asyncCall: (context) => onAccept.call(context)
                 ),
               ),
               Expanded(
                 child: AppLoadingButton(
+                    height: 35.h,
                     title: LocaleKeys.refused,
                     buttonColor: Colors.red,
                     asyncCall: (context) => onReject.call(context)

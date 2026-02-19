@@ -36,11 +36,13 @@ class AppLoadingButton extends StatelessWidget {
       height: height ?? 45.h,
       width: width ?? double.infinity,
       btnColor: buttonColor ?? AppColors.primary,
-      idleWidget: AppText(
-        title,
-        fontSize: fontSize ?? 14.sp,
-        fontWeight: fontWeight ?? FontWeight.bold,
-        color: textColor ?? Colors.white,
+      idleWidget: FittedBox(
+        child: AppText(
+          title,
+          fontSize: fontSize ?? 14.sp,
+          fontWeight: fontWeight ?? FontWeight.bold,
+          color: textColor ?? Colors.white,
+        ),
       ),
       call: (BuildContext context) async => await asyncCall.call(context),
     );

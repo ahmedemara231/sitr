@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../generated/assets.dart';
 import '../../../../config/res/config_imports.dart';
+import '../../../../core/navigation/navigator.dart';
 import '../../../../core/notification/notification_service.dart';
+import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/svg_pic.dart';
+import '../../../chats/data/models/request_model.dart';
+import '../../../chats/presentation/cubits/start_chat.dart';
 import '../../../chats/presentation/widgets/accept_or_reject_first_stage.dart';
+import '../../../home/home_screen.dart';
 import '../../data/models/notification_model.dart';
 
 class NotificationCard extends StatefulWidget {
@@ -70,12 +76,43 @@ class _NotificationCardState extends State<NotificationCard> {
               ],
             ),
             if(widget.notificationModel.data?['show_accept_reject_buttons'] ?? false)
-              AcceptOrRejectFirstStageWidget(onAccept: (ctx)async{}, onReject:  (ctx)async{})
-              // Row(
-              //   children: [
-              //
-              //   ],
-              // )
+              BlocProvider(
+                create: (_) => ChatCubit(),
+                child: Builder(
+                  builder: (context) {
+                    final data = widget.notificationModel.data!;
+                    final matchRequestId = data['match_request_id'].toString();
+                    final requestModel = RequestModel(
+                      receiverId: data['sender_id'].toString(),
+                      fromHome: '0',
+                    );
+
+                    return AcceptOrRejectFirstStageWidget(
+                      showTitle: false,
+                      onAccept: (ctx) async {
+                        await ctx.read<ChatCubit>().executeRequestDirect(
+                          requestModel: requestModel,
+                          path: ApiConstants.acceptRequest + ApiConstants.userMoveToNextRequest,
+                          matchRequestId: matchRequestId,
+                          onSuccess: (_) {},
+                        );
+                      },
+                      onReject: (ctx) async {
+                        await ctx.read<ChatCubit>().executeRequestDirect(
+                          requestModel: requestModel,
+                          path: ApiConstants.rejectAll,
+                          matchRequestId: matchRequestId,
+                          onSuccess: (_) {
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              Go.offAll(const HomeScreen());
+                            });
+                          },
+                        );
+                      },
+                    );
+                  },
+                ),
+              )
           ],
         ),
       ),

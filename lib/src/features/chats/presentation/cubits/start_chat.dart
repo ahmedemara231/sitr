@@ -68,6 +68,27 @@ class ChatCubit extends AsyncCubit<ChatModel>{
     );
   }
 
+  Future<void> executeRequestDirect({
+    required RequestModel requestModel,
+    required String path,
+    required String matchRequestId,
+    required FutureOr<void> Function(ChatModel model) onSuccess,
+  })async{
+    await executeAsyncWithBaseModel(
+        operation: () => baseCrudUseCase.call(
+          CrudBaseParmas(
+            api: path,
+            httpRequestType: HttpRequestType.post,
+            body: requestModel.toJson()..addAll({
+              "match_request_id" : matchRequestId,
+            }),
+            mapper: (json) => ChatModel.fromJson(json),
+          ),
+        ),
+        onSuccess: (data) => onSuccess.call(data.data)
+    );
+  }
+
   Future<void> tipsSeen()async{
     await executeAsyncWithBaseModel(
         operation: () => baseCrudUseCase.call(

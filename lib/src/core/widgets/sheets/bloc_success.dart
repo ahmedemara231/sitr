@@ -47,7 +47,9 @@ class BlocManagerSheet extends StatelessWidget {
                   id: id,
                   onSuccess: (msg){
                     MessageUtils.showSnackBar(msg);
-                    Go.offAll(const HomeScreen());
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      Go.offAll(const HomeScreen());
+                    });
                   }
               );
             }
