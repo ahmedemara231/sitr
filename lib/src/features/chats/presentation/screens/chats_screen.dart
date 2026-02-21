@@ -195,15 +195,17 @@ class _ChatsBodyState extends State<_ChatsBody> {
                             );
                           }
 
+                          context.read<GetChatsCubit>().resetUnreadMessagesCount(index);
                           Go.to(targetScreen);
                         },
                         child: ChatCard(
-                            url: data[index].room?.members?.first.image ?? '',
-                            time: data[index].room?.lastMessageCreatedDt ?? '',
-                            partnerName: data[index].room?.members?.first.name ?? '',
-                            subTitle: data[index].room!.lastMessageBody.isNotNull?
-                            data[index].room!.lastMessageBody!.isImage?
-                            LocaleKeys.photo : data[index].room!.lastMessageBody! : '',
+                          url: data[index].room?.members?.first.image ?? '',
+                          time: data[index].room?.lastMessageCreatedDt ?? '',
+                          partnerName: data[index].room?.members?.first.name ?? '',
+                          subTitle: data[index].room!.lastMessageBody.isNotNull?
+                          data[index].room!.lastMessageBody!.isImage?
+                          LocaleKeys.photo : data[index].room!.lastMessageBody! : '',
+                          unreadMsgs: data[index].room!.unreadMsgs ?? 1,
                         ).paddingBottom(10.h),
                       )
               ),

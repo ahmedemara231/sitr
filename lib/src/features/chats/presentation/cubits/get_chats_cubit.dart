@@ -41,6 +41,14 @@ extension ConvertToChatType on String{
 class GetChatsCubit extends AsyncCubit<List<ChatModel>>{
   GetChatsCubit() : super([]);
 
+  void resetUnreadMessagesCount(int i){
+    final updatedChat = state.data[i].copyWith(
+      room: state.data[i].room!.copyWith(unreadMsgs: 0),
+    );
+    final newList = List<ChatModel>.from(state.data)..[i] = updatedChat;
+    setSuccess(data: newList);
+  }
+
   String _getChatType(ChatType chatType){
     switch(chatType){
       case ChatType.current:

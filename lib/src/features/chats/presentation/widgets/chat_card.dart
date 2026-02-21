@@ -8,12 +8,14 @@ class ChatCard extends StatelessWidget {
   final String partnerName;
   final String subTitle;
   final String time;
+  final int unreadMsgs;
 
   const ChatCard({super.key,
     required this.url,
     required this.partnerName,
     required this.subTitle,
     required this.time,
+    required this.unreadMsgs,
   });
 
   @override
@@ -32,7 +34,21 @@ class ChatCard extends StatelessWidget {
         ),
         title: AppText(partnerName, fontWeight: FontWeight.w500),
         subtitle: AppText(subTitle, color: Colors.grey),
-        trailing: AppText(time, color: Colors.grey),
+        trailing: Column(
+          children: [
+            if(unreadMsgs > 0)
+              Container(
+                width: 20.w,
+                height: 20.h,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.red,
+                ),
+                child: Center(child: AppText(unreadMsgs.toString(), color: Colors.white,))
+              ),
+            AppText(time, color: Colors.grey),
+          ],
+        ),
       ),
     );
   }

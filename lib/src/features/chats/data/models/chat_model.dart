@@ -1,9 +1,7 @@
 import 'package:pagify/helpers/data_and_pagination_data.dart';
-
 import '../../../../core/extensions/string_extension.dart';
 import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/network/log_interceptor.dart';
-import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/widgets/chat_builder/chat_message.dart';
 
 class ChatModel {
@@ -176,6 +174,7 @@ class Room {
   final Messages? messages;
   final String? lastMessageBody;
   final String? lastMessageCreatedDt;
+  final int? unreadMsgs;
 
   Room({
     this.id,
@@ -184,6 +183,7 @@ class Room {
     this.messages,
     this.lastMessageBody,
     this.lastMessageCreatedDt,
+    this.unreadMsgs,
   });
 
   Room.fromJson(Map<String, dynamic> json)
@@ -197,6 +197,7 @@ class Room {
         messages =
         json['messages'] != null ? Messages.fromJson(json['messages']) : null,
         lastMessageBody = json['last_message_body'],
+        unreadMsgs = json['unread_messages_count'],
         lastMessageCreatedDt = json['last_message_created_dt'];
 
   Map<String, dynamic> toJson() {
@@ -216,6 +217,7 @@ class Room {
     Messages? messages,
     String? lastMessageBody,
     String? lastMessageCreatedDt,
+    int? unreadMsgs
   }) {
     return Room(
       id: id ?? this.id,
@@ -225,6 +227,7 @@ class Room {
       lastMessageBody: lastMessageBody ?? this.lastMessageBody,
       lastMessageCreatedDt:
       lastMessageCreatedDt ?? this.lastMessageCreatedDt,
+      unreadMsgs: unreadMsgs ?? this.unreadMsgs
     );
   }
 }
