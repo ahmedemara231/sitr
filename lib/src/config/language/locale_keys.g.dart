@@ -988,4 +988,10 @@ abstract class LocaleKeys {
   static const String _areYouSureToDelete = 'are_you_sure_to_delete';
   static String get areYouSureToDelete => _areYouSureToDelete.tr();
 
+  static const String _accepted = 'accepted';
+  static String get accepted => _accepted.tr();
+
+  static const String _rejected = 'rejected';
+  static String get rejected => _rejected.tr();
+
 }

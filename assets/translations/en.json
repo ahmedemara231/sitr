@@ -332,5 +332,7 @@
   "end_chat": "End Chat",
   "are_you_sure_to_end_chat": "Are you sure to end chat",
   "delete": "Delete",
-  "are_you_sure_to_delete": "Are you sure to delete"
+  "are_you_sure_to_delete": "Are you sure to delete",
+  "accepted": "Accepted",
+  "rejected": "Rejected"
 }

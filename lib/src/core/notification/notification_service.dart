@@ -4,7 +4,6 @@ import 'dart:developer' show log;
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import '../../config/language/locale_keys.g.dart';
@@ -28,10 +27,7 @@ import '../navigation/navigator.dart';
 import '../network/api_endpoints.dart';
 import '../network/network_request.dart';
 import '../network/network_service.dart';
-import '../shared/models/title_value_shape.dart';
-import '../shared/models/user_models/user_model.dart';
 import '../shared/user_cubit/user_cubit.dart';
-import '../widgets/parent_children.dart';
 import '../widgets/parent_children_screen.dart';
 
 part 'navigation_types.dart';
@@ -154,15 +150,13 @@ class NotificationService {
     log('the remote msg is ${message.data}');
     log('the remote msg is ${message.notification?.toMap()}');
     final bool hasActions = _shouldShowActions(message);
-    final DarwinNotificationDetails iOSPlatformChannelSpecifics =
-        DarwinNotificationDetails(
+    final DarwinNotificationDetails iOSPlatformChannelSpecifics = DarwinNotificationDetails(
             presentAlert: true,
             presentBadge: true,
             presentSound: true,
             categoryIdentifier: hasActions ? _chatActionsCategoryId : '',
         );
-    final AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails(
+    final AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
       _channel.id,
       _channel.name,
       channelDescription: ConstantManager.appName,
@@ -175,12 +169,17 @@ class NotificationService {
     );
     final notificationDetails = NotificationDetails(
         android: androidPlatformChannelSpecifics,
-        iOS: iOSPlatformChannelSpecifics);
+        iOS: iOSPlatformChannelSpecifics
+    );
     final notification = message.notification;
 
-    await _flutterLocalNotificationsPlugin.show(notification.hashCode,
-        notification?.title ?? '', notification?.body, notificationDetails,
-        payload: json.encode(message.toMap()));
+    await _flutterLocalNotificationsPlugin.show(
+        notification.hashCode,
+        notification?.title ?? '',
+        notification?.body,
+        notificationDetails,
+        payload: json.encode(message.toMap())
+    );
   }
 
   Future<void> _initLocalNotification() async {
@@ -199,12 +198,12 @@ class NotificationService {
             DarwinNotificationAction.plain(
               acceptChat,
               LocaleKeys.accept,
-              options: {DarwinNotificationActionOption.foreground},
+              // options: {DarwinNotificationActionOption.foreground},
             ),
             DarwinNotificationAction.plain(
               rejectChat,
               LocaleKeys.refused,
-              options: {DarwinNotificationActionOption.destructive, DarwinNotificationActionOption.foreground},
+              options: {DarwinNotificationActionOption.destructive},
             ),
           ],
         ),
@@ -223,36 +222,44 @@ class NotificationService {
               RemoteMessage.fromMap(json.decode(payload!.payload ?? ''))
           );
     },
-        onDidReceiveBackgroundNotificationResponse:
-            onDidReceiveBackgroundNotificationResponse,
+        onDidReceiveBackgroundNotificationResponse: onDidReceiveBackgroundNotificationResponse,
     );
+  }
+
+  (UserRequestStatus, ChatStages) _getChatData(RemoteMessage message){
+    final UserRequestStatus status = ((message.data['status'] ?? '') as String).getUserRequestStatusAsEnum;
+    final ChatStages stage = ((message.data['stage'] ?? '') as String).getCurrentStageAsStagesEnum;
+    return (status, stage);
+  }
+
+  bool _convertToActionsData(RemoteMessage message){
+    final data = _getChatData(message);
+    return data.isNotNull;
   }
 
   bool _shouldShowActions(RemoteMessage message) {
     try {
-      final UserRequestStatus status = (message.data['status'] as String).getUserRequestStatusAsEnum;
-      final ChatStages stage = (message.data['stage'] as String).getCurrentStageAsStagesEnum;
-      return stage.isNewChat && status.isPending;
+      return _convertToActionsData(message);
+
     } on Exception {
       return false;
     }
   }
 
   List<AndroidNotificationAction> _tryingToMakeActions(RemoteMessage message){
-    final UserRequestStatus status = (message.data['status'] as String).getUserRequestStatusAsEnum;
-    final ChatStages stage = (message.data['stage'] as String).getCurrentStageAsStagesEnum;
+    final data = _getChatData(message);
 
-    if(stage.isNewChat && status.isPending){
+    if(data.$2.isNewChat && data.$1.isPending){
       return [
         AndroidNotificationAction(
           acceptChat,
           LocaleKeys.accept,
-          showsUserInterface: true,
+          showsUserInterface: false,
         ),
         AndroidNotificationAction(
           rejectChat,
           LocaleKeys.refused,
-          showsUserInterface: true,
+          showsUserInterface: false,
         ),
       ];
 

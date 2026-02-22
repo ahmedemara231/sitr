@@ -41,16 +41,13 @@ class NotificationBody extends StatefulWidget {
 }
 
 class _NotificationBodyState extends State<NotificationBody> {
-  late PagifyController<NotificationModel> controller;
-  late ValueNotifier<double> random;
+  late PagifyController<NotificationModel> controller = PagifyController<NotificationModel>();
 
   @override
-  void initState() {
-    super.initState();
-    controller = PagifyController<NotificationModel>();
-    random = ValueNotifier(Random().nextDouble());
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
-
 
   final ValueNotifier<bool> _showDeleteAll = ValueNotifier(false);
 
@@ -60,72 +57,62 @@ class _NotificationBodyState extends State<NotificationBody> {
       create: (context) => NotificationCubit(
           injector<ChatNotificationService>()
       ),
-      child: BlocListener<NotificationCubit, NotificationState>(
-        listener: (context, state) {
-          // final NotificationModel notification = NotificationModel.fromRemoteMessage(state.notification!);
-          // controller.addAtBeginning(notification);
-        },
-        child: AppScaffold(
-          isScrollable: false,
-          appBarTitle: LocaleKeys.notifications,
-          actions: [
-            ValueListenableBuilder(
-                valueListenable: _showDeleteAll,
-                builder: (context, show, child) => show? IconWidget(
-                  icon: Assets.svgTrashIcon,
-                  onTap: () {
-                    ChatSheetManager.show(
-                      child: DeleteSheet(
-                        asyncCall: (context) async {
-                          final res = await NotificationsData.deleteAllNotification();
-                          if (res.isSuccess()) {
-                            controller.clear();
-                            Go.back();
-                            MessageUtils.showSnackBar(res.getOrThrow().msg);
-                          }
-                        },
-                        title: LocaleKeys.areYouSureToDeleteAllNotifications,
-                      ),
-                    );
-                  },
-                ) : const SizedBox.shrink(),
-            ),
-          ],
-          body: ValueListenableBuilder(
-            valueListenable: random,
-            builder: (context, value, child) => AppPagify<NotificationModel>(
-              key: UniqueKey(),
-              asyncCall: (context, page)async => await NotificationsData.getNotifications(page),
-              onUpdateStatus: (state) {
-                if(state.isSuccess){
-                  _showDeleteAll.value = controller.getItemsLength >= 2;
-                }
-              },
-              itemBuilder: (context, data, index, element) => NotificationCard(
-                notificationModel: element,
-                onDelete: (id) async {
+      child: AppScaffold(
+        isScrollable: false,
+        appBarTitle: LocaleKeys.notifications,
+        actions: [
+          ValueListenableBuilder(
+              valueListenable: _showDeleteAll,
+              builder: (context, show, child) => show? IconWidget(
+                icon: Assets.svgTrashIcon,
+                onTap: () {
                   ChatSheetManager.show(
                     child: DeleteSheet(
                       asyncCall: (context) async {
-                        final res = await NotificationsData.deleteNotification(id);
+                        final res = await NotificationsData.deleteAllNotification();
                         if (res.isSuccess()) {
-                          controller.removeWhere((e) => e.id == id);
+                          controller.clear();
                           Go.back();
                           MessageUtils.showSnackBar(res.getOrThrow().msg);
                         }
                       },
-                      title: LocaleKeys.areYouSureToDeleteThisNotification,
+                      title: LocaleKeys.areYouSureToDeleteAllNotifications,
                     ),
                   );
                 },
-              ).paddingBottom(10.h),
-              pagifyController: controller,
-            ).defaultScreenPadding(),
-          ).withPullRefresher(onRefresh: () {
-            controller = PagifyController<NotificationModel>();
-            random.value = Random().nextDouble();
-          }),
-        ),
+              ) : const SizedBox.shrink(),
+          ),
+        ],
+        body: AppPagify<NotificationModel>(
+          key: UniqueKey(),
+          asyncCall: (context, page)async => await NotificationsData.getNotifications(page),
+          onUpdateStatus: (state) {
+            if(state.isSuccess){
+              _showDeleteAll.value = controller.getItemsLength >= 2;
+            }
+          },
+          itemBuilder: (context, data, index, element) => NotificationCard(
+            notificationModel: element,
+            onDelete: (id) async {
+              ChatSheetManager.show(
+                child: DeleteSheet(
+                  asyncCall: (context) async {
+                    final res = await NotificationsData.deleteNotification(id);
+                    if (res.isSuccess()) {
+                      controller.removeWhere((e) => e.id == id);
+                      Go.back();
+                      MessageUtils.showSnackBar(res.getOrThrow().msg);
+                    }
+                  },
+                  title: LocaleKeys.areYouSureToDeleteThisNotification,
+                ),
+              );
+            },
+          ).paddingBottom(10.h),
+          pagifyController: controller,
+        ).defaultScreenPadding().withPullRefresher(onRefresh: () {
+          controller.refresh();
+        }),
       ),
     );
   }

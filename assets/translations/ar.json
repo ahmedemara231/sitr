@@ -332,5 +332,7 @@
   "end_chat": "انهاء المحادثة",
   "are_you_sure_to_end_chat": "هل انت متأكد من انهاء المحادثة؟",
   "delete": "حذف",
-  "are_you_sure_to_delete": "هل انت متأكد من مسح"
+  "are_you_sure_to_delete": "هل انت متأكد من مسح",
+  "accepted": "تمت الموافقة",
+  "rejected": "تم الرفض"
 }

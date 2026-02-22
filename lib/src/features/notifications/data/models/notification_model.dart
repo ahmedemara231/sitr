@@ -5,6 +5,36 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import '../../../../config/language/languages.dart';
 import '../../../../core/extensions/object.dart';
 
+enum ButtonsState {
+  show,
+  accepted,
+  none,
+  rejected;
+
+  static ButtonsState fromString(String? value) {
+    switch (value) {
+      case 'accepted':
+        return ButtonsState.accepted;
+
+      case 'rejected':
+        return ButtonsState.rejected;
+
+      case 'show':
+        return ButtonsState.show;
+
+      default:
+        return ButtonsState.none;
+    }
+  }
+}
+
+extension Check on ButtonsState{
+  bool get isAccepted => this == ButtonsState.accepted;
+  bool get isRejected => this == ButtonsState.rejected;
+  bool get isShow => this == ButtonsState.show;
+  bool get isNone => this == ButtonsState.none;
+}
+
 class NotificationModel {
   String id;
   String type;
@@ -12,6 +42,7 @@ class NotificationModel {
   String body;
   Map<String, dynamic>? data;
   String createdAt;
+  ButtonsState? buttonsState;
 
   NotificationModel({
     required this.id,
@@ -20,30 +51,50 @@ class NotificationModel {
     required this.body,
     required this.data,
     required this.createdAt,
+    this.buttonsState,
   });
 
-  factory NotificationModel.fromRemoteMessage(RemoteMessage message) {
-    final json = message.data['data'];
+  // factory NotificationModel.fromRemoteMessage(RemoteMessage message) {
+  //   final json = message.data['data'];
+  //   final dataMap = json["data"] as Map<String, dynamic>?;
+  //   return NotificationModel(
+  //     id: json["id"],
+  //     type: json["type"],
+  //     createdAt: json["created_at"],
+  //     title: json["title"],
+  //     body: Languages.currentIsArabic?
+  //     json["body_ar"] : json["body_en"],
+  //     data: dataMap,
+  //     buttonsState: (dataMap?['show_accept_reject_buttons'] == true) ?
+  //     ButtonsState.show : null,
+  //   );
+  // }
+
+  factory NotificationModel.fromJson(Map<String, dynamic> json) {
+    final dataMap = json["data"] as Map<String, dynamic>?;
     return NotificationModel(
       id: json["id"],
       type: json["type"],
-      createdAt: json["created_at"],
       title: json["title"],
-      body: Languages.currentIsArabic?
-      json["body_ar"] : json["body_en"],
-      data: json["data"]
+      body: json["body"],
+      createdAt: json["created_at"],
+      data: dataMap,
+      buttonsState: (dataMap?['show_accept_reject_buttons'] == true)?
+      ButtonsState.show : ButtonsState.fromString(dataMap?['show_accept_reject_buttons']),
     );
   }
 
-  factory NotificationModel.fromJson(Map<String, dynamic> json) =>
-      NotificationModel(
-        id: json["id"],
-        type: json["type"],
-        title: json["title"],
-        body: json["body"],
-        createdAt: json["created_at"],
-        data: json["data"]
-      );
+  NotificationModel copyWith({ButtonsState? buttonsState}) {
+    return NotificationModel(
+      id: id,
+      type: type,
+      title: title,
+      body: body,
+      data: data,
+      createdAt: createdAt,
+      buttonsState: buttonsState ?? this.buttonsState,
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "id": id,

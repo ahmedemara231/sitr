@@ -338,5 +338,7 @@
   "End Chat" : "انهاء المحادثة",
   "Are you sure to end chat" : "هل انت متأكد من انهاء المحادثة؟",
   "Delete" : "حذف",
-  "Are you sure to delete" : "هل انت متأكد من مسح"
+  "Are you sure to delete" : "هل انت متأكد من مسح",
+  "Accepted" : "تمت الموافقة",
+  "Rejected" : "تم الرفض"
 }

@@ -205,7 +205,7 @@ class _ChatsBodyState extends State<_ChatsBody> {
                           subTitle: data[index].room!.lastMessageBody.isNotNull?
                           data[index].room!.lastMessageBody!.isImage?
                           LocaleKeys.photo : data[index].room!.lastMessageBody! : '',
-                          unreadMsgs: data[index].room!.unreadMsgs ?? 1,
+                          unreadMsgs: data[index].room!.unreadMsgs ?? 0,
                         ).paddingBottom(10.h),
                       )
               ),
