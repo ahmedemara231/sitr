@@ -1,8 +1,6 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:pagify/pagify.dart';
 import '../../../config/language/locale_keys.g.dart';
-import '../../../core/extensions/context_extension.dart';
 import '../../../core/extensions/widget_extension.dart';
 import '../../../core/helpers/user_type_enum.dart';
 import '../../../core/shared/models/user_models/user_model.dart';
@@ -17,7 +15,7 @@ import 'widgets/package_widget.dart';
 
 enum ScreenType{subscription, renew}
 
-class PackagesScreen extends StatelessWidget {
+class PackagesScreen extends StatefulWidget {
   final ScreenType type;
   final UserType? userType;
   final bool isInAuth;
@@ -33,35 +31,48 @@ class PackagesScreen extends StatelessWidget {
     this.paymentMethods,
   }) : type = ScreenType.renew, userType = null, isInAuth = false;
 
+  @override
+  State<PackagesScreen> createState() => _PackagesScreenState();
+}
+
+class _PackagesScreenState extends State<PackagesScreen> {
+  late final PagifyController<Package> _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = PagifyController<Package>();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final ValueNotifier<double> random = ValueNotifier(Random().nextDouble());
     return AppScaffold(
         isScrollable: false,
         appBarTitle: LocaleKeys.packages,
-        body: UserModel.currentUser?.type?.userType?.isChild ?? false?
-        const NotContainData() :
-        Column(
+        body: UserModel.currentUser?.type?.userType?.isChild ?? false
+        ? const NotContainData()
+        : Column(
           children: [
-            if(isInAuth)
+            if(widget.isInAuth)
               AppText(LocaleKeys.inOrderToRegisterOtherDataYouMustSubscribeToOneOfTheAvailablePackages, textAlign: TextAlign.center,),
-            ValueListenableBuilder(
-              valueListenable: random,
-              builder: (context, val, child) => Expanded(
-                child: AppPagify<Package>(
-                    key: UniqueKey(),
-                    asyncCall: (ctx, page) async => await PackagesData.getPackages(page: page, userType: userType),
-                    itemBuilder: (ctx, data, index, element) => PackageWidget(
-                      type: type,
-                      paymentMethods: paymentMethods,
-                      isInAuth: isInAuth,
-                      package: element,
-                    ),
-                    pagifyController: PagifyController<Package>(),
-                ).withPullRefresher(
-                  onRefresh: () => random.value = Random().nextDouble(),
-                ),
+            Expanded(
+              child: AppPagify<Package>(
+                  asyncCall: (ctx, page) async => await PackagesData.getPackages(page: page, userType: widget.userType),
+                  itemBuilder: (ctx, data, index, element) => PackageWidget(
+                    type: widget.type,
+                    paymentMethods: widget.paymentMethods,
+                    isInAuth: widget.isInAuth,
+                    package: element,
+                  ),
+                  pagifyController: _controller,
+              ).withPullRefresher(
+                onRefresh: () => _controller.refresh(),
               ),
             )
           ],

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/pagify.dart';
@@ -15,31 +13,45 @@ import '../../data/models/filter_model.dart';
 import '../widgets/home/partner_card.dart';
 import 'partner_details.dart';
 
-class FilterResultScreen extends StatelessWidget {
+class FilterResultScreen extends StatefulWidget {
   final FilterModel filterModel;
   const FilterResultScreen({super.key, required this.filterModel});
 
   @override
+  State<FilterResultScreen> createState() => _FilterResultScreenState();
+}
+
+class _FilterResultScreenState extends State<FilterResultScreen> {
+  late final PagifyController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = PagifyController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final ValueNotifier<double> random = ValueNotifier(Random().nextDouble());
     return AppScaffold(
         isScrollable: false,
         appBarTitle: LocaleKeys.searchResult,
-        body: ValueListenableBuilder(
-          valueListenable: random,
-          builder: (context, value, child) => AppPagify(
-            key: UniqueKey(),
-            pagifyController: PagifyController(),
-            asyncCall: (context, page) async => await HomeData.filter(filterModel, page),
-            itemBuilder: (context, data, i, opportunity) => InkWell(
-              onTap: () => Go.to(IndividualDetailsScreen.opportunity(
-                id: opportunity?.id ?? 0,
-              )),
-              child: PartnerCard.individual(opportunity: opportunity).paddingBottom(10.h),
-          )).withPullRefresher(
-            onRefresh: () => random.value = Random().nextDouble(),
-          ),
-        )
+        body: AppPagify(
+          pagifyController: _controller,
+          asyncCall: (context, page) async => await HomeData.filter(widget.filterModel, page),
+          itemBuilder: (context, data, i, opportunity) => InkWell(
+            onTap: () => Go.to(IndividualDetailsScreen.opportunity(
+              id: opportunity?.id ?? 0,
+            )),
+            child: PartnerCard.individual(opportunity: opportunity).paddingBottom(10.h),
+        )).withPullRefresher(
+          onRefresh: () => _controller.refresh(),
+        ),
     );
   }
 }

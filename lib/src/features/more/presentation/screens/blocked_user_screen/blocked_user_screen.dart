@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pagify/pagify.dart';
+import '../../../../../core/extensions/widget_extension.dart';
 import '../../../../chats/data/chat_sheet_manager.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/navigation/navigator.dart';
@@ -47,6 +48,8 @@ class _BlockedUserScreenState extends State<BlockedUserScreen> {
                 );
                }),
             pagifyController: _controller
+        ).withPullRefresher(
+          onRefresh: () => _controller.refresh()
         )
     );
   }

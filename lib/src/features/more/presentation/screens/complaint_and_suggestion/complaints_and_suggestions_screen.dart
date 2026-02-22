@@ -8,6 +8,7 @@ import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/extensions/sized_box_helper.dart';
+import '../../../../../core/extensions/widget_extension.dart';
 import '../../../../../core/helpers/status_builder.dart';
 import '../../../../../core/navigation/navigator.dart';
 import '../../../../../core/widgets/app_pagify.dart';
@@ -30,12 +31,15 @@ class ComplaintsAndSuggestionsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final PagifyController controller = PagifyController();
     return AppScaffold(
       appBarTitle: LocaleKeys.complaintsAndSuggestions,
       body: AppPagify(
           asyncCall: (context, page) => MoreData.getComplaints(page),
           itemBuilder: (context, data, i, element) => ComplaintsAndSuggestionsItem(complaintModel: element),
-          pagifyController: PagifyController()
+          pagifyController: controller
+      ).withPullRefresher(
+        onRefresh: () => controller.refresh()
       ),
         bottomBar: AppLoadingButton(
             asyncCall: (context) async {
