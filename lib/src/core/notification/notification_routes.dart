@@ -44,10 +44,17 @@ class FinishedChatNavigation implements NotificationNavigation {
 
   @override
   void navigate({required Map<String, dynamic> data}) {
-    final tabIndex = (data['chat_status'] as String).getChatType.index;
-    Go.off(ChatsScreen(key: chatsKey));
-    chatsKey.currentState!..changeChatsType(LocaleKeys.previousChats)
-      ..tabController.animateTo(tabIndex);
+    Go.to(PreviousChatScreen(
+        chatType: (data['chat_status'] as String).getChatType,
+        requestModel: RequestModel(
+            receiverId: (data['user_id']).toString(),
+            fromHome: 0.toString()
+        )
+    ));
+    // final tabIndex = (data['chat_status'] as String).getChatType.index;
+    // Go.to(ChatsScreen(key: chatsKey));
+    // chatsKey.currentState!..changeChatsType(LocaleKeys.previousChats)
+    //   ..tabController.animateTo(tabIndex);
   }
 }
 
@@ -104,7 +111,6 @@ class MatchRequestNavigation implements NotificationNavigation {
   void navigate({required Map<String, dynamic> data}) {
     Go.to(
         ChatScreen(
-          // showFullChat: ,
             requestModel: RequestModel(
                 receiverId: (data['sender_id']).toString(),
                 fromHome: 0.toString()

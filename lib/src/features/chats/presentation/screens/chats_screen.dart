@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagify/pagify.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
@@ -19,9 +18,8 @@ import '../../data/models/chat_model.dart';
 import '../../data/models/request_model.dart';
 import '../cubits/get_chats_cubit.dart';
 import '../imports.dart';
-import '../widgets/chat/chat_view.dart';
-import '../widgets/chat/upper_view.dart';
 import '../widgets/chat_card.dart';
+import 'previous_chat_screen.dart';
 
 GlobalKey<ChatsScreenState> chatsKey = GlobalKey<ChatsScreenState>();
 
@@ -112,41 +110,6 @@ class _ChatsBody extends StatefulWidget {
 }
 
 class _ChatsBodyState extends State<_ChatsBody> {
-
-  String get _getLabel{
-    switch(widget.chatType){
-      case ChatType.completed:
-        return LocaleKeys.completed;
-
-        case ChatType.rejected:
-          return LocaleKeys.refused;
-
-        case ChatType.cancelled:
-          return LocaleKeys.cancelled;
-
-        case ChatType.pending:
-          return LocaleKeys.pending;
-
-        default:
-          return 'not type';
-    }
-  }
-
-  Color get _getLabelBackgroundColor{
-    switch(widget.chatType){
-      case ChatType.completed:
-      case ChatType.pending:
-        return Colors.green;
-
-      case ChatType.rejected:
-      case ChatType.cancelled:
-        return Colors.red;
-
-      default:
-        return Colors.blue;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider<GetChatsCubit>(
@@ -172,26 +135,10 @@ class _ChatsBodyState extends State<_ChatsBody> {
                               requestModel: requestModel
                             );
 
-                          }else{
-                            targetScreen = AppScaffold(
-                                appBarTitle: LocaleKeys.chat,
-                                body: Column(
-                                  spacing: 10.h,
-                                  children: [
-                                    ChatUpperWidget.withLabel(
-                                        requestId: requestModel.receiverId,
-                                        label: _getLabel,
-                                        labelBackgroundColor: _getLabelBackgroundColor
-                                    ),
-                                    SizedBox(
-                                      height: context.height - 170,
-                                      child: ChatView(
-                                          requestModel: requestModel,
-                                          chatController: PagifyController()
-                                      ),
-                                    ),
-                                  ],
-                                )
+                          } else {
+                            targetScreen = PreviousChatScreen(
+                              chatType: widget.chatType,
+                              requestModel: requestModel,
                             );
                           }
 

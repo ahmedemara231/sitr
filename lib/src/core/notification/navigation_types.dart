@@ -25,6 +25,7 @@ enum NotificationType {
   providerRejected('provider_rejected', navigation: UpdateNavigation()),
 
   // 💬 Match Request Notifications (many types)
+  newChatRequest('new_chat_request', navigation: MatchRequestNavigation()),
   userAcceptedNextStage('user_accepted_next_stage', navigation: MatchRequestNavigation()),
   stageChanged('stage_changed', navigation: MatchRequestNavigation()),
   nextStageRequestSent('next_stage_request_sent', navigation: MatchRequestNavigation()),
@@ -42,20 +43,20 @@ enum NotificationType {
   continueStageRequestAccepted('continue_stage_request_accepted', navigation: MatchRequestNavigation()),
   parentExchangeNumbersAccepted('parent_exchange_numbers_accepted', navigation: MatchRequestNavigation()),
 
-  nextStageRequestRejected('next_stage_request_rejected', navigation: MatchRequestNavigation()),
+  nextStageRequestRejected('next_stage_request_rejected', navigation: FinishedChatNavigation()),
   continueStageRequestRejected('continue_stage_request_rejected', navigation: MatchRequestNavigation()),
   extensionRequestRejected('extension_request_rejected', navigation: MatchRequestNavigation()),
   videoCallRequestRejected('video_call_request_rejected', navigation: MatchRequestNavigation()),
   adminMeetingRequestRejected('admin_meeting_request_rejected', navigation: MatchRequestNavigation()),
   parentMeetingRequestRejected('parent_meeting_request_rejected', navigation: MatchRequestNavigation()),
 
-  // parentIndividualApprovalRejected('parent_individual_approval_rejected', navigation: FinishedChatNavigation()),
-  // matchRejectedWhenTimerEnded('match_rejected_when_timer_ended', navigation: FinishedChatNavigation()),
-  // matchRequestCompleted('match_request_completed', navigation: FinishedChatNavigation()),
+  parentIndividualApprovalRejected('parent_individual_approval_rejected', navigation: FinishedChatNavigation()),
+  matchRejectedWhenTimerEnded('match_rejected_when_timer_ended', navigation: FinishedChatNavigation()),
+  matchRequestCompleted('match_request_completed', navigation: FinishedChatNavigation()),
 
-  parentIndividualApprovalRejected('parent_individual_approval_rejected', navigation: HomeNavigation()),
-  matchRejectedWhenTimerEnded('match_rejected_when_timer_ended', navigation: HomeNavigation()),
-  matchRequestCompleted('match_request_completed', navigation: HomeNavigation()),
+  // parentIndividualApprovalRejected('parent_individual_approval_rejected', navigation: HomeNavigation()),
+  // matchRejectedWhenTimerEnded('match_rejected_when_timer_ended', navigation: HomeNavigation()),
+  // matchRequestCompleted('match_request_completed', navigation: HomeNavigation()),
 
   chattingTimerEnded('chatting_timer_ended', navigation: MatchRequestNavigation()),
   shariaComplaintMeetingTimerEnded('sharia_complaint_meeting_timer_ended', navigation: MatchRequestNavigation()),

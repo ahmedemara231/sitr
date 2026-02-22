@@ -35,6 +35,7 @@ class ChatCard extends StatelessWidget {
         title: AppText(partnerName, fontWeight: FontWeight.w500),
         subtitle: AppText(subTitle, color: Colors.grey),
         trailing: Column(
+          spacing: 5.h,
           children: [
             if(unreadMsgs > 0)
               Container(

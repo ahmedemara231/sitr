@@ -14,6 +14,7 @@ import '../../features/chats/enums.dart';
 import '../../features/chats/presentation/cubits/get_chats_cubit.dart';
 import '../../features/chats/presentation/imports.dart';
 import '../../features/chats/presentation/screens/chats_screen.dart';
+import '../../features/chats/presentation/screens/previous_chat_screen.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/main_screen/presentation/screens/parent_details.dart';
 import '../../features/main_screen/presentation/screens/partner_details.dart';
