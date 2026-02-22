@@ -104,7 +104,7 @@ class _NotificationCardState extends State<NotificationCard> {
                 if(state!.isAccepted || state.isRejected) {
                   return _stateContainer(state);
                 }
-                else{
+                else if(state.isShow){
                   return BlocProvider(
                     create: (_) => ChatCubit(),
                     child: Builder(
@@ -143,6 +143,8 @@ class _NotificationCardState extends State<NotificationCard> {
                     ),
                   );
                 }
+
+                return const SizedBox.shrink();
               },
             )
           ],

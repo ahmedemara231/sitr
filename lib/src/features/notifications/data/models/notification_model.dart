@@ -19,7 +19,7 @@ enum ButtonsState {
       case 'rejected':
         return ButtonsState.rejected;
 
-      case 'show':
+      case 'pending':
         return ButtonsState.show;
 
       default:
@@ -79,8 +79,7 @@ class NotificationModel {
       body: json["body"],
       createdAt: json["created_at"],
       data: dataMap,
-      buttonsState: (dataMap?['show_accept_reject_buttons'] == true)?
-      ButtonsState.show : ButtonsState.fromString(dataMap?['show_accept_reject_buttons']),
+      buttonsState: ButtonsState.fromString(dataMap?['show_accept_reject_buttons']),
     );
   }
 
