@@ -1,8 +1,6 @@
 import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/language/languages.dart';
 import '../../../../../config/language/locale_keys.g.dart';
@@ -18,9 +16,7 @@ import '../../../../../core/shared/models/user_models/individual/male_model.dart
 import '../../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../../core/widgets/app_dropinity.dart';
 import '../../../../../core/widgets/app_text.dart';
-import '../../cubits/personal_data_cubit.dart';
 import '../../data/auth_data.dart';
-import '../../data/enums_data.dart';
 import '../../enums/answer.dart';
 import '../shared/text_field.dart';
 import 'dowry_widget.dart';

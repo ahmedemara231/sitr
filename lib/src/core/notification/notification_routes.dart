@@ -108,7 +108,7 @@ class MatchRequestNavigation implements NotificationNavigation {
     Go.to(
         ChatScreen(
             requestModel: RequestModel(
-                receiverId: (data['sender_id']).toString(),
+                receiverId: (data['user_id']).toString(),
                 fromHome: 0.toString()
             ),
             receiverName: data['user_name']

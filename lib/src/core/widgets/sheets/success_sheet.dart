@@ -8,7 +8,6 @@ import '../../../features/auth/imports.dart' show EnterMaleOrFemaleOrChildDataSc
 import '../../../features/auth/presentation/cubits/add_child.dart';
 import '../../../features/auth/presentation/cubits/complete_profile_cubit.dart';
 import '../../../features/auth/presentation/data/auth_data.dart';
-import '../../../features/auth/presentation/widgets/sign_up/sheets/add_child_sheet.dart';
 import '../../../features/auth/presentation/widgets/sign_up/sheets/complete_profile_sheet.dart';
 import '../../helpers/user_type_enum.dart';
 import '../../navigation/navigator.dart';
@@ -35,11 +34,6 @@ class SuccessSheet extends StatelessWidget {
           showAlreadyHaveAccount: true,
           onClick: (context, user) => context.read<AddChildCubit>().addChild(
             body: user,
-            // onSuccess: (data) {
-            //   showDefaultBottomSheet(
-            //       child: const AddChildSheet()
-            //   );
-            // },
           )
       ));
 

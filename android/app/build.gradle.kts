@@ -1,3 +1,6 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 plugins {
     id("com.android.application")
     // START: FlutterFire Configuration
@@ -8,6 +11,11 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+val keystoreProperties = Properties()
+val keystorePropertiesFile = rootProject.file("key.properties")
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+}
 android {
     namespace = "com.aait.flutter.sitr"
     compileSdk = 36
@@ -34,21 +42,27 @@ android {
         versionName = flutter.versionName
     }
 
+    signingConfigs {
+        create("release") {
+            keyAlias = keystoreProperties["keyAlias"] as String
+            keyPassword = keystoreProperties["keyPassword"] as String
+            storeFile = keystoreProperties["storeFile"]?.let { rootProject.file(it as String) }
+            storePassword = keystoreProperties["storePassword"] as String
+        }
+    }
     buildTypes {
+
         release {
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("release")
 //            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             // لازم الاتنين ميتفتحوش الا عند التسليم والرفع الاستور لانهم وظيفتهم لتقليل حجم التطبيق ودمج الكلاسات ويحذف الللغات واللاي اوت اللي مش مستخدم
-            isMinifyEnabled = true     // ✅ صحيح
-            isShrinkResources = true  // ✅ أضف السطر ده
+//            isMinifyEnabled = true     // ✅ صحيح
+//            isShrinkResources = true  // ✅ أضف السطر ده
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
 
-        }
-        debug {
-            signingConfig = signingConfigs.getByName("debug")
         }
     }
 

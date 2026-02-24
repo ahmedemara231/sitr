@@ -12,16 +12,9 @@ class ExceptionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        spacing: AppMargin.mH10,
-        children: [
-          AppAssets.lottie.error.apiError.lottie(),
-          // Text(
-          //   LocaleKeys.exceptionError,
-          //   style: const TextStyle().setPrimaryColor.s13.medium,
-          // ),
-        ],
+    return FittedBox(
+      child: Center(
+        child: AppAssets.lottie.error.apiError.lottie(),
       ),
     );
   }
