@@ -51,10 +51,6 @@ class FinishedChatNavigation implements NotificationNavigation {
             fromHome: 0.toString()
         )
     ));
-    // final tabIndex = (data['chat_status'] as String).getChatType.index;
-    // Go.to(ChatsScreen(key: chatsKey));
-    // chatsKey.currentState!..changeChatsType(LocaleKeys.previousChats)
-    //   ..tabController.animateTo(tabIndex);
   }
 }
 
@@ -96,7 +92,7 @@ class UserProfileNavigation implements NotificationNavigation {
 
   @override
   void navigate({required Map<String, dynamic> data}) {
-    final UserType type = (data['visitor_type'] as String).toUserType()!;
+    final UserType type = (data['visitor_type'] as String).toUserType();
     final userId = data['visitor_id'];
 
     _routeToProfile(type: type, userId: userId.toString());
@@ -177,7 +173,7 @@ class UserUnblockedYou implements NotificationNavigation {
 
   @override
   void navigate({required Map<String, dynamic> data}) {
-    final UserType type = (data['user_type'] as String).toUserType()!;
+    final UserType type = (data['user_type'] as String).toUserType();
     final userId = data['user_id'];
 
     _routeToProfile(type: type, userId: userId.toString());
