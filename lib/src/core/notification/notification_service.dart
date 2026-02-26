@@ -295,14 +295,16 @@ class NotificationService {
   }
 
   Future<void> saveFcmToken() async {
-    final token = await FirebaseMessaging.instance.getToken();
-    deviceToken = token ?? '';
-    log('Firebase Fcm token : ${token.toString()}');
+    try {
+      final token = await FirebaseMessaging.instance.getToken();
+      deviceToken = token ?? '';
+      log('Firebase Fcm token : ${token.toString()}');
+    } on Exception {
+      return;
+    }
   }
 
   Future<void> _setForegroundNotificationOptions() async {
-    // Disable FCM's built-in foreground presentation on iOS so that
-    // flutter_local_notifications handles it instead (with action buttons).
     FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
       alert: false,
       badge: false,

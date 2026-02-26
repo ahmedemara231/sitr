@@ -41,6 +41,8 @@ gradleFix:
 	-find ~/.gradle -name "*.lock" -delete 2>/dev/null
 	@echo "Gradle locks cleared!"
 
+buildIos:
+    sh upload_ios.sh
 # put:
 #     export PATH="$PATH:/path/to/your/app/bin"
 
