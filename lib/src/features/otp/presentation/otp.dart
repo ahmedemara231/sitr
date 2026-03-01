@@ -21,7 +21,6 @@ import 'cubits/resend_code_cubit.dart';
 import 'widgets/otp_static_texts.dart';
 
 class OtpScreen extends StatelessWidget {
-
   final String phone;
   final String title;
   final FutureOr<void> Function(BuildContext context)? onEnterScreen;
@@ -167,7 +166,7 @@ class _OtpScreenBodyState extends State<OtpScreenBody> {
                             _timeCont.restart();
                             setState(() => _canResend = false);
                             context.read<ResendCodeCubit>().resendOtp(
-                                body: ResendCodeBody(phone: widget.phone)
+                              body: ResendCodeBody(phone: widget.phone),
                             );
                           } : null,
                           child: AppText(

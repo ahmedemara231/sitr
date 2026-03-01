@@ -1,6 +1,7 @@
 import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/network/api_endpoints.dart';
+import '../../../../core/widgets/custom_messages.dart';
 import '../../models/resend_code_body.dart';
 
 class ResendCodeCubit extends AsyncCubit{
@@ -15,6 +16,8 @@ class ResendCodeCubit extends AsyncCubit{
               queryParameters: body.toJson(),
           ),
         ),
+      
+      onSuccess: (data) => MessageUtils.showSnackBar(data.msg)
     );
   }
 }

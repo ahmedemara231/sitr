@@ -7,6 +7,7 @@ import '../../../../../config/language/languages.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import '../../../../../core/extensions/context_extension.dart';
 import '../../../../../core/extensions/num.dart';
 import '../../../../../core/extensions/object.dart';
 import '../../../../../core/extensions/padding_extension.dart';
@@ -56,39 +57,63 @@ class ChatUpperWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Row(
+      textDirection: Languages.currentIsArabic ? TextDirection.rtl : TextDirection.ltr,
       children: [
-        Align(
-            alignment: Languages.currentIsArabic?
-            Alignment.topRight : Alignment.topLeft,
-            child: ChatReportIcon(id: int.parse(requestId))),
-        if(_afterReportIcon == UpperWidgetAfterReportIcon.timer)
-          ...[
-            Center(
-              child: BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
-                  builder: (context, state) => StatusBuilder(
+        // 20% — Report icon
+        Expanded(
+          flex: 2,
+          child: Align(
+            alignment: Languages.currentIsArabic
+                ? Alignment.centerRight
+                : Alignment.centerLeft,
+            child: ChatReportIcon(id: int.parse(requestId)),
+          ),
+        ),
+        // 40% — Timer or label
+        Expanded(
+          flex: 4,
+          child: Center(
+            child: _afterReportIcon == UpperWidgetAfterReportIcon.timer
+                ? BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
+                    builder: (context, state) => StatusBuilder(
                       data: state,
                       onFail: () => const SizedBox.shrink(),
-                      onSuccess: (data, context) => _upperWidget(data)
-                  )),
-            ),
-            Align(
-              alignment: Languages.currentIsArabic?
-              Alignment.topLeft : Alignment.topRight,
-              child: BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
-                builder: (context, state) => InkWell(
-                  onTap: () => WidgetsBinding.instance.addPostFrameCallback(
-                          (_) => showDefaultBottomSheet(
+                      onSuccess: (data, context) => _upperWidget(data),
+                    ),
+                  )
+                : Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.r),
+                      color: labelBackgroundColor?.withOpacity(.1),
+                    ),
+                    child: AppText(label!, color: labelBackgroundColor)
+                        .paddingSymmetric(vertical: 10.h, horizontal: 20.w),
+                  ),
+          ),
+        ),
+        // 40% — End chat button (timer mode) or empty
+        Expanded(
+          flex: 4,
+          child: _afterReportIcon == UpperWidgetAfterReportIcon.timer
+              ? Align(
+                  alignment: Languages.currentIsArabic
+                      ? Alignment.centerLeft
+                      : Alignment.centerRight,
+                  child: BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
+                    builder: (context, state) => InkWell(
+                      onTap: () => WidgetsBinding.instance.addPostFrameCallback(
+                        (_) => showDefaultBottomSheet(
                           child: AppBottomSheet.large(
-                            asyncCall: (ctx) async{
+                            asyncCall: (ctx) async {
                               await ChatActions.executeReq(
                                 context: context,
                                 requestModel: RequestModel(
-                                    receiverId: state.data.room!.members!.first.id.toString(),
-                                    fromHome: 1.toString()
+                                  receiverId: state.data.room!.members!.first.id.toString(),
+                                  fromHome: 1.toString(),
                                 ),
                                 path: ApiConstants.forceReject,
-                                onSuccess: (chatModel){
+                                onSuccess: (chatModel) {
                                   Go.offAll(const HomeScreen());
                                 },
                               );
@@ -102,39 +127,26 @@ class ChatUpperWidget extends StatelessWidget {
                               ],
                             ),
                             cancelBackgroundColor: Colors.red.withOpacity(.4),
-                          )
-                      )
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    spacing: 5.w,
-                    children: [
-                      SvgPic(assetName: Assets.svgEndChatIcon, size: 20.sp,),
-                      AppText(
-                        LocaleKeys.endChat,
-                        color: AppColors.redColor,
-                        fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       ),
-                    ],
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        spacing: 5.w,
+                        children: [
+                          SvgPic(assetName: Assets.svgEndChatIcon, size: 20.sp),
+                          AppText(
+                            LocaleKeys.endChat,
+                            color: AppColors.redColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            )
-          ]
-        else
-          Center(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.r),
-                color: labelBackgroundColor?.withOpacity(.1),
-              ),
-
-              child: AppText(label!, color: labelBackgroundColor).paddingSymmetric(
-                  vertical: 10.h,
-                  horizontal: 20.w
-              ),
-            ),
-          ),
+                )
+              : const SizedBox.shrink(),
+        ),
       ],
     );
   }

@@ -4,7 +4,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
@@ -122,12 +121,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.w500,),
                         currentIndex: cubit.currentIndex,
                         onTap: (index) {
-                          cubit.changeBottomNavIndex(index);
-
                           if(index != 0 && index != 4){
                             if(!UserModel.isAuthenticated){
                               Helpers.showUnauthenticatedSheet();
+                            }else{
+                              cubit.changeBottomNavIndex(index);
                             }
+                          }else{
+                            cubit.changeBottomNavIndex(index);
                           }
 
                           if(index == 1){
