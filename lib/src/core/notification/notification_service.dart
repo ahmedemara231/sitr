@@ -174,7 +174,6 @@ class NotificationService {
         iOS: iOSPlatformChannelSpecifics
     );
     final notification = message.notification;
-
     await _flutterLocalNotificationsPlugin.show(
         notification.hashCode,
         notification?.title ?? '',
@@ -200,12 +199,15 @@ class NotificationService {
             DarwinNotificationAction.plain(
               acceptChat,
               LocaleKeys.accept,
-              // options: {DarwinNotificationActionOption.foreground},
+              options: {DarwinNotificationActionOption.foreground},
             ),
             DarwinNotificationAction.plain(
               rejectChat,
               LocaleKeys.refused,
-              options: {DarwinNotificationActionOption.destructive},
+              options: {
+                DarwinNotificationActionOption.destructive,
+                DarwinNotificationActionOption.foreground,
+              },
             ),
           ],
         ),
@@ -219,11 +221,14 @@ class NotificationService {
     );
     await _flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onDidReceiveNotificationResponse: (NotificationResponse? payload) {
+          final bool isActionButton =
+              payload?.actionId != null && payload!.actionId!.isNotEmpty;
           _handleActions(payload);
-          _handleNotificationsTap(
-              RemoteMessage.fromMap(json.decode(payload!.payload ?? ''))
-          );
-    },
+          if (!isActionButton) {
+            _handleNotificationsTap(
+                RemoteMessage.fromMap(json.decode(payload!.payload ?? '')));
+          }
+        },
         onDidReceiveBackgroundNotificationResponse: onDidReceiveBackgroundNotificationResponse,
     );
   }
@@ -250,8 +255,10 @@ class NotificationService {
 
   List<AndroidNotificationAction> _tryingToMakeActions(RemoteMessage message){
     final data = _getChatData(message);
-
-    if(data.$2.isNewChat && data.$1.isPending){
+    log('the data is ${data.$2}');
+    log('the data is ${data.$1}');
+    log('the data is ${data.$2.isChatting && data.$1.isPending}');
+    if(data.$2.isChatting && data.$1.isPending){
       return [
         AndroidNotificationAction(
           acceptChat,
@@ -315,7 +322,6 @@ class NotificationService {
 
   Future<void> setupNotifications() async {
     await Future.wait([
-      // saveFcmToken(),
       _setForegroundNotificationOptions(),
       _registerNotification(),
       _requestPermissions(),
