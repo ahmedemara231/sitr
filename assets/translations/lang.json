@@ -289,7 +289,7 @@
     "Sufficient knowledge" : "الالمام الكافي",
     "Photo" : "صورة",
     "Want to contact with you" : "يريد التواصل معك",
-  "partner wants to"  : "الشريك يريد ان",
+  "partner wants to"  : "الشريك يريد",
   "Report" : "ابلاغ",
   "Tips for sharia complaint meeting" : "نصائح لمرحلة النظرة الشرعية",
   "Optional stage you can skip this stage" : "مرحلة اختيارية يمكنك تخطي هذه المرحلة",
@@ -340,5 +340,6 @@
   "Delete" : "حذف",
   "Are you sure to delete" : "هل انت متأكد من مسح",
   "Accepted" : "تمت الموافقة",
-  "Rejected" : "تم الرفض"
+  "Rejected" : "تم الرفض",
+  "Do you agree with the partner?" : "هل توافق علي الشريك؟"
 }

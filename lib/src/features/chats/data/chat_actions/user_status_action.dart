@@ -38,6 +38,8 @@ class UserStatusAction extends ChatActions{
           value: context.read<ChatCubit>(),
           child: AcceptOrRejectRequestWidget(
               requestName: requestName,
+              title: request.isParentIndividualApproval?
+              LocaleKeys.doYouAgreeWithThePartner: null,
               onAccept: (context) async => await _executeReq(
                   context, path: ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
                   onSuccess: onSuccess

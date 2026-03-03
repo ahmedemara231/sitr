@@ -11,6 +11,7 @@ enum NotificationType {
   adminProfileUpdated('admin_profile_updated', navigation: ProfileNavigation()),
 
   // 📋 Complaints
+  walletCharged('wallet_charged', navigation: WalletNavigation()),
   complaintReply('complaint_reply', navigation: ComplaintNavigation()),
   complaintInProgress('complaint_in_progress', navigation: ComplaintNavigation()),
 

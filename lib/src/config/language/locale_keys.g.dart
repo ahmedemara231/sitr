@@ -994,4 +994,7 @@ abstract class LocaleKeys {
   static const String _rejected = 'rejected';
   static String get rejected => _rejected.tr();
 
+  static const String _doYouAgreeWithThePartner = 'do_you_agree_with_the_partner';
+  static String get doYouAgreeWithThePartner => _doYouAgreeWithThePartner.tr();
+
 }

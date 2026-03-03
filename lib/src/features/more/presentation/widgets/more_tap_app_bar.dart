@@ -68,9 +68,10 @@ class MoreTabAppBar extends StatelessWidget {
                               child: BlocProvider.value(
                                   value: context.read<ChargeWalletCubit>(),
                                   child: BlocBuilder<ChargeWalletCubit, AsyncState>(
-                                      builder: (context, chargeState) => WalletScreen(
-                                        balance: context.read<FetchWalletCubit>().state.data.toInt(),
-                                      )))));
+                                      builder: (context, chargeState) => const WalletScreen()
+                                  )
+                              )
+                          ));
 
                           // if(result == 'success'){
                           //   final result = await Go.to(SubscriptionScreen(

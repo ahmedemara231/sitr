@@ -334,5 +334,6 @@
   "delete": "Delete",
   "are_you_sure_to_delete": "Are you sure to delete",
   "accepted": "Accepted",
-  "rejected": "Rejected"
+  "rejected": "Rejected",
+  "do_you_agree_with_the_partner": "Do you agree with the partner?"
 }

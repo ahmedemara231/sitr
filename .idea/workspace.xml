@@ -9,16 +9,22 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="chore(build): Add iOS upload script and refine notification service&#10;&#10;This commit introduces a bash script for automated iOS IPA builds and App Store Connect uploads. It also improves the resilience of FCM token retrieval and updates project configurations.&#10;&#10;- **feat(ios):**&#10;  - Created `upload_ios.sh` to automate the `clean`, `pub get`, `build ipa`, validation, and upload process using `altool`.&#10;  - Added a `buildIos` command to the `Makefile` to trigger the new upload script.&#10;&#10;- **refactor(notifications):**&#10;  - In `notification_service.dart`, wrapped FCM token retrieval in a try-catch block to prevent crashes if the service is unavailable.&#10;  - Cleaned up comments regarding foreground presentation options.&#10;&#10;- **chore(version):**&#10;  - Bumped the app version from `1.0.0+15` to `1.0.0+16` in `pubspec.yaml`.&#10;&#10;- **chore(ide):**&#10;  - Updated `.idea/workspace.xml` with recent changes and task history.&#10;  - Re-added the `Dart Packages` library dependency in `appp.iml`.">
-      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" />
+    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="refactor(chats): Update chat UI layout and terminology&#10;&#10;This commit refactors the chat header to use a flexible `Row` layout for better alignment and updates several Arabic translations to align with a more general tone. It also refactors the OTP resend logic and enforces authentication checks for specific bottom navigation items.&#10;&#10;- **refactor(chats):**&#10;  - In `upper_view.dart`, replaced the `Stack` layout with a proportional `Row` (using `Expanded` flex values 2:4:4). This ensures the report icon, timer/label, and &quot;End Chat&quot; button are properly aligned according to the current language direction.&#10;  - Added `context_extension.dart` import and improved the `onTap` logic for the force reject action.&#10;&#10;- **feat(otp):**&#10;  - In `resend_code_cubit.dart`, added a success callback to show a snackbar message when the OTP is successfully resent.&#10;  - In `otp_static_texts.dart`, updated the phone number display format to suffix the country code (`$phone 966+`).&#10;  - In `otp.dart`, cleaned up formatting and state management for the resend timer.&#10;&#10;- **refactor(navigation):**&#10;  - In `home_screen.dart`, updated the bottom navigation `onTap` handler to prevent index changes for restricted tabs (1, 2, 3) if the user is not authenticated.&#10;  - Removed unused `zego_uikit_prebuilt_call` import.&#10;&#10;- **chore(translations):**&#10;  - In `lang.json` and `ar.json`, updated &quot;نبذة سريعة&quot; (Quick brief) to &quot;نبذة عامة&quot; (General brief).&#10;  - Changed the translation of &quot;End Chat&quot; from &quot;انهاء المحادثة&quot; to &quot;الغاء التواصل&quot; (Cancel communication).&#10;&#10;- **chore(ide):**&#10;  - Deleted `.idea/caches/deviceStreaming.xml` and updated `.idea/workspace.xml` to reflect recent file changes and breakpoint updates.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ar.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/translations/ar.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/ar.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/en.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/translations/lang.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/lang.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/chat/upper_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/chat/upper_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/home/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/home/home_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/otp/presentation/cubits/resend_code_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/otp/presentation/cubits/resend_code_cubit.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/otp/presentation/otp.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/otp/presentation/otp.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/otp/presentation/widgets/otp_static_texts.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/otp/presentation/widgets/otp_static_texts.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/en.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/config/language/locale_keys.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/config/language/locale_keys.g.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/notification/navigation_types.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/notification/navigation_types.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/notification/notification_routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/notification/notification_routes.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/notification/notification_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/notification/notification_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/user_status_action.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/user_status_action.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/enums.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/enums.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/accept_or_reject_request.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/accept_or_reject_request.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/wallet/wallet_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/wallet/wallet_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/widgets/more_tap_app_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/widgets/more_tap_app_bar.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,32 +139,31 @@
     <option name="foldersAlwaysOnTop" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Flutter.main.dart.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;ShowUsagesActions.previewPropertyKey&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;NotificationActions&quot;,
-    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/aaita/Desktop/apps/new_crud_satr/android&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;flutter.settings&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Flutter.main.dart.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "ShowUsagesActions.previewPropertyKey": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "git-widget-placeholder": "NotificationActions",
+    "io.flutter.reload.alreadyRun": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/aaita/Desktop/apps/new_crud_satr/android",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "flutter.settings",
+    "show.migrate.to.gradle.popup": "false"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/android" />
@@ -256,14 +261,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
-    </task>
-    <task id="LOCAL-00194" summary="```&#10;chore(version): Increment build number&#10;&#10;This commit increments the application build number.&#10;&#10;- **chore(version):**&#10;  - The application build number in `pubspec.yaml` has been incremented from `1.0.0+2` to `1.0.0+3`.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`).">
-      <option name="closed" value="true" />
-      <created>1766332921474</created>
-      <option name="number" value="00194" />
-      <option name="presentableId" value="LOCAL-00194" />
-      <option name="project" value="LOCAL" />
-      <updated>1766332921474</updated>
     </task>
     <task id="LOCAL-00195" summary="```&#10;refactor(auth): Improve navigation flow post-authentication&#10;&#10;This commit refactors the navigation logic that follows user authentication, particularly after OTP verification and on the splash screen. The changes ensure a more streamlined and correct redirection based on the user's registration and login status.&#10;&#10;- **refactor(auth):**&#10;  - In `otp_cubit.dart`, the user's data is now only set to a logged-in state (`UserCubit.instance.setUserLoggedIn`) if their registration status is fully `completed`. This prevents incompletely registered users from being treated as fully authenticated.&#10;  - The `manageNavigationBasedCompleteRegisterStatus` extension in `string_extension.dart` now uses `Go.off` instead of `Go.to` for navigation. This replaces the current screen in the navigation stack, preventing users from navigating back to intermediate auth steps (e.g., package selection, data completion).&#10;&#10;- **refactor(navigation):**&#10;  - The `_toCompleteRegisterStatus` method in `string_extension.dart` has been made public (`toCompleteRegisterStatus`) for broader use.&#10;  - The call to `UserCubit.instance.init()` within `manageNavigationBasedCompleteRegisterStatus` has been commented out to avoid redundant initializations.&#10;&#10;- **fix(splash):**&#10;  - In `splash_screen.dart`, the logic for handling an authorized user has been corrected. It now properly initializes the `UserCubit` and navigates directly to the `HomeScreen`, fixing a flow where users might get stuck.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`).">
       <option name="closed" value="true" />
@@ -649,7 +646,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772102919882</updated>
     </task>
-    <option name="localTasksCounter" value="243" />
+    <task id="LOCAL-00243" summary="refactor(chats): Update chat UI layout and terminology&#10;&#10;This commit refactors the chat header to use a flexible `Row` layout for better alignment and updates several Arabic translations to align with a more general tone. It also refactors the OTP resend logic and enforces authentication checks for specific bottom navigation items.&#10;&#10;- **refactor(chats):**&#10;  - In `upper_view.dart`, replaced the `Stack` layout with a proportional `Row` (using `Expanded` flex values 2:4:4). This ensures the report icon, timer/label, and &quot;End Chat&quot; button are properly aligned according to the current language direction.&#10;  - Added `context_extension.dart` import and improved the `onTap` logic for the force reject action.&#10;&#10;- **feat(otp):**&#10;  - In `resend_code_cubit.dart`, added a success callback to show a snackbar message when the OTP is successfully resent.&#10;  - In `otp_static_texts.dart`, updated the phone number display format to suffix the country code (`$phone 966+`).&#10;  - In `otp.dart`, cleaned up formatting and state management for the resend timer.&#10;&#10;- **refactor(navigation):**&#10;  - In `home_screen.dart`, updated the bottom navigation `onTap` handler to prevent index changes for restricted tabs (1, 2, 3) if the user is not authenticated.&#10;  - Removed unused `zego_uikit_prebuilt_call` import.&#10;&#10;- **chore(translations):**&#10;  - In `lang.json` and `ar.json`, updated &quot;نبذة سريعة&quot; (Quick brief) to &quot;نبذة عامة&quot; (General brief).&#10;  - Changed the translation of &quot;End Chat&quot; from &quot;انهاء المحادثة&quot; to &quot;الغاء التواصل&quot; (Cancel communication).&#10;&#10;- **chore(ide):**&#10;  - Deleted `.idea/caches/deviceStreaming.xml` and updated `.idea/workspace.xml` to reflect recent file changes and breakpoint updates.">
+      <option name="closed" value="true" />
+      <created>1772365870280</created>
+      <option name="number" value="00243" />
+      <option name="presentableId" value="LOCAL-00243" />
+      <option name="project" value="LOCAL" />
+      <updated>1772365870281</updated>
+    </task>
+    <option name="localTasksCounter" value="244" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -670,7 +675,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor(navigation): Add splash screen import&#10;&#10;This commit adds an import for the `splash_screen.dart` file to core navigation and widget extension files.&#10;&#10;- **refactor(navigation):**&#10;  - Added an import for `splash_screen.dart` in `navigator.dart` and `widget_extension.dart`, likely to make splash-related navigation or widgets accessible from these core files.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`)." />
     <MESSAGE value="```&#10;chore(version): Increment build number&#10;&#10;This commit increments the application's build number.&#10;&#10;- **chore(version):**&#10;  - The build number in `pubspec.yaml` has been incremented from `1.0.0+3` to `1.0.0+4`.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`)." />
     <MESSAGE value="```&#10;feat(auth): Enable multiline input for prohibited things&#10;&#10;This commit introduces a multiline text input for the &quot;prohibited things&quot; field in the sign-up form and adds debugging logs for subscription URL changes. It also removes commented-out code from the wallet screen.&#10;&#10;- **feat(auth):**&#10;  - In `shared_form_fields.dart`, enabled multiline input for the &quot;Things I Absolutely Do Not Accept Or Want&quot; text field by setting `inputType` to `TextInputType.multiline`.&#10;&#10;- **refactor(wallet):**&#10;  - In `wallet_screen.dart`, removed commented-out `RiyalPriceText` widget code.&#10;&#10;- **chore(debug):**&#10;  - In `subscription_screen.dart`, added a `log` statement to print the URL on page start for debugging payment success/failure redirection.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`)." />
     <MESSAGE value="```&#10;refactor(core): Replace loading button and enhance permissions and connectivity&#10;&#10;This commit replaces the deprecated `easy_loading_button` with `rounded_loading_button_plus`, creating a custom `LoadingButton` implementation for better control and consistency. It also enhances the permission handling logic for better reliability, especially on iOS, and introduces an optional internet connectivity interceptor in the base cubit.&#10;&#10;- **refactor(core):**&#10;  - Replaced `easy_loading_button` with `rounded_loading_button_plus` and added `connectivity_plus` to `pubspec.yaml`.&#10;  - Created a new `CustomAnimatedButton` and a refactored `LoadingButton` to provide a consistent, app-wide loading button experience.&#10;  - Replaced old `LoadingButton` usages with the new `AppLoadingButton` across various features (`auth`, `more`, `widgets`).&#10;  - In `async_cubit.dart`, added an optional `enableInternetInterceptor` to `executeAsyncWithBaseModel`. When enabled, it uses `connectivity_plus` to listen for network changes and can re-trigger operations when the connection is restored.&#10;  - The main internet interceptor widget in `app.dart` has been commented out in favor of the more granular cubit-level control.&#10;&#10;- **refactor(permissions):**&#10;  - Significantly improved the permission handling logic in `permission_handler/handler.dart`.&#10;  - The handler now checks the permission status *before* requesting it, properly handling `granted`, `limited`, and `permanentlyDenied` states without re-requesting.&#10;  - Added specific logic for iOS where a `denied` status is treated as permanently denied on subsequent checks.&#10;  - Updated `helpers.dart` to pass more callbacks (`onDeniedForever`, `onLimited`) to the new handler, ensuring UI can react appropriately (e.g., by opening app settings).&#10;&#10;- **fix(auth):**&#10;  - In `image_widget.dart`, added a null check (`isNotNull`) to ensure an image is only processed if one was actually selected by the user.&#10;&#10;- **chore(ios):**&#10;  - Added `CODE_SIGN_IDENTITY`, `CODE_SIGN_STYLE`, and `PROVISIONING_PROFILE_SPECIFIER` settings to the iOS project file (`project.pbxproj`), likely for development build configuration.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in IDE configuration files (`.idea/workspace.xml`, `.idea/libraries/Dart_Packages.xml`, `.idea/caches/deviceStreaming.xml`, `.idea/libraries/Flutter_Plugins.xml`)." />
@@ -695,7 +699,8 @@
     <MESSAGE value="refactor(core): Enable build optimizations and clean up notification routing&#10;&#10;This commit enables code shrinking and minification for Android release builds and refactors notification navigation logic to be more robust.&#10;&#10;- **refactor(notifications):**&#10;  - In `notification_routes.dart`, removed unsafe null assertions when converting user type strings to `UserType` enums in `VisitorNavigation` and `ChatNavigation`.&#10;  - Removed commented-out legacy navigation logic in `FinishedChatNavigation`.&#10;&#10;- **fix(android):**&#10;  - In `build.gradle.kts`, enabled `isMinifyEnabled` and `isShrinkResources` for the release build type to reduce APK size and improve security.&#10;&#10;- **chore(ide):**&#10;  - Updated `deviceStreaming.xml` with a large set of new persistent device definitions for OPPO, Samsung, Xiaomi, and other manufacturers.&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`)." />
     <MESSAGE value="refactor(build): Configure Android release signing and clean up code&#10;&#10;This commit introduces release signing configuration for Android, removes deprecated permissions, and cleans up unused code and build files.&#10;&#10;- **build(android):**&#10;  - In `build.gradle.kts`, added a `release` signing configuration that reads credentials from `key.properties`. The build type now uses this configuration for release builds.&#10;  - In `AndroidManifest.xml`, changed the app label to &quot;ستر&quot;. Removed several unnecessary permissions, including `WRITE_EXTERNAL_STORAGE`, `RECEIVE_BOOT_COMPLETED`, `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS`, `FOREGROUND_SERVICE_MEDIA_PLAYBACK`, `SCHEDULE_EXACT_ALARM`, and `USE_EXACT_ALARM`.&#10;  - Added Proguard rules for Flutter Play Store deferred components in `proguard-rules.pro` to prevent warnings during the release build process.&#10;&#10;- **build(ios):**&#10;  - In `Info.plist`, updated `CFBundleDisplayName` and `CFBundleName` to &quot;ستر&quot;.&#10;  - Incremented the `CURRENT_PROJECT_VERSION` to 15 in `project.pbxproj`.&#10;&#10;- **refactor(auth):**&#10;  - Deleted `enums_data.dart` and commented out its usages in `female_body.dart`, `male_body.dart`, and `shared_form_fields.dart`, indicating a refactoring of how enum-like data is handled.&#10;&#10;- **fix(navigation):**&#10;  - In `notification_routes.dart`, corrected the key for retrieving the user ID from `sender_id` to `user_id` when handling chat navigation.&#10;&#10;- **chore(ui):**&#10;  - Simplified the `ExceptionView` widget to only show a Lottie animation, removing the text part.&#10;  - Removed commented-out code from `success_sheet.dart`.&#10;&#10;- **chore(ide):**&#10;  - Deleted `.idea/libraries/Dart_Packages.xml` and updated `.idea/workspace.xml` and `.idea/caches/deviceStreaming.xml`.&#10;  - Removed the `Dart Packages` library entry from `appp.iml`.&#10;&#10;- **chore(version):**&#10;  - Bumped the app version from `1.0.0+5` to `1.0.0+15` in `pubspec.yaml`." />
     <MESSAGE value="chore(build): Add iOS upload script and refine notification service&#10;&#10;This commit introduces a bash script for automated iOS IPA builds and App Store Connect uploads. It also improves the resilience of FCM token retrieval and updates project configurations.&#10;&#10;- **feat(ios):**&#10;  - Created `upload_ios.sh` to automate the `clean`, `pub get`, `build ipa`, validation, and upload process using `altool`.&#10;  - Added a `buildIos` command to the `Makefile` to trigger the new upload script.&#10;&#10;- **refactor(notifications):**&#10;  - In `notification_service.dart`, wrapped FCM token retrieval in a try-catch block to prevent crashes if the service is unavailable.&#10;  - Cleaned up comments regarding foreground presentation options.&#10;&#10;- **chore(version):**&#10;  - Bumped the app version from `1.0.0+15` to `1.0.0+16` in `pubspec.yaml`.&#10;&#10;- **chore(ide):**&#10;  - Updated `.idea/workspace.xml` with recent changes and task history.&#10;  - Re-added the `Dart Packages` library dependency in `appp.iml`." />
-    <option name="LAST_COMMIT_MESSAGE" value="chore(build): Add iOS upload script and refine notification service&#10;&#10;This commit introduces a bash script for automated iOS IPA builds and App Store Connect uploads. It also improves the resilience of FCM token retrieval and updates project configurations.&#10;&#10;- **feat(ios):**&#10;  - Created `upload_ios.sh` to automate the `clean`, `pub get`, `build ipa`, validation, and upload process using `altool`.&#10;  - Added a `buildIos` command to the `Makefile` to trigger the new upload script.&#10;&#10;- **refactor(notifications):**&#10;  - In `notification_service.dart`, wrapped FCM token retrieval in a try-catch block to prevent crashes if the service is unavailable.&#10;  - Cleaned up comments regarding foreground presentation options.&#10;&#10;- **chore(version):**&#10;  - Bumped the app version from `1.0.0+15` to `1.0.0+16` in `pubspec.yaml`.&#10;&#10;- **chore(ide):**&#10;  - Updated `.idea/workspace.xml` with recent changes and task history.&#10;  - Re-added the `Dart Packages` library dependency in `appp.iml`." />
+    <MESSAGE value="refactor(chats): Update chat UI layout and terminology&#10;&#10;This commit refactors the chat header to use a flexible `Row` layout for better alignment and updates several Arabic translations to align with a more general tone. It also refactors the OTP resend logic and enforces authentication checks for specific bottom navigation items.&#10;&#10;- **refactor(chats):**&#10;  - In `upper_view.dart`, replaced the `Stack` layout with a proportional `Row` (using `Expanded` flex values 2:4:4). This ensures the report icon, timer/label, and &quot;End Chat&quot; button are properly aligned according to the current language direction.&#10;  - Added `context_extension.dart` import and improved the `onTap` logic for the force reject action.&#10;&#10;- **feat(otp):**&#10;  - In `resend_code_cubit.dart`, added a success callback to show a snackbar message when the OTP is successfully resent.&#10;  - In `otp_static_texts.dart`, updated the phone number display format to suffix the country code (`$phone 966+`).&#10;  - In `otp.dart`, cleaned up formatting and state management for the resend timer.&#10;&#10;- **refactor(navigation):**&#10;  - In `home_screen.dart`, updated the bottom navigation `onTap` handler to prevent index changes for restricted tabs (1, 2, 3) if the user is not authenticated.&#10;  - Removed unused `zego_uikit_prebuilt_call` import.&#10;&#10;- **chore(translations):**&#10;  - In `lang.json` and `ar.json`, updated &quot;نبذة سريعة&quot; (Quick brief) to &quot;نبذة عامة&quot; (General brief).&#10;  - Changed the translation of &quot;End Chat&quot; from &quot;انهاء المحادثة&quot; to &quot;الغاء التواصل&quot; (Cancel communication).&#10;&#10;- **chore(ide):**&#10;  - Deleted `.idea/caches/deviceStreaming.xml` and updated `.idea/workspace.xml` to reflect recent file changes and breakpoint updates." />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor(chats): Update chat UI layout and terminology&#10;&#10;This commit refactors the chat header to use a flexible `Row` layout for better alignment and updates several Arabic translations to align with a more general tone. It also refactors the OTP resend logic and enforces authentication checks for specific bottom navigation items.&#10;&#10;- **refactor(chats):**&#10;  - In `upper_view.dart`, replaced the `Stack` layout with a proportional `Row` (using `Expanded` flex values 2:4:4). This ensures the report icon, timer/label, and &quot;End Chat&quot; button are properly aligned according to the current language direction.&#10;  - Added `context_extension.dart` import and improved the `onTap` logic for the force reject action.&#10;&#10;- **feat(otp):**&#10;  - In `resend_code_cubit.dart`, added a success callback to show a snackbar message when the OTP is successfully resent.&#10;  - In `otp_static_texts.dart`, updated the phone number display format to suffix the country code (`$phone 966+`).&#10;  - In `otp.dart`, cleaned up formatting and state management for the resend timer.&#10;&#10;- **refactor(navigation):**&#10;  - In `home_screen.dart`, updated the bottom navigation `onTap` handler to prevent index changes for restricted tabs (1, 2, 3) if the user is not authenticated.&#10;  - Removed unused `zego_uikit_prebuilt_call` import.&#10;&#10;- **chore(translations):**&#10;  - In `lang.json` and `ar.json`, updated &quot;نبذة سريعة&quot; (Quick brief) to &quot;نبذة عامة&quot; (General brief).&#10;  - Changed the translation of &quot;End Chat&quot; from &quot;انهاء المحادثة&quot; to &quot;الغاء التواصل&quot; (Cancel communication).&#10;&#10;- **chore(ide):**&#10;  - Deleted `.idea/caches/deviceStreaming.xml` and updated `.idea/workspace.xml` to reflect recent file changes and breakpoint updates." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -792,17 +797,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/src/core/notification/navigation_types.dart</url>
-          <line>52</line>
+          <line>53</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/src/core/notification/navigation_types.dart</url>
-          <line>53</line>
+          <line>54</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/src/core/notification/navigation_types.dart</url>
-          <line>54</line>
+          <line>55</line>
           <option name="timeStamp" value="49" />
         </line-breakpoint>
       </breakpoints>

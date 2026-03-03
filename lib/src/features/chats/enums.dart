@@ -101,6 +101,8 @@ enum ShowTips{
   shariaComplaintMeetingTerms('sharia_complaint_meeting_terms',ApiConstants.shariaComplaintMeetingTerms),
   shariaComplaintMeetingTips('sharia_complaint_meeting_tips',ApiConstants.shariaComplaintMeetingTips),
   istikharahTips('istikhara_tips',ApiConstants.istikharaTips),
+  istikharahReminder('istikhara_reminder',ApiConstants.istikharaTips),
+  istikharahDua('istikhara_dua',ApiConstants.istikharaTips),
   informParentsTips('inform_parents',ApiConstants.informParentsTips),
   engagementTips('engagement_tips', ApiConstants.engagementTips),
   parentIndividualConversationTips('parent_individual_conversation', ApiConstants.parentIndividualConversation);

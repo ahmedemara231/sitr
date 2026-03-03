@@ -22,6 +22,14 @@ abstract interface class NotificationNavigation {
 
 // ----------------- Home -----------------
 
+class WalletNavigation implements NotificationNavigation {
+  const WalletNavigation();
+
+  @override
+  void navigate({required Map<String, dynamic> data}) {
+    Go.to(const WalletScreen());
+  }
+}
 class NoNavigation implements NotificationNavigation {
   const NoNavigation();
 
