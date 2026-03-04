@@ -22,7 +22,10 @@ class TipsAction extends ChatActions{
           value: context.read<ChatCubit>(),
           child: TipsSheet(
             path: path,
-            onConfirm: onConfirm,
+            onConfirm: (c)async{
+              await onConfirm.call(c);
+              context.read<ChatCubit>().startChat(requestModel: requestModel);
+            },
             btnTitle: btnTitle,
           ),
         )

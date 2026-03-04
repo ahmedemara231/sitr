@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../../features/auth/imports.dart';
@@ -13,7 +12,6 @@ import '../../features/chats/data/models/request_model.dart';
 import '../../features/chats/enums.dart';
 import '../../features/chats/presentation/cubits/get_chats_cubit.dart';
 import '../../features/chats/presentation/imports.dart';
-import '../../features/chats/presentation/screens/chats_screen.dart';
 import '../../features/chats/presentation/screens/previous_chat_screen.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/main_screen/presentation/screens/parent_details.dart';
@@ -114,7 +112,7 @@ class NotificationService {
     importance: Importance.high,
   );
 
-  static String deviceToken = '';
+  static String deviceToken = '1234';
 
   Future<bool> _requestPermissions() async {
     bool? result;
@@ -305,7 +303,7 @@ class NotificationService {
   Future<void> saveFcmToken() async {
     try {
       final token = await FirebaseMessaging.instance.getToken();
-      deviceToken = token ?? '';
+      deviceToken = token ?? '1234';
       log('Firebase Fcm token : ${token.toString()}');
     } on Exception {
       return;

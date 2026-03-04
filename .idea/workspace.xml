@@ -9,10 +9,102 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="refactor(chats): Update chat UI layout and terminology&#10;&#10;This commit refactors the chat header to use a flexible `Row` layout for better alignment and updates several Arabic translations to align with a more general tone. It also refactors the OTP resend logic and enforces authentication checks for specific bottom navigation items.&#10;&#10;- **refactor(chats):**&#10;  - In `upper_view.dart`, replaced the `Stack` layout with a proportional `Row` (using `Expanded` flex values 2:4:4). This ensures the report icon, timer/label, and &quot;End Chat&quot; button are properly aligned according to the current language direction.&#10;  - Added `context_extension.dart` import and improved the `onTap` logic for the force reject action.&#10;&#10;- **feat(otp):**&#10;  - In `resend_code_cubit.dart`, added a success callback to show a snackbar message when the OTP is successfully resent.&#10;  - In `otp_static_texts.dart`, updated the phone number display format to suffix the country code (`$phone 966+`).&#10;  - In `otp.dart`, cleaned up formatting and state management for the resend timer.&#10;&#10;- **refactor(navigation):**&#10;  - In `home_screen.dart`, updated the bottom navigation `onTap` handler to prevent index changes for restricted tabs (1, 2, 3) if the user is not authenticated.&#10;  - Removed unused `zego_uikit_prebuilt_call` import.&#10;&#10;- **chore(translations):**&#10;  - In `lang.json` and `ar.json`, updated &quot;نبذة سريعة&quot; (Quick brief) to &quot;نبذة عامة&quot; (General brief).&#10;  - Changed the translation of &quot;End Chat&quot; from &quot;انهاء المحادثة&quot; to &quot;الغاء التواصل&quot; (Cancel communication).&#10;&#10;- **chore(ide):**&#10;  - Deleted `.idea/caches/deviceStreaming.xml` and updated `.idea/workspace.xml` to reflect recent file changes and breakpoint updates.">
+    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="refactor(notifications): Refine notification action handling and navigation logic&#10;&#10;This commit improves the handling of interactive notification actions on iOS and Android, ensuring that tapping an action button does not trigger the default notification tap behavior. It also updates logic for displaying chat actions and adjusts specific navigation types.&#10;&#10;- **refactor(notifications):**&#10;  - In `notification_service.dart`, updated iOS notification actions to use the `.foreground` option for both &quot;Accept&quot; and &quot;Reject&quot; actions.&#10;  - Improved the initialization logic in `_initializeLocalNotifications` to prevent `_handleNotificationsTap` from executing if a specific action button was pressed.&#10;  - Updated `_tryingToMakeActions` for Android to check `isChatting` instead of `isNewChat` when determining if pending chat actions should be displayed.&#10;  - Added logging for debugging chat data states in `_tryingToMakeActions`.&#10;  - Removed a redundant commented-out call to `saveFcmToken()`.&#10;&#10;- **refactor(navigation):**&#10;  - In `navigation_types.dart`, changed the navigation target for `nextStageRequestRejected` from `FinishedChatNavigation()` to `NoNavigation()`.&#10;&#10;- **chore(ide):**&#10;  - Updated `.idea/workspace.xml` to reflect file changes and internal IDE state.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/notification/navigation_types.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/notification/navigation_types.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-hdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-mdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/images/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024@1x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@1x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@2x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@3x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@3x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@1x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@2x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@3x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@3x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@1x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@2x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@3x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@3x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-50x50@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-50x50@1x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-50x50@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-50x50@2x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-57x57@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-57x57@1x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-57x57@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-57x57@2x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@2x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@3x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@3x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-72x72@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-72x72@1x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-72x72@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-72x72@2x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@1x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@2x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-83.5x83.5@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-83.5x83.5@2x.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/core/notification/notification_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/notification/notification_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/tips_action.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/tips_action.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chat_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chat_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux/flutter/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugin_registrant.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux/flutter/generated_plugins.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux/runner/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux/runner/main.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux/runner/my_application.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/linux/runner/my_application.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Flutter/Flutter-Debug.xcconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Flutter/Flutter-Release.xcconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Podfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner.xcodeproj/project.pbxproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner.xcworkspace/contents.xcworkspacedata" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner/AppDelegate.swift" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_1024.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_128.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_256.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_32.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner/Assets.xcassets/AppIcon.appiconset/app_icon_64.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner/Base.lproj/MainMenu.xib" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner/Configs/AppInfo.xcconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner/Configs/Debug.xcconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner/Configs/Release.xcconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner/Configs/Warnings.xcconfig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner/DebugProfile.entitlements" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner/Info.plist" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner/MainFlutterWindow.swift" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/Runner/Release.entitlements" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/macos/RunnerTests/RunnerTests.swift" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/favicon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/icons/Icon-192.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/icons/Icon-512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/icons/Icon-maskable-192.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/icons/Icon-maskable-512.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/manifest.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/flutter/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugin_registrant.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/flutter/generated_plugins.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/runner/CMakeLists.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/runner/Runner.rc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/runner/flutter_window.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/runner/flutter_window.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/runner/main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/runner/resource.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/runner/resources/app_icon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/runner/runner.exe.manifest" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/runner/utils.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/runner/utils.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/runner/win32_window.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/windows/runner/win32_window.h" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,10 +234,10 @@
     "cidr.known.project.marker": "true",
     "com.google.services.firebase.aqiPopupShown": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "NotificationActions",
+    "git-widget-placeholder": "refactor-test-sheet",
     "io.flutter.reload.alreadyRun": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/aaita/Desktop/apps/new_crud_satr/android",
+    "last_opened_file_path": "/Users/aaita/Desktop/apps/new_crud_satr/assets/images",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.17",
     "project.structure.side.proportion": "0.2",
@@ -155,9 +247,9 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets/images" />
       <recent name="$PROJECT_DIR$/android" />
       <recent name="$PROJECT_DIR$/android/app" />
-      <recent name="$PROJECT_DIR$/assets/images" />
       <recent name="$PROJECT_DIR$/assets/svg" />
       <recent name="$PROJECT_DIR$/lib/src/core/widgets" />
     </key>
@@ -250,14 +342,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
-    </task>
-    <task id="LOCAL-00195" summary="```&#10;refactor(auth): Improve navigation flow post-authentication&#10;&#10;This commit refactors the navigation logic that follows user authentication, particularly after OTP verification and on the splash screen. The changes ensure a more streamlined and correct redirection based on the user's registration and login status.&#10;&#10;- **refactor(auth):**&#10;  - In `otp_cubit.dart`, the user's data is now only set to a logged-in state (`UserCubit.instance.setUserLoggedIn`) if their registration status is fully `completed`. This prevents incompletely registered users from being treated as fully authenticated.&#10;  - The `manageNavigationBasedCompleteRegisterStatus` extension in `string_extension.dart` now uses `Go.off` instead of `Go.to` for navigation. This replaces the current screen in the navigation stack, preventing users from navigating back to intermediate auth steps (e.g., package selection, data completion).&#10;&#10;- **refactor(navigation):**&#10;  - The `_toCompleteRegisterStatus` method in `string_extension.dart` has been made public (`toCompleteRegisterStatus`) for broader use.&#10;  - The call to `UserCubit.instance.init()` within `manageNavigationBasedCompleteRegisterStatus` has been commented out to avoid redundant initializations.&#10;&#10;- **fix(splash):**&#10;  - In `splash_screen.dart`, the logic for handling an authorized user has been corrected. It now properly initializes the `UserCubit` and navigates directly to the `HomeScreen`, fixing a flow where users might get stuck.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`).">
-      <option name="closed" value="true" />
-      <created>1766353592576</created>
-      <option name="number" value="00195" />
-      <option name="presentableId" value="LOCAL-00195" />
-      <option name="project" value="LOCAL" />
-      <updated>1766353592576</updated>
     </task>
     <task id="LOCAL-00196" summary="refactor(navigation): Add splash screen import&#10;&#10;This commit adds an import for the `splash_screen.dart` file to core navigation and widget extension files.&#10;&#10;- **refactor(navigation):**&#10;  - Added an import for `splash_screen.dart` in `navigator.dart` and `widget_extension.dart`, likely to make splash-related navigation or widgets accessible from these core files.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`).">
       <option name="closed" value="true" />
@@ -643,7 +727,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772365870281</updated>
     </task>
-    <option name="localTasksCounter" value="244" />
+    <task id="LOCAL-00244" summary="refactor(notifications): Refine notification action handling and navigation logic&#10;&#10;This commit improves the handling of interactive notification actions on iOS and Android, ensuring that tapping an action button does not trigger the default notification tap behavior. It also updates logic for displaying chat actions and adjusts specific navigation types.&#10;&#10;- **refactor(notifications):**&#10;  - In `notification_service.dart`, updated iOS notification actions to use the `.foreground` option for both &quot;Accept&quot; and &quot;Reject&quot; actions.&#10;  - Improved the initialization logic in `_initializeLocalNotifications` to prevent `_handleNotificationsTap` from executing if a specific action button was pressed.&#10;  - Updated `_tryingToMakeActions` for Android to check `isChatting` instead of `isNewChat` when determining if pending chat actions should be displayed.&#10;  - Added logging for debugging chat data states in `_tryingToMakeActions`.&#10;  - Removed a redundant commented-out call to `saveFcmToken()`.&#10;&#10;- **refactor(navigation):**&#10;  - In `navigation_types.dart`, changed the navigation target for `nextStageRequestRejected` from `FinishedChatNavigation()` to `NoNavigation()`.&#10;&#10;- **chore(ide):**&#10;  - Updated `.idea/workspace.xml` to reflect file changes and internal IDE state.">
+      <option name="closed" value="true" />
+      <created>1772566473795</created>
+      <option name="number" value="00244" />
+      <option name="presentableId" value="LOCAL-00244" />
+      <option name="project" value="LOCAL" />
+      <updated>1772566473798</updated>
+    </task>
+    <option name="localTasksCounter" value="245" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -664,7 +756,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="```&#10;chore(version): Increment build number&#10;&#10;This commit increments the application's build number.&#10;&#10;- **chore(version):**&#10;  - The build number in `pubspec.yaml` has been incremented from `1.0.0+3` to `1.0.0+4`.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`)." />
     <MESSAGE value="```&#10;feat(auth): Enable multiline input for prohibited things&#10;&#10;This commit introduces a multiline text input for the &quot;prohibited things&quot; field in the sign-up form and adds debugging logs for subscription URL changes. It also removes commented-out code from the wallet screen.&#10;&#10;- **feat(auth):**&#10;  - In `shared_form_fields.dart`, enabled multiline input for the &quot;Things I Absolutely Do Not Accept Or Want&quot; text field by setting `inputType` to `TextInputType.multiline`.&#10;&#10;- **refactor(wallet):**&#10;  - In `wallet_screen.dart`, removed commented-out `RiyalPriceText` widget code.&#10;&#10;- **chore(debug):**&#10;  - In `subscription_screen.dart`, added a `log` statement to print the URL on page start for debugging payment success/failure redirection.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`)." />
     <MESSAGE value="```&#10;refactor(core): Replace loading button and enhance permissions and connectivity&#10;&#10;This commit replaces the deprecated `easy_loading_button` with `rounded_loading_button_plus`, creating a custom `LoadingButton` implementation for better control and consistency. It also enhances the permission handling logic for better reliability, especially on iOS, and introduces an optional internet connectivity interceptor in the base cubit.&#10;&#10;- **refactor(core):**&#10;  - Replaced `easy_loading_button` with `rounded_loading_button_plus` and added `connectivity_plus` to `pubspec.yaml`.&#10;  - Created a new `CustomAnimatedButton` and a refactored `LoadingButton` to provide a consistent, app-wide loading button experience.&#10;  - Replaced old `LoadingButton` usages with the new `AppLoadingButton` across various features (`auth`, `more`, `widgets`).&#10;  - In `async_cubit.dart`, added an optional `enableInternetInterceptor` to `executeAsyncWithBaseModel`. When enabled, it uses `connectivity_plus` to listen for network changes and can re-trigger operations when the connection is restored.&#10;  - The main internet interceptor widget in `app.dart` has been commented out in favor of the more granular cubit-level control.&#10;&#10;- **refactor(permissions):**&#10;  - Significantly improved the permission handling logic in `permission_handler/handler.dart`.&#10;  - The handler now checks the permission status *before* requesting it, properly handling `granted`, `limited`, and `permanentlyDenied` states without re-requesting.&#10;  - Added specific logic for iOS where a `denied` status is treated as permanently denied on subsequent checks.&#10;  - Updated `helpers.dart` to pass more callbacks (`onDeniedForever`, `onLimited`) to the new handler, ensuring UI can react appropriately (e.g., by opening app settings).&#10;&#10;- **fix(auth):**&#10;  - In `image_widget.dart`, added a null check (`isNotNull`) to ensure an image is only processed if one was actually selected by the user.&#10;&#10;- **chore(ios):**&#10;  - Added `CODE_SIGN_IDENTITY`, `CODE_SIGN_STYLE`, and `PROVISIONING_PROFILE_SPECIFIER` settings to the iOS project file (`project.pbxproj`), likely for development build configuration.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in IDE configuration files (`.idea/workspace.xml`, `.idea/libraries/Dart_Packages.xml`, `.idea/caches/deviceStreaming.xml`, `.idea/libraries/Flutter_Plugins.xml`)." />
     <MESSAGE value="```&#10;refactor(payment): Generalize PayButton and improve wallet logic&#10;&#10;This commit refactors the `PayButton` widget to make it more reusable and enhances the wallet charging flow. The `PayButton` now accepts a `formKey` and an `onFinish` callback, decoupling it from its parent form and allowing for post-payment actions, such as refreshing the wallet balance.&#10;&#10;- **refactor(payment):**&#10;  - In `pay_button.dart`, the `PayButton` widget has been updated to be more generic.&#10;    - It now accepts a `formKey` and an optional `onFinish` callback.&#10;    - The `onPay` function signature was changed to include the `BuildContext`.&#10;    - The `PaymentBrands` cubit is now provided internally within the `PayButton`, simplifying its usage.&#10;  - In `charge_wallet.dart`, the implementation was updated to use the new `PayButton`.&#10;    - It now passes the `_formKey` and an `onFinish` callback.&#10;    - The `onFinish` callback triggers `FetchWalletCubit` to refresh the user's wallet balance after a successful transaction.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`)." />
@@ -689,7 +780,8 @@
     <MESSAGE value="refactor(build): Configure Android release signing and clean up code&#10;&#10;This commit introduces release signing configuration for Android, removes deprecated permissions, and cleans up unused code and build files.&#10;&#10;- **build(android):**&#10;  - In `build.gradle.kts`, added a `release` signing configuration that reads credentials from `key.properties`. The build type now uses this configuration for release builds.&#10;  - In `AndroidManifest.xml`, changed the app label to &quot;ستر&quot;. Removed several unnecessary permissions, including `WRITE_EXTERNAL_STORAGE`, `RECEIVE_BOOT_COMPLETED`, `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS`, `FOREGROUND_SERVICE_MEDIA_PLAYBACK`, `SCHEDULE_EXACT_ALARM`, and `USE_EXACT_ALARM`.&#10;  - Added Proguard rules for Flutter Play Store deferred components in `proguard-rules.pro` to prevent warnings during the release build process.&#10;&#10;- **build(ios):**&#10;  - In `Info.plist`, updated `CFBundleDisplayName` and `CFBundleName` to &quot;ستر&quot;.&#10;  - Incremented the `CURRENT_PROJECT_VERSION` to 15 in `project.pbxproj`.&#10;&#10;- **refactor(auth):**&#10;  - Deleted `enums_data.dart` and commented out its usages in `female_body.dart`, `male_body.dart`, and `shared_form_fields.dart`, indicating a refactoring of how enum-like data is handled.&#10;&#10;- **fix(navigation):**&#10;  - In `notification_routes.dart`, corrected the key for retrieving the user ID from `sender_id` to `user_id` when handling chat navigation.&#10;&#10;- **chore(ui):**&#10;  - Simplified the `ExceptionView` widget to only show a Lottie animation, removing the text part.&#10;  - Removed commented-out code from `success_sheet.dart`.&#10;&#10;- **chore(ide):**&#10;  - Deleted `.idea/libraries/Dart_Packages.xml` and updated `.idea/workspace.xml` and `.idea/caches/deviceStreaming.xml`.&#10;  - Removed the `Dart Packages` library entry from `appp.iml`.&#10;&#10;- **chore(version):**&#10;  - Bumped the app version from `1.0.0+5` to `1.0.0+15` in `pubspec.yaml`." />
     <MESSAGE value="chore(build): Add iOS upload script and refine notification service&#10;&#10;This commit introduces a bash script for automated iOS IPA builds and App Store Connect uploads. It also improves the resilience of FCM token retrieval and updates project configurations.&#10;&#10;- **feat(ios):**&#10;  - Created `upload_ios.sh` to automate the `clean`, `pub get`, `build ipa`, validation, and upload process using `altool`.&#10;  - Added a `buildIos` command to the `Makefile` to trigger the new upload script.&#10;&#10;- **refactor(notifications):**&#10;  - In `notification_service.dart`, wrapped FCM token retrieval in a try-catch block to prevent crashes if the service is unavailable.&#10;  - Cleaned up comments regarding foreground presentation options.&#10;&#10;- **chore(version):**&#10;  - Bumped the app version from `1.0.0+15` to `1.0.0+16` in `pubspec.yaml`.&#10;&#10;- **chore(ide):**&#10;  - Updated `.idea/workspace.xml` with recent changes and task history.&#10;  - Re-added the `Dart Packages` library dependency in `appp.iml`." />
     <MESSAGE value="refactor(chats): Update chat UI layout and terminology&#10;&#10;This commit refactors the chat header to use a flexible `Row` layout for better alignment and updates several Arabic translations to align with a more general tone. It also refactors the OTP resend logic and enforces authentication checks for specific bottom navigation items.&#10;&#10;- **refactor(chats):**&#10;  - In `upper_view.dart`, replaced the `Stack` layout with a proportional `Row` (using `Expanded` flex values 2:4:4). This ensures the report icon, timer/label, and &quot;End Chat&quot; button are properly aligned according to the current language direction.&#10;  - Added `context_extension.dart` import and improved the `onTap` logic for the force reject action.&#10;&#10;- **feat(otp):**&#10;  - In `resend_code_cubit.dart`, added a success callback to show a snackbar message when the OTP is successfully resent.&#10;  - In `otp_static_texts.dart`, updated the phone number display format to suffix the country code (`$phone 966+`).&#10;  - In `otp.dart`, cleaned up formatting and state management for the resend timer.&#10;&#10;- **refactor(navigation):**&#10;  - In `home_screen.dart`, updated the bottom navigation `onTap` handler to prevent index changes for restricted tabs (1, 2, 3) if the user is not authenticated.&#10;  - Removed unused `zego_uikit_prebuilt_call` import.&#10;&#10;- **chore(translations):**&#10;  - In `lang.json` and `ar.json`, updated &quot;نبذة سريعة&quot; (Quick brief) to &quot;نبذة عامة&quot; (General brief).&#10;  - Changed the translation of &quot;End Chat&quot; from &quot;انهاء المحادثة&quot; to &quot;الغاء التواصل&quot; (Cancel communication).&#10;&#10;- **chore(ide):**&#10;  - Deleted `.idea/caches/deviceStreaming.xml` and updated `.idea/workspace.xml` to reflect recent file changes and breakpoint updates." />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor(chats): Update chat UI layout and terminology&#10;&#10;This commit refactors the chat header to use a flexible `Row` layout for better alignment and updates several Arabic translations to align with a more general tone. It also refactors the OTP resend logic and enforces authentication checks for specific bottom navigation items.&#10;&#10;- **refactor(chats):**&#10;  - In `upper_view.dart`, replaced the `Stack` layout with a proportional `Row` (using `Expanded` flex values 2:4:4). This ensures the report icon, timer/label, and &quot;End Chat&quot; button are properly aligned according to the current language direction.&#10;  - Added `context_extension.dart` import and improved the `onTap` logic for the force reject action.&#10;&#10;- **feat(otp):**&#10;  - In `resend_code_cubit.dart`, added a success callback to show a snackbar message when the OTP is successfully resent.&#10;  - In `otp_static_texts.dart`, updated the phone number display format to suffix the country code (`$phone 966+`).&#10;  - In `otp.dart`, cleaned up formatting and state management for the resend timer.&#10;&#10;- **refactor(navigation):**&#10;  - In `home_screen.dart`, updated the bottom navigation `onTap` handler to prevent index changes for restricted tabs (1, 2, 3) if the user is not authenticated.&#10;  - Removed unused `zego_uikit_prebuilt_call` import.&#10;&#10;- **chore(translations):**&#10;  - In `lang.json` and `ar.json`, updated &quot;نبذة سريعة&quot; (Quick brief) to &quot;نبذة عامة&quot; (General brief).&#10;  - Changed the translation of &quot;End Chat&quot; from &quot;انهاء المحادثة&quot; to &quot;الغاء التواصل&quot; (Cancel communication).&#10;&#10;- **chore(ide):**&#10;  - Deleted `.idea/caches/deviceStreaming.xml` and updated `.idea/workspace.xml` to reflect recent file changes and breakpoint updates." />
+    <MESSAGE value="refactor(notifications): Refine notification action handling and navigation logic&#10;&#10;This commit improves the handling of interactive notification actions on iOS and Android, ensuring that tapping an action button does not trigger the default notification tap behavior. It also updates logic for displaying chat actions and adjusts specific navigation types.&#10;&#10;- **refactor(notifications):**&#10;  - In `notification_service.dart`, updated iOS notification actions to use the `.foreground` option for both &quot;Accept&quot; and &quot;Reject&quot; actions.&#10;  - Improved the initialization logic in `_initializeLocalNotifications` to prevent `_handleNotificationsTap` from executing if a specific action button was pressed.&#10;  - Updated `_tryingToMakeActions` for Android to check `isChatting` instead of `isNewChat` when determining if pending chat actions should be displayed.&#10;  - Added logging for debugging chat data states in `_tryingToMakeActions`.&#10;  - Removed a redundant commented-out call to `saveFcmToken()`.&#10;&#10;- **refactor(navigation):**&#10;  - In `navigation_types.dart`, changed the navigation target for `nextStageRequestRejected` from `FinishedChatNavigation()` to `NoNavigation()`.&#10;&#10;- **chore(ide):**&#10;  - Updated `.idea/workspace.xml` to reflect file changes and internal IDE state." />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor(notifications): Refine notification action handling and navigation logic&#10;&#10;This commit improves the handling of interactive notification actions on iOS and Android, ensuring that tapping an action button does not trigger the default notification tap behavior. It also updates logic for displaying chat actions and adjusts specific navigation types.&#10;&#10;- **refactor(notifications):**&#10;  - In `notification_service.dart`, updated iOS notification actions to use the `.foreground` option for both &quot;Accept&quot; and &quot;Reject&quot; actions.&#10;  - Improved the initialization logic in `_initializeLocalNotifications` to prevent `_handleNotificationsTap` from executing if a specific action button was pressed.&#10;  - Updated `_tryingToMakeActions` for Android to check `isChatting` instead of `isNewChat` when determining if pending chat actions should be displayed.&#10;  - Added logging for debugging chat data states in `_tryingToMakeActions`.&#10;  - Removed a redundant commented-out call to `saveFcmToken()`.&#10;&#10;- **refactor(navigation):**&#10;  - In `navigation_types.dart`, changed the navigation target for `nextStageRequestRejected` from `FinishedChatNavigation()` to `NoNavigation()`.&#10;&#10;- **chore(ide):**&#10;  - Updated `.idea/workspace.xml` to reflect file changes and internal IDE state." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -798,6 +890,16 @@
           <url>file://$PROJECT_DIR$/lib/src/core/notification/navigation_types.dart</url>
           <line>55</line>
           <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chat_screen.dart</url>
+          <line>128</line>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chat_screen.dart</url>
+          <line>111</line>
+          <option name="timeStamp" value="52" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

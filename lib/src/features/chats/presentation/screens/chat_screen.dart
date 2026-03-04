@@ -151,11 +151,23 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
   }
 
   Future<void> _showBased(RemoteMessage notification)async{
-    final type = (notification.data['type'] as String).getType;
+    // final type = (notification.data['type'] as String).getType;
     if((notification.data['action'] as Object?).isNotNull){
       _startChat();
-
     }
+  }
+
+  StreamSubscription<List<ZegoUIKitUser>>? _callStartedSubscription;
+
+  void _listenForCallStart() {
+    _callStartedSubscription?.cancel();
+    _callStartedSubscription = ZegoUIKit().getUserJoinStream().listen((joinedUsers) {
+      if (joinedUsers.isNotEmpty) {
+        _endVideoCall();
+        _callStartedSubscription?.cancel();
+        _callStartedSubscription = null;
+      }
+    });
   }
 
   late final PagifyController<ChatMessages> _chatController;
@@ -213,6 +225,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
   @override
   void dispose() {
+    _callStartedSubscription?.cancel();
     _chatController.dispose();
     socketType.disconnect();
     super.dispose();
@@ -227,7 +240,6 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
   }
 
   Future <void> _endVideoCall()async{
-    log('end video call');
     await context.read<EndVideoCallCubit>().endVideoCall( // برنها وانا فالكول
         ChatsData.data!.matchRequest!.id.toString()
     );
@@ -241,12 +253,6 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
           listener: (context, state) async =>
               _showBased(state.notification!),
         ),
-
-        // show toast based new stage
-        // BlocListener<ChatCubit, AsyncState<ChatModel>>(
-        //   listener: (context, state) async => state.isSuccess?
-        //   MessageUtils.showSnackBar(state.errorMessage!) : null
-        // )
       ],
 
       child: AppScaffold(
@@ -290,12 +296,11 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                             invites: [
                               ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName),
                             ],
-                            onPressed: ()async{
-                              if(callStatus == 'free_available'){
+                            onPressed: () async {
+                              if (callStatus == 'free_available') {
                                 await _makeVideoReq();
                               }
-
-                              await _endVideoCall();
+                              _listenForCallStart();
                             }
                         ) : const SizedBox.shrink()
                     );
