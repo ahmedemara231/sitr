@@ -14,21 +14,26 @@ class TipsAction extends ChatActions{
   void showTipsSheet(BuildContext context, {
     required String path,
     String? btnTitle,
-    required FutureOr<void> Function(BuildContext context) onConfirm
+    required FutureOr<void> Function() onConfirm
   }){
-    context.read<ChatCubit>().tipsSeen();
     ChatSheetManager.show(
         child: BlocProvider.value(
           value: context.read<ChatCubit>(),
           child: TipsSheet(
             path: path,
-            onConfirm: (c)async{
-              await onConfirm.call(c);
-              context.read<ChatCubit>().startChat(requestModel: requestModel);
+            onConfirm: ()async{
+              await onConfirm.call();
+              context.read<ChatCubit>().tipsSeen();
+              context.read<ChatCubit>().startChat(requestModel: requestModel, context: context);
             },
             btnTitle: btnTitle,
           ),
-        )
+        ),
+      // onDismiss: ()async{
+      //   await onConfirm.call();
+      //   context.read<ChatCubit>().tipsSeen();
+      //   context.read<ChatCubit>().startChat(requestModel: requestModel, context: context);
+      // }
     );
   }
 
@@ -39,19 +44,18 @@ class TipsAction extends ChatActions{
         path: currentTips.path,
         btnTitle: currentTips.isChattingStageTips?
         LocaleKeys.start : null,
-        onConfirm: (context) async{
-          if(currentTips.isShariaComplaintMeetingTerms){
+        onConfirm: () async{
+          if(currentTips.isShariaComplaintMeetingTerms) {
             ChatSheetManager.show(
                 child: BlocProvider.value(
                   value: context.read<ChatCubit>(),
                   child: ShariaaMeetingSkipping(
-                      onSubmit: (context, val) async{
+                      onSubmit: (context, val) async {
                         String path = ApiConstants.matchRequestAnd;
-                        if(val == LocaleKeys.moveToNextStage){
-                          path = path+ApiConstants.userMoveToNextRequest;
-
-                        }else{
-                          path = path+ApiConstants.continueStageRequest;
+                        if (val == LocaleKeys.moveToNextStage) {
+                          path = path + ApiConstants.userMoveToNextRequest;
+                        } else {
+                          path = path + ApiConstants.continueStageRequest;
                         }
 
                         await ChatActions.executeReq(
@@ -64,23 +68,35 @@ class TipsAction extends ChatActions{
                   ),
                 )
             );
-
-          }else if(currentTips.isIstikharahTips){
-            await ChatSheetManager.show(
-                child: BlocProvider.value(
-                  value: context.read<ChatCubit>(),
-                  child: const IstikharahRemindersSheet(
-                    path: ApiConstants.istikharaReminder,
-                  ),
-                )
-            );
-
-            await ChatSheetManager.show(
-                child: const IstikharahRemindersSheet(
-                  path: ApiConstants.istikharaDua,
-                )
-            );
-          }else if(currentTips.isInformParentsTips){
+          }
+          // else if(currentTips.isIstikharahTips){
+          //   await ChatSheetManager.show(
+          //       child: BlocProvider.value(
+          //         value: context.read<ChatCubit>(),
+          //         child: const IstikharahRemindersSheet(
+          //           path: ApiConstants.istikharaReminder,
+          //         ),
+          //       )
+          //   );
+          //
+          //
+          // }else if(currentTips.isIstikharahReminder){
+          //   ChatSheetManager.show(
+          //       child: BlocProvider.value(
+          //         value: context.read<ChatCubit>(),
+          //         child: const IstikharahRemindersSheet(
+          //           path: ApiConstants.istikharaReminder,
+          //         ),
+          //       )
+          //   );
+          // }else if(currentTips.istIkharahDua){
+          //   ChatSheetManager.show(
+          //       child: const IstikharahRemindersSheet(
+          //         path: ApiConstants.istikharaDua,
+          //       )
+          //   );
+          // }
+          else if(currentTips.isInformParentsTips){
             ChatSheetManager.show(
                 child: BlocProvider.value(
                   value: context.read<ChatCubit>(),

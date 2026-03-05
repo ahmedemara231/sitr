@@ -64,6 +64,7 @@ import 'widgets/chat/message_widget.dart';
 import 'widgets/chat/timer.dart';
 import 'widgets/chat/upper_view.dart';
 import 'widgets/chat_report_icon.dart';
+import 'widgets/chat_status_builder.dart';
 import 'widgets/sheets/congrats_sheet.dart';
 import 'widgets/sheets/enter_parent_phone.dart';
 import 'widgets/sheets/inform_parent.dart';

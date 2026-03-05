@@ -101,8 +101,8 @@ enum ShowTips{
   shariaComplaintMeetingTerms('sharia_complaint_meeting_terms',ApiConstants.shariaComplaintMeetingTerms),
   shariaComplaintMeetingTips('sharia_complaint_meeting_tips',ApiConstants.shariaComplaintMeetingTips),
   istikharahTips('istikhara_tips',ApiConstants.istikharaTips),
-  istikharahReminder('istikhara_reminder',ApiConstants.istikharaTips),
-  istikharahDua('istikhara_dua',ApiConstants.istikharaTips),
+  istikharahReminder('istikhara_reminder',ApiConstants.istikharaReminder),
+  istikharahDua('istikhara_dua',ApiConstants.istikharaDua),
   informParentsTips('inform_parents',ApiConstants.informParentsTips),
   engagementTips('engagement_tips', ApiConstants.engagementTips),
   parentIndividualConversationTips('parent_individual_conversation', ApiConstants.parentIndividualConversation);
@@ -117,6 +117,8 @@ extension CheckShowTips on ShowTips{
   bool get isChattingStageTips => this == ShowTips.chattingStageTips;
   bool get isShariaComplaintMeetingTips => this == ShowTips.shariaComplaintMeetingTips;
   bool get isIstikharahTips => this == ShowTips.istikharahTips;
+  bool get isIstikharahReminder => this == ShowTips.istikharahReminder;
+  bool get istIkharahDua => this == ShowTips.istikharahDua;
   bool get isShariaComplaintMeetingTerms => this == ShowTips.shariaComplaintMeetingTerms;
   bool get isInformParentsTips => this == ShowTips.informParentsTips;
   bool get isEngagementTips => this == ShowTips.engagementTips;

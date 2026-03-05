@@ -15,7 +15,7 @@ import '../buttons/app_loading_button.dart';
 
 class TipsSheet extends StatelessWidget {
   final String path;
-  final FutureOr<void> Function(BuildContext context) onConfirm;
+  final FutureOr<void> Function() onConfirm;
   final String? btnTitle;
 
   const TipsSheet({
@@ -40,7 +40,7 @@ class TipsSheet extends StatelessWidget {
               AppLoadingButton(
                   title: btnTitle ?? LocaleKeys.confirm,
                   asyncCall: (context) async{
-                    await onConfirm.call(context);
+                    await onConfirm.call();
                   })
             ],
           ).paddingAll(10.r),

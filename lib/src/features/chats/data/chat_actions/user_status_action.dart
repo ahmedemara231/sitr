@@ -107,7 +107,8 @@ class UserStatusAction extends ChatActions{
 
                           if(result == 'success'){
                             chatCubit.startChat(
-                                requestModel: requestModel
+                                requestModel: requestModel,
+                                context: context
                             );
 
                             ChatSheetManager.show(
@@ -134,7 +135,8 @@ class UserStatusAction extends ChatActions{
                     paymentMethod: payMethod.name,
                     onSuccess: (url) async{
                       chatCubit.startChat(
-                          requestModel: requestModel
+                          requestModel: requestModel,
+                          context: context
                       );
 
                       ChatSheetManager.show(

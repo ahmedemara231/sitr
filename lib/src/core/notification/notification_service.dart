@@ -4,6 +4,7 @@ import 'dart:developer' show log;
 import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
@@ -297,7 +298,9 @@ class NotificationService {
 
   void _handleNotificationsTap(RemoteMessage? message) async {
     if (message == null) return;
-    NotificationNavigator._instance?.onRoutingMessage(message);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      NotificationNavigator._instance?.onRoutingMessage(message);
+    });
   }
 
   Future<void> saveFcmToken() async {
@@ -319,6 +322,11 @@ class NotificationService {
   }
 
   Future<void> setupNotifications() async {
+    // Register early — before any awaits — so onMessageOpenedApp events
+    // fired during async initialization are never missed.
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage event) {
+      _handleNotificationsTap(event);
+    });
     await Future.wait([
       _setForegroundNotificationOptions(),
       _registerNotification(),
@@ -339,9 +347,6 @@ class NotificationService {
           type.isMatchRejectedWhenTimerEnded){
         NotificationRoutes.navigateByType(event.data);
       }
-    });
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage event) {
-      _handleNotificationsTap(event);
     });
   }
 }

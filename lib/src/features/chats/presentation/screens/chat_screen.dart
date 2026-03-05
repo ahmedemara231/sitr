@@ -56,7 +56,8 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
           requestModel: widget.requestModel,
           path: ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
           onSuccess: (chatModel) => context.read<ChatCubit>().startChat(
-              requestModel: widget.requestModel
+              requestModel: widget.requestModel,
+              context: context
           ),
         ),
 
@@ -91,62 +92,66 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
   }
 
 
-  ChatActions _manageSuccessState(ChatModel data) {
-    final timer = data.matchRequest!.timer;
-    final stage = data.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum;
-    final userStatus = data.matchRequest!.userRequestStatus!.getUserRequestStatusAsEnum;
-    final matchRequest = data.matchRequest!.userRequest!.getMatchRequestAsEnum;
-    final currentTips = data.matchRequest!.tipsPage!.currentStageTips;
-    final String requestName = data.matchRequest!.requestName!;
-
-    // tips
-    if(!currentTips.isNoPage){
-      return TipsAction(
-          context: context,
-          currentTips: currentTips,
-          requestModel: widget.requestModel
-      );
-    }
-
-    // based stage
-    if(stage.isParentsExchangeNumber){
-      return StageAction(context: context, stage: stage);
-    }
-
-    // acceptance - payment
-    if(!userStatus.isUndefined){
-      return UserStatusAction(
-          context: context,
-          requestName: requestName,
-          stage: stage,
-          status: userStatus,
-          request: matchRequest,
-          matchReqId: context.read<ChatCubit>().matchRequestId!,
-          requestModel: widget.requestModel
-      );
-    }
-
-    if(stage.isParentIndividualConversation){
-      return NoAction();
-    }
-
-    // timer
-    if(timer.isEqualZero){
-      return TimerAction(
-          context: context,
-          requestModel: widget.requestModel,
-          stage: stage
-      );
-    }
-
-    return NoAction();
-  }
+  // ChatActions _manageSuccessState(ChatModel data) {
+  //   final timer = data.matchRequest!.timer;
+  //   final stage = data.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum;
+  //   final userStatus = data.matchRequest!.userRequestStatus!.getUserRequestStatusAsEnum;
+  //   final matchRequest = data.matchRequest!.userRequest!.getMatchRequestAsEnum;
+  //   final currentTips = data.matchRequest!.tipsPage!.currentStageTips;
+  //   final String requestName = data.matchRequest!.requestName!;
+  //
+  //   // tips
+  //   log('the tips is $currentTips');
+  //   log('the tips is ${currentTips.isNoPage}');
+  //   if(!currentTips.isNoPage){
+  //     log('the tips is $currentTips');
+  //     return TipsAction(
+  //         context: context,
+  //         currentTips: currentTips,
+  //         requestModel: widget.requestModel
+  //     );
+  //   }
+  //
+  //   // based stage
+  //   if(stage.isParentsExchangeNumber){
+  //     return StageAction(context: context, stage: stage);
+  //   }
+  //
+  //   // acceptance - payment
+  //   if(!userStatus.isUndefined){
+  //     return UserStatusAction(
+  //         context: context,
+  //         requestName: requestName,
+  //         stage: stage,
+  //         status: userStatus,
+  //         request: matchRequest,
+  //         matchReqId: context.read<ChatCubit>().matchRequestId!,
+  //         requestModel: widget.requestModel
+  //     );
+  //   }
+  //
+  //   if(stage.isParentIndividualConversation){
+  //     return NoAction();
+  //   }
+  //
+  //   // timer
+  //   if(timer.isEqualZero){
+  //     return TimerAction(
+  //         context: context,
+  //         requestModel: widget.requestModel,
+  //         stage: stage
+  //     );
+  //   }
+  //
+  //   return NoAction();
+  // }
 
 
   Future<void> _startChat()async{
     await context.read<ChatCubit>().startChat(
       requestModel: widget.requestModel,
-      onSuccess: (data) => _manageSuccessState.call(data).call(),
+        context: context
+      // onSuccess: (data) => _manageSuccessState.call(data).call(),
     );
   }
 
@@ -257,14 +262,14 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
       child: AppScaffold(
         customTitle: BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
-          builder: (context, state) => StatusBuilder(
+          builder: (context, state) => ChatStatusBuilder(
               data: state,
               onSuccess: (data, context) => AppText(LocaleKeys.chat, fontWeight: FontWeight.bold, fontSize: 16.sp, color: Colors.black,)),
         ),
         isScrollable: false,
         actions: [
           BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
-            builder: (context, state) => StatusBuilder(
+            builder: (context, state) => ChatStatusBuilder(
               data: state,
               onSuccess: (data, context) => !data.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum.isNewChat?
               ValueListenableBuilder(
@@ -282,7 +287,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
             ),
           ),
           BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
-            builder: (context, state) => StatusBuilder(
+            builder: (context, state) => ChatStatusBuilder(
                 data: state,
                 onSuccess: (data, context) {
                   final callStatus = context.read<ChatCubit>().matchRequest?.callStatus;
@@ -338,9 +343,8 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
         bottomBar: BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
             builder: (context, state) =>
                 IntrinsicHeight(
-                  child: StatusBuilder(
+                  child: ChatStatusBuilder(
                     data: state,
-                    onFail: () => AppText(LocaleKeys.exceptionError),
                     onSuccess: (data, context) => _initBottomBar(state.data),
                   ),
                 )

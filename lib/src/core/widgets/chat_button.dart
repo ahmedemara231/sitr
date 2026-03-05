@@ -31,7 +31,7 @@ class ChatButton extends StatelessWidget {
         child: TipsSheet(
             path: ApiConstants.parentIndividualConversation,
             btnTitle: LocaleKeys.start,
-            onConfirm: (context) =>
+            onConfirm: () =>
                 Go.off(ChatScreen(
                   requestModel: RequestModel(receiverId: '${user.id}', fromHome: 1.toString()),
                   receiverName: user.name ?? '',
@@ -41,7 +41,7 @@ class ChatButton extends StatelessWidget {
     ChatSheetManager.show(
         child: TipsSheet(
           path: ApiConstants.appStages,
-          onConfirm: (context) =>
+          onConfirm: () =>
               Go.off(ChatScreen(
                 requestModel: RequestModel(receiverId: '${user.id}', fromHome: 1.toString()),
                 receiverName: user.name ?? '',

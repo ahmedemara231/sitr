@@ -6,6 +6,7 @@ class NotificationRoutes {
     final String type = data['type'];
     log('the type is ${data['type']}');
     final NotificationType notificationType = type.getType;
+    log('the type is $notificationType');
     notificationType.navigation.navigate(data: data);
   }
 }
@@ -55,7 +56,7 @@ class FinishedChatNavigation implements NotificationNavigation {
     Go.to(PreviousChatScreen(
         chatType: (data['chat_status'] as String).getChatType,
         requestModel: RequestModel(
-            receiverId: (data['user_id']).toString(),
+            receiverId: (_getUserId(data)).toString(),
             fromHome: 0.toString()
         )
     ));
@@ -108,6 +109,8 @@ class UserProfileNavigation implements NotificationNavigation {
 }
 
 // ----------------- Match Requests / Chat -----------------
+String _getUserName(Map<String, dynamic> data) => data['user_name'] ?? data['sender_name'];
+String _getUserId(Map<String, dynamic> data) => data['user_id'] ?? data['sender_id'];
 class MatchRequestNavigation implements NotificationNavigation {
   const MatchRequestNavigation();
 
@@ -116,10 +119,10 @@ class MatchRequestNavigation implements NotificationNavigation {
     Go.to(
         ChatScreen(
             requestModel: RequestModel(
-                receiverId: (data['user_id']).toString(),
+                receiverId: (_getUserId(data)).toString(),
                 fromHome: 0.toString()
             ),
-            receiverName: data['user_name']
+            receiverName: _getUserName(data)
         )
     );
   }
@@ -182,7 +185,7 @@ class UserUnblockedYou implements NotificationNavigation {
   @override
   void navigate({required Map<String, dynamic> data}) {
     final UserType type = (data['user_type'] as String).toUserType();
-    final userId = data['user_id'];
+    final userId = _getUserId(data);
 
     _routeToProfile(type: type, userId: userId.toString());
   }

@@ -1,11 +1,14 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
+
 import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/extensions/string_extension.dart';
 import '../../../../core/helpers/helpers.dart';
 import '../../../../core/network/api_endpoints.dart';
+import '../../data/chats_data.dart';
 import '../../data/models/chat_model.dart';
 import '../../data/models/request_model.dart';
 import '../../enums.dart';
@@ -50,11 +53,10 @@ class ChatCubit extends AsyncCubit<ChatModel>{
   }
 
   Future<void> startChat({
+    required BuildContext context,
     required RequestModel requestModel,
     void Function(ChatModel chatModel)? onSuccess
 })async{
-    log('start chaaaaattttt from service');
-    // await Helpers.initZegoService();
     await executeAsyncWithBaseModel(
       operation: () => baseCrudUseCase.call(
           CrudBaseParmas(
@@ -64,7 +66,11 @@ class ChatCubit extends AsyncCubit<ChatModel>{
             mapper: (json) => ChatModel.fromJson(json),
           ),
       ),
-      onSuccess: (data) => onSuccess?.call(data.data)
+      onSuccess: (data) async => await ChatsData.manageSuccessState(
+          data.data,
+          context: context,
+          requestModel: requestModel
+      ).call()
     );
   }
 
