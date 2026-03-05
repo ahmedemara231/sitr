@@ -14,6 +14,7 @@ import 'core/shared/user_cubit/user_cubit.dart' show UserCubit;
 import 'core/widgets/custom_messages.dart';
 import 'features/auth/imports.dart';
 import 'features/home/cubits/get_notification_count.dart';
+import 'features/on_boarding/screen.dart';
 import 'features/splash/splash_screen.dart';
 
 class Sitr extends StatelessWidget {
@@ -45,7 +46,7 @@ class Sitr extends StatelessWidget {
                       children: [
                         child!,
                         ZegoUIKitPrebuiltCallMiniOverlayPage(
-                          contextQuery: () => Go.context
+                            contextQuery: () => Go.context
                         ),
                       ],
                     )),

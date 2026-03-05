@@ -39,11 +39,13 @@ class _ChatTimerWidgetState extends State<ChatTimerWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        AppText(
-            widget.phaseTitle,
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w500,
-            color: Colors.black54
+        FittedBox(
+          child: AppText(
+              widget.phaseTitle,
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w500,
+              color: Colors.black54
+          ),
         ),
         EasyTimerCount.builder(
             controller: _timerCont,

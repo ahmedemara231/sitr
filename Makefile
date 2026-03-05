@@ -1,4 +1,8 @@
-# Makefile
+# ==============================
+# Flutter Makefile
+# ==============================
+
+.PHONY: clean run apk ios upgrade handlePods openXcode translations gradleFix buildIos
 
 # Clean Flutter build and get packages
 clean:
@@ -20,12 +24,15 @@ ios:
 upgrade:
 	flutter pub upgrade
 
+# Install & update CocoaPods
 handlePods:
 	cd ios && pod install && pod update && cd ..
 
+# Open project in Xcode
 openXcode:
 	open ios/Runner.xcworkspace
 
+# Generate translations
 translations:
 	dart run generate/strings/main.dart
 
@@ -34,15 +41,13 @@ gradleFix:
 	@echo "Stopping Gradle daemons..."
 	-cd android && ./gradlew --stop
 	@echo "Killing Gradle and Java processes..."
-	-pkill -9 -f gradle
-	-pkill -9 -f java
+	-pkill -9 -f gradle || true
+	-pkill -9 -f java || true
 	@echo "Removing lock files..."
-	-find android/.gradle -name "*.lock" -delete 2>/dev/null
-	-find ~/.gradle -name "*.lock" -delete 2>/dev/null
+	-find android/.gradle -name "*.lock" -delete 2>/dev/null || true
+	-find ~/.gradle -name "*.lock" -delete 2>/dev/null || true
 	@echo "Gradle locks cleared!"
 
+# Upload iOS build
 buildIos:
-    sh upload_ios.sh
-# put:
-#     export PATH="$PATH:/path/to/your/app/bin"
-
+	sh upload_ios.sh
