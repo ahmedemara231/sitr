@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:equatable/equatable.dart';
+import '../../../../../notification/inactivity_notification_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multiple_result/multiple_result.dart';
 import '../../../../../../config/language/locale_keys.g.dart';
@@ -63,6 +64,7 @@ abstract class AsyncCubit<T> extends Cubit<AsyncState<T>> {
     result.when(
           (success) {
         setSuccess(data: success.data);
+        InactivityNotificationService.scheduleInactivityReminder();
         if (onSuccess != null) {
           onSuccess(success);
         }

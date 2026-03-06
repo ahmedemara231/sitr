@@ -15,10 +15,36 @@ import 'core/widgets/custom_messages.dart';
 import 'features/auth/imports.dart';
 import 'features/home/cubits/get_notification_count.dart';
 import 'features/on_boarding/screen.dart';
+import 'core/notification/inactivity_notification_service.dart';
 import 'features/splash/splash_screen.dart';
 
-class Sitr extends StatelessWidget {
+class Sitr extends StatefulWidget {
   const Sitr({super.key});
+
+  @override
+  State<Sitr> createState() => _SitrState();
+}
+
+class _SitrState extends State<Sitr> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    InactivityNotificationService.scheduleInactivityReminder();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      InactivityNotificationService.scheduleInactivityReminder();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

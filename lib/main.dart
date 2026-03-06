@@ -16,6 +16,7 @@ import 'src/core/navigation/go.dart';
 import 'src/core/navigation/page_router/implementation/imports_page_router.dart';
 import 'src/core/navigation/page_router/imports_page_router_builder.dart';
 import 'src/core/helpers/cache_service.dart';
+import 'src/core/notification/inactivity_notification_service.dart';
 import 'src/core/network/backend_configuation.dart';
 import 'src/core/shared/functions/setup_service_locators.dart';
 import 'src/core/shared/bloc_observer.dart';

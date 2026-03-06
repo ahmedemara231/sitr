@@ -349,6 +349,7 @@ class NotificationService {
       }
     });
   }
+
 }
 
 class NotificationNavigator {
