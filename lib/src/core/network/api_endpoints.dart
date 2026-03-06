@@ -134,6 +134,7 @@ class ApiConstants {
   static const String rejectAll = 'reject-match-request';
   static const String payRequest = 'pay-request/';
   static const String endVideoCall = 'end-video-call';
+  static const String markRead = 'mark-read';
 
 // ============================== acceptance ==============================
   static const String acceptRequest = 'accept-request/';

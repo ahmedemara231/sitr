@@ -9,19 +9,14 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="Refactor chat and auth UI, update iOS build version, and improve Makefile&#10;&#10;- **Auth**: Update localization key for the residence field in `female_fields.dart`.&#10;- **Chat**: Wrap the phase title in a `FittedBox` within the chat timer widget for better layout handling.&#10;- **iOS**: Bump `CURRENT_PROJECT_VERSION` to 17 and update `project.pbxproj` with missing input/output paths for Pods scripts.&#10;- **Makefile**: Refactor for clarity, add `.PHONY` targets, and improve the `gradleFix` and `buildIos` commands.&#10;- **App**: Add missing `OnBoardingScreen` import and fix formatting in `app.dart`.&#10;- **IDE**: Synchronize `.idea/workspace.xml` with recent project changes.">
-      <change afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/chat_status_builder.dart" afterDir="false" />
+    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="Refactor chat state management, notification routing, and UI builder logic.&#10;&#10;- **Chats**:&#10;  - Introduce `ChatStatusBuilder` to standardize state handling across chat-related widgets.&#10;  - Relocate `manageSuccessState` logic from `ChatScreen` to `ChatsData` for better separation of concerns.&#10;  - Update `startChat` in `ChatCubit` to automatically handle success actions using the new centralized logic.&#10;  - Refactor `TipsAction` and `TipsSheet` to simplify confirmation callbacks and fix redirection for Sharia-compliant meeting and Istikharah flows.&#10;  - Update `ChatSheetManager` to support an optional `onDismiss` callback.&#10;  - Correct API constants for Istikharah reminder and dua enums.&#10;&#10;- **Notifications**:&#10;  - Enhance `NotificationRoutes` to robustly extract user IDs and names from various notification payload formats.&#10;  - Improve `NotificationService` by registering `onMessageOpenedApp` listeners earlier in the lifecycle and using `addPostFrameCallback` for safer navigation.&#10;  - Add debug logging to `NotificationNavigator` for better traceability of incoming message types.&#10;&#10;- **Core/UI**:&#10;  - Refactor `ChatButton` to remove unused context parameters from confirmation callbacks.&#10;  - Update `TipsSheet` and `TipsAction` to use simplified function signatures for better readability.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/network/api_endpoints.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/network/api_endpoints.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/core/notification/notification_routes.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/notification/notification_routes.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/notification/notification_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/notification/notification_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/chat_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/chat_button.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/sheets/tips_sheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/sheets/tips_sheet.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/exeption_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/exeption_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/scaffolds/app_scaffold.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/scaffolds/app_scaffold.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/tips_action.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/tips_action.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/user_status_action.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/user_status_action.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/data/chat_sheet_manager.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/data/chat_sheet_manager.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/data/chats_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/data/chats_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/enums.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/enums.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/cubits/start_chat.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/cubits/start_chat.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/imports.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/imports.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chat_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chat_screen.dart" afterDir="false" />
     </list>
@@ -138,32 +133,32 @@
     <option name="foldersAlwaysOnTop" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Flutter.main.dart.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "ShowUsagesActions.previewPropertyKey": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "com.google.services.firebase.aqiPopupShown": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "refactor-test-sheet",
-    "io.flutter.reload.alreadyRun": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/aaita/Desktop/apps/new_crud_satr/assets/images",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.17",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "flutter.settings",
-    "show.migrate.to.gradle.popup": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Flutter.main.dart.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;ShowUsagesActions.previewPropertyKey&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;refactor-test-sheet&quot;,
+    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/aaita/Desktop/apps/new_crud_satr/assets/images&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;flutter.settings&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/assets/images" />
@@ -261,14 +256,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
-    </task>
-    <task id="LOCAL-00198" summary="```&#10;chore(version): Increment build number&#10;&#10;This commit increments the application's build number.&#10;&#10;- **chore(version):**&#10;  - The build number in `pubspec.yaml` has been incremented from `1.0.0+3` to `1.0.0+4`.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`).">
-      <option name="closed" value="true" />
-      <created>1766497137121</created>
-      <option name="number" value="00198" />
-      <option name="presentableId" value="LOCAL-00198" />
-      <option name="project" value="LOCAL" />
-      <updated>1766497137121</updated>
     </task>
     <task id="LOCAL-00199" summary="```&#10;chore(version): Increment build number&#10;&#10;This commit increments the application's build number.&#10;&#10;- **chore(version):**&#10;  - The build number in `pubspec.yaml` has been incremented from `1.0.0+3` to `1.0.0+4`.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`).">
       <option name="closed" value="true" />
@@ -654,7 +641,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772709405091</updated>
     </task>
-    <option name="localTasksCounter" value="247" />
+    <task id="LOCAL-00247" summary="Refactor chat state management, notification routing, and UI builder logic.&#10;&#10;- **Chats**:&#10;  - Introduce `ChatStatusBuilder` to standardize state handling across chat-related widgets.&#10;  - Relocate `manageSuccessState` logic from `ChatScreen` to `ChatsData` for better separation of concerns.&#10;  - Update `startChat` in `ChatCubit` to automatically handle success actions using the new centralized logic.&#10;  - Refactor `TipsAction` and `TipsSheet` to simplify confirmation callbacks and fix redirection for Sharia-compliant meeting and Istikharah flows.&#10;  - Update `ChatSheetManager` to support an optional `onDismiss` callback.&#10;  - Correct API constants for Istikharah reminder and dua enums.&#10;&#10;- **Notifications**:&#10;  - Enhance `NotificationRoutes` to robustly extract user IDs and names from various notification payload formats.&#10;  - Improve `NotificationService` by registering `onMessageOpenedApp` listeners earlier in the lifecycle and using `addPostFrameCallback` for safer navigation.&#10;  - Add debug logging to `NotificationNavigator` for better traceability of incoming message types.&#10;&#10;- **Core/UI**:&#10;  - Refactor `ChatButton` to remove unused context parameters from confirmation callbacks.&#10;  - Update `TipsSheet` and `TipsAction` to use simplified function signatures for better readability.">
+      <option name="closed" value="true" />
+      <created>1772743368505</created>
+      <option name="number" value="00247" />
+      <option name="presentableId" value="LOCAL-00247" />
+      <option name="project" value="LOCAL" />
+      <updated>1772743368505</updated>
+    </task>
+    <option name="localTasksCounter" value="248" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -675,7 +670,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="```&#10;refactor(payment): Generalize PayButton and improve wallet logic&#10;&#10;This commit refactors the `PayButton` widget to make it more reusable and enhances the wallet charging flow. The `PayButton` now accepts a `formKey` and an `onFinish` callback, decoupling it from its parent form and allowing for post-payment actions, such as refreshing the wallet balance.&#10;&#10;- **refactor(payment):**&#10;  - In `pay_button.dart`, the `PayButton` widget has been updated to be more generic.&#10;    - It now accepts a `formKey` and an optional `onFinish` callback.&#10;    - The `onPay` function signature was changed to include the `BuildContext`.&#10;    - The `PaymentBrands` cubit is now provided internally within the `PayButton`, simplifying its usage.&#10;  - In `charge_wallet.dart`, the implementation was updated to use the new `PayButton`.&#10;    - It now passes the `_formKey` and an `onFinish` callback.&#10;    - The `onFinish` callback triggers `FetchWalletCubit` to refresh the user's wallet balance after a successful transaction.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`)." />
     <MESSAGE value="feat(calls): Implement Picture-in-Picture for video calls&#10;&#10;This commit introduces Picture-in-Picture (PiP) functionality for video calls using the `pip_view` package and enhances the Zego call UI and configuration.&#10;&#10;- **feat(calls):**&#10;  - Added `pip_view` dependency to `pubspec.yaml` to enable PiP.&#10;  - Enabled PiP support in `AndroidManifest.xml` by setting `supportsPictureInPicture` and `resizeableActivity` to `true`.&#10;  - Wrapped the main app `child` in a `PIPView` widget in `app.dart` to provide a global context for PiP.&#10;  - In `zego.dart`, updated the `ZegoUIKitPrebuiltCallConfig` for video calls:&#10;    - Configured the layout to `ZegoLayout.pictureInPicture`.&#10;    - Explicitly set the top menu bar buttons to include `minimizingButton` and `switchCameraButton`.&#10;    - Passed the `BuildContext` to the `zegoButton` to support call invocation.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in IDE configuration files (`.idea/workspace.xml`, `.idea/libraries/Dart_Packages.xml`)." />
     <MESSAGE value="feat(home, calls): Implement pagination for opportunities and enhance Zego call services&#10;&#10;This commit introduces pagination for the opportunities list on the main screen and significantly enhances the Zego video call integration, including offline notifications and improved UI configuration.&#10;&#10;- **feat(home):**&#10;  - In `main_screen/view.dart`, replaced the static list of opportunities with `AppPagify` to enable pagination.&#10;  - Added a new `getOpportunities` method in `home_data.dart` to fetch paginated data from the `/opportunities` endpoint based on user type.&#10;&#10;- **feat(calls):**&#10;  - Added `zego_zpns` to `pubspec.yaml` for offline push notifications.&#10;  - Enhanced Zego initialization in `zego.dart`:&#10;    - Configured `ZegoCallInvitationUIConfig` to show avatar and name for both inviter and invitee.&#10;    - Set up `ZegoCallInvitationNotificationConfig` for both Android (FCM) and iOS (CallKit) to handle offline call notifications.&#10;    - Enabled `autoEnterAcceptedOfflineCall: false` to manually control joining offline calls.&#10;  - In `helpers.dart`, integrated Zego Push Notification Service (ZPNS) registration (`registerPush`) and configuration.&#10;  - Zego initialization (`initZegoData`) is now called once at app startup in `main.dart`.&#10;  - Added necessary permissions for calls and notifications in `AndroidManifest.xml` and `Info.plist`.&#10;&#10;- **refactor(auth):**&#10;  - Removed `guardianName` and `guardianPhone` fields from `female_fields.dart` and `FemaleModel` as they are no longer required from the frontend.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in IDE configuration files (`.idea/workspace.xml`, `.claude/settings.local.json`)." />
     <MESSAGE value="feat(chat): Add &quot;End Chat&quot; functionality and confirmation dialog&#10;&#10;This commit introduces a new feature allowing users to end a chat session. An &quot;End Chat&quot; button has been added to the chat screen, which, when tapped, presents a confirmation dialog to prevent accidental chat termination.&#10;&#10;- **feat(chat):**&#10;  - In `upper_view.dart`, a new &quot;End Chat&quot; `AppText` button has been added to the chat header.&#10;  - Tapping the button displays a confirmation bottom sheet (`AppBottomSheet.large`) asking the user &quot;Are you sure to end chat&quot;.&#10;  - A new `alert.png` image is used in the confirmation dialog for visual emphasis.&#10;  - Upon confirmation, a request is sent to the `ApiConstants.rejectAll` endpoint to terminate the chat.&#10;  - After successfully ending the chat, the user is redirected to the home screen.&#10;&#10;- **refactor(ui):**&#10;  - In `upper_view.dart`, the layout has been changed from a `Stack` to a `Row` with `mainAxisAlignment: MainAxisAlignment.spaceBetween` to better accommodate the new &quot;End Chat&quot; button alongside the existing report icon and timer/label.&#10;  - The `AppText` widget has been enhanced to support `TextDecoration`.&#10;&#10;- **i18n:**&#10;  - Added new translation keys and their corresponding Arabic and English translations for &quot;End Chat&quot; (`end_chat`) and the confirmation message (`are_you_sure_to_end_chat`) in `lang.json`, `en.json`, and `ar.json`.&#10;  - Updated `locale_keys.g.dart` to include the new translation strings.&#10;&#10;- **build(ios):**&#10;  - In `AppDelegate.swift`, removed Zego-related service setup code that is no longer needed in this file.&#10;  - The project version in `project.pbxproj` has been incremented.&#10;&#10;- **chore(dev):**&#10;  - Added a new `gradleFix` command to the `Makefile` to help resolve Gradle lock file issues by stopping daemons and clearing lock files.&#10;&#10;- **chore(assets):**&#10;  - Added a new image `assets/images/alert.png`.&#10;  - Regenerated `assets.dart` to include the new image asset." />
@@ -700,7 +694,8 @@
     <MESSAGE value="refactor(notifications): Refine notification action handling and navigation logic&#10;&#10;This commit improves the handling of interactive notification actions on iOS and Android, ensuring that tapping an action button does not trigger the default notification tap behavior. It also updates logic for displaying chat actions and adjusts specific navigation types.&#10;&#10;- **refactor(notifications):**&#10;  - In `notification_service.dart`, updated iOS notification actions to use the `.foreground` option for both &quot;Accept&quot; and &quot;Reject&quot; actions.&#10;  - Improved the initialization logic in `_initializeLocalNotifications` to prevent `_handleNotificationsTap` from executing if a specific action button was pressed.&#10;  - Updated `_tryingToMakeActions` for Android to check `isChatting` instead of `isNewChat` when determining if pending chat actions should be displayed.&#10;  - Added logging for debugging chat data states in `_tryingToMakeActions`.&#10;  - Removed a redundant commented-out call to `saveFcmToken()`.&#10;&#10;- **refactor(navigation):**&#10;  - In `navigation_types.dart`, changed the navigation target for `nextStageRequestRejected` from `FinishedChatNavigation()` to `NoNavigation()`.&#10;&#10;- **chore(ide):**&#10;  - Updated `.idea/workspace.xml` to reflect file changes and internal IDE state." />
     <MESSAGE value="refactor(core): Cleanup platform files and enhance chat/notification logic&#10;&#10;This commit performs a major cleanup by removing unused platform-specific directories (Linux, macOS, Windows, and Web) and updates the application's branding assets. It also refactors the notification service and chat-related logic for better reliability and user experience.&#10;&#10;- **feat(assets):**&#10;  - Replaced the application logo and updated all Android mipmap and iOS AppIcon launcher icons with a new design.&#10;&#10;- **refactor(notifications):**&#10;  - In `notification_service.dart`, updated the default `deviceToken` to '1234' and ensured it is consistently assigned even if retrieval fails.&#10;  - In `navigation_types.dart`, changed the navigation behavior for `nextStageRequestRejected` to `NoNavigation()` instead of `FinishedChatNavigation()`.&#10;&#10;- **refactor(chats):**&#10;  - In `chat_screen.dart`, introduced `_listenForCallStart` using `ZegoUIKit` to monitor when a user joins a call, automatically ending the video call request once a connection is established.&#10;  - In `tips_action.dart`, updated the `TipsSheet` confirmation logic to explicitly call `startChat` after the confirmation action completes.&#10;  - Cleaned up debug logs and unused imports in the chat and notification modules.&#10;&#10;- **chore(cleanup):**&#10;  - Deleted the entire `linux/`, `macos/`, `windows/`, and `web/` directories, including build configurations, runners, and ignore files, to focus on mobile platforms.&#10;&#10;- **chore(ide):**&#10;  - Updated `.idea/workspace.xml` to reflect the branch change to `refactor-test-sheet`, updated file states, and recorded new breakpoints." />
     <MESSAGE value="Refactor chat and auth UI, update iOS build version, and improve Makefile&#10;&#10;- **Auth**: Update localization key for the residence field in `female_fields.dart`.&#10;- **Chat**: Wrap the phase title in a `FittedBox` within the chat timer widget for better layout handling.&#10;- **iOS**: Bump `CURRENT_PROJECT_VERSION` to 17 and update `project.pbxproj` with missing input/output paths for Pods scripts.&#10;- **Makefile**: Refactor for clarity, add `.PHONY` targets, and improve the `gradleFix` and `buildIos` commands.&#10;- **App**: Add missing `OnBoardingScreen` import and fix formatting in `app.dart`.&#10;- **IDE**: Synchronize `.idea/workspace.xml` with recent project changes." />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor chat and auth UI, update iOS build version, and improve Makefile&#10;&#10;- **Auth**: Update localization key for the residence field in `female_fields.dart`.&#10;- **Chat**: Wrap the phase title in a `FittedBox` within the chat timer widget for better layout handling.&#10;- **iOS**: Bump `CURRENT_PROJECT_VERSION` to 17 and update `project.pbxproj` with missing input/output paths for Pods scripts.&#10;- **Makefile**: Refactor for clarity, add `.PHONY` targets, and improve the `gradleFix` and `buildIos` commands.&#10;- **App**: Add missing `OnBoardingScreen` import and fix formatting in `app.dart`.&#10;- **IDE**: Synchronize `.idea/workspace.xml` with recent project changes." />
+    <MESSAGE value="Refactor chat state management, notification routing, and UI builder logic.&#10;&#10;- **Chats**:&#10;  - Introduce `ChatStatusBuilder` to standardize state handling across chat-related widgets.&#10;  - Relocate `manageSuccessState` logic from `ChatScreen` to `ChatsData` for better separation of concerns.&#10;  - Update `startChat` in `ChatCubit` to automatically handle success actions using the new centralized logic.&#10;  - Refactor `TipsAction` and `TipsSheet` to simplify confirmation callbacks and fix redirection for Sharia-compliant meeting and Istikharah flows.&#10;  - Update `ChatSheetManager` to support an optional `onDismiss` callback.&#10;  - Correct API constants for Istikharah reminder and dua enums.&#10;&#10;- **Notifications**:&#10;  - Enhance `NotificationRoutes` to robustly extract user IDs and names from various notification payload formats.&#10;  - Improve `NotificationService` by registering `onMessageOpenedApp` listeners earlier in the lifecycle and using `addPostFrameCallback` for safer navigation.&#10;  - Add debug logging to `NotificationNavigator` for better traceability of incoming message types.&#10;&#10;- **Core/UI**:&#10;  - Refactor `ChatButton` to remove unused context parameters from confirmation callbacks.&#10;  - Update `TipsSheet` and `TipsAction` to use simplified function signatures for better readability." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor chat state management, notification routing, and UI builder logic.&#10;&#10;- **Chats**:&#10;  - Introduce `ChatStatusBuilder` to standardize state handling across chat-related widgets.&#10;  - Relocate `manageSuccessState` logic from `ChatScreen` to `ChatsData` for better separation of concerns.&#10;  - Update `startChat` in `ChatCubit` to automatically handle success actions using the new centralized logic.&#10;  - Refactor `TipsAction` and `TipsSheet` to simplify confirmation callbacks and fix redirection for Sharia-compliant meeting and Istikharah flows.&#10;  - Update `ChatSheetManager` to support an optional `onDismiss` callback.&#10;  - Correct API constants for Istikharah reminder and dua enums.&#10;&#10;- **Notifications**:&#10;  - Enhance `NotificationRoutes` to robustly extract user IDs and names from various notification payload formats.&#10;  - Improve `NotificationService` by registering `onMessageOpenedApp` listeners earlier in the lifecycle and using `addPostFrameCallback` for safer navigation.&#10;  - Add debug logging to `NotificationNavigator` for better traceability of incoming message types.&#10;&#10;- **Core/UI**:&#10;  - Refactor `ChatButton` to remove unused context parameters from confirmation callbacks.&#10;  - Update `TipsSheet` and `TipsAction` to use simplified function signatures for better readability." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -809,16 +804,6 @@
           <url>file://$PROJECT_DIR$/lib/src/core/notification/navigation_types.dart</url>
           <line>55</line>
           <option name="timeStamp" value="49" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chat_screen.dart</url>
-          <line>132</line>
-          <option name="timeStamp" value="51" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chat_screen.dart</url>
-          <line>115</line>
-          <option name="timeStamp" value="52" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

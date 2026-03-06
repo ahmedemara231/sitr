@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../config/language/locale_keys.g.dart';
 import '../../config/res/assets.gen.dart';
-import '../../config/res/config_imports.dart';
-import '../extensions/context_extension.dart';
-import '../extensions/text_style_extensions.dart';
  
 
 class ExceptionView extends StatelessWidget {
@@ -12,8 +7,8 @@ class ExceptionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FittedBox(
-      child: Center(
+    return Center(
+      child: FittedBox(
         child: AppAssets.lottie.error.apiError.lottie(),
       ),
     );

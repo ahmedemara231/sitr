@@ -53,6 +53,7 @@ import '../data/socket_events.dart';
 import '../enums.dart';
 import 'cubits/end_video_call.dart';
 import 'cubits/finish_chat_cubit.dart';
+import 'cubits/mark_read_cubit.dart';
 import 'cubits/notification_cubit.dart';
 import 'cubits/pay_request.dart';
 import 'cubits/start_chat.dart';

@@ -2,13 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../config/res/config_imports.dart';
 import '../../extensions/context_extension.dart';
 import '../../extensions/padding_extension.dart';
 import '../../navigation/navigator.dart';
 import '../app_text.dart';
-import '../pull_refresher.dart';
 
 class AppScaffold extends StatelessWidget {
   final String? appBarTitle;
@@ -20,6 +18,7 @@ class AppScaffold extends StatelessWidget {
   final double? appBarHeight;
   final List<Widget>? actions;
   final bool isScrollable;
+  final FutureOr<void> Function()? onBack;
   // final FutureOr<void> Function(BuildContext context)? onRefresh;
 
   const AppScaffold({super.key,
@@ -31,6 +30,7 @@ class AppScaffold extends StatelessWidget {
     this.bottomWidget,
     this.appBarHeight,
     this.actions,
+    this.onBack,
     this.isScrollable = true,
   });
 
@@ -46,7 +46,7 @@ class AppScaffold extends StatelessWidget {
             centerTitle: true,
             title: customTitle??AppText(appBarTitle??'', fontWeight: FontWeight.bold, fontSize: 16.sp, color: Colors.black,),
             leading: ModalRoute.of(context)!.canPop?
-            const AppBackButton() : null,
+            AppBackButton(onBack: onBack) : null,
             bottom: bottomWidget,
             actions: actions?.map((e)
                 => SizedBox.square(dimension: 30.sp, child: e)).toList(),
@@ -68,8 +68,8 @@ class AppScaffold extends StatelessWidget {
 }
 
 class AppBackButton extends StatelessWidget {
-  const AppBackButton({super.key});
-
+  final FutureOr<void> Function()? onBack;
+  const AppBackButton({super.key, this.onBack});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -82,7 +82,10 @@ class AppBackButton extends StatelessWidget {
               shape: BoxShape.circle
           ),
           child: IconButton(
-              onPressed: () => Go.back(),
+              onPressed: () async{
+                await onBack?.call();
+                Go.back();
+              },
               icon: const Icon(Icons.arrow_back_ios_sharp, color: Colors.black, size: 14)
           ),
         ).paddingAll(12.r),

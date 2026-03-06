@@ -14,7 +14,7 @@ run:
 
 # Build APK
 apk:
-	flutter build apk
+	flutter build apk --split-per-abi
 
 # Build iOS (for macOS users with Xcode)
 ios:

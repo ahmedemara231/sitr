@@ -110,7 +110,7 @@ class UserProfileNavigation implements NotificationNavigation {
 
 // ----------------- Match Requests / Chat -----------------
 String _getUserName(Map<String, dynamic> data) => data['user_name'] ?? data['sender_name'];
-String _getUserId(Map<String, dynamic> data) => data['user_id'] ?? data['sender_id'];
+String _getUserId(Map<String, dynamic> data) => (data['user_id'] ?? data['sender_id']).toString();
 class MatchRequestNavigation implements NotificationNavigation {
   const MatchRequestNavigation();
 
