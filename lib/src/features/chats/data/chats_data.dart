@@ -74,24 +74,27 @@ class ChatsData{
       );
     }
 
-
-
-    if(stage.isParentIndividualConversation){
-      return NoAction();
-    }
-
-    // timer
-    if(timer.isEqualZero){
-      return TimerAction(
-          context: context,
-          requestModel: requestModel,
-          stage: stage
-      );
-    }
+    // if(stage.isParentIndividualConversation){
+    //   return NoAction();
+    // }
+    //
+    // // timer
+    // if(timer.isEqualZero){
+    //   return TimerAction(
+    //       context: context,
+    //       requestModel: requestModel,
+    //       stage: stage
+    //   );
+    // }
 
     // based stage
     if(!stage.isNewChat){
-      return StageAction(context: context, stage: stage, requestModel: requestModel);
+      return StageAction(
+          context: context,
+          stage: stage,
+          requestModel: requestModel,
+          timer: timer!
+      );
     }
 
     return NoAction();

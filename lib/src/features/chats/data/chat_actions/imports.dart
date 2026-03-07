@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../config/language/locale_keys.g.dart';
+import '../../../../core/extensions/num.dart';
 import '../../../../core/extensions/string_extension.dart';
 import '../../../../core/helpers/helpers.dart';
 import '../../../../core/navigation/navigator.dart';

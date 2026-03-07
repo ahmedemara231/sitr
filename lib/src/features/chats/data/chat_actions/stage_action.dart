@@ -4,11 +4,13 @@ class StageAction extends ChatActions{
   final BuildContext context;
   final ChatStages stage;
   final RequestModel requestModel;
+  final int timer;
 
   StageAction({
     required this.context,
     required this.stage,
-    required this.requestModel
+    required this.requestModel,
+    required this.timer,
   });
 
   @override
@@ -25,6 +27,7 @@ class StageAction extends ChatActions{
           ),
         ),
       );
+
     }else if(stage.isShariaMeetingChoice){
       ChatSheetManager.show(
           child: BlocProvider.value(
@@ -48,6 +51,37 @@ class StageAction extends ChatActions{
             ),
           )
       );
+
+    }else if(timer.isEqualZero){
+      ChatSheetManager.show(
+          child: BlocProvider.value(
+            value: context.read<ChatCubit>(),
+            child: ChooseRequestSheet(
+              onConfirm: (context, selectedVal) async {
+                await ChatActions.executeReq(
+                  context: context,
+                  requestModel: requestModel,
+                  path: selectedVal.pathToRequest,
+                  onSuccess: (chatModel){
+                    Go.back();
+                    if(selectedVal == LocaleKeys.refuseMoveToNextStage){
+                      Go.offAll(const HomeScreen());
+                    }
+                  },
+                );
+              },
+              titles: [
+                LocaleKeys.moveToNextStage,
+                LocaleKeys.refuseMoveToNextStage,
+                if(!stage.isShariaComplaintMeeting)
+                  LocaleKeys.requestForExtensionOfPeriod
+              ],
+            ),
+          )
+      );
+
+    }else{
+      return;
     }
   }
 }

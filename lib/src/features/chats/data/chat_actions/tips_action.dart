@@ -24,9 +24,10 @@ class TipsAction extends ChatActions{
             onConfirm: ()async{
               await onConfirm.call();
               context.read<ChatCubit>().tipsSeen();
-              if(currentTips.isIstikharahTips || currentTips.isIstikharahReminder){
-                context.read<ChatCubit>().startChat(requestModel: requestModel, context: context);
-              }
+              context.read<ChatCubit>().startChat(requestModel: requestModel, context: context);
+              // if(currentTips.isIstikharahTips || currentTips.isIstikharahReminder){
+              //   context.read<ChatCubit>().startChat(requestModel: requestModel, context: context);
+              // }
             },
             btnTitle: btnTitle,
           ),
