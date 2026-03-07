@@ -36,6 +36,7 @@ class ChatCubit extends AsyncCubit<ChatModel>{
     required RequestModel requestModel,
     required String path,
     required FutureOr<void> Function(ChatModel model) onSuccess,
+    Map<String, dynamic>? additionalBody,
   })async{
     await executeAsyncWithBaseModel(
         operation: () => baseCrudUseCase.call(
@@ -44,7 +45,7 @@ class ChatCubit extends AsyncCubit<ChatModel>{
             httpRequestType: HttpRequestType.post,
             body: requestModel.toJson()..addAll({
               "match_request_id" : matchRequestId.toString(),
-            }),
+            })..addAll(additionalBody??{}),
             mapper: (json) => ChatModel.fromJson(json),
           ),
         ),

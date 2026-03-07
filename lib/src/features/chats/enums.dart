@@ -99,9 +99,11 @@ extension CheckMatchRequest on MatchRequestEnum{
 
 enum ShowTips{
   noPage('no_page', ''),
+  appStages('app_stages',ApiConstants.appStages),
   chattingStageTips('chatting_stage_tips',ApiConstants.chattingStageTips),
-  shariaComplaintMeetingTerms('sharia_complaint_meeting_terms',ApiConstants.shariaComplaintMeetingTerms),
   shariaComplaintMeetingTips('sharia_complaint_meeting_tips',ApiConstants.shariaComplaintMeetingTips),
+  shariaMeetingChoiceTips('sharia_meeting_choice_tips',ApiConstants.shariaComplaintMeetingTips),
+  shariaComplaintMeetingTerms('sharia_complaint_meeting_terms',ApiConstants.shariaComplaintMeetingTerms),
   istikharahTips('istikhara_tips',ApiConstants.istikharaTips),
   istikharahReminder('istikhara_reminder',ApiConstants.istikharaReminder),
   istikharahDua('istikhara_dua',ApiConstants.istikharaDua),
@@ -125,6 +127,14 @@ extension CheckShowTips on ShowTips{
   bool get isInformParentsTips => this == ShowTips.informParentsTips;
   bool get isEngagementTips => this == ShowTips.engagementTips;
   bool get isParentIndividualConversationTips => this == ShowTips.parentIndividualConversationTips;
+}
+
+enum ShariaChoice {
+  complete('complete'),
+  skip('skip');
+
+  final String value;
+  const ShariaChoice(this.value);
 }
 
 

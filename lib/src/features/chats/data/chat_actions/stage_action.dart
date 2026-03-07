@@ -34,16 +34,20 @@ class StageAction extends ChatActions{
             value: context.read<ChatCubit>(),
             child: ShariaaMeetingSkipping(
                 onSubmit: (context, val) async {
-                  String path = ApiConstants.matchRequestAnd;
+                  late ShariaChoice choice;
+                  // String path = ApiConstants.matchRequestAnd;
                   if (val == LocaleKeys.moveToNextStage) {
-                    path = path + ApiConstants.userMoveToNextRequest;
+                    choice = ShariaChoice.skip;
+                    // path = path + ApiConstants.userMoveToNextRequest;
                   } else {
-                    path = path + ApiConstants.continueStageRequest;
+                    choice = ShariaChoice.complete;
+                    // path = path + ApiConstants.continueStageRequest;
                   }
 
                   await ChatActions.executeReq(
                     context: context,
-                    path: path,
+                    path: ApiConstants.matchRequestAnd + ApiConstants.shariaChoiceRequest,
+                    additionalBody: {'choice': choice.value},
                     onSuccess: (chatModel) => Go.back(),
                     requestModel: requestModel,
                   );

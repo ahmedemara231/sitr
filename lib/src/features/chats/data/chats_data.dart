@@ -49,11 +49,7 @@ class ChatsData{
     final currentTips = data.matchRequest!.tipsPage!.currentStageTips;
     final MatchRequest matchRequest = data.matchRequest!;
 
-    // tips
-    log('the tips is $currentTips');
-    log('the tips is ${currentTips.isNoPage}');
     if(!currentTips.isNoPage){
-      log('the tips is $currentTips');
       return TipsAction(
           context: context,
           currentTips: currentTips,

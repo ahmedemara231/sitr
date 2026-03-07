@@ -261,18 +261,18 @@ class NotificationService {
     final data = _getChatData(message);
     log('the data is ${data.$2}');
     log('the data is ${data.$1}');
-    log('the data is ${data.$2.isChatting && data.$1.isPending}');
+    log('the data is ${data.$2.isNewChat && data.$1.isPending}');
     if(data.$2.isNewChat && data.$1.isPending){
       return [
         AndroidNotificationAction(
           acceptChat,
           LocaleKeys.accept,
-          showsUserInterface: false,
+          showsUserInterface: true,
         ),
         AndroidNotificationAction(
           rejectChat,
           LocaleKeys.refused,
-          showsUserInterface: false,
+          showsUserInterface: true,
         ),
       ];
 

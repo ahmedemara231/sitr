@@ -33,6 +33,9 @@ class UserStatusAction extends ChatActions{
   }
 
   void _showAcceptanceSheet(void Function() onSuccess){
+    // path: stage.isShariaMeetingChoice?
+    // ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!+ApiConstants.shariaChoiceRequest :
+    // ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
     ChatSheetManager.show(
         child: BlocProvider.value(
           value: context.read<ChatCubit>(),
@@ -41,7 +44,8 @@ class UserStatusAction extends ChatActions{
               title: request.isParentIndividualApproval?
               LocaleKeys.doYouAgreeWithThePartner: null,
               onAccept: (context) async => await _executeReq(
-                  context, path: ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
+                  context,
+                  path: ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
                   onSuccess: onSuccess
               ),
               onReject:(context) async => await _executeReq(
