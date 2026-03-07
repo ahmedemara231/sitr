@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../config/res/config_imports.dart';
 import '../../../core/extensions/num.dart';
 import '../../../core/extensions/string_extension.dart';
@@ -63,12 +61,6 @@ class ChatsData{
       );
     }
 
-
-    // based stage
-    if(stage.isParentsExchangeNumber){
-      return StageAction(context: context, stage: stage);
-    }
-
     // acceptance - payment
     if(!userStatus.isUndefined){
       return UserStatusAction(
@@ -82,6 +74,8 @@ class ChatsData{
       );
     }
 
+
+
     if(stage.isParentIndividualConversation){
       return NoAction();
     }
@@ -93,6 +87,11 @@ class ChatsData{
           requestModel: requestModel,
           stage: stage
       );
+    }
+
+    // based stage
+    if(!stage.isNewChat){
+      return StageAction(context: context, stage: stage, requestModel: requestModel);
     }
 
     return NoAction();

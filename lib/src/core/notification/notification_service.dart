@@ -55,7 +55,8 @@ Future<void> handleNotificationAction(NotificationResponse? payload) async {
   final decodedPayload = json.decode(payload.payload ?? '{}');
   log('handleNotificationAction decoded payload: $decodedPayload');
 
-  final messageData = decodedPayload['data'] as Map<String, dynamic>?;
+  final messageData = (decodedPayload['data'] as Map<String, dynamic>?) ?? (decodedPayload as Map<String, dynamic>?);
+  log('handleNotificationAction decodedPayload keys: ${decodedPayload.keys}');
   log('handleNotificationAction messageData: $messageData');
   if (messageData == null) {
     log('handleNotificationAction: messageData is null, returning');
@@ -66,10 +67,14 @@ Future<void> handleNotificationAction(NotificationResponse? payload) async {
   final matchRequestId =
       (messageData['match_request_id'] ?? messageData['match_request'])
           ?.toString();
-  final senderId = messageData['sender_id']?.toString();
-  log('handleNotificationAction: userRequest=$userRequest, matchRequestId=$matchRequestId, senderId=$senderId');
+  final senderId =
+      (messageData['sender'] ?? messageData['user_id'] ?? messageData['sender_id'])
+          ?.toString();
+  log('handleNotificationAction: userRequest=$userRequest');
+  log('handleNotificationAction: matchRequestId=$matchRequestId');
+  log('handleNotificationAction: senderId=$senderId');
   if (userRequest == null || matchRequestId == null || senderId == null) {
-    log('handleNotificationAction: missing required fields, returning');
+    log('handleNotificationAction: missing required fields → userRequest=$userRequest, matchRequestId=$matchRequestId, senderId=$senderId');
     return;
   }
 
@@ -233,7 +238,7 @@ class NotificationService {
   }
 
   (UserRequestStatus, ChatStages) _getChatData(RemoteMessage message){
-    final UserRequestStatus status = ((message.data['status'] ?? '') as String).getUserRequestStatusAsEnum;
+    final UserRequestStatus status = ((message.data['user_request_status'] ?? '') as String).getUserRequestStatusAsEnum;
     final ChatStages stage = ((message.data['stage'] ?? '') as String).getCurrentStageAsStagesEnum;
     return (status, stage);
   }
@@ -257,7 +262,7 @@ class NotificationService {
     log('the data is ${data.$2}');
     log('the data is ${data.$1}');
     log('the data is ${data.$2.isChatting && data.$1.isPending}');
-    if(data.$2.isChatting && data.$1.isPending){
+    if(data.$2.isNewChat && data.$1.isPending){
       return [
         AndroidNotificationAction(
           acceptChat,

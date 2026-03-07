@@ -48,28 +48,28 @@ class TipsAction extends ChatActions{
         LocaleKeys.start : null,
         onConfirm: () async{
           if(currentTips.isShariaComplaintMeetingTerms) {
-            ChatSheetManager.show(
-                child: BlocProvider.value(
-                  value: context.read<ChatCubit>(),
-                  child: ShariaaMeetingSkipping(
-                      onSubmit: (context, val) async {
-                        String path = ApiConstants.matchRequestAnd;
-                        if (val == LocaleKeys.moveToNextStage) {
-                          path = path + ApiConstants.userMoveToNextRequest;
-                        } else {
-                          path = path + ApiConstants.continueStageRequest;
-                        }
-
-                        await ChatActions.executeReq(
-                          context: context,
-                          path: path,
-                          onSuccess: (chatModel) => Go.back(),
-                          requestModel: requestModel,
-                        );
-                      }
-                  ),
-                )
-            );
+            // ChatSheetManager.show(
+            //     child: BlocProvider.value(
+            //       value: context.read<ChatCubit>(),
+            //       child: ShariaaMeetingSkipping(
+            //           onSubmit: (context, val) async {
+            //             String path = ApiConstants.matchRequestAnd;
+            //             if (val == LocaleKeys.moveToNextStage) {
+            //               path = path + ApiConstants.userMoveToNextRequest;
+            //             } else {
+            //               path = path + ApiConstants.continueStageRequest;
+            //             }
+            //
+            //             await ChatActions.executeReq(
+            //               context: context,
+            //               path: path,
+            //               onSuccess: (chatModel) => Go.back(),
+            //               requestModel: requestModel,
+            //             );
+            //           }
+            //       ),
+            //     )
+            // );
           }
           // else if(currentTips.isIstikharahTips){
           //   await ChatSheetManager.show(
