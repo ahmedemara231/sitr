@@ -16,6 +16,13 @@ class InactivityNotificationService {
   static Future<void> init() async {
     if (_initialized) return;
     tz.initializeTimeZones();
+
+    const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const iosSettings = DarwinInitializationSettings();
+    await _plugin.initialize(
+      const InitializationSettings(android: androidSettings, iOS: iosSettings),
+    );
+
     if (Platform.isAndroid) {
       await _plugin
           .resolvePlatformSpecificImplementation<
@@ -39,6 +46,7 @@ class InactivityNotificationService {
     await _plugin.cancel(_notificationId);
 
     final scheduledDate =
+        // tz.TZDateTime.now(tz.local).add(const Duration(minutes: 1));
         tz.TZDateTime.now(tz.local).add(const Duration(hours: 24));
 
     const androidDetails = AndroidNotificationDetails(

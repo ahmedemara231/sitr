@@ -9,9 +9,14 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="Refactor chat stage transitions and Sharia-compliant meeting logic (#183201)&#10;&#10;- **Chats**:&#10;    - Update `StageAction` to handle Sharia-compliant meeting choices using a new `sharia_choice_request` endpoint and `ShariaChoice` enum.&#10;    - Enhance `ChatCubit` (via `executeRequest`) and `StartChatCubit` to support passing optional `additionalBody` data in API requests.&#10;    - Update `ShowTips` enum with new stages: `appStages`, `shariaMeetingChoiceTips`, and `shariaComplaintMeetingTerms`.&#10;    - Refactor `UserStatusAction` to streamline acceptance and rejection flows.&#10;- **Notifications**:&#10;    - Update `NotificationService` to show the user interface when interacting with chat request notification actions.&#10;    - Fix notification action logic to correctly target `isNewChat` stages.&#10;- **Infrastructure**:&#10;    - Add `sharia_choice_request` to `ApiConstants`.&#10;    - Update project workspace and debug breakpoints.">
+    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="Refactor `TipsAction` to streamline tip handling and chat transitions (#183202)&#10;&#10;- Ensure `tipsSeen` and `startChat` are awaited sequentially when confirming tips.&#10;- Simplify `TipsAction` by removing obsolete conditional logic for Sharia-compliant meeting terms, Istikharah reminders, and informing parents.&#10;- Clean up commented-out code and unused logic paths within the `TipsAction` component.">
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/tips_action.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/tips_action.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/app.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/notification/inactivity_notification_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/notification/inactivity_notification_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/stage_action.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/stage_action.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/data/chats_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/data/chats_data.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,32 +131,32 @@
     <option name="foldersAlwaysOnTop" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Flutter.main.dart.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "ShowUsagesActions.previewPropertyKey": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "com.google.services.firebase.aqiPopupShown": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "manageCycle",
-    "io.flutter.reload.alreadyRun": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/aaita/Desktop/apps/new_crud_satr/assets/images",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.17",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "flutter.settings",
-    "show.migrate.to.gradle.popup": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Flutter.main.dart.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;ShowUsagesActions.previewPropertyKey&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;manageCycle&quot;,
+    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/aaita/Desktop/apps/new_crud_satr/assets/images&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;flutter.settings&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/assets/images" />
@@ -249,14 +254,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
-    </task>
-    <task id="LOCAL-00204" summary="```&#10;chore(version): Increment build number&#10;&#10;This commit increments the application's build number.&#10;&#10;- **chore(version):**&#10;  - The build number in `pubspec.yaml` has been incremented from `1.0.0+3` to `1.0.0+4`.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`).">
-      <option name="closed" value="true" />
-      <created>1767102323032</created>
-      <option name="number" value="00204" />
-      <option name="presentableId" value="LOCAL-00204" />
-      <option name="project" value="LOCAL" />
-      <updated>1767102323033</updated>
     </task>
     <task id="LOCAL-00205" summary="```&#10;chore(version): Increment build number&#10;&#10;This commit increments the application's build number.&#10;&#10;- **chore(version):**&#10;  - The build number in `pubspec.yaml` has been incremented from `1.0.0+3` to `1.0.0+4`.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`).">
       <option name="closed" value="true" />
@@ -642,7 +639,15 @@
       <option name="project" value="LOCAL" />
       <updated>1772853063774</updated>
     </task>
-    <option name="localTasksCounter" value="253" />
+    <task id="LOCAL-00253" summary="Refactor `TipsAction` to streamline tip handling and chat transitions (#183202)&#10;&#10;- Ensure `tipsSeen` and `startChat` are awaited sequentially when confirming tips.&#10;- Simplify `TipsAction` by removing obsolete conditional logic for Sharia-compliant meeting terms, Istikharah reminders, and informing parents.&#10;- Clean up commented-out code and unused logic paths within the `TipsAction` component.">
+      <option name="closed" value="true" />
+      <created>1772854011213</created>
+      <option name="number" value="00253" />
+      <option name="presentableId" value="LOCAL-00253" />
+      <option name="project" value="LOCAL" />
+      <updated>1772854011213</updated>
+    </task>
+    <option name="localTasksCounter" value="254" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -663,7 +668,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(notifications): Add interactive chat request actions&#10;&#10;This commit enhances the notification system to allow users to directly accept or reject new chat requests from the notification itself.&#10;&#10;- **feat(notifications):**&#10;  - In `notification_service.dart`, added interactive action buttons (&quot;Accept&quot;, &quot;Reject&quot;) to incoming new chat request notifications on Android.&#10;  - Implemented `_handleActions` to process the user's choice. When an action is tapped, an API call is made to either `ApiConstants.acceptRequest` or `ApiConstants.rejectRequest`.&#10;  - The logic correctly parses the necessary IDs (`user_request`, `match_request_id`, `sender_id`) from the notification payload to perform the action.&#10;  - This allows users to respond to chat requests without opening the app, streamlining the interaction.&#10;&#10;- **refactor(home):**&#10;  - In `main_screen/view.dart`, the state management for the main screen's filters (`firstSelection` and `secondSelection`) has been lifted into a new `MainView` `StatefulWidget`.&#10;  - This refactoring separates the state initialization from the `MainViewBody`, improving the structure and lifecycle management of the screen's filters.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`)." />
     <MESSAGE value="feat(children): Add &quot;Delete&quot; functionality to child profiles&#10;&#10;This commit introduces a &quot;Delete&quot; button on the `ParentChildrenCard`, allowing a parent to delete a child's profile. A confirmation dialog is shown to prevent accidental deletion.&#10;&#10;- **feat(children):**&#10;  - In `parent_children_card.dart`, a new &quot;Delete&quot; button (`DefaultButton`) has been added alongside the existing &quot;Edit&quot; button.&#10;  - The card's layout is updated to a `Column` containing the `ListTile` and a `Row` for the action buttons, improving the structure.&#10;  - Tapping &quot;Delete&quot; opens a `DeleteSheet` confirmation dialog, which asks &quot;Are you sure to delete [child's name]&quot;.&#10;&#10;- **i18n:**&#10;  - Added new translation keys for &quot;Delete&quot; (`delete`) and the confirmation message (`are_you_sure_to_delete`) in `en.json`, `ar.json`, and `lang.json`.&#10;  - Regenerated `locale_keys.g.dart` to include the new translation strings.&#10;&#10;- **refactor(chat):**&#10;  - In `chat_screen.dart`, the Zego call button is now conditionally rendered. It only appears if the chat stage is not `isNewChat`, preventing users from making calls in newly created chats.&#10;&#10;- **fix(ui):**&#10;  - In `app_pagify.dart`, the redundant `scrollController` property has been removed from the `Pagify` widget constructors, as it was not being used.&#10;&#10;- **chore(ide):**&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`)." />
     <MESSAGE value="feat(auth): Conditionally show &quot;Children Exists&quot; field&#10;&#10;This commit enhances the user registration form by conditionally displaying the &quot;Do you have children?&quot; field. The field will now only appear if the user selects a marital status other than &quot;single.&quot;&#10;&#10;- **feat(auth):**&#10;  - In `shared_form_fields.dart`, the `RadioWidget` for `childrenExists` is now wrapped in a `ValueListenableBuilder`.&#10;  - The builder listens to changes in the `martialStatus` `ValueNotifier`.&#10;  - The &quot;Do you have children?&quot; field is only rendered if the selected marital status value is not &quot;single,&quot; improving the form's contextual relevance.&#10;&#10;- **chore(dev):**&#10;  - In `app.dart`, the home screen was temporarily changed to `EnterMaleOrFemaleOrChildDataScreen` for development and testing purposes.&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`)." />
     <MESSAGE value="feat(auth): Conditionally show &quot;Children Exists&quot; field&#10;&#10;This commit enhances the user registration form by conditionally displaying the &quot;Do you have children?&quot; field. The field will now only appear if the user selects a marital status other than &quot;single.&quot;&#10;&#10;- **feat(auth):**&#10;  - In `shared_form_fields.dart`, the `RadioWidget` for `childrenExists` is now wrapped in a `ValueListenableBuilder`.&#10;  - The builder listens to changes in the `martialStatus` `ValueNotifier`.&#10;  - The &quot;Do you have children?&quot; field is only rendered if the selected marital status value is not &quot;single,&quot; improving the form's contextual relevance.&#10;&#10;- **chore(dev):**&#10;  - In `app.dart`, the home screen was temporarily changed to `EnterMaleOrFemaleOrChildDataScreen` for development and testing purposes and has now been reverted.&#10;  - Ignored changes in the IDE configuration file (`.idea/workspace.xml`)." />
@@ -688,7 +692,8 @@
     <MESSAGE value="Refactor chat stage handling and notification payload parsing.&#10;&#10;- **Chats**: &#10;  - Introduce `shariaMeetingChoice` to `ChatStages` enum.&#10;  - Refactor `StageAction` to support complex stage transitions, specifically moving Sharia-compliant meeting logic from `TipsAction` to `StageAction`.&#10;  - Update `ChatsData` to prioritize `UserStatusAction` and generalize `StageAction` for all non-new chat stages.&#10;- **Notifications**:&#10;  - Enhance `handleNotificationAction` to robustly parse sender IDs and nested data from various payload structures.&#10;  - Fix logic for displaying notification actions by ensuring they target `isNewChat` instead of `isChatting`.&#10;  - Update `_getChatData` to use the correct `user_request_status` key from message data.&#10;- **Other**:&#10;  - Comment out legacy Sharia meeting logic in `TipsAction`." />
     <MESSAGE value="Refactor chat stage handling and generalize stage actions in the chat data layer.&#10;&#10;- **Chats**:&#10;    - Update `StageAction` to handle timer-based transitions and consolidate Sharia-compliant meeting logic.&#10;    - Refactor `ChatsData` to prioritize `StageAction` for all non-new chat stages, passing the current timer value.&#10;    - Remove specific `TimerAction` and `isParentIndividualConversation` checks in favor of the generalized `StageAction`.&#10;    - Simplified `TipsAction` by removing conditional logic for starting chats, making it the default behavior after tips are seen.&#10;- **Infrastructure**:&#10;    - Added necessary imports to `chat_actions/imports.dart`.&#10;    - Updated IDE workspace settings and project configurations." />
     <MESSAGE value="Refactor chat stage transitions and Sharia-compliant meeting logic (#183201)&#10;&#10;- **Chats**:&#10;    - Update `StageAction` to handle Sharia-compliant meeting choices using a new `sharia_choice_request` endpoint and `ShariaChoice` enum.&#10;    - Enhance `ChatCubit` (via `executeRequest`) and `StartChatCubit` to support passing optional `additionalBody` data in API requests.&#10;    - Update `ShowTips` enum with new stages: `appStages`, `shariaMeetingChoiceTips`, and `shariaComplaintMeetingTerms`.&#10;    - Refactor `UserStatusAction` to streamline acceptance and rejection flows.&#10;- **Notifications**:&#10;    - Update `NotificationService` to show the user interface when interacting with chat request notification actions.&#10;    - Fix notification action logic to correctly target `isNewChat` stages.&#10;- **Infrastructure**:&#10;    - Add `sharia_choice_request` to `ApiConstants`.&#10;    - Update project workspace and debug breakpoints." />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor chat stage transitions and Sharia-compliant meeting logic (#183201)&#10;&#10;- **Chats**:&#10;    - Update `StageAction` to handle Sharia-compliant meeting choices using a new `sharia_choice_request` endpoint and `ShariaChoice` enum.&#10;    - Enhance `ChatCubit` (via `executeRequest`) and `StartChatCubit` to support passing optional `additionalBody` data in API requests.&#10;    - Update `ShowTips` enum with new stages: `appStages`, `shariaMeetingChoiceTips`, and `shariaComplaintMeetingTerms`.&#10;    - Refactor `UserStatusAction` to streamline acceptance and rejection flows.&#10;- **Notifications**:&#10;    - Update `NotificationService` to show the user interface when interacting with chat request notification actions.&#10;    - Fix notification action logic to correctly target `isNewChat` stages.&#10;- **Infrastructure**:&#10;    - Add `sharia_choice_request` to `ApiConstants`.&#10;    - Update project workspace and debug breakpoints." />
+    <MESSAGE value="Refactor `TipsAction` to streamline tip handling and chat transitions (#183202)&#10;&#10;- Ensure `tipsSeen` and `startChat` are awaited sequentially when confirming tips.&#10;- Simplify `TipsAction` by removing obsolete conditional logic for Sharia-compliant meeting terms, Istikharah reminders, and informing parents.&#10;- Clean up commented-out code and unused logic paths within the `TipsAction` component." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor `TipsAction` to streamline tip handling and chat transitions (#183202)&#10;&#10;- Ensure `tipsSeen` and `startChat` are awaited sequentially when confirming tips.&#10;- Simplify `TipsAction` by removing obsolete conditional logic for Sharia-compliant meeting terms, Istikharah reminders, and informing parents.&#10;- Clean up commented-out code and unused logic paths within the `TipsAction` component." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
