@@ -83,7 +83,7 @@ class AppBackButton extends StatelessWidget {
           ),
           child: IconButton(
               onPressed: () async{
-                await onBack?.call();
+                onBack?.call();
                 Go.back();
               },
               icon: const Icon(Icons.arrow_back_ios_sharp, color: Colors.black, size: 14)

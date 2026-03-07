@@ -16,7 +16,6 @@ class ChatScreen extends StatelessWidget {
           BlocProvider(create: (context) => ChatCubit()),
           BlocProvider(create: (context) => FinishChatCubit()),
           BlocProvider(create: (context) => EndVideoCallCubit()),
-          BlocProvider(create: (context) => MarkReadCubit()),
           BlocProvider(
             create: (context) => NotificationCubit(injector<ChatNotificationService>()),
           ),
@@ -194,9 +193,9 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     );
   }
 
-  Future<void> _markAsRead()async{
+  void _markAsRead()async{
     final roomId = context.read<ChatCubit>().currentRoom?.id;
-    await context.read<MarkReadCubit>().markRead(roomId!);
+    await ChatsData.markRead(roomId!);
   }
   @override
   Widget build(BuildContext context) {
@@ -212,7 +211,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
         canPop: false,
         onPopInvokedWithResult: (didPop, result) async {
           if (didPop) return;
-          await _markAsRead();
+          _markAsRead();
           Go.back();
         },
         child: AppScaffold(
@@ -222,7 +221,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
               onSuccess: (data, context) => AppText(LocaleKeys.chat, fontWeight: FontWeight.bold, fontSize: 16.sp, color: Colors.black,)),
         ),
         isScrollable: false,
-        onBack: () async => await _markAsRead(),
+        onBack: () => _markAsRead(),
         actions: [
           BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
             builder: (context, state) => ChatStatusBuilder(

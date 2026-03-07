@@ -94,4 +94,14 @@ class ChatsData{
     return NoAction();
   }
 
+  static Future<void> markRead(int roomId) async {
+    await injector<NetworkService>().callApi(
+      NetworkRequest(
+        method: RequestMethod.post,
+        path: 'room/$roomId/${ApiConstants.markRead}',
+      ),
+      mapper: (data) => data,
+    );
+  }
+
 }
