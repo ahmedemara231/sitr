@@ -64,6 +64,9 @@ class _PackagesScreenState extends State<PackagesScreen> {
             Expanded(
               child: AppPagify<Package>(
                   asyncCall: (ctx, page) async => await PackagesData.getPackages(page: page, userType: widget.userType),
+                  cacheKey: 'packages_${widget.userType?.name ?? 'all'}',
+                  cacheToJson: (item) => item.toJson(),
+                  cacheFromJson: (json) => Package.fromJson(json),
                   itemBuilder: (ctx, data, index, element) => PackageWidget(
                     type: widget.type,
                     paymentMethods: widget.paymentMethods,

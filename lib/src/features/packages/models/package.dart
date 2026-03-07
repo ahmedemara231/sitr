@@ -51,6 +51,17 @@ class Package{
     hasActivePackage: json['has_active_package']??true,
     packageId: json['package_id'] ?? 0 // package id
   );
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'type': type.toJson(),
+    'image': image,
+    'duration': duration,
+    'price': price,
+    'has_active_package': hasActivePackage,
+    'package_id': packageId,
+  };
 }
 
 class PackageType{
@@ -67,4 +78,9 @@ class PackageType{
     json['value'],
     json['title'],
   );
+
+  Map<String, dynamic> toJson() => {
+    'value': value,
+    'title': title,
+  };
 }

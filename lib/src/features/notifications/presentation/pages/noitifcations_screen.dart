@@ -84,6 +84,9 @@ class _NotificationBodyState extends State<NotificationBody> {
         body: AppPagify<NotificationModel>(
           key: UniqueKey(),
           asyncCall: (context, page)async => await NotificationsData.getNotifications(page),
+          cacheKey: 'notifications',
+          cacheToJson: (item) => item.toJson(),
+          cacheFromJson: (json) => NotificationModel.fromJson(json),
           onUpdateStatus: (state) {
             if(state.isSuccess){
               _showDeleteAll.value = controller.getItemsLength >= 2;

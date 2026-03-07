@@ -13,4 +13,7 @@ class FontFamily {
 
   /// Font family: Tajawal
   static const String tajawal = 'Tajawal';
+
+  /// Font family: riyal
+  static const String riyal = 'riyal';
 }

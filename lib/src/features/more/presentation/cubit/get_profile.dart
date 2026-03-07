@@ -12,6 +12,7 @@ class GetProfileCubit extends GetUserModelCubit{
             api: ApiConstants.profile,
             httpRequestType: HttpRequestType.get,
             mapper: (json) => UserModel.fromJson(json),
+            toJson: (model) => model.toJson(),
           ),
       ),
       onSuccess: (user) => onSuccess.call(user.data)

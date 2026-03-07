@@ -1,5 +1,5 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 // **************************************************************************
 // InjectableConfigGenerator
@@ -31,10 +31,14 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i30.GetBaseEntityCubit<dynamic>>(
         () => _i30.GetBaseEntityCubit());
+    gh.lazySingleton<_i241.BaseLocalDataSource>(
+        () => _i241.BaseLocalDataSourceImpl());
     gh.lazySingleton<_i241.BaseRemoteDataSource>(() =>
         _i241.BaseRemoteDataSourceImpl(dioService: gh<_i632.NetworkService>()));
     gh.lazySingleton<_i267.BaseRepository>(() => _i241.BaseRepositoryImpl(
-        baseRemoteDataSource: gh<_i241.BaseRemoteDataSource>()));
+          baseRemoteDataSource: gh<_i241.BaseRemoteDataSource>(),
+          baseLocalDataSource: gh<_i241.BaseLocalDataSource>(),
+        ));
     gh.lazySingleton<_i267.BaseCrudUseCase>(
         () => _i267.BaseCrudUseCase(repository: gh<_i267.BaseRepository>()));
     gh.lazySingleton<_i267.GetBaseEntityUseCase>(() =>

@@ -7,6 +7,7 @@ import 'package:pagify/helpers/status_stream.dart';
 import 'package:pagify/pagify.dart';
 import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
+import '../local_db/objectbox_cache_service.dart';
 import 'app_text.dart';
 import 'custom_loading.dart';
 import 'custom_messages.dart';
@@ -23,6 +24,11 @@ class AppPagify<T> extends StatefulWidget {
   final FutureOr<void> Function(PagifyAsyncCallStatus)? onUpdateStatus;
   final bool shrinkWrap;
 
+  /// Optional — provide all three together to enable offline cache support.
+  final String? cacheKey;
+  final Map<String, dynamic> Function(T item)? cacheToJson;
+  final T Function(Map<String, dynamic> json)? cacheFromJson;
+
   const AppPagify({super.key,
     required this.asyncCall,
     required this.itemBuilder,
@@ -32,6 +38,9 @@ class AppPagify<T> extends StatefulWidget {
     this.rankingType = Ranking.listView,
     this.onUpdateStatus,
     this.shrinkWrap = true,
+    this.cacheKey,
+    this.cacheToJson,
+    this.cacheFromJson,
   });
 
   @override
@@ -48,6 +57,19 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
 
   @override
   Widget build(BuildContext context) {
+    final hasCacheConfig = widget.cacheKey != null &&
+        widget.cacheToJson != null &&
+        widget.cacheFromJson != null;
+
+    void onSaveCache(String key, List<Map<String, dynamic>> items) =>
+        ObjectBoxCacheService.save(key, {'items': items});
+
+    List<Map<String, dynamic>>? onReadCache(String key) {
+      final cached = ObjectBoxCacheService.read(key);
+      if (cached == null) return null;
+      return (cached['items'] as List?)?.cast<Map<String, dynamic>>();
+    }
+
     if(widget.rankingType == Ranking.listView){
       return Pagify<(List<T>, PaginationData), T>.listView(
           key: widget.key,
@@ -73,7 +95,6 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
               )
           ),
           errorBuilder: (e) => const ExceptionView(),
-
           onError: (c, page, e) => MessageUtils.showTopMsg(e.msg, state: MsgState.error),
           errorMapper: PagifyErrorMapper(
               errorWhenDio: (e) {
@@ -85,9 +106,13 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
                     statusMsg: e.response?.statusMessage,
                   ),
                 );
-              } // if you using Dio
-
+              }
           ),
+          cacheKey: hasCacheConfig ? widget.cacheKey : null,
+          cacheToJson: hasCacheConfig ? widget.cacheToJson : null,
+          cacheFromJson: hasCacheConfig ? widget.cacheFromJson : null,
+          onSaveCache: hasCacheConfig ? onSaveCache : null,
+          onReadCache: hasCacheConfig ? onReadCache : null,
           itemBuilder: widget.itemBuilder
       );
 
@@ -121,6 +146,11 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
           errorMapper: PagifyErrorMapper(
               errorWhenDio: (error) => error.response?.data['msg']
           ),
+          cacheKey: hasCacheConfig ? widget.cacheKey : null,
+          cacheToJson: hasCacheConfig ? widget.cacheToJson : null,
+          cacheFromJson: hasCacheConfig ? widget.cacheFromJson : null,
+          onSaveCache: hasCacheConfig ? onSaveCache : null,
+          onReadCache: hasCacheConfig ? onReadCache : null,
           itemBuilder: widget.itemBuilder
       );
     }

@@ -11,6 +11,7 @@ import 'src/app.dart';
 import 'src/config/language/languages.dart';
 import 'src/config/res/config_imports.dart';
 import 'src/core/helpers/helpers.dart';
+import 'src/core/local_db/objectbox_cache_service.dart';
 import 'src/core/navigation/Constants/imports_constants.dart';
 import 'src/core/navigation/go.dart';
 import 'src/core/navigation/page_router/implementation/imports_page_router.dart';
@@ -33,6 +34,7 @@ void main() async {
       Helpers.initZegoData(),
       EasyLocalization.ensureInitialized(),
       CacheStorage.init(),
+      ObjectBoxCacheService.init(),
       ScreenUtil.ensureScreenSize(),
     ],
   );

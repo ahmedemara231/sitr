@@ -33,6 +33,9 @@ class _BlockedUserScreenState extends State<BlockedUserScreen> {
         appBarTitle: LocaleKeys.blockedCustomers,
         body: AppPagify<BlockUserModel>(
             asyncCall: (context, page) => MoreData.getBlockedUsers(page),
+            cacheKey: 'blocked_users',
+            cacheToJson: (item) => item.toJson(),
+            cacheFromJson: (json) => BlockUserModel.fromJson(json),
             itemBuilder: (context, data, index, element) => BlockedUserItem(
               blockUserModel: element,
               onDelete: (ctx)  {

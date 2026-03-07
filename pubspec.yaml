@@ -81,6 +81,8 @@ dependencies:
   shared_preferences: ^2.2.3
   path: 1.9.1
   path_provider: ^2.1.3
+  objectbox: ^5.2.0
+  objectbox_flutter_libs: ^5.2.0
 
   #--------------------- Sharing & Links -----------------------
   share_plus: ^12.0.1
@@ -88,8 +90,8 @@ dependencies:
   watcher: ^1.1.2
 
   #--------------------- Genetaion_Models ----------------------
-  freezed_annotation: ^2.4.1
-  json_annotation: ^4.9.0
+#  freezed_annotation: ^3.1.0
+#  json_annotation: ^4.11.0
 
   #--------------------- mine ----------------------
   easy_timer_count: ^0.0.2
@@ -120,13 +122,15 @@ flutter_launcher_icons:
 
 dependency_overrides:
   zego_express_engine: ^3.23.0
+  pointycastle: ^4.0.0
 
 dev_dependencies:
   sentry_dart_plugin: ^3.2.0
-  build_runner: null
-  freezed: ^2.5.2
-  json_serializable: ^6.8.0
-  flutter_gen_runner: null
+  objectbox_generator: ^5.2.0
+  build_runner: ^2.12.2
+#  freezed: ^2.5.2
+#  json_serializable: ^6.8.0
+  flutter_gen_runner: ^5.13.0
   flutter_lints: ^6.0.0
   injectable_generator: null
   flutter_test:

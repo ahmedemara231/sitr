@@ -32,6 +32,7 @@ class CrudBaseParmas<T>  {
   final T Function(dynamic json)? mapper;
   final bool isFromData;
   final void Function(int, int)? onSendProgress;
+  final Map<String, dynamic> Function(T)? toJson;
   CrudBaseParmas({
     required this.api,
     required this.httpRequestType,
@@ -39,7 +40,8 @@ class CrudBaseParmas<T>  {
     this.queryParameters,
     this.onSendProgress,
     this.isFromData = false,
-    this.mapper
+    this.mapper,
+    this.toJson,
   });
 
   CrudBaseParmas<T> copyWith({
@@ -49,6 +51,8 @@ class CrudBaseParmas<T>  {
     Map<String, dynamic>? queryParameters,
     T Function(dynamic)? mapper,
     bool? isFromData,
+    String? cacheKey,
+    Map<String, dynamic> Function(T)? toJson,
   }) {
     return CrudBaseParmas<T>(
       api: api ?? this.api,
@@ -57,6 +61,7 @@ class CrudBaseParmas<T>  {
       queryParameters: queryParameters ?? this.queryParameters,
       mapper: mapper ?? this.mapper,
       isFromData: isFromData ?? this.isFromData,
+      toJson: toJson ?? this.toJson,
     );
   }
 }

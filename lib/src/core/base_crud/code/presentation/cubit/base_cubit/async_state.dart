@@ -3,12 +3,12 @@ part of 'async_cubit.dart';
 class AsyncState<T> extends Equatable {
   final BaseStatus status;
   final T data;
-  final String? errorMessage;
+  final String? msg;
 
   const AsyncState({
     this.status = BaseStatus.initial,
     required this.data,
-    this.errorMessage,
+    this.msg,
   });
 
   factory AsyncState.initial({
@@ -18,36 +18,36 @@ class AsyncState<T> extends Equatable {
     return AsyncState<T>(
       status: BaseStatus.initial,
       data: data,
-      errorMessage: errorMessage,
+      msg: errorMessage,
     );
   }
 
   AsyncState<T> loading({
     T? data,
-    String? errorMessage,
+    String? msg,
   }) {
     return AsyncState<T>(
       status: BaseStatus.loading,
       data: data ?? this.data,
-      errorMessage: errorMessage ?? this.errorMessage,
+      msg: msg ?? this.msg,
     );
   }
   AsyncState<T> loadingMore({T? data, String? errorMessage}) {
     return AsyncState<T>(
       status: BaseStatus.loadingMore,
       data: data ?? this.data,
-      errorMessage: errorMessage ?? this.errorMessage,
+      msg: errorMessage ?? msg,
     );
   }
 
   AsyncState<T> success({
     required T data,
-    String? errorMessage,
+    String? msg,
   }) {
     return AsyncState<T>(
       status: BaseStatus.success,
       data: data,
-      errorMessage: errorMessage ?? this.errorMessage,
+      msg: msg ?? this.msg,
     );
   }
 
@@ -58,12 +58,12 @@ class AsyncState<T> extends Equatable {
     return AsyncState<T>(
       status: BaseStatus.error,
       data: data ?? this.data,
-      errorMessage: errorMessage ?? this.errorMessage,
+      msg: errorMessage ?? msg,
     );
   }
 
   @override
-  List<Object?> get props => [status, data, errorMessage];
+  List<Object?> get props => [status, data, msg];
 
   bool get isInitial => status.isInitial;
 
@@ -78,12 +78,12 @@ class AsyncState<T> extends Equatable {
   AsyncState<T> copyWith({
     BaseStatus? status,
     T? data,
-    String? errorMessage,
+    String? msg,
   }) {
     return AsyncState<T>(
       status: status ?? this.status,
       data: data ?? this.data,
-      errorMessage: errorMessage ?? this.errorMessage,
+      msg: msg ?? this.msg,
     );
   }
 }

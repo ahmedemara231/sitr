@@ -29,8 +29,10 @@ class StatusBuilder<T> extends StatelessWidget {
       return onLoading?.call() ??
           Center(child: CustomLoading.showLoadingView());
     }, onError: () {
-      return onFail?.call() ??
-          const ExceptionView();
+      if (data.data != null) {
+        return onSuccess(data.data, context);
+      }
+      return onFail?.call() ?? const ExceptionView();
     },
       onInitial: () {
         return onSuccess(data.data, context);

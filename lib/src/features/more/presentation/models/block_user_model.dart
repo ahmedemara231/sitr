@@ -19,6 +19,12 @@ class BlockUserModel extends Equatable {
     );
   }
 
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'avatar': avatar,
+  };
+
   @override
   List<Object?> get props => [
     id, name, avatar, ];

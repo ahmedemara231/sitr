@@ -10,6 +10,7 @@ import '../../../../core/widgets/app_pagify.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../data/home_data.dart';
 import '../../data/models/filter_model.dart';
+import '../../data/models/home_model.dart';
 import '../widgets/home/partner_card.dart';
 import 'partner_details.dart';
 
@@ -22,7 +23,7 @@ class FilterResultScreen extends StatefulWidget {
 }
 
 class _FilterResultScreenState extends State<FilterResultScreen> {
-  late final PagifyController _controller;
+  late final PagifyController<Opportunity> _controller;
 
   @override
   void initState() {
@@ -41,9 +42,12 @@ class _FilterResultScreenState extends State<FilterResultScreen> {
     return AppScaffold(
         isScrollable: false,
         appBarTitle: LocaleKeys.searchResult,
-        body: AppPagify(
+        body: AppPagify<Opportunity>(
           pagifyController: _controller,
           asyncCall: (context, page) async => await HomeData.filter(widget.filterModel, page),
+          cacheKey: 'filter_result',
+          cacheToJson: (item) => item.toJson(),
+          cacheFromJson: (json) => Opportunity.fromJson(json),
           itemBuilder: (context, data, i, opportunity) => InkWell(
             onTap: () => Go.to(IndividualDetailsScreen.opportunity(
               id: opportunity?.id ?? 0,

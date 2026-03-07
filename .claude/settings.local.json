@@ -29,7 +29,8 @@
       "Bash(grep:*)",
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(sips --help:*)",
-      "WebFetch(domain:pub.dev)"
+      "WebFetch(domain:pub.dev)",
+      "Bash(dart run:*)"
     ],
     "deny": [],
     "ask": []

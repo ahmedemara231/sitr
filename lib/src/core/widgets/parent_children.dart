@@ -66,6 +66,9 @@ class _ParentChildrenState extends State<ParentChildren> {
     final PagifyController<Opportunity> childrenCont = widget.cont ?? PagifyController();
     return AppPagify<Opportunity>(
         asyncCall: (context, page)async => await HomeData.getParentChildren(widget.id, page),
+        cacheKey: 'parent_children_${widget.id}',
+        cacheToJson: (item) => item.toJson(),
+        cacheFromJson: (json) => Opportunity.fromJson(json),
         itemBuilder: (context, data, index, element) => InkWell(
           onTap: () => Go.to(_individualDetailsScreenRoute(element.id ?? 0)),
           child: MultiBlocProvider(
