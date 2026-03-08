@@ -6,95 +6,94 @@ import '../../../../core/shared/models/user_models/user_model.dart';
 
 class HomeModel {
   HomeModel({
-      this.banners, 
-      this.marriageConsultants, 
-      this.opportunities
+    this.banners,
+    this.marriageConsultants,
+    this.opportunities,
   });
 
-  HomeModel.fromJson(dynamic json) {
-    if (json['banners'] != null) {
-      banners = [];
-      json['banners'].forEach((v) {
-        banners?.add(Banners.fromJson(v));
-      });
-    }
-    if (json['marriage_consultants'] != null) {
-      marriageConsultants = [];
-      json['marriage_consultants'].forEach((v) {
-        marriageConsultants?.add(MarriageConsultants.fromJson(v));
-      });
-    }
-    opportunities = (json['opportunities'] as Object).isNotNull?
-    Opportunities.fromJson(json['opportunities']) : null;
+  factory HomeModel.fromJson(dynamic json) {
+    return HomeModel(
+      banners: json['banners'] != null
+          ? List<Banners>.from(
+          json['banners'].map((v) => Banners.fromJson(v)))
+          : null,
+      marriageConsultants: json['marriage_consultants'] != null
+          ? List<MarriageConsultants>.from(
+          json['marriage_consultants'].map((v) => MarriageConsultants.fromJson(v)))
+          : null,
+      opportunities: (json['opportunities'] as Object?).isNotNull
+          ? Opportunities.fromJson(json['opportunities'])
+          : null,
+    );
   }
+
   List<Banners>? banners;
   List<MarriageConsultants>? marriageConsultants;
   Opportunities? opportunities;
-HomeModel copyWith({  List<Banners>? banners,
-  List<MarriageConsultants>? marriageConsultants,
-  Opportunities? opportunities,
-}) => HomeModel(  banners: banners ?? this.banners,
-  marriageConsultants: marriageConsultants ?? this.marriageConsultants,
-  opportunities: opportunities ?? this.opportunities,
-);
+
+  HomeModel copyWith({
+    List<Banners>? banners,
+    List<MarriageConsultants>? marriageConsultants,
+    Opportunities? opportunities,
+  }) =>
+      HomeModel(
+        banners: banners ?? this.banners,
+        marriageConsultants: marriageConsultants ?? this.marriageConsultants,
+        opportunities: opportunities ?? this.opportunities,
+      );
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     if (banners != null) {
       map['banners'] = banners?.map((v) => v.toJson()).toList();
     }
     if (marriageConsultants != null) {
-      map['marriage_consultants'] = marriageConsultants?.map((v) => v.toJson()).toList();
+      map['marriage_consultants'] =
+          marriageConsultants?.map((v) => v.toJson()).toList();
     }
     if (opportunities != null) {
       map['opportunities'] = opportunities?.toJson();
     }
     return map;
   }
-
 }
 
 class Opportunities {
   Opportunities({
-      this.parent, 
-      this.male, 
-      this.female
+    this.parent,
+    this.male,
+    this.female,
   });
 
-  // bool get isEmptyData => (parent == null && male == null && female == null) ||
-  //     (parent!.isEmpty && male!.isEmpty && female!.isEmpty);
-
-
-  Opportunities.fromJson(dynamic json) {
-    if (json['parent'] != null) {
-      parent = [];
-      json['parent'].forEach((v) {
-        parent?.add(Parent.fromJson(v));
-      });
-    }
-    if (json['male'] != null) {
-      male = [];
-      json['male'].forEach((v) {
-        male?.add(Opportunity.fromJson(v));
-      });
-    }
-    if (json['female'] != null) {
-      female = [];
-      json['female'].forEach((v) {
-        female?.add(Opportunity.fromJson(v));
-      });
-    }
+  factory Opportunities.fromJson(dynamic json) {
+    return Opportunities(
+      parent: json['parent'] != null
+          ? List<Parent>.from(json['parent'].map((v) => Parent.fromJson(v)))
+          : null,
+      male: json['male'] != null
+          ? List<Opportunity>.from(json['male'].map((v) => Opportunity.fromJson(v)))
+          : null,
+      female: json['female'] != null
+          ? List<Opportunity>.from(json['female'].map((v) => Opportunity.fromJson(v)))
+          : null,
+    );
   }
+
   List<Parent>? parent;
   List<Opportunity>? male;
   List<Opportunity>? female;
-Opportunities copyWith({
-  List<Parent>? parent,
-  List<Opportunity>? male,
-  List<Opportunity>? female,
-}) => Opportunities(  parent: parent ?? this.parent,
-  male: male ?? this.male,
-  female: female ?? this.female,
-);
+
+  Opportunities copyWith({
+    List<Parent>? parent,
+    List<Opportunity>? male,
+    List<Opportunity>? female,
+  }) =>
+      Opportunities(
+        parent: parent ?? this.parent,
+        male: male ?? this.male,
+        female: female ?? this.female,
+      );
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     if (parent != null) {
@@ -108,10 +107,9 @@ Opportunities copyWith({
     }
     return map;
   }
-
 }
 
-class OpportunityModel{
+class OpportunityModel {
   int? id;
   String? name;
   String? avatar;
@@ -126,17 +124,23 @@ class OpportunityModel{
     this.gender,
   });
 
+  Map<String, dynamic> toJson() => {};
   factory OpportunityModel.fromJson(Map<String, dynamic> json) {
-    if(TitleValueShape.fromJson(json['type']).value.toUserType().isParent){
-      return Parent.fromJson(json);
-
-    }else{
+    try {
+      if (json['type'] != null) {
+        final typeValue = TitleValueShape.fromJson(json['type']);
+        if (typeValue.value.toUserType().isParent) {
+          return Parent.fromJson(json);
+        }
+      }
+      return Opportunity.fromJson(json);
+    } catch (e) {
       return Opportunity.fromJson(json);
     }
   }
 }
-class Opportunity extends OpportunityModel{
 
+class Opportunity extends OpportunityModel {
   TitleValueShape? skin;
   TitleValueShape? hijab;
   int? age;
@@ -173,152 +177,181 @@ class Opportunity extends OpportunityModel{
       city: json['city'],
       height: json['height'],
       weight: json['weight'],
-      martialStatus: (json['marital_status'] as Object?).isNotNull?
-      TitleValueShape.fromJson(json['marital_status']) :
-      TitleValueShape.initial(),
+      martialStatus: (json['marital_status'] as Object?).isNotNull
+          ? TitleValueShape.fromJson(json['marital_status'])
+          : TitleValueShape.initial(),
       nickName: json['nick_name'],
       hijab: json['hijab'] != null ? TitleValueShape.fromJson(json['hijab']) : null,
       skin: json['skin_color'] != null ? TitleValueShape.fromJson(json['skin_color']) : null,
     );
   }
 
-Opportunity copyWith({  int? id,
-  String? name,
-  String? avatar,
-  int? age,
-  TitleValueShape? type,
-  GenderValueShape? gender,
-  String? city,
-  double? height,
-  double? weight,
-  TitleValueShape? martialStatus,
-  String? nickName,
-}) => Opportunity(  id: id ?? this.id,
-  name: name ?? this.name,
-  avatar: avatar ?? this.avatar,
-  age: age ?? this.age,
-  martialStatus: martialStatus??this.martialStatus,
-  nickName: nickName??this.nickName,
-  type: type ?? this.type,
-  gender: gender ?? this.gender,
-  city: city ?? this.city,
-  height: height ?? this.height,
-  weight: weight ?? this.weight,
-);
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['name'] = name;
-    map['avatar'] = avatar;
-    map['age'] = age;
-    map['skin_color'] = skin?.toJson();
-    map['hijab'] = hijab?.toJson();
-    map['martial_status'] = martialStatus;
-    map['nick_name'] = nickName;
-    if (type != null) {
-      map['type'] = type?.toJson();
-    }
-    if (gender != null) {
-      map['gender'] = gender?.toJson();
-    }
-    map['city'] = city;
-    map['height'] = height;
-    map['weight'] = weight;
-    return map;
-  }
-
-}
-
-class Parent extends OpportunityModel{
-  Parent({
-      super.id,
-      super.name,
-      super.avatar,
-      super.type,
-      super.gender,
-      this.relation,
-      this.numOfChildren,
-  });
-
-  Parent.fromJson(dynamic json) {
-    id = json['id'];
-    name = json['name'];
-    avatar = json['avatar'];
-    type = json['type'] != null ? TitleValueShape.fromJson(json['type']) : null;
-    gender = json['gender'] != null ? GenderValueShape.fromJson(json['gender']) : null;
-    relation = json['relation'] != null ? Relation.fromJson(json['relation']) : null;
-    numOfChildren = json['num_of_children'];
-  }
-
-  Relation? relation;
-  int? numOfChildren;
+  Opportunity copyWith({
+    int? id,
+    String? name,
+    String? avatar,
+    int? age,
+    TitleValueShape? type,
+    GenderValueShape? gender,
+    String? city,
+    double? height,
+    double? weight,
+    TitleValueShape? martialStatus,
+    String? nickName,
+    TitleValueShape? hijab,
+    TitleValueShape? skin,
+  }) =>
+      Opportunity(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        avatar: avatar ?? this.avatar,
+        age: age ?? this.age,
+        martialStatus: martialStatus ?? this.martialStatus,
+        nickName: nickName ?? this.nickName,
+        type: type ?? this.type,
+        gender: gender ?? this.gender,
+        city: city ?? this.city,
+        height: height ?? this.height,
+        weight: weight ?? this.weight,
+        hijab: hijab ?? this.hijab,
+        skin: skin ?? this.skin,
+      );
 
   @override
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['id'] = id;
-    map['name'] = name;
-    map['avatar'] = avatar;
-    if (type != null) {
-      map['type'] = type?.toJson();
-    }
-    if (gender != null) {
-      map['gender'] = gender?.toJson();
-    }
-    if (relation != null) {
-      map['relation'] = relation?.toJson();
-    }
-    map['num_of_children'] = numOfChildren;
+    if (id != null) map['id'] = id;
+    if (name != null) map['name'] = name;
+    if (avatar != null) map['avatar'] = avatar;
+    if (age != null) map['age'] = age;
+    if (skin != null) map['skin_color'] = skin!.toJson();
+    if (hijab != null) map['hijab'] = hijab!.toJson();
+    if (martialStatus != null) map['marital_status'] = martialStatus!.toJson();
+    if (nickName != null) map['nick_name'] = nickName;
+    if (type != null) map['type'] = type!.toJson();
+    if (gender != null) map['gender'] = gender!.toJson();
+    if (city != null) map['city'] = city;
+    if (height != null) map['height'] = height;
+    if (weight != null) map['weight'] = weight;
     return map;
   }
+}
 
+class Parent extends OpportunityModel {
+  Relation? relation;
+  int? numOfChildren;
+
+  Parent({
+    super.id,
+    super.name,
+    super.avatar,
+    super.type,
+    super.gender,
+    this.relation,
+    this.numOfChildren,
+  });
+
+  factory Parent.fromJson(dynamic json) {
+    return Parent(
+      id: json['id'],
+      name: json['name'],
+      avatar: json['avatar'],
+      type: json['type'] != null ? TitleValueShape.fromJson(json['type']) : null,
+      gender: json['gender'] != null ? GenderValueShape.fromJson(json['gender']) : null,
+      relation: json['relation'] != null ? Relation.fromJson(json['relation']) : null,
+      numOfChildren: json['num_of_children'],
+    );
+  }
+
+  Parent copyWith({
+    int? id,
+    String? name,
+    String? avatar,
+    TitleValueShape? type,
+    GenderValueShape? gender,
+    Relation? relation,
+    int? numOfChildren,
+  }) =>
+      Parent(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        avatar: avatar ?? this.avatar,
+        type: type ?? this.type,
+        gender: gender ?? this.gender,
+        relation: relation ?? this.relation,
+        numOfChildren: numOfChildren ?? this.numOfChildren,
+      );
+
+  @override
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    if (id != null) map['id'] = id;
+    if (name != null) map['name'] = name;
+    if (avatar != null) map['avatar'] = avatar;
+    if (type != null) map['type'] = type!.toJson();
+    if (gender != null) map['gender'] = gender!.toJson();
+    if (relation != null) map['relation'] = relation!.toJson();
+    if (numOfChildren != null) map['num_of_children'] = numOfChildren;
+    return map;
+  }
 }
 
 class Relation {
   Relation({
-      this.id, 
-      this.name,});
+    this.id,
+    this.name,
+  });
 
-  Relation.fromJson(dynamic json) {
-    id = json['id'];
-    name = json['name'];
+  factory Relation.fromJson(dynamic json) {
+    return Relation(
+      id: json['id'],
+      name: json['name'],
+    );
   }
+
   int? id;
   String? name;
-Relation copyWith({  int? id,
-  String? name,
-}) => Relation(  id: id ?? this.id,
-  name: name ?? this.name,
-);
+
+  Relation copyWith({
+    int? id,
+    String? name,
+  }) =>
+      Relation(
+        id: id ?? this.id,
+        name: name ?? this.name,
+      );
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['id'] = id;
-    map['name'] = name;
+    if (id != null) map['id'] = id;
+    if (name != null) map['name'] = name;
     return map;
   }
-
 }
 
 class MarriageConsultants {
   MarriageConsultants({
-      this.id, 
-      this.name, 
-      this.description, 
-      this.image, 
-      this.phone, 
-      this.countryCode, 
-      this.fullPhone,
+    this.id,
+    this.name,
+    this.description,
+    this.image,
+    this.phone,
+    this.countryCode,
+    this.fullPhone,
   });
 
-  MarriageConsultants.fromJson(dynamic json) {
-    id = json['id'];
-    name = json['name'];
-    description = json['description'];
-    image = json['image'];
-    phone = json['phone'];
-    countryCode = json['country_code'];
-    fullPhone = json['full_phone'];
+  factory MarriageConsultants.fromJson(dynamic json) {
+    return MarriageConsultants(
+      id: json['id'],
+      name: json['name'],
+      description: json['description'],
+      image: json['image'],
+      phone: json['phone'],
+      countryCode: json['country_code'],
+      fullPhone: json['full_phone'],
+    );
   }
+
   int? id;
   String? name;
   String? description;
@@ -326,56 +359,68 @@ class MarriageConsultants {
   String? phone;
   String? countryCode;
   String? fullPhone;
-MarriageConsultants copyWith({  int? id,
-  String? name,
-  String? description,
-  String? image,
-  String? phone,
-  String? countryCode,
-  String? fullPhone,
-}) => MarriageConsultants(  id: id ?? this.id,
-  name: name ?? this.name,
-  description: description ?? this.description,
-  image: image ?? this.image,
-  phone: phone ?? this.phone,
-  countryCode: countryCode ?? this.countryCode,
-  fullPhone: fullPhone ?? this.fullPhone,
-);
+
+  MarriageConsultants copyWith({
+    int? id,
+    String? name,
+    String? description,
+    String? image,
+    String? phone,
+    String? countryCode,
+    String? fullPhone,
+  }) =>
+      MarriageConsultants(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        description: description ?? this.description,
+        image: image ?? this.image,
+        phone: phone ?? this.phone,
+        countryCode: countryCode ?? this.countryCode,
+        fullPhone: fullPhone ?? this.fullPhone,
+      );
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['id'] = id;
-    map['name'] = name;
-    map['description'] = description;
-    map['image'] = image;
-    map['phone'] = phone;
-    map['country_code'] = countryCode;
-    map['full_phone'] = fullPhone;
+    if (id != null) map['id'] = id;
+    if (name != null) map['name'] = name;
+    if (description != null) map['description'] = description;
+    if (image != null) map['image'] = image;
+    if (phone != null) map['phone'] = phone;
+    if (countryCode != null) map['country_code'] = countryCode;
+    if (fullPhone != null) map['full_phone'] = fullPhone;
     return map;
   }
-
 }
 
 class Banners {
   Banners({
-      this.id, 
-      this.image,});
+    this.id,
+    this.image,
+  });
 
-  Banners.fromJson(dynamic json) {
-    id = json['id'];
-    image = json['image'];
+  factory Banners.fromJson(dynamic json) {
+    return Banners(
+      id: json['id'],
+      image: json['image'],
+    );
   }
+
   int? id;
   String? image;
-Banners copyWith({  int? id,
-  String? image,
-}) => Banners(  id: id ?? this.id,
-  image: image ?? this.image,
-);
+
+  Banners copyWith({
+    int? id,
+    String? image,
+  }) =>
+      Banners(
+        id: id ?? this.id,
+        image: image ?? this.image,
+      );
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['id'] = id;
-    map['image'] = image;
+    if (id != null) map['id'] = id;
+    if (image != null) map['image'] = image;
     return map;
   }
-
 }

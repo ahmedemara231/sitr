@@ -25,25 +25,45 @@ class GetOpportunitiesCubit extends AsyncCubit<(List<OpportunityModel>, Paginati
       setLoadingMore();
     }
 
+    final String typeKey = type == UserGender.unknown ? 'parent' : type.name;
+
     final result = await baseCrudUseCase.call(
       CrudBaseParmas(
         api: ApiConstants.opportunities,
+        cacheKey: 'opportunities_$typeKey',
         httpRequestType: HttpRequestType.get,
         queryParameters: {
           'type': type,
           'page': page,
         },
         mapper: (data) {
-          final String selectedType = type == UserGender.unknown ? 'parent' : type.name;
+          // Cache format (restored from ObjectBox)
+          if (data['items'] != null) {
+            return (
+              (data['items'] as List)
+                  .map((e) => OpportunityModel.fromJson(e as Map<String, dynamic>))
+                  .toList(),
+              PaginationData(
+                perPage: data['per_page'] as int,
+                totalPages: data['total_pages'] as int,
+              ),
+            );
+          }
+          // API response format
           return (
-            (data[selectedType]['data'] as List)
+            (data[typeKey]['data'] as List)
                 .map((e) => OpportunityModel.fromJson(e))
                 .toList(),
             PaginationData(
-              perPage: data[selectedType]['pagination']['per_page'],
-              totalPages: data[selectedType]['pagination']['total_pages'],
+              perPage: data[typeKey]['pagination']['per_page'],
+              totalPages: data[typeKey]['pagination']['total_pages'],
             ),
           );
+        },
+        toJson: (tuple) => {
+          'items': tuple.$1.map((e) => e.toJson()).toList(),
+          'total_pages': tuple.$2.totalPages,
+          'per_page': tuple.$2.perPage,
         },
       ),
     );

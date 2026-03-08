@@ -1,7 +1,10 @@
 
+import 'dart:developer';
+
 import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import '../../../../../core/local_db/objectbox_cache_service.dart';
 import '../../../../../core/network/api_endpoints.dart';
 import '../../../../../core/network/network_service.dart';
 
@@ -15,6 +18,7 @@ class FetchWalletCubit extends AsyncCubit<num>{
                 api: ApiConstants.showWallet,
                 httpRequestType: HttpRequestType.get,
                 mapper: (json) => json['balance'],
+                toJson: (data) => {'balance': data}
               )
           ),
       );

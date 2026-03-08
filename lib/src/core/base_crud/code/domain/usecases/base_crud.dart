@@ -26,6 +26,7 @@ enum HttpRequestType {
 
 class CrudBaseParmas<T>  {
   final String api;
+  final String? cacheKey;
   final HttpRequestType httpRequestType;
   final Map<String, dynamic>? body;
   final Map<String, dynamic>? queryParameters;
@@ -36,6 +37,7 @@ class CrudBaseParmas<T>  {
   CrudBaseParmas({
     required this.api,
     required this.httpRequestType,
+    this.cacheKey,
     this.body,
     this.queryParameters,
     this.onSendProgress,

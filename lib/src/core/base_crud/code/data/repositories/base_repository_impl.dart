@@ -29,7 +29,7 @@ class BaseRepositoryImpl implements BaseRepository {
   Future<Result<BaseModel<T>, Failure>> _crudCallWithCache<T>(
       CrudBaseParmas<T> params) {
     return baseRemoteDataSource.crudCall<T>(params).handleCallbackWithCache(
-      cacheKey: params.api,
+      cacheKey: params.cacheKey ?? params.api,
       fromJson: params.mapper!,
       toJson: params.toJson!,
       onSave: baseLocalDataSource.save,
