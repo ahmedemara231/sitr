@@ -46,7 +46,7 @@ class _ChatViewState extends State<ChatView> {
       asyncCall: (context, page) async => await ChatsData.getChatMessages(
           requestModel: widget.requestModel
       ),
-      onError: (c, page, e) => MessageUtils.showTopMsg(e.msg, state: MsgState.error),
+      onError: (c, page, e) => MessageUtils.showTopMsg(e.msg),
       errorBuilder: (e) => const ExceptionView(),
       errorMapper: PagifyErrorMapper(
           errorWhenDio: (e) {

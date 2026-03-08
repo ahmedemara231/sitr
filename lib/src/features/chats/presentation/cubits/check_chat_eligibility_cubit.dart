@@ -18,7 +18,6 @@ class CheckChatEligibilityCubit extends AsyncCubit<bool> {
           api: ApiConstants.checkChatEligibility,
           httpRequestType: HttpRequestType.post,
           body: requestModel.toJson(),
-          mapper: (json) => json['can_start_chat'],
         ),
       ),
       onSuccess: (data) {

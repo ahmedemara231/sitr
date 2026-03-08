@@ -138,6 +138,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
                           if(index == 1){
                             context.read<GetNotificationCountCubit>().reset();
+
+                          }else if(index == 2){
+                            context.read<GetChatsNotificationCountCubit>().reset();
                           }
 
                           return;

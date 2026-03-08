@@ -14,7 +14,7 @@ class MessageUtils {
       fontFamily: ConstantManager.fontFamily
   );
 
-  static void showTopMsg(String msg, {MsgState state = MsgState.info}){
+  static void showTopMsg(String msg, {MsgState state = MsgState.error}){
     // final overlayState = Go.navigatorKey.currentState?.overlay;
     final overlayState = Overlay.of(Go.context);
     if(state == MsgState.success){
