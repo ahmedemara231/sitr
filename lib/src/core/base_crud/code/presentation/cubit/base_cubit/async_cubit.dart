@@ -120,11 +120,11 @@ abstract class AsyncCubit<T> extends Cubit<AsyncState<T>> {
           emit(state.error(errorMessage: LocaleKeys.checkInternet));
 
         }else{
-          MessageUtils.showSnackBar(LocaleKeys.checkInternet);
+          MessageUtils.showTopMsg(LocaleKeys.checkInternet);
         }
 
       }else{
-        MessageUtils.showSnackBar(LocaleKeys.theInternetConnectionIsRestored);
+        MessageUtils.showTopMsg(LocaleKeys.theInternetConnectionIsRestored);
         await _basicOperation(
             operation: operation,
             successEmitter: successEmitter,
@@ -177,7 +177,7 @@ abstract class AsyncCubit<T> extends Cubit<AsyncState<T>> {
         successEmitter?.call(success);
       },
           (failure) {
-        MessageUtils.showSnackBar(failure.message);
+        MessageUtils.showTopMsg(failure.message);
         setError(errorMessage: failure.message);
         onError?.call(failure.message);
       },

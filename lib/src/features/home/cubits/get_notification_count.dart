@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import '../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../core/network/api_endpoints.dart';
+import '../../../core/notification/notification_service.dart';
 import '../../../core/shared/base_state.dart';
 
 class GetNotificationCountCubit extends AsyncCubit<int>{
@@ -37,4 +38,42 @@ class GetNotificationCountCubit extends AsyncCubit<int>{
         ),
       ));
     }
+}
+
+class GetChatsNotificationCountCubit extends AsyncCubit<int>{
+  GetChatsNotificationCountCubit() : super(0);
+
+  @override
+  reset(){
+    emit(state.copyWith(data: 0));
+  }
+
+  void startNotificationInterceptor(){
+    FirebaseMessaging
+        .onMessage
+        .listen((data) {
+      final int matchRequest = data.data['match_request_id'] ?? 0;
+      if(matchRequest != 0){
+        increment();
+      }}
+    );
+  }
+
+  void increment(){
+    emit(state.copyWith(
+        status: BaseStatus.success,
+        data: state.data + 1
+    ));
+  }
+
+  Future<void> getChatNotificationCount()async{
+    await executeAsyncWithBaseModel(
+        operation: () async => await baseCrudUseCase.call(
+          CrudBaseParmas(
+              api: ApiConstants.countUnreadMessages,
+              httpRequestType: HttpRequestType.get,
+              mapper: (json) => json['count']
+          ),
+        ));
+  }
 }

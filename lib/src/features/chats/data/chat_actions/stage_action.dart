@@ -28,7 +28,8 @@ class StageAction extends ChatActions{
         ),
       );
 
-    }else if(stage.isShariaMeetingChoice){
+    }else
+      if(stage.isShariaMeetingChoice){
       ChatSheetManager.show(
           child: BlocProvider.value(
             value: context.read<ChatCubit>(),

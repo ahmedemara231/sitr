@@ -30,7 +30,7 @@ void setUpGeneralDependencies() {
     () => UserCubit(),
   );
 
-  injector.registerFactory<NotificationService>(
+  injector.registerLazySingleton<NotificationService>(
     () => NotificationService(),
   );
 

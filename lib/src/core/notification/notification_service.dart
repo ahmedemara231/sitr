@@ -326,7 +326,11 @@ class NotificationService {
     );
   }
 
+  bool _isInitialized = false;
+
   Future<void> setupNotifications() async {
+    if (_isInitialized) return;
+    _isInitialized = true;
     // Register early — before any awaits — so onMessageOpenedApp events
     // fired during async initialization are never missed.
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage event) {

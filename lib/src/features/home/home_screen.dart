@@ -10,7 +10,7 @@ import '../../config/res/config_imports.dart';
 import '../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../core/helpers/helpers.dart';
 import '../../core/notification/inactivity_notification_service.dart';
-import '../../core/notification/notification_service.dart';
+import '../../core/notification/notification_service.dart'; // NotificationNavigator, NotificationRoutes
 import '../../core/shared/models/user_models/user_model.dart';
 import '../../core/widgets/app_text.dart';
 import '../../core/widgets/icon_widget.dart';
@@ -33,8 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       onNoInitialMessage: () {},
     );
-    await injector<NotificationService>()
-        .setupNotifications();
+    await injector<NotificationService>().setupNotifications();
   }
 
   void _initZego()async{
@@ -79,8 +78,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     context.locale;
-    return BlocProvider(
-      create: (context) => HomeCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => HomeCubit()),
+        BlocProvider(create: (context) => GetNotificationCountCubit()..getNotificationCount()..startNotificationInterceptor()),
+        BlocProvider(create: (context) => GetChatsNotificationCountCubit()..getChatNotificationCount()..startNotificationInterceptor()),
+      ],
       child: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
           final cubit = context.read<HomeCubit>();
@@ -166,11 +169,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             label: LocaleKeys.notifications,
                           ),
                           BottomNavigationBarItem(
-                            icon: IconWidget(
-                              icon: Assets.svgChatsIcon,
-                              color: cubit.currentIndex == 2
-                                  ? AppColors.primary
-                                  : null,
+                            icon: BlocBuilder<GetChatsNotificationCountCubit, AsyncState<int>>(
+                              builder: (context, state) => Badge(
+                                backgroundColor: AppColors.primary,
+                                label: AppText(state.data.toString()),
+                                isLabelVisible: state.data <= 0 ? false : true,
+                                child: IconWidget(
+                                  icon: Assets.svgChatsIcon,
+                                  color: cubit.currentIndex == 2
+                                      ? AppColors.primary
+                                      : null,
+                                ),
+                              ),
                             ),
                             label: LocaleKeys.chats,
                           ),

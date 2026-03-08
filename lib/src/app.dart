@@ -55,55 +55,52 @@ class _SitrState extends State<Sitr> with WidgetsBindingObserver {
       builder: (ctx, child) {
         return BlocProvider(
           create: (context) => injector<UserCubit>(),
-          child: BlocProvider(
-            create: (context) => GetNotificationCountCubit()..startNotificationInterceptor(),
-            child: MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: ConstantManager.projectName,
-              localizationsDelegates: context.localizationDelegates,
-              supportedLocales: context.supportedLocales,
-              locale: context.locale,
-              navigatorKey: Go.navigatorKey,
-              restorationScopeId: 'app',
-              builder: (context, child) {
-                return Overlay(
-                  initialEntries: [
-                    OverlayEntry(builder: (context) => Stack(
-                      children: [
-                        child!,
-                        ZegoUIKitPrebuiltCallMiniOverlayPage(
-                            contextQuery: () => Go.context
-                        ),
-                      ],
-                    )),
-                  ],
-                );
-              },
-              // home: EnterMaleOrFemaleOrChildDataScreen.individual(
-              //     scaffoldType: ScaffoldType.appScaffold,
-              //     onClick: (ctx, user)async{},
-              //     userType: UserGender.male
-              // ),
-              home: const ZegoUIKitPrebuiltCallMiniPopScope(child: SplashScreen()),
-              navigatorObservers: [AppNavigationObserver()],
-              // builder: (context, child) {
-              //   return InternetInterceptorWidget(
-              //     loadingWidget: const SplashLogo(),
-              //     onChanged: (previous, current) => _manageInternetConnectivity(context, current),
-              //     builder: (previous, current) {
-              //       return Stack(
-              //         children: [
-              //           child!,
-              //           if (current == InternetConnectionStatus.disconnected)
-              //             const Positioned.fill(
-              //               child: NoInternetWidget(),
-              //             ),
-              //         ],
-              //       );
-              //     },
-              //   );
-              // },
-            ),
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: ConstantManager.projectName,
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+            navigatorKey: Go.navigatorKey,
+            restorationScopeId: 'app',
+            builder: (context, child) {
+              return Overlay(
+                initialEntries: [
+                  OverlayEntry(builder: (context) => Stack(
+                    children: [
+                      child!,
+                      ZegoUIKitPrebuiltCallMiniOverlayPage(
+                          contextQuery: () => Go.context
+                      ),
+                    ],
+                  )),
+                ],
+              );
+            },
+            // home: EnterMaleOrFemaleOrChildDataScreen.individual(
+            //     scaffoldType: ScaffoldType.appScaffold,
+            //     onClick: (ctx, user)async{},
+            //     userType: UserGender.male
+            // ),
+            home: const ZegoUIKitPrebuiltCallMiniPopScope(child: SplashScreen()),
+            navigatorObservers: [AppNavigationObserver()],
+            // builder: (context, child) {
+            //   return InternetInterceptorWidget(
+            //     loadingWidget: const SplashLogo(),
+            //     onChanged: (previous, current) => _manageInternetConnectivity(context, current),
+            //     builder: (previous, current) {
+            //       return Stack(
+            //         children: [
+            //           child!,
+            //           if (current == InternetConnectionStatus.disconnected)
+            //             const Positioned.fill(
+            //               child: NoInternetWidget(),
+            //             ),
+            //         ],
+            //       );
+            //     },
+            //   );
+            // },
           ),
         );
       },
