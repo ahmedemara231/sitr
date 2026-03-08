@@ -14,7 +14,9 @@ class GetPartnerInfoCubit extends GetUserModelCubit{
           CrudBaseParmas(
             api: ApiConstants.getPartnerInfo+id.toString(),
             httpRequestType: HttpRequestType.get,
+            cacheKey: 'partner_info_$id',
             mapper: (json) => UserModel.fromJson(json),
+            toJson: (model) => model.toJson(),
           ),
         ),
 

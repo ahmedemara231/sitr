@@ -14,7 +14,9 @@ class GetChildProfileCubit extends GetUserModelCubit{
           CrudBaseParmas(
             api: ApiConstants.getPartnerInfo+id.toString(),
             httpRequestType: HttpRequestType.get,
+            cacheKey: 'child_profile_$id',
             mapper: (json) => UserModel.fromJson(json),
+            toJson: (model) => model.toJson(),
           ),
         ),
         onSuccess: (user) => onSuccess.call(user.data)

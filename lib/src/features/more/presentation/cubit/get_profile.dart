@@ -12,6 +12,7 @@ class GetProfileCubit extends GetUserModelCubit{
           CrudBaseParmas(
             api: ApiConstants.profile,
             httpRequestType: HttpRequestType.get,
+            cacheKey: 'profile',
             mapper: (json) => UserModel.fromJson(json),
             toJson: (model) => model.toJson(),
           ),
