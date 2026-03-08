@@ -87,7 +87,8 @@ class ChatsData{
           context: context,
           stage: stage,
           requestModel: requestModel,
-          timer: timer!
+          timer: timer!,
+          hasSentRequest: data.matchRequest!.hasSendRequest ?? false
       );
     }
 

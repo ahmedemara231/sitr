@@ -87,6 +87,7 @@ enum MatchRequestEnum{
 }
 
 extension CheckMatchRequest on MatchRequestEnum{
+  bool get isNoRequests => this == MatchRequestEnum.noRequests;
   bool get isMoveToNext => this == MatchRequestEnum.moveToNext;
   bool get isReject => this == MatchRequestEnum.reject;
   bool get isExtension => this == MatchRequestEnum.extension;

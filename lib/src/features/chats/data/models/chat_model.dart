@@ -48,6 +48,7 @@ class MatchRequest {
   final String? tipsPage;
   final String? callStatus;
   final String? requestName;
+  final bool? hasSendRequest;
 
   MatchRequest({
     this.id,
@@ -59,6 +60,7 @@ class MatchRequest {
     this.callStatus,
     this.tipsPage,
     this.requestName,
+    this.hasSendRequest,
   });
 
   MatchRequest.initial()
@@ -70,6 +72,7 @@ class MatchRequest {
         userRequestStatus = '',
         tipsPage = '',
         callStatus = '',
+        hasSendRequest = false,
         requestName = '';
 
   MatchRequest.fromJson(Map<String, dynamic> json)
@@ -81,6 +84,7 @@ class MatchRequest {
         timer = json['timer'],
         userRequest = json['user_request'],
         requestName = json['request_name'],
+        hasSendRequest = json['has_send_request'],
         userRequestStatus = json['user_request_status'];
 
   Map<String, dynamic> toJson() {
@@ -90,6 +94,7 @@ class MatchRequest {
     if (type != null) data['type'] = type!.toJson();
     if (stage != null) data['stage'] = stage!.toJson();
     data['timer'] = timer;
+    data['has_send_request'] = hasSendRequest;
     data['user_request'] = userRequest;
     data['user_request_status'] = userRequestStatus;
     data['tips_page'] = tipsPage;
@@ -107,12 +112,14 @@ class MatchRequest {
     String? userRequestStatus,
     String? callStatus,
     String? requestName,
+    bool? hasSendRequest,
   }) {
     return MatchRequest(
       id: id ?? this.id,
       tipsPage: tipsPage ?? this.tipsPage,
       type: type ?? this.type,
       stage: stage ?? this.stage,
+      hasSendRequest: hasSendRequest ?? this.hasSendRequest,
       timer: timer ?? this.timer,
       requestName: requestName ?? this.requestName,
       userRequest: userRequest ?? this.userRequest,

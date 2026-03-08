@@ -33,9 +33,6 @@ class UserStatusAction extends ChatActions{
   }
 
   void _showAcceptanceSheet(void Function() onSuccess){
-    // path: stage.isShariaMeetingChoice?
-    // ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!+ApiConstants.shariaChoiceRequest :
-    // ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
     ChatSheetManager.show(
         child: BlocProvider.value(
           value: context.read<ChatCubit>(),

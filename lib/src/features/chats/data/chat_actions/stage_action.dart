@@ -4,11 +4,13 @@ class StageAction extends ChatActions{
   final BuildContext context;
   final ChatStages stage;
   final RequestModel requestModel;
+  final bool hasSentRequest;
   final int timer;
 
   StageAction({
     required this.context,
     required this.stage,
+    required this.hasSentRequest,
     required this.requestModel,
     required this.timer,
   });
@@ -57,7 +59,7 @@ class StageAction extends ChatActions{
           )
       );
 
-    }else if(timer.isEqualZero){
+    }else if(timer.isEqualZero && !hasSentRequest){
       ChatSheetManager.show(
           child: BlocProvider.value(
             value: context.read<ChatCubit>(),
