@@ -12,9 +12,14 @@ class GetSocialsCubit extends AsyncCubit<List<Social>>{
           CrudBaseParmas(
             api: ApiConstants.socials,
             httpRequestType: HttpRequestType.get,
+            cacheKey: 'socials',
             mapper: (json) => (json as List)
                 .map((e) => Social.fromJson(e))
-                .toList()
+                .toList(),
+            fromCacheJson: (json) => (json['data'] as List)
+                .map((e) => Social.fromJson(e))
+                .toList(),
+            toJson: (data) => {'data': data.map((e) => e.toJson()).toList()},
           ),
         ),
     );

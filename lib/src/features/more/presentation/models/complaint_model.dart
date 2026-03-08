@@ -25,6 +25,14 @@ class ComplaintModel extends Equatable {
     );
   }
 
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'num': number,
+    'status': status?.toJson(),
+    'image': image,
+    'created_at': createdAt,
+  };
+
   @override
   List<Object?> get props => [
     id, num, status, image, createdAt, ];
@@ -45,6 +53,8 @@ class Status extends Equatable {
       title: json["title"],
     );
   }
+
+  Map<String, dynamic> toJson() => {'value': value, 'title': title};
 
   @override
   List<Object?> get props => [

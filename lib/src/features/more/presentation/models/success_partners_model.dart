@@ -16,6 +16,8 @@ class SuccessPartnersModel extends Equatable {
     );
   }
 
+  Map<String, dynamic> toJson() => {'id': id, 'image': image};
+
   @override
   List<Object?> get props => [
     id, image, ];

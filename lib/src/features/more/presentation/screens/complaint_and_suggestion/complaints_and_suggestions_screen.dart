@@ -35,6 +35,9 @@ class ComplaintsAndSuggestionsScreen extends StatelessWidget {
     return AppScaffold(
       appBarTitle: LocaleKeys.complaintsAndSuggestions,
       body: AppPagify(
+          cacheKey: 'complaints',
+          cacheToJson: (item) => item.toJson(),
+          cacheFromJson: (json) => ComplaintModel.fromJson(json),
           asyncCall: (context, page) => MoreData.getComplaints(page),
           itemBuilder: (context, data, i, element) => ComplaintsAndSuggestionsItem(complaintModel: element),
           pagifyController: controller

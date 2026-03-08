@@ -14,7 +14,7 @@ import '../../data/models/request_model.dart';
 import '../../enums.dart';
 
 class ChatCubit extends AsyncCubit<ChatModel>{
-  ChatCubit() : super(ChatModel());
+  ChatCubit() : super(ChatModel.initial());
 
   MatchRequest? get matchRequest => state.data.matchRequest;
   Stage? get currentStage => matchRequest?.stage;

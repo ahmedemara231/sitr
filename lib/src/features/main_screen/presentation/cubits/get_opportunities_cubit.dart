@@ -36,30 +36,24 @@ class GetOpportunitiesCubit extends AsyncCubit<(List<OpportunityModel>, Paginati
           'type': type,
           'page': page,
         },
-        mapper: (data) {
-          // Cache format (restored from ObjectBox)
-          if (data['items'] != null) {
-            return (
-              (data['items'] as List)
-                  .map((e) => OpportunityModel.fromJson(e as Map<String, dynamic>))
-                  .toList(),
-              PaginationData(
-                perPage: data['per_page'] as int,
-                totalPages: data['total_pages'] as int,
-              ),
-            );
-          }
-          // API response format
-          return (
-            (data[typeKey]['data'] as List)
-                .map((e) => OpportunityModel.fromJson(e))
-                .toList(),
-            PaginationData(
-              perPage: data[typeKey]['pagination']['per_page'],
-              totalPages: data[typeKey]['pagination']['total_pages'],
-            ),
-          );
-        },
+        mapper: (data) => (
+          (data[typeKey]['data'] as List)
+              .map((e) => OpportunityModel.fromJson(e))
+              .toList(),
+          PaginationData(
+            perPage: data[typeKey]['pagination']['per_page'],
+            totalPages: data[typeKey]['pagination']['total_pages'],
+          ),
+        ),
+        fromCacheJson: (json) => (
+          (json['items'] as List)
+              .map((e) => OpportunityModel.fromJson(e as Map<String, dynamic>))
+              .toList(),
+          PaginationData(
+            perPage: json['per_page'] as int,
+            totalPages: json['total_pages'] as int,
+          ),
+        ),
         toJson: (tuple) => {
           'items': tuple.$1.map((e) => e.toJson()).toList(),
           'total_pages': tuple.$2.totalPages,

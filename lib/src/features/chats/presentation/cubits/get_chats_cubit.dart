@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/network/api_endpoints.dart';
@@ -73,8 +75,15 @@ class GetChatsCubit extends AsyncCubit<List<ChatModel>>{
       operation: () => baseCrudUseCase.call(
           CrudBaseParmas(
             api: _getChatType(chatType),
+            cacheKey: 'chats_${chatType.name}',
             httpRequestType: HttpRequestType.get,
-            mapper: (json) => json.map<ChatModel>((e) => ChatModel.fromJson(e)).toList(),
+            mapper: (json) => (json as List)
+                .map<ChatModel>((e) => ChatModel.fromJson(e))
+                .toList(),
+            fromCacheJson: (json) => (json['data'] as List)
+                .map<ChatModel>((e) => ChatModel.fromJson(e))
+                .toList(),
+            toJson: (list) => {'data': list.map((e) => e.toJson()).toList()},
           )
       ),
     );

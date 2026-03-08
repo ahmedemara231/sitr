@@ -10,6 +10,10 @@ class ChatModel {
 
   ChatModel({this.matchRequest, this.room});
 
+  ChatModel.initial()
+      : matchRequest = MatchRequest.initial(),
+        room = Room.initial();
+
   ChatModel.fromJson(Map<String, dynamic> json)
       : matchRequest = json['match_request'] != null
       ? MatchRequest.fromJson(json['match_request'])
@@ -57,6 +61,17 @@ class MatchRequest {
     this.requestName,
   });
 
+  MatchRequest.initial()
+      : id = 0,
+        type = Type.initial(),
+        stage = Stage.initial(),
+        timer = 0,
+        userRequest = '',
+        userRequestStatus = '',
+        tipsPage = '',
+        callStatus = '',
+        requestName = '';
+
   MatchRequest.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         callStatus = json['call'],
@@ -67,6 +82,7 @@ class MatchRequest {
         userRequest = json['user_request'],
         requestName = json['request_name'],
         userRequestStatus = json['user_request_status'];
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     data['id'] = id;
@@ -112,6 +128,10 @@ class Type {
 
   Type({this.value, this.title});
 
+  Type.initial()
+      : value = '',
+        title = '';
+
   Type.fromJson(Map<String, dynamic> json)
       : value = json['value'],
         title = json['title'];
@@ -140,6 +160,11 @@ class Stage {
   final String? description;
 
   Stage({this.value, this.text, this.description});
+
+  Stage.initial()
+      : value = '',
+        text = '',
+        description = '';
 
   Stage.fromJson(Map<String, dynamic> json)
       : value = json['value'],
@@ -186,6 +211,15 @@ class Room {
     this.unreadMsgs,
   });
 
+  Room.initial()
+      : id = 0,
+        timer = 0,
+        members = [],
+        messages = Messages.initial(),
+        lastMessageBody = '',
+        lastMessageCreatedDt = '',
+        unreadMsgs = 0;
+
   Room.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         timer = json['timer'],
@@ -194,8 +228,9 @@ class Room {
             .map((v) => Members.fromJson(v))
             .toList()
             : null,
-        messages =
-        json['messages'] != null ? Messages.fromJson(json['messages']) : null,
+        messages = json['messages'] != null
+            ? Messages.fromJson(json['messages'])
+            : null,
         lastMessageBody = json['last_message_body'],
         unreadMsgs = json['unread_messages_count'],
         lastMessageCreatedDt = json['last_message_created_dt'];
@@ -204,7 +239,8 @@ class Room {
     final Map<String, dynamic> data = {};
     data['id'] = id;
     data['timer'] = timer;
-    if (members != null) data['members'] = members!.map((v) => v.toJson()).toList();
+    if (members != null)
+      data['members'] = members!.map((v) => v.toJson()).toList();
     data['last_message_body'] = lastMessageBody;
     data['last_message_created_dt'] = lastMessageCreatedDt;
     return data;
@@ -217,7 +253,7 @@ class Room {
     Messages? messages,
     String? lastMessageBody,
     String? lastMessageCreatedDt,
-    int? unreadMsgs
+    int? unreadMsgs,
   }) {
     return Room(
       id: id ?? this.id,
@@ -227,7 +263,7 @@ class Room {
       lastMessageBody: lastMessageBody ?? this.lastMessageBody,
       lastMessageCreatedDt:
       lastMessageCreatedDt ?? this.lastMessageCreatedDt,
-      unreadMsgs: unreadMsgs ?? this.unreadMsgs
+      unreadMsgs: unreadMsgs ?? this.unreadMsgs,
     );
   }
 }
@@ -241,13 +277,19 @@ class Members {
 
   Members({this.id, this.type, this.name, this.image, this.userType});
 
+  Members.initial()
+      : id = 0,
+        type = '',
+        name = '',
+        image = '',
+        userType = UserType.values.first;
+
   Members.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         type = json['type'],
         name = json['name'],
         userType = (json['user_type'] as String?)?.toUserType(),
         image = json['image'];
-
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
@@ -279,6 +321,10 @@ class Messages {
 
   Messages({this.pagination, this.data});
 
+  Messages.initial()
+      : pagination = PaginationData(perPage: 0, totalPages: 0),
+        data = [];
+
   Messages.fromJson(Map<String, dynamic> json)
       : pagination = json['pagination'] != null
       ? PaginationData(
@@ -287,26 +333,23 @@ class Messages {
   )
       : null,
         data = json['data'] != null
-            ? (json['data'] as List)
-            .map((v) {
-              logDebug('the v is $v');
-              return ChatMessages(
-                message: Message(
-                    id: v['id'],
-                    type: v['type'],
-                    body: v['body']
-                ),
-                sender: Sender(
-                    id: v['sender_id'],
-                    name: v['name'],
-                    image: v['avatar'],
-                    isFromMe: v['is_sender'] ?? false
-                ),
-                time: v['created_at'],
-                // messageState: MessageState.sent
-              );
-        }
-        ).toList()
+            ? (json['data'] as List).map((v) {
+          logDebug('the v is $v');
+          return ChatMessages(
+            message: Message(
+              id: v['id'],
+              type: v['type'],
+              body: v['body'],
+            ),
+            sender: Sender(
+              id: v['sender_id'],
+              name: v['name'],
+              image: v['avatar'],
+              isFromMe: v['is_sender'] ?? false,
+            ),
+            time: v['created_at'],
+          );
+        }).toList()
             : null;
 
   Messages copyWith({
@@ -342,6 +385,17 @@ class Data {
     this.createdAt,
     this.avatar,
   });
+
+  Data.initial()
+      : id = 0,
+        senderId = 0,
+        isSender = false,
+        body = '',
+        type = '',
+        duration = 0,
+        name = '',
+        createdAt = '',
+        avatar = '';
 
   Data.fromJson(Map<String, dynamic> json)
       : id = json['id'],

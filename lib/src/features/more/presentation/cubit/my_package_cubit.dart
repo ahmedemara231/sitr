@@ -12,9 +12,14 @@ class MyPackageCubit extends AsyncCubit<List<Package>>{
           CrudBaseParmas(
             api: ApiConstants.myPackage,
             httpRequestType: HttpRequestType.get,
+            cacheKey: 'my_package',
             mapper: (json) => (json as List)
                 .map((e) => Package.fromJson(e))
                 .toList(),
+            fromCacheJson: (json) => (json['data'] as List)
+                .map((e) => Package.fromJson(e))
+                .toList(),
+            toJson: (data) => {'data': data.map((e) => e.toJson()).toList()},
           ),
         ),
     );

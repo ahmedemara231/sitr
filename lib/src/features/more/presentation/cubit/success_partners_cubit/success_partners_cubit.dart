@@ -12,8 +12,14 @@ class SuccessPartnersCubit extends AsyncCubit<List<SuccessPartnersModel>> {
                 .call(CrudBaseParmas(
               api: ApiConstants.successPartners,
               httpRequestType: HttpRequestType.get,
-              mapper: (data) => (data as List).map<SuccessPartnersModel>(
-                      (e) => SuccessPartnersModel.fromJson(e)).toList()
+              cacheKey: 'success_partners',
+              mapper: (data) => (data as List)
+                  .map<SuccessPartnersModel>((e) => SuccessPartnersModel.fromJson(e))
+                  .toList(),
+              fromCacheJson: (json) => (json['data'] as List)
+                  .map<SuccessPartnersModel>((e) => SuccessPartnersModel.fromJson(e))
+                  .toList(),
+              toJson: (data) => {'data': data.map((e) => e.toJson()).toList()},
             )));
   }
 }

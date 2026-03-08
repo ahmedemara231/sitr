@@ -5,7 +5,7 @@ import '../../../../core/network/api_endpoints.dart';
 import '../../data/models/chat_model.dart';
 
 class EndVideoCallCubit extends AsyncCubit<ChatModel>{
-  EndVideoCallCubit() : super(ChatModel());
+  EndVideoCallCubit() : super(ChatModel.initial());
 
   static EndVideoCallCubit get instance => injector<EndVideoCallCubit>();
 

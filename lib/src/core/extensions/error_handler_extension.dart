@@ -12,6 +12,7 @@ extension ErrorHandlerWithCache<M> on Future<BaseModel<M>> {
   Future<Result<BaseModel<M>, Failure>> handleCallbackWithCache({
     required String cacheKey,
     required M Function(dynamic json) fromJson,
+    required M Function(Map<String, dynamic> json) fromCacheJson,
     required Map<String, dynamic> Function(M) toJson,
     required void Function(String key, Map<String, dynamic> json) onSave,
     required Map<String, dynamic>? Function(String key) onRead,
@@ -21,33 +22,30 @@ extension ErrorHandlerWithCache<M> on Future<BaseModel<M>> {
       onSave(cacheKey, toJson(result.data));
       return Success(result);
     } on BlockedException catch (e) {
-      return _resolveFromCache(cacheKey, fromJson, e.message, onRead);
+      return _resolveFromCache(cacheKey, fromCacheJson, e.message, onRead);
     } on UnauthorizedException catch (e) {
-      return _resolveFromCache(cacheKey, fromJson, e.message, onRead);
+      return _resolveFromCache(cacheKey, fromCacheJson, e.message, onRead);
     } on ServerException catch (e) {
-      return _resolveFromCache(cacheKey, fromJson, e.message, onRead);
+      return _resolveFromCache(cacheKey, fromCacheJson, e.message, onRead);
     } catch (e, s) {
       if (kDebugMode) log('Unexpected error: ${e.toString()}', stackTrace: s);
-      return _resolveFromCache(
-        cacheKey,
-        fromJson,
-        kDebugMode ? e.toString() : 'An unexpected error occurred',
-        onRead,
-      );
+      return _resolveFromCache(cacheKey, fromCacheJson, e.toString(), onRead);
     }
   }
 }
 
 Result<BaseModel<M>, Failure> _resolveFromCache<M>(
   String cacheKey,
-  M Function(dynamic json) fromJson,
+  M Function(Map<String, dynamic> json) fromCacheJson,
   String errorMessage,
   Map<String, dynamic>? Function(String key) onRead,
 ) {
-  final cached = onRead(cacheKey);
-  if (cached.isNotNull) {
-    return Success(BaseModel(key: '', msg: '', data: fromJson(cached)));
-  }
+  try {
+    final cached = onRead(cacheKey);
+    if (cached.isNotNull) {
+      return Success(BaseModel(key: '', msg: '', data: fromCacheJson(cached!)));
+    }
+  } catch (_) {}
   return Error(Failure(errorMessage));
 }
 

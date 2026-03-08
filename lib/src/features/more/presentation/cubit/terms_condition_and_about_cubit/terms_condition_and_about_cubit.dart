@@ -9,9 +9,11 @@ class TermsConditionAndAboutCubit  extends AsyncCubit<String>  {
     await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call<String>(
               CrudBaseParmas(
-                  api:staticPageType.name,
+                  api: staticPageType.name,
                   httpRequestType: HttpRequestType.get,
-                  mapper: (data)=>data
+                  mapper: (data) => data as String,
+                  fromCacheJson: (json) => json['content'] as String,
+                  toJson: (data) => {'content': data},
               )
           )
     );

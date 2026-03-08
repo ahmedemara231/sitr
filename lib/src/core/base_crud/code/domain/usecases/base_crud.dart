@@ -31,6 +31,7 @@ class CrudBaseParmas<T>  {
   final Map<String, dynamic>? body;
   final Map<String, dynamic>? queryParameters;
   final T Function(dynamic json)? mapper;
+  final T Function(Map<String, dynamic> json)? fromCacheJson;
   final bool isFromData;
   final void Function(int, int)? onSendProgress;
   final Map<String, dynamic> Function(T)? toJson;
@@ -43,6 +44,7 @@ class CrudBaseParmas<T>  {
     this.onSendProgress,
     this.isFromData = false,
     this.mapper,
+    this.fromCacheJson,
     this.toJson,
   });
 

@@ -19,21 +19,28 @@ class ChatButton extends StatelessWidget {
       create: (_) => CheckChatEligibilityCubit(),
       child: BlocBuilder<CheckChatEligibilityCubit, AsyncState<bool>>(
         builder: (context, state) => AppLoadingButton(
-          asyncCall: (context) => (user.canChat!) ?
-              context.read<CheckChatEligibilityCubit>().checkEligibility(
-                    requestModel: RequestModel(
-                        receiverId: user.id.toString(),
-                        fromHome: 1.toString()
-                    ),
-                    onEligible: () => Go.to(ChatScreen(
-                      requestModel: RequestModel(
-                        receiverId: '${user.id}',
-                        fromHome: 1.toString(),
-                      ),
-                      receiverName: user.name ?? '',
-                    )),
-              ) : Future(() => null),
-          buttonColor: user.canChat! ? null : Colors.grey[300],
+          asyncCall: (context) => Go.to(ChatScreen(
+            requestModel: RequestModel(
+              receiverId: '${user.id}',
+              fromHome: 1.toString(),
+            ),
+            receiverName: user.name ?? '',
+          )),
+          // asyncCall: (context) => (user.canChat!) ?
+          //     context.read<CheckChatEligibilityCubit>().checkEligibility(
+          //           requestModel: RequestModel(
+          //               receiverId: user.id.toString(),
+          //               fromHome: 1.toString()
+          //           ),
+          //           onEligible: () => Go.to(ChatScreen(
+          //             requestModel: RequestModel(
+          //               receiverId: '${user.id}',
+          //               fromHome: 1.toString(),
+          //             ),
+          //             receiverName: user.name ?? '',
+          //           )),
+          //     ) : Future(() => null),
+          buttonColor: user.canChat??false ? null : Colors.grey[300],
           title: LocaleKeys.startChat,
         ),
       ),
