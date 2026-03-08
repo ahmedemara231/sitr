@@ -161,7 +161,10 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
             _listenToData(model.copyWith(maritalStatus: val) as T);
             martialStatus.value = val.value;
           },
-          validator: (e) => Validators.validateEmpty(e?.title)
+          validator: (e) => Validators.validateEmpty(e?.title),
+          cacheKey: 'marital_statuses',
+          cacheToJson: (e) => e.toJson(),
+          cacheFromJson: (json) => TitleValueShape.fromJson(json),
       ),
 
 
@@ -233,7 +236,10 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
                  asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.childCustodies),
                  getLabel: (element) => element.title,
                  onChanged: (result) => _listenToData(model.copyWith(childCustody: result) as T),
-                 validator: (e) => Validators.validateEmpty(e?.title)
+                 validator: (e) => Validators.validateEmpty(e?.title),
+                 cacheKey: 'child_custodies',
+                 cacheToJson: (e) => e.toJson(),
+                 cacheFromJson: (json) => TitleValueShape.fromJson(json),
                )
              ],
            ) : const SizedBox.shrink(),
@@ -271,6 +277,9 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         getLabel: (element) => element.title,
         onChanged: (val) =>
             _listenToData(model.copyWith(weddingType: TitleValueShape.fromSingleLabel(val.value)) as T),
+        cacheKey: 'wedding_types',
+        cacheToJson: (e) => e.toJson(),
+        cacheFromJson: (json) => TitleValueShape.fromJson(json),
       ),
 
       AppDropinity<List<CityModel>, CityModel>.withApiRequest(
@@ -280,7 +289,10 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
           asyncCall: (context, page) async => await AuthData.getCities(),
           getLabel: (city) => city.name ?? '',
         onChanged: (val) => _listenToData(model.copyWith(cityId: val) as T),
-          validator: (e) => Validators.validateEmpty(e?.name)
+          validator: (e) => Validators.validateEmpty(e?.name),
+        cacheKey: 'cities',
+        cacheToJson: (e) => e.toJson(),
+        cacheFromJson: (json) => CityModel.fromJson(json),
         // validator: (v) => Validators.validateDropDown<String>(
         //     v?.name,
         //     fieldTitle: LocaleKeys.city.tr()
@@ -344,6 +356,9 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.skinColors),
         getLabel: (element) => element.title,
         onChanged: (val) => _listenToData(model.copyWith(skinColor: TitleValueShape.fromSingleLabel(val?.value)) as T),
+        cacheKey: 'skin_colors',
+        cacheToJson: (e) => e.toJson(),
+        cacheFromJson: (json) => TitleValueShape.fromJson(json),
       ),
 
 
@@ -356,7 +371,10 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.religiousCommitments),
         getLabel: (element) => element.title,
         onChanged: (value) => _listenToData(model.copyWith(religiousCommitment: TitleValueShape.fromSingleLabel(value?.value)) as T),
-        validator: (e) => Validators.validateEmpty(e?.title)
+        validator: (e) => Validators.validateEmpty(e?.title),
+        cacheKey: 'religious_commitments',
+        cacheToJson: (e) => e.toJson(),
+        cacheFromJson: (json) => TitleValueShape.fromJson(json),
       ),
     ];
 

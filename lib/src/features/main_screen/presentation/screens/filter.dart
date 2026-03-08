@@ -79,6 +79,9 @@ class _FilterScreenState extends State<FilterScreen> {
               asyncCall: (context, page) async => await AuthData.getCities(),
               getLabel: (city) => city.name ?? '',
               onChanged: (val) => _listenToData(model.copyWith(cityId: val.id)),
+              cacheKey: 'cities',
+              cacheToJson: (e) => e.toJson(),
+              cacheFromJson: (json) => CityModel.fromJson(json),
             ),
 
             SignUpTextField(
@@ -106,6 +109,9 @@ class _FilterScreenState extends State<FilterScreen> {
               getLabel: (v) => v.title,
               onChanged: (val) =>
                   _listenToData(model.copyWith(maritalStatus: val.value)),
+              cacheKey: 'marital_statuses',
+              cacheToJson: (e) => e.toJson(),
+              cacheFromJson: (json) => TitleValueShape.fromJson(json),
             ),
 
             SignUpTextField(
@@ -145,6 +151,9 @@ class _FilterScreenState extends State<FilterScreen> {
               asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.skinColors),
               getLabel: (v) => v.title,
               onChanged: (val) => _listenToData(model.copyWith(skinColor: val.value)),
+              cacheKey: 'skin_colors',
+              cacheToJson: (e) => e.toJson(),
+              cacheFromJson: (json) => TitleValueShape.fromJson(json),
             ),
 
             if(UserModel.isMale)
@@ -157,6 +166,9 @@ class _FilterScreenState extends State<FilterScreen> {
               onChanged: (value) {
                 _listenToData(model.copyWith(hijab: value.value));
               },
+              cacheKey: 'hijab_types',
+              cacheToJson: (e) => e.toJson(),
+              cacheFromJson: (json) => TitleValueShape.fromJson(json),
             ),
 
             RadioWidget<Languages>(
@@ -189,6 +201,9 @@ class _FilterScreenState extends State<FilterScreen> {
               getLabel: (v) => v.title,
               onChanged: (val) =>
                   _listenToData(model.copyWith(weddingType: val.value)),
+              cacheKey: 'wedding_types',
+              cacheToJson: (e) => e.toJson(),
+              cacheFromJson: (json) => TitleValueShape.fromJson(json),
             ),
             RadioWidget<Answer>(
               title: LocaleKeys.wantToHaveChildren,
@@ -205,6 +220,9 @@ class _FilterScreenState extends State<FilterScreen> {
               asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.religiousCommitments),
               getLabel: (v) => v.title,
               onChanged: (value) => _listenToData(model.copyWith(religiousCommitment: value.value)),
+              cacheKey: 'religious_commitments',
+              cacheToJson: (e) => e.toJson(),
+              cacheFromJson: (json) => TitleValueShape.fromJson(json),
             ),
 
             AppDefaultButton.withBackGroundColor(

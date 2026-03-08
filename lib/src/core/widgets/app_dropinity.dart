@@ -8,6 +8,7 @@ import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../extensions/padding_extension.dart';
+import '../local_db/objectbox_cache_service.dart';
 import 'app_text.dart';
 import 'custom_loading.dart';
 import 'svg_pic.dart';
@@ -37,7 +38,12 @@ class AppDropinity<FullResponse, Model> extends StatefulWidget {
     required this.values,
     required this.getLabel,
     required this.onChanged,
-  }) : asyncCall = null, type = DropinityType.local;
+  }) : asyncCall = null, type = DropinityType.local,
+       cacheKey = null, cacheToJson = null, cacheFromJson = null;
+
+  final String? cacheKey;
+  final Map<String, dynamic> Function(Model item)? cacheToJson;
+  final Model Function(Map<String, dynamic> json)? cacheFromJson;
 
   const AppDropinity.withApiRequest({
     super.key,
@@ -50,6 +56,9 @@ class AppDropinity<FullResponse, Model> extends StatefulWidget {
     required this.asyncCall,
     required this.getLabel,
     required this.onChanged,
+    this.cacheKey,
+    this.cacheToJson,
+    this.cacheFromJson,
 }) : values = null, type = DropinityType.api;
 
   @override
@@ -104,6 +113,19 @@ class _AppDropinityState<FullResponse, Model> extends State<AppDropinity<FullRes
         );
 
       default:
+        final hasCacheConfig = widget.cacheKey != null &&
+            widget.cacheToJson != null &&
+            widget.cacheFromJson != null;
+
+        void onSaveCache(String key, List<Map<String, dynamic>> items) =>
+            ObjectBoxCacheService.save(key, {'items': items});
+
+        List<Map<String, dynamic>>? onReadCache(String key) {
+          final cached = ObjectBoxCacheService.read(key);
+          if (cached == null) return null;
+          return (cached['items'] as List?)?.cast<Map<String, dynamic>>();
+        }
+
         return Dropinity<FullResponse, Model>.withApiRequest(
           showNoDataAlert: false,
           validator: widget.validator,
@@ -128,6 +150,11 @@ class _AppDropinityState<FullResponse, Model> extends State<AppDropinity<FullRes
             widget.onChanged.call(val);
           },
           pagifyData: DropinityPagifyData(
+            cacheKey: hasCacheConfig ? widget.cacheKey : null,
+            cacheToJson: hasCacheConfig ? widget.cacheToJson : null,
+            cacheFromJson: hasCacheConfig ? widget.cacheFromJson : null,
+            onSaveCache: hasCacheConfig ? onSaveCache : null,
+            onReadCache: hasCacheConfig ? onReadCache : null,
             loadingBuilder: CustomLoading.showLoadingView(),
             asyncCall: widget.asyncCall!,
             mapper: (response) => PagifyData(
@@ -147,8 +174,7 @@ class _AppDropinityState<FullResponse, Model> extends State<AppDropinity<FullRes
                       statusMsg: e.response?.statusMessage,
                     ),
                   );
-                } // if you using Dio
-
+                }
             ),
             itemBuilder: (context, data, index, element) => AppText(
                 widget.getLabel.call(element),

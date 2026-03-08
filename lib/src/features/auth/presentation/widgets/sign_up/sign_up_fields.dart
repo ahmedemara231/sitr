@@ -277,6 +277,9 @@ class _SignUpFieldsState extends State<SignUpFields> {
               _listenToData(
                   (signUpBody as ParentSignUp).copyWith(kinship: val.id));
             },
+            cacheKey: 'kinships',
+            cacheToJson: (e) => e.toJson(),
+            cacheFromJson: (json) => Kinship.fromJson(json),
           ),
           SignUpTextField(
             validator: Validators.validateEmpty,

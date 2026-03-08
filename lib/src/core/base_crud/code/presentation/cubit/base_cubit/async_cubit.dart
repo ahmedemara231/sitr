@@ -115,29 +115,52 @@ abstract class AsyncCubit<T> extends Cubit<AsyncState<T>> {
     );
 
     _streamSubscription = _connectivity.onConnectivityChanged.listen((status)async{
-      _checkIsFirstTime(
-          _firstRequest,
-          onNotFirstTime: ()async{
-            if(status.contains(ConnectivityResult.none)){
-              if(state.data.isNull || (state.data is List && (state.data as List).isEmpty)){
-                emit(state.error(errorMessage: LocaleKeys.checkInternet));
+      if(status.contains(ConnectivityResult.none)){
+        if(state.data.isNull || (state.data is List && (state.data as List).isEmpty)){
+          emit(state.error(errorMessage: LocaleKeys.checkInternet));
 
-              }else{
-                MessageUtils.showSnackBar(LocaleKeys.checkInternet);
-              }
+        }else{
+          MessageUtils.showSnackBar(LocaleKeys.checkInternet);
+        }
 
-            }else{
-              MessageUtils.showSnackBar(LocaleKeys.theInternetConnectionIsRestored);
-              if(state.data.isNull || (state.data is List && (state.data as List).isEmpty)){
-                await _basicOperation(
-                    operation: operation,
-                    successEmitter: successEmitter,
-                    onError: onError
-                );
-              }
-            }
-          }
-      );
+      }else{
+        MessageUtils.showSnackBar(LocaleKeys.theInternetConnectionIsRestored);
+        await _basicOperation(
+            operation: operation,
+            successEmitter: successEmitter,
+            onError: onError
+        );
+        // if(state.data.isNull || (state.data is List && (state.data as List).isEmpty)){
+        //   await _basicOperation(
+        //       operation: operation,
+        //       successEmitter: successEmitter,
+        //       onError: onError
+        //   );
+        // }
+      }
+      // _checkIsFirstTime(
+      //     _firstRequest,
+      //     onNotFirstTime: ()async{
+      //       if(status.contains(ConnectivityResult.none)){
+      //         if(state.data.isNull || (state.data is List && (state.data as List).isEmpty)){
+      //           emit(state.error(errorMessage: LocaleKeys.checkInternet));
+      //
+      //         }else{
+      //           MessageUtils.showSnackBar(LocaleKeys.checkInternet);
+      //         }
+      //
+      //       }else{
+      //         MessageUtils.showSnackBar(LocaleKeys.theInternetConnectionIsRestored);
+      //         if(state.data.isNull || (state.data is List && (state.data as List).isEmpty)){
+      //           await _basicOperation(
+      //               operation: operation,
+      //               successEmitter: successEmitter,
+      //               onError: onError
+      //           );
+      //         }
+      //       }
+      //     }
+      // );
     });
   }
 

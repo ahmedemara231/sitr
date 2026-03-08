@@ -401,13 +401,6 @@
             </list>
           </value>
         </entry>
-        <entry key="dropinity">
-          <value>
-            <list>
-              <option value="$PROJECT_DIR$/../dropinity/lib" />
-            </list>
-          </value>
-        </entry>
         <entry key="easy_debounce">
           <value>
             <list>
@@ -2614,7 +2607,6 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/zego_uikit_signaling_plugin-2.8.20/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/zego_zim-2.25.0+1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/zego_zpns-2.8.0/lib" />
-      <root url="file://$PROJECT_DIR$/../dropinity/lib" />
       <root url="file://$PROJECT_DIR$/../pagination_helper/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_setups/flutter4/bin/cache/pkg/sky_engine/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_setups/flutter4/packages/flutter/lib" />

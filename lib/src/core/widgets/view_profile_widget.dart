@@ -61,7 +61,7 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatefulWidget {
 
 class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewProfileWidget<T>> {
   late List<PartnerInfoModel> partnerInfo = [];
-  late final IndividualUserModel user;
+  late IndividualUserModel user = IndividualUserModel.initial();
   void _onSuccess(UserModel userResult){
     user = userResult as IndividualUserModel;
     partnerInfo = [

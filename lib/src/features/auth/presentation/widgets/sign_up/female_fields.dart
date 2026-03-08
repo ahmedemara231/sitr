@@ -150,7 +150,10 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 wearingHijab.value = value.value;
                 _listenToData(asFemale.copyWith(hijab: TitleValueShape.fromSingleLabel(wearingHijab.value)));
               },
-              validator: (e) => Validators.validateEmpty(e?.title)
+              validator: (e) => Validators.validateEmpty(e?.title),
+              cacheKey: 'hijab_types',
+              cacheToJson: (e) => e.toJson(),
+              cacheFromJson: (json) => TitleValueShape.fromJson(json),
             ),
 
               // SignUpTextField(
@@ -245,7 +248,10 @@ class _FemaleFieldsState extends State<FemaleFields> {
                   wearingHijab.value = value?.value;
                   _listenToData(asFemale.copyWith(hijab: TitleValueShape.fromSingleLabel(wearingHijab.value)));
                 },
-                validator: (e) => Validators.validateEmpty(e?.title)
+                validator: (e) => Validators.validateEmpty(e?.title),
+                cacheKey: 'hijab_types',
+                cacheToJson: (e) => e.toJson(),
+                cacheFromJson: (json) => TitleValueShape.fromJson(json),
               ),
 
 

@@ -150,7 +150,10 @@ class _EditParentProfileScreenState extends State<EditParentProfileScreen> {
                 asyncCall: (context, page) async => await AuthData.getKinships(),
                 getLabel: (kinship) => kinship.value,
                 onChanged: (kinship) => _selectedRelation = kinship,
-                  validator: (e) => Validators.validateEmpty(e?.value)
+                validator: (e) => Validators.validateEmpty(e?.value),
+                cacheKey: 'kinships',
+                cacheToJson: (e) => e.toJson(),
+                cacheFromJson: (json) => Kinship.fromJson(json),
               ),
 
               // Number of children field
