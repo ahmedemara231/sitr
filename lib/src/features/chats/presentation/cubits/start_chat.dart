@@ -63,8 +63,11 @@ class ChatCubit extends AsyncCubit<ChatModel>{
           CrudBaseParmas(
             api: ApiConstants.startChat,
             httpRequestType: HttpRequestType.post,
+            cacheKey: 'chat_${requestModel.receiverId}',
             body: requestModel.toJson(),
+            // fromCacheJson: (json) => ChatModel.fromJson(json['data']),
             mapper: (json) => ChatModel.fromJson(json),
+            toJson: (model) => model.toJson(),
           ),
       ),
       onSuccess: (data) async => await ChatsData.manageSuccessState(

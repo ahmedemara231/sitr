@@ -19,7 +19,11 @@ extension ErrorHandlerWithCache<M> on Future<BaseModel<M>> {
   }) async {
     try {
       final result = await this;
-      onSave(cacheKey, toJson(result.data));
+      try {
+        onSave(cacheKey, toJson(result.data));
+      } catch (e) {
+        if (kDebugMode) log('Cache save failed for key $cacheKey: $e');
+      }
       return Success(result);
     } on BlockedException catch (e) {
       return _resolveFromCache(cacheKey, fromCacheJson, e.message, onRead);

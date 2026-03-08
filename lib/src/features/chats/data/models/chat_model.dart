@@ -241,8 +241,10 @@ class Room {
     data['timer'] = timer;
     if (members != null)
       data['members'] = members!.map((v) => v.toJson()).toList();
+    if (messages != null) data['messages'] = messages!.toJson();
     data['last_message_body'] = lastMessageBody;
     data['last_message_created_dt'] = lastMessageCreatedDt;
+    data['unread_messages_count'] = unreadMsgs;
     return data;
   }
 
@@ -297,6 +299,7 @@ class Members {
     data['type'] = type;
     data['name'] = name;
     data['image'] = image;
+    data['user_type'] = userType?.name;
     return data;
   }
 
@@ -351,6 +354,23 @@ class Messages {
           );
         }).toList()
             : null;
+
+  Map<String, dynamic> toJson() => {
+    'pagination': pagination != null ? {
+      'per_page': pagination!.perPage,
+      'total_pages': pagination!.totalPages,
+    } : null,
+    'data': data?.map((v) => {
+      'id': v.message?.id,
+      'type': v.message?.type,
+      'body': v.message?.body,
+      'sender_id': v.sender?.id,
+      'name': v.sender?.name,
+      'avatar': v.sender?.image,
+      'is_sender': v.sender?.isFromMe,
+      'created_at': v.time,
+    }).toList(),
+  };
 
   Messages copyWith({
     PaginationData? pagination,

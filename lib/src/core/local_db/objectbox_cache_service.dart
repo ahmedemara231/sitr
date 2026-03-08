@@ -38,4 +38,8 @@ class ObjectBoxCacheService {
       return null;
     }
   }
+
+  static void clearAll() {
+    _box.removeAll();
+  }
 }

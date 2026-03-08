@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../config/res/config_imports.dart';
 import '../../helpers/cache_service.dart';
+import '../../local_db/objectbox_cache_service.dart';
 import '../../helpers/helpers.dart';
 import '../../network/log_interceptor.dart';
 import '../../network/network_service.dart';
@@ -34,6 +35,7 @@ class UserCubit extends Cubit<UserState> with UserUtils {
       CacheStorage.delete(_userKey),
       SecureStorage.delete(_tokenKey),
     ]);
+    ObjectBoxCacheService.clearAll();
     _clearUser();
     emit(state.copyWith(userStatus: UserStatus.loggedOut));
   }
