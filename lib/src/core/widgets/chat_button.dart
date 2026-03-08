@@ -1,78 +1,42 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../features/chats/data/models/request_model.dart';
+import '../../features/chats/presentation/cubits/check_chat_eligibility_cubit.dart';
 import '../../features/chats/presentation/imports.dart';
-import '../helpers/user_type_enum.dart';
-import '../../features/chats/data/chat_sheet_manager.dart';
+import '../base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../navigation/navigator.dart';
-import '../network/api_endpoints.dart';
 import '../shared/models/user_models/user_model.dart';
-import 'buttons/custom_app_buttons/default_button.dart' show AppDefaultButton;
-import 'sheets/tips_sheet.dart';
+import 'buttons/app_loading_button.dart';
 
-
-enum ChatButtonActions { startChat, viewTips, none}
 class ChatButton extends StatelessWidget {
   final UserModel user;
-  ChatButton({super.key, required this.user});
-
-
-  late final Map<ChatButtonActions, FutureOr<void> Function()?> _chatButtonPossibleActions = {
-    ChatButtonActions.startChat : () {
-      Go.to(ChatScreen(
-        requestModel: RequestModel(receiverId: '${user.id}', fromHome: 1.toString()),
-        receiverName: user.name ?? '',
-      ));
-    },
-
-    ChatButtonActions.viewTips : () => user.type!.userType!.isParent?
-    ChatSheetManager.show(
-        child: TipsSheet(
-            path: ApiConstants.parentIndividualConversation,
-            btnTitle: LocaleKeys.start,
-            onConfirm: () =>
-                Go.off(ChatScreen(
-                  requestModel: RequestModel(receiverId: '${user.id}', fromHome: 1.toString()),
-                  receiverName: user.name ?? '',
-                )),
-        )
-    ) :
-    ChatSheetManager.show(
-        child: TipsSheet(
-          path: ApiConstants.appStages,
-          onConfirm: () =>
-              Go.off(ChatScreen(
-                requestModel: RequestModel(receiverId: '${user.id}', fromHome: 1.toString()),
-                receiverName: user.name ?? '',
-              )),
-        )
-    ),
-
-    ChatButtonActions.none : null,
-  };
-
-  ChatButtonActions get _getButtonAction{
-    if(user.canChat!){
-      if(!user.hasChatWith!){
-        return ChatButtonActions.viewTips;
-
-      }else{
-        return ChatButtonActions.startChat;
-      }
-
-    }else{
-      return ChatButtonActions.none;
-    }
-  }
+  const ChatButton({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
-    return AppDefaultButton.withBackGroundColor(
-      onTap: _chatButtonPossibleActions[_getButtonAction],
-      borderColor: Colors.grey[300],
-      backgroundColor: user.canChat!? null : Colors.grey[300],
-      title: LocaleKeys.startChat,
+    return BlocProvider(
+      create: (_) => CheckChatEligibilityCubit(),
+      child: BlocBuilder<CheckChatEligibilityCubit, AsyncState<bool>>(
+        builder: (context, state) => AppLoadingButton(
+          asyncCall: (context) => (user.canChat!) ?
+              context.read<CheckChatEligibilityCubit>().checkEligibility(
+                    requestModel: RequestModel(
+                        receiverId: user.id.toString(),
+                        fromHome: 1.toString()
+                    ),
+                    onEligible: () => Go.to(ChatScreen(
+                      requestModel: RequestModel(
+                        receiverId: '${user.id}',
+                        fromHome: 1.toString(),
+                      ),
+                      receiverName: user.name ?? '',
+                    )),
+              ) : Future(() => null),
+          buttonColor: user.canChat! ? null : Colors.grey[300],
+          title: LocaleKeys.startChat,
+        ),
+      ),
     );
   }
 }
