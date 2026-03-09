@@ -14,6 +14,7 @@ class Assets {
   static const String errorError2 = 'assets/lottie/error/error_2.json';
   static const String errorError3 = 'assets/lottie/error/error_3.json';
   static const String errorError4 = 'assets/lottie/error/error_4.json';
+  static const String errorErrorView = 'assets/lottie/error/error_view.json';
   static const String fontsRiyal = 'assets/fonts/riyal.ttf';
   static const String imagesAlert = 'assets/images/alert.png';
   static const String imagesAppLogo = 'assets/images/app_logo.png';

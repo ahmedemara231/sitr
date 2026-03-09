@@ -1,7 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
-
-import '../../config/language/locale_keys.g.dart';
 import '../base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../shared/base_state.dart';
 import '../widgets/custom_loading.dart';
@@ -9,7 +6,6 @@ import '../widgets/exeption_view.dart';
 
 class StatusBuilder<T> extends StatelessWidget {
   final AsyncState<T> data;
-  final String? errorMessage;
   final Widget Function(T data, BuildContext context) onSuccess;
   final Widget Function()? onFail;
   final Widget Function()? onLoading;
@@ -18,7 +14,6 @@ class StatusBuilder<T> extends StatelessWidget {
         required this.data,
         required this.onSuccess,
         this.onFail,
-        this.errorMessage,
         this.onLoading});
 
   @override
@@ -29,9 +24,9 @@ class StatusBuilder<T> extends StatelessWidget {
       return onLoading?.call() ??
           Center(child: CustomLoading.showLoadingView());
     }, onError: () {
-      if (data.data != null) {
-        return onSuccess(data.data, context);
-      }
+      // if (data.data != null) { // لو عايزين نظهر الداتا ال initial اما اول request fails
+      //   return onSuccess(data.data, context);
+      // }
       return onFail?.call() ?? const ExceptionView();
     },
       onInitial: () {
@@ -50,7 +45,6 @@ class CenterErrorWidget extends StatelessWidget {
       child: Text(
         message,
         textAlign: TextAlign.center,
-        // style: context.textStyle.s14.regular.setHintColor,
       ),
     );
   }

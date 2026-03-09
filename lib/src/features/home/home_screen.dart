@@ -127,10 +127,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         currentIndex: cubit.currentIndex,
                         onTap: (index) {
                           if(index != 0 && index != 4){
-                            if(!UserModel.isAuthenticated){
-                              Helpers.showUnauthenticatedSheet();
-                            }else{
+                            if(UserModel.isAuthenticated){
                               cubit.changeBottomNavIndex(index);
+
+                            }else{
+                              Helpers.showUnauthenticatedSheet();
                             }
                           }else{
                             cubit.changeBottomNavIndex(index);

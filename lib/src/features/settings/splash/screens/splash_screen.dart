@@ -1,34 +1,68 @@
-// part of '../imports/view_imports.dart';
-//
-// class SplashScreen extends StatelessWidget {
-//   const SplashScreen({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocProvider<SplashCubit>(
-//       create: (context) => SplashCubit(),
-//       child: const _SplashView(),
-//     );
-//   }
-// }
-//
-// class _SplashView extends StatelessWidget {
-//   const _SplashView();
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Column(
-//         children: [
-//           SizedBox(
-//             width: context.width,
-//             height: context.height,
-//             child: AppAssets.lottie.loading.loading3.lottie(
-//               fit: BoxFit.fill,
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+import 'package:flutter/material.dart';
+import '../../../../config/res/assets.gen.dart';
+import '../../../../config/res/config_imports.dart';
+import '../../../../core/extensions/object.dart';
+import '../../../../core/helpers/cache_service.dart';
+import '../../../../core/helpers/helpers.dart';
+import '../../../../core/navigation/navigator.dart';
+import '../../../../core/notification/notification_service.dart';
+import '../../../../core/shared/user_cubit/user_cubit.dart';
+import '../../../auth/imports.dart';
+import '../../../home/home_screen.dart';
+import '../../../on_boarding/screen.dart';
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _manipulateSplashData();
+  }
+
+  void _manipulateSplashData() async {
+    await NotificationService().saveFcmToken();
+    await Future.delayed(const Duration(seconds: 2));
+    final result = await CacheStorage.read(CacheConstant.onBoardingSubmission);
+    switch (result) {
+      case true:
+        _manipulateLoginState();
+        break;
+      default:
+        Go.offAll(const OnBoardingView());
+        break;
+    }
+  }
+
+  Future<void> _manipulateLoginState() async {
+    final result = (await CacheStorage.read('user', isDecoded: true) as Object?).isNotNull;
+    switch (result) {
+      case true:
+        await UserCubit.instance.init();
+        Go.offAll(const HomeScreen());
+        break;
+      default:
+        Go.offAll(const LoginScreen());
+        break;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: AppAssets.lottie.loading.loading3.lottie(
+          fit: BoxFit.fill,
+        ),
+      ),
+    );
+  }
+}

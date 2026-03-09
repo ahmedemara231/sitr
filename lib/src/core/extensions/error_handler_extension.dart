@@ -11,7 +11,6 @@ import 'object.dart';
 extension ErrorHandlerWithCache<M> on Future<BaseModel<M>> {
   Future<Result<BaseModel<M>, Failure>> handleCallbackWithCache({
     required String cacheKey,
-    required M Function(dynamic json) fromJson,
     required M Function(Map<String, dynamic> json) fromCacheJson,
     required Map<String, dynamic> Function(M) toJson,
     required void Function(String key, Map<String, dynamic> json) onSave,

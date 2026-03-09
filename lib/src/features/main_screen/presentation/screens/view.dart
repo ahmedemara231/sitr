@@ -163,10 +163,8 @@ class _MainViewBodyState extends State<MainViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => MainViewCubit()..getHomeData()),
-      ],
+    return BlocProvider(
+      create: (context) => MainViewCubit()..getHomeData(),
       child: BlocBuilder<MainViewCubit, AsyncState<HomeModel>>(
         builder: (context, state) => SliverCenterCardScaffold(
             scrollController: _scrollController,

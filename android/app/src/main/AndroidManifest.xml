@@ -37,11 +37,6 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
 
-    <!-- FOREGROUND SERVICE TYPES (API 34+) -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_PHONE_CALL"/>
-
     <queries>
         <!-- WhatsApp -->
         <intent>

@@ -94,7 +94,7 @@ dependencies:
 #  json_annotation: ^4.11.0
 
   #--------------------- mine ----------------------
-  easy_timer_count: ^0.0.2
+  easy_timer_count: ^0.0.3
   pagify:
 #    git: https://github.com/ahmedemara231/pagination_helper
     path: /Users/aaita/Desktop/apps/pagination_helper

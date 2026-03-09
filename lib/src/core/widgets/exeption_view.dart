@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../config/res/assets.gen.dart';
- 
+import 'package:lottie/lottie.dart';
+import '../../../generated/assets.dart';
 
 class ExceptionView extends StatelessWidget {
   const ExceptionView({super.key});
@@ -9,7 +9,7 @@ class ExceptionView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: FittedBox(
-        child: AppAssets.lottie.error.apiError.lottie(),
+        child: Lottie.asset(Assets.errorErrorView),
       ),
     );
   }

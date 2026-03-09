@@ -16,7 +16,7 @@ import 'features/auth/imports.dart';
 import 'features/home/cubits/get_notification_count.dart';
 import 'features/on_boarding/screen.dart';
 import 'core/notification/inactivity_notification_service.dart';
-import 'features/splash/splash_screen.dart';
+import 'features/settings/splash/screens/splash_screen.dart';
 
 class Sitr extends StatefulWidget {
   const Sitr({super.key});
@@ -62,7 +62,6 @@ class _SitrState extends State<Sitr> with WidgetsBindingObserver {
             supportedLocales: context.supportedLocales,
             locale: context.locale,
             navigatorKey: Go.navigatorKey,
-            restorationScopeId: 'app',
             builder: (context, child) {
               return Overlay(
                 initialEntries: [
@@ -77,11 +76,6 @@ class _SitrState extends State<Sitr> with WidgetsBindingObserver {
                 ],
               );
             },
-            // home: EnterMaleOrFemaleOrChildDataScreen.individual(
-            //     scaffoldType: ScaffoldType.appScaffold,
-            //     onClick: (ctx, user)async{},
-            //     userType: UserGender.male
-            // ),
             home: const ZegoUIKitPrebuiltCallMiniPopScope(child: SplashScreen()),
             navigatorObservers: [AppNavigationObserver()],
             // builder: (context, child) {

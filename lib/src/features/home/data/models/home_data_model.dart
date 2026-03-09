@@ -13,6 +13,11 @@ class HomeDataModel extends Equatable {
     required this.opportunities,
   });
 
+  const HomeDataModel.initial()
+      : banners = const [],
+        marriageConsultants = const [],
+        opportunities = const OpportunitiesModel.initial();
+
   factory HomeDataModel.fromJson(Map<String, dynamic> json) {
     return HomeDataModel(
       banners: (json['banners'] as List<dynamic>?)
@@ -62,6 +67,10 @@ class BannerModel extends Equatable {
     required this.image,
   });
 
+  const BannerModel.initial()
+      : id = 0,
+        image = '';
+
   factory BannerModel.fromJson(Map<String, dynamic> json) {
     return BannerModel(
       id: json['id'] ?? 0,
@@ -110,6 +119,15 @@ class MarriageConsultantModel extends Equatable {
     required this.countryCode,
     required this.fullPhone,
   });
+
+  const MarriageConsultantModel.initial()
+      : id = 0,
+        name = '',
+        description = '',
+        image = '',
+        phone = '',
+        countryCode = '',
+        fullPhone = '';
 
   factory MarriageConsultantModel.fromJson(Map<String, dynamic> json) {
     return MarriageConsultantModel(
@@ -170,6 +188,10 @@ class OpportunitiesModel extends Equatable {
     required this.male,
   });
 
+  const OpportunitiesModel.initial()
+      : parent = const [],
+        male = const [];
+
   factory OpportunitiesModel.fromJson(Map<String, dynamic> json) {
     return OpportunitiesModel(
       parent: (json['parent'] as List<dynamic>?)
@@ -224,6 +246,15 @@ class ParentUserModel extends Equatable {
     required this.relation,
     required this.numOfChildren,
   });
+
+  const ParentUserModel.initial()
+      : id = 0,
+        name = '',
+        avatar = '',
+        type = const KeyValueModel.initial(),
+        gender = const KeyValueModel.initial(),
+        relation = const RelationModel.initial(),
+        numOfChildren = 0;
 
   factory ParentUserModel.fromJson(Map<String, dynamic> json) {
     return ParentUserModel(
@@ -298,6 +329,17 @@ class MaleUserModel extends Equatable {
     required this.weight,
   });
 
+  const MaleUserModel.initial()
+      : id = 0,
+        name = '',
+        avatar = '',
+        age = 0,
+        type = const KeyValueModel.initial(),
+        gender = const KeyValueModel.initial(),
+        city = '',
+        height = 0,
+        weight = 0;
+
   factory MaleUserModel.fromJson(Map<String, dynamic> json) {
     return MaleUserModel(
       id: json['id'] ?? 0,
@@ -365,6 +407,10 @@ class KeyValueModel extends Equatable {
     required this.title,
   });
 
+  const KeyValueModel.initial()
+      : value = '',
+        title = '';
+
   factory KeyValueModel.fromJson(Map<String, dynamic> json) {
     return KeyValueModel(
       value: json['value'] ?? '',
@@ -403,6 +449,10 @@ class RelationModel extends Equatable {
     required this.id,
     required this.name,
   });
+
+  const RelationModel.initial()
+      : id = 0,
+        name = '';
 
   factory RelationModel.fromJson(Map<String, dynamic> json) {
     return RelationModel(

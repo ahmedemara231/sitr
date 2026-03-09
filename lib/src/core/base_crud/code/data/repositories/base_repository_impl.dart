@@ -20,8 +20,7 @@ class BaseRepositoryImpl implements BaseRepository {
 
   @override
   Future<Result<BaseModel<T>, Failure>> crudCall<T>(CrudBaseParmas<T> params) async {
-    log('messageeeeee ${params.mapper.isNotNull && params.toJson.isNotNull}');
-    if (params.mapper.isNotNull && params.toJson.isNotNull) {
+    if (params.mapper.isNotNull && params.toJson.isNotNull && params.httpRequestType == HttpRequestType.get) {
       return await _crudCallWithCache(params);
     }
     return await baseRemoteDataSource.crudCall<T>(params).handleCallbackWithFailure();
@@ -31,7 +30,6 @@ class BaseRepositoryImpl implements BaseRepository {
       CrudBaseParmas<T> params) {
     return baseRemoteDataSource.crudCall<T>(params).handleCallbackWithCache(
       cacheKey: params.cacheKey ?? params.api,
-      fromJson: params.mapper!,
       fromCacheJson: params.fromCacheJson ?? (json) => params.mapper!(json),
       toJson: params.toJson!,
       onSave: baseLocalDataSource.save,
