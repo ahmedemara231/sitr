@@ -28,7 +28,7 @@ class WalletNavigation implements NotificationNavigation {
 
   @override
   void navigate({required Map<String, dynamic> data}) {
-    Go.to(const WalletScreen());
+    Go.toOrOff(const WalletScreen());
   }
 }
 class NoNavigation implements NotificationNavigation {
@@ -53,7 +53,7 @@ class FinishedChatNavigation implements NotificationNavigation {
 
   @override
   void navigate({required Map<String, dynamic> data}) {
-    Go.to(PreviousChatScreen(
+    Go.toOrOff(PreviousChatScreen(
         chatType: (data['chat_status'] as String).getChatType,
         requestModel: RequestModel(
             receiverId: (_getUserId(data)).toString(),
@@ -68,7 +68,7 @@ class ProfileNavigation implements NotificationNavigation {
 
   @override
   void navigate({required Map<String, dynamic> data}) {
-    Go.to(const ProfileScreen());
+    Go.toOrOff(const ProfileScreen());
   }
 }
 
@@ -88,7 +88,7 @@ class ComplaintNavigation implements NotificationNavigation {
 
   @override
   void navigate({required Map<String, dynamic> data}) {
-    Go.to(ComplaintDetailsScreen(
+    Go.toOrOff(ComplaintDetailsScreen(
         complaintId: (data['complaint_id']) is String?
         int.parse(data['complaint_id']) : data['complaint_id']
     ));
@@ -116,7 +116,7 @@ class MatchRequestNavigation implements NotificationNavigation {
 
   @override
   void navigate({required Map<String, dynamic> data}) {
-    Go.to(
+    Go.toOrOff(
         ChatScreen(
             requestModel: RequestModel(
                 receiverId: (_getUserId(data)).toString(),
@@ -143,7 +143,7 @@ class PackagesNavigation implements NotificationNavigation {
 
   @override
   void navigate({required Map<String, dynamic> data}) {
-    Go.to(const MyPackagesScreen());
+    Go.toOrOff(const MyPackagesScreen());
   }
 }
 
@@ -152,7 +152,7 @@ class PackageExpiredNavigation implements NotificationNavigation {
 
   @override
   void navigate({required Map<String, dynamic> data}) {
-    Go.to(const MyPackagesScreen());
+    Go.toOrOff(const MyPackagesScreen());
   }
 }
 
@@ -196,7 +196,7 @@ class AdminActionWithChild implements NotificationNavigation {
 
   @override
   void navigate({required Map<String, dynamic> data}) {
-    Go.to(const ParentChildrenView());
+    Go.toOrOff(const ParentChildrenView());
   }
 }
 
@@ -206,10 +206,9 @@ void _routeToProfile({
   required String userId,
 }){
   if(type!.isParent){
-    Go.to(ParentDetailsScreen(id: int.parse(userId)));
-
+    Go.toOrOff(ParentDetailsScreen(id: int.parse(userId)));
   }else{
-    Go.to(
+    Go.toOrOff(
         IndividualDetailsScreen.opportunity(id: int.parse(userId))
     );
   }

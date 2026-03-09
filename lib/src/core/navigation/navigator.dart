@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../features/splash/splash_screen.dart';
+import '../shared/route_observer.dart';
 import 'Constants/imports_constants.dart';
 import 'Helper/Interfaces/helper_imports.dart';
 import 'named_routes.dart';
@@ -28,9 +29,28 @@ class Go {
   }) {
     return _navigatorKey.currentState!.push<T>(_pageRouter.build(
       page,
+      settings: RouteSettings(name: page.runtimeType.toString()),
       transition: transition,
       options: options,
     ));
+  }
+
+//</editor-fold>
+
+//<editor-fold desc="TO OR OFF">
+  /// Pushes [page] onto the stack, but if the current visible screen is already
+  /// the same widget type, uses [off] (replace) instead of [to] (push).
+  static Future<T?> toOrOff<T extends Object?>(
+    Widget page, {
+    TransitionType? transition,
+    AnimationOption? options,
+  }) {
+    final isCurrent = AppNavigationObserver.currentRouteName ==
+        page.runtimeType.toString();
+    if (isCurrent) {
+      return off(page, transition: transition, options: options);
+    }
+    return to<T>(page, transition: transition, options: options);
   }
 
 //</editor-fold>
@@ -57,6 +77,7 @@ class Go {
   }) {
     return _navigatorKey.currentState!.pushReplacement<T, TO>(_pageRouter.build(
       page,
+      settings: RouteSettings(name: page.runtimeType.toString()),
       transition: transition,
       options: options,
     ));

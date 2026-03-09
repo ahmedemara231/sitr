@@ -45,6 +45,8 @@ enum NotificationType {
   parentExchangeNumbersAccepted('parent_exchange_numbers_accepted', navigation: MatchRequestNavigation()),
 
   nextStageRequestRejected('next_stage_request_rejected', navigation: NoNavigation()),
+  shariaChoiceRequestRejected('sharia_choice_request_rejected', navigation: MatchRequestNavigation()),
+  shariaChoiceRequestAccepted('sharia_choice_request_accepted', navigation: MatchRequestNavigation()),
   continueStageRequestRejected('continue_stage_request_rejected', navigation: MatchRequestNavigation()),
   extensionRequestRejected('extension_request_rejected', navigation: MatchRequestNavigation()),
   videoCallRequestRejected('video_call_request_rejected', navigation: MatchRequestNavigation()),
