@@ -108,7 +108,7 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
                 );
               }
           ),
-          cacheKey: hasCacheConfig ? widget.cacheKey : null,
+          cacheKey: widget.cacheKey,
           cacheToJson: hasCacheConfig ? widget.cacheToJson : null,
           cacheFromJson: hasCacheConfig ? widget.cacheFromJson : null,
           onSaveCache: hasCacheConfig ? onSaveCache : null,
@@ -146,7 +146,7 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
           errorMapper: PagifyErrorMapper(
               errorWhenDio: (error) => error.response?.data['msg']
           ),
-          cacheKey: hasCacheConfig ? widget.cacheKey : null,
+          cacheKey: widget.cacheKey,
           cacheToJson: hasCacheConfig ? widget.cacheToJson : null,
           cacheFromJson: hasCacheConfig ? widget.cacheFromJson : null,
           onSaveCache: hasCacheConfig ? onSaveCache : null,

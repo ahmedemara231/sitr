@@ -7,8 +7,6 @@ class ExceptionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Lottie.asset(Assets.errorErrorView),
-    );
+    return Lottie.asset(Assets.errorErrorView);
   }
 }

@@ -50,7 +50,7 @@ class _FilterResultScreenState extends State<FilterResultScreen> {
           cacheFromJson: (json) => Opportunity.fromJson(json),
           itemBuilder: (context, data, i, opportunity) => InkWell(
             onTap: () => Go.to(IndividualDetailsScreen.opportunity(
-              id: opportunity?.id ?? 0,
+              id: opportunity.id ?? 0,
             )),
             child: PartnerCard.individual(opportunity: opportunity).paddingBottom(10.h),
         )).withPullRefresher(

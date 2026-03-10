@@ -3,6 +3,7 @@ import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/network/api_endpoints.dart';
+import '../../../../core/widgets/custom_messages.dart';
 import '../../data/models/home_model.dart';
 
 class GetOpportunitiesCubit extends AsyncCubit<(List<OpportunityModel>, PaginationData)>{
@@ -26,11 +27,13 @@ class GetOpportunitiesCubit extends AsyncCubit<(List<OpportunityModel>, Paginati
     }
 
     final String typeKey = type == UserGender.unknown ? 'parent' : type.name;
+    // Each page gets its own cache key so offline pagination works per-page.
+    final String pageCacheKey = 'opportunities_${typeKey}_$page';
 
     final result = await baseCrudUseCase.call(
       CrudBaseParmas(
         api: ApiConstants.opportunities,
-        cacheKey: 'opportunities_$typeKey',
+        cacheKey: pageCacheKey,
         httpRequestType: HttpRequestType.get,
         queryParameters: {
           'type': type,
@@ -69,15 +72,18 @@ class GetOpportunitiesCubit extends AsyncCubit<(List<OpportunityModel>, Paginati
         setSuccess(data: ([...previousItems, ...success.data.$1], success.data.$2));
       },
       (failure) {
-        setError(errorMessage: failure.message);
+        if (isFirstPage) {
+          // handleCallbackWithCache already attempted cache; nothing to fall back to.
+          setError(errorMessage: failure.message);
+        } else {
+          // Page-specific cache was also empty. Keep the already-loaded items
+          // visible and inform the user.
+          emit(state.success(data: state.data));
+          MessageUtils.showTopMsg(failure.message);
+        }
       },
     );
 
-    _isFetching = false;
-  }
-
-  void resetPagination() {
-    _currentPage = 0;
     _isFetching = false;
   }
 }

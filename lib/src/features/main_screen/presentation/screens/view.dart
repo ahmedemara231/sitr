@@ -167,120 +167,120 @@ class _MainViewBodyState extends State<MainViewBody> {
       create: (context) => MainViewCubit()..getHomeData(),
       child: BlocBuilder<MainViewCubit, AsyncState<HomeModel>>(
         builder: (context, state) => SliverCenterCardScaffold(
-            scrollController: _scrollController,
-            bodyTopPadding: 120,
-            cardTopPadding: 100,
-            upperWidget: SizedBox(
-              height: 100.h,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    spacing: 5.h,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+          scrollController: _scrollController,
+          bodyTopPadding: 120,
+          cardTopPadding: 100,
+          upperWidget: SizedBox(
+            height: 100.h,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  spacing: 5.h,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppText(LocaleKeys.welcome, fontSize: 12.sp),
+                    AppText(UserCubit.instance.user.name??'', fontWeight: FontWeight.bold, fontSize: 16.sp),
+                  ],
+                ),
+                const Spacer(),
+                const FilterButton(),
+              ],
+            ),
+          ),
+          bodyColor: Colors.white,
+          upperWidgetPadding: const EdgeInsets.all(20),
+          centerCardBody: StatusBuilder(
+              data: state,
+              onSuccess: (data, context) => ImageSlider(
+                  height: context.height / 5,
+                  images: state.data.banners?.map((e) => e.image??'').toList() ?? []
+              )
+          ),
+          headerContent: StatusBuilder(
+            data: state,
+            onSuccess: (data, context) => Column(
+              children: [
+                ChooseFromOptionsWidget(
+                  onSelectOption: (selectedOption) => firstSelection.value = selectedOption,
+                  fontSize: 14.sp,
+                  childPadding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 12.w),
+                  titles: _partnersOrConsultants,
+                ),
+                ValueListenableBuilder(
+                  valueListenable: firstSelection,
+                  builder: (context, value, child) => value == _partnersOrConsultants.first?
+                  ChooseFromOptionsWidget(
+                    fontWeight: FontWeight.w500,
+                    onSelectOption: (selectedOption) => secondSelection.value = selectedOption,
+                    childPadding: EdgeInsets.symmetric(vertical: 12.h),
+                    titles: _opportunitiesTitles,
+                    fontSize: 14.sp,
+                  ) : const SizedBox.shrink(),
+                ),
+              ],
+            ),
+          ),
+          bodyBuilder: (context) => ValueListenableBuilder(
+            valueListenable: firstSelection,
+            builder: (context, value, child) => value == _partnersOrConsultants.first?
+            BlocBuilder<GetOpportunitiesCubit, AsyncState<(List<OpportunityModel>, PaginationData)>>(
+              builder: (context, oppState) => StatusBuilder(
+                data: oppState,
+                onSuccess: (data, context) => data.$1.isEmpty? const NotContainData() :
+                ValueListenableBuilder(
+                  valueListenable: secondSelection,
+                  builder: (context, val, child) => Column(
                     children: [
-                      AppText(LocaleKeys.welcome, fontSize: 12.sp),
-                      AppText(UserCubit.instance.user.name??'', fontWeight: FontWeight.bold, fontSize: 16.sp),
+                      ...List.generate(
+                          data.$1.length,
+                              (index) {
+                            final element = data.$1[index];
+                            return InkWell(
+                                onTap: () => UserModel.isAuthenticated? Go.to(
+                                    !(val.toUserGender().isMale || val.toUserGender().isFemale)?
+                                    ParentDetailsScreen(id: element.id??0) :
+                                    IndividualDetailsScreen.opportunity(
+                                      id: element.id ?? 0,
+                                    )
+                                ) : Helpers.showUnauthenticatedSheet(),
+                                child: !(val.toUserGender().isMale || val.toUserGender().isFemale)?
+                                ParentCard(
+                                    parentImage: (element as Parent).avatar ??'',
+                                    name: element.name??'',
+                                    kinship: element.relation?.name??'',
+                                    childrenNumber: element.numOfChildren??0
+                                ):
+                                PartnerCard.individual(opportunity: element as Opportunity).paddingBottom(16.h)
+                            );
+                          }
+                      ),
+                      if(oppState.isLoadingMore)
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 16.h),
+                          child:  CustomLoading.showLoadingView(),
+                        ),
                     ],
                   ),
-                  const Spacer(),
-                  const FilterButton(),
-                ],
-              ),
-            ),
-            bodyColor: Colors.white,
-            upperWidgetPadding: const EdgeInsets.all(20),
-            centerCardBody: StatusBuilder(
-                data: state,
-                onSuccess: (data, context) => ImageSlider(
-                    height: context.height / 5,
-                    images: state.data.banners?.map((e) => e.image??'').toList() ?? []
-                )
-            ),
-            headerContent: StatusBuilder(
-              data: state,
-              onSuccess: (data, context) => Column(
-                children: [
-                  ChooseFromOptionsWidget(
-                    onSelectOption: (selectedOption) => firstSelection.value = selectedOption,
-                    fontSize: 14.sp,
-                    childPadding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 12.w),
-                    titles: _partnersOrConsultants,
-                  ),
-                  ValueListenableBuilder(
-                    valueListenable: firstSelection,
-                    builder: (context, value, child) => value == _partnersOrConsultants.first?
-                      ChooseFromOptionsWidget(
-                        fontWeight: FontWeight.w500,
-                        onSelectOption: (selectedOption) => secondSelection.value = selectedOption,
-                        childPadding: EdgeInsets.symmetric(vertical: 12.h),
-                        titles: _opportunitiesTitles,
-                        fontSize: 14.sp,
-                      ) : const SizedBox.shrink(),
-                  ),
-                ],
-              ),
-            ),
-            bodyBuilder: (context) => ValueListenableBuilder(
-              valueListenable: firstSelection,
-              builder: (context, value, child) => value == _partnersOrConsultants.first?
-                BlocBuilder<GetOpportunitiesCubit, AsyncState<(List<OpportunityModel>, PaginationData)>>(
-                  builder: (context, oppState) => StatusBuilder(
-                    data: oppState,
-                    onSuccess: (data, context) => data.$1.isEmpty? const NotContainData() :
-                    ValueListenableBuilder(
-                      valueListenable: secondSelection,
-                      builder: (context, val, child) => Column(
-                        children: [
-                          ...List.generate(
-                              data.$1.length,
-                              (index) {
-                                final element = data.$1[index];
-                                return InkWell(
-                                    onTap: () => UserModel.isAuthenticated? Go.to(
-                                        !(val.toUserGender().isMale || val.toUserGender().isFemale)?
-                                        ParentDetailsScreen(id: element.id??0) :
-                                        IndividualDetailsScreen.opportunity(
-                                          id: element.id ?? 0,
-                                        )
-                                    ) : Helpers.showUnauthenticatedSheet(),
-                                    child: !(val.toUserGender().isMale || val.toUserGender().isFemale)?
-                                    ParentCard(
-                                        parentImage: (element as Parent).avatar ??'',
-                                        name: element.name??'',
-                                        kinship: element.relation?.name??'',
-                                        childrenNumber: element.numOfChildren??0
-                                    ):
-                                    PartnerCard.individual(opportunity: element as Opportunity).paddingBottom(16.h)
-                                );
-                              }
-                          ),
-                          if(oppState.isLoadingMore)
-                            Padding(
-                              padding: EdgeInsets.symmetric(vertical: 16.h),
-                              child:  CustomLoading.showLoadingView(),
-                            ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ) :
-                Column(
-                  spacing: 10.h,
-                  children: List.generate(
-                      state.data.marriageConsultants?.length ?? 0,
-                          (i) {
-                        final marriageConsultant = state.data.marriageConsultants?[i];
-                        return MarriageConsultantCard(
-                            name: marriageConsultant?.name ?? '',
-                            phone: marriageConsultant?.phone ?? '',
-                            parentImage: marriageConsultant?.image ?? '',
-                            description: marriageConsultant?.description ?? ''
-                        );
-                      }
-                  ),
                 ),
+              ),
+            ) :
+            Column(
+              spacing: 10.h,
+              children: List.generate(
+                  state.data.marriageConsultants?.length ?? 0,
+                      (i) {
+                    final marriageConsultant = state.data.marriageConsultants?[i];
+                    return MarriageConsultantCard(
+                        name: marriageConsultant?.name ?? '',
+                        phone: marriageConsultant?.phone ?? '',
+                        parentImage: marriageConsultant?.image ?? '',
+                        description: marriageConsultant?.description ?? ''
+                    );
+                  }
+              ),
             ),
+          ),
         ),
       ),
     );
