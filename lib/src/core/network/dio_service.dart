@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -7,6 +6,7 @@ import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../error/exceptions.dart';
 import '../base_crud/code/domain/usecases/pagination_response.dart';
+import '../helpers/cache_service.dart';
 import 'configuration_interceptor.dart';
 import 'extensions.dart';
 import 'log_interceptor.dart';
@@ -22,7 +22,7 @@ class DioService implements NetworkService {
 
   void _initDio() {
     _dio = Dio()
-      ..options.baseUrl = ConstantManager.baseUrl
+      // ..options.baseUrl = ConstantManager.testUrl
       ..options.connectTimeout = const Duration(
         seconds: ConstantManager.connectTimeoutDuration,
       )
@@ -43,7 +43,17 @@ class DioService implements NetworkService {
     }
   }
 
+
+  Future<String> getBaseUrl() async {
+    return await SecureStorage.read(SecureLocalVariableKeys.baseUrlKey) ?? '';
+  }
+
   @override
+  Future<void> updateBaseUrl() async {
+    final baseUrl = await getBaseUrl();
+    _dio.options.baseUrl = baseUrl;
+  }
+
   @override
   void setToken(String token) {
     _dio.options.headers[HttpHeaders.authorizationHeader] = 'Bearer $token';
@@ -129,4 +139,9 @@ class DioService implements NetworkService {
         );
     }
   }
+}
+
+final class SecureLocalVariableKeys {
+  static const String baseUrlKey = "base_url";
+  static const String socetIoUrl = "socet_io_url";
 }

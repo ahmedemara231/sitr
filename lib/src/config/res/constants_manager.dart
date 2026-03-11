@@ -11,6 +11,7 @@ class ConstantManager {
   static const String projectName = 'sitr';
   static const int splashTimer = 3000;
   static const String baseUrl = 'https://str-sa.com/api/v1/';
+  static const String testUrl = 'https://str-sa.4hoste.com/api/v1/';
 
   static const String socketUrl = 'https://str-sa.com:4866';
 
@@ -29,8 +30,8 @@ class ConstantManager {
   static const int maxLines = 4;
   static const double snackbarElevation = 4;
   static const int snackbarDuration = 4;
-  static const int connectTimeoutDuration = 20;
-  static const int recieveTimeoutDuration = 20;
+  static const int connectTimeoutDuration = 120;
+  static const int recieveTimeoutDuration = 120;
   static const double customImageSliderAsepctRatio = 3;
   static const String ar = 'ar';
   static const String en = 'en';

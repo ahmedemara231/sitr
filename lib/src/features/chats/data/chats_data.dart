@@ -5,7 +5,6 @@ import '../../../core/extensions/string_extension.dart';
 import '../../../core/network/api_endpoints.dart';
 import '../../../core/network/network_request.dart';
 import '../../../core/network/network_service.dart';
-
 import '../enums.dart';
 import 'chat_actions/imports.dart';
 import 'chat_actions/no_action.dart';
@@ -51,7 +50,7 @@ class ChatsData{
       return TipsAction(
           context: context,
           currentTips: currentTips,
-          requestModel: requestModel
+          requestModel: requestModel,
       );
     }
 
@@ -64,7 +63,7 @@ class ChatsData{
           requestName: matchRequest.requestName!,
           stage: stage,
           matchReqId: matchRequest.id!,
-          requestModel: requestModel
+          requestModel: requestModel,
       );
     }
 
@@ -88,7 +87,7 @@ class ChatsData{
           stage: stage,
           requestModel: requestModel,
           timer: timer!,
-          hasSentRequest: data.matchRequest!.hasSendRequest ?? false
+          hasSentRequest: data.matchRequest!.hasSendRequest ?? false,
       );
     }
 

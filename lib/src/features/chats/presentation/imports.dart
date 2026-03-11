@@ -36,6 +36,7 @@ import '../enums.dart';
 import 'cubits/end_video_call.dart';
 import 'cubits/finish_chat_cubit.dart';
 import 'cubits/notification_cubit.dart';
+import 'cubits/socket_cubit.dart';
 import 'cubits/start_chat.dart';
 import 'widgets/accept_or_reject_first_stage.dart';
 import 'widgets/chat/bottom_bar.dart';

@@ -73,7 +73,7 @@ class ChatCubit extends AsyncCubit<ChatModel>{
       onSuccess: (data) async => await ChatsData.manageSuccessState(
           data.data,
           context: context,
-          requestModel: requestModel
+          requestModel: requestModel,
       ).call()
     );
   }

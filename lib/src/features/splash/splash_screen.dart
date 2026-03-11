@@ -5,6 +5,7 @@ import '../../core/extensions/string_extension.dart';
 import '../../core/helpers/cache_service.dart';
 import '../../core/helpers/helpers.dart';
 import '../../core/navigation/navigator.dart';
+import '../../core/network/network_service.dart';
 import '../../core/notification/notification_service.dart';
 import '../../core/shared/models/user_models/user_model.dart';
 import '../../core/shared/user_cubit/user_cubit.dart';
@@ -23,6 +24,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    injector<NetworkService>().updateBaseUrl();
     _manipulateSplashData();
     super.initState();
   }

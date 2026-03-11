@@ -14,6 +14,7 @@ class ChatScreen extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => ChatCubit()),
+          BlocProvider(create: (context) => SocketCubit()),
           BlocProvider(create: (context) => FinishChatCubit()),
           BlocProvider(create: (context) => EndVideoCallCubit()),
           BlocProvider(
@@ -57,7 +58,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
           path: ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
           onSuccess: (chatModel) => context.read<ChatCubit>().startChat(
               requestModel: widget.requestModel,
-              context: context
+              context: context,
           ),
         ),
 
@@ -95,7 +96,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
   Future<void> _startChat()async{
     await context.read<ChatCubit>().startChat(
       requestModel: widget.requestModel,
-        context: context
+      context: context,
     );
   }
 
@@ -120,39 +121,45 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
   late final PagifyController<ChatMessages> _chatController;
 
-  late final SocketHelper socketType = ClientIOImpl(
-      onConnect: (d) => log('socket connected'),
-      onDisconnect: (d) => log('socket disconnected'),
-      onReconnect: (d) => log('socket reconnected'),
-      onReceiveAnyEvent: (e, d) => log('event is received $e $d'),
-      extraParams: MessageParamsModel().toJson(),
-      url: ConstantManager.socketUrl,
-      jsonToChatMessage: (json) => ChatMessages(
-        message: Message(id: json['id'], type: json['type'], body: json['body']),
-        sender: Sender(
-            id: json['sender_id'],
-            name: json['sender_name'],
-            image: json['avatar'],
-            isFromMe: (json['sender_id'] == UserModel.currentUser?.id)
-        ),
-        time: json['created_dt'],
-        // messageState: MessageState.sent
-      ),
-      onReceiveMessage: (msg) {
-        _chatController.addItem(msg);
-        _chatController.moveToMaxBottom();
-      }, events: EasyChatEvents(
-      messageEvents: MessageEvents(
-          receiveMsgEvent: SocketEvents.receivedMsg,
-          sendMsgEvent: SocketEvents.sendMsg
-      ), chatEvents: ChatEvents(
-      enterChatEvent: SocketEvents.enterChat,
-      exitChatEvent: SocketEvents.exitChat),
-      otherEvents: []
-  ), roomId: context.read<ChatCubit>().currentRoom?.id ?? 0
-  );
+  late SocketHelper socketType;
 
   void _initSocket() async {
+    socketType = ClientIOImpl(
+
+        onConnect: (d) => log('socket connected'),
+        onDisconnect: (d) => log('socket disconnected'),
+        onReconnect: (d) => log('socket reconnected'),
+        onReceiveAnyEvent: (e, d) => log('event is received $e $d'),
+        extraParams: MessageParamsModel().toJson(),
+        url: ConstantManager.socketUrl,
+        jsonToChatMessage: (json) => ChatMessages(
+          message: Message(id: json['id'], type: json['type'], body: json['body']),
+          sender: Sender(
+              id: json['sender_id'],
+              name: json['sender_name'],
+              image: json['avatar'],
+              isFromMe: (json['sender_id'] == UserModel.currentUser?.id)
+          ),
+          time: json['created_dt'],
+        ),
+        onReceiveMessage: (msg) {
+          _chatController.addItem(msg);
+          _chatController.moveToMaxBottom();
+        },
+        events: EasyChatEvents(
+            messageEvents: MessageEvents(
+                receiveMsgEvent: SocketEvents.receivedMsg,
+                sendMsgEvent: SocketEvents.sendMsg
+            ),
+            chatEvents: ChatEvents(
+                enterChatEvent: SocketEvents.enterChat,
+                exitChatEvent: SocketEvents.exitChat
+            ),
+            otherEvents: []
+        ),
+        roomId: context.read<ChatCubit>().currentRoom?.id ?? 0,
+    );
+    context.read<SocketCubit>().setSocket(socketType);
     socketType
       ..initSocket()
       ..initConfig()

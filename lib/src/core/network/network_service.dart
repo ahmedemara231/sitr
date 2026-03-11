@@ -10,4 +10,5 @@ abstract interface class NetworkService {
   void setToken(String token);
 
   void removeToken();
+  Future<void> updateBaseUrl();
 }

@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -18,9 +21,53 @@ import 'src/core/navigation/page_router/implementation/imports_page_router.dart'
 import 'src/core/navigation/page_router/imports_page_router_builder.dart';
 import 'src/core/helpers/cache_service.dart';
 import 'src/core/network/backend_configuation.dart';
+import 'src/core/network/dio_service.dart';
 import 'src/core/shared/functions/setup_service_locators.dart';
 import 'src/core/shared/bloc_observer.dart';
 import 'src/core/widgets/exeption_view.dart';
+
+Future<bool> fetchBaseUrl() async {
+  try {
+    final remoteConfig = FirebaseRemoteConfig.instance;
+
+    // Set config settings for fetch timeout and minimum fetch interval
+    await remoteConfig.setConfigSettings(
+      RemoteConfigSettings(
+        fetchTimeout: const Duration(seconds: 10),
+        minimumFetchInterval: const Duration(hours: 1),
+      ),
+    );
+
+    // Fetch and activate the remote config
+    await remoteConfig.fetchAndActivate();
+
+    // Get the base URL from remote config
+    final baseUrl = remoteConfig.getString(
+      SecureLocalVariableKeys.baseUrlKey,
+    );
+
+    log('the base url is $baseUrl');
+
+    // Get the Socet_Io URL from remote config
+    final socetIoUrl = remoteConfig.getString(
+      SecureLocalVariableKeys.socetIoUrl,
+    );
+
+    if (baseUrl.isEmpty) {
+      return false;
+    }
+
+    await SecureStorage.write(SecureLocalVariableKeys.baseUrlKey, baseUrl);
+    await SecureStorage.write(SecureLocalVariableKeys.socetIoUrl, socetIoUrl);
+
+    return true;
+  } catch (e) {
+    log('the error is $e');
+    return false;
+    // return await fetchBaseUrl();
+  }
+}
+
 
 void main() async {
   Helpers.changeStatusbarColor(
@@ -35,12 +82,11 @@ void main() async {
       CacheStorage.init(),
       ObjectBoxCacheService.init(),
       ScreenUtil.ensureScreenSize(),
+      Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
     ],
   );
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await fetchBaseUrl();
   SystemChrome.setPreferredOrientations(
     [
       DeviceOrientation.portraitUp,
