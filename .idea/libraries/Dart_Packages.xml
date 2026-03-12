@@ -369,7 +369,7 @@
         <entry key="dio">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/dio-5.9.1/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/dio-5.9.2/lib" />
             </list>
           </value>
         </entry>
@@ -404,7 +404,7 @@
         <entry key="dropinity">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../dropinity/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/dropinity-0.0.3/lib" />
             </list>
           </value>
         </entry>
@@ -1377,7 +1377,7 @@
         <entry key="pagify">
           <value>
             <list>
-              <option value="$PROJECT_DIR$/../pagination_helper/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/pagify-0.3.1/lib" />
             </list>
           </value>
         </entry>
@@ -2367,11 +2367,12 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/dbus-0.7.11/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/device_info_plus-11.5.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/device_info_plus_platform_interface-7.0.3/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/dio-5.9.1/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/dio-5.9.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/dio_web_adapter-2.1.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/dotted_border-3.1.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/dropdown_flutter-1.0.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/dropdown_search-6.0.2/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/dropinity-0.0.3/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/easy_debounce-2.0.3/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/easy_loading_button-0.4.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/easy_localization-3.0.8/lib" />
@@ -2506,6 +2507,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/package_config-2.2.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/package_info_plus-8.3.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/package_info_plus_platform_interface-3.2.1/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/pagify-0.3.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path-1.9.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path_parsing-1.1.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider-2.1.5/lib" />
@@ -2638,8 +2640,6 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/zego_uikit_signaling_plugin-2.8.20/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/zego_zim-2.25.0+1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/zego_zpns-2.8.0/lib" />
-      <root url="file://$PROJECT_DIR$/../dropinity/lib" />
-      <root url="file://$PROJECT_DIR$/../pagination_helper/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_setups/flutter4/bin/cache/pkg/sky_engine/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_setups/flutter4/packages/flutter/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_setups/flutter4/packages/flutter_localizations/lib" />

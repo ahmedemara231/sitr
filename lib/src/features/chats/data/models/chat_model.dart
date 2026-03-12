@@ -84,7 +84,7 @@ class MatchRequest {
         timer = json['timer'],
         userRequest = json['user_request'],
         requestName = json['request_name'],
-        hasSendRequest = json['has_send_request'],
+        hasSendRequest = json['has_any_request'],
         userRequestStatus = json['user_request_status'];
 
   Map<String, dynamic> toJson() {
@@ -94,7 +94,7 @@ class MatchRequest {
     if (type != null) data['type'] = type!.toJson();
     if (stage != null) data['stage'] = stage!.toJson();
     data['timer'] = timer;
-    data['has_send_request'] = hasSendRequest;
+    data['has_any_request'] = hasSendRequest;
     data['user_request'] = userRequest;
     data['user_request_status'] = userRequestStatus;
     data['tips_page'] = tipsPage;

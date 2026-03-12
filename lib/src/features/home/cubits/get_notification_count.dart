@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 import '../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import '../../../core/extensions/object.dart';
 import '../../../core/network/api_endpoints.dart';
 import '../../../core/notification/notification_service.dart';
 import '../../../core/shared/base_state.dart';
@@ -52,8 +53,8 @@ class GetChatsNotificationCountCubit extends AsyncCubit<int>{
     FirebaseMessaging
         .onMessage
         .listen((data) {
-      final int matchRequest = data.data['match_request_id'] ?? 0;
-      if(matchRequest != 0){
+      final matchRequest = data.data['match_request_id'];
+      if((matchRequest as Object?).isNotNull){
         increment();
       }}
     );

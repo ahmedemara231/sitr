@@ -65,13 +65,13 @@ class StageAction extends ChatActions{
             value: context.read<ChatCubit>(),
             child: ChooseRequestSheet(
               onConfirm: (context, selectedVal) async {
-                context.read<SocketCubit>().state?.emitEvent(
-                  event: 'next-stage-request',
-                  data: {
-                    'match_request_id': context.read<ChatCubit>().matchRequestId,
-                    'receiver_id': requestModel.receiverId,
-                  },
-                );
+                // context.read<SocketCubit>().state?.emitEvent(
+                //   event: 'next-stage-request',
+                //   data: {
+                //     'match_request_id': context.read<ChatCubit>().matchRequestId,
+                //     'receiver_id': requestModel.receiverId,
+                //   },
+                // );
                 await ChatActions.executeReq(
                   context: context,
                   requestModel: requestModel,

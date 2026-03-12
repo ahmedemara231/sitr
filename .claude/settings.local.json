@@ -30,7 +30,9 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(sips --help:*)",
       "WebFetch(domain:pub.dev)",
-      "Bash(dart run:*)"
+      "Bash(dart run:*)",
+      "Bash(git reset:*)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []
