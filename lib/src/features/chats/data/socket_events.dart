@@ -6,4 +6,5 @@ class SocketEvents{
 
 
   static const String updateChat = 'update-chat';
+  static const String timer = 'timer';
 }

@@ -56,10 +56,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
           context: context,
           requestModel: widget.requestModel,
           path: ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
-          onSuccess: (chatModel) => context.read<ChatCubit>().startChat(
-              requestModel: widget.requestModel,
-              context: context,
-          ),
+          onSuccess: (chatModel) => _startChat()
         ),
 
         onReject: (context)async => ChatActions.executeReq(
