@@ -13,8 +13,18 @@ class StageAction extends ChatActions{
   bool get hasSentRequest => data.matchRequest!.hasSendRequest ?? false;
   int get timer => data.matchRequest!.timer!;
 
+  void _fireUpdate(SocketCubit socketCubit) {
+    socketCubit.fireShouldUpdate(
+      roomId: data.room!.id!,
+      matchRequestId: data.matchRequest!.id!,
+      receiverId: int.parse(requestModel.receiverId),
+    );
+  }
+
   @override
   Future<void> call(BuildContext context) async{
+    final socketCubit = context.read<SocketCubit>();
+
     if(stage.isParentsExchangeNumber){
       ChatSheetManager.show(
         child: BlocProvider.value(
@@ -22,6 +32,7 @@ class StageAction extends ChatActions{
           child: EnterParentPhoneSheet(
               onSubmit: (context, phone)async{
                 await context.read<ChatCubit>().parentsExchangeNumbers(parentPhone: phone);
+                _fireUpdate(socketCubit);
                 Go.back();
               }
           ),
@@ -49,7 +60,10 @@ class StageAction extends ChatActions{
                     context: context,
                     path: ApiConstants.matchRequestAnd + ApiConstants.shariaChoiceRequest,
                     additionalBody: {'choice': choice.value},
-                    onSuccess: (chatModel) => Go.back(),
+                    onSuccess: (chatModel) {
+                      _fireUpdate(socketCubit);
+                      Go.back();
+                    },
                     requestModel: requestModel,
                   );
                 }
@@ -63,18 +77,12 @@ class StageAction extends ChatActions{
             value: context.read<ChatCubit>(),
             child: ChooseRequestSheet(
               onConfirm: (context, selectedVal) async {
-                // context.read<SocketCubit>().state?.emitEvent(
-                //   event: 'next-stage-request',
-                //   data: {
-                //     'match_request_id': context.read<ChatCubit>().matchRequestId,
-                //     'receiver_id': requestModel.receiverId,
-                //   },
-                // );
                 await ChatActions.executeReq(
                   context: context,
                   requestModel: requestModel,
                   path: selectedVal.pathToRequest,
                   onSuccess: (chatModel){
+                    _fireUpdate(socketCubit);
                     Go.back();
                     if(selectedVal == LocaleKeys.refuseMoveToNextStage){
                       Go.offAll(const HomeScreen());

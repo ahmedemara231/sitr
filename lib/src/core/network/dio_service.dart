@@ -6,6 +6,7 @@ import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../error/exceptions.dart';
 import '../base_crud/code/domain/usecases/pagination_response.dart';
+import '../extensions/object.dart';
 import '../helpers/cache_service.dart';
 import 'configuration_interceptor.dart';
 import 'extensions.dart';
@@ -68,6 +69,9 @@ class DioService implements NetworkService {
   Future<BaseModel<Model>> callApi<Model>(NetworkRequest networkRequest,
       {Model Function(dynamic json)? mapper}) async {
     try {
+      if(_dio.options.baseUrl.isNull || _dio.options.baseUrl.isEmpty){
+        await updateBaseUrl();
+      }
       await networkRequest.prepareRequestData();
       final response = await _dio.request(networkRequest.path,
           data: networkRequest.hasBodyAndProgress() ?

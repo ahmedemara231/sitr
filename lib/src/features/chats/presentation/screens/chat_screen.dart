@@ -44,6 +44,13 @@ class _ChatScreenBody extends StatefulWidget {
 
 class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
+  void _fireShouldUpdate(){
+    context.read<SocketCubit>().fireShouldUpdate(
+      roomId: context.read<ChatCubit>().currentRoom!.id!,
+      matchRequestId: context.read<ChatCubit>().matchRequest!.id!,
+      receiverId: int.parse(widget.requestModel.receiverId),
+    );
+  }
   Widget _initBottomBar(ChatModel model){
     final userRequest = model.matchRequest!;
     final stage = userRequest.stage!.value!.getCurrentStageAsStagesEnum;
@@ -56,7 +63,9 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
           context: context,
           requestModel: widget.requestModel,
           path: ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
-          onSuccess: (chatModel) => _startChat()
+          onSuccess: (chatModel) {
+            _fireShouldUpdate();
+          }
         ),
 
         onReject: (context)async => ChatActions.executeReq(
@@ -120,9 +129,24 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
   late SocketHelper socketType;
 
+  void _updateTimer() {
+    final chatCubit = context.read<ChatCubit>();
+    final timer = chatCubit.matchRequest?.timer;
+    final matchRequestId = chatCubit.matchRequestId;
+    if (timer != null && matchRequestId != null) {
+      context.read<SocketCubit>().updateTimer(
+        timer: timer,
+        matchRequestId: matchRequestId,
+      );
+    }
+  }
+
   void _initSocket() async {
     socketType = ClientIOImpl(
-      onConnect: (d) => log('socket connected'),
+      onConnect: (d) {
+        log('socket connected');
+        _updateTimer();
+      },
       onDisconnect: (d) => log('socket disconnected'),
       onReconnect: (d) => log('socket reconnected'),
       onReceiveAnyEvent: (e, d) {
@@ -188,14 +212,18 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
     await context.read<ChatCubit>().executeRequest(
         requestModel: widget.requestModel,
         path: ApiConstants.matchRequestAnd+ApiConstants.videoCallRequest,
-        onSuccess: (data) => MessageUtils.showSnackBar(LocaleKeys.aVideoCallRequestWasSuccessfullySent)
+        onSuccess: (data) {
+          _fireShouldUpdate();
+          MessageUtils.showSnackBar(LocaleKeys.aVideoCallRequestWasSuccessfullySent);
+        }
     );
   }
 
   Future <void> _endVideoCall()async{
     await context.read<EndVideoCallCubit>().endVideoCall( // برنها وانا فالكول
-        ChatsData.data!.matchRequest!.id.toString()
+        ChatsData.data!.matchRequest!.id.toString(),
     );
+    _fireShouldUpdate();
   }
 
   void _markAsRead()async{
@@ -273,7 +301,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
                   }else if(callStatus == 'free_used'){
                     return InkWell(
                         onTap: () => _makeVideoReq(),
-                        child: const Icon(Icons.video_call)
+                        child: const Icon(Icons.videocam, color: AppColors.primary)
                     );
 
                   }else if(callStatus == 'completed'){ // المحانية خلصت

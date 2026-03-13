@@ -51,13 +51,25 @@ class UserStatusAction extends ChatActions{
     );
   }
 
+  void _fireUpdate(SocketCubit socketCubit) {
+    socketCubit.fireShouldUpdate(
+      roomId: data.room!.id!,
+      matchRequestId: matchReqId,
+      receiverId: int.parse(requestModel.receiverId),
+    );
+  }
+
   @override
   Future<void> call(BuildContext context) async{
+    final socketCubit = context.read<SocketCubit>();
+
     if(!stage.isNewChat && status.isPending){
-      _showAcceptanceSheet(context,
-            () => request.isParentIndividualApproval?
-        Go.offAll(const HomeScreen()) : Go.back(),
-      );
+      _showAcceptanceSheet(context, () {
+        _fireUpdate(socketCubit);
+        request.isParentIndividualApproval
+            ? Go.offAll(const HomeScreen())
+            : Go.back();
+      });
 
     }
     // else if(status.isParentExchangeNumbers){
@@ -103,6 +115,7 @@ class UserStatusAction extends ChatActions{
                           ));
 
                           if(result == 'success'){
+                            _fireUpdate(socketCubit);
                             chatCubit.startChat(
                                 requestModel: requestModel,
                                 context: context,
@@ -131,6 +144,7 @@ class UserStatusAction extends ChatActions{
                     matchRequestId: matchReqId.toString(),
                     paymentMethod: payMethod.name,
                     onSuccess: (url) async{
+                      _fireUpdate(socketCubit);
                       chatCubit.startChat(
                           requestModel: requestModel,
                           context: context,
@@ -176,7 +190,10 @@ class UserStatusAction extends ChatActions{
                     context: context,
                     path: path,
                     requestModel: requestModel,
-                    onSuccess: (chatModel) => Go.back(),
+                    onSuccess: (chatModel) {
+                      _fireUpdate(socketCubit);
+                      Go.back();
+                    },
                   );
 
                   return;

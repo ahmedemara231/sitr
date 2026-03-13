@@ -92,8 +92,8 @@ void main() async {
       DeviceOrientation.portraitDown,
     ],
   );
-  setUpServiceLocator();
   BackendConfiguation.setBackendType(BackendType.php);
+  setUpServiceLocator();
 
   PageRouterBuilder().initAppRouter(
     config: PlatformConfig(
