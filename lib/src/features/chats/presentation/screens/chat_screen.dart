@@ -158,12 +158,8 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
             otherEvents: []
         ),
         roomId: context.read<ChatCubit>().currentRoom?.id ?? 0,
-    );
+    )..initSocket()..initConfig()..connect();
     context.read<SocketCubit>().setSocket(socketType);
-    socketType
-      ..initSocket()
-      ..initConfig()
-      ..connect();
   }
 
   void _handleInitialState()async{
