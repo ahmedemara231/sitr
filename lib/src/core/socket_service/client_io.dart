@@ -147,7 +147,6 @@ class ClientIOImpl extends SocketHelper{
     );
   }
 
-
   @override
   FutureOr<void> initConfig(){
     initSocketStates();

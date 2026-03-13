@@ -102,7 +102,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
   Future<void> _showBased(RemoteMessage notification)async{
     if((notification.data['action'] as Object?).isNotNull){
-      _startChat();
+      // _startChat();
     }
   }
 
@@ -125,37 +125,42 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
   void _initSocket() async {
     socketType = ClientIOImpl(
-
-        onConnect: (d) => log('socket connected'),
-        onDisconnect: (d) => log('socket disconnected'),
-        onReconnect: (d) => log('socket reconnected'),
-        onReceiveAnyEvent: (e, d) => log('event is received $e $d'),
-        extraParams: MessageParamsModel().toJson(),
-        url: ConstantManager.socketUrl,
-        jsonToChatMessage: (json) => ChatMessages(
-          message: Message(id: json['id'], type: json['type'], body: json['body']),
-          sender: Sender(
-              id: json['sender_id'],
-              name: json['sender_name'],
-              image: json['avatar'],
-              isFromMe: (json['sender_id'] == UserModel.currentUser?.id)
-          ),
-          time: json['created_dt'],
+      onConnect: (d) => log('socket connected'),
+      onDisconnect: (d) => log('socket disconnected'),
+      onReconnect: (d) => log('socket reconnected'),
+      onReceiveAnyEvent: (e, d) {
+        log((e == SocketEvents.updateChat).toString());
+        if(e == SocketEvents.updateChat){
+          _startChat();
+        }
+        log('event is received $e $d');
+      },
+      extraParams: MessageParamsModel().toJson(),
+      url: ConstantManager.socketUrl,
+      jsonToChatMessage: (json) => ChatMessages(
+        message: Message(id: json['id'], type: json['type'], body: json['body']),
+        sender: Sender(
+            id: json['sender_id'],
+            name: json['sender_name'],
+            image: json['avatar'],
+            isFromMe: (json['sender_id'] == UserModel.currentUser?.id)
         ),
-        onReceiveMessage: (msg) {
+        time: json['created_dt'],
+      ),
+      onReceiveMessage: (msg) {
           _chatController.addItem(msg);
           _chatController.moveToMaxBottom();
         },
-        events: EasyChatEvents(
-            messageEvents: MessageEvents(
-                receiveMsgEvent: SocketEvents.receivedMsg,
-                sendMsgEvent: SocketEvents.sendMsg
-            ),
-            chatEvents: ChatEvents(
-                enterChatEvent: SocketEvents.enterChat,
-                exitChatEvent: SocketEvents.exitChat
-            ),
-            otherEvents: []
+      events: EasyChatEvents(
+          messageEvents: MessageEvents(
+              receiveMsgEvent: SocketEvents.receivedMsg,
+              sendMsgEvent: SocketEvents.sendMsg
+          ),
+          chatEvents: ChatEvents(
+              enterChatEvent: SocketEvents.enterChat,
+              exitChatEvent: SocketEvents.exitChat
+          ),
+          otherEvents: []
         ),
         roomId: context.read<ChatCubit>().currentRoom?.id ?? 0,
     )..initSocket()..initConfig()..connect();
