@@ -1,12 +1,8 @@
 import 'dart:async';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-
 import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/extensions/string_extension.dart';
-import '../../../../core/helpers/helpers.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../data/chats_data.dart';
 import '../../data/models/chat_model.dart';
@@ -65,16 +61,14 @@ class ChatCubit extends AsyncCubit<ChatModel>{
             httpRequestType: HttpRequestType.post,
             cacheKey: 'chat_${requestModel.receiverId}',
             body: requestModel.toJson(),
-            // fromCacheJson: (json) => ChatModel.fromJson(json['data']),
             mapper: (json) => ChatModel.fromJson(json),
             toJson: (model) => model.toJson(),
           ),
       ),
       onSuccess: (data) async => await ChatsData.manageSuccessState(
           data.data,
-          context: context,
           requestModel: requestModel,
-      ).call()
+      ).call(context)
     );
   }
 

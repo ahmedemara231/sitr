@@ -2,25 +2,21 @@ part of 'imports.dart';
 
 
 class UserStatusAction extends ChatActions{
-  final BuildContext context;
-  final UserRequestStatus status;
-  final MatchRequestEnum request;
-  final ChatStages stage;
-  final int matchReqId;
+  final ChatModel data;
   final RequestModel requestModel;
-  final String requestName;
 
   UserStatusAction({
-    required this.matchReqId,
-    required this.stage,
-    required this.context,
-    required this.status,
-    required this.request,
-    required this.requestName,
+    required this.data,
     required this.requestModel,
   });
 
-  Future<void> _executeReq(BuildContext context,{
+  UserRequestStatus get status => data.matchRequest!.userRequestStatus!.getUserRequestStatusAsEnum;
+  MatchRequestEnum get request => data.matchRequest!.userRequest!.getMatchRequestAsEnum;
+  ChatStages get stage => data.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum;
+  int get matchReqId => data.matchRequest!.id!;
+  String get requestName => data.matchRequest!.requestName!;
+
+  Future<void> _executeReq(BuildContext context, {
     required String path,
     required void Function() onSuccess
   })async{
@@ -32,7 +28,7 @@ class UserStatusAction extends ChatActions{
     );
   }
 
-  void _showAcceptanceSheet(void Function() onSuccess){
+  void _showAcceptanceSheet(BuildContext context, void Function() onSuccess){
     ChatSheetManager.show(
         child: BlocProvider.value(
           value: context.read<ChatCubit>(),
@@ -56,9 +52,9 @@ class UserStatusAction extends ChatActions{
   }
 
   @override
-  Future<void> call() async{
+  Future<void> call(BuildContext context) async{
     if(!stage.isNewChat && status.isPending){
-      _showAcceptanceSheet(
+      _showAcceptanceSheet(context,
             () => request.isParentIndividualApproval?
         Go.offAll(const HomeScreen()) : Go.back(),
       );

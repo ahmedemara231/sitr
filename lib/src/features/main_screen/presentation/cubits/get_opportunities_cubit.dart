@@ -1,13 +1,24 @@
+import 'dart:developer';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pagify/helpers/data_and_pagination_data.dart';
 import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import '../../../../config/res/config_imports.dart';
 import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/widgets/custom_messages.dart';
 import '../../data/models/home_model.dart';
 
-class GetOpportunitiesCubit extends AsyncCubit<(List<OpportunityModel>, PaginationData)>{
-  GetOpportunitiesCubit() : super(([], PaginationData(perPage: 0, totalPages: 0)));
+typedef OpportunitiesState = AsyncState<(List<OpportunityModel>, PaginationData)>;
+
+class GetOpportunitiesCubit extends Cubit<OpportunitiesState> {
+  GetOpportunitiesCubit()
+      : super(AsyncState.initial(data: ([], PaginationData(perPage: 0, totalPages: 0)))) {
+    _baseCrudUseCase = injector();
+  }
+
+  late final BaseCrudUseCase _baseCrudUseCase;
 
   int _currentPage = 0;
   bool _isFetching = false;
@@ -21,16 +32,15 @@ class GetOpportunitiesCubit extends AsyncCubit<(List<OpportunityModel>, Paginati
     final isFirstPage = page == 1;
     if (isFirstPage) {
       _currentPage = 0;
-      setLoading();
+      emit(state.loading());
     } else {
-      setLoadingMore();
+      emit(state.loadingMore());
     }
 
     final String typeKey = type == UserGender.unknown ? 'parent' : type.name;
-    // Each page gets its own cache key so offline pagination works per-page.
     final String pageCacheKey = 'opportunities_${typeKey}_$page';
 
-    final result = await baseCrudUseCase.call(
+    final result = await _baseCrudUseCase.call(
       CrudBaseParmas(
         api: ApiConstants.opportunities,
         cacheKey: pageCacheKey,
@@ -69,21 +79,28 @@ class GetOpportunitiesCubit extends AsyncCubit<(List<OpportunityModel>, Paginati
       (success) {
         _currentPage = page;
         final previousItems = isFirstPage ? <OpportunityModel>[] : state.data.$1;
-        setSuccess(data: ([...previousItems, ...success.data.$1], success.data.$2));
+        emit(state.success(data: ([...previousItems, ...success.data.$1], success.data.$2)));
+        log('sucesss ${success.key == 'fromCache'}');
+        if (success.key == 'fromCache') {
+          MessageUtils.showTopMsg(success.msg);
+        }
       },
       (failure) {
         if (isFirstPage) {
-          // handleCallbackWithCache already attempted cache; nothing to fall back to.
-          setError(errorMessage: failure.message);
+          emit(state.error(errorMessage: failure.message));
         } else {
-          // Page-specific cache was also empty. Keep the already-loaded items
-          // visible and inform the user.
-          emit(state.success(data: state.data));
+          // emit(state.success(data: state.data));
           MessageUtils.showTopMsg(failure.message);
         }
       },
     );
 
     _isFetching = false;
+  }
+
+  @override
+  void emit(OpportunitiesState state) {
+    if (isClosed) return;
+    super.emit(state);
   }
 }

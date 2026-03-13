@@ -1,22 +1,20 @@
 part of 'imports.dart';
 
 class StageAction extends ChatActions{
-  final BuildContext context;
-  final ChatStages stage;
+  final ChatModel data;
   final RequestModel requestModel;
-  final bool hasSentRequest;
-  final int timer;
 
   StageAction({
-    required this.context,
-    required this.stage,
-    required this.hasSentRequest,
+    required this.data,
     required this.requestModel,
-    required this.timer,
   });
 
+  ChatStages get stage => data.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum;
+  bool get hasSentRequest => data.matchRequest!.hasSendRequest ?? false;
+  int get timer => data.matchRequest!.timer!;
+
   @override
-  Future<void> call() async{
+  Future<void> call(BuildContext context) async{
     if(stage.isParentsExchangeNumber){
       ChatSheetManager.show(
         child: BlocProvider.value(

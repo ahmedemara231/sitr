@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/network/api_endpoints.dart';
+import '../../../../core/shared/base_state.dart';
 import '../../data/models/chat_model.dart';
 
 enum ChatType {
@@ -48,7 +47,7 @@ class GetChatsCubit extends AsyncCubit<List<ChatModel>>{
       room: state.data[i].room!.copyWith(unreadMsgs: 0),
     );
     final newList = List<ChatModel>.from(state.data)..[i] = updatedChat;
-    setSuccess(data: newList);
+    emit(state.copyWith(status: BaseStatus.success, data: newList));
   }
 
   String _getChatType(ChatType chatType){

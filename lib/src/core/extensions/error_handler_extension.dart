@@ -46,7 +46,7 @@ Result<BaseModel<M>, Failure> _resolveFromCache<M>(
   try {
     final cached = onRead(cacheKey);
     if (cached.isNotNull) {
-      return Success(BaseModel(key: '', msg: '', data: fromCacheJson(cached!)));
+      return Success(BaseModel(key: 'fromCache', msg: errorMessage, data: fromCacheJson(cached!)));
     }
   } catch (_) {}
   return Error(Failure(errorMessage));

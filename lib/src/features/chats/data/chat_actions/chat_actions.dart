@@ -14,5 +14,5 @@ abstract class ChatActions{
       onSuccess: onSuccess
   );
 
-  Future<void> call();
+  Future<void> call(BuildContext context);
 }

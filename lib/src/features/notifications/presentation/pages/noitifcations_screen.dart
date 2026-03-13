@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -61,7 +59,6 @@ class _NotificationBodyState extends State<NotificationBody> {
         isScrollable: false,
         appBarTitle: LocaleKeys.notifications,
         actions: [
-          // IconButton(onPressed: () => log('the length is ${controller.getItemsLength}'), icon: const Icon(Icons.ad_units)),
           ValueListenableBuilder(
               valueListenable: _showDeleteAll,
               builder: (context, show, child) => show? IconWidget(
@@ -92,7 +89,7 @@ class _NotificationBodyState extends State<NotificationBody> {
           cacheFromJson: (json) => NotificationModel.fromJson(json),
           onUpdateStatus: (state) {
             if(state.isSuccess){
-              _showDeleteAll.value = controller.getItemsLength >= 2;
+              _showDeleteAll.value = controller.getItemsLength > 1;
             }
           },
           itemBuilder: (context, data, index, element) => NotificationCard(

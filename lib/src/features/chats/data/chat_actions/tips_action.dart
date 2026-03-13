@@ -1,12 +1,10 @@
 part of 'imports.dart';
 
 class TipsAction extends ChatActions{
-  final BuildContext context;
   final ShowTips currentTips;
   RequestModel requestModel;
 
   TipsAction({
-    required this.context,
     required this.currentTips,
     required this.requestModel,
   });
@@ -33,7 +31,7 @@ class TipsAction extends ChatActions{
   }
 
   @override
-  Future<void> call() async {
+  Future<void> call(BuildContext context) async {
     showTipsSheet(
         context,
         path: currentTips.path,

@@ -107,18 +107,18 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
   }
 
   double _calcCenterCardPadding(String bio){
-    double height = 40.h;
-    final int lines = bio.calculateRenderedLines(
-        context: context,
-        text: bio, maxWidth: context.width - 50
-    );
+    final textPainter = TextPainter(
+      text: TextSpan(text: bio, style: const TextStyle()),
+      textDirection: TextDirection.ltr,
+      textAlign: TextAlign.center,
+      maxLines: null,
+    )..layout(maxWidth: context.width - 50);
 
-    log('lines is $lines');
-    if(lines > 3){
-      height = height + ((lines - 3) * 30);
-    }
+    log('bio height is ${textPainter.height}');
 
-    return height;
+    // 24.r = top + bottom card padding, 30.sp = name/header row height, 10.h = spacing
+    final double base = 24.r + 30.sp + 10.h;
+    return base + textPainter.height;
   }
 
   @override

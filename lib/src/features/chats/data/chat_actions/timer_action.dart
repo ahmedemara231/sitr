@@ -12,7 +12,7 @@ class TimerAction extends ChatActions{
   });
 
   @override
-  Future<void> call() async{
+  Future<void> call(BuildContext context) async{
     ChatSheetManager.show(
         child: BlocProvider.value(
           value: context.read<ChatCubit>(),

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
 import '../../../config/res/config_imports.dart';
 import '../../../core/extensions/string_extension.dart';
 import '../../../core/network/api_endpoints.dart';
@@ -36,19 +35,14 @@ class ChatsData{
   }
 
   static ChatActions manageSuccessState(ChatModel data, {
-    required BuildContext context,
     required RequestModel requestModel,
   }) {
-    final timer = data.matchRequest!.timer;
-    final stage = data.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum;
-    final userStatus = data.matchRequest!.userRequestStatus!.getUserRequestStatusAsEnum;
-    final matchRequestEnum = data.matchRequest!.userRequest!.getMatchRequestAsEnum;
     final currentTips = data.matchRequest!.tipsPage!.currentStageTips;
-    final MatchRequest matchRequest = data.matchRequest!;
+    final userStatus = data.matchRequest!.userRequestStatus!.getUserRequestStatusAsEnum;
+    final stage = data.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum;
 
     if(!currentTips.isNoPage){
       return TipsAction(
-          context: context,
           currentTips: currentTips,
           requestModel: requestModel,
       );
@@ -57,37 +51,16 @@ class ChatsData{
     // acceptance - payment
     if(!userStatus.isUndefined){
       return UserStatusAction(
-          context: context,
-          status: userStatus,
-          request: matchRequestEnum,
-          requestName: matchRequest.requestName!,
-          stage: stage,
-          matchReqId: matchRequest.id!,
+          data: data,
           requestModel: requestModel,
       );
     }
 
-    // if(stage.isParentIndividualConversation){
-    //   return NoAction();
-    // }
-    //
-    // // timer
-    // if(timer.isEqualZero){
-    //   return TimerAction(
-    //       context: context,
-    //       requestModel: requestModel,
-    //       stage: stage
-    //   );
-    // }
-
     // based stage
     if(!stage.isNewChat){
       return StageAction(
-          context: context,
-          stage: stage,
+          data: data,
           requestModel: requestModel,
-          timer: timer!,
-          hasSentRequest: data.matchRequest!.hasSendRequest ?? false,
       );
     }
 

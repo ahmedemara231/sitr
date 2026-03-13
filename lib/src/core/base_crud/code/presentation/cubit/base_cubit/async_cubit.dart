@@ -26,8 +26,11 @@ abstract class AsyncCubit<T> extends Cubit<AsyncState<T>> {
     emit(state.loadingMore());
   }
 
-  void setSuccess({required T data, String? msg}) {
-    emit(state.success(data: data, msg: msg));
+  void setSuccess(BaseModel<T> data) {
+    emit(state.success(data: data.data, msg: data.msg));
+    if(data.key == 'fromCache'){
+      MessageUtils.showTopMsg(data.msg);
+    }
   }
 
   void setError({String? errorMessage, bool showToast = false}) {
@@ -173,7 +176,7 @@ abstract class AsyncCubit<T> extends Cubit<AsyncState<T>> {
     final result = await operation();
     result.when(
           (success) {
-        setSuccess(data: success.data, msg: success.msg);
+        setSuccess(success);
         successEmitter?.call(success);
       },
           (failure) {

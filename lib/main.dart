@@ -34,7 +34,7 @@ Future<bool> fetchBaseUrl() async {
     await remoteConfig.setConfigSettings(
       RemoteConfigSettings(
         fetchTimeout: const Duration(seconds: 10),
-        minimumFetchInterval: const Duration(hours: 1),
+        minimumFetchInterval: Duration.zero
       ),
     );
 
@@ -58,13 +58,12 @@ Future<bool> fetchBaseUrl() async {
     }
 
     await SecureStorage.write(SecureLocalVariableKeys.baseUrlKey, baseUrl);
-    await SecureStorage.write(SecureLocalVariableKeys.socetIoUrl, socetIoUrl);
+    // await SecureStorage.write(SecureLocalVariableKeys.socetIoUrl, socetIoUrl);
 
     return true;
   } catch (e) {
     log('the error is $e');
     return false;
-    // return await fetchBaseUrl();
   }
 }
 

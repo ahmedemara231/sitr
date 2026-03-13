@@ -35,6 +35,6 @@ void setUpGeneralDependencies() {
   );
 
   injector.registerLazySingleton<NetworkService>(
-        () => DioService(),
+        () => DioService()..updateBaseUrl(),
   );
 }

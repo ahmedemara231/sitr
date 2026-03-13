@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
 import 'imports.dart';
 
 class NoAction extends ChatActions{
   @override
-  Future<void> call() async{}
+  Future<void> call(BuildContext context) async{}
 }

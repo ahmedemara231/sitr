@@ -24,7 +24,6 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    injector<NetworkService>().updateBaseUrl();
     _manipulateSplashData();
     super.initState();
   }
