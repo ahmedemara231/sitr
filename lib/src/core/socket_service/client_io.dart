@@ -58,6 +58,8 @@ abstract interface class SocketHelper{
   FutureOr<void> disconnect();
   FutureOr<void> reconnect();
 
+  bool get isConnected;
+
   FutureOr<void> sendMessage(Map<String, dynamic> data);
   FutureOr<void> emitEvent({required String event, Map<String, dynamic>? data});
 
@@ -95,6 +97,9 @@ class ClientIOImpl extends SocketHelper{
   });
 
   late final IO.Socket socket;
+
+  @override
+  bool get isConnected => socket.connected;
 
   @override
   FutureOr<void> initSocket() {

@@ -42,7 +42,17 @@ class _ChatScreenBody extends StatefulWidget {
   State<_ChatScreenBody> createState() => _ChatScreenBodyState();
 }
 
-class _ChatScreenBodyState extends State<_ChatScreenBody> {
+class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObserver {
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      if (!socketType.isConnected) {
+        socketType.reconnect();
+      }
+      // _startChat();
+    }
+  }
 
   void _fireShouldUpdate(){
     context.read<SocketCubit>().fireShouldUpdate(
@@ -196,12 +206,14 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
 
   @override
   void initState() {
-    _handleInitialState();
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _handleInitialState();
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _callStartedSubscription?.cancel();
     _chatController.dispose();
     socketType.disconnect();

@@ -76,7 +76,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait(
     [
-      Helpers.initZegoData(),
       EasyLocalization.ensureInitialized(),
       CacheStorage.init(),
       ObjectBoxCacheService.init(),
@@ -84,6 +83,7 @@ void main() async {
       Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
     ],
   );
+  await Helpers.initZegoData();
 
   await fetchBaseUrl();
   SystemChrome.setPreferredOrientations(

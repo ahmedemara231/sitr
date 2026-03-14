@@ -26,6 +26,11 @@
 
     <!-- BACKGROUND / FOREGROUND SERVICES -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_PHONE_CALL"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK"/>
+
+    <!-- BOOT COMPLETED (re-register push after reboot) -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <!-- WAKELOCK -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />

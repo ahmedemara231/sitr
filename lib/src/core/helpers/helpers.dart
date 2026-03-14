@@ -52,21 +52,15 @@ class Helpers {
     final ZPNsConfig zpnsConfig = ZPNsConfig();
     zpnsConfig.enableFCMPush = true;
     ZPNs.setPushConfig(zpnsConfig);
-    ZPNs.getInstance().registerPush();
-  }
-
-  void _handleRegisterPush(){
     ZPNs.getInstance().registerPush(
         iOSEnvironment: ZPNsIOSEnvironment.Automatic,
         iOSNotificationArrivedConfig: ZPNsIOSNotificationArrivedConfig()
           ..isPresentBadge = true
-          ..isPresentSound=true
-          ..isPresentAlert=true,
-        enableIOSVoIP: true
-    )
-        .catchError((onError) {
+          ..isPresentSound = true
+          ..isPresentAlert = true,
+        enableIOSVoIP: true,
+    ).catchError((onError) {
       if (onError is PlatformException) {
-        // Notice exception here
         log(onError.message ?? "");
       }
     });
