@@ -11,6 +11,7 @@ import '../../../config/language/locale_keys.g.dart';
 import '../../../config/res/config_imports.dart';
 import '../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../core/extensions/object.dart';
+import '../../../core/extensions/padding_extension.dart';
 import '../../../core/extensions/string_extension.dart';
 import '../../../core/helpers/helpers.dart';
 import '../../../core/navigation/navigator.dart';

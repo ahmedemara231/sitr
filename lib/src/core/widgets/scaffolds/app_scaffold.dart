@@ -18,6 +18,7 @@ class AppScaffold extends StatelessWidget {
   final double? appBarHeight;
   final List<Widget>? actions;
   final bool isScrollable;
+  final bool? resizeToAvoidBottomInset;
   final FutureOr<void> Function()? onBack;
   // final FutureOr<void> Function(BuildContext context)? onRefresh;
 
@@ -32,11 +33,13 @@ class AppScaffold extends StatelessWidget {
     this.actions,
     this.onBack,
     this.isScrollable = true,
+    this.resizeToAvoidBottomInset,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       backgroundColor: scaffoldBackgroundColor?? Colors.white,
       appBar: PreferredSize(
           preferredSize: Size(context.width, appBarHeight ?? 60),

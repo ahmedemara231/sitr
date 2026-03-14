@@ -12,7 +12,6 @@ import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/helpers/helpers.dart';
 import '../../../../../core/helpers/validators.dart';
 import '../../../../../core/navigation/navigator.dart';
-import '../../../../../core/notification/notification_service.dart';
 import '../../../../../core/widgets/chat_builder/chat_message.dart';
 import '../../../../../core/widgets/custom_messages.dart' show MessageUtils;
 import '../../../../../core/widgets/svg_pic.dart';
@@ -112,6 +111,7 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                   child: Form(
                     key: _formKey,
                     child: DefaultTextField(
+                      closeWhenTapOutSide: false,
                       validator: Validators.validateChatMessage,
                       controller: _chatCont,
                       maxLines: 5,

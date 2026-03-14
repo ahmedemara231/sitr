@@ -54,6 +54,16 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
     }
   }
 
+  @override
+  void didChangeMetrics() {
+    super.didChangeMetrics();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _chatController.moveToMaxBottom();
+      }
+    });
+  }
+
   void _fireShouldUpdate(){
     context.read<SocketCubit>().fireShouldUpdate(
       roomId: context.read<ChatCubit>().currentRoom!.id!,
@@ -260,6 +270,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
           Go.back();
         },
         child: AppScaffold(
+        resizeToAvoidBottomInset: true,
         customTitle: BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
           builder: (context, state) => ChatStatusBuilder(
               data: state,
