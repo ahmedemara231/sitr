@@ -9,7 +9,10 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../../features/auth/imports.dart';
+import '../../features/chats/data/models/chat_model.dart';
+import '../../features/chats/data/models/message_params_model.dart';
 import '../../features/chats/data/models/request_model.dart';
+import '../../features/chats/data/socket_events.dart';
 import '../../features/chats/enums.dart';
 import '../../features/chats/presentation/cubits/get_chats_cubit.dart';
 import '../../features/chats/presentation/imports.dart';
@@ -29,6 +32,7 @@ import '../network/api_endpoints.dart';
 import '../network/network_request.dart';
 import '../network/network_service.dart';
 import '../shared/user_cubit/user_cubit.dart';
+import '../socket_service/client_io.dart';
 import '../widgets/parent_children_screen.dart';
 
 part 'navigation_types.dart';
@@ -43,6 +47,58 @@ Future<void> backgroundHandler(RemoteMessage message) async {
 void onDidReceiveBackgroundNotificationResponse(NotificationResponse response) {
   log('Background notification action: ${response.actionId}');
   handleNotificationAction(response);
+}
+
+Future<void> _emitUpdateChatEvent({
+  required int roomId,
+  required int matchRequestId,
+  required int receiverId,
+}) async {
+  final completer = Completer<void>();
+  late final SocketHelper socket;
+  socket = ClientIOImpl(
+    onConnect: (d) {
+      log('notification action socket connected');
+      socket.emitEvent(
+        event: SocketEvents.updateChat,
+        data: {
+          'room_id': roomId,
+          'match_request_id': matchRequestId,
+          'receiver_id': receiverId,
+        },
+      );
+      Future.delayed(const Duration(milliseconds: 500), () {
+        socket.disconnect();
+        if (!completer.isCompleted) completer.complete();
+      });
+    },
+    onDisconnect: (d) => log('notification action socket disconnected'),
+    extraParams: MessageParamsModel().toJson(),
+    url: ConstantManager.socketUrl,
+    roomId: 0,
+    jsonToChatMessage: (_) => throw UnimplementedError(),
+    onReceiveMessage: (_) {},
+    events: EasyChatEvents(
+      messageEvents: MessageEvents(
+        receiveMsgEvent: SocketEvents.receivedMsg,
+        sendMsgEvent: SocketEvents.sendMsg,
+      ),
+      chatEvents: ChatEvents(
+        enterChatEvent: SocketEvents.enterChat,
+        exitChatEvent: SocketEvents.exitChat,
+      ),
+      otherEvents: [],
+    ),
+  )..initSocket()..initConfig()..connect();
+
+  // Wait for emit + disconnect, with a timeout so we don't hang forever
+  await completer.future.timeout(
+    const Duration(seconds: 5),
+    onTimeout: () {
+      log('notification action socket timed out');
+      try { socket.disconnect(); } catch (_) {}
+    },
+  );
 }
 
 Future<void> handleNotificationAction(NotificationResponse? payload) async {
@@ -91,7 +147,7 @@ Future<void> handleNotificationAction(NotificationResponse? payload) async {
   log('handleNotificationAction: calling API with path=$path');
   try {
     final networkService = injector<NetworkService>();
-    await networkService.callApi(
+    final response = await networkService.callApi<ChatModel>(
       NetworkRequest(
         path: path,
         method: RequestMethod.post,
@@ -101,8 +157,18 @@ Future<void> handleNotificationAction(NotificationResponse? payload) async {
           'match_request_id': matchRequestId,
         },
       ),
+      mapper: (json) => ChatModel.fromJson(json),
     );
     log('handleNotificationAction: API call succeeded');
+
+    final roomId = response.data.room?.id ?? 0;
+    final responseMatchRequestId = response.data.matchRequest?.id ?? 0;
+    final receiverId = int.tryParse(senderId) ?? 0;
+    await _emitUpdateChatEvent(
+      roomId: roomId,
+      matchRequestId: responseMatchRequestId,
+      receiverId: receiverId,
+    );
   } catch (e) {
     log('handleNotificationAction: API call failed with error: $e');
   }
