@@ -1,8 +1,4 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
-
-import '../../features/splash/splash_screen.dart';
 import '../shared/route_observer.dart';
 import 'Constants/imports_constants.dart';
 import 'Helper/Interfaces/helper_imports.dart';

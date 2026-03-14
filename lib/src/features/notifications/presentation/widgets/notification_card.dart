@@ -145,11 +145,11 @@ class _NotificationCardState extends State<NotificationCard> {
                               matchRequestId: matchRequestId,
                               onSuccess: (chatModel) {
                                 _buttonsState.value = ButtonsState.rejected;
-                                widget.onFireShouldUpdate?.call(
-                                  roomId: chatModel.room?.id ?? 0,
-                                  matchRequestId: chatModel.matchRequest?.id ?? 0,
-                                  receiverId: int.parse(data['sender_id'].toString()),
-                                );
+                                // widget.onFireShouldUpdate?.call(
+                                //   roomId: chatModel.room?.id ?? 0,
+                                //   matchRequestId: chatModel.matchRequest?.id ?? 0,
+                                //   receiverId: chatModel.room!.members!.first.id!,
+                                // );
                               },
                             );
                           },
