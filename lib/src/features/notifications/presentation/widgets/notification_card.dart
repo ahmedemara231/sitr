@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dropinity/helpers/extensions/padding_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,10 +21,13 @@ import '../../data/models/notification_model.dart';
 class NotificationCard extends StatefulWidget {
   final NotificationModel notificationModel;
   final Future<void> Function(String id) onDelete;
+  final void Function({required int roomId, required int matchRequestId, required int receiverId})? onFireShouldUpdate;
 
   const NotificationCard({super.key,
     required this.onDelete,
-    required this.notificationModel});
+    required this.notificationModel,
+    this.onFireShouldUpdate,
+  });
 
   @override
   State<NotificationCard> createState() => _NotificationCardState();
@@ -123,8 +128,13 @@ class _NotificationCardState extends State<NotificationCard> {
                               requestModel: requestModel,
                               path: ApiConstants.acceptRequest + ApiConstants.userMoveToNextRequest,
                               matchRequestId: matchRequestId,
-                              onSuccess: (_) {
+                              onSuccess: (chatModel) {
                                 _buttonsState.value = ButtonsState.accepted;
+                                widget.onFireShouldUpdate?.call(
+                                  roomId: chatModel.room?.id ?? 0,
+                                  matchRequestId: chatModel.matchRequest?.id ?? 0,
+                                  receiverId: chatModel.room!.members!.first.id!,
+                                );
                               },
                             );
                           },
@@ -133,8 +143,13 @@ class _NotificationCardState extends State<NotificationCard> {
                               requestModel: requestModel,
                               path: ApiConstants.rejectAll,
                               matchRequestId: matchRequestId,
-                              onSuccess: (_) {
+                              onSuccess: (chatModel) {
                                 _buttonsState.value = ButtonsState.rejected;
+                                widget.onFireShouldUpdate?.call(
+                                  roomId: chatModel.room?.id ?? 0,
+                                  matchRequestId: chatModel.matchRequest?.id ?? 0,
+                                  receiverId: int.parse(data['sender_id'].toString()),
+                                );
                               },
                             );
                           },

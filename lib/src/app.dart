@@ -73,7 +73,7 @@ class _SitrState extends State<Sitr> with WidgetsBindingObserver {
             },
             // home: const OnBoardingView(),
             home: const ZegoUIKitPrebuiltCallMiniPopScope(child: SplashScreen()),
-            navigatorObservers: [AppNavigationObserver()],
+            navigatorObservers: [AppNavigationObserver.instance],
           ),
         );
       },

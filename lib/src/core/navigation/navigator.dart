@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 
 import '../../features/splash/splash_screen.dart';
@@ -47,7 +49,8 @@ class Go {
   }) {
     final isCurrent = AppNavigationObserver.currentRouteName ==
         page.runtimeType.toString();
-    if (isCurrent) {
+
+    if (isCurrent || _navigatorKey.currentState!.canPop()) {
       return off(page, transition: transition, options: options);
     }
     return to<T>(page, transition: transition, options: options);

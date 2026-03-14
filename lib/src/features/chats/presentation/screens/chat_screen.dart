@@ -132,11 +132,11 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> {
   void _updateTimer() {
     final chatCubit = context.read<ChatCubit>();
     final timer = chatCubit.matchRequest?.timer;
-    final matchRequestId = chatCubit.matchRequestId;
-    if (timer != null && matchRequestId != null) {
+    final roomId = chatCubit.currentRoom?.id;
+    if (timer.isNotNull && roomId.isNotNull) {
       context.read<SocketCubit>().updateTimer(
-        timer: timer,
-        matchRequestId: matchRequestId,
+        timer: timer!,
+        roomId: roomId!,
       );
     }
   }

@@ -40,7 +40,7 @@ class StageAction extends ChatActions{
       );
 
     }else
-      if(stage.isShariaMeetingChoice){
+      if(stage.isShariaMeetingChoice && !hasSentRequest){
       ChatSheetManager.show(
           child: BlocProvider.value(
             value: context.read<ChatCubit>(),
@@ -82,10 +82,11 @@ class StageAction extends ChatActions{
                   requestModel: requestModel,
                   path: selectedVal.pathToRequest,
                   onSuccess: (chatModel){
-                    _fireUpdate(socketCubit);
-                    Go.back();
                     if(selectedVal == LocaleKeys.refuseMoveToNextStage){
                       Go.offAll(const HomeScreen());
+                    }else{
+                      _fireUpdate(socketCubit);
+                      Go.back();
                     }
                   },
                 );

@@ -11,6 +11,7 @@ import '../../../../core/extensions/string_extension.dart';
 import '../../../../core/extensions/widget_extension.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/navigation/navigator.dart';
+import '../../../../core/shared/route_observer.dart';
 import '../../../../core/widgets/not_contain_data.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../core/widgets/choose_from_options.dart';
@@ -109,11 +110,33 @@ class _ChatsBody extends StatefulWidget {
   State<_ChatsBody> createState() => _ChatsBodyState();
 }
 
-class _ChatsBodyState extends State<_ChatsBody> {
+class _ChatsBodyState extends State<_ChatsBody> with RouteAware {
+  late final GetChatsCubit _getChatsCubit = GetChatsCubit()..getChat(widget.chatType);
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final route = ModalRoute.of(context);
+    if (route != null) {
+      AppNavigationObserver.instance.subscribe(this, route);
+    }
+  }
+
+  @override
+  void dispose() {
+    AppNavigationObserver.instance.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
+  void didPopNext() {
+    _getChatsCubit.getChat(widget.chatType);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<GetChatsCubit>(
-      create: (context) => GetChatsCubit()..getChat(widget.chatType),
+    return BlocProvider<GetChatsCubit>.value(
+      value: _getChatsCubit,
       child: BlocBuilder<GetChatsCubit, AsyncState<List<ChatModel>>>(
         builder: (context, state) => StatusBuilder(
           data: state,

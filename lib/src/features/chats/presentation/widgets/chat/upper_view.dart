@@ -55,6 +55,7 @@ class ChatUpperWidget extends StatelessWidget {
     return const SizedBox.shrink();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Row(

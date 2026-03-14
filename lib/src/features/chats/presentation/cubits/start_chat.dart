@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import '../../../../core/extensions/num.dart';
 import '../../../../core/extensions/object.dart';
 import '../../../../core/extensions/string_extension.dart';
 import '../../../../core/network/api_endpoints.dart';
@@ -73,14 +75,16 @@ class ChatCubit extends AsyncCubit<ChatModel>{
           data.data,
           requestModel: requestModel,
         ).call(context);
-        final timer = matchRequest?.timer;
-        final id = matchRequestId;
-        if (timer.isNotNull && id.isNotNull) {
-          context.read<SocketCubit>().updateTimer(
-            timer: timer!,
-            matchRequestId: id!,
-          );
-        }
+        // final timer = matchRequest?.timer;
+        // final id = data.data.room?.id;
+        // if (timer.isNotNull && timer.isNotEqualZero && id.isNotNull) {
+        //   log('the timer is $timer');
+        //   log('the room id is $id');
+        //   context.read<SocketCubit>().updateTimer(
+        //     timer: timer!,
+        //     roomId: id!,
+        //   );
+        // }
         // onSuccess?.call(data.data);
       }
     );

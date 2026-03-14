@@ -38,16 +38,6 @@ class NoNavigation implements NotificationNavigation {
   void navigate({required Map<String, dynamic> data}) {}
 }
 
-
-class HomeNavigation implements NotificationNavigation {
-  const HomeNavigation();
-
-  @override
-  void navigate({required Map<String, dynamic> data}) {
-    Go.offAll(const HomeScreen());
-  }
-}
-
 class FinishedChatNavigation implements NotificationNavigation {
   const FinishedChatNavigation();
 

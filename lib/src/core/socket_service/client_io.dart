@@ -195,7 +195,10 @@ class ClientIOImpl extends SocketHelper{
 
   void _emit({required String event, Map<String, dynamic>? data}){
     if(socket.connected){
-      socket.emit(event, [data]);
+      socket.emitWithAck(
+          event, [data],
+        ack: () => log('Server acknowledged: $data'),
+      );
 
     }else{
       MessageUtils.showSnackBar(LocaleKeys.waitingForConnection);

@@ -3,6 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 
 class AppNavigationObserver extends RouteObserver<ModalRoute<dynamic>> {
+  static final AppNavigationObserver instance = AppNavigationObserver._();
+  AppNavigationObserver._();
+
   /// The name (widget runtimeType) of the currently visible route.
   static String? currentRouteName;
 
