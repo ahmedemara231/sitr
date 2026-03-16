@@ -2,15 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pip_view/pip_view.dart';
 import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
-
-import '../../features/home/home_screen.dart';
 import '../extensions/num.dart';
 import '../extensions/object.dart';
-import '../widgets/app_text.dart';
 
 class ZegoService {
   final int appId;
@@ -172,7 +168,7 @@ class ZegoService {
 
           config.topMenuBar.buttons
             ..insert(0, ZegoCallMenuBarButtonName.minimizingButton)
-            ..insert(0, ZegoCallMenuBarButtonName.pipButton)
+            // ..insert(0, ZegoCallMenuBarButtonName.pipButton)
             ..insert(0, ZegoCallMenuBarButtonName.showMemberListButton);
           // من برا قبل ما يخش الكول
           // config.topMenuBar.buttons = [
