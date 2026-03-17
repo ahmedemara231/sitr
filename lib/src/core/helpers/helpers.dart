@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:lottie/lottie.dart';
 import 'package:zego_zpns/zego_zpns.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
+import '../../../generated/assets.dart';
 import '../../core/zego_service/zego.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,26 +17,25 @@ import '../../config/language/languages.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../../features/chats/data/chat_sheet_manager.dart';
-import '../../features/packages/presentation/screens/subscription_screen.dart';
-import '../base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../extensions/padding_extension.dart';
 import '../navigation/navigator.dart';
-import '../shared/get_paymeny_brands_cubit.dart';
 import '../shared/user_cubit/user_cubit.dart';
-import '../widgets/app_text.dart';
+import '../widgets/app_bottom_sheet.dart';
 import '../widgets/custom_loading.dart';
 import '../widgets/custom_messages.dart';
-import '../widgets/image_widgets/cached_image.dart';
-import '../widgets/radio_bottom_sheet.dart';
 import '../widgets/sheets/login_when_visitor.dart';
-import '../widgets/sheets/payment_sheet.dart';
-import '../widgets/sheets/success_sheet.dart';
 import 'permission_handler/handler.dart';
 import 'permission_handler/model.dart';
 
 class Helpers {
+  static void showRestartSheet()async{
+    AppBottomSheet.large(
+        asyncCall: (context) async => await Phoenix.rebirth(context),
+        btnTitle: LocaleKeys.updateAvailableUpdateNow,
+        upperWidget: Lottie.asset(Assets.errorErrorView)
+    );
+  }
   static ZegoService? zegoService;
-
   static Future<void> initZegoData()async{
     zegoService = ZegoService(
         appId: ConstantManager.zegoAppId,

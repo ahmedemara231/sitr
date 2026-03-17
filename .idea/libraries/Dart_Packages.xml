@@ -807,6 +807,13 @@
             </list>
           </value>
         </entry>
+        <entry key="flutter_phoenix">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_phoenix-1.1.1/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="flutter_picture_taker">
           <value>
             <list>
@@ -1822,6 +1829,13 @@
             </list>
           </value>
         </entry>
+        <entry key="shorebird_code_push">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/shorebird_code_push-2.0.5/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="skeletonizer">
           <value>
             <list>
@@ -2428,6 +2442,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_local_notifications_windows-1.0.3/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_logs_yoer-2.2.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_markdown_plus-1.0.5/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_phoenix-1.1.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_picture_taker-0.2.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.32/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_ringtone_player-4.0.0+4/lib" />
@@ -2571,6 +2586,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/shared_preferences_windows-2.4.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/shelf-1.4.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/shelf_web_socket-2.0.1/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/shorebird_code_push-2.0.5/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/skeletonizer-2.1.0+1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/sliver_tools-0.2.12/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/socket_io_client-3.1.2/lib" />

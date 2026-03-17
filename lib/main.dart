@@ -1,4 +1,6 @@
 import 'dart:developer';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:shorebird_code_push/shorebird_code_push.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
@@ -68,6 +70,25 @@ Future<bool> fetchBaseUrl() async {
 }
 
 
+Future<void> _checkForUpdates()async{
+  bool makeAnotherCheck = true;
+  final shorebirdCodePush = ShorebirdUpdater();
+  while(makeAnotherCheck){
+    final status = await shorebirdCodePush.checkForUpdate();
+    final isUpdateAvailable = status == UpdateStatus.outdated;
+    final isRestartNeeded = status == UpdateStatus.restartRequired;
+
+    if(isUpdateAvailable){
+      await shorebirdCodePush.update();
+    }else if(isRestartNeeded){
+      Helpers.showRestartSheet();
+      makeAnotherCheck = false;
+    }else{
+      makeAnotherCheck = false;
+    }
+  }
+}
+
 void main() async {
   Helpers.changeStatusbarColor(
     statusBarColor: AppColors.white,
@@ -83,8 +104,8 @@ void main() async {
       Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
     ],
   );
+  // await _checkForUpdates();
   await Helpers.initZegoData();
-
   await fetchBaseUrl();
   SystemChrome.setPreferredOrientations(
     [
@@ -129,10 +150,7 @@ void _initSentry()async{
           startLocale: Languages.arabic.locale,
           // startLocale: Languages.getDeviceLocaleFromPlatform().locale,
           fallbackLocale: const Locale('ar'),
-          child: const RootRestorationScope(
-              restorationId:'app',
-              child: Sitr()
-          ),
+          child: Phoenix(child: const Satr()),
         ),
       )
   );

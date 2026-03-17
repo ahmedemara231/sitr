@@ -997,6 +997,9 @@ abstract class LocaleKeys {
   static const String _doYouAgreeWithThePartner = 'do_you_agree_with_the_partner';
   static String get doYouAgreeWithThePartner => _doYouAgreeWithThePartner.tr();
 
+  static const String _updateAvailableUpdateNow = 'update_available_update_now';
+  static String get updateAvailableUpdateNow => _updateAvailableUpdateNow.tr();
+
   static const String _congratulationsOnYourEngagementWeAskGodToBlessYourUnionAndGrantYouHappiness = 'congratulations_on_your_engagement_we_ask_god_to_bless_your_union_and_grant_you_happiness';
   static String get congratulationsOnYourEngagementWeAskGodToBlessYourUnionAndGrantYouHappiness => _congratulationsOnYourEngagementWeAskGodToBlessYourUnionAndGrantYouHappiness.tr();
 

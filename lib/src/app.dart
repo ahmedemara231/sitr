@@ -13,14 +13,14 @@ import 'features/on_boarding/screen.dart';
 import 'features/settings/splash/screens/splash_screen.dart';
 import 'features/splash/splash_screen.dart';
 
-class Sitr extends StatefulWidget {
-  const Sitr({super.key});
+class Satr extends StatefulWidget {
+  const Satr({super.key});
 
   @override
-  State<Sitr> createState() => _SitrState();
+  State<Satr> createState() => _SatrState();
 }
 
-class _SitrState extends State<Sitr> with WidgetsBindingObserver {
+class _SatrState extends State<Satr> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
