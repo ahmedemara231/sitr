@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
-import '../extensions/num.dart';
 import '../extensions/object.dart';
 
 class ZegoService {
@@ -35,7 +34,6 @@ class ZegoService {
     bool isSmallViewDraggable = true,
     bool switchLargeOrSmallViewByClick = true,
     void Function(ZegoCallEndEvent, void Function())? onCallEnd,
-    void Function()? onCallStarted,
     Future<bool> Function(ZegoCallHangUpConfirmationEvent, Future<bool> Function())?
     onHangUpConfirmation,
     dynamic Function(ZegoUIKitError)? onError,
@@ -196,7 +194,7 @@ class ZegoService {
 
           config.duration.isVisible = true;
           if(ZegoCallType.videoCall == data.type){
-            _endVideoCall(onCallStarted: onCallStarted);
+            // _endVideoCall(onCallStarted: onCallStarted);
             if (callDuration.isNotNull) {
               config.duration.onDurationUpdate = (Duration duration) {
                 if (duration.inSeconds == callDuration!.inSeconds) {
@@ -225,21 +223,21 @@ class ZegoService {
     });
   }
 
-  void _endVideoCall({
-    void Function()? onCallStarted,
-  }){
-    ZegoUIKit().getUserJoinStream().listen((joinedUsers) {
-      for(var user in joinedUsers){
-        log('the user ${user.name} is joined');
-        log('the users ${joinedUsers.length}');
-      }
-
-      log(joinedUsers.length.isNotEqualZero.toString());
-      if(joinedUsers.length.isNotEqualZero){
-        onCallStarted?.call();
-      }
-    });
-  }
+  // void _endVideoCall({
+  //   void Function()? onCallStarted,
+  // }){
+  //   ZegoUIKit().getUserJoinStream().listen((joinedUsers) {
+  //     for(var user in joinedUsers){
+  //       log('the user ${user.name} is joined');
+  //       log('the users ${joinedUsers.length}');
+  //     }
+  //
+  //     log(joinedUsers.length.isNotEqualZero.toString());
+  //     if(joinedUsers.length.isNotEqualZero){
+  //       onCallStarted?.call();
+  //     }
+  //   });
+  // }
 
   Future<bool> _waitForSignalingConnection() async {
     log('✅ Signaling connection test');

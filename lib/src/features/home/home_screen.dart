@@ -1,16 +1,16 @@
-import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shorebird_code_push/shorebird_code_push.dart';
 import '../../../generated/assets.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../core/helpers/helpers.dart';
 import '../../core/notification/inactivity_notification_service.dart';
-import '../../core/notification/notification_service.dart'; // NotificationNavigator, NotificationRoutes
+import '../../core/notification/notification_service.dart';
 import '../../core/shared/models/user_models/user_model.dart';
 import '../../core/widgets/app_text.dart';
 import '../../core/widgets/icon_widget.dart';
@@ -26,6 +26,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   void _initApp() async {
+    await _handleNotifications();
+    await Helpers.initZegoService();
+    // _checkForUpdates();
+  }
+
+  Future<void> _handleNotifications() async {
     InactivityNotificationService.init();
     NotificationNavigator(
       onRoutingMessage: (message) {
@@ -36,42 +42,28 @@ class _HomeScreenState extends State<HomeScreen> {
     await injector<NotificationService>().setupNotifications();
   }
 
-  void _initZego()async{
-    await Helpers.initZegoService(
-        onCallStarted: (){
-          // if(EndVideoCallCubit.instance.state.data.matchRequest?.callStatus == 'free_available'){
-          //   log('end video call');
-          //   EndVideoCallCubit.instance.endVideoCall( // برنها وانا فالكول
-          //       ChatsData.data!.matchRequest!.id.toString()
-          //   );
-          // }
-        },
-        onCallEnd: (event, defaultAction) {
-          log('Call ended with reason: ${event.reason}');
+  Future<void> _checkForUpdates()async{
+    bool makeAnotherCheck = true;
+    final shorebirdCodePush = ShorebirdUpdater();
+    while(makeAnotherCheck){
+      final status = await shorebirdCodePush.checkForUpdate();
+      final isUpdateAvailable = status == UpdateStatus.outdated;
+      final isRestartNeeded = status == UpdateStatus.restartRequired;
 
-          // Handle different call end reasons
-          // switch (event.reason) {
-          //   case ZegoCallEndReason.localHangUp:
-          //     log('Local user hung up');
-          //     break;
-          //   case ZegoCallEndReason.remoteHangUp:
-          //     log('Remote user hung up');
-          //     break;
-          //   case ZegoCallEndReason.kickOut:
-          //     log('User was kicked out by: ${event.kickerUserID}');
-          //     break;
-          // }
-
-          // Call the default action to return to previous page
-          defaultAction();
-        }
-    );
+      if(isUpdateAvailable){
+        await shorebirdCodePush.update();
+      }else if(isRestartNeeded){
+        Helpers.showRestartSheet();
+        makeAnotherCheck = false;
+      }else{
+        makeAnotherCheck = false;
+      }
+    }
   }
 
   @override
   void initState() {
     _initApp();
-    _initZego();
     super.initState();
   }
 

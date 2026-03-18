@@ -33,7 +33,12 @@
       "Bash(dart run:*)",
       "Bash(git reset:*)",
       "Bash(git push:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(killall java:*)",
+      "Read(//Users/aaita/.gradle/caches/8.12/**)",
+      "Read(//Users/aaita/Downloads/flutter_setups/flutter4/packages/flutter_tools/gradle/.gradle/**)",
+      "Bash(rm -rf /Users/aaita/Desktop/apps/new_crud_satr/android/.gradle/buildOutputCleanup)",
+      "Bash(rm -rf /Users/aaita/Desktop/apps/new_crud_satr/android/app/build)"
     ],
     "deny": [],
     "ask": []

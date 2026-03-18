@@ -67,11 +67,9 @@ class Helpers {
   }
 
   static Future<void> initZegoService({
-   required void Function() onCallStarted,
    void Function(ZegoCallEndEvent, void Function())? onCallEnd,
 }) async{
       final isConnected = await zegoService?.onUserLogin(
-        onCallStarted: onCallStarted,
         onCallEnd: onCallEnd,
         currentUserId: UserCubit.instance.user.id.toString(),
         currentUserName: UserCubit.instance.user.name??'',

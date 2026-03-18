@@ -134,10 +134,13 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
 
   StreamSubscription<List<ZegoUIKitUser>>? _callStartedSubscription;
 
-  void _listenForCallStart() {
+  void _listenForCallStart(String callStatus) {
     _callStartedSubscription?.cancel();
-    _callStartedSubscription = ZegoUIKit().getUserJoinStream().listen((joinedUsers) {
+    _callStartedSubscription = ZegoUIKit().getUserJoinStream().listen((joinedUsers) async{
       if (joinedUsers.isNotEmpty) {
+        if (callStatus == 'free_available') {
+          await _makeVideoReq();
+        }
         _endVideoCall();
         _callStartedSubscription?.cancel();
         _callStartedSubscription = null;
@@ -312,12 +315,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
                             invites: [
                               ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName),
                             ],
-                            onPressed: () async {
-                              if (callStatus == 'free_available') {
-                                await _makeVideoReq();
-                              }
-                              _listenForCallStart();
-                            }
+                            onPressed: () => _listenForCallStart(callStatus ?? '')
                         ) : const SizedBox.shrink()
                     );
 
