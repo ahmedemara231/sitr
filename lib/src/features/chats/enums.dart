@@ -65,6 +65,7 @@ extension CheckChatStages on ChatStages{
   bool get isFullParentConversation => this == ChatStages.fullParentConversation;
   bool get isParentIndividualConversation => this == ChatStages.parentIndividualConversation;
   bool get isRejected => this == ChatStages.rejected;
+  bool get isCompleted => this == ChatStages.completed;
 }
 
 

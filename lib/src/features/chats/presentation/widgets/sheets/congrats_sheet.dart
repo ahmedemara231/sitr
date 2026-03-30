@@ -33,3 +33,26 @@ class CongratsSheet extends StatelessWidget {
     );
   }
 }
+
+class ParentIndividualCongratsSheet extends StatelessWidget {
+  final int matchReqId;
+  final void Function()? onTap;
+  const ParentIndividualCongratsSheet({super.key, required this.matchReqId, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      spacing: 10.h,
+      children: [
+        Image.asset(Assets.imagesMarriageBalloons),
+        AppText(LocaleKeys.congratulationsTheParentApprovedYouYouCanSeeHisChildrenFromNow),
+        AppDefaultButton.withBackGroundColor(
+            title: LocaleKeys.showParentChildren,
+            onTap: () {
+              onTap?.call();
+            }
+        )
+      ],
+    );
+  }
+}

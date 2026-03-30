@@ -361,6 +361,9 @@ abstract class LocaleKeys {
   static const String _theMinDowryCanNotBeGreaterThanMax = 'the_min_dowry_can_not_be_greater_than_max';
   static String get theMinDowryCanNotBeGreaterThanMax => _theMinDowryCanNotBeGreaterThanMax.tr();
 
+  static const String _congratulationsTheParentApprovedYouYouCanSeeHisChildrenFromNow = 'congratulations_the_parent_approved_you_you_can_see_his_children_from_now';
+  static String get congratulationsTheParentApprovedYouYouCanSeeHisChildrenFromNow => _congratulationsTheParentApprovedYouYouCanSeeHisChildrenFromNow.tr();
+
   static const String _yes = 'yes';
   static String get yes => _yes.tr();
 
@@ -388,8 +391,8 @@ abstract class LocaleKeys {
   static const String _areYouSureToDeleteThisNotification = 'are_you_sure_to_delete_this_notification';
   static String get areYouSureToDeleteThisNotification => _areYouSureToDeleteThisNotification.tr();
 
-  static const String _unableToContinueChattingPleaseSelectOneOfAvailableOptions = 'unable_to_continue_chatting_please_select_one_of_available_options';
-  static String get unableToContinueChattingPleaseSelectOneOfAvailableOptions => _unableToContinueChattingPleaseSelectOneOfAvailableOptions.tr();
+  static const String _unableToContinueChattingBecauseThereIsSelectionProcessExecutedNow = 'unable_to_continue_chatting_because_there_is_selection_process_executed_now';
+  static String get unableToContinueChattingBecauseThereIsSelectionProcessExecutedNow => _unableToContinueChattingBecauseThereIsSelectionProcessExecutedNow.tr();
 
   static const String _kg = 'kg';
   static String get kg => _kg.tr();
@@ -930,6 +933,9 @@ abstract class LocaleKeys {
 
   static const String _youCanNotChooseNow = 'you_can_not_choose_now';
   static String get youCanNotChooseNow => _youCanNotChooseNow.tr();
+
+  static const String _showParentChildren = 'show_parent_children';
+  static String get showParentChildren => _showParentChildren.tr();
 
   static const String _aVideoCallRequestWasSuccessfullySent = 'a_video_call_request_was_successfully_sent';
   static String get aVideoCallRequestWasSuccessfullySent => _aVideoCallRequestWasSuccessfullySent.tr();

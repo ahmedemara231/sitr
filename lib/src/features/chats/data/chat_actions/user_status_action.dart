@@ -71,6 +71,7 @@ class UserStatusAction extends ChatActions{
               child: EnterParentPhoneSheet(
                   onSubmit: (context, phone)async{
                     await context.read<ChatCubit>().parentsExchangeNumbers(parentPhone: phone);
+                    _fireUpdate(socketCubit);
                     Go.back();
                   }
               ),
@@ -99,90 +100,105 @@ class UserStatusAction extends ChatActions{
     //   );
     //
     // }
-    else if((request.isExtension || request.isVideoCall || request.isAdminMeeting)
-        && status.isAccepted){
+    else if( status.isAccepted){
       final chatCubit = context.read<ChatCubit>();
       final userRequest = chatCubit.userRequest!;
 
-      ChatSheetManager.show(
-        child: BlocProvider.value(
-          value: chatCubit,
-          child: BlocProvider(
-            create: (context) => PayRequestCubit(),
-            child: PaymentSheet(
-              onPay: (ctx, payMethod)async {
-                final payRequestCubit = ctx.read<PayRequestCubit>();
-                if(payMethod == PaymentMethod.online) {
-                  ChatSheetManager.show(
-                    child: ShowBrandsSheet(
-                      onPay: (_, brandId) => payRequestCubit.pay(
-                        path: ApiConstants.payRequest + userRequest,
-                        matchRequestId: matchReqId.toString(),
-                        paymentMethod: payMethod.name,
-                        brandId: brandId,
-                        onSuccess: (url) async{
-                          Object? result = '';
-                          result = await Go.to(SubscriptionScreen(
-                              initialUrl: url!,
-                              title: LocaleKeys.pay
-                          ));
+      if(stage.isCompleted){
+        ChatSheetManager.show(
+          child: BlocProvider.value(
+            value: chatCubit,
+            child: ParentIndividualCongratsSheet(
+              matchReqId: matchReqId,
+              onTap: () {
+                2.pop();
+                Go.to(ParentDetailsScreen(id: data.room!.members!.first.id??0));
+              }
+            )
+          ),
+        );
 
-                          if(result == 'success'){
-                            _fireUpdate(socketCubit);
-                            chatCubit.startChat(
-                                requestModel: requestModel,
-                                context: context,
-                            );
+      }else{
+        ChatSheetManager.show(
+          child: BlocProvider.value(
+            value: chatCubit,
+            child: BlocProvider(
+              create: (context) => PayRequestCubit(),
+              child: PaymentSheet(
+                onPay: (ctx, payMethod)async {
+                  final payRequestCubit = ctx.read<PayRequestCubit>();
+                  if(payMethod == PaymentMethod.online) {
+                    ChatSheetManager.show(
+                        child: ShowBrandsSheet(
+                          onPay: (_, brandId) => payRequestCubit.pay(
+                            path: ApiConstants.payRequest + userRequest,
+                            matchRequestId: matchReqId.toString(),
+                            paymentMethod: payMethod.name,
+                            brandId: brandId,
+                            onSuccess: (url) async{
+                              Object? result = '';
+                              result = await Go.to(SubscriptionScreen(
+                                  initialUrl: url!,
+                                  title: LocaleKeys.pay
+                              ));
 
-                            ChatSheetManager.show(
-                                child: SuccessSheet(
-                                  isInAuth: false,
-                                  upperText: Column(
-                                    spacing: 10.h,
-                                    children: [
-                                      AppText(LocaleKeys.paymentSucceeded),
-                                      AppText(LocaleKeys.youCanNowContinueChatStages, color: Colors.grey, fontSize: 12.sp),
-                                    ],
-                                  ),
-                                )
-                            );
-                          }
-                        },
-                      ),
-                    )
-                  );
-                } else {
-                  await payRequestCubit.pay(
-                    path: ApiConstants.payRequest + userRequest,
-                    matchRequestId: matchReqId.toString(),
-                    paymentMethod: payMethod.name,
-                    onSuccess: (url) async{
-                      _fireUpdate(socketCubit);
-                      chatCubit.startChat(
+                              if(result == 'success'){
+                                _fireUpdate(socketCubit);
+                                chatCubit.startChat(
+                                  requestModel: requestModel,
+                                  context: context,
+                                );
+
+                                ChatSheetManager.show(
+                                    child: SuccessSheet(
+                                      isInAuth: false,
+                                      upperText: Column(
+                                        spacing: 10.h,
+                                        children: [
+                                          AppText(LocaleKeys.paymentSucceeded),
+                                          AppText(LocaleKeys.youCanNowContinueChatStages, color: Colors.grey, fontSize: 12.sp),
+                                        ],
+                                      ),
+                                    )
+                                );
+                              }
+                            },
+                          ),
+                        )
+                    );
+                  } else {
+                    await payRequestCubit.pay(
+                      path: ApiConstants.payRequest + userRequest,
+                      matchRequestId: matchReqId.toString(),
+                      paymentMethod: payMethod.name,
+                      onSuccess: (url) async{
+                        _fireUpdate(socketCubit);
+                        chatCubit.startChat(
                           requestModel: requestModel,
                           context: context,
-                      );
+                        );
 
-                      ChatSheetManager.show(
-                          child: SuccessSheet(
-                            isInAuth: false,
-                            upperText: Column(
-                              spacing: 10.h,
-                              children: [
-                                AppText(LocaleKeys.paymentSucceeded),
-                                AppText(LocaleKeys.youCanNowContinueChatStages, color: Colors.grey, fontSize: 12.sp),
-                              ],
-                            ),
-                          )
-                      );
-                    },
-                  );
-                }
-              },
+                        ChatSheetManager.show(
+                            child: SuccessSheet(
+                              isInAuth: false,
+                              upperText: Column(
+                                spacing: 10.h,
+                                children: [
+                                  AppText(LocaleKeys.paymentSucceeded),
+                                  AppText(LocaleKeys.youCanNowContinueChatStages, color: Colors.grey, fontSize: 12.sp),
+                                ],
+                              ),
+                            )
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
             ),
           ),
-        ),
-      );
+        );
+      }
 
     }else if(status.isParentMeeting){
       ChatSheetManager.show(
