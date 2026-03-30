@@ -38,20 +38,20 @@ class NoNavigation implements NotificationNavigation {
   void navigate({required Map<String, dynamic> data}) {}
 }
 
-class FinishedChatNavigation implements NotificationNavigation {
-  const FinishedChatNavigation();
-
-  @override
-  void navigate({required Map<String, dynamic> data}) {
-    Go.toOrOff(PreviousChatScreen(
-        chatType: (data['chat_status'] as String).getChatType,
-        requestModel: RequestModel(
-            receiverId: (_getUserId(data)).toString(),
-            fromHome: 0.toString()
-        )
-    ));
-  }
-}
+// class FinishedChatNavigation implements NotificationNavigation {
+//   const FinishedChatNavigation();
+//
+//   @override
+//   void navigate({required Map<String, dynamic> data}) {
+//     Go.toOrOff(PreviousChatScreen(
+//         chatType: (data['chat_status'] as String).getChatType,
+//         requestModel: RequestModel(
+//             receiverId: (_getUserId(data)).toString(),
+//             fromHome: 0.toString()
+//         )
+//     ));
+//   }
+// }
 
 class ProfileNavigation implements NotificationNavigation {
   const ProfileNavigation();
@@ -106,15 +106,27 @@ class MatchRequestNavigation implements NotificationNavigation {
 
   @override
   void navigate({required Map<String, dynamic> data}) {
-    Go.toOrOff(
-        ChatScreen(
-            requestModel: RequestModel(
-                receiverId: (_getUserId(data)).toString(),
-                fromHome: 0.toString()
-            ),
-            receiverName: _getUserName(data)
-        )
-    );
+    final chatType = (data['chat_status'] as String).getChatType;
+    if(chatType.isCurrent){
+      Go.toOrOff(
+          ChatScreen(
+              requestModel: RequestModel(
+                  receiverId: (_getUserId(data)).toString(),
+                  fromHome: 0.toString()
+              ),
+              receiverName: _getUserName(data)
+          )
+      );
+
+    }else{
+      Go.toOrOff(PreviousChatScreen(
+          chatType: (data['chat_status'] as String).getChatType,
+          requestModel: RequestModel(
+              receiverId: (_getUserId(data)).toString(),
+              fromHome: 0.toString()
+          )
+      ));
+    }
   }
 }
 

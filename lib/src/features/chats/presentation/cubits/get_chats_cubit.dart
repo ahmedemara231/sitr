@@ -39,6 +39,13 @@ extension ConvertToChatType on String{
   }
 }
 
+extension Check on ChatType{
+  bool get isCurrent => this == ChatType.current;
+  bool get isCompleted => this == ChatType.completed;
+  bool get isRejected => this == ChatType.rejected;
+  bool get isCancelled => this == ChatType.cancelled;
+}
+
 class GetChatsCubit extends AsyncCubit<List<ChatModel>>{
   GetChatsCubit() : super([]);
 

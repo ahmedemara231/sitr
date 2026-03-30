@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_loading_button/easy_loading_button.dart';
 
 import '../../../../config/res/config_imports.dart';
+import '../../../extensions/padding_extension.dart';
 import '../../app_text.dart';
 
 class LoadingButton extends StatelessWidget {
@@ -22,9 +23,7 @@ class LoadingButton extends StatelessWidget {
     this.width = double.infinity,
     this.contentGap = 12,
     this.idleWidget = const AppText('Confirm'),
-    this.loadingWidget = const CircularProgressIndicator(
-      color: Colors.white,
-    )
+    required this.loadingWidget,
   });
 
   void _changeState(EasyButtonState state){

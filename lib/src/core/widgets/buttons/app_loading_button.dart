@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../config/res/config_imports.dart';
+import '../../extensions/padding_extension.dart';
 import '../app_text.dart';
 import 'custom_app_buttons/loading_button.dart';
 
@@ -36,6 +37,9 @@ class AppLoadingButton extends StatelessWidget {
       height: height ?? 45.h,
       width: width ?? double.infinity,
       btnColor: buttonColor ?? AppColors.primary,
+      loadingWidget: const CircularProgressIndicator(
+        color: Colors.white,
+      ).paddingAll(3.r),
       idleWidget: FittedBox(
         child: AppText(
           title,

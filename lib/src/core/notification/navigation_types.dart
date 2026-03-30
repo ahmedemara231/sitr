@@ -53,9 +53,9 @@ enum NotificationType {
   adminMeetingRequestRejected('admin_meeting_request_rejected', navigation: MatchRequestNavigation()),
   parentMeetingRequestRejected('parent_meeting_request_rejected', navigation: MatchRequestNavigation()),
 
-  parentIndividualApprovalRejected('parent_individual_approval_rejected', navigation: FinishedChatNavigation()),
-  matchRejectedWhenTimerEnded('match_rejected_when_timer_ended', navigation: FinishedChatNavigation()),
-  matchRequestCompleted('match_request_completed', navigation: FinishedChatNavigation()),
+  parentIndividualApprovalRejected('parent_individual_approval_rejected', navigation: MatchRequestNavigation()),
+  matchRejectedWhenTimerEnded('match_rejected_when_timer_ended', navigation: MatchRequestNavigation()),
+  matchRequestCompleted('match_request_completed', navigation: MatchRequestNavigation()),
 
   // parentIndividualApprovalRejected('parent_individual_approval_rejected', navigation: HomeNavigation()),
   // matchRejectedWhenTimerEnded('match_rejected_when_timer_ended', navigation: HomeNavigation()),
