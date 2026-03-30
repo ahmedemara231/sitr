@@ -62,23 +62,25 @@ PODS:
   - Firebase/RemoteConfig (12.9.0):
     - Firebase/CoreOnly
     - FirebaseRemoteConfig (~> 12.9.0)
-  - firebase_app_check (0.4.1-1):
+  - firebase_ai (3.10.0):
+    - Flutter
+  - firebase_app_check (0.4.2):
     - Firebase/CoreOnly (~> 12.9.0)
     - firebase_core
     - FirebaseAppCheck (~> 12.9.0)
     - Flutter
-  - firebase_auth (6.1.1):
+  - firebase_auth (6.3.0):
     - Firebase/Auth (= 12.9.0)
     - firebase_core
     - Flutter
-  - firebase_core (4.5.0):
+  - firebase_core (4.6.0):
     - Firebase/CoreOnly (= 12.9.0)
     - Flutter
-  - firebase_messaging (16.1.0):
+  - firebase_messaging (16.1.3):
     - Firebase/Messaging (= 12.9.0)
     - firebase_core
     - Flutter
-  - firebase_remote_config (6.2.0):
+  - firebase_remote_config (6.3.0):
     - Firebase/RemoteConfig (= 12.9.0)
     - firebase_core
     - Flutter
@@ -175,7 +177,7 @@ PODS:
   - GoogleUtilities/UserDefaults (8.1.0):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
-  - GTMSessionFetcher/Core (5.1.0)
+  - GTMSessionFetcher/Core (5.2.0)
   - image_cropper (0.0.4):
     - Flutter
     - TOCropViewController (~> 2.7.4)
@@ -192,13 +194,12 @@ PODS:
   - nanopb/encode (3.30910.0)
   - native_device_orientation (0.0.1):
     - Flutter
-  - "no_screenshot (0.0.1+4)":
+  - no_screenshot (0.3.2-beta.3):
     - Flutter
-    - ScreenProtectorKit (~> 1.3.1)
-  - ObjectBox (5.2.0)
+  - ObjectBox (5.3.0-beta.4)
   - objectbox_flutter_libs (0.0.1):
     - Flutter
-    - ObjectBox (= 5.2.0)
+    - ObjectBox (= 5.3.0-beta.4)
   - package_info_plus (0.4.5):
     - Flutter
   - path_provider_foundation (0.0.1):
@@ -210,19 +211,18 @@ PODS:
   - proximity_sensor (0.0.1):
     - Flutter
   - RecaptchaInterop (101.0.0)
-  - record_ios (1.1.0):
+  - record_ios (1.2.0):
     - Flutter
   - screen_brightness_ios (0.1.0):
     - Flutter
-  - ScreenProtectorKit (1.3.1)
   - SDWebImage (5.21.7):
     - SDWebImage/Core (= 5.21.7)
   - SDWebImage/Core (5.21.7)
-  - Sentry/HybridSDK (8.56.2)
-  - sentry_flutter (9.9.0):
+  - Sentry/HybridSDK (8.58.0)
+  - sentry_flutter (9.16.0):
     - Flutter
     - FlutterMacOS
-    - Sentry/HybridSDK (= 8.56.2)
+    - Sentry/HybridSDK (= 8.58.0)
   - share_plus (0.0.1):
     - Flutter
   - shared_preferences_foundation (0.0.1):
@@ -246,23 +246,23 @@ PODS:
     - Flutter
   - zego_express_engine (3.23.0):
     - Flutter
-  - zego_uikit (2.28.37):
+  - zego_uikit (2.28.44):
     - Flutter
     - Masonry
     - zego_express_engine
     - ZegoUIKitReport (= 0.2.10)
-  - zego_uikit_prebuilt_call (4.22.2):
+  - zego_uikit_prebuilt_call (4.22.3):
     - Flutter
   - zego_uikit_signaling_plugin (2.8.19):
     - Flutter
-  - zego_zim (2.25.0):
+  - zego_zim (2.26.0):
     - Flutter
-    - ZIM (= 2.25.0)
+    - ZIM (= 2.27.0)
   - zego_zpns (2.6.0):
     - Flutter
     - ZPNs (= 2.6.0)
   - ZegoUIKitReport (0.2.10)
-  - ZIM (2.25.0)
+  - ZIM (2.27.0)
   - ZIPFoundation (0.9.20)
   - ZPNs (2.6.0)
 
@@ -274,6 +274,7 @@ DEPENDENCIES:
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - file_selector_ios (from `.symlinks/plugins/file_selector_ios/ios`)
+  - firebase_ai (from `.symlinks/plugins/firebase_ai/ios`)
   - firebase_app_check (from `.symlinks/plugins/firebase_app_check/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
@@ -342,7 +343,6 @@ SPEC REPOS:
     - ObjectBox
     - PromisesObjC
     - RecaptchaInterop
-    - ScreenProtectorKit
     - SDWebImage
     - Sentry
     - SwiftyGif
@@ -367,6 +367,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/file_picker/ios"
   file_selector_ios:
     :path: ".symlinks/plugins/file_selector_ios/ios"
+  firebase_ai:
+    :path: ".symlinks/plugins/firebase_ai/ios"
   firebase_app_check:
     :path: ".symlinks/plugins/firebase_app_check/ios"
   firebase_auth:
@@ -449,7 +451,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AppCheckCore: cc8fd0a3a230ddd401f326489c99990b013f0c4f
   audio_session: 9bb7f6c970f21241b19f5a3658097ae459681ba0
-  audioplayers_darwin: 4f9ca89d92d3d21cec7ec580e78ca888e5fb68bd
+  audioplayers_darwin: 835ced6edd4c9fc8ebb0a7cc9e294a91d99917d5
   camera_avfoundation: 5675ca25298b6f81fa0a325188e7df62cc217741
   connectivity_plus: cb623214f4e1f6ef8fe7403d580fdad517d2f7dd
   CryptoSwift: e64e11850ede528a02a0f3e768cec8e9d92ecb90
@@ -459,11 +461,12 @@ SPEC CHECKSUMS:
   file_picker: a0560bc09d61de87f12d246fc47d2119e6ef37be
   file_selector_ios: ec57ec07954363dd730b642e765e58f199bb621a
   Firebase: 065f2bb395062046623036d8e6dc857bc2521d56
-  firebase_app_check: 413267b85eb86f8a875d884f36ef1a4d40f40209
-  firebase_auth: c857e2bc5a66661bf5081525bf84a274d020b588
-  firebase_core: afac1aac13c931e0401c7e74ed1276112030efab
-  firebase_messaging: 7e94f9419be34b79a605912667d1bb2e3eb4a5ae
-  firebase_remote_config: 8fc76417b5b60cf25e6ce2c88a86a8a63c71370a
+  firebase_ai: db3e09570a9e9456d1c01c48c63fed46b770f511
+  firebase_app_check: 4d509b2df4dc9ad0aa7260a74443b4d32d852bff
+  firebase_auth: 323c64eedef33fc3fdf438d16c29d2624b2ce4f4
+  firebase_core: 8e6f58412ca227827c366b92e7cee047a2148c60
+  firebase_messaging: c3aa897e0d40109cfb7927c40dc0dea799863f3b
+  firebase_remote_config: cd42a29a61e8610230e7f74d5646d6392fd7368d
   FirebaseABTesting: a399ffe546392a39b19a5c2fb28bd8ea178a6f47
   FirebaseAppCheck: 94dae4d9bb682bdef85a778b0c1024a4613f1e89
   FirebaseAppCheckInterop: 4bade10286cc977e516f75d2d8312cbdfa534789
@@ -486,46 +489,45 @@ SPEC CHECKSUMS:
   flutter_volume_controller: c2be490cb0487e8b88d0d9fc2b7e1c139a4ebccb
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
   GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
-  GTMSessionFetcher: b8ab00db932816e14b0a0664a08cb73dda6d164b
+  GTMSessionFetcher: 904bdd2a82c635bcd6f44edf94cc8775c5d1d6e6
   image_cropper: c4326ea50132b1e1564499e5d32a84f01fb03537
   image_picker_ios: e0ece4aa2a75771a7de3fa735d26d90817041326
   just_audio: 4e391f57b79cad2b0674030a00453ca5ce817eed
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
-  native_device_orientation: e3580675687d5034770da198f6839ebf2122ef94
-  no_screenshot: 6d183496405a3ab709a67a54e5cd0f639e94729e
-  ObjectBox: 946c1e8586aaa61e21b6661bab4948d06fdd51c4
-  objectbox_flutter_libs: 4d609454f39d002fc850b3019e180fc4760cdf36
+  native_device_orientation: f3ba5f2ddbab3deee23a5f6693b4f97b02dafea2
+  no_screenshot: 5e345998c43ffcad5d6834f249590483fcc037bd
+  ObjectBox: eccb95ea2054c39d81dfa2d4ccc5f1e31187228a
+  objectbox_flutter_libs: ed1510f71602e4a0d3f2a721324e468d066fdbb9
   package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
   path_provider_foundation: bb55f6dbba17d0dccd6737fe6f7f34fbd0376880
   permission_handler_apple: 4ed2196e43d0651e8ff7ca3483a069d469701f2d
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   proximity_sensor: 2aef59f90cf0382935faf58ad0a79e1e860773bd
   RecaptchaInterop: 11e0b637842dfb48308d242afc3f448062325aba
-  record_ios: f75fa1d57f840012775c0e93a38a7f3ceea1a374
+  record_ios: 412daca2350b228e698fffcd08f1f94ceb1e3844
   screen_brightness_ios: 5ed898fa50fa82a26171c086ca5e28228f932576
-  ScreenProtectorKit: 83a6281b02c7a5902ee6eac4f5045f674e902ae4
   SDWebImage: e9fc87c1aab89a8ab1bbd74eba378c6f53be8abf
-  Sentry: b53951377b78e21a734f5dc8318e333dbfc682d7
-  sentry_flutter: 77a018a9daceea074455fd4a5b7eda950c8a01a8
+  Sentry: d587a8fe91ca13503ecd69a1905f3e8a0fcf61be
+  sentry_flutter: 31101687061fb85211ebab09ce6eb8db4e9ba74f
   share_plus: 50da8cb520a8f0f65671c6c6a99b3617ed10a58a
   shared_preferences_foundation: 7036424c3d8ec98dfe75ff1667cb0cd531ec82bb
   sqflite_darwin: 20b2a3a3b70e43edae938624ce550a3cbf66a3d0
   SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4
   TOCropViewController: 80b8985ad794298fb69d3341de183f33d1853654
   url_launcher_ios: 7a95fa5b60cc718a708b8f2966718e93db0cef1b
-  vibration: 69774ad57825b11c951ee4c46155f455d7a592ce
+  vibration: ca8104a8875b9c493e15b21b04e456befd0ff6eb
   wakelock_plus: e29112ab3ef0b318e58cfa5c32326458be66b556
   webview_flutter_wkwebview: 8ebf4fded22593026f7dbff1fbff31ea98573c8d
   zego_callkit: 8e3bc2e9fc6895cff1b27841b1de1100344d2613
   zego_express_engine: 9b73b5b83129ee033287f6597fd5d700b84b27c8
-  zego_uikit: 6064a39817a431fa567c112fd5b722aa737cd82a
-  zego_uikit_prebuilt_call: be5d85deb992269ed89736b02f07dca47da56360
+  zego_uikit: 728c996bc68760fc203863b90440869d7c97a2ae
+  zego_uikit_prebuilt_call: 5134f0ab000850779b5ad9b73e91d168cf316a3c
   zego_uikit_signaling_plugin: ffced40608c89b1ac0241a6194dacb9bc5af19b7
-  zego_zim: 51534d092fcbaf994e8fd8cbc1269f00c7ead6fd
+  zego_zim: 98d0946eeca309073e48a43ba14d1dce7a52c80f
   zego_zpns: e2ef9b972e9b6be00b78b32b71c550c426584752
   ZegoUIKitReport: a993f7ccc5d243998a7e601a60e16fcd6c084417
-  ZIM: 75fde45d5cb5802f9dedba9c3de0798fde559643
+  ZIM: b39b9a5a2ddff4d60de51c3bd6a5574cedbcdf03
   ZIPFoundation: dfd3d681c4053ff7e2f7350bc4e53b5dba3f5351
   ZPNs: 73bad0046a74e37315201053f9a0e7ac625d9436
 

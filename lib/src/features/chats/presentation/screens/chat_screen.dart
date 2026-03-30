@@ -75,7 +75,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
     final userRequest = model.matchRequest!;
     final stage = userRequest.stage!.value!.getCurrentStageAsStagesEnum;
     final userRequestEnum = userRequest.userRequestStatus!.getUserRequestStatusAsEnum;
-
+    final int timer = model.matchRequest?.timer ?? 0;
 
     if(stage.isNewChat && userRequestEnum.isPending){
       return AcceptOrRejectFirstStageWidget(
@@ -95,6 +95,17 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
             onSuccess: (chatModel) =>  Go.offAll(const HomeScreen())
         ),
       );
+    }else if(!stage.isNewChat && timer.isEqualZero){
+      return Card(
+        color: Colors.white,
+        child: Center(
+            child: AppText(
+              LocaleKeys.unableToContinueChattingPleaseSelectOneOfAvailableOptions,
+              color: Colors.red,
+              fontWeight: FontWeight.w500,
+            ).paddingAll(20.sp)
+        ),
+      ).paddingAll(12.sp);
     }
 
     return ChatBottomBar(
@@ -285,7 +296,9 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
           BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
             builder: (context, state) => ChatStatusBuilder(
               data: state,
-              onSuccess: (data, context) => !data.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum.isNewChat?
+              onSuccess: (data, context) =>
+              !data.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum.isNewChat &&
+                  data.matchRequest!.timer.isNotEqualZero?
               ValueListenableBuilder(
                   valueListenable: ZegoService.isConnected,
                   builder: (context, isConnected, child) => isConnected?
@@ -304,30 +317,32 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
             builder: (context, state) => ChatStatusBuilder(
                 data: state,
                 onSuccess: (data, context) {
-                  final callStatus = context.read<ChatCubit>().matchRequest?.callStatus;
-                  if(((callStatus == 'free_available') || (callStatus == 'paid_available'))){
-                    return ValueListenableBuilder(
-                        valueListenable: ZegoService.isConnected,
-                        builder: (context, isConnected, child) => isConnected? Helpers.zegoService!.zegoButton( // المحانية موجودة
-                            context: context,
-                            isVideoCall: true,
-                            icon: const SvgPic(assetName: Assets.svgVideoCall),
-                            invites: [
-                              ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName),
-                            ],
-                            onPressed: () => _listenForCallStart(callStatus ?? '')
-                        ) : const SizedBox.shrink()
-                    );
+                  if(data.matchRequest!.timer.isNotEqualZero){
+                    final callStatus = context.read<ChatCubit>().matchRequest?.callStatus;
+                    if(((callStatus == 'free_available') || (callStatus == 'paid_available'))){
+                      return ValueListenableBuilder(
+                          valueListenable: ZegoService.isConnected,
+                          builder: (context, isConnected, child) => isConnected? Helpers.zegoService!.zegoButton( // المحانية موجودة
+                              context: context,
+                              isVideoCall: true,
+                              icon: const SvgPic(assetName: Assets.svgVideoCall),
+                              invites: [
+                                ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName),
+                              ],
+                              onPressed: () => _listenForCallStart(callStatus ?? '')
+                          ) : const SizedBox.shrink()
+                      );
 
-                  }else if(callStatus == 'free_used'){
-                    return InkWell(
-                        onTap: () => _makeVideoReq(),
-                        child: const Icon(Icons.videocam, color: AppColors.primary)
-                    );
+                    }else if(callStatus == 'free_used'){
+                      return InkWell(
+                          onTap: () => _makeVideoReq(),
+                          child: const Icon(Icons.videocam, color: AppColors.primary)
+                      );
 
-                  }else if(callStatus == 'completed'){ // المحانية خلصت
-                    return const SvgPic(assetName: Assets.svgVideoCall, color: Colors.grey);
+                    }else if(callStatus == 'completed'){ // المحانية خلصت
+                      return const SvgPic(assetName: Assets.svgVideoCall, color: Colors.grey);
 
+                    }
                   }
 
                   // not available

@@ -388,6 +388,9 @@ abstract class LocaleKeys {
   static const String _areYouSureToDeleteThisNotification = 'are_you_sure_to_delete_this_notification';
   static String get areYouSureToDeleteThisNotification => _areYouSureToDeleteThisNotification.tr();
 
+  static const String _unableToContinueChattingPleaseSelectOneOfAvailableOptions = 'unable_to_continue_chatting_please_select_one_of_available_options';
+  static String get unableToContinueChattingPleaseSelectOneOfAvailableOptions => _unableToContinueChattingPleaseSelectOneOfAvailableOptions.tr();
+
   static const String _kg = 'kg';
   static String get kg => _kg.tr();
 

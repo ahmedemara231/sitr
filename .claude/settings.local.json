@@ -40,7 +40,11 @@
       "Bash(rm -rf /Users/aaita/Desktop/apps/new_crud_satr/android/.gradle/buildOutputCleanup)",
       "Bash(rm -rf /Users/aaita/Desktop/apps/new_crud_satr/android/app/build)",
       "WebFetch(domain:firebase.google.com)",
-      "Bash(chmod:*)"
+      "Bash(chmod:*)",
+      "Bash(flutter devices:*)",
+      "Bash(flutter run:*)",
+      "Bash(du -sh ~/Library/Caches/Google/AndroidStudio* ~/Library/Caches/com.google.android.studio* /Users/aaita/Desktop/apps/satr/build)",
+      "Bash(pod update:*)"
     ],
     "deny": [],
     "ask": []

@@ -80,9 +80,7 @@
 	<array>
 		<string>remote-notification</string>
 		<string>fetch</string>
-		<string>audio</string>
 		<string>voip</string>
-		<string>processing</string>
 	</array>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
     <array>
