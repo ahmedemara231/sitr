@@ -64,13 +64,26 @@ class UserStatusAction extends ChatActions{
     final socketCubit = context.read<SocketCubit>();
 
     if(!stage.isNewChat && status.isPending){
-      _showAcceptanceSheet(context, () {
-        _fireUpdate(socketCubit);
-        request.isParentIndividualApproval
-            ? Go.offAll(const HomeScreen())
-            : Go.back();
-      });
-
+      if(stage.isParentsExchangeNumber){
+          ChatSheetManager.show(
+            child: BlocProvider.value(
+              value: context.read<ChatCubit>(),
+              child: EnterParentPhoneSheet(
+                  onSubmit: (context, phone)async{
+                    await context.read<ChatCubit>().parentsExchangeNumbers(parentPhone: phone);
+                    Go.back();
+                  }
+              ),
+            ),
+          );
+      }else{
+        _showAcceptanceSheet(context, () {
+          _fireUpdate(socketCubit);
+          request.isParentIndividualApproval
+              ? Go.offAll(const HomeScreen())
+              : Go.back();
+        });
+      }
     }
     // else if(status.isParentExchangeNumbers){
     //   ChatSheetManager.show(

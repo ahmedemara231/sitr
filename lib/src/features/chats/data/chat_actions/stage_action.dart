@@ -25,21 +25,21 @@ class StageAction extends ChatActions{
   Future<void> call(BuildContext context) async{
     final socketCubit = context.read<SocketCubit>();
 
-    if(stage.isParentsExchangeNumber){
-      ChatSheetManager.show(
-        child: BlocProvider.value(
-          value: context.read<ChatCubit>(),
-          child: EnterParentPhoneSheet(
-              onSubmit: (context, phone)async{
-                await context.read<ChatCubit>().parentsExchangeNumbers(parentPhone: phone);
-                _fireUpdate(socketCubit);
-                Go.back();
-              }
-          ),
-        ),
-      );
-
-    }else
+    // if(stage.isParentsExchangeNumber){
+    //   ChatSheetManager.show(
+    //     child: BlocProvider.value(
+    //       value: context.read<ChatCubit>(),
+    //       child: EnterParentPhoneSheet(
+    //           onSubmit: (context, phone)async{
+    //             await context.read<ChatCubit>().parentsExchangeNumbers(parentPhone: phone);
+    //             _fireUpdate(socketCubit);
+    //             Go.back();
+    //           }
+    //       ),
+    //     ),
+    //   );
+    //
+    // }else
       if(stage.isShariaMeetingChoice && !hasSentRequest){
       ChatSheetManager.show(
           child: BlocProvider.value(
