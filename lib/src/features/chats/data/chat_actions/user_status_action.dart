@@ -199,6 +199,10 @@ class UserStatusAction extends ChatActions{
         );
       }
 
+    }else if(status.isRejected){
+      ChatSheetManager.show(
+        child: const RejectedChatSheet(),
+      );
     }else if(status.isParentMeeting){
       ChatSheetManager.show(
           child: BlocProvider.value(
