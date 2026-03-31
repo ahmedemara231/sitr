@@ -117,7 +117,7 @@ class ParentDetailsScreen extends StatelessWidget {
               BlocBuilder<GetPartnerInfoCubit, AsyncState<UserModel>>(
                 builder: (context, state) => StatusBuilder(
                   data: state,
-                  onSuccess: (data, context) => ChatButton(user: state.data),
+                  onSuccess: (data, context) => Center(child: ChatButton(user: state.data)),
                 ),
               ),
 

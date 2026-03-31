@@ -80,9 +80,8 @@ class UserStatusAction extends ChatActions{
       }else{
         _showAcceptanceSheet(context, () {
           _fireUpdate(socketCubit);
-          request.isParentIndividualApproval
-              ? Go.offAll(const HomeScreen())
-              : Go.back();
+          request.isParentIndividualApproval ?
+          Go.offAll(const HomeScreen()) : Go.back();
         });
       }
     }

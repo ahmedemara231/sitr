@@ -130,9 +130,12 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
   }
 
 
-  Future<void> _startChat()async{
+  Future<void> _startChat({bool update = false})async{
     await context.read<ChatCubit>().startChat(
-      requestModel: widget.requestModel,
+      requestModel: RequestModel(
+          receiverId: widget.requestModel.receiverId,
+          fromHome: update? 0.toString() : 1.toString()
+      ),
       context: context,
     );
   }
@@ -186,7 +189,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
       onReceiveAnyEvent: (e, d) {
         log((e == SocketEvents.updateChat).toString());
         if(e == SocketEvents.updateChat){
-          _startChat();
+          _startChat(update: true);
         }
         log('event is received $e $d');
       },
