@@ -25,22 +25,12 @@ class StageAction extends ChatActions{
   Future<void> call(BuildContext context) async{
     final socketCubit = context.read<SocketCubit>();
 
-    // if(stage.isParentsExchangeNumber){
-    //   ChatSheetManager.show(
-    //     child: BlocProvider.value(
-    //       value: context.read<ChatCubit>(),
-    //       child: EnterParentPhoneSheet(
-    //           onSubmit: (context, phone)async{
-    //             await context.read<ChatCubit>().parentsExchangeNumbers(parentPhone: phone);
-    //             _fireUpdate(socketCubit);
-    //             Go.back();
-    //           }
-    //       ),
-    //     ),
-    //   );
-    //
-    // }else
-      if(stage.isShariaMeetingChoice && !hasSentRequest){
+    if(stage.isRejected){
+      ChatSheetManager.show(
+        child: const RejectedChatSheet(),
+      );
+
+    } else if(stage.isShariaMeetingChoice && !hasSentRequest){
       ChatSheetManager.show(
           child: BlocProvider.value(
             value: context.read<ChatCubit>(),
@@ -82,10 +72,10 @@ class StageAction extends ChatActions{
                   requestModel: requestModel,
                   path: selectedVal.pathToRequest,
                   onSuccess: (chatModel){
+                    _fireUpdate(socketCubit);
                     if(selectedVal == LocaleKeys.refuseMoveToNextStage){
                       Go.offAll(const HomeScreen());
                     }else{
-                      _fireUpdate(socketCubit);
                       Go.back();
                     }
                   },

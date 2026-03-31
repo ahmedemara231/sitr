@@ -99,7 +99,7 @@ class UserStatusAction extends ChatActions{
     //   );
     //
     // }
-    else if( status.isAccepted){
+    else if(status.isAccepted){
       final chatCubit = context.read<ChatCubit>();
       final userRequest = chatCubit.userRequest!;
 

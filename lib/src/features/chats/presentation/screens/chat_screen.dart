@@ -92,7 +92,10 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
             requestModel: widget.requestModel,
             context: context,
             path: ApiConstants.rejectAll,
-            onSuccess: (chatModel) =>  Go.offAll(const HomeScreen())
+            onSuccess: (chatModel) {
+              _fireShouldUpdate();
+              Go.offAll(const HomeScreen());
+            }
         ),
       );
     }else if(!stage.isNewChat && timer.isEqualZero){

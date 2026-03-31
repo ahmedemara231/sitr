@@ -1003,6 +1003,9 @@ abstract class LocaleKeys {
   static const String _rejected = 'rejected';
   static String get rejected => _rejected.tr();
 
+  static const String _thisChatHasBeenRejectedWeWishYouBetterLuckNextTime = 'this_chat_has_been_rejected_we_wish_you_better_luck_next_time';
+  static String get thisChatHasBeenRejectedWeWishYouBetterLuckNextTime => _thisChatHasBeenRejectedWeWishYouBetterLuckNextTime.tr();
+
   static const String _doYouAgreeWithThePartner = 'do_you_agree_with_the_partner';
   static String get doYouAgreeWithThePartner => _doYouAgreeWithThePartner.tr();
 

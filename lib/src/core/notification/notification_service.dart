@@ -417,9 +417,10 @@ class NotificationService {
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
       _showNotification(event);
       final type = (event.data['type'] as String).getType;
-      if(type.isAccountDeletedByAdmin || type.isBlock ||
-          type.isParentIndividualApprovalRejected ||
-          type.isMatchRejectedWhenTimerEnded){
+      if(type.isAccountDeletedByAdmin || type.isBlock
+          // type.isParentIndividualApprovalRejected ||
+          // type.isMatchRejectedWhenTimerEnded
+      ){
         NotificationRoutes.navigateByType(event.data);
       }
     });
