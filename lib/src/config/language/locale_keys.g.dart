@@ -391,8 +391,8 @@ abstract class LocaleKeys {
   static const String _areYouSureToDeleteThisNotification = 'are_you_sure_to_delete_this_notification';
   static String get areYouSureToDeleteThisNotification => _areYouSureToDeleteThisNotification.tr();
 
-  static const String _unableToContinueChattingBecauseThereIsSelectionProcessExecutedNow = 'unable_to_continue_chatting_because_there_is_selection_process_executed_now';
-  static String get unableToContinueChattingBecauseThereIsSelectionProcessExecutedNow => _unableToContinueChattingBecauseThereIsSelectionProcessExecutedNow.tr();
+  static const String _unableToContinueChattingRightNow = 'unable_to_continue_chatting_right_now';
+  static String get unableToContinueChattingRightNow => _unableToContinueChattingRightNow.tr();
 
   static const String _kg = 'kg';
   static String get kg => _kg.tr();
@@ -1002,9 +1002,6 @@ abstract class LocaleKeys {
 
   static const String _rejected = 'rejected';
   static String get rejected => _rejected.tr();
-
-  static const String _thisChatHasBeenRejectedWeWishYouBetterLuckNextTime = 'this_chat_has_been_rejected_we_wish_you_better_luck_next_time';
-  static String get thisChatHasBeenRejectedWeWishYouBetterLuckNextTime => _thisChatHasBeenRejectedWeWishYouBetterLuckNextTime.tr();
 
   static const String _doYouAgreeWithThePartner = 'do_you_agree_with_the_partner';
   static String get doYouAgreeWithThePartner => _doYouAgreeWithThePartner.tr();

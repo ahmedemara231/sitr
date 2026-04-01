@@ -129,7 +129,7 @@
   "please_enter_the_things": "please enter the things",
   "please_enter_the_type": "please enter the type",
   "are_you_sure_to_delete_this_notification": "Are you sure to delete this notification",
-  "unable_to_continue_chatting_because_there_is_selection_process_executed_now": "unable to continue chatting because there is selection process executed now",
+  "unable_to_continue_chatting_right_now": "unable to continue chatting right now",
   "kg": "Kg",
   "are_you_sure_to_delete_all_notifications": "Are you sure to delete all notifications",
   "please_enter_the_city": "please enter the city",
@@ -338,7 +338,6 @@
   "are_you_sure_to_delete": "Are you sure to delete",
   "accepted": "Accepted",
   "rejected": "Rejected",
-  "this_chat_has_been_rejected_we_wish_you_better_luck_next_time": "This chat has been rejected. We wish you better luck next time.",
   "do_you_agree_with_the_partner": "Do you agree with the partner?",
   "update_available_update_now": "Update available update now?",
   "congratulations_on_your_engagement_we_ask_god_to_bless_your_union_and_grant_you_happiness": "Congratulations on your engagement We ask God to bless your union and grant you happiness"

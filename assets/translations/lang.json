@@ -134,7 +134,7 @@
     "please enter the things" : "يرجي ادخال الاشياء",
     "please enter the type" : "يرجي اختيار النوع",
   "Are you sure to delete this notification" : "هل انت متأكد من حذف الاشعار",
-  "unable to continue chatting because there is selection process executed now" : "لا يمكن استمرار المحادثة الان لان عملية الاختيار تتم الان",
+  "unable to continue chatting right now" : "لا يمكن استمرار المحادثة الان",
   "Kg" : "كجم",
   "Are you sure to delete all notifications" : "هل انت متأكد من حذف كل الاشعارات",
     "please enter the city" : "يرجي اختيار المدينة",

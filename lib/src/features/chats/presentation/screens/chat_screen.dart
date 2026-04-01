@@ -103,7 +103,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
         color: Colors.white,
         child: Center(
             child: AppText(
-              LocaleKeys.unableToContinueChattingBecauseThereIsSelectionProcessExecutedNow,
+              LocaleKeys.unableToContinueChattingRightNow,
               color: Colors.red,
               fontWeight: FontWeight.w500,
             ).paddingAll(20.sp)

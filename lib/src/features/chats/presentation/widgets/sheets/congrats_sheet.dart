@@ -45,7 +45,7 @@ class RejectedChatSheet extends StatelessWidget {
       children: [
         Image.asset(Assets.imagesAlert),
         AppText(LocaleKeys.rejected, fontWeight: FontWeight.bold),
-        AppText(LocaleKeys.thisChatHasBeenRejectedWeWishYouBetterLuckNextTime),
+        AppText(LocaleKeys.unableToContinueChattingRightNow),
         AppDefaultButton.withBackGroundColor(
           title: LocaleKeys.back,
           onTap: () {
