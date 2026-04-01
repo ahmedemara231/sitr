@@ -10,8 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="Implement rejected chat handling, update notification routing, and refine UI feedback&#10;&#10;- **Chat / Business Logic**:&#10;    - Update `ChatScreen` to trigger a socket update (`_fireShouldUpdate`) upon successfully rejecting a chat before navigating to the Home screen.&#10;    - Implement `RejectedChatSheet` to display a rejection message and provide a &quot;Back&quot; button to return to the Home screen.&#10;    - Update `stage_action.dart` to check for the `isRejected` stage and display the `RejectedChatSheet`.&#10;    - Refactor `stage_action.dart` to ensure socket updates are fired consistently across different stage transitions, including meeting choices.&#10;- **Notifications**:&#10;    - Update `NotificationService` to prevent automatic navigation for `isParentIndividualApprovalRejected` and `isMatchRejectedWhenTimerEnded` types during active foreground listening, favoring manual or state-driven handling.&#10;- **UI / Localization**:&#10;    - Add translation keys for `this_chat_has_been_rejected_we_wish_you_better_luck_next_time` in English and Arabic.&#10;    - Regenerate `locale_keys.g.dart` to include the new rejection message key.&#10;    - Minor cleanup of whitespace in `user_status_action.dart`.&#10;- **iOS &amp; Tools**:&#10;    - Re-add empty `inputPaths` and `outputPaths` arrays to the &quot;Embed Pods Frameworks&quot; and &quot;Copy Pods Resources&quot; shell script phases in `project.pbxproj`.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and breakpoint locations.">
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/user_status_action.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/user_status_action.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,33 +121,33 @@
     <option name="foldersAlwaysOnTop" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Flutter.main.dart.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;ShowUsagesActions.previewPropertyKey&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;fullSocketCycleV2&quot;,
-    &quot;io.flutter.project.isFirstOpen&quot;: &quot;true&quot;,
-    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/aaita/Desktop/apps/new_crud_satr/assets/lottie/error&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;flutter.settings&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Flutter.main.dart.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "ShowUsagesActions.previewPropertyKey": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "fullSocketCycleV2",
+    "io.flutter.project.isFirstOpen": "true",
+    "io.flutter.reload.alreadyRun": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/aaita/Desktop/apps/new_crud_satr/assets/lottie/error",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "flutter.settings",
+    "show.migrate.to.gradle.popup": "false"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/assets/lottie/error" />
@@ -245,14 +245,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
-    </task>
-    <task id="LOCAL-00241" summary="refactor(build): Configure Android release signing and clean up code&#10;&#10;This commit introduces release signing configuration for Android, removes deprecated permissions, and cleans up unused code and build files.&#10;&#10;- **build(android):**&#10;  - In `build.gradle.kts`, added a `release` signing configuration that reads credentials from `key.properties`. The build type now uses this configuration for release builds.&#10;  - In `AndroidManifest.xml`, changed the app label to &quot;ستر&quot;. Removed several unnecessary permissions, including `WRITE_EXTERNAL_STORAGE`, `RECEIVE_BOOT_COMPLETED`, `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS`, `FOREGROUND_SERVICE_MEDIA_PLAYBACK`, `SCHEDULE_EXACT_ALARM`, and `USE_EXACT_ALARM`.&#10;  - Added Proguard rules for Flutter Play Store deferred components in `proguard-rules.pro` to prevent warnings during the release build process.&#10;&#10;- **build(ios):**&#10;  - In `Info.plist`, updated `CFBundleDisplayName` and `CFBundleName` to &quot;ستر&quot;.&#10;  - Incremented the `CURRENT_PROJECT_VERSION` to 15 in `project.pbxproj`.&#10;&#10;- **refactor(auth):**&#10;  - Deleted `enums_data.dart` and commented out its usages in `female_body.dart`, `male_body.dart`, and `shared_form_fields.dart`, indicating a refactoring of how enum-like data is handled.&#10;&#10;- **fix(navigation):**&#10;  - In `notification_routes.dart`, corrected the key for retrieving the user ID from `sender_id` to `user_id` when handling chat navigation.&#10;&#10;- **chore(ui):**&#10;  - Simplified the `ExceptionView` widget to only show a Lottie animation, removing the text part.&#10;  - Removed commented-out code from `success_sheet.dart`.&#10;&#10;- **chore(ide):**&#10;  - Deleted `.idea/libraries/Dart_Packages.xml` and updated `.idea/workspace.xml` and `.idea/caches/deviceStreaming.xml`.&#10;  - Removed the `Dart Packages` library entry from `appp.iml`.&#10;&#10;- **chore(version):**&#10;  - Bumped the app version from `1.0.0+5` to `1.0.0+15` in `pubspec.yaml`.">
-      <option name="closed" value="true" />
-      <created>1771977312796</created>
-      <option name="number" value="00241" />
-      <option name="presentableId" value="LOCAL-00241" />
-      <option name="project" value="LOCAL" />
-      <updated>1771977312796</updated>
     </task>
     <task id="LOCAL-00242" summary="chore(build): Add iOS upload script and refine notification service&#10;&#10;This commit introduces a bash script for automated iOS IPA builds and App Store Connect uploads. It also improves the resilience of FCM token retrieval and updates project configurations.&#10;&#10;- **feat(ios):**&#10;  - Created `upload_ios.sh` to automate the `clean`, `pub get`, `build ipa`, validation, and upload process using `altool`.&#10;  - Added a `buildIos` command to the `Makefile` to trigger the new upload script.&#10;&#10;- **refactor(notifications):**&#10;  - In `notification_service.dart`, wrapped FCM token retrieval in a try-catch block to prevent crashes if the service is unavailable.&#10;  - Cleaned up comments regarding foreground presentation options.&#10;&#10;- **chore(version):**&#10;  - Bumped the app version from `1.0.0+15` to `1.0.0+16` in `pubspec.yaml`.&#10;&#10;- **chore(ide):**&#10;  - Updated `.idea/workspace.xml` with recent changes and task history.&#10;  - Re-added the `Dart Packages` library dependency in `appp.iml`.">
       <option name="closed" value="true" />
@@ -638,7 +630,15 @@
       <option name="project" value="LOCAL" />
       <updated>1774953488282</updated>
     </task>
-    <option name="localTasksCounter" value="290" />
+    <task id="LOCAL-00290" summary="Implement rejected chat handling, update notification routing, and refine UI feedback&#10;&#10;- **Chat / Business Logic**:&#10;    - Update `ChatScreen` to trigger a socket update (`_fireShouldUpdate`) upon successfully rejecting a chat before navigating to the Home screen.&#10;    - Implement `RejectedChatSheet` to display a rejection message and provide a &quot;Back&quot; button to return to the Home screen.&#10;    - Update `stage_action.dart` to check for the `isRejected` stage and display the `RejectedChatSheet`.&#10;    - Refactor `stage_action.dart` to ensure socket updates are fired consistently across different stage transitions, including meeting choices.&#10;- **Notifications**:&#10;    - Update `NotificationService` to prevent automatic navigation for `isParentIndividualApprovalRejected` and `isMatchRejectedWhenTimerEnded` types during active foreground listening, favoring manual or state-driven handling.&#10;- **UI / Localization**:&#10;    - Add translation keys for `this_chat_has_been_rejected_we_wish_you_better_luck_next_time` in English and Arabic.&#10;    - Regenerate `locale_keys.g.dart` to include the new rejection message key.&#10;    - Minor cleanup of whitespace in `user_status_action.dart`.&#10;- **iOS &amp; Tools**:&#10;    - Re-add empty `inputPaths` and `outputPaths` arrays to the &quot;Embed Pods Frameworks&quot; and &quot;Copy Pods Resources&quot; shell script phases in `project.pbxproj`.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and breakpoint locations.">
+      <option name="closed" value="true" />
+      <created>1774956055455</created>
+      <option name="number" value="00290" />
+      <option name="presentableId" value="LOCAL-00290" />
+      <option name="project" value="LOCAL" />
+      <updated>1774956055455</updated>
+    </task>
+    <option name="localTasksCounter" value="291" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -808,6 +808,11 @@
           <url>file://$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/user_status_action.dart</url>
           <line>109</line>
           <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/user_status_action.dart</url>
+          <line>207</line>
+          <option name="timeStamp" value="58" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

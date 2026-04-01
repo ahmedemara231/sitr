@@ -2,8 +2,8 @@
 # Flutter Makefile
 # ==============================
 
-.PHONY: clean run apk ios upgrade handlePods openXcode translations gradleFix buildIos \
-        distribute distributeAndroid
+.PHONY: clean run apk ios upgrade handlePods openXcode translations gradleFix clearGradleCache \
+        buildIos distribute distributeAndroid
 
 # Clean Flutter build and get packages
 clean:
@@ -48,6 +48,10 @@ gradleFix:
 	-find android/.gradle -name "*.lock" -delete 2>/dev/null || true
 	-find ~/.gradle -name "*.lock" -delete 2>/dev/null || true
 	@echo "Gradle locks cleared!"
+
+clearGradleCache:
+	rm -rf android/.gradle
+	rm -rf ~/.gradle/caches
 
 # Upload iOS build
 buildIos:
