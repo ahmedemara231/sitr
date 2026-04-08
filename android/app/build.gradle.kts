@@ -54,10 +54,6 @@ android {
 
         release {
             signingConfig = signingConfigs.getByName("release")
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            // لازم الاتنين ميتفتحوش الا عند التسليم والرفع الاستور لانهم وظيفتهم لتقليل حجم التطبيق ودمج الكلاسات ويحذف الللغات واللاي اوت اللي مش مستخدم
-//            isMinifyEnabled = true     // ✅ صحيح
-//            isShrinkResources = true  // ✅ أضف السطر ده
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

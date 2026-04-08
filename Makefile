@@ -70,4 +70,4 @@ distributeAndroid:
 	sh distribute_android.sh $(ARGS)
 
 kill:
-    killall -9 dart
+	killall -9 dart
