@@ -66,8 +66,6 @@ class ChatBody<Response> extends StatelessWidget {
       errorMapper: errorMapper,
       errorBuilder: errorBuilder,
       itemBuilder: (context, data, index, element) => Row(
-        // mainAxisAlignment: element.sender.isFromMe?
-        // MainAxisAlignment.start : MainAxisAlignment.end,
         mainAxisAlignment: messageAlignment(element.sender.isFromMe),
         children: [
           MessageWidget(

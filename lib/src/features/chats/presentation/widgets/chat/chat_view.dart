@@ -36,7 +36,6 @@ class _ChatViewState extends State<ChatView> {
   @override
   Widget build(BuildContext context) {
     return EasyChat(
-      itemExtent: 60.h,
       controller: widget.chatController,
       messageAlignment: (fromMe) => fromMe?
       _alignmentWhenMe : _alignmentWhenNotMe,
