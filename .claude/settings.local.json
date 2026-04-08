@@ -44,7 +44,8 @@
       "Bash(flutter devices:*)",
       "Bash(flutter run:*)",
       "Bash(du -sh ~/Library/Caches/Google/AndroidStudio* ~/Library/Caches/com.google.android.studio* /Users/aaita/Desktop/apps/satr/build)",
-      "Bash(pod update:*)"
+      "Bash(pod update:*)",
+      "Bash(wc -l /Users/aaita/Desktop/apps/satr/lib/src/features/*/presentation/screens/*.dart)"
     ],
     "deny": [],
     "ask": []

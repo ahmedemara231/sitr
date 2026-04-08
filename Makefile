@@ -68,3 +68,6 @@ distribute:
 # Distribute Android build — see distribute_android.sh for all options
 distributeAndroid:
 	sh distribute_android.sh $(ARGS)
+
+kill:
+    killall -9 dart

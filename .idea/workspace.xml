@@ -9,14 +9,16 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="Update project build tools, clean up IDE caches, and synchronize workspace state&#10;&#10;- **Tools &amp; Infrastructure**:&#10;    - Update `Makefile` to include a `clearGradleCache` target for removing Android and global Gradle caches.&#10;    - Delete `.idea/caches/deviceStreaming.xml` to clear persistent device selection history.&#10;- **Firebase**:&#10;    - Update `firebase-debug.log` with recent authorization logs and API query statuses for App Distribution.&#10;- **Tools &amp; IDE**:&#10;    - Synchronize `.idea/workspace.xml` with recent task history, property updates, and new breakpoint locations in `user_status_action.dart`.&#10;    - Revert minor whitespace or pending changes in `user_status_action.dart`.">
-      <change afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CLAUDE.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/.kotlin/errors/errors-1774868780613.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/android/.kotlin/errors/errors-1774868803801.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ios/firebase-debug.log" afterDir="false" />
+    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="Synchronize workspace state, document core project rules, and update build logs&#10;&#10;- **Documentation**:&#10;    - Create `CLAUDE.md` to provide a comprehensive guide on project architecture, navigation patterns, network service usage, state management with `AsyncCubit`, and coding conventions.&#10;- **Tools &amp; IDE**:&#10;    - Re-add `.idea/caches/deviceStreaming.xml` with an extensive list of persistent device selection data.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and file additions.&#10;- **Firebase**:&#10;    - Update `firebase-debug.log` with recent authorization activities and API query statuses.&#10;    - Add a new `ios/firebase-debug.log` to track Firebase operations specifically for the iOS platform.&#10;- **Android**:&#10;    - Add Kotlin daemon compilation error logs (`errors-1774868780613.log` and `errors-1774868803801.log`) to document build-time storage and file deletion exceptions.">
+      <change beforePath="$PROJECT_DIR$/.claude/settings.local.json" beforeDir="false" afterPath="$PROJECT_DIR$/.claude/settings.local.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/firebase-debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/firebase-debug.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chats_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chats_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/filter.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/filter.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/setting/setting_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/setting/setting_screen.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,33 +128,33 @@
     <option name="foldersAlwaysOnTop" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Flutter.main.dart.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;ShowUsagesActions.previewPropertyKey&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;fullSocketCycleV2&quot;,
-    &quot;io.flutter.project.isFirstOpen&quot;: &quot;true&quot;,
-    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/aaita/Desktop/apps/new_crud_satr/assets/lottie/error&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;flutter.settings&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Flutter.main.dart.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "ShowUsagesActions.previewPropertyKey": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "git-widget-placeholder": "fullSocketCycleV2",
+    "io.flutter.project.isFirstOpen": "true",
+    "io.flutter.reload.alreadyRun": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/aaita/Desktop/apps/new_crud_satr/assets/lottie/error",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "dart.settings",
+    "show.migrate.to.gradle.popup": "false"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/assets/lottie/error" />
@@ -250,22 +252,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
-    </task>
-    <task id="LOCAL-00244" summary="refactor(notifications): Refine notification action handling and navigation logic&#10;&#10;This commit improves the handling of interactive notification actions on iOS and Android, ensuring that tapping an action button does not trigger the default notification tap behavior. It also updates logic for displaying chat actions and adjusts specific navigation types.&#10;&#10;- **refactor(notifications):**&#10;  - In `notification_service.dart`, updated iOS notification actions to use the `.foreground` option for both &quot;Accept&quot; and &quot;Reject&quot; actions.&#10;  - Improved the initialization logic in `_initializeLocalNotifications` to prevent `_handleNotificationsTap` from executing if a specific action button was pressed.&#10;  - Updated `_tryingToMakeActions` for Android to check `isChatting` instead of `isNewChat` when determining if pending chat actions should be displayed.&#10;  - Added logging for debugging chat data states in `_tryingToMakeActions`.&#10;  - Removed a redundant commented-out call to `saveFcmToken()`.&#10;&#10;- **refactor(navigation):**&#10;  - In `navigation_types.dart`, changed the navigation target for `nextStageRequestRejected` from `FinishedChatNavigation()` to `NoNavigation()`.&#10;&#10;- **chore(ide):**&#10;  - Updated `.idea/workspace.xml` to reflect file changes and internal IDE state.">
-      <option name="closed" value="true" />
-      <created>1772566473795</created>
-      <option name="number" value="00244" />
-      <option name="presentableId" value="LOCAL-00244" />
-      <option name="project" value="LOCAL" />
-      <updated>1772566473798</updated>
-    </task>
-    <task id="LOCAL-00245" summary="refactor(core): Cleanup platform files and enhance chat/notification logic&#10;&#10;This commit performs a major cleanup by removing unused platform-specific directories (Linux, macOS, Windows, and Web) and updates the application's branding assets. It also refactors the notification service and chat-related logic for better reliability and user experience.&#10;&#10;- **feat(assets):**&#10;  - Replaced the application logo and updated all Android mipmap and iOS AppIcon launcher icons with a new design.&#10;&#10;- **refactor(notifications):**&#10;  - In `notification_service.dart`, updated the default `deviceToken` to '1234' and ensured it is consistently assigned even if retrieval fails.&#10;  - In `navigation_types.dart`, changed the navigation behavior for `nextStageRequestRejected` to `NoNavigation()` instead of `FinishedChatNavigation()`.&#10;&#10;- **refactor(chats):**&#10;  - In `chat_screen.dart`, introduced `_listenForCallStart` using `ZegoUIKit` to monitor when a user joins a call, automatically ending the video call request once a connection is established.&#10;  - In `tips_action.dart`, updated the `TipsSheet` confirmation logic to explicitly call `startChat` after the confirmation action completes.&#10;  - Cleaned up debug logs and unused imports in the chat and notification modules.&#10;&#10;- **chore(cleanup):**&#10;  - Deleted the entire `linux/`, `macos/`, `windows/`, and `web/` directories, including build configurations, runners, and ignore files, to focus on mobile platforms.&#10;&#10;- **chore(ide):**&#10;  - Updated `.idea/workspace.xml` to reflect the branch change to `refactor-test-sheet`, updated file states, and recorded new breakpoints.">
-      <option name="closed" value="true" />
-      <created>1772619096035</created>
-      <option name="number" value="00245" />
-      <option name="presentableId" value="LOCAL-00245" />
-      <option name="project" value="LOCAL" />
-      <updated>1772619096035</updated>
     </task>
     <task id="LOCAL-00246" summary="Refactor chat and auth UI, update iOS build version, and improve Makefile&#10;&#10;- **Auth**: Update localization key for the residence field in `female_fields.dart`.&#10;- **Chat**: Wrap the phase title in a `FittedBox` within the chat timer widget for better layout handling.&#10;- **iOS**: Bump `CURRENT_PROJECT_VERSION` to 17 and update `project.pbxproj` with missing input/output paths for Pods scripts.&#10;- **Makefile**: Refactor for clarity, add `.PHONY` targets, and improve the `gradleFix` and `buildIos` commands.&#10;- **App**: Add missing `OnBoardingScreen` import and fix formatting in `app.dart`.&#10;- **IDE**: Synchronize `.idea/workspace.xml` with recent project changes.">
       <option name="closed" value="true" />
@@ -643,7 +629,23 @@
       <option name="project" value="LOCAL" />
       <updated>1775042957877</updated>
     </task>
-    <option name="localTasksCounter" value="293" />
+    <task id="LOCAL-00293" summary="Synchronize workspace state, document core project rules, and update build logs&#10;&#10;- **Documentation**:&#10;    - Create `CLAUDE.md` to provide a comprehensive guide on project architecture, navigation patterns, network service usage, state management with `AsyncCubit`, and coding conventions.&#10;- **Tools &amp; IDE**:&#10;    - Re-add `.idea/caches/deviceStreaming.xml` with an extensive list of persistent device selection data.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and file additions.&#10;- **Firebase**:&#10;    - Update `firebase-debug.log` with recent authorization activities and API query statuses.&#10;    - Add a new `ios/firebase-debug.log` to track Firebase operations specifically for the iOS platform.&#10;- **Android**:&#10;    - Add Kotlin daemon compilation error logs (`errors-1774868780613.log` and `errors-1774868803801.log`) to document build-time storage and file deletion exceptions.">
+      <option name="closed" value="true" />
+      <created>1775124826118</created>
+      <option name="number" value="00293" />
+      <option name="presentableId" value="LOCAL-00293" />
+      <option name="project" value="LOCAL" />
+      <updated>1775124826118</updated>
+    </task>
+    <task id="LOCAL-00294" summary="Synchronize workspace state, document core project rules, and update build logs&#10;&#10;- **Documentation**:&#10;    - Create `CLAUDE.md` to provide a comprehensive guide on project architecture, navigation patterns, network service usage, state management with `AsyncCubit`, and coding conventions.&#10;- **Tools &amp; IDE**:&#10;    - Re-add `.idea/caches/deviceStreaming.xml` with an extensive list of persistent device selection data.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and file additions.&#10;- **Firebase**:&#10;    - Update `firebase-debug.log` with recent authorization activities and API query statuses.&#10;    - Add a new `ios/firebase-debug.log` to track Firebase operations specifically for the iOS platform.&#10;- **Android**:&#10;    - Add Kotlin daemon compilation error logs (`errors-1774868780613.log` and `errors-1774868803801.log`) to document build-time storage and file deletion exceptions.">
+      <option name="closed" value="true" />
+      <created>1775127682781</created>
+      <option name="number" value="00294" />
+      <option name="presentableId" value="LOCAL-00294" />
+      <option name="project" value="LOCAL" />
+      <updated>1775127682782</updated>
+    </task>
+    <option name="localTasksCounter" value="295" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -664,7 +666,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Implement chat notifications, unread message counts, and refactor notification initialization.&#10;&#10;### Core&#10;*   **Notification Service**: Added `_isInitialized` flag to `setupNotifications` to prevent redundant initialization.&#10;*   **Service Locator**: Changed `NotificationService` registration from a factory to a lazy singleton.&#10;*   **Networking**: Added `countUnreadMessages` API endpoint.&#10;&#10;### Features&#10;*   **Home**:&#10;    *   Integrated `GetChatsNotificationCountCubit` to track and display unread chat counts via a `Badge` on the navigation bar.&#10;    *   Moved notification count cubits from `App` level to `HomeScreen` scope.&#10;*   **Chats**:&#10;    *   Implemented `GetChatsNotificationCountCubit` with an interceptor to listen for incoming Firebase messages and increment the count.&#10;    *   Updated `ChatButton` to re-enable eligibility checks before navigating to a chat.&#10;*   **Splash**:&#10;    *   Removed app initialization logic and notification setup from `SplashCubit`, delegating these responsibilities to the `HomeScreen`.&#10;&#10;### Infrastructure &amp; UI&#10;*   **Base Cubit**: Updated `AsyncCubit` to use `MessageUtils.showTopMsg` instead of `showSnackBar` for network and error feedback.&#10;*   **iOS**: Incremented `CURRENT_PROJECT_VERSION` to 19 and updated `Podfile.lock` to include `ObjectBox` dependencies.&#10;*   **Clean up**: Removed unused imports in splash and home features." />
     <MESSAGE value="Reset chat notification counts in HomeScreen and refine error messaging across core and chat features (#183209)&#10;&#10;*   **Features - Home**:&#10;    *   Updated `HomeScreen` to reset the `GetChatsNotificationCountCubit` when the corresponding navigation index (2) is selected.&#10;&#10;*   **Features - Chats**:&#10;    *   Refactored `CheckChatEligibilityCubit` to remove the explicit mapper for the `can_start_chat` field, relying on base repository handling.&#10;    *   Standardized error reporting in `ChatView` by simplifying the `MessageUtils.showTopMsg` call.&#10;&#10;*   **Core/UI**:&#10;    *   Updated `MessageUtils.showTopMsg` to default to `MsgState.error` instead of `MsgState.info`.&#10;    *   Cleaned up error handling in `AppPagify` to use the new default error state in `MessageUtils`.&#10;&#10;*   **IDE**:&#10;    *   Updated project workspace configuration." />
     <MESSAGE value="Refine match request logic and update engagement success messaging (#183210)&#10;&#10;*   **Features - Chats**:&#10;    *   Updated `MatchRequest` model to include `hasSendRequest` field for better tracking of outbound requests.&#10;    *   Refactored `StageAction` and `chats_data.dart` to check `hasSendRequest` before triggering automatic chat sheets when a timer expires.&#10;    *   Added `isNoRequests` extension to `MatchRequestEnum`.&#10;    *   Cleaned up dead code in `user_status_action.dart`.&#10;&#10;*   **Localization &amp; UI**:&#10;    *   Updated `CongratsSheet` to use a new, more descriptive engagement blessing message.&#10;    *   Added `congratulations_on_your_engagement_we_ask_god_to_bless_your_union_and_grant_you_happiness` key to translation files (AR, EN).&#10;    *   Refined Arabic translation for `partner_wants_to`.&#10;&#10;*   **IDE**:&#10;    *   Updated project workspace configuration." />
     <MESSAGE value="Refine navigation logic and notification routing (#183211)&#10;&#10;### Core&#10;*   **Navigation**: Introduced `Go.toOrOff` in the navigator to handle smart redirection (push or replace) based on whether the target screen is already visible.&#10;*   **Route Tracking**: Updated `AppNavigationObserver` to track the `currentRouteName` globally.&#10;*   **Routing**: Added `RouteSettings` to `to` and `off` methods to ensure route names (based on widget type) are available for the observer.&#10;&#10;### Notifications&#10;*   **Notification Types**: Added support for `shariaChoiceRequestRejected` and `shariaChoiceRequestAccepted` navigation types.&#10;*   **Navigation Flow**: Refactored all `NotificationNavigation` routes to use `Go.toOrOff`, preventing redundant screen stacks when navigating from notifications.&#10;&#10;### iOS&#10;*   Incremented `CURRENT_PROJECT_VERSION` to 20 in the Xcode project configuration." />
@@ -689,7 +690,8 @@
     <MESSAGE value="Refine chat initiation logic, center UI buttons, and update project configurations&#10;&#10;- **Chat / Business Logic**:&#10;    - Refactor `_startChat` in `ChatScreen` to accept an optional `update` flag, which sets the `fromHome` property in the `RequestModel` (0 for updates, 1 for initial starts).&#10;    - Ensure `_startChat(update: true)` is called when a `SocketEvents.updateChat` event is received.&#10;    - Clean up navigation logic in `user_status_action.dart` by removing redundant conditional formatting for `isParentIndividualApproval`.&#10;- **UI / Presentation**:&#10;    - Wrap `ChatButton` in a `Center` widget within `parent_details.dart` for improved alignment on the parent information screen.&#10;- **iOS**:&#10;    - Clean up `project.pbxproj` by removing empty `inputPaths` and `outputPaths` arrays from the &quot;Embed Pods Frameworks&quot; and &quot;Copy Pods Resources&quot; shell script phases.&#10;- **Tools &amp; IDE**:&#10;    - Synchronize `.idea/workspace.xml` with recent changes, including updated breakpoints and task history." />
     <MESSAGE value="Implement rejected chat handling, update notification routing, and refine UI feedback&#10;&#10;- **Chat / Business Logic**:&#10;    - Update `ChatScreen` to trigger a socket update (`_fireShouldUpdate`) upon successfully rejecting a chat before navigating to the Home screen.&#10;    - Implement `RejectedChatSheet` to display a rejection message and provide a &quot;Back&quot; button to return to the Home screen.&#10;    - Update `stage_action.dart` to check for the `isRejected` stage and display the `RejectedChatSheet`.&#10;    - Refactor `stage_action.dart` to ensure socket updates are fired consistently across different stage transitions, including meeting choices.&#10;- **Notifications**:&#10;    - Update `NotificationService` to prevent automatic navigation for `isParentIndividualApprovalRejected` and `isMatchRejectedWhenTimerEnded` types during active foreground listening, favoring manual or state-driven handling.&#10;- **UI / Localization**:&#10;    - Add translation keys for `this_chat_has_been_rejected_we_wish_you_better_luck_next_time` in English and Arabic.&#10;    - Regenerate `locale_keys.g.dart` to include the new rejection message key.&#10;    - Minor cleanup of whitespace in `user_status_action.dart`.&#10;- **iOS &amp; Tools**:&#10;    - Re-add empty `inputPaths` and `outputPaths` arrays to the &quot;Embed Pods Frameworks&quot; and &quot;Copy Pods Resources&quot; shell script phases in `project.pbxproj`.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and breakpoint locations." />
     <MESSAGE value="Update project build tools, clean up IDE caches, and synchronize workspace state&#10;&#10;- **Tools &amp; Infrastructure**:&#10;    - Update `Makefile` to include a `clearGradleCache` target for removing Android and global Gradle caches.&#10;    - Delete `.idea/caches/deviceStreaming.xml` to clear persistent device selection history.&#10;- **Firebase**:&#10;    - Update `firebase-debug.log` with recent authorization logs and API query statuses for App Distribution.&#10;- **Tools &amp; IDE**:&#10;    - Synchronize `.idea/workspace.xml` with recent task history, property updates, and new breakpoint locations in `user_status_action.dart`.&#10;    - Revert minor whitespace or pending changes in `user_status_action.dart`." />
-    <option name="LAST_COMMIT_MESSAGE" value="Update project build tools, clean up IDE caches, and synchronize workspace state&#10;&#10;- **Tools &amp; Infrastructure**:&#10;    - Update `Makefile` to include a `clearGradleCache` target for removing Android and global Gradle caches.&#10;    - Delete `.idea/caches/deviceStreaming.xml` to clear persistent device selection history.&#10;- **Firebase**:&#10;    - Update `firebase-debug.log` with recent authorization logs and API query statuses for App Distribution.&#10;- **Tools &amp; IDE**:&#10;    - Synchronize `.idea/workspace.xml` with recent task history, property updates, and new breakpoint locations in `user_status_action.dart`.&#10;    - Revert minor whitespace or pending changes in `user_status_action.dart`." />
+    <MESSAGE value="Synchronize workspace state, document core project rules, and update build logs&#10;&#10;- **Documentation**:&#10;    - Create `CLAUDE.md` to provide a comprehensive guide on project architecture, navigation patterns, network service usage, state management with `AsyncCubit`, and coding conventions.&#10;- **Tools &amp; IDE**:&#10;    - Re-add `.idea/caches/deviceStreaming.xml` with an extensive list of persistent device selection data.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and file additions.&#10;- **Firebase**:&#10;    - Update `firebase-debug.log` with recent authorization activities and API query statuses.&#10;    - Add a new `ios/firebase-debug.log` to track Firebase operations specifically for the iOS platform.&#10;- **Android**:&#10;    - Add Kotlin daemon compilation error logs (`errors-1774868780613.log` and `errors-1774868803801.log`) to document build-time storage and file deletion exceptions." />
+    <option name="LAST_COMMIT_MESSAGE" value="Synchronize workspace state, document core project rules, and update build logs&#10;&#10;- **Documentation**:&#10;    - Create `CLAUDE.md` to provide a comprehensive guide on project architecture, navigation patterns, network service usage, state management with `AsyncCubit`, and coding conventions.&#10;- **Tools &amp; IDE**:&#10;    - Re-add `.idea/caches/deviceStreaming.xml` with an extensive list of persistent device selection data.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and file additions.&#10;- **Firebase**:&#10;    - Update `firebase-debug.log` with recent authorization activities and API query statuses.&#10;    - Add a new `ios/firebase-debug.log` to track Firebase operations specifically for the iOS platform.&#10;- **Android**:&#10;    - Add Kotlin daemon compilation error logs (`errors-1774868780613.log` and `errors-1774868803801.log`) to document build-time storage and file deletion exceptions." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -706,33 +708,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/filter.dart</url>
-          <line>75</line>
+          <line>66</line>
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/filter.dart</url>
-          <line>103</line>
+          <line>94</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/filter.dart</url>
-          <line>146</line>
+          <line>96</line>
           <option name="timeStamp" value="18" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/filter.dart</url>
-          <line>159</line>
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/filter.dart</url>
-          <line>195</line>
-          <option name="timeStamp" value="20" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/src/features/main_screen/presentation/screens/filter.dart</url>
-          <line>215</line>
-          <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/src/core/network/api_endpoints.dart</url>

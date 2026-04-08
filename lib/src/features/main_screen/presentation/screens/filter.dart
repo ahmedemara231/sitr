@@ -2,24 +2,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../config/language/languages.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
-import '../../../../core/extensions/enum.dart';
 import '../../../../core/navigation/navigator.dart';
-import '../../../../core/network/api_endpoints.dart';
-import '../../../../core/shared/models/title_value_shape.dart';
-import '../../../../core/shared/models/user_models/user_model.dart';
-import '../../../../core/widgets/app_dropinity.dart';
-import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/buttons/custom_app_buttons/default_button.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
-import '../../../auth/presentation/data/auth_data.dart' show AuthData;
-import '../../../auth/presentation/enums/answer.dart';
-import '../../../auth/presentation/widgets/shared/text_field.dart';
-import '../../../auth/presentation/widgets/sign_up/dowry_widget.dart';
-import '../../../auth/presentation/widgets/sign_up/radio_widget.dart';
 import '../../data/models/filter_model.dart';
+import '../widgets/filter/filter_job_education_widget.dart';
+import '../widgets/filter/filter_lifestyle_widget.dart';
+import '../widgets/filter/filter_location_widget.dart';
+import '../widgets/filter/filter_physical_attributes_widget.dart';
 import 'filter_result.dart' show FilterResultScreen;
 
 class FilterScreen extends StatefulWidget {
@@ -32,7 +24,7 @@ class FilterScreen extends StatefulWidget {
 class _FilterScreenState extends State<FilterScreen> {
   FilterModel model = FilterModel();
 
-  void _listenToData(FilterModel model){
+  void _listenToData(FilterModel model) {
     this.model = model;
   }
 
@@ -49,7 +41,6 @@ class _FilterScreenState extends State<FilterScreen> {
     _ageCont = TextEditingController();
     _currentJobCont = TextEditingController();
     _educationalQualificationCont = TextEditingController();
-
     super.initState();
   }
 
@@ -60,179 +51,56 @@ class _FilterScreenState extends State<FilterScreen> {
     _ageCont.dispose();
     _currentJobCont.dispose();
     _educationalQualificationCont.dispose();
-
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-        appBarTitle: LocaleKeys.filter,
-        body: SingleChildScrollView(
-      child: Container(
-        color: AppColors.whiteGreyColorProMax,
-        child: Column(
-          spacing: 12.h,
-          children: [
-            AppDropinity<List<CityModel>, CityModel>.withApiRequest(
-              hint: LocaleKeys.pleaseEnterTheCity,
-              title: LocaleKeys.city,
-              asyncCall: (context, page) async => await AuthData.getCities(),
-              getLabel: (city) => city.name ?? '',
-              onChanged: (val) => _listenToData(model.copyWith(cityId: val.id)),
-              cacheKey: 'cities',
-              cacheToJson: (e) => e.toJson(),
-              cacheFromJson: (json) => CityModel.fromJson(json),
-            ),
-
-            SignUpTextField(
-              upperTitle: LocaleKeys.weight,
-              title: LocaleKeys.pleaseEnterTheWeight,
-              controller: _weightCont,
-              inputType: TextInputType.number,
-              onChanged: (val) => _listenToData(model.copyWith(weight: double.parse(val!))),
-              // validator: Validators.validateEmpty,
-            ),
-            SignUpTextField(
-              upperTitle: LocaleKeys.tall,
-              title: LocaleKeys.pleaseEnterTheTall,
-              controller: _tallCont,
-              inputType: TextInputType.number,
-              onChanged: (val) => _listenToData(model.copyWith(height: double.parse(val!))),
-              // validator: Validators.validateEmpty,
-            ),
-
-            AppDropinity<List<TitleValueShape>, TitleValueShape>.withApiRequest(
-              listHeight: 100,
-              title: LocaleKeys.maritalStatus,
-              hint: LocaleKeys.pleaseEnterTheStatus,
-              asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.maritalStatuses),
-              getLabel: (v) => v.title,
-              onChanged: (val) =>
-                  _listenToData(model.copyWith(maritalStatus: val.value)),
-              cacheKey: 'marital_statuses',
-              cacheToJson: (e) => e.toJson(),
-              cacheFromJson: (json) => TitleValueShape.fromJson(json),
-            ),
-
-            SignUpTextField(
-              upperTitle: LocaleKeys.age,
-              title: LocaleKeys.pleaseEnterYourAge,
-              controller: _ageCont,
-              inputType: TextInputType.number,
-              onChanged: (val) => _listenToData(model.copyWith(age: int.parse(val!))),
-              // validator: Validators.validateEmpty,
-            ),
-            SignUpTextField(
-              upperTitle: LocaleKeys.currentJob,
-              title: LocaleKeys.pleaseEnterTheCurrentJob,
-              controller: _currentJobCont,
-              onChanged: (val) => _listenToData(model.copyWith(currentJob: val)),
-              // validator: Validators.validateEmpty,
-            ),
-
-
-            SignUpTextField(
-              upperTitle: LocaleKeys.educationalQualification,
-              title: LocaleKeys.pleaseEnterTheEducationalQualification,
-              controller: _educationalQualificationCont,
-              onChanged: (val) => _listenToData(model.copyWith(educationLevel: val)),
-              // validator: Validators.validateEmpty,
-            ),
-
-
-            DowryWidget(
-                onSelect: (dowryVal) => _listenToData(model.copyWith(dowry: dowryVal))
-            ),
-
-            AppDropinity<List<TitleValueShape>, TitleValueShape>.withApiRequest(
-              listHeight: 100,
-              hint: LocaleKeys.pleaseEnterSkinColor,
-              title: LocaleKeys.skinColor,
-              asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.skinColors),
-              getLabel: (v) => v.title,
-              onChanged: (val) => _listenToData(model.copyWith(skinColor: val.value)),
-              cacheKey: 'skin_colors',
-              cacheToJson: (e) => e.toJson(),
-              cacheFromJson: (json) => TitleValueShape.fromJson(json),
-            ),
-
-            if(UserModel.isMale)
-              AppDropinity<List<TitleValueShape>, TitleValueShape>.withApiRequest(
-              listHeight: 100,
-              hint: LocaleKeys.areYouWaringHijab,
-              title: LocaleKeys.areYouWaringHijab,
-              asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.hijabTypes),
-              getLabel: (v) => v.title,
-              onChanged: (value) {
-                _listenToData(model.copyWith(hijab: value.value));
-              },
-              cacheKey: 'hijab_types',
-              cacheToJson: (e) => e.toJson(),
-              cacheFromJson: (json) => TitleValueShape.fromJson(json),
-            ),
-
-            RadioWidget<Languages>(
-              title: LocaleKeys.inChatYouPrefer,
-              onSubmit: (result) => _listenToData(
-                  model.copyWith(chatLang: result.languageCode)),
-              values: Languages.values,
-              titleBuilder: (i) => AppText(Languages.values[i].translate),
-            ),
-            RadioWidget<Answer>(
-              title: LocaleKeys.areYouSmoke,
-              onSubmit: (result) =>
-                  _listenToData(model.copyWith(isSmoker: result.toBinary)),
-              values: Answer.values,
-              titleBuilder: (i) => AppText(Answer.values[i].translate),
-            ),
-            RadioWidget<Answer>(
-              title: LocaleKeys.areYouPray,
-              onSubmit: (result) =>
-                  _listenToData(model.copyWith(isPrayer: result.toBinary)),
-              values: Answer.values,
-              titleBuilder: (i) => AppText(Answer.values[i].translate),
-            ),
-
-            AppDropinity<List<TitleValueShape>, TitleValueShape>.withApiRequest(
-              listHeight: 100,
-              hint: LocaleKeys.pleaseEnterTheWeddingParty,
-              title: LocaleKeys.typeOfWeddingParty,
-              asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.weddingTypes),
-              getLabel: (v) => v.title,
-              onChanged: (val) =>
-                  _listenToData(model.copyWith(weddingType: val.value)),
-              cacheKey: 'wedding_types',
-              cacheToJson: (e) => e.toJson(),
-              cacheFromJson: (json) => TitleValueShape.fromJson(json),
-            ),
-            RadioWidget<Answer>(
-              title: LocaleKeys.wantToHaveChildren,
-              onSubmit: (result) =>
-                  _listenToData(model.copyWith(wantChildren: result.toBinary)),
-              values: Answer.values,
-              titleBuilder: (i) => AppText(Answer.values[i].translate),
-            ),
-
-            AppDropinity<List<TitleValueShape>, TitleValueShape>.withApiRequest(
-              listHeight: 100,
-              hint: LocaleKeys.pleaseEnterTheDegreeOfCommitment,
-              title: LocaleKeys.degreeOfCommitment,
-              asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.religiousCommitments),
-              getLabel: (v) => v.title,
-              onChanged: (value) => _listenToData(model.copyWith(religiousCommitment: value.value)),
-              cacheKey: 'religious_commitments',
-              cacheToJson: (e) => e.toJson(),
-              cacheFromJson: (json) => TitleValueShape.fromJson(json),
-            ),
-
-            AppDefaultButton.withBackGroundColor(
+      appBarTitle: LocaleKeys.filter,
+      body: SingleChildScrollView(
+        child: Container(
+          color: AppColors.whiteGreyColorProMax,
+          child: Column(
+            spacing: 12.h,
+            children: [
+              FilterLocationWidget(
+                onCityChanged: (cityId) => _listenToData(model.copyWith(cityId: cityId)),
+              ),
+              FilterPhysicalAttributesWidget(
+                weightController: _weightCont,
+                heightController: _tallCont,
+                ageController: _ageCont,
+                onWeightChanged: (val) => _listenToData(model.copyWith(weight: val)),
+                onHeightChanged: (val) => _listenToData(model.copyWith(height: val)),
+                onAgeChanged: (val) => _listenToData(model.copyWith(age: val)),
+                onMaritalStatusChanged: (val) => _listenToData(model.copyWith(maritalStatus: val)),
+                onSkinColorChanged: (val) => _listenToData(model.copyWith(skinColor: val)),
+                onHijabChanged: (val) => _listenToData(model.copyWith(hijab: val)),
+              ),
+              FilterJobEducationWidget(
+                currentJobController: _currentJobCont,
+                educationController: _educationalQualificationCont,
+                onJobChanged: (val) => _listenToData(model.copyWith(currentJob: val)),
+                onEducationChanged: (val) => _listenToData(model.copyWith(educationLevel: val)),
+              ),
+              FilterLifestyleWidget(
+                onDowrySelected: (val) => _listenToData(model.copyWith(dowry: val)),
+                onLanguageChanged: (val) => _listenToData(model.copyWith(chatLang: val)),
+                onSmokerChanged: (val) => _listenToData(model.copyWith(isSmoker: val)),
+                onPrayerChanged: (val) => _listenToData(model.copyWith(isPrayer: val)),
+                onWeddingTypeChanged: (val) => _listenToData(model.copyWith(weddingType: val)),
+                onWantChildrenChanged: (val) => _listenToData(model.copyWith(wantChildren: val)),
+                onReligiousCommitmentChanged: (val) => _listenToData(model.copyWith(religiousCommitment: val)),
+              ),
+              AppDefaultButton.withBackGroundColor(
                 title: LocaleKeys.confirm,
-                onTap: () => Go.to(FilterResultScreen(filterModel: model))
-            )
-          ],
+                onTap: () => Go.to(FilterResultScreen(filterModel: model)),
+              ),
+            ],
+          ),
         ),
       ),
-    )
     );
   }
 }
