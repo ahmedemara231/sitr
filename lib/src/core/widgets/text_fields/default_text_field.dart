@@ -33,6 +33,7 @@ class DefaultTextField extends StatefulWidget {
   final Widget? suffixIcon;
   final bool? isPassword;
   final int? maxLines;
+  final int? minLines;
   final bool? hasBorderColor;
   final Color? borderColor;
   final void Function(String?)? onChanged;
@@ -70,6 +71,7 @@ class DefaultTextField extends StatefulWidget {
     this.suffixText,
     this.suffixIcon,
     this.maxLines,
+    this.minLines,
     this.onChanged,
     this.style,
   }) : upperTitle = null, withTitle = TitleStatus.withoutTitle;
@@ -104,6 +106,7 @@ class DefaultTextField extends StatefulWidget {
     this.suffixText,
     this.suffixIcon,
     this.maxLines,
+    this.minLines,
     this.onChanged,
     this.style,
     required this.upperTitle
@@ -164,6 +167,7 @@ class _DefaultTextFieldState extends State<DefaultTextField> {
           maxLines: widget.inputType == TextInputType.multiline
               ? widget.maxLines ?? 7
               : 1,
+          minLines: widget.minLines,
           style: widget.style,
           onFieldSubmitted: widget.onSubmitted,
           textInputAction: widget.action,

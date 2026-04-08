@@ -114,6 +114,8 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                       closeWhenTapOutSide: false,
                       validator: Validators.validateChatMessage,
                       controller: _chatCont,
+                      inputType: TextInputType.multiline,
+                      minLines: 1,
                       maxLines: 5,
                       action: TextInputAction.newline,
                       title: LocaleKeys.hereIsTheTextOfTheMessageHereIsTheTextOfTheMessageHereIsTheTextOfTheMessage,

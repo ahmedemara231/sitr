@@ -956,3 +956,54 @@
 [debug] [2026-04-08T12:41:04.350Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"flutter"}
 [debug] [2026-04-08T12:41:04.350Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
 [debug] [2026-04-08T12:41:04.350Z] > authorizing via signed-in user (flutteraaitsa@gmail.com)
+[debug] [2026-04-08T12:48:48.548Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"flutter"}
+[debug] [2026-04-08T12:48:48.550Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"flutter"}
+[debug] [2026-04-08T12:48:48.551Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"flutter"}
+[debug] [2026-04-08T12:48:48.552Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"flutter"}
+[debug] [2026-04-08T12:48:48.552Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"flutter"}
+[debug] [2026-04-08T12:48:48.552Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"flutter"}
+[debug] [2026-04-08T12:48:48.552Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-04-08T12:48:48.553Z] > authorizing via signed-in user (flutteraaitsa@gmail.com)
+[debug] [2026-04-08T12:48:48.553Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-04-08T12:48:48.553Z] > authorizing via signed-in user (flutteraaitsa@gmail.com)
+[debug] [2026-04-08T12:48:48.553Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"flutter"}
+[debug] [2026-04-08T12:48:48.566Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"flutter"}
+[debug] [2026-04-08T12:48:48.567Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-04-08T12:48:48.567Z] > authorizing via signed-in user (flutteraaitsa@gmail.com)
+[debug] [2026-04-08T12:48:48.567Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"flutter"}
+[debug] [2026-04-08T12:48:48.732Z] Checked if tokens are valid: true, expires at: 1775654491203
+[debug] [2026-04-08T12:48:48.732Z] Checked if tokens are valid: true, expires at: 1775654491203
+[debug] [2026-04-08T12:48:48.733Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects//services/firebaseappdistribution.googleapis.com [none]
+[debug] [2026-04-08T12:48:48.733Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects//services/firebaseappdistribution.googleapis.com x-goog-quota-user=projects/
+[debug] [2026-04-08T12:48:48.734Z] Checked if tokens are valid: true, expires at: 1775654491203
+[debug] [2026-04-08T12:48:48.734Z] Checked if tokens are valid: true, expires at: 1775654491203
+[debug] [2026-04-08T12:48:48.734Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects//services/firebaseappdistribution.googleapis.com [none]
+[debug] [2026-04-08T12:48:48.734Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects//services/firebaseappdistribution.googleapis.com x-goog-quota-user=projects/
+[debug] [2026-04-08T12:48:48.735Z] Checked if tokens are valid: true, expires at: 1775654491203
+[debug] [2026-04-08T12:48:48.735Z] Checked if tokens are valid: true, expires at: 1775654491203
+[debug] [2026-04-08T12:48:48.735Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects//services/firebaseappdistribution.googleapis.com [none]
+[debug] [2026-04-08T12:48:48.735Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects//services/firebaseappdistribution.googleapis.com x-goog-quota-user=projects/
+[debug] [2026-04-08T12:48:49.174Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects//services/firebaseappdistribution.googleapis.com 400
+[debug] [2026-04-08T12:48:49.174Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects//services/firebaseappdistribution.googleapis.com [omitted]
+[debug] [2026-04-08T12:48:49.175Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"flutter"}
+[debug] [2026-04-08T12:48:49.257Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"flutter"}
+[debug] [2026-04-08T12:48:49.258Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"flutter"}
+[debug] [2026-04-08T12:48:49.259Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-04-08T12:48:49.259Z] > authorizing via signed-in user (flutteraaitsa@gmail.com)
+[debug] [2026-04-08T12:48:49.259Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"flutter"}
+[debug] [2026-04-08T12:48:49.260Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"flutter"}
+[debug] [2026-04-08T12:48:49.260Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-04-08T12:48:49.260Z] > authorizing via signed-in user (flutteraaitsa@gmail.com)
+[debug] [2026-04-08T12:48:49.647Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects//services/firebaseappdistribution.googleapis.com 400
+[debug] [2026-04-08T12:48:49.647Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects//services/firebaseappdistribution.googleapis.com [omitted]
+[debug] [2026-04-08T12:48:49.647Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"flutter"}
+[debug] [2026-04-08T12:48:49.648Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects//services/firebaseappdistribution.googleapis.com 400
+[debug] [2026-04-08T12:48:49.648Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects//services/firebaseappdistribution.googleapis.com [omitted]
+[debug] [2026-04-08T12:48:49.723Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"flutter"}
+[debug] [2026-04-08T12:48:49.724Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"flutter"}
+[debug] [2026-04-08T12:48:49.724Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-04-08T12:48:49.724Z] > authorizing via signed-in user (flutteraaitsa@gmail.com)
+[debug] [2026-04-08T12:48:49.724Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"flutter"}
+[debug] [2026-04-08T12:48:49.724Z] Object "" in "firebase.json" has unknown property: {"additionalProperty":"flutter"}
+[debug] [2026-04-08T12:48:49.724Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-04-08T12:48:49.724Z] > authorizing via signed-in user (flutteraaitsa@gmail.com)
