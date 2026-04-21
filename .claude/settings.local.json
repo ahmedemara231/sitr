@@ -46,7 +46,9 @@
       "Bash(du -sh ~/Library/Caches/Google/AndroidStudio* ~/Library/Caches/com.google.android.studio* /Users/aaita/Desktop/apps/satr/build)",
       "Bash(pod update:*)",
       "Bash(wc -l /Users/aaita/Desktop/apps/satr/lib/src/features/*/presentation/screens/*.dart)",
-      "Bash(keytool:*)"
+      "Bash(keytool:*)",
+      "Bash(awk 'NR==73 {sub\\(/^    /, \"\\\\t\"\\)} 1' /Users/aaita/Desktop/apps/satr/Makefile)",
+      "Bash(mv /tmp/Makefile.fixed /Users/aaita/Desktop/apps/satr/Makefile)"
     ],
     "deny": [],
     "ask": []

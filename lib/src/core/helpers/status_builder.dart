@@ -9,12 +9,16 @@ class StatusBuilder<T> extends StatelessWidget {
   final Widget Function(T data, BuildContext context) onSuccess;
   final Widget Function()? onFail;
   final Widget Function()? onLoading;
+  final Size? errorWidgetSize;
+
   const StatusBuilder(
       {super.key,
         required this.data,
         required this.onSuccess,
         this.onFail,
-        this.onLoading});
+        this.onLoading,
+        this.errorWidgetSize,
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,7 @@ class StatusBuilder<T> extends StatelessWidget {
       // if (data.data != null) { // لو عايزين نظهر الداتا ال initial اما اول request fails
       //   return onSuccess(data.data, context);
       // }
-      return onFail?.call() ?? const ExceptionView();
+      return onFail?.call() ?? ExceptionView(size: errorWidgetSize);
     },
       onInitial: () {
         return onSuccess(data.data, context);

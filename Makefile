@@ -70,7 +70,7 @@ distributeAndroid:
 	sh distribute_android.sh $(ARGS)
 
 fingerPrint:
-    keytool -list -v -keystore android/app/key.jks -storepass 123456
+	keytool -list -v -keystore android/app/key.jks -storepass 123456
 
 kill:
 	killall -9 dart

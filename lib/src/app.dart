@@ -71,8 +71,8 @@ class _SatrState extends State<Satr> with WidgetsBindingObserver {
                 ],
               );
             },
-            // home: const OnBoardingView(),
-            home: const ZegoUIKitPrebuiltCallMiniPopScope(child: SplashScreen()),
+            home: const LoginScreen(),
+            // home: const ZegoUIKitPrebuiltCallMiniPopScope(child: SplashScreen()),
             navigatorObservers: [AppNavigationObserver.instance],
           ),
         );

@@ -77,7 +77,7 @@ extension FormatString on String {
 
   MatchRequestEnum get getMatchRequestAsEnum => MatchRequestEnum.values
       .firstWhere((e) => this == e.requestName,
-    orElse: () => MatchRequestEnum.noRequests
+      orElse: () => MatchRequestEnum.noRequests
   );
 
   UserRequestStatus get getUserRequestStatusAsEnum => UserRequestStatus.values
@@ -148,7 +148,7 @@ extension FormatString on String {
 
 
 
-bool get isImage =>
+  bool get isImage =>
       contains('jpg') ||
           contains('png') ||
           contains('svg') ||
@@ -210,9 +210,9 @@ bool get isImage =>
     }else if(statusType.isNotSubscribed){
       injector<NetworkService>().setToken(user.token ?? '');
       Go.off(PackagesScreen.subscription(
-          paymentMethods: const [PaymentMethod.online],
-          userType: user.type?.userType,
-          isInAuth: true,
+        paymentMethods: const [PaymentMethod.online],
+        userType: user.type?.userType,
+        isInAuth: true,
       ));
 
     }else if(statusType.isCompleteChild){

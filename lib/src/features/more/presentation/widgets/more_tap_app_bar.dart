@@ -110,6 +110,7 @@ class MoreTabAppBar extends StatelessWidget {
                                   BlocBuilder<FetchWalletCubit, AsyncState<num>>(
                                       builder: (context, state) => StatusBuilder(
                                         data: state,
+                                        errorWidgetSize: Size(60.w, 60.h),
                                         onSuccess: (data, context) =>
                                             RiyalPriceText(
                                                 price: data.toString(),

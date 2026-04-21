@@ -3,21 +3,18 @@ import 'package:lottie/lottie.dart';
 import '../../../generated/assets.dart';
 
 class ExceptionView extends StatelessWidget {
-  const ExceptionView({super.key});
+  final Size? size;
+  const ExceptionView({super.key, this.size});
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final screenSize = MediaQuery.sizeOf(context);
-        final width = constraints.maxWidth.isFinite ? constraints.maxWidth : screenSize.width;
-        final height = constraints.maxHeight.isFinite ? constraints.maxHeight : screenSize.height;
-        return Lottie.asset(
-          Assets.errorErrorView,
-          width: width,
-          height: height,
-        );
-      },
+    return FittedBox(
+      child: Lottie.asset(
+        Assets.errorErrorView,
+        width: size?.width,
+        height: size?.height,
+        fit: BoxFit.contain,
+      ),
     );
   }
 }
