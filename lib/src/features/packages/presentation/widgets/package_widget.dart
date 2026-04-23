@@ -26,10 +26,12 @@ class PackageWidget extends StatelessWidget {
   final ScreenType type;
   final bool isInAuth;
   final List<PaymentMethod>? paymentMethods;
+  final void Function() onSubscribe;
 
   const PackageWidget({super.key,
     required this.type,
     required this.package,
+    required this.onSubscribe,
     this.paymentMethods,
     this.isInAuth = false,
   });
@@ -78,7 +80,7 @@ class PackageWidget extends StatelessWidget {
                             title: type == ScreenType.subscription?
                             LocaleKeys.subscribeToPackage : LocaleKeys.renewPackage,
                             onTap: () => package.hasActivePackage?
-                            MessageUtils.showSnackBar(LocaleKeys.youAreAlreadySubscribedInPackage) :
+                            MessageUtils.showSnackBar(LocaleKeys.youHaveActivePackageNow) :
                             ChatSheetManager.show(
                                 child: BlocProvider(
                                   create: (context) => PackagesManagerCubit(),
@@ -101,6 +103,7 @@ class PackageWidget extends StatelessWidget {
                                                       title: LocaleKeys.pay
                                                   ));
                                                   if(result == 'success'){
+                                                    onSubscribe.call();
                                                     ChatSheetManager.show(
                                                         child: SuccessSheet(
                                                           isInAuth: isInAuth,
@@ -128,6 +131,7 @@ class PackageWidget extends StatelessWidget {
                                         type: type,
                                         paymentMethod: PaymentMethod.wallet,
                                         onSuccess: (url) async{
+                                          onSubscribe.call();
                                           ChatSheetManager.show(
                                                     child: SuccessSheet(
                                                       isInAuth: isInAuth,

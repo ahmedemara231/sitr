@@ -26,7 +26,8 @@ class MyPackagesScreen extends StatelessWidget {
                 onSuccess: (data, context) => data.isEmpty? const NotContainData() :
                 PackageWidget(
                     type: ScreenType.renew,
-                    package: data.first
+                    package: data.first,
+                    onSubscribe: () => context.read<MyPackageCubit>().getMyPackage(),
                 ),
             ),
           )

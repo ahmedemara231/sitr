@@ -13,7 +13,7 @@ class CompleteProfileCubit extends AsyncCubit<UserModel>{
 
   Future<void> completeProfile({
     required IndividualUserModel body,
-    required void Function() onSuccess
+    required void Function(UserModel user) onSuccess
 })async{
     await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call<UserModel>(
@@ -25,7 +25,7 @@ class CompleteProfileCubit extends AsyncCubit<UserModel>{
             )
         ),
 
-        onSuccess: (data) => onSuccess.call()
+        onSuccess: (data) => onSuccess.call(data.data)
     );
   }
 }

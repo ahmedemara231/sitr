@@ -34,6 +34,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 builder: (context, state) => ChooseFromOptionsWidget(
                   height: 50.h,
                   canChoose: !state.isLoading,
+                  fontSize: 12.sp,
                   onSelectOption: (val) => _init(val),
                   titles: [
                     LocaleKeys.male,

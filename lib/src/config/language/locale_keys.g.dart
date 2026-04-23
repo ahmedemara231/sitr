@@ -880,8 +880,8 @@ abstract class LocaleKeys {
   static const String _loginFirst = 'login_first';
   static String get loginFirst => _loginFirst.tr();
 
-  static const String _youAreAlreadySubscribedInPackage = 'you_are_already_subscribed_in_package';
-  static String get youAreAlreadySubscribedInPackage => _youAreAlreadySubscribedInPackage.tr();
+  static const String _youHaveActivePackageNow = 'you_have_active_package_now';
+  static String get youHaveActivePackageNow => _youHaveActivePackageNow.tr();
 
   static const String _pleaseEnterMartialStatus = 'please_enter_martial_status';
   static String get pleaseEnterMartialStatus => _pleaseEnterMartialStatus.tr();

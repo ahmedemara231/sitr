@@ -3,9 +3,12 @@ import 'dart:core';
 import 'package:flutter/foundation.dart';
 import 'package:multiple_result/multiple_result.dart';
 
+import '../../features/auth/imports.dart';
 import '../base_crud/code/domain/usecases/pagination_response.dart';
 import '../error/exceptions.dart';
 import '../error/failure.dart';
+import '../navigation/navigator.dart';
+import '../shared/user_cubit/user_cubit.dart';
 import 'object.dart';
 
 extension ErrorHandlerWithCache<M> on Future<BaseModel<M>> {
@@ -28,6 +31,9 @@ extension ErrorHandlerWithCache<M> on Future<BaseModel<M>> {
       return _resolveFromCache(cacheKey, fromCacheJson, e.message, onRead);
     } on UnauthorizedException catch (e) {
       return _resolveFromCache(cacheKey, fromCacheJson, e.message, onRead);
+      // UserCubit.instance.logout();
+      // Go.offAll(const LoginScreen());
+      // return Result.error(Failure(e.message));
     } on ServerException catch (e) {
       return _resolveFromCache(cacheKey, fromCacheJson, e.message, onRead);
     } catch (e, s) {

@@ -9,8 +9,22 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="Refactor ExceptionView and StatusBuilder to support dynamic sizing, and update app entry point&#10;&#10;- **UI &amp; Widgets**:&#10;    - Refactor `ExceptionView` to use `FittedBox` and support an optional `size` parameter for better layout control.&#10;    - Update `StatusBuilder` and `MoreTapAppBar` to pass `errorWidgetSize` to `ExceptionView`, specifically fixing the wallet balance error display.&#10;    - Temporary change: Set `LoginScreen` as the home widget in `app.dart` for development/debugging.&#10;- **Project Configuration**:&#10;    - Fix indentation in `Makefile` (converted spaces to tabs for the `fingerPrint` and `kill` targets).&#10;    - Update `.idea/workspace.xml` and `.idea/caches/deviceStreaming.xml` with recent IDE state and task history.&#10;    - Synchronize `.claude/settings.local.json` with recent command history.&#10;- **Code Cleanup**:&#10;    - Minor formatting and indentation fixes in `string_extension.dart`.">
-      <change beforePath="$PROJECT_DIR$/lib/src/app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/app.dart" afterDir="false" />
+    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="Refactor home, filter, and chat screens into modular widgets and update the application entry point.&#10;&#10;- **UI &amp; Widgets**: &#10;    - Refactor `MainView` into specialized components: `HomeWelcomeHeader`, `OpportunitiesListBody`, and `ConsultantsListBody`.&#10;    - Modularize `FilterScreen` by introducing `FilterLocationWidget`, `FilterPhysicalAttributesWidget`, `FilterJobEducationWidget`, and `FilterLifestyleWidget`.&#10;    - Introduce `ChatListTile` to encapsulate chat list item logic and navigation.&#10;- **Features**:&#10;    - Update `OpportunitiesListBody` with enhanced pagination support and gender-based UI logic.&#10;    - Set `SplashScreen` as the default home widget in `app.dart`.&#10;- **Tools &amp; IDE**:&#10;    - Add `assetWizardSettings.xml` for project asset management.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and UI refactors.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/translations/ar.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/ar.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/translations/lang.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/lang.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/config/language/locale_keys.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/config/language/locale_keys.g.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/extensions/error_handler_extension.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/extensions/error_handler_extension.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/extensions/string_extension.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/extensions/string_extension.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/shared/user_cubit/user_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/shared/user_cubit/user_cubit.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/sheets/success_sheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/sheets/success_sheet.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/cubits/complete_profile_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/cubits/complete_profile_cubit.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/screens/sign_up.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/screens/sign_up.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/widgets/home/consultants_list_body.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/widgets/home/consultants_list_body.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/my_packages.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/screens/my_packages.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/packages/presentation/packages_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/packages/presentation/packages_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/packages/presentation/widgets/package_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/packages/presentation/widgets/package_widget.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,33 +134,33 @@
     <option name="foldersAlwaysOnTop" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Flutter.main.dart.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "ShowUsagesActions.previewPropertyKey": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "com.google.services.firebase.aqiPopupShown": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "fullSocketCycleV2",
-    "io.flutter.project.isFirstOpen": "true",
-    "io.flutter.reload.alreadyRun": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/aaita/Desktop/apps/satr/android",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.17",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "show.migrate.to.gradle.popup": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Flutter.main.dart.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;ShowUsagesActions.previewPropertyKey&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;autoSign&quot;,
+    &quot;io.flutter.project.isFirstOpen&quot;: &quot;true&quot;,
+    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/aaita/Desktop/apps/satr/android&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/android" />
@@ -244,14 +258,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
-    </task>
-    <task id="LOCAL-00251" summary="Refactor chat stage handling and generalize stage actions in the chat data layer.&#10;&#10;- **Chats**:&#10;    - Update `StageAction` to handle timer-based transitions and consolidate Sharia-compliant meeting logic.&#10;    - Refactor `ChatsData` to prioritize `StageAction` for all non-new chat stages, passing the current timer value.&#10;    - Remove specific `TimerAction` and `isParentIndividualConversation` checks in favor of the generalized `StageAction`.&#10;    - Simplified `TipsAction` by removing conditional logic for starting chats, making it the default behavior after tips are seen.&#10;- **Infrastructure**:&#10;    - Added necessary imports to `chat_actions/imports.dart`.&#10;    - Updated IDE workspace settings and project configurations.">
-      <option name="closed" value="true" />
-      <created>1772848060169</created>
-      <option name="number" value="00251" />
-      <option name="presentableId" value="LOCAL-00251" />
-      <option name="project" value="LOCAL" />
-      <updated>1772848060170</updated>
     </task>
     <task id="LOCAL-00252" summary="Refactor chat stage transitions and Sharia-compliant meeting logic (#183201)&#10;&#10;- **Chats**:&#10;    - Update `StageAction` to handle Sharia-compliant meeting choices using a new `sharia_choice_request` endpoint and `ShariaChoice` enum.&#10;    - Enhance `ChatCubit` (via `executeRequest`) and `StartChatCubit` to support passing optional `additionalBody` data in API requests.&#10;    - Update `ShowTips` enum with new stages: `appStages`, `shariaMeetingChoiceTips`, and `shariaComplaintMeetingTerms`.&#10;    - Refactor `UserStatusAction` to streamline acceptance and rejection flows.&#10;- **Notifications**:&#10;    - Update `NotificationService` to show the user interface when interacting with chat request notification actions.&#10;    - Fix notification action logic to correctly target `isNewChat` stages.&#10;- **Infrastructure**:&#10;    - Add `sharia_choice_request` to `ApiConstants`.&#10;    - Update project workspace and debug breakpoints.">
       <option name="closed" value="true" />
@@ -637,7 +643,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776767007418</updated>
     </task>
-    <option name="localTasksCounter" value="300" />
+    <task id="LOCAL-00300" summary="Refactor home, filter, and chat screens into modular widgets and update the application entry point.&#10;&#10;- **UI &amp; Widgets**: &#10;    - Refactor `MainView` into specialized components: `HomeWelcomeHeader`, `OpportunitiesListBody`, and `ConsultantsListBody`.&#10;    - Modularize `FilterScreen` by introducing `FilterLocationWidget`, `FilterPhysicalAttributesWidget`, `FilterJobEducationWidget`, and `FilterLifestyleWidget`.&#10;    - Introduce `ChatListTile` to encapsulate chat list item logic and navigation.&#10;- **Features**:&#10;    - Update `OpportunitiesListBody` with enhanced pagination support and gender-based UI logic.&#10;    - Set `SplashScreen` as the default home widget in `app.dart`.&#10;- **Tools &amp; IDE**:&#10;    - Add `assetWizardSettings.xml` for project asset management.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and UI refactors.">
+      <option name="closed" value="true" />
+      <created>1776767313201</created>
+      <option name="number" value="00300" />
+      <option name="presentableId" value="LOCAL-00300" />
+      <option name="project" value="LOCAL" />
+      <updated>1776767313201</updated>
+    </task>
+    <option name="localTasksCounter" value="301" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -658,7 +672,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Refactor splash screen logic and cleanup unused internet connectivity handling (#183212)&#10;&#10;*   **Navigation &amp; Splash**:&#10;    *   Updated `Sitr` app to use a new `SplashScreen` location (`features/splash/splash_screen.dart`).&#10;    *   Commented out the legacy splash screen implementation in `settings/splash`.&#10;    *   Removed `InternetInterceptorWidget` and related connectivity management logic from the main application entry point.&#10;&#10;*   **UI &amp; Assets**:&#10;    *   Updated `ExceptionView` to use an `Expanded` layout for displaying the error Lottie animation.&#10;    *   Fixed the app's `startLocale` to default to Arabic in `main.dart`.&#10;&#10;*   **Clean up**:&#10;    *   Removed several unused imports including `internet_connection_checker`, `pip_view`, and various feature-specific cubits from `app.dart`.&#10;    *   Cleaned up `main.dart` by removing the unused `InactivityNotificationService` import." />
     <MESSAGE value="Enhance chat socket integration and dependency management&#10;&#10;*   **Chat &amp; Socket**:&#10;    *   Introduced `update-chat` and `timer` events to `SocketEvents`.&#10;    *   Updated `ChatCubit` to emit a `timer` event upon successfully starting a chat.&#10;    *   Refactored `StageAction` and `UserStatusAction` to emit `update-chat` socket events after successful state changes (e.g., exchanging phone numbers, making a sharia choice, or confirming payments).&#10;    *   Updated `ChatScreen` to listen for `update-chat` events to trigger chat refreshes and now accepts an optional `roomId`.&#10;    *   Improved socket initialization in `ChatScreen` and added logging for connection status and event reception.&#10;&#10;*   **Navigation &amp; Notifications**:&#10;    *   Updated `NotificationRoutes` and `ChatsScreen` to pass `roomId` when navigating to `ChatScreen`.&#10;    *   Modified `ChatsData` to include room information in chat action configurations.&#10;&#10;*   **Dependencies &amp; Configuration**:&#10;    *   Updated `dio` from `5.9.1` to `5.9.2`.&#10;    *   Switched `pagify` and `dropinity` from local path dependencies to hosted pub.dev versions (`0.3.1` and `0.0.3` respectively).&#10;    *   Upgraded Firebase iOS SDK components from `12.6.0` to `12.9.0` and added `firebase_remote_config`.&#10;    *   Set `minimumFetchInterval` to `Duration.zero` for Firebase Remote Config in `main.dart`.&#10;    *   Bumped iOS `CURRENT_PROJECT_VERSION` to `21`.&#10;&#10;*   **Cleanup**:&#10;    *   Removed unused `onSuccess` callback from `ChatCubit.startChat`.&#10;    *   Updated IDE project files and path mappings for Dart packages." />
     <MESSAGE value="Enhance chat socket integration and dependency management&#10;&#10;### Chat &amp; Socket&#10;*   Refactored `StageAction` to comment out manual `next-stage-request` socket emissions, shifting logic towards `ChatActions.executeReq`.&#10;*   Updated `ChatModel` to map `has_any_request` from the JSON field `has_send_request`.&#10;*   Improved notification listening in `GetNotificationCountCubit` to more robustly check for `match_request_id` presence using an object extension.&#10;&#10;### Dependencies &amp; Configuration&#10;*   Updated `dio` from `5.9.1` to `5.9.2`.&#10;*   Migrated `pagify` and `dropinity` from local path dependencies to hosted versions `0.3.1` and `0.0.3` respectively.&#10;*   Upgraded Firebase iOS SDK components from `12.6.0` to `12.9.0` and added `firebase_remote_config`.&#10;*   Added `connectivity_plus` to dependency overrides.&#10;*   Bumped iOS `CURRENT_PROJECT_VERSION` to `21`.&#10;&#10;### Infrastructure &amp; IDE&#10;*   Updated `.idea/libraries/Dart_Packages.xml` to reflect the move from local paths to pub-cache for internal packages.&#10;*   Added `git reset` and `git push` to allowed Bash commands in Claude settings.&#10;*   Updated `appp.iml` to exclude build and dart_tool directories for `firebase_remote_config` and `objectbox_flutter_libs`." />
     <MESSAGE value="Refactor chat actions, enhance caching feedback, and update state management for opportunities and consultants.&#10;&#10;### Chat &amp; Actions&#10;*   **Refactored ChatActions**: Updated `call()` to accept `BuildContext` and refactored `TipsAction`, `StageAction`, and `UserStatusAction` to extract data directly from the `ChatModel` instead of passing individual parameters.&#10;*   **State Management**: Optimized `ChatsData.manageSuccessState` to simplify the creation of chat action objects.&#10;*   **Start Chat**: Updated `StartChatCubit` to handle successful chat initialization via the refactored action call.&#10;&#10;### Feature Updates&#10;*   **Opportunities**: Refactored `GetOpportunitiesCubit` to use standard `Cubit` with `AsyncState` and manual injection of `BaseCrudUseCase`. Added explicit cache-hit logging and UI feedback when data is loaded from cache.&#10;*   **Consultants &amp; Complaints**: Commented out/removed `ConsultantCubit`, `FetchComplaintCubit`, and related UI screens (`ConsultantScreen`) in preparation for a refactor or replacement.&#10;*   **Notifications**: Refined the &quot;Delete All&quot; visibility logic in `NotificationsScreen` based on item count.&#10;&#10;### Core &amp; Infrastructure&#10;*   **Base CRUD &amp; Caching**: &#10;    *   Updated `AsyncCubit` to handle `BaseModel` directly in `setSuccess`.&#10;    *   Enhanced `ErrorHandlerExtension` to return a specific &quot;fromCache&quot; key and message when reading from local storage.&#10;    *   Added automatic top-message notifications when data is served from cache.&#10;*   **Network**: Configured `NetworkService` to update its base URL immediately upon registration in the service locator.&#10;*   **UI/UX**: &#10;    *   Improved profile view height calculation by using `TextPainter` for more accurate bio text measurements.&#10;    *   Fixed Firebase Remote Config to use `Duration.zero` for `minimumFetchInterval` in development/main.&#10;*   **Configuration**: Removed redundant socket URL storage in `main.dart` and added a commented-out `LoginScreen` entry point for testing in `app.dart`." />
@@ -683,7 +696,8 @@
     <MESSAGE value="Enhance text field multiline support, update chat bottom bar, and synchronize workspace state&#10;&#10;- **Core / UI**:&#10;    - Update `DefaultTextField` to support `minLines` and pass it to the underlying `CustomTextFormField`.&#10;    - Ensure `maxLines` in `DefaultTextField` correctly defaults based on the `inputType`.&#10;- **Chats**:&#10;    - Update the chat `BottomBar` to use `multiline` input type for the message field.&#10;    - Set `minLines: 1` and `maxLines: 5` in the chat input to allow for dynamic height adjustment.&#10;- **Firebase**:&#10;    - Update `firebase-debug.log` with recent authorization logs and API query statuses for App Distribution.&#10;- **Tools &amp; IDE**:&#10;    - Synchronize `.idea/workspace.xml` with recent task history and file changes." />
     <MESSAGE value="Refine chat list item constraints, clean up layout code, and synchronize workspace state&#10;&#10;- **Chats**:&#10;    - Remove fixed `itemExtent` from `EasyChat` in `ChatView` to allow for dynamic message heights.&#10;    - Remove commented-out `mainAxisAlignment` logic in `ChatBody` to clean up the message alignment implementation.&#10;- **Tools &amp; IDE**:&#10;    - Synchronize `.idea/workspace.xml` with recent task history, updating the last commit message and clearing obsolete local tasks." />
     <MESSAGE value="Refactor ExceptionView and StatusBuilder to support dynamic sizing, and update app entry point&#10;&#10;- **UI &amp; Widgets**:&#10;    - Refactor `ExceptionView` to use `FittedBox` and support an optional `size` parameter for better layout control.&#10;    - Update `StatusBuilder` and `MoreTapAppBar` to pass `errorWidgetSize` to `ExceptionView`, specifically fixing the wallet balance error display.&#10;    - Temporary change: Set `LoginScreen` as the home widget in `app.dart` for development/debugging.&#10;- **Project Configuration**:&#10;    - Fix indentation in `Makefile` (converted spaces to tabs for the `fingerPrint` and `kill` targets).&#10;    - Update `.idea/workspace.xml` and `.idea/caches/deviceStreaming.xml` with recent IDE state and task history.&#10;    - Synchronize `.claude/settings.local.json` with recent command history.&#10;- **Code Cleanup**:&#10;    - Minor formatting and indentation fixes in `string_extension.dart`." />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor ExceptionView and StatusBuilder to support dynamic sizing, and update app entry point&#10;&#10;- **UI &amp; Widgets**:&#10;    - Refactor `ExceptionView` to use `FittedBox` and support an optional `size` parameter for better layout control.&#10;    - Update `StatusBuilder` and `MoreTapAppBar` to pass `errorWidgetSize` to `ExceptionView`, specifically fixing the wallet balance error display.&#10;    - Temporary change: Set `LoginScreen` as the home widget in `app.dart` for development/debugging.&#10;- **Project Configuration**:&#10;    - Fix indentation in `Makefile` (converted spaces to tabs for the `fingerPrint` and `kill` targets).&#10;    - Update `.idea/workspace.xml` and `.idea/caches/deviceStreaming.xml` with recent IDE state and task history.&#10;    - Synchronize `.claude/settings.local.json` with recent command history.&#10;- **Code Cleanup**:&#10;    - Minor formatting and indentation fixes in `string_extension.dart`." />
+    <MESSAGE value="Refactor home, filter, and chat screens into modular widgets and update the application entry point.&#10;&#10;- **UI &amp; Widgets**: &#10;    - Refactor `MainView` into specialized components: `HomeWelcomeHeader`, `OpportunitiesListBody`, and `ConsultantsListBody`.&#10;    - Modularize `FilterScreen` by introducing `FilterLocationWidget`, `FilterPhysicalAttributesWidget`, `FilterJobEducationWidget`, and `FilterLifestyleWidget`.&#10;    - Introduce `ChatListTile` to encapsulate chat list item logic and navigation.&#10;- **Features**:&#10;    - Update `OpportunitiesListBody` with enhanced pagination support and gender-based UI logic.&#10;    - Set `SplashScreen` as the default home widget in `app.dart`.&#10;- **Tools &amp; IDE**:&#10;    - Add `assetWizardSettings.xml` for project asset management.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and UI refactors." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor home, filter, and chat screens into modular widgets and update the application entry point.&#10;&#10;- **UI &amp; Widgets**: &#10;    - Refactor `MainView` into specialized components: `HomeWelcomeHeader`, `OpportunitiesListBody`, and `ConsultantsListBody`.&#10;    - Modularize `FilterScreen` by introducing `FilterLocationWidget`, `FilterPhysicalAttributesWidget`, `FilterJobEducationWidget`, and `FilterLifestyleWidget`.&#10;    - Introduce `ChatListTile` to encapsulate chat list item logic and navigation.&#10;- **Features**:&#10;    - Update `OpportunitiesListBody` with enhanced pagination support and gender-based UI logic.&#10;    - Set `SplashScreen` as the default home widget in `app.dart`.&#10;- **Tools &amp; IDE**:&#10;    - Add `assetWizardSettings.xml` for project asset management.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and UI refactors." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

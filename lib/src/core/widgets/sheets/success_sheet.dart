@@ -44,7 +44,7 @@ class SuccessSheet extends StatelessWidget {
         showAlreadyHaveAccount: true,
         userType: gender,
         onClick: (context, user) => context.read<CompleteProfileCubit>().completeProfile(
-          body: user, onSuccess: () => showDefaultBottomSheet(child: const CompleteProfileSheet()),
+          body: user, onSuccess: (_) => showDefaultBottomSheet(child: const CompleteProfileSheet()),
         ),
       ));
     }

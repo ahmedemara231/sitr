@@ -241,9 +241,11 @@ extension FormatString on String {
             showConditionsAndTerms: true,
             showAlreadyHaveAccount: true,
             userType: user.gender!.userGender,
-            onClick: (context, user) => context.read<CompleteProfileCubit>().completeProfile(
-              body: user, onSuccess: () => ChatSheetManager.show(child: const CompleteProfileSheet()),
-            ),
+            onClick: (context, formUser) => context.read<CompleteProfileCubit>().completeProfile(
+                body: formUser, onSuccess: (responseUser) async {
+              await UserCubit.instance.setUserLoggedIn(user: responseUser, token: responseUser.token ?? '');
+              Go.offAll(const HomeScreen());
+            }),
           )
       );
 
@@ -253,9 +255,11 @@ extension FormatString on String {
         showConditionsAndTerms: true,
         showAlreadyHaveAccount: true,
         userType: user.gender!.userGender,
-        onClick: (context, user) => context.read<CompleteProfileCubit>().completeProfile(
-          body: user, onSuccess: () => ChatSheetManager.show(child: const CompleteProfileSheet()),
-        ),
+        onClick: (context, formUser) => context.read<CompleteProfileCubit>().completeProfile(
+            body: formUser, onSuccess: (responseUser) async {
+          await UserCubit.instance.setUserLoggedIn(user: responseUser, token: responseUser.token ?? '');
+          Go.offAll(const HomeScreen());
+        }),
       ));
 
     }else{

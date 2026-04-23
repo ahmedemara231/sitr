@@ -72,6 +72,7 @@ class _PackagesScreenState extends State<PackagesScreen> {
                     paymentMethods: widget.paymentMethods,
                     isInAuth: widget.isInAuth,
                     package: element,
+                    onSubscribe: () => _controller.refresh(),
                   ),
                   pagifyController: _controller,
               ).withPullRefresher(
