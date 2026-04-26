@@ -166,7 +166,7 @@ class FemaleModel extends IndividualUserModel {
 
     // Remove null values (parent already does this, but re-apply after adding female-specific fields)
     // body.removeWhere((key, value) => value == null);
-    return body;
+    return body..removeWhere((key, value) => (value as Object?).isNull);
   }
 
   @override

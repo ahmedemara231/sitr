@@ -181,7 +181,7 @@ class IndividualUserModel extends UserModel {
     }
 
     log('the body is $body');
-    return body;
+    return body..removeWhere((key, value) => (value as Object?).isNull);
   }
 
   @override

@@ -189,7 +189,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         title: LocaleKeys.pleaseEnterTheCurrentJob,
         controller: _currentJobCont,
         onChanged: (val) => _listenToData(model.copyWith(currentJob: val) as T),
-        validator: (v) => Validators.validateString(v, min: 3, max: 100, fieldTitle: LocaleKeys.currentJob.tr()),
+        // validator: (v) => Validators.validateString(v, min: 3, max: 100, fieldTitle: LocaleKeys.currentJob.tr()),
       ),
       SignUpTextField(
         upperTitle: LocaleKeys.quickBrief,
@@ -197,7 +197,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         controller: _briefCont,
         inputType: TextInputType.multiline,
         onChanged: (val) => _listenToData(model.copyWith(bio: val) as T),
-        validator: (v) => Validators.validateString(v, min: 3, max: 1000, fieldTitle: LocaleKeys.quickBrief.tr()),
+        // validator: (v) => Validators.validateString(v, min: 3, max: 1000, fieldTitle: LocaleKeys.quickBrief.tr()),
       ),
       // if(model.maritalStatus?.value == 'single')
 
@@ -227,7 +227,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
                  inputType: TextInputType.number,
                  onChanged: (val) =>
                      _listenToData(model.copyWith(numOfChildren: int.parse(val!)) as T),
-                 validator: (v) => Validators.validateInteger(v, min: 0, max: 100, fieldTitle: LocaleKeys.childrenNumber.tr()),
+                 // validator: (v) => Validators.validateInteger(v, min: 0, max: 100, fieldTitle: LocaleKeys.childrenNumber.tr()),
                ),
                AppDropinity<List<TitleValueShape>, TitleValueShape>.withApiRequest(
                  initialValue: widget.initialValue?.childCustody,
@@ -236,7 +236,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
                  asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.childCustodies),
                  getLabel: (element) => element.title,
                  onChanged: (result) => _listenToData(model.copyWith(childCustody: result) as T),
-                 validator: (e) => Validators.validateEmpty(e?.title),
+                 // validator: (e) => Validators.validateEmpty(e?.title),
                  cacheKey: 'child_custodies',
                  cacheToJson: (e) => e.toJson(),
                  cacheFromJson: (json) => TitleValueShape.fromJson(json),
@@ -260,7 +260,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         controller: _thingsCont,
         onChanged: (val) =>
             _listenToData(model.copyWith(prohibitedThings: val) as T),
-        validator: (v) => Validators.validateString(v, min: 3, max: 1000, fieldTitle: LocaleKeys.thingsIAbsolutelyDoNotAcceptOrWant.tr()),
+        // validator: (v) => Validators.validateString(v, min: 3, max: 1000, fieldTitle: LocaleKeys.thingsIAbsolutelyDoNotAcceptOrWant.tr()),
       ),
 
       DowryWidget(
@@ -289,7 +289,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
           asyncCall: (context, page) async => await AuthData.getCities(),
           getLabel: (city) => city.name ?? '',
         onChanged: (val) => _listenToData(model.copyWith(cityId: val) as T),
-          validator: (e) => Validators.validateEmpty(e?.name),
+          // validator: (e) => Validators.validateEmpty(e?.name),
         cacheKey: 'cities',
         cacheToJson: (e) => e.toJson(),
         cacheFromJson: (json) => CityModel.fromJson(json),
@@ -305,7 +305,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         controller: _educationalQualificationCont,
         onChanged: (val) =>
             _listenToData(model.copyWith(educationLevel: val) as T),
-        validator: (v) => Validators.validateString(v, fieldTitle: LocaleKeys.educationalQualification.tr()),
+        // validator: (v) => Validators.validateString(v, fieldTitle: LocaleKeys.educationalQualification.tr()),
       ),
       RadioWidget<Answer>(
         initialValue: widget.initialValue?.isPrayer?.toAnswer,
@@ -321,7 +321,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         controller: _diseasesCont,
         onChanged: (val) =>
             _listenToData(model.copyWith(healthConditions: val) as T),
-        validator: (v) => Validators.validateString(v, min: 3, max: 1000, isRequired: false, fieldTitle: LocaleKeys.diseasesIfExists.tr()),
+        // validator: (v) => Validators.validateString(v, min: 3, max: 1000, isRequired: false, fieldTitle: LocaleKeys.diseasesIfExists.tr()),
       ),
       RadioWidget<Languages>(
         initialValue: widget.initialValue?.chatLang?.toLang(),
@@ -371,7 +371,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.religiousCommitments),
         getLabel: (element) => element.title,
         onChanged: (value) => _listenToData(model.copyWith(religiousCommitment: TitleValueShape.fromSingleLabel(value?.value)) as T),
-        validator: (e) => Validators.validateEmpty(e?.title),
+        // validator: (e) => Validators.validateEmpty(e?.title),
         cacheKey: 'religious_commitments',
         cacheToJson: (e) => e.toJson(),
         cacheFromJson: (json) => TitleValueShape.fromJson(json),

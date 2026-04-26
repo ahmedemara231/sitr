@@ -115,7 +115,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 title: LocaleKeys.pleaseEnterHome,
                 controller: _liveAfterMarryCont,
                 onChanged: (value) => _listenToData(asFemale.copyWith(preferredResidenceAfterMarriage: value)),
-                validator: (v) => Validators.validateString(v, min: 3, max: 1000, fieldTitle: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage.tr()),
+                // validator: (v) => Validators.validateString(v, min: 3, max: 1000, fieldTitle: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage.tr()),
               ),
             )..insert(
               18,
@@ -150,7 +150,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 wearingHijab.value = value.value;
                 _listenToData(asFemale.copyWith(hijab: TitleValueShape.fromSingleLabel(wearingHijab.value)));
               },
-              validator: (e) => Validators.validateEmpty(e?.title),
+              // validator: (e) => Validators.validateEmpty(e?.title),
               cacheKey: 'hijab_types',
               cacheToJson: (e) => e.toJson(),
               cacheFromJson: (json) => TitleValueShape.fromJson(json),
@@ -222,7 +222,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 title: LocaleKeys.pleaseEnterHome,
                 controller: _liveAfterMarryCont,
                 onChanged: (value) => _listenToData(asFemale.copyWith(preferredResidenceAfterMarriage: value)),
-                validator: (v) => Validators.validateString(v, min: 3, max: 1000, fieldTitle: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage.tr()),
+                // validator: (v) => Validators.validateString(v, min: 3, max: 1000, fieldTitle: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage.tr()),
               ),
             ])
             ..insertAll(17, [
@@ -248,7 +248,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                   wearingHijab.value = value?.value;
                   _listenToData(asFemale.copyWith(hijab: TitleValueShape.fromSingleLabel(wearingHijab.value)));
                 },
-                validator: (e) => Validators.validateEmpty(e?.title),
+                // validator: (e) => Validators.validateEmpty(e?.title),
                 cacheKey: 'hijab_types',
                 cacheToJson: (e) => e.toJson(),
                 cacheFromJson: (json) => TitleValueShape.fromJson(json),

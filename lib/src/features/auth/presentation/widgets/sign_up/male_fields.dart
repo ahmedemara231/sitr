@@ -75,16 +75,14 @@ class _MaleFieldsState extends State<MaleFields> {
         return SharedFormFields<MaleModel>(
           initialValue: widget.initialValue,
           restorationId: UserGender.male.name,
-          onChanged: (data) =>
-              _listenToData(asMaleModel.merge(data.copyWith())),
+          onChanged: (data) => _listenToData(asMaleModel.merge(data.copyWith())),
         );
 
       default:
         return SharedFormFields<MaleModel>(
           restorationId: UserGender.male.name,
           initialValue: widget.initialValue,
-          onChanged: (data) =>
-              _listenToData(asMaleModel.merge(data.copyWith())),
+          onChanged: (data) => _listenToData(asMaleModel.merge(data.copyWith())),
           onInitData: (List<Widget> children) => children
             ..insertAll(
               0,
