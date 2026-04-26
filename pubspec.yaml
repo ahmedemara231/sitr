@@ -26,6 +26,7 @@ dependencies:
   intl: 0.20.2
   easy_localization: ^3.0.7
   #--------------------- Tools -----------------------
+  package_info_plus: ^8.3.1
   pip_view: ^0.9.7
   no_screenshot: ^0.3.1
   sentry_flutter: ^9.9.0

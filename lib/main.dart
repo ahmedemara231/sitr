@@ -10,6 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'firebase_options.dart';
+import 'firebase_options.dart' as production;
+import 'firebase_options_dev.dart' as dev;
 import 'src/app.dart';
 import 'src/config/language/languages.dart';
 import 'src/config/res/config_imports.dart';
@@ -30,34 +32,37 @@ Future<bool> fetchBaseUrl() async {
   try {
     final remoteConfig = FirebaseRemoteConfig.instance;
 
-    // Set config settings for fetch timeout and minimum fetch interval
     await remoteConfig.setConfigSettings(
       RemoteConfigSettings(
         fetchTimeout: const Duration(seconds: 10),
-        minimumFetchInterval: Duration.zero
+        minimumFetchInterval: Duration.zero,
       ),
     );
 
-    // Fetch and activate the remote config
     await remoteConfig.fetchAndActivate();
 
-    // Get the base URL from remote config
-    final baseUrl = remoteConfig.getString(
-      SecureLocalVariableKeys.baseUrlKey,
-    );
+    final String prodBaseUrl = remoteConfig.getString(SecureLocalVariableKeys.baseUrlKey);
+    final String devBaseUrl = remoteConfig.getString(SecureLocalVariableKeys.devBaseUrlKey);
 
-    log('the base url is $baseUrl');
+    log('the prod base url is $prodBaseUrl');
+    log('the dev base url is $devBaseUrl');
 
-    // Get the Socet_Io URL from remote config
     final socetIoUrl = remoteConfig.getString(
       SecureLocalVariableKeys.socetIoUrl,
     );
 
-    if (baseUrl.isEmpty) {
+    if (prodBaseUrl.isEmpty && devBaseUrl.isEmpty) {
       return false;
     }
 
-    await SecureStorage.write(SecureLocalVariableKeys.baseUrlKey, baseUrl);
+    if (prodBaseUrl.isNotEmpty) {
+      await SecureStorage.write(
+          SecureLocalVariableKeys.baseUrlKey, prodBaseUrl);
+    }
+    if (devBaseUrl.isNotEmpty) {
+      await SecureStorage.write(
+          SecureLocalVariableKeys.devBaseUrlKey, devBaseUrl);
+    }
     // await SecureStorage.write(SecureLocalVariableKeys.socetIoUrl, socetIoUrl);
 
     return true;
@@ -66,6 +71,17 @@ Future<bool> fetchBaseUrl() async {
     return false;
   }
 }
+
+Future<void> _initializeFirebaseApp() async {
+  // Determine which Firebase options to use based on the flavor
+  final firebaseOptions = switch (appFlavor) {
+    'dev' => dev.DefaultFirebaseOptions.currentPlatform,
+    'production' => production.DefaultFirebaseOptions.currentPlatform,
+    _ => throw UnsupportedError('Invalid flavor: $appFlavor'),
+  };
+  await Firebase.initializeApp(options: firebaseOptions);
+}
+
 
 void main() async {
   Helpers.changeStatusbarColor(
@@ -79,7 +95,7 @@ void main() async {
       CacheStorage.init(),
       ObjectBoxCacheService.init(),
       ScreenUtil.ensureScreenSize(),
-      Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
+      _initializeFirebaseApp()
     ],
   );
   await Helpers.initZegoData();

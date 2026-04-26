@@ -62,6 +62,21 @@ android {
         }
     }
 
+    flavorDimensions += "default"
+    productFlavors {
+        create("dev") {
+            dimension = "default"
+            applicationId = "com.aait.flutter.sitr.dev"
+            resValue("string", "app_name", "ستر dev")
+        }
+        create("production") {
+            dimension = "default"
+            applicationId = "com.aait.flutter.sitr"
+            resValue("string", "app_name", "ستر")
+        }
+
+    }
+
 }
 
 dependencies {

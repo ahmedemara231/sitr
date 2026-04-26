@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import '../../config/language/languages.dart' show Languages;
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
@@ -8,6 +9,7 @@ import '../error/exceptions.dart';
 import '../base_crud/code/domain/usecases/pagination_response.dart';
 import '../extensions/object.dart';
 import '../helpers/cache_service.dart';
+import '../helpers/helpers.dart';
 import 'configuration_interceptor.dart';
 import 'extensions.dart';
 import 'log_interceptor.dart';
@@ -46,7 +48,17 @@ class DioService implements NetworkService {
 
 
   Future<String> getBaseUrl() async {
-    return await SecureStorage.read(SecureLocalVariableKeys.baseUrlKey) ?? '';
+    final bool isDev = Helpers.currentFlavor.isDev;
+    final String primaryKey = isDev
+        ? SecureLocalVariableKeys.devBaseUrlKey
+        : SecureLocalVariableKeys.baseUrlKey;
+    final String secondaryKey = isDev
+        ? SecureLocalVariableKeys.baseUrlKey
+        : SecureLocalVariableKeys.devBaseUrlKey;
+
+    final String primary = await SecureStorage.read(primaryKey) ?? '';
+    if (primary.isNotEmpty) return primary;
+    return await SecureStorage.read(secondaryKey) ?? '';
   }
 
   @override
@@ -147,5 +159,6 @@ class DioService implements NetworkService {
 
 final class SecureLocalVariableKeys {
   static const String baseUrlKey = "base_url";
+  static const String devBaseUrlKey = "dev_base_url";
   static const String socetIoUrl = "socet_io_url";
 }

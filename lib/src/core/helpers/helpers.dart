@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:lottie/lottie.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:zego_zpns/zego_zpns.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import '../../../generated/assets.dart';
@@ -27,7 +28,32 @@ import '../widgets/sheets/login_when_visitor.dart';
 import 'permission_handler/handler.dart';
 import 'permission_handler/model.dart';
 
+enum AppFlavor{dev, production, none}
+extension Check on AppFlavor{
+  bool get isDev => this == AppFlavor.dev;
+  bool get isProduction => this == AppFlavor.production;
+}
+
+
 class Helpers {
+  static late AppFlavor currentFlavor;
+  static Future<void> get getCurrentFlavor async{
+    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    log('info is ${packageInfo.packageName} ${packageInfo.appName}');
+    switch(packageInfo.packageName){
+      case ConstantManager.devBundleId:
+        currentFlavor = AppFlavor.dev;
+
+      case ConstantManager.bundleId:
+        currentFlavor = AppFlavor.production;
+
+      default:
+        currentFlavor = AppFlavor.none;
+    }
+  }
+
+
   static void showRestartSheet()async{
     AppBottomSheet.large(
         asyncCall: (context) async => await Phoenix.rebirth(context),

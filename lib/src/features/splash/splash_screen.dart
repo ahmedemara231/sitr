@@ -29,6 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _manipulateSplashData()async{
+    await Helpers.getCurrentFlavor;
     await NotificationService().saveFcmToken();
     await Future.delayed(const Duration(seconds: 2));
     final result = await CacheStorage.read(CacheConstant.onBoardingSubmission);
