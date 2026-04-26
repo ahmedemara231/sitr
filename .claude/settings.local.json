@@ -48,7 +48,10 @@
       "Bash(wc -l /Users/aaita/Desktop/apps/satr/lib/src/features/*/presentation/screens/*.dart)",
       "Bash(keytool:*)",
       "Bash(awk 'NR==73 {sub\\(/^    /, \"\\\\t\"\\)} 1' /Users/aaita/Desktop/apps/satr/Makefile)",
-      "Bash(mv /tmp/Makefile.fixed /Users/aaita/Desktop/apps/satr/Makefile)"
+      "Bash(mv /tmp/Makefile.fixed /Users/aaita/Desktop/apps/satr/Makefile)",
+      "Bash(awk NR>=70520 && NR<=70535 *)",
+      "Bash(awk 'NR>=70525 && NR<=70535' /tmp/dev_ipa_build.log)",
+      "Bash(awk '/\\\\/\\\\* Pods-Runner \\\\*\\\\/ = {/,/};/' /Users/aaita/Desktop/apps/satr/ios/Pods/Pods.xcodeproj/project.pbxproj)"
     ],
     "deny": [],
     "ask": []
