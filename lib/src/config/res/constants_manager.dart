@@ -4,7 +4,7 @@ final GetIt injector = GetIt.instance;
 
 class ConstantManager {
   static const String bundleId = 'com.aait.flutter.sitr';
-  static const String devBundleId = 'com.aait.flutter.dev.sitr';
+  static const String devBundleId = 'com.aait.flutter.sitr.dev';
   static const String appName = 'sitr';
   static const String defaultAvatar = 'https://share.google/images/xqtQr0B9c0ROYtxeG';
   static const String fontFamily = 'Tajawal';

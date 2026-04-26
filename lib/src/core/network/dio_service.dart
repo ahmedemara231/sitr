@@ -49,14 +49,17 @@ class DioService implements NetworkService {
 
   Future<String> getBaseUrl() async {
     final bool isDev = Helpers.currentFlavor.isDev;
-    final String primaryKey = isDev
-        ? SecureLocalVariableKeys.devBaseUrlKey
-        : SecureLocalVariableKeys.baseUrlKey;
-    final String secondaryKey = isDev
-        ? SecureLocalVariableKeys.baseUrlKey
-        : SecureLocalVariableKeys.devBaseUrlKey;
+
+    final String primaryKey = isDev ?
+    SecureLocalVariableKeys.devBaseUrlKey :
+    SecureLocalVariableKeys.baseUrlKey;
+
+    final String secondaryKey = isDev ?
+    SecureLocalVariableKeys.baseUrlKey :
+    SecureLocalVariableKeys.devBaseUrlKey;
 
     final String primary = await SecureStorage.read(primaryKey) ?? '';
+
     if (primary.isNotEmpty) return primary;
     return await SecureStorage.read(secondaryKey) ?? '';
   }
