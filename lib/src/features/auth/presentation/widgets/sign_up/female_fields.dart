@@ -22,12 +22,14 @@ import 'shared_form_fields.dart';
 class FemaleFields extends StatefulWidget {
   final bool withParent;
   final IndividualUserModel? initialValue;
+  final FormMode mode;
   final void Function(IndividualUserModel data) onChangeFemaleData;
   const FemaleFields({
     super.key,
     this.initialValue,
     required this.withParent,
     required this.onChangeFemaleData,
+    this.mode = FormMode.all,
   });
 
   @override
@@ -99,203 +101,111 @@ class _FemaleFieldsState extends State<FemaleFields> {
 
   FemaleModel get asFemale => femaleFields as FemaleModel;
   final _formKey = GlobalKey<FormState>();
+
+  Widget _nameField() => SignUpTextField(
+        upperTitle: LocaleKeys.name,
+        title: LocaleKeys.pleaseEnterName,
+        controller: _nameCont,
+        onChanged: (val) => _listenToData(asFemale.copyWith(name: val)),
+        validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.name.tr()),
+      );
+
+  Widget _phoneField() => SignUpTextField(
+        upperTitle: LocaleKeys.phoneNumber,
+        title: LocaleKeys.pleaseEnterTheNumber,
+        controller: _phoneCont,
+        onChanged: (value) => _listenToData(asFemale.copyWith(phone: value)),
+        validator: Validators.validatePhone,
+        inputType: TextInputType.number,
+      );
+
+  Widget _ageField() => SignUpTextField(
+        upperTitle: LocaleKeys.age,
+        title: LocaleKeys.pleaseEnterYourAge,
+        onChanged: (value) =>
+            _listenToData(asFemale.copyWith(age: int.parse(value!))),
+        controller: _ageCont,
+        inputType: TextInputType.number,
+        validator: (v) => Validators.validateAge(v, fieldTitle: LocaleKeys.age.tr(), isRequired: true),
+      );
+
+  Widget _liveAfterMarryField() => SignUpTextField(
+        upperTitle: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage,
+        title: LocaleKeys.pleaseEnterHome,
+        controller: _liveAfterMarryCont,
+        onChanged: (value) => _listenToData(
+            asFemale.copyWith(preferredResidenceAfterMarriage: value)),
+      );
+
+  Widget _polygamyField() => RadioWidget<Answer>(
+        initialValue: (widget.initialValue as FemaleModel?)?.acceptsPolygamy?.toAnswer,
+        title: LocaleKeys.doYouAcceptPolygamy,
+        onSubmit: (result) {
+          acceptsPolygamy = result;
+          _listenToData(asFemale.copyWith(acceptsPolygamy: acceptsPolygamy.toBool));
+        },
+        values: Answer.values,
+        titleBuilder: (i) => AppText(Answer.values[i].translate),
+      );
+
+  Widget _hijabField() => AppDropinity<List<TitleValueShape>, TitleValueShape>.withApiRequest(
+        initialValue: (widget.initialValue as FemaleModel?)?.hijab,
+        hint: LocaleKeys.areYouWaringHijab,
+        title: LocaleKeys.areYouWaringHijab,
+        asyncCall: (BuildContext ctx, int page) async =>
+            await AuthData.getPersonalData(ApiConstants.hijabTypes),
+        getLabel: (TitleValueShape element) => element.title,
+        onChanged: (value) {
+          wearingHijab.value = value?.value;
+          _listenToData(asFemale.copyWith(
+              hijab: TitleValueShape.fromSingleLabel(wearingHijab.value)));
+        },
+        cacheKey: 'hijab_types',
+        cacheToJson: (e) => e.toJson(),
+        cacheFromJson: (json) => TitleValueShape.fromJson(json),
+      );
+
+  void _allInsertsWithParent(List<Widget> children) {
+    children
+      ..insert(2, _phoneField())
+      ..insert(6, _ageField())
+      ..insert(15, _liveAfterMarryField())
+      ..insert(17, _polygamyField())
+      ..insert(21, _hijabField())
+      ..insert(0, _nameField());
+  }
+
+  void _allInsertsIndividual(List<Widget> children) {
+    children
+      ..insert(15, _liveAfterMarryField())
+      ..insert(18, _polygamyField())
+      ..insert(21, _hijabField());
+  }
+
+  void _requiredInserts(List<Widget> children) {
+    children
+      ..insert(0, _nameField())
+      ..insert(2, _phoneField())
+      ..add(_ageField());
+  }
+
+  void _optionalInserts(List<Widget> children) {
+    children
+      ..insert(11, _liveAfterMarryField())
+      ..insert(14, _polygamyField())
+      ..insert(17, _hijabField());
+  }
+
   @override
   Widget build(BuildContext context) {
-    switch (widget.withParent) {
-      case false:
-        return SharedFormFields<FemaleModel>(
-          restorationId: 'female_fields',
-          initialValue: widget.initialValue,
-          onChanged: (data) => _listenToData(asFemale.merge(data.copyWith())),
-          // onChanged: (data) => _listenToData(asFemale.merge(data.copyWith())),
-          onInitData: (List<Widget> children) => children..insert(
-              15,
-              SignUpTextField(
-                upperTitle: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage,
-                title: LocaleKeys.pleaseEnterHome,
-                controller: _liveAfterMarryCont,
-                onChanged: (value) => _listenToData(asFemale.copyWith(preferredResidenceAfterMarriage: value)),
-                // validator: (v) => Validators.validateString(v, min: 3, max: 1000, fieldTitle: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage.tr()),
-              ),
-            )..insert(
-              18,
-              RadioWidget<Answer>(
-                  title: LocaleKeys.doYouAcceptPolygamy,
-                  onSubmit: (result) {
-                    acceptsPolygamy = result;
-                    _listenToData(asFemale.copyWith(acceptsPolygamy: acceptsPolygamy.toBool));
-                  },
-                  values: Answer.values,
-                titleBuilder: (i) => AppText(Answer.values[i].translate),
-              ),
-            )..insertAll(21, [
-
-            // AppDropinity<List<Kinship>, Kinship>.withApiRequest(
-            //     initialValue: (widget.initialValue as FemaleModel?)?.guardianRelation,
-            //     hint: LocaleKeys.kinship,
-            //     title: LocaleKeys.kinship,
-            //     asyncCall: (BuildContext ctx, int page) async => await AuthData.getKinships(),
-            //     getLabel: (Kinship element) => element.value,
-            //     onChanged: (value) => _listenToData(asFemale.copyWith(guardianRelation: value)),
-            //     validator: (e) => Validators.validateEmpty(e?.value)
-            // ),
-
-            AppDropinity<List<TitleValueShape>, TitleValueShape>.withApiRequest(
-              initialValue: (widget.initialValue as FemaleModel?)?.hijab,
-              hint: LocaleKeys.areYouWaringHijab,
-              title: LocaleKeys.areYouWaringHijab,
-              asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.hijabTypes),
-              getLabel: (TitleValueShape element) => element.title,
-              onChanged: (value) {
-                wearingHijab.value = value.value;
-                _listenToData(asFemale.copyWith(hijab: TitleValueShape.fromSingleLabel(wearingHijab.value)));
-              },
-              // validator: (e) => Validators.validateEmpty(e?.title),
-              cacheKey: 'hijab_types',
-              cacheToJson: (e) => e.toJson(),
-              cacheFromJson: (json) => TitleValueShape.fromJson(json),
-            ),
-
-              // SignUpTextField(
-              //   upperTitle: LocaleKeys.parentName,
-              //   title: LocaleKeys.pleaseEnterName,
-              //   controller: _parentNameCont,
-              //   onChanged: (value) => _listenToData(asFemale.copyWith(guardianName: value)),
-              //
-              //   validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.parentName.tr()),
-              // ),
-              // SignUpTextField(
-              //   upperTitle: LocaleKeys.parentNumber,
-              //   title: LocaleKeys.pleaseEnterTheNumber,
-              //   controller: _parentNumberCont,
-              //   inputType: TextInputType.phone,
-              //   onChanged: (value) => _listenToData(asFemale.copyWith(guardianPhone: value)),
-              //   validator: (v) => Validators.validatePhone(v, message: LocaleKeys.parentNumber.tr()),
-              // ),
-            // AppDropinity<List<Kinship>, Kinship>.withApiRequest(
-            //   initialValue: (widget.initialValue as FemaleModel?)?.guardianRelation,
-            //   hint: LocaleKeys.kinship,
-            //   title: LocaleKeys.kinship,
-            //   asyncCall: (BuildContext ctx, int page) async => await AuthData.getKinships(),
-            //   getLabel: (Kinship element) => element.value,
-            //   onChanged: (value) => _listenToData(asFemale.copyWith(guardianRelation: value)),
-            //     // validator: (e) => Validators.validateEmpty(e?.value)
-            // ),
-            ]),
-        );
-
-      default:
-        return SharedFormFields<FemaleModel>(
-          restorationId: 'female_fields',
-          initialValue: widget.initialValue,
-          onChanged: (data) => _listenToData(asFemale.merge(data.copyWith())),
-          onInitData: (List<Widget> children) => children..insert(2, 
-            SignUpTextField(
-              upperTitle: LocaleKeys.phoneNumber,
-              title: LocaleKeys.pleaseEnterTheNumber,
-              controller: _phoneCont,
-              onChanged: (value) => _listenToData(asFemale.copyWith(phone: value)),
-              validator: Validators.validatePhone,
-              inputType: TextInputType.number,
-            ),
-          )..insertAll(6, [
-            SignUpTextField(
-              upperTitle: LocaleKeys.age,
-              title: LocaleKeys.pleaseEnterYourAge,
-              onChanged: (value) => _listenToData(asFemale.copyWith(age: int.parse(value!))),
-              controller: _ageCont,
-              inputType: TextInputType.number,
-              validator: (v) => Validators.validateAge(v, fieldTitle: LocaleKeys.age.tr(), isRequired: true),
-            ),
-            // SignUpTextField(
-            //   upperTitle: LocaleKeys.identifyNumber,
-            //   title: LocaleKeys.pleaseEnterTheNumber,
-            //   controller: _identifyNumberCont,
-            //   onChanged: (value) => _listenToData(asFemale.copyWith(identityNumber: value)),
-            //   inputType: TextInputType.number,
-            //   validator: (v) => Validators.validateIdentityNumber(v, fieldTitle: LocaleKeys.identifyNumber.tr()),
-            // ),
-          ])
-            ..insertAll(15, [
-              SignUpTextField(
-                upperTitle: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage,
-                title: LocaleKeys.pleaseEnterHome,
-                controller: _liveAfterMarryCont,
-                onChanged: (value) => _listenToData(asFemale.copyWith(preferredResidenceAfterMarriage: value)),
-                // validator: (v) => Validators.validateString(v, min: 3, max: 1000, fieldTitle: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage.tr()),
-              ),
-            ])
-            ..insertAll(17, [
-              RadioWidget<Answer>(
-                initialValue: (widget.initialValue as FemaleModel?)?.acceptsPolygamy?.toAnswer,
-                  title: LocaleKeys.doYouAcceptPolygamy,
-                  onSubmit: (result) {
-                    acceptsPolygamy = result;
-                    _listenToData(asFemale.copyWith(acceptsPolygamy: acceptsPolygamy.toBool));
-                  },
-                  values: Answer.values,
-                titleBuilder: (i) => AppText(Answer.values[i].translate),
-              ),
-            ])
-            ..insertAll(21, [
-              AppDropinity<List<TitleValueShape>, TitleValueShape>.withApiRequest(
-                initialValue: (widget.initialValue as FemaleModel?)?.hijab,
-                hint: LocaleKeys.areYouWaringHijab,
-                title: LocaleKeys.areYouWaringHijab,
-                asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.hijabTypes),
-                getLabel: (TitleValueShape element) => element.title,
-                onChanged: (value) {
-                  wearingHijab.value = value?.value;
-                  _listenToData(asFemale.copyWith(hijab: TitleValueShape.fromSingleLabel(wearingHijab.value)));
-                },
-                // validator: (e) => Validators.validateEmpty(e?.title),
-                cacheKey: 'hijab_types',
-                cacheToJson: (e) => e.toJson(),
-                cacheFromJson: (json) => TitleValueShape.fromJson(json),
-              ),
-
-
-              // SignUpTextField(
-              //   upperTitle: LocaleKeys.parentName,
-              //   title: LocaleKeys.pleaseEnterName,
-              //   controller: _parentNameCont,
-              //   onChanged: (value) => _listenToData(asFemale.copyWith(guardianName: value)),
-              //
-              //   validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.parentName.tr()),
-              // ),
-              // SignUpTextField(
-              //   upperTitle: LocaleKeys.parentNumber,
-              //   title: LocaleKeys.pleaseEnterTheNumber,
-              //   controller: _parentNumberCont,
-              //   inputType: TextInputType.phone,
-              //   onChanged: (value) => _listenToData(asFemale.copyWith(guardianPhone: value)),
-              //   validator: (v) => Validators.validatePhone(v, message: LocaleKeys.parentNumber.tr()),
-              // ),
-
-              // AppDropinity<List<Kinship>, Kinship>.withApiRequest(
-              //   initialValue: (widget.initialValue as FemaleModel?)?.guardianRelation,
-              //   hint: LocaleKeys.kinship,
-              //   title: LocaleKeys.kinship,
-              //   asyncCall: (BuildContext ctx, int page) async => await AuthData.getKinships(),
-              //   getLabel: (Kinship element) => element.value,
-              //   onChanged: (value) => _listenToData(asFemale.copyWith(guardianRelation: value)),
-              //     // validator: (e) => Validators.validateEmpty(e?.value)
-              // ),
-
-            ])
-            ..insert(
-              0,
-              SignUpTextField(
-                upperTitle: LocaleKeys.name,
-                title: LocaleKeys.pleaseEnterName,
-                controller: _nameCont,
-                onChanged: (val) => _listenToData(
-                    asFemale.copyWith(name: val)
-                ),
-                validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.name.tr()),
-              ),
-            ),
-        );
-    }
+    return SharedFormFields<FemaleModel>(
+      restorationId: 'female_fields',
+      initialValue: widget.initialValue,
+      mode: widget.mode,
+      onChanged: (data) => _listenToData(asFemale.merge(data.copyWith())),
+      onInitData: widget.withParent ? _allInsertsWithParent : _allInsertsIndividual,
+      onInitRequired: widget.withParent ? _requiredInserts : null,
+      onInitOptional: _optionalInserts,
+    );
   }
 }

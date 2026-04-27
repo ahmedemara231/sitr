@@ -13,8 +13,10 @@ import '../../features/auth/presentation/cubits/add_child.dart';
 import '../../features/auth/presentation/cubits/complete_profile_cubit.dart';
 import '../../features/auth/presentation/cubits/oath.dart';
 import '../../features/auth/presentation/enums/complete_register_status.dart';
+import '../../features/auth/presentation/widgets/sign_up/shared_form_fields.dart';
 import '../../features/auth/presentation/widgets/sign_up/sheets/add_child_sheet.dart';
 import '../../features/auth/presentation/widgets/sign_up/sheets/complete_profile_sheet.dart';
+import '../../features/more/presentation/cubit/edit_profile.dart';
 import '../../features/chats/data/chat_sheet_manager.dart';
 import '../../features/chats/enums.dart';
 import '../../features/home/home_screen.dart';
@@ -236,31 +238,11 @@ extension FormatString on String {
                 body: user,
               )
           ) :
-          EnterMaleOrFemaleOrChildDataScreen.individual(
-            scaffoldType: ScaffoldType.centerCard,
-            showConditionsAndTerms: true,
-            showAlreadyHaveAccount: true,
-            userType: user.gender!.userGender,
-            onClick: (context, formUser) => context.read<CompleteProfileCubit>().completeProfile(
-                body: formUser, onSuccess: (responseUser) async {
-              await UserCubit.instance.setUserLoggedIn(user: responseUser, token: responseUser.token ?? '');
-              Go.offAll(const HomeScreen());
-            }),
-          )
+          _buildIndividualRequiredScreen(user)
       );
 
     }else if(statusType.isIncomplete){
-      Go.off(EnterMaleOrFemaleOrChildDataScreen.individual(
-        scaffoldType: ScaffoldType.centerCard,
-        showConditionsAndTerms: true,
-        showAlreadyHaveAccount: true,
-        userType: user.gender!.userGender,
-        onClick: (context, formUser) => context.read<CompleteProfileCubit>().completeProfile(
-            body: formUser, onSuccess: (responseUser) async {
-          await UserCubit.instance.setUserLoggedIn(user: responseUser, token: responseUser.token ?? '');
-          Go.offAll(const HomeScreen());
-        }),
-      ));
+      Go.off(_buildIndividualRequiredScreen(user));
 
     }else{
       throw Exception('there is no such value with $statusType');
@@ -356,6 +338,39 @@ extension FormatString on String {
         substring(1).replaceAllMapped(
             RegExp('[_-](.)'), (Match match) => match.group(1)!.toLowerCase());
   }
+}
+
+Widget _buildIndividualRequiredScreen(UserModel user) {
+  return EnterMaleOrFemaleOrChildDataScreen.individual(
+    scaffoldType: ScaffoldType.centerCard,
+    showConditionsAndTerms: true,
+    showAlreadyHaveAccount: true,
+    userType: user.gender!.userGender,
+    formMode: FormMode.requiredOnly,
+    onClick: (context, formUser) => context.read<CompleteProfileCubit>().completeProfile(
+      body: formUser,
+      onSuccess: (responseUser) async {
+        await UserCubit.instance.setUserLoggedIn(user: responseUser, token: responseUser.token ?? '');
+        Go.to(_buildIndividualOptionalScreen(responseUser));
+      },
+    ),
+  );
+}
+
+Widget _buildIndividualOptionalScreen(UserModel user) {
+  return EnterMaleOrFemaleOrChildDataScreen.individual(
+    scaffoldType: ScaffoldType.centerCard,
+    userType: user.gender!.userGender,
+    formMode: FormMode.optionalOnly,
+    onSkip: () => Go.offAll(const HomeScreen()),
+    onClick: (context, formUser) => context.read<EditProfileCubit>().editProfile(
+      body: formUser,
+      onSuccess: (response) async {
+        await UserCubit.instance.updateUser(response.data);
+        Go.offAll(const HomeScreen());
+      },
+    ),
+  );
 }
 
 extension FormatDouble on double {

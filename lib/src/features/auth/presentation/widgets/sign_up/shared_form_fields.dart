@@ -22,17 +22,25 @@ import '../shared/text_field.dart';
 import 'dowry_widget.dart';
 import 'radio_widget.dart';
 
+enum FormMode { all, requiredOnly, optionalOnly }
+
 class SharedFormFields<T extends IndividualUserModel> extends StatefulWidget {
   final String? restorationId;
   final IndividualUserModel? initialValue;
   final void Function(T sharedFields) onChanged;
   final void Function(List<Widget> children)? onInitData;
+  final void Function(List<Widget> children)? onInitRequired;
+  final void Function(List<Widget> children)? onInitOptional;
+  final FormMode mode;
   const SharedFormFields({
     super.key,
     this.restorationId,
     required this.onChanged,
     this.onInitData,
+    this.onInitRequired,
+    this.onInitOptional,
     this.initialValue,
+    this.mode = FormMode.all,
   });
 
   @override
@@ -141,8 +149,7 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
     super.dispose();
   }
 
-  List<Widget> get children {
-    final List<Widget> inputs = [
+  List<Widget> get _requiredInputs => [
       SignUpTextField(
         upperTitle: LocaleKeys.nickname,
         title: LocaleKeys.pleaseEnterYourName,
@@ -184,6 +191,9 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
         onChanged: (val) => _listenToData(model.copyWith(weight: val) as T),
         validator: (v) => Validators.validateNumeric(v, min: 30, max: 300, fieldTitle: LocaleKeys.weight.tr()),
       ),
+    ];
+
+  List<Widget> get _optionalInputs => [
       SignUpTextField(
         upperTitle: LocaleKeys.currentJob,
         title: LocaleKeys.pleaseEnterTheCurrentJob,
@@ -378,8 +388,21 @@ class _SharedFormFieldsState<T extends IndividualUserModel> extends State<Shared
       ),
     ];
 
-    widget.onInitData?.call(inputs);
-    return inputs;
+  List<Widget> get children {
+    switch (widget.mode) {
+      case FormMode.requiredOnly:
+        final list = _requiredInputs;
+        widget.onInitRequired?.call(list);
+        return list;
+      case FormMode.optionalOnly:
+        final list = _optionalInputs;
+        widget.onInitOptional?.call(list);
+        return list;
+      case FormMode.all:
+        final all = [..._requiredInputs, ..._optionalInputs];
+        widget.onInitData?.call(all);
+        return all;
+    }
   }
 
   @override
