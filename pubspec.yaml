@@ -71,6 +71,7 @@ dependencies:
   top_snackbar_flutter: ^3.3.0
   overlay_support: ^2.1.0
   easy_loading_button: ^0.4.0
+  easy_stepper: ^1.0.1
 
   flutter_svg: ^2.1.0
   lottie: ^3.1.2

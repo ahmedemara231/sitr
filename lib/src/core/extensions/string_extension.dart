@@ -27,6 +27,7 @@ import '../helpers/user_type_enum.dart';
 import '../navigation/navigator.dart';
 import '../network/api_endpoints.dart';
 import '../network/network_service.dart';
+import '../shared/models/user_models/individual/individual_user_model.dart';
 import '../shared/models/user_models/user_model.dart';
 import '../shared/user_cubit/user_cubit.dart';
 import '../widgets/app_bottom_sheet.dart' show AppBottomSheet;
@@ -347,21 +348,26 @@ Widget _buildIndividualRequiredScreen(UserModel user) {
     showAlreadyHaveAccount: true,
     userType: user.gender!.userGender,
     formMode: FormMode.requiredOnly,
+    currentStep: 1,
+    totalSteps: 2,
     onClick: (context, formUser) => context.read<CompleteProfileCubit>().completeProfile(
       body: formUser,
       onSuccess: (responseUser) async {
         await UserCubit.instance.setUserLoggedIn(user: responseUser, token: responseUser.token ?? '');
-        Go.to(_buildIndividualOptionalScreen(responseUser));
+        Go.to(_buildIndividualOptionalScreen(UserCubit.instance.user as IndividualUserModel));
       },
     ),
   );
 }
 
-Widget _buildIndividualOptionalScreen(UserModel user) {
+Widget _buildIndividualOptionalScreen(IndividualUserModel previousFormData) {
   return EnterMaleOrFemaleOrChildDataScreen.individual(
     scaffoldType: ScaffoldType.centerCard,
-    userType: user.gender!.userGender,
+    userType: previousFormData.gender!.userGender,
     formMode: FormMode.optionalOnly,
+    initialValue: previousFormData,
+    currentStep: 2,
+    totalSteps: 2,
     onSkip: () => Go.offAll(const HomeScreen()),
     onClick: (context, formUser) => context.read<EditProfileCubit>().editProfile(
       body: formUser,

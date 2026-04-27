@@ -42,6 +42,7 @@ import '../../core/widgets/choose_from_options.dart';
 import '../../core/widgets/custom_messages.dart';
 import '../../core/widgets/default_bottom_sheet.dart';
 import '../../core/widgets/lang_icon.dart';
+import '../../core/widgets/register_stepper.dart';
 import '../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../core/widgets/scaffolds/center_card_scaffold.dart';
 import '../../core/widgets/sheets/payment_sheet.dart';

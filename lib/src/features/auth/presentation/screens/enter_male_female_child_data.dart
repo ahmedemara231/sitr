@@ -14,6 +14,8 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
   final int? femaleNum;
   final FormMode formMode;
   final FutureOr<void> Function()? onSkip;
+  final int? currentStep;
+  final int? totalSteps;
 
   final Future<void> Function(BuildContext context, IndividualUserModel user) onClick;
 
@@ -30,6 +32,8 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
     this.userType,
     this.formMode = FormMode.all,
     this.onSkip,
+    this.currentStep,
+    this.totalSteps,
   }) : _withParent = true;
 
   const EnterMaleOrFemaleOrChildDataScreen.individual({
@@ -43,6 +47,8 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
     required this.userType,
     this.formMode = FormMode.all,
     this.onSkip,
+    this.currentStep,
+    this.totalSteps,
   }) : _withParent = false, maleNum = null, femaleNum = null;
 
   @override
@@ -62,6 +68,8 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
           onClick: onClick,
           formMode: formMode,
           onSkip: onSkip,
+          currentStep: currentStep,
+          totalSteps: totalSteps,
         )
     ) :
     CenterCardScaffold(
@@ -79,6 +87,8 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
           onClick: onClick,
           formMode: formMode,
           onSkip: onSkip,
+          currentStep: currentStep,
+          totalSteps: totalSteps,
         )
     );
   }
@@ -95,6 +105,8 @@ class _EnterMaleOrFemaleOrChildDataBody extends StatefulWidget {
   final int? femaleNum;
   final FormMode formMode;
   final FutureOr<void> Function()? onSkip;
+  final int? currentStep;
+  final int? totalSteps;
   final Future<void> Function(BuildContext context, IndividualUserModel user) onClick;
 
   const _EnterMaleOrFemaleOrChildDataBody({
@@ -109,6 +121,8 @@ class _EnterMaleOrFemaleOrChildDataBody extends StatefulWidget {
     this.showAlreadyHaveAccount = false,
     this.formMode = FormMode.all,
     this.onSkip,
+    this.currentStep,
+    this.totalSteps,
   });
 
   @override
@@ -173,6 +187,12 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
         child: Column(
           spacing: 10.h,
           children: [
+            if (widget.currentStep != null && widget.totalSteps != null)
+              RegisterStepper(
+                currentStep: widget.currentStep!,
+                totalSteps: widget.totalSteps!,
+              ),
+
             if(widget.showGenderSelection)
               ChooseGenderWidget(
                 // titles: (element) => element.translate,
