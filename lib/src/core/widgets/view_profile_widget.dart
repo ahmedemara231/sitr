@@ -77,29 +77,29 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
       PartnerInfoModel(leading: Assets.svgEducationalQualification, title: LocaleKeys.educationalQualification, subTitle: user.educationLevel),
       PartnerInfoModel(leading: Assets.svgJob, title: LocaleKeys.currentJob, subTitle: user.currentJob),
 
-      PartnerInfoModel(leading: Assets.svgParentChildren, title: LocaleKeys.childrenExists, subTitle: user.hasChildren!.toNormalLang()),
+      PartnerInfoModel(leading: Assets.svgParentChildren, title: LocaleKeys.childrenExists, subTitle: user.hasChildren?.toNormalLang()),
       PartnerInfoModel(leading: Assets.svgParentChildren, title: LocaleKeys.childrenNumber, subTitle: '${user.numOfChildren} ${LocaleKeys.children}'),
 
       PartnerInfoModel(leading: Assets.svgParentChildren, title: LocaleKeys.nursery, subTitle: user.childCustody?.title),
-      PartnerInfoModel(leading: Assets.svgRecycing, title: LocaleKeys.wantToHaveChildren, subTitle: user.wantChildren!.toNormalLang()),
+      PartnerInfoModel(leading: Assets.svgRecycing, title: LocaleKeys.wantToHaveChildren, subTitle: user.wantChildren?.toNormalLang()),
 
       PartnerInfoModel(leading: Assets.svgRecycing, title: LocaleKeys.dowry, subTitle: '${LocaleKeys.from} ${user.dowry?.from} ${LocaleKeys.to} ${user.dowry?.to}'),
       PartnerInfoModel(leading: Assets.svgRecycing, title: LocaleKeys.typeOfWeddingParty, subTitle: user.weddingType?.title),
 
-      PartnerInfoModel(leading: Assets.svgPrey, title: LocaleKeys.areYouPray, subTitle: user.isPrayer!.toNormalLang()),
-      PartnerInfoModel(leading: Assets.svgSmoke, title: LocaleKeys.areYouSmoke, subTitle: user.isSmoker!.toNormalLang()),
+      PartnerInfoModel(leading: Assets.svgPrey, title: LocaleKeys.areYouPray, subTitle: user.isPrayer?.toNormalLang()),
+      PartnerInfoModel(leading: Assets.svgSmoke, title: LocaleKeys.areYouSmoke, subTitle: user.isSmoker?.toNormalLang()),
 
       if(userResult.gender?.userGender?.isFemale?? false)
         ...[
-          PartnerInfoModel(leading: Assets.svgParentChildren, title: LocaleKeys.doYouAcceptPolygamy, subTitle: (user as FemaleModel).acceptsPolygamy!.toNormalLang()),
+          PartnerInfoModel(leading: Assets.svgParentChildren, title: LocaleKeys.doYouAcceptPolygamy, subTitle: (user as FemaleModel).acceptsPolygamy?.toNormalLang()),
           PartnerInfoModel(leading: Assets.svgHijab, title: LocaleKeys.areYouWaringHijab, subTitle: (user as FemaleModel).hijab?.title),
 
           PartnerInfoModel(leading: Assets.svgHome, title: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage, subTitle: (user as FemaleModel).preferredResidenceAfterMarriage),
         ],
-      PartnerInfoModel(leading: Assets.svgTribe, title: LocaleKeys.doYouBelongToATribe, subTitle: user.tribeAffiliation!.toNormalLang()),
+      PartnerInfoModel(leading: Assets.svgTribe, title: LocaleKeys.doYouBelongToATribe, subTitle: user.tribeAffiliation?.toNormalLang()),
 
       PartnerInfoModel(leading: Assets.svgHospital, title: LocaleKeys.diseasesIfExists, subTitle: user.healthConditions),
-      PartnerInfoModel(leading: Assets.svgTranslation, title: LocaleKeys.inChatYouPrefer, subTitle: user.chatLang!.toLang().toFullTitle()),
+      PartnerInfoModel(leading: Assets.svgTranslation, title: LocaleKeys.inChatYouPrefer, subTitle: user.chatLang?.toLang().toFullTitle()),
 
       if(widget._type.isProfile)
         PartnerInfoModel(leading: Assets.svgProfilePhone, title: LocaleKeys.phoneNumber, subTitle: user.phone),
@@ -243,7 +243,9 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                   crossAxisSpacing: 10.w,
                   // childAspectRatio: 2.5,
                   itemCount: partnerInfo.length,
-                  itemBuilder: (BuildContext context, int index) => InfoWidget(partnerInfoModel: partnerInfo[index]),
+                  itemBuilder: (BuildContext context, int index) => InfoWidget(
+                      partnerInfoModel: partnerInfo[index]
+                  ),
                 ),
 
                 InfoWidget(

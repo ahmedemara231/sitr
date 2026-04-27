@@ -409,6 +409,9 @@ abstract class LocaleKeys {
   static const String _pleaseEnterTheDiseases = 'please_enter_the_diseases';
   static String get pleaseEnterTheDiseases => _pleaseEnterTheDiseases.tr();
 
+  static const String _notSetYet = 'not_set_yet';
+  static String get notSetYet => _notSetYet.tr();
+
   static const String _pleaseEnterHome = 'please_enter_home';
   static String get pleaseEnterHome => _pleaseEnterHome.tr();
 
