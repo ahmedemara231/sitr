@@ -9,10 +9,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="Refine profile information display, introduce &quot;Not set yet&quot; placeholders, and update workspace configurations&#10;&#10;- **UI &amp; Widgets**:&#10;    - Update `InfoWidget` to dynamically change the subtitle color to red when a value is not set.&#10;    - Refactor `ViewProfileWidget` to handle null safety for user attributes and update the data mapping for `PartnerInfoModel`.&#10;- **Models &amp; Core**:&#10;    - Enhance `PartnerInfoModel` to include a `isValueSet` flag and automatically provide a default &quot;Not set yet&quot; translation for null subtitles.&#10;    - Refactor `IndividualUserModel.initial()` to remove default empty string and zero values.&#10;    - Update `ConvertToLocaleKeys` extension on `bool` to return an optional `String?` for better null handling.&#10;- **Localization**:&#10;    - Add `not_set_yet` translation key to `ar.json`, `en.json`, and `lang.json`.&#10;    - Regenerate `locale_keys.g.dart` to include the `notSetYet` constant.&#10;- **iOS**:&#10;    - Synchronize `project.pbxproj` with recent build environment updates.&#10;    - Introduce a new `dev.xcscheme` for the development flavor.&#10;- **Tools &amp; IDE**:&#10;    - Add a new run configuration for `main_dev.dart` targeting the `dev` flavor.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and active git branch updates.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-    </list>
+    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="Refine profile information display, introduce &quot;Not set yet&quot; placeholders, and update workspace configurations&#10;&#10;- **UI &amp; Widgets**:&#10;    - Update `InfoWidget` to dynamically change the subtitle color to red when a value is not set.&#10;    - Refactor `ViewProfileWidget` to handle null safety for user attributes and update the data mapping for `PartnerInfoModel`.&#10;- **Models &amp; Core**:&#10;    - Enhance `PartnerInfoModel` to include a `isValueSet` flag and automatically provide a default &quot;Not set yet&quot; translation for null subtitles.&#10;    - Refactor `IndividualUserModel.initial()` to remove default empty string and zero values.&#10;    - Update `ConvertToLocaleKeys` extension on `bool` to return an optional `String?` for better null handling.&#10;- **Localization**:&#10;    - Add `not_set_yet` translation key to `ar.json`, `en.json`, and `lang.json`.&#10;    - Regenerate `locale_keys.g.dart` to include the `notSetYet` constant.&#10;- **iOS**:&#10;    - Synchronize `project.pbxproj` with recent build environment updates.&#10;    - Introduce a new `dev.xcscheme` for the development flavor.&#10;- **Tools &amp; IDE**:&#10;    - Add a new run configuration for `main_dev.dart` targeting the `dev` flavor.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and active git branch updates." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -257,14 +254,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
-    </task>
-    <task id="LOCAL-00260" summary="Implement chat eligibility check and refactor chat initiation logic (#183207)&#10;&#10;- **Feature - Chats**:&#10;    - Introduce `CheckChatEligibilityCubit` to handle the `check-chat-eligibility` API endpoint.&#10;    - Refactor `ChatButton` to use `AppLoadingButton` and the new eligibility cubit, replacing the previous static action mapping and tip-sheet logic.&#10;    - Update `api_endpoints.dart` to include the `check-chat-eligibility` route.&#10;&#10;- **Core/Infrastructure**:&#10;    - Add `dart:core` import to `error_handler_extension.dart`.&#10;    - Update IDE project configuration and local Dart package dependencies.">
-      <option name="closed" value="true" />
-      <created>1772939534700</created>
-      <option name="number" value="00260" />
-      <option name="presentableId" value="LOCAL-00260" />
-      <option name="project" value="LOCAL" />
-      <updated>1772939534700</updated>
     </task>
     <task id="LOCAL-00261" summary="Extend offline caching support and refine model serialization across core and feature modules (#183208)&#10;&#10;- **Core/Infrastructure**:&#10;    - Update `BaseRepositoryImpl` and `ErrorHandler` to support a dedicated `fromCacheJson` mapper, allowing for different data structures between API responses and local storage.&#10;    - Add `fromCacheJson` to `CrudBaseParmas` and `handleCallbackWithCache`.&#10;    - Refine null safety checks using `isNotNull` extension in repository logic.&#10;&#10;- **Feature - More**:&#10;    - Implement offline caching for Socials (`GetSocialsCubit`), My Package (`MyPackageCubit`), Success Partners (`SuccessPartnersCubit`), and Terms/About pages.&#10;    - Add `toJson` methods to `ComplaintModel`, `Status`, and `SuccessPartnersModel` for serialization.&#10;    - Enable caching in `ComplaintsAndSuggestionsScreen` via `AppPagify`.&#10;&#10;- **Feature - Chats**:&#10;    - Implement offline caching for chat lists in `GetChatsCubit` with type-specific cache keys.&#10;    - Introduce `ChatModel.initial()` and other initial constructors for `MatchRequest`, `Room`, `Members`, and `Messages` to prevent late initialization errors.&#10;    - Refactor `ChatButton` to simplify the `ChatScreen` navigation logic.&#10;&#10;- **Feature - Main Screen**:&#10;    - Refactor `GetOpportunitiesCubit` to use the new `fromCacheJson` parameter, separating API mapping logic from cache restoration logic.&#10;&#10;- **IDE**:&#10;    - Update project workspace configuration.">
       <option name="closed" value="true" />
@@ -650,7 +639,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777300664105</updated>
     </task>
-    <option name="localTasksCounter" value="309" />
+    <task id="LOCAL-00309" summary="Refine profile information display, introduce &quot;Not set yet&quot; placeholders, and update workspace configurations&#10;&#10;- **UI &amp; Widgets**:&#10;    - Update `InfoWidget` to dynamically change the subtitle color to red when a value is not set.&#10;    - Refactor `ViewProfileWidget` to handle null safety for user attributes and update the data mapping for `PartnerInfoModel`.&#10;- **Models &amp; Core**:&#10;    - Enhance `PartnerInfoModel` to include a `isValueSet` flag and automatically provide a default &quot;Not set yet&quot; translation for null subtitles.&#10;    - Refactor `IndividualUserModel.initial()` to remove default empty string and zero values.&#10;    - Update `ConvertToLocaleKeys` extension on `bool` to return an optional `String?` for better null handling.&#10;- **Localization**:&#10;    - Add `not_set_yet` translation key to `ar.json`, `en.json`, and `lang.json`.&#10;    - Regenerate `locale_keys.g.dart` to include the `notSetYet` constant.&#10;- **iOS**:&#10;    - Synchronize `project.pbxproj` with recent build environment updates.&#10;    - Introduce a new `dev.xcscheme` for the development flavor.&#10;- **Tools &amp; IDE**:&#10;    - Add a new run configuration for `main_dev.dart` targeting the `dev` flavor.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and active git branch updates.">
+      <option name="closed" value="true" />
+      <created>1777383952228</created>
+      <option name="number" value="00309" />
+      <option name="presentableId" value="LOCAL-00309" />
+      <option name="project" value="LOCAL" />
+      <updated>1777383952228</updated>
+    </task>
+    <option name="localTasksCounter" value="310" />
     <servers />
   </component>
   <component name="ToolWindowManager">
