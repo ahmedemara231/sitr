@@ -10,13 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="Refine profile information display, introduce &quot;Not set yet&quot; placeholders, and update workspace configurations&#10;&#10;- **UI &amp; Widgets**:&#10;    - Update `InfoWidget` to dynamically change the subtitle color to red when a value is not set.&#10;    - Refactor `ViewProfileWidget` to handle null safety for user attributes and update the data mapping for `PartnerInfoModel`.&#10;- **Models &amp; Core**:&#10;    - Enhance `PartnerInfoModel` to include a `isValueSet` flag and automatically provide a default &quot;Not set yet&quot; translation for null subtitles.&#10;    - Refactor `IndividualUserModel.initial()` to remove default empty string and zero values.&#10;    - Update `ConvertToLocaleKeys` extension on `bool` to return an optional `String?` for better null handling.&#10;- **Localization**:&#10;    - Add `not_set_yet` translation key to `ar.json`, `en.json`, and `lang.json`.&#10;    - Regenerate `locale_keys.g.dart` to include the `notSetYet` constant.&#10;- **iOS**:&#10;    - Synchronize `project.pbxproj` with recent build environment updates.&#10;    - Introduce a new `dev.xcscheme` for the development flavor.&#10;- **Tools &amp; IDE**:&#10;    - Add a new run configuration for `main_dev.dart` targeting the `dev` flavor.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and active git branch updates.">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/appp.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/core/extensions/string_extension.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/extensions/string_extension.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/imports.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/imports.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/screens/enter_male_female_child_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/screens/enter_male_female_child_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,35 +121,35 @@
     <option name="foldersAlwaysOnTop" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Flutter.main.dart.executor": "Run",
-    "Flutter.main_dev.dart.executor": "Run",
-    "Flutter.main_production.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "ShowUsagesActions.previewPropertyKey": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "com.google.services.firebase.aqiPopupShown": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "subForm",
-    "io.flutter.project.isFirstOpen": "true",
-    "io.flutter.reload.alreadyRun": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/aaita/Desktop/apps/satr/android",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.17",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "show.migrate.to.gradle.popup": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Flutter.main.dart.executor&quot;: &quot;Run&quot;,
+    &quot;Flutter.main_dev.dart.executor&quot;: &quot;Run&quot;,
+    &quot;Flutter.main_production.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;ShowUsagesActions.previewPropertyKey&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;subForm&quot;,
+    &quot;io.flutter.project.isFirstOpen&quot;: &quot;true&quot;,
+    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/aaita/Desktop/apps/satr/android&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/android" />
@@ -262,14 +257,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
-    </task>
-    <task id="LOCAL-00259" summary="Implement offline caching for dropdown menus and refine connectivity handling (#183206)&#10;&#10;- **UI/Widgets**:&#10;    - Update `AppDropinity` to support local caching by adding `cacheKey`, `cacheToJson`, and `cacheFromJson` parameters.&#10;    - Implement caching for common dropdown data (cities, marital statuses, skin colors, hijab types, wedding types, religious commitments, kinships, and child custodies) across `FilterScreen`, `SignUpFields`, `FemaleFields`, `SharedFormFields`, and `EditParentProfileScreen`.&#10;    - Fix potential late initialization error in `ViewProfileWidget` by providing an initial state for the user model.&#10;&#10;- **Core/Infrastructure**:&#10;    - Refactor `AsyncCubit` connectivity listener to simplify logic and ensure consistent UI feedback via SnackBars when connection status changes.&#10;    - Update `MainViewCubit` to remove explicit `ObjectBoxCacheService` logging and internet interceptor, relying on the base implementation.&#10;    - Update `GetUserModelCubit` and its initial state to use `IndividualUserModel` for better type specificity.&#10;&#10;- **IDE**:&#10;    - Update project workspace configuration and breakpoint locations.">
-      <option name="closed" value="true" />
-      <created>1772931439668</created>
-      <option name="number" value="00259" />
-      <option name="presentableId" value="LOCAL-00259" />
-      <option name="project" value="LOCAL" />
-      <updated>1772931439668</updated>
     </task>
     <task id="LOCAL-00260" summary="Implement chat eligibility check and refactor chat initiation logic (#183207)&#10;&#10;- **Feature - Chats**:&#10;    - Introduce `CheckChatEligibilityCubit` to handle the `check-chat-eligibility` API endpoint.&#10;    - Refactor `ChatButton` to use `AppLoadingButton` and the new eligibility cubit, replacing the previous static action mapping and tip-sheet logic.&#10;    - Update `api_endpoints.dart` to include the `check-chat-eligibility` route.&#10;&#10;- **Core/Infrastructure**:&#10;    - Add `dart:core` import to `error_handler_extension.dart`.&#10;    - Update IDE project configuration and local Dart package dependencies.">
       <option name="closed" value="true" />
@@ -655,7 +642,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777298684173</updated>
     </task>
-    <option name="localTasksCounter" value="308" />
+    <task id="LOCAL-00308" summary="Refine profile information display, introduce &quot;Not set yet&quot; placeholders, and update workspace configurations&#10;&#10;- **UI &amp; Widgets**:&#10;    - Update `InfoWidget` to dynamically change the subtitle color to red when a value is not set.&#10;    - Refactor `ViewProfileWidget` to handle null safety for user attributes and update the data mapping for `PartnerInfoModel`.&#10;- **Models &amp; Core**:&#10;    - Enhance `PartnerInfoModel` to include a `isValueSet` flag and automatically provide a default &quot;Not set yet&quot; translation for null subtitles.&#10;    - Refactor `IndividualUserModel.initial()` to remove default empty string and zero values.&#10;    - Update `ConvertToLocaleKeys` extension on `bool` to return an optional `String?` for better null handling.&#10;- **Localization**:&#10;    - Add `not_set_yet` translation key to `ar.json`, `en.json`, and `lang.json`.&#10;    - Regenerate `locale_keys.g.dart` to include the `notSetYet` constant.&#10;- **iOS**:&#10;    - Synchronize `project.pbxproj` with recent build environment updates.&#10;    - Introduce a new `dev.xcscheme` for the development flavor.&#10;- **Tools &amp; IDE**:&#10;    - Add a new run configuration for `main_dev.dart` targeting the `dev` flavor.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and active git branch updates.">
+      <option name="closed" value="true" />
+      <created>1777300664105</created>
+      <option name="number" value="00308" />
+      <option name="presentableId" value="LOCAL-00308" />
+      <option name="project" value="LOCAL" />
+      <updated>1777300664105</updated>
+    </task>
+    <option name="localTasksCounter" value="309" />
     <servers />
   </component>
   <component name="ToolWindowManager">
