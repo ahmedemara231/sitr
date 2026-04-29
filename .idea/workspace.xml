@@ -9,7 +9,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="Refine profile information display, introduce &quot;Not set yet&quot; placeholders, and update workspace configurations&#10;&#10;- **UI &amp; Widgets**:&#10;    - Update `InfoWidget` to dynamically change the subtitle color to red when a value is not set.&#10;    - Refactor `ViewProfileWidget` to handle null safety for user attributes and update the data mapping for `PartnerInfoModel`.&#10;- **Models &amp; Core**:&#10;    - Enhance `PartnerInfoModel` to include a `isValueSet` flag and automatically provide a default &quot;Not set yet&quot; translation for null subtitles.&#10;    - Refactor `IndividualUserModel.initial()` to remove default empty string and zero values.&#10;    - Update `ConvertToLocaleKeys` extension on `bool` to return an optional `String?` for better null handling.&#10;- **Localization**:&#10;    - Add `not_set_yet` translation key to `ar.json`, `en.json`, and `lang.json`.&#10;    - Regenerate `locale_keys.g.dart` to include the `notSetYet` constant.&#10;- **iOS**:&#10;    - Synchronize `project.pbxproj` with recent build environment updates.&#10;    - Introduce a new `dev.xcscheme` for the development flavor.&#10;- **Tools &amp; IDE**:&#10;    - Add a new run configuration for `main_dev.dart` targeting the `dev` flavor.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and active git branch updates." />
+    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="Refine profile information display, introduce &quot;Not set yet&quot; placeholders, and update workspace configurations&#10;&#10;- **UI &amp; Widgets**:&#10;    - Update `InfoWidget` to dynamically change the subtitle color to red when a value is not set.&#10;    - Refactor `ViewProfileWidget` to handle null safety for user attributes and update the data mapping for `PartnerInfoModel`.&#10;- **Models &amp; Core**:&#10;    - Enhance `PartnerInfoModel` to include a `isValueSet` flag and automatically provide a default &quot;Not set yet&quot; translation for null subtitles.&#10;    - Refactor `IndividualUserModel.initial()` to remove default empty string and zero values.&#10;    - Update `ConvertToLocaleKeys` extension on `bool` to return an optional `String?` for better null handling.&#10;- **Localization**:&#10;    - Add `not_set_yet` translation key to `ar.json`, `en.json`, and `lang.json`.&#10;    - Regenerate `locale_keys.g.dart` to include the `notSetYet` constant.&#10;- **iOS**:&#10;    - Synchronize `project.pbxproj` with recent build environment updates.&#10;    - Introduce a new `dev.xcscheme` for the development flavor.&#10;- **Tools &amp; IDE**:&#10;    - Add a new run configuration for `main_dev.dart` targeting the `dev` flavor.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and active git branch updates.">
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -254,22 +257,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
-    </task>
-    <task id="LOCAL-00261" summary="Extend offline caching support and refine model serialization across core and feature modules (#183208)&#10;&#10;- **Core/Infrastructure**:&#10;    - Update `BaseRepositoryImpl` and `ErrorHandler` to support a dedicated `fromCacheJson` mapper, allowing for different data structures between API responses and local storage.&#10;    - Add `fromCacheJson` to `CrudBaseParmas` and `handleCallbackWithCache`.&#10;    - Refine null safety checks using `isNotNull` extension in repository logic.&#10;&#10;- **Feature - More**:&#10;    - Implement offline caching for Socials (`GetSocialsCubit`), My Package (`MyPackageCubit`), Success Partners (`SuccessPartnersCubit`), and Terms/About pages.&#10;    - Add `toJson` methods to `ComplaintModel`, `Status`, and `SuccessPartnersModel` for serialization.&#10;    - Enable caching in `ComplaintsAndSuggestionsScreen` via `AppPagify`.&#10;&#10;- **Feature - Chats**:&#10;    - Implement offline caching for chat lists in `GetChatsCubit` with type-specific cache keys.&#10;    - Introduce `ChatModel.initial()` and other initial constructors for `MatchRequest`, `Room`, `Members`, and `Messages` to prevent late initialization errors.&#10;    - Refactor `ChatButton` to simplify the `ChatScreen` navigation logic.&#10;&#10;- **Feature - Main Screen**:&#10;    - Refactor `GetOpportunitiesCubit` to use the new `fromCacheJson` parameter, separating API mapping logic from cache restoration logic.&#10;&#10;- **IDE**:&#10;    - Update project workspace configuration.">
-      <option name="closed" value="true" />
-      <created>1772944600671</created>
-      <option name="number" value="00261" />
-      <option name="presentableId" value="LOCAL-00261" />
-      <option name="project" value="LOCAL" />
-      <updated>1772944600671</updated>
-    </task>
-    <task id="LOCAL-00262" summary="Implement caching and clean up imports in profile and partner features&#10;&#10;*   Add `cacheKey` and `toJson` parameters to `CrudBaseParmas` in `GetPartnerInfoCubit`, `GetProfileCubit`, and `GetChildProfileCubit` to enable data persistence.&#10;*   Remove unused imports and redundant dependencies in `ComplaintsAndSuggestionsScreen`.">
-      <option name="closed" value="true" />
-      <created>1772945063103</created>
-      <option name="number" value="00262" />
-      <option name="presentableId" value="LOCAL-00262" />
-      <option name="project" value="LOCAL" />
-      <updated>1772945063104</updated>
     </task>
     <task id="LOCAL-00263" summary="Implement caching and clean up imports in profile and partner features&#10;&#10;*   Add `cacheKey` and `toJson` parameters to `CrudBaseParmas` in `GetPartnerInfoCubit`, `GetProfileCubit`, and `GetChildProfileCubit` to enable data persistence.&#10;*   Remove unused imports and redundant dependencies in `ComplaintsAndSuggestionsScreen`.">
       <option name="closed" value="true" />
@@ -647,7 +634,23 @@
       <option name="project" value="LOCAL" />
       <updated>1777383952228</updated>
     </task>
-    <option name="localTasksCounter" value="310" />
+    <task id="LOCAL-00310" summary="Refine profile information display, introduce &quot;Not set yet&quot; placeholders, and update workspace configurations&#10;&#10;- **UI &amp; Widgets**:&#10;    - Update `InfoWidget` to dynamically change the subtitle color to red when a value is not set.&#10;    - Refactor `ViewProfileWidget` to handle null safety for user attributes and update the data mapping for `PartnerInfoModel`.&#10;- **Models &amp; Core**:&#10;    - Enhance `PartnerInfoModel` to include a `isValueSet` flag and automatically provide a default &quot;Not set yet&quot; translation for null subtitles.&#10;    - Refactor `IndividualUserModel.initial()` to remove default empty string and zero values.&#10;    - Update `ConvertToLocaleKeys` extension on `bool` to return an optional `String?` for better null handling.&#10;- **Localization**:&#10;    - Add `not_set_yet` translation key to `ar.json`, `en.json`, and `lang.json`.&#10;    - Regenerate `locale_keys.g.dart` to include the `notSetYet` constant.&#10;- **iOS**:&#10;    - Synchronize `project.pbxproj` with recent build environment updates.&#10;    - Introduce a new `dev.xcscheme` for the development flavor.&#10;- **Tools &amp; IDE**:&#10;    - Add a new run configuration for `main_dev.dart` targeting the `dev` flavor.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and active git branch updates.">
+      <option name="closed" value="true" />
+      <created>1777386737773</created>
+      <option name="number" value="00310" />
+      <option name="presentableId" value="LOCAL-00310" />
+      <option name="project" value="LOCAL" />
+      <updated>1777386737773</updated>
+    </task>
+    <task id="LOCAL-00311" summary="Refine profile information display, introduce &quot;Not set yet&quot; placeholders, and update workspace configurations&#10;&#10;- **UI &amp; Widgets**:&#10;    - Update `InfoWidget` to dynamically change the subtitle color to red when a value is not set.&#10;    - Refactor `ViewProfileWidget` to handle null safety for user attributes and update the data mapping for `PartnerInfoModel`.&#10;- **Models &amp; Core**:&#10;    - Enhance `PartnerInfoModel` to include a `isValueSet` flag and automatically provide a default &quot;Not set yet&quot; translation for null subtitles.&#10;    - Refactor `IndividualUserModel.initial()` to remove default empty string and zero values.&#10;    - Update `ConvertToLocaleKeys` extension on `bool` to return an optional `String?` for better null handling.&#10;- **Localization**:&#10;    - Add `not_set_yet` translation key to `ar.json`, `en.json`, and `lang.json`.&#10;    - Regenerate `locale_keys.g.dart` to include the `notSetYet` constant.&#10;- **iOS**:&#10;    - Synchronize `project.pbxproj` with recent build environment updates.&#10;    - Introduce a new `dev.xcscheme` for the development flavor.&#10;- **Tools &amp; IDE**:&#10;    - Add a new run configuration for `main_dev.dart` targeting the `dev` flavor.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and active git branch updates.">
+      <option name="closed" value="true" />
+      <created>1777387941064</created>
+      <option name="number" value="00311" />
+      <option name="presentableId" value="LOCAL-00311" />
+      <option name="project" value="LOCAL" />
+      <updated>1777387941064</updated>
+    </task>
+    <option name="localTasksCounter" value="312" />
     <servers />
   </component>
   <component name="ToolWindowManager">
