@@ -9,7 +9,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'firebase_options.dart';
 import 'firebase_options.dart' as production;
 import 'firebase_options_dev.dart' as dev;
 import 'src/app.dart';
@@ -77,7 +76,7 @@ Future<void> _initializeFirebaseApp() async {
   final firebaseOptions = switch (appFlavor) {
     'dev' => dev.DefaultFirebaseOptions.currentPlatform,
     'production' => production.DefaultFirebaseOptions.currentPlatform,
-    _ => throw UnsupportedError('Invalid flavor: $appFlavor'),
+    _ => throw UnsupportedError('Unsupported flavor: $appFlavor'),
   };
   await Firebase.initializeApp(options: firebaseOptions);
 }
