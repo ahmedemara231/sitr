@@ -13,7 +13,6 @@ import 'shared_form_fields.dart';
 class MaleFields extends StatefulWidget {
   final bool withParent;
   final IndividualUserModel? initialValue;
-  final FormMode mode;
   final void Function(IndividualUserModel data) onChangeMaleData;
 
   const MaleFields({
@@ -21,7 +20,6 @@ class MaleFields extends StatefulWidget {
     this.initialValue,
     required this.withParent,
     required this.onChangeMaleData,
-    this.mode = FormMode.all,
   });
 
   @override
@@ -70,55 +68,73 @@ class _MaleFieldsState extends State<MaleFields> {
   }
 
   MaleModel get asMaleModel => maleFields as MaleModel;
-
-  Widget _nameField() => SignUpTextField(
-        upperTitle: LocaleKeys.name,
-        title: LocaleKeys.pleaseEnterName,
-        controller: _nameCont,
-        onChanged: (val) =>
-            _listenToData(asMaleModel.copyWith(name: _nameCont.text)),
-        validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.name.tr()),
-      );
-
-  Widget _phoneField() => SignUpTextField(
-        upperTitle: LocaleKeys.phoneNumber,
-        title: LocaleKeys.pleaseEnterTheNumber,
-        controller: _phoneCont,
-        inputType: TextInputType.phone,
-        onChanged: (val) =>
-            _listenToData(asMaleModel.copyWith(phone: _phoneCont.text)),
-        validator: Validators.validatePhone,
-      );
-
-  Widget _ageField() => SignUpTextField(
-        upperTitle: LocaleKeys.age,
-        title: LocaleKeys.pleaseEnterYourAge,
-        inputType: TextInputType.number,
-        controller: _ageCont,
-        onChanged: (val) => _listenToData(
-            asMaleModel.copyWith(age: int.tryParse(_ageCont.text))),
-        validator: (v) => Validators.validateAge(v, fieldTitle: LocaleKeys.age.tr(), isRequired: true),
-      );
-
   @override
   Widget build(BuildContext context) {
-    return SharedFormFields<MaleModel>(
-      restorationId: UserGender.male.name,
-      initialValue: widget.initialValue,
-      mode: widget.mode,
-      onChanged: (data) => _listenToData(asMaleModel.merge(data.copyWith())),
-      onInitData: widget.withParent
-          ? (children) => children
-            ..insert(0, _nameField())
-            ..insert(2, _phoneField())
-            ..insert(7, _ageField())
-          : null,
-      onInitRequired: widget.withParent
-          ? (children) => children
-            ..insert(0, _nameField())
-            ..insert(2, _phoneField())
-            ..add(_ageField())
-          : null,
-    );
+    switch (widget.withParent) {
+      case false:
+        return SharedFormFields<MaleModel>(
+          initialValue: widget.initialValue,
+          restorationId: UserGender.male.name,
+          onChanged: (data) =>
+              _listenToData(asMaleModel.merge(data.copyWith())),
+        );
+
+      default:
+        return SharedFormFields<MaleModel>(
+          restorationId: UserGender.male.name,
+          initialValue: widget.initialValue,
+          onChanged: (data) =>
+              _listenToData(asMaleModel.merge(data.copyWith())),
+          onInitData: (List<Widget> children) => children
+            ..insertAll(
+              0,
+              [
+                SignUpTextField(
+                upperTitle: LocaleKeys.name,
+                title: LocaleKeys.pleaseEnterName,
+                controller: _nameCont,
+                onChanged: (val) =>
+                    _listenToData(asMaleModel.copyWith(name: _nameCont.text)),
+                validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.name.tr()),
+              ),
+              ]
+            )
+            ..insert(
+              2,
+                SignUpTextField(
+                  upperTitle: LocaleKeys.phoneNumber,
+                  title: LocaleKeys.pleaseEnterTheNumber,
+                  controller: _phoneCont,
+                  inputType: TextInputType.phone,
+                  onChanged: (val) => _listenToData(
+                      asMaleModel.copyWith(phone: _phoneCont.text)),
+                  validator: Validators.validatePhone,
+                ),
+            )
+            ..insertAll(
+                7,
+                [
+              // SignUpTextField(
+              //   upperTitle: LocaleKeys.identifyNumber,
+              //   title: LocaleKeys.pleaseEnterTheNumber,
+              //   controller: _identifyNumberCont,
+              //   inputType: TextInputType.number,
+              //   onChanged: (val) => _listenToData(asMaleModel.copyWith(
+              //       identityNumber: _identifyNumberCont.text)),
+              //   validator: (v) => Validators.validateIdentityNumber(v, fieldTitle: LocaleKeys.identifyNumber.tr()),
+              // ),
+              SignUpTextField(
+                upperTitle: LocaleKeys.age,
+                title: LocaleKeys.pleaseEnterYourAge,
+                inputType: TextInputType.number,
+                controller: _ageCont,
+                onChanged: (val) => _listenToData(
+                    asMaleModel.copyWith(age: int.tryParse(_ageCont.text))),
+                validator: (v) => Validators.validateAge(v, fieldTitle: LocaleKeys.age.tr(), isRequired: true),
+              ),
+            ]
+            )
+        );
+    }
   }
 }

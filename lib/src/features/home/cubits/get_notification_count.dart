@@ -4,8 +4,8 @@ import '../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../core/extensions/object.dart';
 import '../../../core/network/api_endpoints.dart';
-import '../../../core/notification/notification_service.dart';
 import '../../../core/shared/base_state.dart';
+import '../../../core/shared/models/user_models/user_model.dart';
 
 class GetNotificationCountCubit extends AsyncCubit<int>{
     GetNotificationCountCubit() : super(0);
@@ -16,10 +16,12 @@ class GetNotificationCountCubit extends AsyncCubit<int>{
     }
 
     void startNotificationInterceptor(){
-      FirebaseMessaging
-          .onMessage
-          .listen((data) => increment()
-      );
+      if(UserModel.isAuthenticated){
+        FirebaseMessaging
+            .onMessage
+            .listen((data) => increment()
+        );
+      }
     }
 
     void increment(){
@@ -30,14 +32,16 @@ class GetNotificationCountCubit extends AsyncCubit<int>{
     }
 
     Future<void> getNotificationCount()async{
-      await executeAsyncWithBaseModel(
-      operation: () async => await baseCrudUseCase.call(
-        CrudBaseParmas(
-          api: ApiConstants.getNotificationsCount,
-          httpRequestType: HttpRequestType.get,
-          mapper: (json) => json['count']
-        ),
-      ));
+      if(UserModel.isAuthenticated){
+        await executeAsyncWithBaseModel(
+            operation: () async => await baseCrudUseCase.call(
+              CrudBaseParmas(
+                  api: ApiConstants.getNotificationsCount,
+                  httpRequestType: HttpRequestType.get,
+                  mapper: (json) => json['count']
+              ),
+            ));
+      }
     }
 }
 
@@ -50,14 +54,16 @@ class GetChatsNotificationCountCubit extends AsyncCubit<int>{
   }
 
   void startNotificationInterceptor(){
-    FirebaseMessaging
-        .onMessage
-        .listen((data) {
-      final matchRequest = data.data['match_request_id'];
-      if((matchRequest as Object?).isNotNull){
-        increment();
-      }}
-    );
+    if(UserModel.isAuthenticated){
+      FirebaseMessaging
+          .onMessage
+          .listen((data) {
+        final matchRequest = data.data['match_request_id'];
+        if((matchRequest as Object?).isNotNull){
+          increment();
+        }}
+      );
+    }
   }
 
   void increment(){
@@ -68,13 +74,16 @@ class GetChatsNotificationCountCubit extends AsyncCubit<int>{
   }
 
   Future<void> getChatNotificationCount()async{
-    await executeAsyncWithBaseModel(
-        operation: () async => await baseCrudUseCase.call(
-          CrudBaseParmas(
-              api: ApiConstants.countUnreadMessages,
-              httpRequestType: HttpRequestType.get,
-              mapper: (json) => json['count']
-          ),
-        ));
+    if(UserModel.isAuthenticated){
+      await executeAsyncWithBaseModel(
+          operation: () async => await baseCrudUseCase.call(
+            CrudBaseParmas(
+                api: ApiConstants.countUnreadMessages,
+                httpRequestType: HttpRequestType.get,
+                mapper: (json) => json['count']
+            ),
+          )
+      );
+    }
   }
 }

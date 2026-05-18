@@ -12,10 +12,6 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
   final bool showGenderSelection;
   final int? maleNum;
   final int? femaleNum;
-  final FormMode formMode;
-  final FutureOr<void> Function()? onSkip;
-  final int? currentStep;
-  final int? totalSteps;
 
   final Future<void> Function(BuildContext context, IndividualUserModel user) onClick;
 
@@ -30,10 +26,6 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
     this.showConditionsAndTerms = false,
     this.showAlreadyHaveAccount = false,
     this.userType,
-    this.formMode = FormMode.all,
-    this.onSkip,
-    this.currentStep,
-    this.totalSteps,
   }) : _withParent = true;
 
   const EnterMaleOrFemaleOrChildDataScreen.individual({
@@ -45,10 +37,6 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
     this.showConditionsAndTerms = false,
     this.showAlreadyHaveAccount = false,
     required this.userType,
-    this.formMode = FormMode.all,
-    this.onSkip,
-    this.currentStep,
-    this.totalSteps,
   }) : _withParent = false, maleNum = null, femaleNum = null;
 
   @override
@@ -66,10 +54,6 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
           showAlreadyHaveAccount: showAlreadyHaveAccount,
           showConditionsAndTerms: showConditionsAndTerms,
           onClick: onClick,
-          formMode: formMode,
-          onSkip: onSkip,
-          currentStep: currentStep,
-          totalSteps: totalSteps,
         )
     ) :
     CenterCardScaffold(
@@ -85,10 +69,6 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
           showAlreadyHaveAccount: showAlreadyHaveAccount,
           showConditionsAndTerms: showConditionsAndTerms,
           onClick: onClick,
-          formMode: formMode,
-          onSkip: onSkip,
-          currentStep: currentStep,
-          totalSteps: totalSteps,
         )
     );
   }
@@ -103,10 +83,6 @@ class _EnterMaleOrFemaleOrChildDataBody extends StatefulWidget {
   final bool showAlreadyHaveAccount;
   final int? maleNum;
   final int? femaleNum;
-  final FormMode formMode;
-  final FutureOr<void> Function()? onSkip;
-  final int? currentStep;
-  final int? totalSteps;
   final Future<void> Function(BuildContext context, IndividualUserModel user) onClick;
 
   const _EnterMaleOrFemaleOrChildDataBody({
@@ -119,10 +95,6 @@ class _EnterMaleOrFemaleOrChildDataBody extends StatefulWidget {
     required this.femaleNum,
     this.showConditionsAndTerms = false,
     this.showAlreadyHaveAccount = false,
-    this.formMode = FormMode.all,
-    this.onSkip,
-    this.currentStep,
-    this.totalSteps,
   });
 
   @override
@@ -187,12 +159,6 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
         child: Column(
           spacing: 10.h,
           children: [
-            if (widget.currentStep != null && widget.totalSteps != null)
-              RegisterStepper(
-                currentStep: widget.currentStep!,
-                totalSteps: widget.totalSteps!,
-              ),
-
             if(widget.showGenderSelection)
               ChooseGenderWidget(
                 // titles: (element) => element.translate,
@@ -222,7 +188,6 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
                   return FemaleFields(
                       withParent: widget.withParent,
                       initialValue: widget.initialValue,
-                      mode: widget.formMode,
                       onChangeFemaleData: (data) =>
                           _listenToData(sharedFormFieldModel.merge(data))
                   );
@@ -231,7 +196,6 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
                   return MaleFields(
                       initialValue: widget.initialValue,
                       withParent: widget.withParent,
-                      mode: widget.formMode,
                       onChangeMaleData: (data) => _listenToData(sharedFormFieldModel.merge(data))
                   );
 
@@ -251,12 +215,6 @@ class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrC
                 asyncCall: (ctx) async => _formKey.currentState!.validate()?
                 widget.onClick.call(ctx, sharedFormFieldModel) : null
             ),
-
-            if (widget.onSkip != null)
-              TextButton(
-                onPressed: () async => await widget.onSkip!(),
-                child: AppText(LocaleKeys.skip),
-              ),
 
             if (widget.showAlreadyHaveAccount)
               const AlreadyHaveAccWidget()

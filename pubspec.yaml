@@ -26,6 +26,7 @@ dependencies:
   intl: 0.20.2
   easy_localization: ^3.0.7
   #--------------------- Tools -----------------------
+  upgrader: ^13.3.0
   package_info_plus: ^8.3.1
   pip_view: ^0.9.7
   no_screenshot: ^0.3.1
@@ -71,7 +72,6 @@ dependencies:
   top_snackbar_flutter: ^3.3.0
   overlay_support: ^2.1.0
   easy_loading_button: ^0.4.0
-  easy_stepper: ^1.0.1
 
   flutter_svg: ^2.1.0
   lottie: ^3.1.2
