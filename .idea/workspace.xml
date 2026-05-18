@@ -9,14 +9,42 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="Refine profile information display, introduce &quot;Not set yet&quot; placeholders, and update workspace configurations&#10;&#10;- **UI &amp; Widgets**:&#10;    - Update `InfoWidget` to dynamically change the subtitle color to red when a value is not set.&#10;    - Refactor `ViewProfileWidget` to handle null safety for user attributes and update the data mapping for `PartnerInfoModel`.&#10;- **Models &amp; Core**:&#10;    - Enhance `PartnerInfoModel` to include a `isValueSet` flag and automatically provide a default &quot;Not set yet&quot; translation for null subtitles.&#10;    - Refactor `IndividualUserModel.initial()` to remove default empty string and zero values.&#10;    - Update `ConvertToLocaleKeys` extension on `bool` to return an optional `String?` for better null handling.&#10;- **Localization**:&#10;    - Add `not_set_yet` translation key to `ar.json`, `en.json`, and `lang.json`.&#10;    - Regenerate `locale_keys.g.dart` to include the `notSetYet` constant.&#10;- **iOS**:&#10;    - Synchronize `project.pbxproj` with recent build environment updates.&#10;    - Introduce a new `dev.xcscheme` for the development flavor.&#10;- **Tools &amp; IDE**:&#10;    - Add a new run configuration for `main_dev.dart` targeting the `dev` flavor.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and active git branch updates.">
+    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="Update project configuration, SDK paths, and introduce production build flavor&#10;&#10;- Bump version to 1.0.3+1 in `pubspec.yaml`.&#10;- Update Dart SDK and library paths across IDE configuration files (`.idea`, `appp.iml`).&#10;- Add iOS &quot;production&quot; shared scheme and corresponding build configurations in `project.pbxproj`.&#10;- Update `firebase.json` to include specific build configurations for dev and production flavors on iOS.&#10;- Update Git remote URL and remove absolute path VCS mappings in `.idea/vcs.xml`.&#10;- Refine flavor initialization logic and error handling in `main.dart`.&#10;- Synchronize device streaming cache and internal IDE workspace settings.">
+      <change beforePath="$PROJECT_DIR$/.claude/scheduled_tasks.lock" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_04_05_2026,_10_02 AM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_04_05_2026__10_02AM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/appp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/appp.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/firebase.json" beforeDir="false" afterPath="$PROJECT_DIR$/firebase.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-hdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-mdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/images/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/logo.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024@1x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@1x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@2x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@3x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-20x20@3x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@1x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@2x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@3x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-29x29@3x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@1x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@2x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@3x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-40x40@3x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-50x50@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-50x50@1x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-50x50@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-50x50@2x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-57x57@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-57x57@1x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-57x57@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-57x57@2x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@2x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@3x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-60x60@3x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-72x72@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-72x72@1x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-72x72@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-72x72@2x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@1x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@1x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-76x76@2x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-83.5x83.5@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-83.5x83.5@2x.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
@@ -128,42 +156,42 @@
     <option name="foldersAlwaysOnTop" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Flutter.main.dart.executor": "Run",
-    "Flutter.main_dev.dart.executor": "Run",
-    "Flutter.main_production.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "ShowUsagesActions.previewPropertyKey": "true",
-    "android.gradle.sync.needed": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "com.google.services.firebase.aqiPopupShown": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "removeFlavors",
-    "io.flutter.project.isFirstOpen": "true",
-    "io.flutter.reload.alreadyRun": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/aaita/Desktop/apps/satr/android",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.17",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "flutter.settings",
-    "show.migrate.to.gradle.popup": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Flutter.main.dart.executor&quot;: &quot;Run&quot;,
+    &quot;Flutter.main_dev.dart.executor&quot;: &quot;Run&quot;,
+    &quot;Flutter.main_production.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;ShowUsagesActions.previewPropertyKey&quot;: &quot;true&quot;,
+    &quot;android.gradle.sync.needed&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;removeFlavors&quot;,
+    &quot;io.flutter.project.isFirstOpen&quot;: &quot;true&quot;,
+    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/aaita/Desktop/apps/sitr/assets/images&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;flutter.settings&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/assets/images" />
       <recent name="$PROJECT_DIR$/android" />
       <recent name="$PROJECT_DIR$/android/app" />
       <recent name="$PROJECT_DIR$/assets/lottie/error" />
-      <recent name="$PROJECT_DIR$/assets/images" />
       <recent name="$PROJECT_DIR$/assets/svg" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -265,14 +293,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
-    </task>
-    <task id="LOCAL-00263" summary="Implement caching and clean up imports in profile and partner features&#10;&#10;*   Add `cacheKey` and `toJson` parameters to `CrudBaseParmas` in `GetPartnerInfoCubit`, `GetProfileCubit`, and `GetChildProfileCubit` to enable data persistence.&#10;*   Remove unused imports and redundant dependencies in `ComplaintsAndSuggestionsScreen`.">
-      <option name="closed" value="true" />
-      <created>1772963826587</created>
-      <option name="number" value="00263" />
-      <option name="presentableId" value="LOCAL-00263" />
-      <option name="project" value="LOCAL" />
-      <updated>1772963826587</updated>
     </task>
     <task id="LOCAL-00264" summary="Implement chat notifications, unread message counts, and refactor notification initialization.&#10;&#10;### Core&#10;*   **Notification Service**: Added `_isInitialized` flag to `setupNotifications` to prevent redundant initialization.&#10;*   **Service Locator**: Changed `NotificationService` registration from a factory to a lazy singleton.&#10;*   **Networking**: Added `countUnreadMessages` API endpoint.&#10;&#10;### Features&#10;*   **Home**:&#10;    *   Integrated `GetChatsNotificationCountCubit` to track and display unread chat counts via a `Badge` on the navigation bar.&#10;    *   Moved notification count cubits from `App` level to `HomeScreen` scope.&#10;*   **Chats**:&#10;    *   Implemented `GetChatsNotificationCountCubit` with an interceptor to listen for incoming Firebase messages and increment the count.&#10;    *   Updated `ChatButton` to re-enable eligibility checks before navigating to a chat.&#10;*   **Splash**:&#10;    *   Removed app initialization logic and notification setup from `SplashCubit`, delegating these responsibilities to the `HomeScreen`.&#10;&#10;### Infrastructure &amp; UI&#10;*   **Base Cubit**: Updated `AsyncCubit` to use `MessageUtils.showTopMsg` instead of `showSnackBar` for network and error feedback.&#10;*   **iOS**: Incremented `CURRENT_PROJECT_VERSION` to 19 and updated `Podfile.lock` to include `ObjectBox` dependencies.&#10;*   **Clean up**: Removed unused imports in splash and home features.">
       <option name="closed" value="true" />
@@ -658,7 +678,15 @@
       <option name="project" value="LOCAL" />
       <updated>1777387941064</updated>
     </task>
-    <option name="localTasksCounter" value="312" />
+    <task id="LOCAL-00312" summary="Update project configuration, SDK paths, and introduce production build flavor&#10;&#10;- Bump version to 1.0.3+1 in `pubspec.yaml`.&#10;- Update Dart SDK and library paths across IDE configuration files (`.idea`, `appp.iml`).&#10;- Add iOS &quot;production&quot; shared scheme and corresponding build configurations in `project.pbxproj`.&#10;- Update `firebase.json` to include specific build configurations for dev and production flavors on iOS.&#10;- Update Git remote URL and remove absolute path VCS mappings in `.idea/vcs.xml`.&#10;- Refine flavor initialization logic and error handling in `main.dart`.&#10;- Synchronize device streaming cache and internal IDE workspace settings.">
+      <option name="closed" value="true" />
+      <created>1777992162518</created>
+      <option name="number" value="00312" />
+      <option name="presentableId" value="LOCAL-00312" />
+      <option name="project" value="LOCAL" />
+      <updated>1777992162518</updated>
+    </task>
+    <option name="localTasksCounter" value="313" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -679,7 +707,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Enhance `SocketCubit` and add socket event constants&#10;&#10;*   **Socket**:&#10;    *   Added `timer` event constant to `SocketEvents`.&#10;    *   Implemented `updateTimer` in `SocketCubit` to emit timer updates with `matchRequestId`.&#10;    *   Implemented `fireShouldUpdate` in `SocketCubit` to emit `update-chat` events with `room_id`, `match_request_id`, and `receiver_id`.&#10;*   **Chat**:&#10;    *   Simplified the `onSuccess` callback for `ChatActions.executeReq` in `ChatScreen` to use a local `_startChat()` call." />
     <MESSAGE value="Enhance socket integration for real-time chat updates and timer synchronization.&#10;&#10;### Socket&#10;*   Implemented `updateTimer` in `SocketCubit` to emit timer synchronization events.&#10;*   Implemented `fireShouldUpdate` in `SocketCubit` to trigger `update-chat` events across clients using `roomId`, `matchRequestId`, and `receiverId`.&#10;*   Integrated `_updateTimer` in `ChatScreen` to sync the countdown upon socket connection.&#10;&#10;### Chat &amp; Actions&#10;*   Updated `ChatCubit` to automatically trigger timer updates via `SocketCubit` upon successfully starting a chat.&#10;*   Refactored `StageAction` and `UserStatusAction` to fire socket update events after successful state transitions (e.g., accepting requests, exchanging numbers, choosing Sharia options).&#10;*   Simplified `ChatScreen` callbacks to use socket-driven updates and improved the video call icon and feedback.&#10;&#10;### Core &amp; Network&#10;*   Modified `DioService` to lazily update the `baseUrl` if it is null or empty during an API call.&#10;*   Adjusted `setup_service_locators.dart` and `main.dart` to ensure `BackendConfiguration` is set before service locator initialization.&#10;*   Deleted `.idea/caches/deviceStreaming.xml`." />
     <MESSAGE value="Comment out `onFireShouldUpdate` callback in `NotificationCard` and clean up unused imports in `navigator.dart`.&#10;&#10;### Details&#10;- **Notifications**: Commented out the `onFireShouldUpdate` call within the `onSuccess` handler for rejection actions in `NotificationCard`.&#10;- **Navigation**: Removed unused imports (`dart:developer` and `splash_screen.dart`) from `navigator.dart`.&#10;- **IDE**: Updated `.idea/workspace.xml` to reflect local task changes." />
     <MESSAGE value="Emit update chat event on notification action in `NotificationService`&#10;&#10;- Added `_emitUpdateChatEvent` to handle socket signaling when a notification action (like accepting a match request) occurs.&#10;- Updated `handleNotificationAction` to parse the API response into a `ChatModel`.&#10;- Trigger the socket event with `room_id`, `match_request_id`, and `receiver_id` upon successful API call.&#10;- Implemented a temporary socket connection lifecycle within the notification handler, including a 5-second timeout and automatic disconnection." />
@@ -704,7 +731,8 @@
     <MESSAGE value="Update development bundle ID and refine base URL retrieval logic in Dio service&#10;&#10;- **Configuration**:&#10;    - Update `devBundleId` in `ConstantManager` to follow the `.sitr.dev` naming convention.&#10;- **Networking**:&#10;    - Refactor `getBaseUrl` in `DioService` to improve code formatting and readability when resolving flavor-based base URLs from secure storage." />
     <MESSAGE value="Refactor authentication forms and user models to improve data handling and simplify the sign-up flow.&#10;&#10;- **Auth &amp; Forms**:&#10;    - Comment out several field validators across `MaleFields`, `FemaleFields`, `SharedFormFields`, and `DowryWidget` to relax input constraints during the sign-up process.&#10;    - Refactor `MaleFields` to improve code formatting and readability within the `SharedFormFields` callback logic.&#10;- **Models &amp; Core**:&#10;    - Update `FemaleModel` and `IndividualUserModel` to explicitly filter out null values from their JSON representations using `removeWhere`.&#10;    - Enhance data serialization consistency by ensuring only non-null fields are sent in API requests for user profiles." />
     <MESSAGE value="Refine profile information display, introduce &quot;Not set yet&quot; placeholders, and update workspace configurations&#10;&#10;- **UI &amp; Widgets**:&#10;    - Update `InfoWidget` to dynamically change the subtitle color to red when a value is not set.&#10;    - Refactor `ViewProfileWidget` to handle null safety for user attributes and update the data mapping for `PartnerInfoModel`.&#10;- **Models &amp; Core**:&#10;    - Enhance `PartnerInfoModel` to include a `isValueSet` flag and automatically provide a default &quot;Not set yet&quot; translation for null subtitles.&#10;    - Refactor `IndividualUserModel.initial()` to remove default empty string and zero values.&#10;    - Update `ConvertToLocaleKeys` extension on `bool` to return an optional `String?` for better null handling.&#10;- **Localization**:&#10;    - Add `not_set_yet` translation key to `ar.json`, `en.json`, and `lang.json`.&#10;    - Regenerate `locale_keys.g.dart` to include the `notSetYet` constant.&#10;- **iOS**:&#10;    - Synchronize `project.pbxproj` with recent build environment updates.&#10;    - Introduce a new `dev.xcscheme` for the development flavor.&#10;- **Tools &amp; IDE**:&#10;    - Add a new run configuration for `main_dev.dart` targeting the `dev` flavor.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and active git branch updates." />
-    <option name="LAST_COMMIT_MESSAGE" value="Refine profile information display, introduce &quot;Not set yet&quot; placeholders, and update workspace configurations&#10;&#10;- **UI &amp; Widgets**:&#10;    - Update `InfoWidget` to dynamically change the subtitle color to red when a value is not set.&#10;    - Refactor `ViewProfileWidget` to handle null safety for user attributes and update the data mapping for `PartnerInfoModel`.&#10;- **Models &amp; Core**:&#10;    - Enhance `PartnerInfoModel` to include a `isValueSet` flag and automatically provide a default &quot;Not set yet&quot; translation for null subtitles.&#10;    - Refactor `IndividualUserModel.initial()` to remove default empty string and zero values.&#10;    - Update `ConvertToLocaleKeys` extension on `bool` to return an optional `String?` for better null handling.&#10;- **Localization**:&#10;    - Add `not_set_yet` translation key to `ar.json`, `en.json`, and `lang.json`.&#10;    - Regenerate `locale_keys.g.dart` to include the `notSetYet` constant.&#10;- **iOS**:&#10;    - Synchronize `project.pbxproj` with recent build environment updates.&#10;    - Introduce a new `dev.xcscheme` for the development flavor.&#10;- **Tools &amp; IDE**:&#10;    - Add a new run configuration for `main_dev.dart` targeting the `dev` flavor.&#10;    - Synchronize `.idea/workspace.xml` with recent task history and active git branch updates." />
+    <MESSAGE value="Update project configuration, SDK paths, and introduce production build flavor&#10;&#10;- Bump version to 1.0.3+1 in `pubspec.yaml`.&#10;- Update Dart SDK and library paths across IDE configuration files (`.idea`, `appp.iml`).&#10;- Add iOS &quot;production&quot; shared scheme and corresponding build configurations in `project.pbxproj`.&#10;- Update `firebase.json` to include specific build configurations for dev and production flavors on iOS.&#10;- Update Git remote URL and remove absolute path VCS mappings in `.idea/vcs.xml`.&#10;- Refine flavor initialization logic and error handling in `main.dart`.&#10;- Synchronize device streaming cache and internal IDE workspace settings." />
+    <option name="LAST_COMMIT_MESSAGE" value="Update project configuration, SDK paths, and introduce production build flavor&#10;&#10;- Bump version to 1.0.3+1 in `pubspec.yaml`.&#10;- Update Dart SDK and library paths across IDE configuration files (`.idea`, `appp.iml`).&#10;- Add iOS &quot;production&quot; shared scheme and corresponding build configurations in `project.pbxproj`.&#10;- Update `firebase.json` to include specific build configurations for dev and production flavors on iOS.&#10;- Update Git remote URL and remove absolute path VCS mappings in `.idea/vcs.xml`.&#10;- Refine flavor initialization logic and error handling in `main.dart`.&#10;- Synchronize device streaming cache and internal IDE workspace settings." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

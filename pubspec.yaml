@@ -125,6 +125,7 @@ flutter_launcher_icons:
   image_path: "assets/images/logo.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
 
+default_flavor: dev
 dependency_overrides:
   connectivity_plus: ^6.1.1
   zego_express_engine: ^3.23.0

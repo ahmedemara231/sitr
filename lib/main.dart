@@ -142,7 +142,7 @@ void _initSentry()async{
           startLocale: Languages.arabic.locale,
           // startLocale: Languages.getDeviceLocaleFromPlatform().locale,
           fallbackLocale: const Locale('ar'),
-          child: Phoenix(child: const Satr()),
+          child: const Satr(),
         ),
       )
   );
