@@ -55,7 +55,11 @@
       "Bash(git check-ignore *)",
       "mcp__plugin_context7_context7__query-docs",
       "Skill(figma:figma-implement-design)",
-      "mcp__plugin_figma_figma__get_design_context"
+      "mcp__plugin_figma_figma__get_design_context",
+      "mcp__stitch__get_screen",
+      "WebFetch(domain:stitch.withgoogle.com)",
+      "Bash(dart run *)",
+      "Read(//tmp/**)"
     ],
     "deny": [],
     "ask": []

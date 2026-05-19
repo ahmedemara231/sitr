@@ -29,7 +29,7 @@ import '../more_screen.dart';
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
 
-  static void _openProfileEdit(BuildContext context) {
+  static void _openProfileEdit() {
     UserModel.isIndividual
         ? Go.to(EnterMaleOrFemaleOrChildDataScreen.showAll(
             scaffoldType: ScaffoldType.appScaffold,
@@ -107,8 +107,8 @@ class SettingScreen extends StatelessWidget {
     final List<MorItemModel> moreItemsList = [
       MorItemModel(
         icon: Assets.svgUser,
-        label: LocaleKeys.profile,
-        onTap: () => _openProfileEdit(context),
+        label: LocaleKeys.editProfile,
+        onTap: () => _openProfileEdit(),
       ),
       MorItemModel(
         icon: Assets.svgSettingPhone,

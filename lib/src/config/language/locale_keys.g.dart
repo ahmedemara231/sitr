@@ -1015,4 +1015,22 @@ abstract class LocaleKeys {
   static const String _congratulationsOnYourEngagementWeAskGodToBlessYourUnionAndGrantYouHappiness = 'congratulations_on_your_engagement_we_ask_god_to_bless_your_union_and_grant_you_happiness';
   static String get congratulationsOnYourEngagementWeAskGodToBlessYourUnionAndGrantYouHappiness => _congratulationsOnYourEngagementWeAskGodToBlessYourUnionAndGrantYouHappiness.tr();
 
+  static const String _questionBadge = 'question_badge';
+  static String get questionBadge => _questionBadge.tr();
+
+  static const String _supportBadge = 'support_badge';
+  static String get supportBadge => _supportBadge.tr();
+
+  static const String _supportTeam = 'support_team';
+  static String get supportTeam => _supportTeam.tr();
+
+  static const String _replyAction = 'reply_action';
+  static String get replyAction => _replyAction.tr();
+
+  static const String _writeYourMessageHere = 'write_your_message_here';
+  static String get writeYourMessageHere => _writeYourMessageHere.tr();
+
+  static const String _editProfile = 'edit_profile';
+  static String get editProfile => _editProfile.tr();
+
 }

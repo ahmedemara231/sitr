@@ -347,5 +347,12 @@
   "Rejected" : "تم الرفض",
   "Do you agree with the partner?" : "هل توافق علي الشريك؟",
   "Update available update now?" : "يتوفر تحديث هل تريد التحديث الآن؟",
-  "Congratulations on your engagement We ask God to bless your union and grant you happiness" : "مبارك خطوبتكما نسأل الله أن يتمم لكما بالخير والبركة"
+  "Congratulations on your engagement We ask God to bless your union and grant you happiness" : "مبارك خطوبتكما نسأل الله أن يتمم لكما بالخير والبركة",
+  "_____________________________________ContactUsChat___________________________________" : "",
+  "questionBadge #$ Question" : "سؤال",
+  "supportBadge #$ Support" : "دعم",
+  "supportTeam #$ Support Team" : "فريق الدعم",
+  "replyAction #$ Reply" : "رد",
+  "writeYourMessageHere #$ Write your message here" : "اكتب رسالتك هنا...",
+  "Edit profile" : "تعديل الملف الشخصي"
 }

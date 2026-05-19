@@ -8,10 +8,12 @@ import '../../../generated/assets.dart';
 import '../../config/language/languages.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
+import '../../features/auth/imports.dart';
 import '../../features/main_screen/data/models/partner_info_model.dart';
 import '../../features/main_screen/presentation/screens/parent_details.dart';
 import '../../features/main_screen/presentation/widgets/app_bar_actions.dart';
 import '../../features/main_screen/presentation/widgets/partner_info/info_widget.dart';
+import '../../features/more/presentation/cubit/edit_profile.dart';
 import '../base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../extensions/bool.dart';
 import '../extensions/context_extension.dart';
@@ -29,8 +31,11 @@ import '../shared/convert_user_model_to_data_list_cubit.dart';
 import '../shared/models/user_models/individual/female_model.dart';
 import '../shared/models/user_models/individual/individual_user_model.dart';
 import '../shared/models/user_models/user_model.dart';
+import '../shared/user_cubit/user_cubit.dart';
 import 'app_text.dart' show AppText;
+import 'buttons/default_button.dart';
 import 'chat_button.dart';
+import 'custom_messages.dart';
 import 'image_widgets/cached_image.dart';
 import 'scaffolds/center_card_scaffold.dart';
 import 'sheets/bloc_success.dart';
@@ -256,7 +261,26 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                     )
                 ),
                 if(widget._type.isPartnerProfile)
-                  ChatButton(user: state.data),
+                  ChatButton(user: state.data)
+                else if(widget._type.isProfile)
+                  DefaultButton(
+                    borderRadius: BorderRadius.circular(40.r),
+                    title: LocaleKeys.editProfile,
+                    onTap: () => Go.to(EnterMaleOrFemaleOrChildDataScreen.showAll(
+                      scaffoldType: ScaffoldType.appScaffold,
+                      userType: UserModel.currentUser?.gender?.userGender,
+                      showGenderSelection: false,
+                      initialValue: UserModel.currentUser as IndividualUserModel,
+                      onClick: (context, user) => context.read<EditProfileCubit>().editProfile(
+                        body: user,
+                        onSuccess: (data) {
+                          UserCubit.instance.updateUser(data.data);
+                          MessageUtils.showSnackBar(data.msg);
+                          Go.back();
+                        },
+                      ),
+                    )),
+                  )
               ],
             ),
           ),

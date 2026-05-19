@@ -341,5 +341,11 @@
   "rejected": "Rejected",
   "do_you_agree_with_the_partner": "Do you agree with the partner?",
   "update_available_update_now": "Update available update now?",
-  "congratulations_on_your_engagement_we_ask_god_to_bless_your_union_and_grant_you_happiness": "Congratulations on your engagement We ask God to bless your union and grant you happiness"
+  "congratulations_on_your_engagement_we_ask_god_to_bless_your_union_and_grant_you_happiness": "Congratulations on your engagement We ask God to bless your union and grant you happiness",
+  "question_badge": "Question",
+  "support_badge": "Support",
+  "support_team": "Support Team",
+  "reply_action": "Reply",
+  "write_your_message_here": "Write your message here",
+  "edit_profile": "Edit profile"
 }
