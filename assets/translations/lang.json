@@ -354,5 +354,10 @@
   "supportTeam #$ Support Team" : "فريق الدعم",
   "replyAction #$ Reply" : "رد",
   "writeYourMessageHere #$ Write your message here" : "اكتب رسالتك هنا...",
+  "pleaseSelectMessageToReply #$ Please select a message to reply to" : "يرجى اختيار رسالة للرد عليها",
+  "replyingTo #$ Replying to" : "الرد على",
+  "startNewConversation #$ Start new conversation" : "بدء محادثة جديدة",
+  "showMore #$ Show more" : "عرض المزيد",
+  "showLess #$ Show less" : "عرض أقل",
   "Edit profile" : "تعديل الملف الشخصي"
 }

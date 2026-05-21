@@ -21,6 +21,7 @@ import '../../features/home/home_screen.dart';
 import '../../features/main_screen/presentation/screens/parent_details.dart';
 import '../../features/main_screen/presentation/screens/partner_details.dart';
 import '../../features/more/presentation/screens/complaint_and_suggestion/complaint_details_screen.dart';
+import '../../features/more/presentation/screens/contact_us/contact_us_chat_screen.dart';
 import '../../features/more/presentation/screens/my_packages.dart';
 import '../../features/more/presentation/screens/profile.dart';
 import '../../features/more/presentation/screens/wallet/wallet_screen.dart';

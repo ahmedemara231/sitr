@@ -1,8 +1,11 @@
+import 'package:dropinity/helpers/extensions/padding_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../../../../generated/assets.dart';
 import '../../../../../../config/language/locale_keys.g.dart';
 import '../../../../../../config/res/config_imports.dart';
 import '../../../../../../core/extensions/sized_box_helper.dart';
+import '../../../../../../core/widgets/svg_pic.dart';
 
 /// Floating message composer for the contact-us conversation.
 /// The parent owns [controller]; this widget only reports user intent.
@@ -24,7 +27,35 @@ class ContactChatInputBar extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 16.h),
         child: Row(
+          spacing: 10.w,
           children: [
+            InkWell(
+              onTap: onSendPressed,
+              borderRadius: BorderRadius.circular(16.r),
+              child: Container(
+                width: 50.h,
+                height: 50.h,
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(16.r),
+                  border: Border.all(
+                    color: AppColors.border.withValues(alpha: 0.2),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.06),
+                      blurRadius: 16,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: SvgPic(
+                  assetName: Assets.svgSend,
+                  color: AppColors.primary,
+                  size: 16.r,
+                ).paddingAll(14.r),
+              ),
+            ),
             Expanded(
               child: Container(
                 height: 56.h,
@@ -77,37 +108,6 @@ class ContactChatInputBar extends StatelessWidget {
                       ),
                     ),
                   ],
-                ),
-              ),
-            ),
-            12.szW,
-            InkWell(
-              onTap: onSendPressed,
-              borderRadius: BorderRadius.circular(16.r),
-              child: Container(
-                width: 56.h,
-                height: 56.h,
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(16.r),
-                  border: Border.all(
-                    color: AppColors.border.withValues(alpha: 0.2),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.06),
-                      blurRadius: 16,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Transform.rotate(
-                  angle: -0.785398, // -45deg
-                  child: Icon(
-                    Icons.send,
-                    color: AppColors.primary,
-                    size: 26.r,
-                  ),
                 ),
               ),
             ),

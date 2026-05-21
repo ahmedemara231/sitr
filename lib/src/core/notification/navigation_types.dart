@@ -24,6 +24,7 @@ enum NotificationType {
   ownerApproved('owner_approved', navigation: UpdateNavigation()),
   providerAccepted('provider_accepted', navigation: UpdateNavigation()),
   providerRejected('provider_rejected', navigation: UpdateNavigation()),
+  contactUsReply('contact_us_reply', navigation: ContactUsNavigation()),
 
   // 💬 Match Request Notifications (many types)
   newChatRequest('new_chat_request', navigation: MatchRequestNavigation()),

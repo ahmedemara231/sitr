@@ -1030,6 +1030,21 @@ abstract class LocaleKeys {
   static const String _writeYourMessageHere = 'write_your_message_here';
   static String get writeYourMessageHere => _writeYourMessageHere.tr();
 
+  static const String _pleaseSelectMessageToReply = 'please_select_message_to_reply';
+  static String get pleaseSelectMessageToReply => _pleaseSelectMessageToReply.tr();
+
+  static const String _replyingTo = 'replying_to';
+  static String get replyingTo => _replyingTo.tr();
+
+  static const String _startNewConversation = 'start_new_conversation';
+  static String get startNewConversation => _startNewConversation.tr();
+
+  static const String _showMore = 'show_more';
+  static String get showMore => _showMore.tr();
+
+  static const String _showLess = 'show_less';
+  static String get showLess => _showLess.tr();
+
   static const String _editProfile = 'edit_profile';
   static String get editProfile => _editProfile.tr();
 

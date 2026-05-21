@@ -118,6 +118,7 @@ dependencies:
   saudi_currency: ^0.0.6
   shorebird_code_push: ^2.0.5
   flutter_phoenix: ^1.1.1
+  expandable_text: ^2.3.0
 
 flutter_launcher_icons:
   android: true

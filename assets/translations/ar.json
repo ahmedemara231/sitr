@@ -347,5 +347,10 @@
   "support_team": "فريق الدعم",
   "reply_action": "رد",
   "write_your_message_here": "اكتب رسالتك هنا...",
+  "please_select_message_to_reply": "يرجى اختيار رسالة للرد عليها",
+  "replying_to": "الرد على",
+  "start_new_conversation": "بدء محادثة جديدة",
+  "show_more": "عرض المزيد",
+  "show_less": "عرض أقل",
   "edit_profile": "تعديل الملف الشخصي"
 }

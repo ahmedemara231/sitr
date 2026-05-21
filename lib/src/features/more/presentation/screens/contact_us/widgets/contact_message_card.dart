@@ -1,8 +1,11 @@
+import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../config/language/locale_keys.g.dart';
 import '../../../../../../config/res/config_imports.dart';
 import '../../../../../../core/extensions/sized_box_helper.dart';
+import '../../../../../../core/shared/models/user_models/user_model.dart';
+import '../../../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../../../core/widgets/app_text.dart';
 import '../../../../../../core/widgets/image_widgets/cached_image.dart';
 import '../../../models/contact_message.dart';
@@ -14,12 +17,16 @@ class ContactMessageCard extends StatelessWidget {
     super.key,
     required this.message,
     required this.avatarSize,
+    required this.onReplyTap,
     this.badgeLabel,
+    this.isSelected = false,
   });
 
   final ContactMessage message;
   final double avatarSize;
   final String? badgeLabel;
+  final void Function() onReplyTap;
+  final bool isSelected;
 
   bool get _isSupport => message.isSupport;
 
@@ -35,9 +42,12 @@ class ContactMessageCard extends StatelessWidget {
             : AppColors.white.withValues(alpha: 0.7),
         borderRadius: BorderRadius.circular(16.r),
         border: Border.all(
-          color: _isSupport
-              ? AppColors.primary.withValues(alpha: 0.08)
-              : AppColors.white.withValues(alpha: 0.5),
+          width: isSelected ? 1.5 : 1,
+          color: isSelected
+              ? AppColors.primary
+              : _isSupport
+                  ? AppColors.primary.withValues(alpha: 0.08)
+                  : AppColors.white.withValues(alpha: 0.5),
         ),
         boxShadow: [
           BoxShadow(
@@ -66,15 +76,18 @@ class ContactMessageCard extends StatelessWidget {
                       child: AppText(
                         message.authorName,
                         color: accent,
-                        fontSize: 15.sp,
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    AppText(
-                      message.time,
-                      color: accent.withValues(alpha: 0.5),
-                      fontSize: 11.sp,
-                      fontWeight: FontWeight.w400,
+                    SizedBox(
+                      width: 60.w,
+                      child: AppText(
+                        message.time,
+                        color: accent.withValues(alpha: 0.5),
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ],
                 ),
@@ -82,21 +95,33 @@ class ContactMessageCard extends StatelessWidget {
                 if (message.highlighted)
                   _HighlightedBubble(text: message.message)
                 else
-                  AppText(
+                  ExpandableText(
                     message.message,
-                    color: AppColors.textBlack.withValues(alpha: 0.8),
-                    fontSize: 15.sp,
-                    fontWeight: FontWeight.w400,
-                    height: 1.6,
+                    expandText: LocaleKeys.showMore,
+                    collapseText: LocaleKeys.showLess,
+                    maxLines: 3,
+                    animation: true,
+                    linkColor: AppColors.primary,
+                    linkStyle: TextStyle(
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    style: TextStyle(
+                      color: AppColors.textBlack.withValues(alpha: 0.8),
+                      fontSize: 15.sp,
+                      fontWeight: FontWeight.w400,
+                      height: 1.6,
+                    ),
                   ),
-                12.szH,
-                Divider(
-                  height: 1,
-                  color: (_isSupport ? AppColors.primary : AppColors.border)
-                      .withValues(alpha: 0.15),
-                ),
-                12.szH,
-                _ReplyButton(isSupport: _isSupport),
+                if (_isSupport) ...[
+                  12.szH,
+                  Divider(
+                    height: 1,
+                    color: AppColors.primary.withValues(alpha: 0.15),
+                  ),
+                  12.szH,
+                  _ReplyButton(isSupport: true, onTap: onReplyTap),
+                ],
               ],
             ),
           ),
@@ -134,10 +159,12 @@ class _Avatar extends StatelessWidget {
                 width: 2,
               ),
             ),
-            child: Icon(
-              Icons.support_agent,
-              color: AppColors.white,
-              size: dimension * 0.5,
+            child: Center(
+              child: Icon(
+                Icons.support_agent,
+                color: Colors.white,
+                size: dimension * 0.5,
+              ),
             ),
           )
         : Container(
@@ -145,15 +172,17 @@ class _Avatar extends StatelessWidget {
               shape: BoxShape.circle,
               border: Border.all(color: AppColors.white, width: 2),
             ),
-            child: CachedImage(
-              url: message.avatarUrl ?? '',
-              width: dimension,
-              height: dimension,
-              boxShape: BoxShape.circle,
-              placeHolder: Icon(
-                Icons.person,
-                color: AppColors.darkGray,
-                size: dimension * 0.5,
+            child: Center(
+              child: CachedImage(
+                url: UserModel.currentUser?.avatar ?? '',
+                width: dimension,
+                height: dimension,
+                boxShape: BoxShape.circle,
+                placeHolder: Icon(
+                  Icons.person,
+                  color: AppColors.darkGray,
+                  size: dimension * 0.5,
+                ),
               ),
             ),
           );
@@ -224,9 +253,10 @@ class _HighlightedBubble extends StatelessWidget {
 }
 
 class _ReplyButton extends StatelessWidget {
-  const _ReplyButton({required this.isSupport});
+  const _ReplyButton({required this.isSupport, required this.onTap});
 
   final bool isSupport;
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -234,12 +264,19 @@ class _ReplyButton extends StatelessWidget {
         ? AppColors.primary.withValues(alpha: 0.7)
         : AppColors.darkGray;
 
-    return AppText.withIcon(
-      icon: Icon(Icons.reply, size: 18.r, color: color),
-      text: LocaleKeys.replyAction,
-      color: color,
-      fontSize: 11.sp,
-      fontWeight: FontWeight.w700,
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(6.r),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
+        child: AppText.withIcon(
+          icon: Icon(Icons.reply, size: 18.r, color: color),
+          text: LocaleKeys.replyAction,
+          color: color,
+          fontSize: 11.sp,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
     );
   }
 }

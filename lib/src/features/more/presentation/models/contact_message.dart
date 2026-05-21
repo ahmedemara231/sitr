@@ -1,6 +1,11 @@
+import 'package:equatable/equatable.dart';
+import '../../../../config/language/locale_keys.g.dart';
+
 enum ContactSender { user, support }
 
-class ContactMessage {
+class ContactMessage extends Equatable {
+  final int? id;
+  final int parentId;
   final ContactSender sender;
   final String authorName;
   final String message;
@@ -9,6 +14,8 @@ class ContactMessage {
   final bool highlighted;
 
   const ContactMessage({
+    this.id,
+    required this.parentId,
     required this.sender,
     required this.authorName,
     required this.message,
@@ -17,29 +24,47 @@ class ContactMessage {
     this.highlighted = false,
   });
 
-  bool get isSupport => sender == ContactSender.support;
-
-  factory ContactMessage.fromJson(Map<String, dynamic> json) => ContactMessage(
-        sender: (json['sender'] ?? '') == 'support'
-            ? ContactSender.support
-            : ContactSender.user,
-        authorName: json['author_name'] ?? '',
-        message: json['message'] ?? '',
-        time: json['time'] ?? '',
-        avatarUrl: json['avatar_url'],
-        highlighted: json['highlighted'] ?? false,
+  factory ContactMessage.initial() => const ContactMessage(
+        parentId: 0,
+        sender: ContactSender.user,
+        authorName: '',
+        message: '',
+        time: '',
       );
 
-  Map<String, dynamic> toJson() => {
-        'sender': isSupport ? 'support' : 'user',
-        'author_name': authorName,
-        'message': message,
-        'time': time,
-        'avatar_url': avatarUrl,
-        'highlighted': highlighted,
-      };
+  bool get isSupport => sender == ContactSender.support;
+
+  factory ContactMessage.fromParentJson(Map<String, dynamic> json) {
+    final int parentId = json['id'] ?? 0;
+    return ContactMessage(
+      id: parentId,
+      parentId: parentId,
+      sender: ContactSender.user,
+      authorName: json['name'] ?? '',
+      message: json['message'] ?? '',
+      time: json['created_at'] ?? '',
+    );
+  }
+
+  factory ContactMessage.fromReplyJson(
+    Map<String, dynamic> json, {
+    required int parentId,
+    required String parentName,
+  }) {
+    final bool isAdmin = (json['sender_type'] ?? '') == 'admin';
+    return ContactMessage(
+      id: json['id'],
+      parentId: parentId,
+      sender: isAdmin ? ContactSender.support : ContactSender.user,
+      authorName: isAdmin ? LocaleKeys.supportBadge : parentName,
+      message: json['reply'] ?? '',
+      time: json['created_at'] ?? '',
+    );
+  }
 
   ContactMessage copyWith({
+    int? id,
+    int? parentId,
     ContactSender? sender,
     String? authorName,
     String? message,
@@ -48,6 +73,8 @@ class ContactMessage {
     bool? highlighted,
   }) =>
       ContactMessage(
+        id: id ?? this.id,
+        parentId: parentId ?? this.parentId,
         sender: sender ?? this.sender,
         authorName: authorName ?? this.authorName,
         message: message ?? this.message,
@@ -55,4 +82,16 @@ class ContactMessage {
         avatarUrl: avatarUrl ?? this.avatarUrl,
         highlighted: highlighted ?? this.highlighted,
       );
+
+  @override
+  List<Object?> get props => [
+        id,
+        parentId,
+        sender,
+        authorName,
+        message,
+        time,
+        avatarUrl,
+        highlighted,
+      ];
 }

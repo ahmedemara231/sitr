@@ -39,6 +39,8 @@ class ApiConstants {
   static const String getPaymentBrands = 'payment-brands';
   static const String chargeWallet = 'charge-wallet';
   static const String contactStore = 'contact-us-store';
+  static const String contactUsIndex = 'contact-us/index';
+  static const String contactUsSendReply = 'contact-us/';
   static const String activate = 'activate';
   static const String register = 'register';
   static const String completeRegister = 'complete-registration';

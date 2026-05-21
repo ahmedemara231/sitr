@@ -72,6 +72,15 @@ class UpdateNavigation implements NotificationNavigation {
   }
 }
 
+class ContactUsNavigation implements NotificationNavigation {
+  const ContactUsNavigation();
+
+  @override
+  void navigate({required Map<String, dynamic> data}) {
+    Go.toOrOff(const ContactUsChatScreen());
+  }
+}
+
 // ----------------- Complaints -----------------
 class ComplaintNavigation implements NotificationNavigation {
   const ComplaintNavigation();

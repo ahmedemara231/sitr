@@ -347,5 +347,10 @@
   "support_team": "Support Team",
   "reply_action": "Reply",
   "write_your_message_here": "Write your message here",
+  "please_select_message_to_reply": "Please select a message to reply to",
+  "replying_to": "Replying to",
+  "start_new_conversation": "Start new conversation",
+  "show_more": "Show more",
+  "show_less": "Show less",
   "edit_profile": "Edit profile"
 }

@@ -16,7 +16,7 @@ import '../widgets/more_item.dart';
 import '../widgets/more_tap_app_bar.dart';
 import 'blocked_user_screen/blocked_user_screen.dart';
 import 'complaint_and_suggestion/complaints_and_suggestions_screen.dart';
-import 'contact_us/contact_us_screen.dart';
+import 'contact_us/contact_us_chat_screen.dart';
 import 'my_packages.dart';
 import 'profile.dart';
 import 'success_partners/success_partners_screen.dart';
@@ -74,9 +74,7 @@ class MoreScreen extends StatelessWidget {
           MorItemModel(
             icon: Assets.svgContactUsIcon,
             label: LocaleKeys.contactUs,
-            onTap: () {
-              Go.to(const ContactUsScreen());
-            },
+            onTap: () => Go.to(const ContactUsChatScreen()),
           ),
           MorItemModel(
             icon: Assets.svgComplaintIcon,

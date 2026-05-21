@@ -13,6 +13,7 @@ import '../../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../../core/widgets/custom_app_bar.dart' show customAppBar;
+import '../../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../../core/widgets/text_fields/default_text_field.dart';
 import '../../cubit/contact_us_cubit/contact_us_cubit.dart';
 import '../../widgets/socials.dart';
@@ -44,9 +45,8 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ContactUsCubit(),
-      child: Scaffold(
-        backgroundColor: AppColors.whiteScaffoldBackground,
-        appBar: customAppBar(appBarTitle: LocaleKeys.contactUs),
+      child: AppScaffold(
+        appBarTitle: LocaleKeys.contactUs,
         body: Form(
           key: formKey,
           child: SingleChildScrollView(
@@ -87,7 +87,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
             ).paddingAll(16.r),
           ),
         ),
-        bottomNavigationBar: BlocBuilder<ContactUsCubit, AsyncState>(
+        bottomBar: BlocBuilder<ContactUsCubit, AsyncState>(
           builder: (context, state) {
             return AppLoadingButton(
                 asyncCall: (context) async {
