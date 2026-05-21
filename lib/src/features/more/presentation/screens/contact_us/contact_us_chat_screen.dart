@@ -139,8 +139,8 @@ class _ChatThread extends StatelessWidget {
 
   static const double _rightEdge = 0.94;
   static const double _questionWidth = 0.94;
-  static const double _adminWidth = 0.84;
-  static const double _userReplyWidth = 0.74;
+  static const double _adminWidth = 0.9;
+  static const double _userReplyWidth = 0.85;
 
   bool _isQuestion(ContactMessage message) => message.id == message.parentId;
 

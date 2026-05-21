@@ -98,15 +98,15 @@ class ContactChatInputBar extends StatelessWidget {
                       ),
                     ),
                     8.szW,
-                    InkWell(
-                      onTap: onCameraPressed,
-                      customBorder: const CircleBorder(),
-                      child: Icon(
-                        Icons.photo_camera_outlined,
-                        color: AppColors.primary,
-                        size: 24.r,
-                      ),
-                    ),
+                    // InkWell(
+                    //   onTap: onCameraPressed,
+                    //   customBorder: const CircleBorder(),
+                    //   child: Icon(
+                    //     Icons.photo_camera_outlined,
+                    //     color: AppColors.primary,
+                    //     size: 24.r,
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
