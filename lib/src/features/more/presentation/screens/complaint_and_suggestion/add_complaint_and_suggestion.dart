@@ -14,6 +14,7 @@ import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/extensions/sized_box_helper.dart';
 import '../../../../../core/helpers/validators.dart';
 import '../../../../../core/navigation/navigator.dart';
+import '../../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../chats/data/chat_sheet_manager.dart';
 import '../../../../../core/widgets/app_bottom_sheet.dart';
 import '../../../../../core/widgets/app_text.dart';
@@ -44,10 +45,8 @@ class _AddComplaintAndSuggestionState extends State<AddComplaintAndSuggestion> {
       create: (context) => AddComplaintCubit(),
       child: Form(
         key: formKey,
-        child: Scaffold(
-          backgroundColor: AppColors.whiteScaffoldBackground,
-
-          appBar: customAppBar(appBarTitle: LocaleKeys.complaintDetails),
+        child: AppScaffold(
+          appBarTitle: LocaleKeys.complaintDetails,
           body: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,7 +107,7 @@ class _AddComplaintAndSuggestionState extends State<AddComplaintAndSuggestion> {
               ],
             ).paddingAll(16.r),
           ),
-          bottomNavigationBar: BlocConsumer<AddComplaintCubit, AsyncState>(
+          bottomBar: BlocConsumer<AddComplaintCubit, AsyncState>(
             listener: (context, state) {
               if(state.isSuccess){
                 ChatSheetManager.show(

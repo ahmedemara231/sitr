@@ -21,15 +21,19 @@ class SuccessPartnersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => SuccessPartnersCubit()..fetchSuccessPartners(),
-      child: Scaffold(
-        backgroundColor: AppColors.whiteScaffoldBackground,
-        appBar: customAppBar(appBarTitle: LocaleKeys.successPartners),
+      child: AppScaffold(
+        isScrollable: true,
+        appBarTitle: LocaleKeys.successPartners,
         body: BlocBuilder<SuccessPartnersCubit, AsyncState<List<SuccessPartnersModel>>>(
           builder: (context, state) {
             return StatusBuilder(
               data: state,
               onSuccess: (data,context) {
-                return data.isEmpty?const NotContainData():GridView.builder(
+                return data.isEmpty?
+                const NotContainData():
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 15.w,

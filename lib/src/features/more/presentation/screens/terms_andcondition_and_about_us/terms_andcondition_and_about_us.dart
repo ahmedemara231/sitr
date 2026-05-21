@@ -10,6 +10,7 @@ import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/helpers/status_builder.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/custom_app_bar.dart';
+import '../../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../cubit/terms_condition_and_about_cubit/terms_condition_and_about_cubit.dart';
 
 class TermsAndConditionAndAboutUs extends StatelessWidget {
@@ -22,33 +23,26 @@ class TermsAndConditionAndAboutUs extends StatelessWidget {
     return BlocProvider(
       create: (context) => TermsConditionAndAboutCubit()
         ..fetchTermsAndConditions(staticPageType: staticPageType),
-      child: Scaffold(
-        backgroundColor: AppColors.whiteScaffoldBackground,
-        appBar: customAppBar(
-            appBarTitle: staticPageType == StaticPageType.terms
-                ? LocaleKeys.termsAndConditions
-                : LocaleKeys.aboutUs),
-        body: SizedBox(
-          height: double.infinity,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(18.r),
-            ),
-            child: BlocBuilder<TermsConditionAndAboutCubit, AsyncState<String>>(
-              builder: (context, state) {
-                return StatusBuilder(
-                    data: state,
-                    onSuccess: (data, context) {
-                      return SingleChildScrollView(
-                        child: Html(data: data)
-                      );
-                    });
-              },
-            ),
-          ).paddingAll(18),
-        ),
+      child: AppScaffold(
+        isScrollable: true,
+        appBarTitle: staticPageType == StaticPageType.terms ?
+        LocaleKeys.termsAndConditions : LocaleKeys.aboutUs,
+        body: Container(
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(18.r),
+          ),
+          child: BlocBuilder<TermsConditionAndAboutCubit, AsyncState<String>>(
+            builder: (context, state) {
+              return StatusBuilder(
+                  data: state,
+                  onSuccess: (data, context) {
+                    return Html(data: data);
+                  });
+            },
+          ),
+        ).paddingAll(18),
       ),
     );
   }

@@ -12,6 +12,7 @@ import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../../core/widgets/custom_app_bar.dart';
 import '../../../../../core/widgets/riyal_price_text.dart';
+import '../../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../../core/widgets/svg_pic.dart';
 import '../../../../auth/presentation/widgets/sign_up/sheets/charge_wallet.dart';
 import '../../cubit/wallet_cubit/fetch_wallet_cubit.dart';
@@ -23,9 +24,8 @@ class WalletScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => FetchWalletCubit()..fetchWallet(),
-      child: Scaffold(
-        backgroundColor: AppColors.whiteScaffoldBackground,
-        appBar: customAppBar(appBarTitle: LocaleKeys.wallet),
+      child: AppScaffold(
+        appBarTitle: LocaleKeys.wallet,
         body: SizedBox(
           width: double.infinity,
           child: Column(
@@ -58,7 +58,7 @@ class WalletScreen extends StatelessWidget {
             ],
           ),
         ),
-        bottomNavigationBar: Padding(
+        bottomBar: Padding(
           padding: EdgeInsets.all(16.r),
           child: AppLoadingButton(
               asyncCall: (context) async {

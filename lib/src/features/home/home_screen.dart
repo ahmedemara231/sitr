@@ -74,8 +74,8 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
   late final upgrader = Upgrader(
-    debugDisplayAlways: kDebugMode,
-    debugLogging: kDebugMode,
+    // debugDisplayAlways: kDebugMode,
+    // debugLogging: kDebugMode,
     storeController: UpgraderStoreController(
       onAndroid: () => UpgraderPlayStore(),
       oniOS: () => UpgraderAppStore(),
