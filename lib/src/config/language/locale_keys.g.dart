@@ -73,6 +73,9 @@ abstract class LocaleKeys {
   static const String _camera = 'camera';
   static String get camera => _camera.tr();
 
+  static const String _cropImage = 'crop_image';
+  static String get cropImage => _cropImage.tr();
+
   static const String _badRequest = 'bad_request';
   static String get badRequest => _badRequest.tr();
 
@@ -1047,5 +1050,8 @@ abstract class LocaleKeys {
 
   static const String _editProfile = 'edit_profile';
   static String get editProfile => _editProfile.tr();
+
+  static const String _thisImageHasSensitiveContentPleaseRechooseAnotherImage = 'this_image_has_sensitive_content_please_rechoose_another_image';
+  static String get thisImageHasSensitiveContentPleaseRechooseAnotherImage => _thisImageHasSensitiveContentPleaseRechooseAnotherImage.tr();
 
 }

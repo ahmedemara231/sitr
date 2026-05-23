@@ -23,6 +23,7 @@
   "cancel": "Cancel",
   "photo_library": "Photo Library",
   "camera": "Camera",
+  "crop_image": "Crop Image",
   "bad_request": "Bad Request try again",
   "unauthorized": "Unauthorized",
   "not_found": "Not Found",
@@ -352,5 +353,6 @@
   "start_new_conversation": "Start new conversation",
   "show_more": "Show more",
   "show_less": "Show less",
-  "edit_profile": "Edit profile"
+  "edit_profile": "Edit profile",
+  "this_image_has_sensitive_content_please_rechoose_another_image": "This image has sensitive content please rechoose another image"
 }

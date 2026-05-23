@@ -351,6 +351,9 @@ class Helpers {
                             final bool isSafe = await NsfwDetectorHelper.isSafe(croppedImage)??false;
                             if(isSafe){
                               image = File(croppedImage.path);
+                            }else{
+                              MessageUtils.showSnackBar(
+                                  LocaleKeys.thisImageHasSensitiveContentPleaseRechooseAnotherImage);
                             }
                           }
                         }
@@ -374,6 +377,9 @@ class Helpers {
                             final bool isSafe = await NsfwDetectorHelper.isSafe(croppedImage)??false;
                             if(isSafe){
                               image = File(croppedImage.path);
+                            }else{
+                              MessageUtils.showSnackBar(
+                                  LocaleKeys.thisImageHasSensitiveContentPleaseRechooseAnotherImage);
                             }
                           }
                         }
@@ -392,7 +398,16 @@ class Helpers {
                         final currentImage =
                             await picker.pickImage(source: ImageSource.camera);
                         if (currentImage != null) {
-                          image = File(currentImage.path);
+                          final croppedImage = await _cropImage(sourcePath: currentImage.path);
+                          if(croppedImage != null){
+                            final bool isSafe = await NsfwDetectorHelper.isSafe(croppedImage)??false;
+                            if(isSafe){
+                              image = File(croppedImage.path);
+                            }else{
+                              MessageUtils.showSnackBar(
+                                  LocaleKeys.thisImageHasSensitiveContentPleaseRechooseAnotherImage);
+                            }
+                          }
                         }
                         Go.back();
                       },

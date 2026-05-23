@@ -360,5 +360,6 @@
   "startNewConversation #$ Start new conversation" : "بدء محادثة جديدة",
   "showMore #$ Show more" : "عرض المزيد",
   "showLess #$ Show less" : "عرض أقل",
-  "Edit profile" : "تعديل الملف الشخصي"
+  "Edit profile" : "تعديل الملف الشخصي",
+  "This image has sensitive content please rechoose another image" : "هذه الصورة تحتوي علي محتوي غير لائق من فضلك قم باختيار صورة اخري"
 }
