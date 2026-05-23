@@ -99,7 +99,7 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                       strategy: MaskStrategy.custom(replacement: '[${LocaleKeys.dissenter}]'),
                     );
 
-                    MessageUtils.showSnackBar(LocaleKeys.yourMessageHasBeenHiddenBecauseItContainedInappropriateLanguage);
+                    MessageUtils.showTopMsg(LocaleKeys.yourMessageHasBeenHiddenBecauseItContainedInappropriateLanguage);
                     widget.onSend.call(context, _chatCont.text);
                     _chatCont.clear();
                   }else{
