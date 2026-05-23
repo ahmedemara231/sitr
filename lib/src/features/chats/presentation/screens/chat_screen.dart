@@ -231,6 +231,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
   void _handleInitialState()async{
     _chatController = PagifyController<ChatMessages>();
     await _startChat();
+    await SafeTextHelper.init();
     _initSocket();
   }
 

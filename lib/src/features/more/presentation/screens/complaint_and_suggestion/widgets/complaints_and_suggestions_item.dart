@@ -6,7 +6,6 @@ import '../../../../../../config/res/config_imports.dart';
 import '../../../../../../core/extensions/sized_box_helper.dart';
 import '../../../../../../core/navigation/navigator.dart';
 import '../../../../../../core/widgets/app_text.dart';
-import '../../../../../../core/widgets/icon_widget.dart';
 import '../../../../../../core/widgets/svg_pic.dart';
 import '../../../models/complaint_model.dart';
 import '../complaint_details_screen.dart';

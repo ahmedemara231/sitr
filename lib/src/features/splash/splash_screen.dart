@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../config/res/config_imports.dart';
 import '../../core/extensions/object.dart';
-import '../../core/extensions/string_extension.dart';
 import '../../core/helpers/cache_service.dart';
 import '../../core/helpers/helpers.dart';
 import '../../core/navigation/navigator.dart';
-import '../../core/network/network_service.dart';
 import '../../core/notification/notification_service.dart';
-import '../../core/shared/models/user_models/user_model.dart';
 import '../../core/shared/user_cubit/user_cubit.dart';
 import '../../core/widgets/splash_logo.dart';
 import '../auth/imports.dart';

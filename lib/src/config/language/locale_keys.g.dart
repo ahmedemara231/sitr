@@ -1057,4 +1057,7 @@ abstract class LocaleKeys {
   static const String _noMessagesExistsYet = 'no_messages_exists_yet';
   static String get noMessagesExistsYet => _noMessagesExistsYet.tr();
 
+  static const String _dissenter = 'dissenter';
+  static String get dissenter => _dissenter.tr();
+
 }

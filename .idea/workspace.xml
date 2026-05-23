@@ -9,13 +9,74 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="Implement NSFW content validation for images, integrate image cropping on Android, and update localization&#10;&#10;- **Core &amp; Infrastructure**:&#10;    - Update `NsfwDetectorHelper` to initialize with a safety threshold of `0.3` and add logging for NSFW scores and safety status.&#10;    - Enhance `Helpers.getImageFromCameraOrDevice` to display a snackbar warning if a selected or cropped image is flagged as unsafe by the NSFW detector.&#10;    - Delete the `deviceStreaming.xml` cache file.&#10;&#10;- **Platform Specifics**:&#10;    - **Android**: Register `UCropActivity` in `AndroidManifest.xml` to enable image cropping functionality via the `image_cropper` library.&#10;&#10;- **Localization**:&#10;    - Add translation keys for `crop_image` and `this_image_has_sensitive_content_please_rechoose_another_image` in `ar.json`, `en.json`, and `lang.json`.&#10;    - Regenerate `locale_keys.g.dart` to include the new localization constants.&#10;&#10;- **Tools &amp; Workspace**:&#10;    - Update `.idea/workspace.xml` to synchronize with recent file changes, including debug breakpoints in `helpers.dart` and UI state updates.">
+    <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="Update chat list UI to handle empty message states and enhance localization&#10;&#10;- **Chat Feature**:&#10;    - Update `ChatListTile` to display a placeholder message (&quot;No messages exists yet&quot;) when `lastMessageBody` is null or empty.&#10;    - Refactor subtitle logic in `ChatListTile` to correctly toggle between text messages, the &quot;Photo&quot; label for images, and the new empty state placeholder.&#10;&#10;- **Localization**:&#10;    - Add `no_messages_exists_yet` translation key to `ar.json`, `en.json`, and `lang.json`.&#10;    - Regenerate `locale_keys.g.dart` to include the new translation constant.&#10;&#10;- **Tools &amp; Workspace**:&#10;    - Synchronize `.idea/workspace.xml` with recent task history and file changes.">
+      <change afterPath="$PROJECT_DIR$/lib/src/core/helpers/safe_text_helper.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/translations/ar.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/ar.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/translations/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/en.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/translations/lang.json" beforeDir="false" afterPath="$PROJECT_DIR$/assets/translations/lang.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Podfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/app.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/app.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/config/language/locale_keys.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/config/language/locale_keys.g.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/base_crud/code/data/base_data_imports.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/base_crud/code/data/base_data_imports.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/extensions/context_extension.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/extensions/context_extension.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/extensions/error_handler_extension.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/extensions/error_handler_extension.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/extensions/num.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/extensions/num.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/extensions/string_extension.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/extensions/string_extension.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/extensions/widget_extension.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/extensions/widget_extension.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/helpers/permission_handler/handler.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/helpers/permission_handler/handler.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/helpers/tik_tok_ads.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/helpers/tik_tok_ads.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/local_db/objectbox_cache_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/local_db/objectbox_cache_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/network/dio_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/network/dio_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/notification/notification_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/notification/notification_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/shared/Functions/setup_service_locators.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/shared/Functions/setup_service_locators.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/shared/block_user_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/shared/block_user_cubit.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/individual/individual_user_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/individual/individual_user_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/user_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/shared/models/user_models/user_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/buttons/custom_app_buttons/loading_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/buttons/custom_app_buttons/loading_button.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/default_bottom_sheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/default_bottom_sheet.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/drop_down_button.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/drop_down_button.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/image_widgets/image_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/image_widgets/image_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/parent_children_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/parent_children_card.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/parent_children_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/parent_children_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/riyal_price_text.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/riyal_price_text.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/sheets/bloc_success.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/sheets/bloc_success.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/sheets/chat_requests_sheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/sheets/chat_requests_sheet.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/core/widgets/text_fields/default_text_field.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/core/widgets/text_fields/default_text_field.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/imports.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/imports.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/models/auth_body_static_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/models/auth_body_static_data.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/cubits/complete_profile_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/cubits/complete_profile_cubit.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/data/auth_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/data/auth_data.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/shared/choose_gender.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/shared/choose_gender.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/dowry_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/dowry_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/drop_down_text_field.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/drop_down_text_field.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/female_fields.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/female_fields.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/image_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/image_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/shared_form_fields.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/shared_form_fields.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/sheets/add_child_sheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/sheets/add_child_sheet.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/sheets/charge_wallet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/sheets/charge_wallet.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/sign_up_upper_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/auth/presentation/widgets/sign_up/sign_up_upper_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/imports.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/data/chat_actions/imports.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/data/models/chat_model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/data/models/chat_model.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/cubits/notification_cubit.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/cubits/notification_cubit.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/cubits/start_chat.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/cubits/start_chat.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/imports.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/imports.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chat_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/chat_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/previous_chat_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/screens/previous_chat_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/chat/bottom_bar.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/chat/bottom_bar.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/chat/chat_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/chat/chat_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/chat/upper_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/chat/upper_view.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/chat_image_viewer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/chat_image_viewer.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/chat_list_tile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/chat_list_tile.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/home/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/home/home_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/main_screen/data/home_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/main_screen/data/home_data.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/widgets/app_bar_actions.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/widgets/app_bar_actions.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/widgets/home/filter_icon.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/widgets/home/filter_icon.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/widgets/home/partner_card.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/main_screen/presentation/widgets/home/partner_card.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,36 +186,35 @@
     <option name="foldersAlwaysOnTop" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Flutter.main.dart.executor&quot;: &quot;Run&quot;,
-    &quot;Flutter.main_dev.dart.executor&quot;: &quot;Run&quot;,
-    &quot;Flutter.main_production.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
-    &quot;ShowUsagesActions.previewPropertyKey&quot;: &quot;true&quot;,
-    &quot;android.gradle.sync.needed&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;tiktok&quot;,
-    &quot;io.flutter.project.isFirstOpen&quot;: &quot;true&quot;,
-    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/aaita/Desktop/apps/sitr/assets/images&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;flutter.settings&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Flutter.main.dart.executor": "Run",
+    "Flutter.main_dev.dart.executor": "Run",
+    "Flutter.main_production.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "ShowUsagesActions.previewPropertyKey": "true",
+    "android.gradle.sync.needed": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "git-widget-placeholder": "tiktok",
+    "io.flutter.project.isFirstOpen": "true",
+    "io.flutter.reload.alreadyRun": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/aaita/Desktop/apps/sitr/assets/images",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "flutter.settings",
+    "show.migrate.to.gradle.popup": "false"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/assets/images" />
@@ -262,14 +322,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756127908904</updated>
-    </task>
-    <task id="LOCAL-00273" summary="Chain socket initialization calls in `ChatScreen`&#10;&#10;Refactor the socket initialization in `chat_screen.dart` to use cascade notation for `initSocket()`, `initConfig()`, and `connect()`, simplifying the setup logic within `_initSocket`.">
-      <option name="closed" value="true" />
-      <created>1773363654506</created>
-      <option name="number" value="00273" />
-      <option name="presentableId" value="LOCAL-00273" />
-      <option name="project" value="LOCAL" />
-      <updated>1773363654507</updated>
     </task>
     <task id="LOCAL-00274" summary="Handle `update-chat` socket events in `ChatScreen`&#10;&#10;- **Features**:&#10;  - Added `updateChat` event constant to `SocketEvents`.&#10;  - Updated `ChatScreen` to listen for `SocketEvents.updateChat` within `onReceiveAnyEvent` to trigger `_startChat()`.&#10;- **Refactoring**:&#10;  - Cleaned up indentation and removed redundant whitespace in `ClientIOImpl` initialization within `chat_screen.dart`.&#10;  - Commented out the manual `_startChat()` call in `_showBased` (notification handler) in favor of the socket-driven update.&#10;  - Minor code cleanup in `client_io.dart`.">
       <option name="closed" value="true" />
@@ -655,7 +707,15 @@
       <option name="project" value="LOCAL" />
       <updated>1779570312603</updated>
     </task>
-    <option name="localTasksCounter" value="322" />
+    <task id="LOCAL-00322" summary="Update chat list UI to handle empty message states and enhance localization&#10;&#10;- **Chat Feature**:&#10;    - Update `ChatListTile` to display a placeholder message (&quot;No messages exists yet&quot;) when `lastMessageBody` is null or empty.&#10;    - Refactor subtitle logic in `ChatListTile` to correctly toggle between text messages, the &quot;Photo&quot; label for images, and the new empty state placeholder.&#10;&#10;- **Localization**:&#10;    - Add `no_messages_exists_yet` translation key to `ar.json`, `en.json`, and `lang.json`.&#10;    - Regenerate `locale_keys.g.dart` to include the new translation constant.&#10;&#10;- **Tools &amp; Workspace**:&#10;    - Synchronize `.idea/workspace.xml` with recent task history and file changes.">
+      <option name="closed" value="true" />
+      <created>1779571002142</created>
+      <option name="number" value="00322" />
+      <option name="presentableId" value="LOCAL-00322" />
+      <option name="project" value="LOCAL" />
+      <updated>1779571002142</updated>
+    </task>
+    <option name="localTasksCounter" value="323" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -676,7 +736,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Update chat status handling and refactor parent phone exchange logic&#10;&#10;- **Chat / Business Logic**:&#10;    - Refactor `stage_action.dart` by commenting out the `isParentsExchangeNumber` logic to delegate that responsibility to status-based actions.&#10;    - Update `user_status_action.dart` to handle `isParentsExchangeNumber` within the pending status check, triggering the `EnterParentPhoneSheet`.&#10;    - Simplified the phone submission callback to navigate back without redundant socket updates in the `stage_action` layer.&#10;- **Tools &amp; IDE**:&#10;    - Synchronize `.idea/workspace.xml` with recent project updates, including dependency upgrades, version increments, and UI changes." />
     <MESSAGE value="Update chat status handling, implement parent approval congratulations, and refine UI feedback&#10;&#10;- **Chat / Business Logic**:&#10;    - Add `isCompleted` getter to `ChatStages` enum for tracking finalized conversations.&#10;    - Refactor `user_status_action.dart` to handle accepted statuses more comprehensively, adding logic to detect completed stages and trigger a &quot;congratulations&quot; workflow.&#10;    - Ensure socket updates are fired after a parent exchanges phone numbers.&#10;- **UI / Presentation**:&#10;    - Implement `ParentIndividualCongratsSheet` in `congrats_sheet.dart` to notify users when a parent approves them, including a navigation action to view the parent's children.&#10;    - Update `ChatScreen` to display a more specific error message (`unable_to_continue_chatting_because_there_is_selection_process_executed_now`) when chat interaction is restricted.&#10;    - Update translation files (AR/EN) with new keys for parent approval success and refined chat restriction messaging.&#10;- **Infrastructure &amp; Tools**:&#10;    - Synchronize `.idea/workspace.xml` with recent project state and breakpoint locations.&#10;    - Update `firebase-debug.log` with recent deployment and authorization activities.&#10;    - Regenerate `locale_keys.g.dart` to include new translation keys." />
     <MESSAGE value="Summarize the UI button enhancements, notification routing refactor, and chat logic extensions.&#10;&#10;- **Core / Widgets**:&#10;    - Update `AppLoadingButton` and `LoadingButton` to include a default white `CircularProgressIndicator` with custom padding.&#10;    - Refactor `LoadingButton` to require a `loadingWidget` instead of providing a hardcoded default.&#10;- **Notifications**:&#10;    - Refactor `MatchRequestNavigation` to dynamically route users to either the active `ChatScreen` or the `PreviousChatScreen` based on whether the `chatType` is current or finished.&#10;    - Update `NavigationTypes` to map `parent_individual_approval_rejected`, `match_rejected_when_timer_ended`, and `match_request_completed` to `MatchRequestNavigation`.&#10;    - Comment out the unused `FinishedChatNavigation` class in favor of the unified logic in `MatchRequestNavigation`.&#10;- **Chat / Business Logic**:&#10;    - Add a `Check` extension on `ChatType` enum to provide boolean getters (`isCurrent`, `isCompleted`, `isRejected`, `isCancelled`) for cleaner state checking.&#10;- **Tools &amp; IDE**:&#10;    - Synchronize `.idea/workspace.xml` with recent changes, including task updates and breakpoint adjustments." />
     <MESSAGE value="Refine chat initiation logic, center UI buttons, and update project configurations&#10;&#10;- **Chat / Business Logic**:&#10;    - Refactor `_startChat` in `ChatScreen` to accept an optional `update` flag, which sets the `fromHome` property in the `RequestModel` (0 for updates, 1 for initial starts).&#10;    - Ensure `_startChat(update: true)` is called when a `SocketEvents.updateChat` event is received.&#10;    - Clean up navigation logic in `user_status_action.dart` by removing redundant conditional formatting for `isParentIndividualApproval`.&#10;- **UI / Presentation**:&#10;    - Wrap `ChatButton` in a `Center` widget within `parent_details.dart` for improved alignment on the parent information screen.&#10;- **iOS**:&#10;    - Clean up `project.pbxproj` by removing empty `inputPaths` and `outputPaths` arrays from the &quot;Embed Pods Frameworks&quot; and &quot;Copy Pods Resources&quot; shell script phases.&#10;- **Tools &amp; IDE**:&#10;    - Synchronize `.idea/workspace.xml` with recent changes, including updated breakpoints and task history." />
@@ -701,7 +760,8 @@
     <MESSAGE value="Refactor UI screens to use `AppScaffold` and update application components&#10;&#10;- **UI &amp; Refactoring**:&#10;    - Replace standard `Scaffold` with `AppScaffold` across multiple features, including `TermsAndConditionAndAboutUs`, `AddComplaintAndSuggestion`, `ComplaintDetailsScreen`, `SuccessPartnersScreen`, and `WalletScreen`.&#10;    - Simplify layout in `TermsAndConditionAndAboutUs` by removing redundant `SizedBox`, `SingleChildScrollView`, and background color logic in favor of `AppScaffold` properties.&#10;    - Update `AddComplaintAndSuggestion` and `WalletScreen` to use the `bottomBar` parameter instead of `bottomNavigationBar`.&#10;    - Enable scrolling in `AppScaffold` for `TermsAndConditionAndAboutUs` and `SuccessPartnersScreen`.&#10;    - Configure `GridView` in `SuccessPartnersScreen` to use `shrinkWrap: true` and `NeverScrollableScrollPhysics` to support nested scrolling.&#10;&#10;- **Features &amp; Core**:&#10;    - Comment out `debugDisplayAlways` and `debugLogging` for the `Upgrader` instance in `HomeScreen`.&#10;    - Update IDE workspace settings in `.idea/workspace.xml` to reflect recent file changes and task history.&#10;&#10;- **Cleanup**:&#10;    - Remove unused imports and redundant background color definitions that are now handled by the custom scaffold." />
     <MESSAGE value="Integrate TikTok Events SDK, enhance socket configuration management, and update project dependencies&#10;&#10;- **Core &amp; Infrastructure**:&#10;    - Integrate `tiktok_events_sdk` and implement `TikTokAdsHelper` to handle event tracking for Android and iOS.&#10;    - Implement a dynamic socket URL loading mechanism in `main.dart` that retrieves and persists the `socketUrl` from Firebase Remote Config via `SecureStorage`.&#10;    - Update `ConstantManager` to support a dynamic `socketUrl` instead of a hardcoded string.&#10;    - Add `getBundleId` helper to `Helpers` class to dynamically return the bundle identifier based on the active app flavor.&#10;    - Revert project version from `1.0.3+1` to `1.0.0+2` in `pubspec.yaml`.&#10;&#10;- **Platform Specifics**:&#10;    - **iOS**: Add `NSUserTrackingUsageDescription` to `Info.plist` to support IDFA tracking for ad personalization.&#10;    - **Android**: Add `com.google.android.gms.permission.AD_ID` permission to `AndroidManifest.xml` for advertising ID access.&#10;&#10;- **Tools &amp; Workspace**:&#10;    - Update IDE library configurations (`Dart_Packages.xml`, `Flutter_Plugins.xml`) to include the TikTok SDK and synchronize with the latest pub cache.&#10;    - Synchronize `.idea/workspace.xml` and `deviceStreaming.xml` with updated task history and new persistent device data (Pixel 9 Pro Fold).&#10;&#10;- **Cleanup**:&#10;    - Refactor initialization logic in `main.dart` for better readability and consistent indentation in Sentry configuration." />
     <MESSAGE value="Implement NSFW content validation for images, integrate image cropping on Android, and update localization&#10;&#10;- **Core &amp; Infrastructure**:&#10;    - Update `NsfwDetectorHelper` to initialize with a safety threshold of `0.3` and add logging for NSFW scores and safety status.&#10;    - Enhance `Helpers.getImageFromCameraOrDevice` to display a snackbar warning if a selected or cropped image is flagged as unsafe by the NSFW detector.&#10;    - Delete the `deviceStreaming.xml` cache file.&#10;&#10;- **Platform Specifics**:&#10;    - **Android**: Register `UCropActivity` in `AndroidManifest.xml` to enable image cropping functionality via the `image_cropper` library.&#10;&#10;- **Localization**:&#10;    - Add translation keys for `crop_image` and `this_image_has_sensitive_content_please_rechoose_another_image` in `ar.json`, `en.json`, and `lang.json`.&#10;    - Regenerate `locale_keys.g.dart` to include the new localization constants.&#10;&#10;- **Tools &amp; Workspace**:&#10;    - Update `.idea/workspace.xml` to synchronize with recent file changes, including debug breakpoints in `helpers.dart` and UI state updates." />
-    <option name="LAST_COMMIT_MESSAGE" value="Implement NSFW content validation for images, integrate image cropping on Android, and update localization&#10;&#10;- **Core &amp; Infrastructure**:&#10;    - Update `NsfwDetectorHelper` to initialize with a safety threshold of `0.3` and add logging for NSFW scores and safety status.&#10;    - Enhance `Helpers.getImageFromCameraOrDevice` to display a snackbar warning if a selected or cropped image is flagged as unsafe by the NSFW detector.&#10;    - Delete the `deviceStreaming.xml` cache file.&#10;&#10;- **Platform Specifics**:&#10;    - **Android**: Register `UCropActivity` in `AndroidManifest.xml` to enable image cropping functionality via the `image_cropper` library.&#10;&#10;- **Localization**:&#10;    - Add translation keys for `crop_image` and `this_image_has_sensitive_content_please_rechoose_another_image` in `ar.json`, `en.json`, and `lang.json`.&#10;    - Regenerate `locale_keys.g.dart` to include the new localization constants.&#10;&#10;- **Tools &amp; Workspace**:&#10;    - Update `.idea/workspace.xml` to synchronize with recent file changes, including debug breakpoints in `helpers.dart` and UI state updates." />
+    <MESSAGE value="Update chat list UI to handle empty message states and enhance localization&#10;&#10;- **Chat Feature**:&#10;    - Update `ChatListTile` to display a placeholder message (&quot;No messages exists yet&quot;) when `lastMessageBody` is null or empty.&#10;    - Refactor subtitle logic in `ChatListTile` to correctly toggle between text messages, the &quot;Photo&quot; label for images, and the new empty state placeholder.&#10;&#10;- **Localization**:&#10;    - Add `no_messages_exists_yet` translation key to `ar.json`, `en.json`, and `lang.json`.&#10;    - Regenerate `locale_keys.g.dart` to include the new translation constant.&#10;&#10;- **Tools &amp; Workspace**:&#10;    - Synchronize `.idea/workspace.xml` with recent task history and file changes." />
+    <option name="LAST_COMMIT_MESSAGE" value="Update chat list UI to handle empty message states and enhance localization&#10;&#10;- **Chat Feature**:&#10;    - Update `ChatListTile` to display a placeholder message (&quot;No messages exists yet&quot;) when `lastMessageBody` is null or empty.&#10;    - Refactor subtitle logic in `ChatListTile` to correctly toggle between text messages, the &quot;Photo&quot; label for images, and the new empty state placeholder.&#10;&#10;- **Localization**:&#10;    - Add `no_messages_exists_yet` translation key to `ar.json`, `en.json`, and `lang.json`.&#10;    - Regenerate `locale_keys.g.dart` to include the new translation constant.&#10;&#10;- **Tools &amp; Workspace**:&#10;    - Synchronize `.idea/workspace.xml` with recent task history and file changes." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -713,7 +773,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/src/core/shared/models/user_models/user_model.dart</url>
-          <line>258</line>
+          <line>257</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
@@ -778,7 +838,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/chat/upper_view.dart</url>
-          <line>64</line>
+          <line>63</line>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="Dart">
@@ -820,6 +880,11 @@
           <url>file://$PROJECT_DIR$/lib/src/core/helpers/helpers.dart</url>
           <line>354</line>
           <option name="timeStamp" value="59" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/src/features/chats/presentation/widgets/chat/bottom_bar.dart</url>
+          <line>116</line>
+          <option name="timeStamp" value="60" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

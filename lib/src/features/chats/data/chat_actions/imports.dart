@@ -1,15 +1,12 @@
-import 'dart:developer';
 import '../../../main_screen/presentation/screens/parent_details.dart';
 import '../../presentation/cubits/socket_cubit.dart';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/extensions/num.dart';
 import '../../../../core/extensions/string_extension.dart';
-import '../../../../core/helpers/helpers.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/widgets/app_text.dart';
@@ -21,12 +18,9 @@ import '../../../../core/widgets/sheets/tips_sheet.dart';
 import '../../../home/home_screen.dart';
 import '../../../packages/presentation/screens/subscription_screen.dart';
 import '../../enums.dart';
-import '../../presentation/cubits/finish_chat_cubit.dart';
-import '../../presentation/cubits/istikhara_dua_cubit.dart';
 import '../../presentation/cubits/pay_request.dart';
 import '../../presentation/cubits/start_chat.dart';
 import '../../presentation/widgets/accept_or_reject_request.dart';
-import '../../presentation/widgets/istikharah_reminder.dart';
 import '../../presentation/widgets/sheets/congrats_sheet.dart';
 import '../../presentation/widgets/sheets/enter_parent_phone.dart';
 import '../../presentation/widgets/sheets/inform_parent.dart';

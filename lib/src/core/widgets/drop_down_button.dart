@@ -9,7 +9,6 @@ import '../extensions/context_extension.dart';
 import '../extensions/padding_extension.dart';
 import '../extensions/sized_box_helper.dart';
 import '../extensions/text_style_extensions.dart';
-import '../helpers/validators.dart';
 import 'image_widgets/cached_image.dart';
 
 /// Dropdown display types

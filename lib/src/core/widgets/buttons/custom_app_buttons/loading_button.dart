@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:easy_loading_button/easy_loading_button.dart';
 
 import '../../../../config/res/config_imports.dart';
-import '../../../extensions/padding_extension.dart';
 import '../../app_text.dart';
 
 class LoadingButton extends StatelessWidget {

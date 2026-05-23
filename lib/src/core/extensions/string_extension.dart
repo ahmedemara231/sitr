@@ -13,8 +13,6 @@ import '../../features/auth/presentation/cubits/add_child.dart';
 import '../../features/auth/presentation/cubits/complete_profile_cubit.dart';
 import '../../features/auth/presentation/cubits/oath.dart';
 import '../../features/auth/presentation/enums/complete_register_status.dart';
-import '../../features/auth/presentation/widgets/sign_up/sheets/add_child_sheet.dart';
-import '../../features/auth/presentation/widgets/sign_up/sheets/complete_profile_sheet.dart';
 import '../../features/chats/data/chat_sheet_manager.dart';
 import '../../features/chats/enums.dart';
 import '../../features/home/home_screen.dart';

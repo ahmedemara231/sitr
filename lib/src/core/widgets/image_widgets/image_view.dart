@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
 
-import '../../../config/res/config_imports.dart';
 import '../scaffolds/app_scaffold.dart';
 import 'cached_image.dart';
 

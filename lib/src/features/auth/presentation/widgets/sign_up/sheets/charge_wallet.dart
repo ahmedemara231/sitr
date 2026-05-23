@@ -7,7 +7,6 @@ import '../../../../../../core/helpers/validators.dart';
 import '../../../../../../core/navigation/navigator.dart';
 import '../../../../../../core/widgets/app_text.dart';
 import '../../../../../../core/widgets/buttons/app_loading_button.dart';
-import '../../../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../../../core/widgets/sheets/show_brands_sheet.dart';
 import '../../../../../../core/widgets/sheets/success_sheet.dart';
 import '../../../../../../core/widgets/text_fields/default_text_field.dart';

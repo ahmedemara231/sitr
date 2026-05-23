@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dropinity/helpers/extensions/padding_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

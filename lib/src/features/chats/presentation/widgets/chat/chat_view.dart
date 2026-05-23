@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/helpers/data_and_pagination_data.dart' show PaginationData, PagifyData;
 import 'package:pagify/helpers/errors.dart';
 import 'package:pagify/pagify.dart';

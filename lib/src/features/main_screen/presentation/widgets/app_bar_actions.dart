@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../generated/assets.dart';
 import '../../../../core/extensions/padding_extension.dart';
-import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../core/widgets/svg_pic.dart';
 import '../../../../core/widgets/view_profile_widget.dart';
 import 'partner_info/partner_app_bar_icons.dart';

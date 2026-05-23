@@ -1,10 +1,3 @@
-import 'dart:developer';
-
-import 'package:firebase_messaging/firebase_messaging.dart';
-
-import '../../../../config/language/languages.dart';
-import '../../../../core/extensions/object.dart';
-
 enum ButtonsState {
   show,
   accepted,

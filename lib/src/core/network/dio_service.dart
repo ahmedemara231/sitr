@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import '../../config/language/languages.dart' show Languages;
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';

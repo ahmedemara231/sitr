@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../config/res/config_imports.dart';
-import '../extensions/object.dart';
 import '../extensions/padding_extension.dart';
 import '../extensions/sized_box_helper.dart';
 import '../navigation/navigator.dart';

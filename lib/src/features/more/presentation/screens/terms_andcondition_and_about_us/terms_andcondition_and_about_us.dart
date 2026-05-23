@@ -4,12 +4,9 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../config/language/locale_keys.g.dart';
-import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/helpers/status_builder.dart';
-import '../../../../../core/widgets/app_text.dart';
-import '../../../../../core/widgets/custom_app_bar.dart';
 import '../../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../cubit/terms_condition_and_about_cubit/terms_condition_and_about_cubit.dart';
 

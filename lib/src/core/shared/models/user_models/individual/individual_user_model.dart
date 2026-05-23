@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 
 import '../../../../../features/auth/models/dowry.dart';
-import '../../../../../features/main_screen/data/models/home_model.dart';
 import '../../../../extensions/object.dart';
 import '../../../../extensions/string_extension.dart';
 import '../../../../helpers/user_type_enum.dart';

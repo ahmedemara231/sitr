@@ -8,10 +8,6 @@ import 'core/navigation/navigator.dart';
 import 'core/shared/route_observer.dart';
 import 'core/shared/user_cubit/user_cubit.dart' show UserCubit;
 import 'core/notification/inactivity_notification_service.dart';
-import 'features/auth/imports.dart';
-import 'features/more/presentation/screens/contact_us/contact_us_chat_screen.dart';
-import 'features/on_boarding/screen.dart';
-import 'features/settings/splash/screens/splash_screen.dart';
 import 'features/splash/splash_screen.dart';
 
 class Satr extends StatefulWidget {

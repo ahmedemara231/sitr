@@ -10,7 +10,6 @@ import '../../../../../core/helpers/status_builder.dart';
 import '../../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/buttons/app_loading_button.dart';
-import '../../../../../core/widgets/custom_app_bar.dart';
 import '../../../../../core/widgets/riyal_price_text.dart';
 import '../../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../../core/widgets/svg_pic.dart';

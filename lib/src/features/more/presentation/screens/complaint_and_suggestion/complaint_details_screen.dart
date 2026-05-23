@@ -10,7 +10,6 @@ import '../../../../../core/extensions/sized_box_helper.dart';
 import '../../../../../core/helpers/status_builder.dart';
 import '../../../../../core/navigation/navigator.dart';
 import '../../../../../core/widgets/app_text.dart';
-import '../../../../../core/widgets/custom_app_bar.dart';
 import '../../../../../core/widgets/image_widgets/cached_image.dart';
 import '../../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../cubit/complaint_cubit/complaint_details_cubit.dart';

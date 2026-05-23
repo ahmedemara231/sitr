@@ -27,11 +27,6 @@ class RiyalPriceText extends StatelessWidget {
 
   String getPrice() {
     return price;
-    if (checkIfPriceOnly()) {
-      return price;
-    } else {
-      return price.split(' ').firstOrNull ?? "";
-    }
   }
 
   @override

@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:tiktok_events_sdk/tiktok_events_sdk.dart';
 
-import '../../config/res/config_imports.dart';
 import 'helpers.dart';
 
 class TikTokAdsHelper{

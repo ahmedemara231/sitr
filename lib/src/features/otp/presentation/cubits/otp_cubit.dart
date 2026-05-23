@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import '../../../../config/res/config_imports.dart' show injector;
 import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';

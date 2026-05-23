@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/pagify.dart';
+import 'package:safe_text/safe_text.dart';
 import '../../../../../../generated/assets.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
@@ -88,11 +89,31 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
               spacing: 10.w,
               children: [
                 InkWell(
-                  onTap: () {
+                  onTap: () async{
                     if(_chatCont.text.isEmpty){
                       return;
 
                     } else if(_formKey.currentState!.validate()){
+                      final bool hasBadWord = await SafeTextFilter.containsBadWord(text: _chatCont.text);
+                      if (hasBadWord) {
+                        // لو فيه كلام وحش، هنعمله Masking عشان يظهر في الشات بس متشطب
+                        _chatCont.text = SafeTextFilter.filterText(
+                          text: _chatCont.text,
+                          // هنستخدم partial عشان يبان إن في كلمة اتحذفت زي f**k
+                          // أو تستخدم custom لو عايز تكتب مكانها [مخالف]
+                          strategy: MaskStrategy.custom(replacement: '[${LocaleKeys.dissenter}]'),
+                        );
+
+                        // ممكن اختياري تعمل Vibrating أو تنبيه خفيف للمستخدم إنه كتب حاجة غلط
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("تم إخفاء كلمة غير لائقة في رسالتك"),
+                            backgroundColor: Colors.orange,
+                          ),
+                        );
+                        widget.onSend.call(context, _chatCont.text);
+                        _chatCont.clear();
+                      }
                       widget.onSend.call(context, _chatCont.text);
                       _chatCont.clear();
                       _selectedImage.value = null;
@@ -143,5 +164,4 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
     );
   }
 }
-
 

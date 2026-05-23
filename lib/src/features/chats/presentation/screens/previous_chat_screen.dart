@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/pagify.dart';
 
 import '../../../../config/language/locale_keys.g.dart';
-import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../data/models/request_model.dart';

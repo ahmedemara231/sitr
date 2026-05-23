@@ -11,8 +11,6 @@ import '../../../../../core/shared/models/user_models/individual/individual_user
 import '../../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../../core/widgets/app_dropinity.dart';
 import '../../../../../core/widgets/app_text.dart';
-import '../../../models/kinship.dart';
-import '../../cubits/personal_data_cubit.dart';
 import '../../data/auth_data.dart';
 import '../../enums/answer.dart';
 import '../shared/text_field.dart';
@@ -98,7 +96,6 @@ class _FemaleFieldsState extends State<FemaleFields> {
   }
 
   FemaleModel get asFemale => femaleFields as FemaleModel;
-  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     switch (widget.withParent) {
@@ -245,7 +242,7 @@ class _FemaleFieldsState extends State<FemaleFields> {
                 asyncCall: (BuildContext ctx, int page) async => await AuthData.getPersonalData(ApiConstants.hijabTypes),
                 getLabel: (TitleValueShape element) => element.title,
                 onChanged: (value) {
-                  wearingHijab.value = value?.value;
+                  wearingHijab.value = value.value;
                   _listenToData(asFemale.copyWith(hijab: TitleValueShape.fromSingleLabel(wearingHijab.value)));
                 },
                 validator: (e) => Validators.validateEmpty(e?.title),

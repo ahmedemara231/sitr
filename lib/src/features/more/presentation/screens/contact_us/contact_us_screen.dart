@@ -12,7 +12,6 @@ import '../../../../../core/helpers/validators.dart';
 import '../../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/buttons/app_loading_button.dart';
-import '../../../../../core/widgets/custom_app_bar.dart' show customAppBar;
 import '../../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../../core/widgets/text_fields/default_text_field.dart';
 import '../../cubit/contact_us_cubit/contact_us_cubit.dart';

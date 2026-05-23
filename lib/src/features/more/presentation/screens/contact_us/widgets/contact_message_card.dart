@@ -5,7 +5,6 @@ import '../../../../../../config/language/locale_keys.g.dart';
 import '../../../../../../config/res/config_imports.dart';
 import '../../../../../../core/extensions/sized_box_helper.dart';
 import '../../../../../../core/shared/models/user_models/user_model.dart';
-import '../../../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../../../core/widgets/app_text.dart';
 import '../../../../../../core/widgets/image_widgets/cached_image.dart';
 import '../../../models/contact_message.dart';

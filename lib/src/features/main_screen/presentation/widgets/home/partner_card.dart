@@ -5,7 +5,6 @@ import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/extensions/sized_box_helper.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
-import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/svg_pic.dart';
 import '../../../data/models/home_model.dart';
 import 'home_image.dart';

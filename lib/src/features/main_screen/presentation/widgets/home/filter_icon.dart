@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../generated/assets.dart' show Assets;
 import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/navigation/navigator.dart';
-import '../../../../../core/widgets/default_bottom_sheet.dart';
 import '../../../../../core/widgets/svg_pic.dart';
 import '../../screens/filter.dart';
 

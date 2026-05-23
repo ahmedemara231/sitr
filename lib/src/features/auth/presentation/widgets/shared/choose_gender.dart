@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
-import '../../../../../core/extensions/enum.dart';
 import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
 import '../../../../../core/widgets/buttons/custom_app_buttons/default_button.dart';

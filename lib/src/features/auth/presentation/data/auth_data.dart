@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import '../../../../config/res/config_imports.dart';
-import '../../../../core/helpers/cache_service.dart';
 import '../../../../core/helpers/user_type_enum.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/network/network_request.dart';
