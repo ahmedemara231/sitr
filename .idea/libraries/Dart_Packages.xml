@@ -2018,6 +2018,13 @@
             </list>
           </value>
         </entry>
+        <entry key="tiktok_events_sdk">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/tiktok_events_sdk-1.1.5/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="time">
           <value>
             <list>
@@ -2661,6 +2668,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/system_info2-4.1.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/term_glyph-1.2.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/test_api-0.7.6/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/tiktok_events_sdk-1.1.5/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/time-2.1.6/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/timezone-0.10.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/top_snackbar_flutter-3.3.0/lib" />

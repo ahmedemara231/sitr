@@ -14,7 +14,7 @@ class ConstantManager {
   static const String baseUrl = 'https://str-sa.com/api/v1/';
   static const String testUrl = 'https://str-sa.4hoste.com/api/v1/';
 
-  static const String socketUrl = 'https://str-sa.com:4866';
+  static String socketUrl = 'a'; // default fallback; overridden from Remote Config at startup
 
   static const int zegoAppId = 509026631;
   static const String zegoAppSign = 'abd4c5e860e63439d4887862a9c14d08fd1b5991fc7fd9ca69e79ee347a6e17e';

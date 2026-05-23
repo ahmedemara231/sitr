@@ -42,13 +42,15 @@ Future<bool> fetchBaseUrl() async {
 
     final String prodBaseUrl = remoteConfig.getString(SecureLocalVariableKeys.baseUrlKey);
     final String devBaseUrl = remoteConfig.getString(SecureLocalVariableKeys.devBaseUrlKey);
+    final String socetIoUrl = remoteConfig.getString(SecureLocalVariableKeys.socetIoUrl);
 
     log('the prod base url is $prodBaseUrl');
     log('the dev base url is $devBaseUrl');
+    log('the socket url is $socetIoUrl');
 
-    final socetIoUrl = remoteConfig.getString(
-      SecureLocalVariableKeys.socetIoUrl,
-    );
+    if (socetIoUrl.isNotEmpty) {
+      await SecureStorage.write(SecureLocalVariableKeys.socetIoUrl, socetIoUrl);
+    }
 
     if (prodBaseUrl.isEmpty && devBaseUrl.isEmpty) {
       return false;
@@ -62,12 +64,19 @@ Future<bool> fetchBaseUrl() async {
       await SecureStorage.write(
           SecureLocalVariableKeys.devBaseUrlKey, devBaseUrl);
     }
-    // await SecureStorage.write(SecureLocalVariableKeys.socetIoUrl, socetIoUrl);
 
     return true;
   } catch (e) {
     log('the error is $e');
     return false;
+  }
+}
+
+Future<void> _loadSocketUrl() async {
+  final String? storedSocketUrl =
+  await SecureStorage.read(SecureLocalVariableKeys.socetIoUrl);
+  if (storedSocketUrl != null && storedSocketUrl.isNotEmpty) {
+    ConstantManager.socketUrl = storedSocketUrl;
   }
 }
 
@@ -99,6 +108,7 @@ void main() async {
   );
   await Helpers.initZegoData();
   await fetchBaseUrl();
+  await _loadSocketUrl();
   SystemChrome.setPreferredOrientations(
     [
       DeviceOrientation.portraitUp,
@@ -128,12 +138,12 @@ void main() async {
 
 void _initSentry()async{
   await SentryFlutter.init(
-        (options) {
-      options.dsn = 'https://cb95fd92d19a9f57924ae8dba99d9df4@o4508946921291776.ingest.us.sentry.io/4510555526070272';
-      // Adds request headers and IP for users, for more info visit:
-      // https://docs.sentry.io/platforms/dart/guides/flutter/data-management/data-collected/
-      options.sendDefaultPii = true;
-    },
+          (options) {
+        options.dsn = 'https://cb95fd92d19a9f57924ae8dba99d9df4@o4508946921291776.ingest.us.sentry.io/4510555526070272';
+        // Adds request headers and IP for users, for more info visit:
+        // https://docs.sentry.io/platforms/dart/guides/flutter/data-management/data-collected/
+        options.sendDefaultPii = true;
+      },
       appRunner: () => runApp(
         EasyLocalization(
           supportedLocales: Languages.suppoerLocales,

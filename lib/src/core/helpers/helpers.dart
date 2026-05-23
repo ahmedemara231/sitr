@@ -36,6 +36,13 @@ extension Check on AppFlavor{
 
 
 class Helpers {
+  static String get getBundleId{
+    if(currentFlavor.isDev){
+      return ConstantManager.devBundleId;
+    }
+    return ConstantManager.bundleId;
+  }
+
   static late AppFlavor currentFlavor;
   static Future<void> get getCurrentFlavor async{
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
