@@ -40,7 +40,6 @@ class _EditProfileImageWidgetState extends State<EditProfileImageWidget> {
           onTap: () async{
             final selectedImage = await Helpers.getImageFromCameraOrDevice();
             setState(() => image = selectedImage);
-            log('the selected image is ${selectedImage}');
             widget.onSelectImage.call(selectedImage);
           },
           child: Container(

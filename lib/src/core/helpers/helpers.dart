@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:lottie/lottie.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:zego_zpns/zego_zpns.dart';
@@ -25,6 +26,7 @@ import '../widgets/app_bottom_sheet.dart';
 import '../widgets/custom_loading.dart';
 import '../widgets/custom_messages.dart';
 import '../widgets/sheets/login_when_visitor.dart';
+import 'nsfw_detector.dart';
 import 'permission_handler/handler.dart';
 import 'permission_handler/model.dart';
 
@@ -294,6 +296,36 @@ class Helpers {
     ));
   }
 
+
+  static Future<File?> _cropImage({required String sourcePath}) async {
+    final CroppedFile? croppedFile = await ImageCropper().cropImage(
+      sourcePath: sourcePath,
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: 'Cropper',
+          toolbarColor: AppColors.primary,
+          toolbarWidgetColor: Colors.white,
+          statusBarColor: AppColors.primary,
+          activeControlsWidgetColor: AppColors.primary,
+          aspectRatioPresets: [
+            CropAspectRatioPreset.original,
+            CropAspectRatioPreset.square,
+            CropAspectRatioPresetCustom(),
+          ],
+        ),
+        IOSUiSettings(
+          title: 'Cropper',
+          aspectRatioPresets: [
+            CropAspectRatioPreset.original,
+            CropAspectRatioPreset.square,
+            CropAspectRatioPresetCustom(),
+          ],
+        ),
+      ],
+    );
+    return croppedFile != null ? File(croppedFile.path) : null;
+  }
+
   static Future<File?> getImageFromCameraOrDevice() async {
     final ImagePicker picker = ImagePicker();
     File? image;
@@ -312,10 +344,15 @@ class Helpers {
                       Permission.storage :
                       Permission.photos,
                       onGranted: (permission) async {
-                        final currentImage =
-                            await picker.pickImage(source: ImageSource.gallery);
+                        final currentImage = await picker.pickImage(source: ImageSource.gallery);
                         if (currentImage != null) {
-                          image = File(currentImage.path);
+                          final croppedImage = await _cropImage(sourcePath: currentImage.path);
+                          if(croppedImage != null){
+                            final bool isSafe = await NsfwDetectorHelper.isSafe(croppedImage)??false;
+                            if(isSafe){
+                              image = File(croppedImage.path);
+                            }
+                          }
                         }
                         Go.back();
                       },
@@ -330,10 +367,15 @@ class Helpers {
                       },
                       onLimited: (permission) async {
                         // iOS limited photo access - treat as granted
-                        final currentImage =
-                            await picker.pickImage(source: ImageSource.gallery);
+                        final currentImage = await picker.pickImage(source: ImageSource.gallery);
                         if (currentImage != null) {
-                          image = File(currentImage.path);
+                          final croppedImage = await _cropImage(sourcePath: currentImage.path);
+                          if(croppedImage != null){
+                            final bool isSafe = await NsfwDetectorHelper.isSafe(croppedImage)??false;
+                            if(isSafe){
+                              image = File(croppedImage.path);
+                            }
+                          }
                         }
                         Go.back();
                       },
@@ -399,4 +441,12 @@ class Helpers {
       return en;
     }
   }
+}
+
+class CropAspectRatioPresetCustom implements CropAspectRatioPresetData {
+  @override
+  (int, int)? get data => (324, 214);
+
+  @override
+  String get name => '324 x 214 (3:2) Customized';
 }

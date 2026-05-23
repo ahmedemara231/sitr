@@ -15,6 +15,7 @@ import 'src/app.dart';
 import 'src/config/language/languages.dart';
 import 'src/config/res/config_imports.dart';
 import 'src/core/helpers/helpers.dart';
+import 'src/core/helpers/nsfw_detector.dart';
 import 'src/core/local_db/objectbox_cache_service.dart';
 import 'src/core/navigation/Constants/imports_constants.dart';
 import 'src/core/navigation/go.dart';
@@ -99,6 +100,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait(
     [
+      NsfwDetectorHelper.init(),
       EasyLocalization.ensureInitialized(),
       CacheStorage.init(),
       ObjectBoxCacheService.init(),

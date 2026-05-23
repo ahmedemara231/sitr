@@ -189,7 +189,6 @@ class MoreTabAppBar extends StatelessWidget {
                                     asyncCall: (context) => context.read<LogoutCubit>().logout(
                                         onSuccess: (msg) async{
                                           await UserCubit.instance.logout();
-                                          Helpers.zegoService?.onUserLogout();
                                           Go.back(); // Close the bottom sheet first
                                           MessageUtils.showSnackBar(msg);
                                           Go.offAll(const LoginScreen());

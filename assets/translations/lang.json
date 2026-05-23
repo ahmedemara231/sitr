@@ -23,6 +23,7 @@
     "cancel #$ Cancel": "الغاء",
     "PhotoLibrary #$ Photo Library": "مكتبة الصور",
     "Camera #$ Camera": "الكاميرا",
+    "cropImage #$ Crop Image": "قص الصورة",
     "bad_request #$ Bad Request try again": "طلب خاطيء حاول مرة اخرى",
     "unauthorized #$ Unauthorized": "غير مصرح",
     "notFound #$ Not Found": "غير موجود",
