@@ -1060,4 +1060,7 @@ abstract class LocaleKeys {
   static const String _dissenter = 'dissenter';
   static String get dissenter => _dissenter.tr();
 
+  static const String _yourMessageHasBeenHiddenBecauseItContainedInappropriateLanguage = 'your_message_has_been_hidden_because_it_contained_inappropriate_language';
+  static String get yourMessageHasBeenHiddenBecauseItContainedInappropriateLanguage => _yourMessageHasBeenHiddenBecauseItContainedInappropriateLanguage.tr();
+
 }

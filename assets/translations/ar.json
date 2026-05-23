@@ -356,5 +356,6 @@
   "edit_profile": "تعديل الملف الشخصي",
   "this_image_has_sensitive_content_please_rechoose_another_image": "هذه الصورة تحتوي علي محتوي غير لائق من فضلك قم باختيار صورة اخري",
   "no_messages_exists_yet": "لا يوجد رسائل الي الان",
-  "dissenter": "مخالف"
+  "dissenter": "مخالف",
+  "your_message_has_been_hidden_because_it_contained_inappropriate_language": "تم اخفاء رسالتك لاحوائها علي كلام غير لائق"
 }

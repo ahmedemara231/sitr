@@ -356,5 +356,6 @@
   "edit_profile": "Edit profile",
   "this_image_has_sensitive_content_please_rechoose_another_image": "This image has sensitive content please rechoose another image",
   "no_messages_exists_yet": "No messages exists yet",
-  "dissenter": "Dissenter"
+  "dissenter": "Dissenter",
+  "your_message_has_been_hidden_because_it_contained_inappropriate_language": "Your message has been hidden because it contained inappropriate language"
 }

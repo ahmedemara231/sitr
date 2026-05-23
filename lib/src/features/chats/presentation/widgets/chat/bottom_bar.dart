@@ -78,89 +78,77 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
   Widget build(BuildContext context) {
     return SafeArea(
       top: false,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            color: AppColors.whiteGreyColor,
-            padding: EdgeInsets.all(16.r),
-            child: Row(
-              spacing: 10.w,
-              children: [
-                InkWell(
-                  onTap: () async{
-                    if(_chatCont.text.isEmpty){
-                      return;
+      child: Container(
+        color: AppColors.whiteGreyColor,
+        padding: EdgeInsets.all(16.r),
+        child: Row(
+          spacing: 10.w,
+          children: [
+            InkWell(
+              onTap: () async{
+                if(_chatCont.text.isEmpty){
+                  return;
 
-                    } else if(_formKey.currentState!.validate()){
-                      final bool hasBadWord = await SafeTextFilter.containsBadWord(text: _chatCont.text);
-                      if (hasBadWord) {
-                        // لو فيه كلام وحش، هنعمله Masking عشان يظهر في الشات بس متشطب
-                        _chatCont.text = SafeTextFilter.filterText(
-                          text: _chatCont.text,
-                          // هنستخدم partial عشان يبان إن في كلمة اتحذفت زي f**k
-                          // أو تستخدم custom لو عايز تكتب مكانها [مخالف]
-                          strategy: MaskStrategy.custom(replacement: '[${LocaleKeys.dissenter}]'),
-                        );
+                } else if(_formKey.currentState!.validate()){
+                  final bool hasBadWord = await SafeTextFilter.containsBadWord(text: _chatCont.text);
+                  if (hasBadWord) {
+                    _chatCont.text = SafeTextFilter.filterText(
+                      text: _chatCont.text,
+                      // هنستخدم partial عشان يبان إن في كلمة اتحذفت زي f**k
+                      // أو تستخدم custom لو عايز تكتب مكانها [مخالف]
+                      strategy: MaskStrategy.custom(replacement: '[${LocaleKeys.dissenter}]'),
+                    );
 
-                        // ممكن اختياري تعمل Vibrating أو تنبيه خفيف للمستخدم إنه كتب حاجة غلط
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("تم إخفاء كلمة غير لائقة في رسالتك"),
-                            backgroundColor: Colors.orange,
-                          ),
-                        );
-                        widget.onSend.call(context, _chatCont.text);
-                        _chatCont.clear();
-                      }
-                      widget.onSend.call(context, _chatCont.text);
-                      _chatCont.clear();
-                      _selectedImage.value = null;
-                    }
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(10.sp),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12.r),
-                      color: Colors.white,
-                    ),
-                    child: const SvgPic(assetName: Assets.svgSend, color: AppColors.primary),
+                    MessageUtils.showSnackBar(LocaleKeys.yourMessageHasBeenHiddenBecauseItContainedInappropriateLanguage);
+                    widget.onSend.call(context, _chatCont.text);
+                    _chatCont.clear();
+                  }else{
+                    widget.onSend.call(context, _chatCont.text);
+                    _chatCont.clear();
+                  }
+                  _selectedImage.value = null;
+                }
+              },
+              child: Container(
+                padding: EdgeInsets.all(10.sp),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.r),
+                  color: Colors.white,
+                ),
+                child: const SvgPic(assetName: Assets.svgSend, color: AppColors.primary),
+              ),
+            ),
+            Expanded(
+              child: Form(
+                key: _formKey,
+                child: DefaultTextField(
+                  closeWhenTapOutSide: false,
+                  validator: Validators.validateChatMessage,
+                  controller: _chatCont,
+                  inputType: TextInputType.multiline,
+                  minLines: 1,
+                  maxLines: 5,
+                  action: TextInputAction.newline,
+                  title: LocaleKeys.hereIsTheTextOfTheMessageHereIsTheTextOfTheMessageHereIsTheTextOfTheMessage,
+                  prefixIcon: IconButton(
+                      onPressed: () async{
+                        _calcImagesLength();
+                        if(_imagesLength < 2){
+                          final result = await Helpers.getImageFromCameraOrDevice();
+                          _selectedImage.value = result;
+
+                        }else{
+                          MessageUtils.showSnackBar(LocaleKeys.youCanNotSendMoreThan2ImagesInChat);
+                        }
+                      },
+                      icon: const Icon(Icons.camera_alt_sharp, color: AppColors.primary)
                   ),
                 ),
-                Expanded(
-                  child: Form(
-                    key: _formKey,
-                    child: DefaultTextField(
-                      closeWhenTapOutSide: false,
-                      validator: Validators.validateChatMessage,
-                      controller: _chatCont,
-                      inputType: TextInputType.multiline,
-                      minLines: 1,
-                      maxLines: 5,
-                      action: TextInputAction.newline,
-                      title: LocaleKeys.hereIsTheTextOfTheMessageHereIsTheTextOfTheMessageHereIsTheTextOfTheMessage,
-                      prefixIcon: IconButton(
-                          onPressed: () async{
-                            _calcImagesLength();
-                            if(_imagesLength < 2){
-                              final result = await Helpers.getImageFromCameraOrDevice();
-                              _selectedImage.value = result;
-
-                            }else{
-                              MessageUtils.showSnackBar(LocaleKeys.youCanNotSendMoreThan2ImagesInChat);
-                            }
-                          },
-                          icon: const Icon(Icons.camera_alt_sharp, color: AppColors.primary)
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ).paddingBottom(MediaQuery.of(context).viewInsets.bottom),
-        ],
-      ),
+              ),
+            )
+          ],
+        ),
+      ).paddingBottom(MediaQuery.of(context).viewInsets.bottom),
     );
   }
 }
