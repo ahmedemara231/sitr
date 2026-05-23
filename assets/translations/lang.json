@@ -361,5 +361,6 @@
   "showMore #$ Show more" : "عرض المزيد",
   "showLess #$ Show less" : "عرض أقل",
   "Edit profile" : "تعديل الملف الشخصي",
-  "This image has sensitive content please rechoose another image" : "هذه الصورة تحتوي علي محتوي غير لائق من فضلك قم باختيار صورة اخري"
+  "This image has sensitive content please rechoose another image" : "هذه الصورة تحتوي علي محتوي غير لائق من فضلك قم باختيار صورة اخري",
+  "No messages exists yet" : "لا يوجد رسائل الي الان"
 }

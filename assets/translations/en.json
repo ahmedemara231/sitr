@@ -354,5 +354,6 @@
   "show_more": "Show more",
   "show_less": "Show less",
   "edit_profile": "Edit profile",
-  "this_image_has_sensitive_content_please_rechoose_another_image": "This image has sensitive content please rechoose another image"
+  "this_image_has_sensitive_content_please_rechoose_another_image": "This image has sensitive content please rechoose another image",
+  "no_messages_exists_yet": "No messages exists yet"
 }

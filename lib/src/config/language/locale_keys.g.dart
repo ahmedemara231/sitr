@@ -1054,4 +1054,7 @@ abstract class LocaleKeys {
   static const String _thisImageHasSensitiveContentPleaseRechooseAnotherImage = 'this_image_has_sensitive_content_please_rechoose_another_image';
   static String get thisImageHasSensitiveContentPleaseRechooseAnotherImage => _thisImageHasSensitiveContentPleaseRechooseAnotherImage.tr();
 
+  static const String _noMessagesExistsYet = 'no_messages_exists_yet';
+  static String get noMessagesExistsYet => _noMessagesExistsYet.tr();
+
 }

@@ -54,11 +54,10 @@ class ChatListTile extends StatelessWidget {
         url: chatModel.room?.members?.first.image ?? '',
         time: chatModel.room?.lastMessageCreatedDt ?? '',
         partnerName: chatModel.room?.members?.first.name ?? '',
-        subTitle: chatModel.room!.lastMessageBody.isNotNull
-            ? chatModel.room!.lastMessageBody!.isImage
-                ? LocaleKeys.photo
-                : chatModel.room!.lastMessageBody!
-            : '',
+        subTitle: chatModel.room!.lastMessageBody?.isNotEmpty ?? false?
+        chatModel.room!.lastMessageBody!.isImage ?
+        LocaleKeys.photo : chatModel.room!.lastMessageBody!
+            : LocaleKeys.noMessagesExistsYet,
         unreadMsgs: chatModel.room!.unreadMsgs ?? 0,
       ).paddingBottom(10.h),
     );
