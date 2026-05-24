@@ -3,7 +3,7 @@
 # ==============================
 
 .PHONY: clean run apk ios upgrade handlePods openXcode translations gradleFix clearGradleCache \
-        buildIos distribute distributeAndroid
+        buildIos distribute distributeAndroid flutterfireSetup
 
 # Clean Flutter build and get packages
 clean:
@@ -32,6 +32,10 @@ handlePods:
 # Open project in Xcode
 openXcode:
 	open ios/Runner.xcworkspace
+
+# Install flutterfire CLI (fixes iOS "flutterfire: command not found" build phase failure)
+flutterfireSetup:
+	dart pub global activate flutterfire_cli
 
 # Generate translations
 translations:

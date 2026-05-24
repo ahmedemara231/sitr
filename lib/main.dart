@@ -25,6 +25,7 @@ import 'src/core/network/backend_configuation.dart';
 import 'src/core/network/dio_service.dart';
 import 'src/core/shared/functions/setup_service_locators.dart';
 import 'src/core/shared/bloc_observer.dart';
+import 'src/core/widgets/custom_messages.dart';
 import 'src/core/widgets/exeption_view.dart';
 
 Future<bool> fetchBaseUrl() async {
@@ -72,20 +73,18 @@ Future<bool> fetchBaseUrl() async {
   }
 }
 
-Future<void> _loadSocketUrl() async {
-  final String? storedSocketUrl =
-  await SecureStorage.read(SecureLocalVariableKeys.socetIoUrl);
-  if (storedSocketUrl != null && storedSocketUrl.isNotEmpty) {
-    ConstantManager.socketUrl = storedSocketUrl;
-  }
-}
 
 Future<void> _initializeFirebaseApp() async {
-  // Determine which Firebase options to use based on the flavor
+  // Determine which Firebase options to use based on the flavor.
+  // Fall back to production when the flavor is missing (e.g. launched from
+  // Xcode without --flavor) so initialization never hard-crashes the launch.
   final firebaseOptions = switch (appFlavor) {
     'dev' => dev.DefaultFirebaseOptions.currentPlatform,
     'production' => production.DefaultFirebaseOptions.currentPlatform,
-    _ => throw UnsupportedError('Unsupported flavor: $appFlavor'),
+    _ => () {
+        log('Unknown/empty appFlavor "$appFlavor" — defaulting Firebase to production options');
+        return production.DefaultFirebaseOptions.currentPlatform;
+      }(),
   };
   await Firebase.initializeApp(options: firebaseOptions);
 }
@@ -99,7 +98,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait(
     [
-      NsfwDetectorHelper.init(),
       EasyLocalization.ensureInitialized(),
       CacheStorage.init(),
       ObjectBoxCacheService.init(),
@@ -109,7 +107,13 @@ void main() async {
   );
   await Helpers.initZegoData();
   await fetchBaseUrl();
-  await _loadSocketUrl();
+
+  try {
+    await NsfwDetectorHelper.init();
+  } on Exception catch (e) {
+    MessageUtils.showTopMsg(e.toString());
+  }
+
   SystemChrome.setPreferredOrientations(
     [
       DeviceOrientation.portraitUp,
@@ -136,6 +140,7 @@ void main() async {
 
   _initSentry();
 }
+
 
 void _initSentry()async{
   await SentryFlutter.init(

@@ -182,6 +182,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
   }
 
   void _initSocket() async {
+    final String storedSocketUrl = await SecureStorage.read(SecureLocalVariableKeys.socetIoUrl) ?? '';
     socketType = ClientIOImpl(
       onConnect: (d) {
         log('socket connected');
@@ -197,7 +198,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
         log('event is received $e $d');
       },
       extraParams: MessageParamsModel().toJson(),
-      url: ConstantManager.socketUrl,
+      url: storedSocketUrl,
       jsonToChatMessage: (json) => ChatMessages(
         message: Message(id: json['id'], type: json['type'], body: json['body']),
         sender: Sender(

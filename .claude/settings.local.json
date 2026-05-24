@@ -59,7 +59,10 @@
       "mcp__stitch__get_screen",
       "WebFetch(domain:stitch.withgoogle.com)",
       "Bash(dart run *)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "Read(//Users/aaita/.pub-cache/**)",
+      "Bash(dart pub *)",
+      "Bash(~/.pub-cache/bin/flutterfire --version)"
     ],
     "deny": [],
     "ask": []

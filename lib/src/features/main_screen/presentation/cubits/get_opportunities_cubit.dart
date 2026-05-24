@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pagify/helpers/data_and_pagination_data.dart';
 import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
@@ -39,14 +37,13 @@ class GetOpportunitiesCubit extends Cubit<OpportunitiesState> {
 
     final String typeKey = type == UserGender.unknown ? 'parent' : type.name;
     final String pageCacheKey = 'opportunities_${typeKey}_$page';
-
     final result = await _baseCrudUseCase.call(
       CrudBaseParmas(
         api: ApiConstants.opportunities,
         cacheKey: pageCacheKey,
         httpRequestType: HttpRequestType.get,
         queryParameters: {
-          'type': type,
+          'type': typeKey,
           'page': page,
         },
         mapper: (data) => (
@@ -80,7 +77,6 @@ class GetOpportunitiesCubit extends Cubit<OpportunitiesState> {
         _currentPage = page;
         final previousItems = isFirstPage ? <OpportunityModel>[] : state.data.$1;
         emit(state.success(data: ([...previousItems, ...success.data.$1], success.data.$2)));
-        log('sucesss ${success.key == 'fromCache'}');
         if (success.key == 'fromCache') {
           MessageUtils.showTopMsg(success.msg);
         }

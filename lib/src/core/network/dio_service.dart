@@ -53,14 +53,8 @@ class DioService implements NetworkService {
     SecureLocalVariableKeys.devBaseUrlKey :
     SecureLocalVariableKeys.baseUrlKey;
 
-    final String secondaryKey = isDev ?
-    SecureLocalVariableKeys.baseUrlKey :
-    SecureLocalVariableKeys.devBaseUrlKey;
-
     final String primary = await SecureStorage.read(primaryKey) ?? '';
-
-    if (primary.isNotEmpty) return primary;
-    return await SecureStorage.read(secondaryKey) ?? '';
+    return primary;
   }
 
   @override

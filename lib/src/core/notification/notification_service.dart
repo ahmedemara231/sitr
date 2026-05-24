@@ -26,9 +26,11 @@ import '../../features/more/presentation/screens/profile.dart';
 import '../../features/more/presentation/screens/wallet/wallet_screen.dart';
 import '../extensions/object.dart';
 import '../extensions/string_extension.dart';
+import '../helpers/cache_service.dart';
 import '../helpers/user_type_enum.dart';
 import '../navigation/navigator.dart';
 import '../network/api_endpoints.dart';
+import '../network/dio_service.dart';
 import '../network/network_request.dart';
 import '../network/network_service.dart';
 import '../shared/user_cubit/user_cubit.dart';
@@ -56,6 +58,7 @@ Future<void> _emitUpdateChatEvent({
 }) async {
   final completer = Completer<void>();
   late final SocketHelper socket;
+  final String storedSocketUrl = await SecureStorage.read(SecureLocalVariableKeys.socetIoUrl) ?? '';
   socket = ClientIOImpl(
     onConnect: (d) {
       log('notification action socket connected');
@@ -74,7 +77,7 @@ Future<void> _emitUpdateChatEvent({
     },
     onDisconnect: (d) => log('notification action socket disconnected'),
     extraParams: MessageParamsModel().toJson(),
-    url: ConstantManager.socketUrl,
+    url: storedSocketUrl,
     roomId: 0,
     jsonToChatMessage: (_) => throw UnimplementedError(),
     onReceiveMessage: (_) {},
