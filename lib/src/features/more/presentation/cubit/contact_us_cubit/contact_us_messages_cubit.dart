@@ -30,7 +30,6 @@ class ContactUsMessagesCubit extends AsyncCubit<List<ContactMessage>> {
           return bubbles;
         },
       )),
-      withInternetInterceptor: true,
     );
   }
 }

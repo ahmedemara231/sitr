@@ -16,8 +16,6 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>ستر</string>
-	<key>NSUserTrackingUsageDescription</key>
-    <string>ستر uses IDFA to improve ad personalization.</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

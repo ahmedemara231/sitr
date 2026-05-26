@@ -70,3 +70,7 @@
 -dontwarn com.google.android.play.core.tasks.OnFailureListener
 -dontwarn com.google.android.play.core.tasks.OnSuccessListener
 -dontwarn com.google.android.play.core.tasks.Task
+
+# TikTok SDK references Play Billing & Install Referrer (not bundled — optional at runtime)
+-dontwarn com.android.billingclient.api.**
+-dontwarn com.android.installreferrer.api.**

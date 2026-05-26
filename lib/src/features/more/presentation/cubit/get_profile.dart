@@ -7,7 +7,6 @@ class GetProfileCubit extends GetUserModelCubit{
   @override
   Future<void> getProfile({required void Function(UserModel data) onSuccess})async {
     executeAsyncWithBaseModel(
-      // withInternetInterceptor: true,
       operation: () => baseCrudUseCase.call(
           CrudBaseParmas(
             api: ApiConstants.profile,
