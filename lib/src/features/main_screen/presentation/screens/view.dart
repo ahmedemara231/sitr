@@ -88,7 +88,6 @@ class MainViewBody extends StatefulWidget {
 }
 
 class _MainViewBodyState extends State<MainViewBody> {
-  int _page = 1;
   late final ScrollController _scrollController = ScrollController()..addListener(_onScroll);
 
   ValueNotifier<String> get firstSelection => widget.firstSelection;
@@ -100,11 +99,7 @@ class _MainViewBodyState extends State<MainViewBody> {
     if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
       final cubit = context.read<GetOpportunitiesCubit>();
       if (cubit.canLoadMore) {
-        _page++;
-        cubit.getOpportunities(
-          type: secondSelection.value.toUserGender(),
-          page: _page,
-        );
+        cubit.loadMoreOpportunities(type: secondSelection.value.toUserGender());
       }
     }
   }
@@ -129,7 +124,6 @@ class _MainViewBodyState extends State<MainViewBody> {
   }
 
   void _secondSelectionListener() {
-    _page = 1;
     context.read<GetOpportunitiesCubit>().getOpportunities(
           type: secondSelection.value.toUserGender(),
           page: 1,

@@ -18,6 +18,10 @@
 	<string>ستر</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+
+	<key>NSUserTrackingUsageDescription</key>
+    <string>We use your activity data to measure ad performance and improve your experience within the app.</string>
+
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>

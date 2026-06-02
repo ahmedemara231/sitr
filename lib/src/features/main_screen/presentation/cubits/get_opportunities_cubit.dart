@@ -23,6 +23,9 @@ class GetOpportunitiesCubit extends Cubit<OpportunitiesState> {
 
   bool get canLoadMore => _currentPage < state.data.$2.totalPages;
 
+  Future<void> loadMoreOpportunities({required UserGender type}) =>
+      getOpportunities(type: type, page: _currentPage + 1);
+
   Future<void> getOpportunities({required UserGender type, required int page}) async {
     if (_isFetching) return;
     _isFetching = true;

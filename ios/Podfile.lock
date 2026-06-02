@@ -331,6 +331,7 @@ DEPENDENCIES:
   - sqflite_darwin (from `.symlinks/plugins/sqflite_darwin/darwin`)
   - tflite_flutter (from `.symlinks/plugins/tflite_flutter/ios`)
   - tiktok_events_sdk (from `.symlinks/plugins/tiktok_events_sdk/ios`)
+  - TikTokBusinessSDK
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - vibration (from `.symlinks/plugins/vibration/ios`)
   - wakelock_plus (from `.symlinks/plugins/wakelock_plus/ios`)
@@ -571,6 +572,6 @@ SPEC CHECKSUMS:
   ZIPFoundation: dfd3d681c4053ff7e2f7350bc4e53b5dba3f5351
   ZPNs: 73bad0046a74e37315201053f9a0e7ac625d9436
 
-PODFILE CHECKSUM: 5cb67c9061127751fb465a2c30e86071efc7a038
+PODFILE CHECKSUM: d51fa4ee3056f841969231c69ee2e875e982190e
 
 COCOAPODS: 1.16.2
