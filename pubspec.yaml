@@ -25,7 +25,9 @@ dependencies:
   intl: 0.20.2
   easy_localization: ^3.0.7
   #--------------------- Tools -----------------------
-  tiktok_events_sdk: ^1.1.5
+  app_tracking_transparency: ^2.0.7
+  appsflyer_sdk: ^6.18.0
+#  tiktok_events_sdk: ^1.1.5
   nsfw_detector_flutter: ^2.0.0
   safe_text: ^2.1.5
   upgrader: ^13.3.0

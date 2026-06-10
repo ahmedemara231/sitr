@@ -98,8 +98,9 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_callkit_incoming-2.5.8" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/file_picker-10.3.8" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/audioplayers-6.6.0" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/tiktok_events_sdk-1.1.5" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/tflite_flutter-0.12.1" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/app_tracking_transparency-2.0.7" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/appsflyer_sdk-6.18.0" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

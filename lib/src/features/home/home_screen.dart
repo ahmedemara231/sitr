@@ -1,6 +1,7 @@
 
 import 'dart:io';
 
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,6 +32,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   void _initApp() async {
     await _handleNotifications();
+    await _handleTrackingPermission();
     if(UserModel.isAuthenticated){
       await Helpers.initZegoService();
     }
@@ -67,6 +69,14 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> _handleTrackingPermission()async{
+    if(Platform.isIOS){
+      final status = await AppTrackingTransparency.requestTrackingAuthorization();
+      // switch(status){
+      //   case TrackingStatus.authorized:
+      // }
+    }
+  }
   @override
   void initState() {
     _initApp();

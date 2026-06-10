@@ -170,9 +170,11 @@ class ClientIOImpl extends SocketHelper{
 
   @override
   FutureOr<void> disconnect() {
-    emitEvent(event: events.chatEvents.exitChatEvent, data: {'room_id' : roomId});
-    socket.disconnect();
-    socket.dispose();
+    if(socket.connected){
+      emitEvent(event: events.chatEvents.exitChatEvent, data: {'room_id' : roomId});
+      socket.disconnect();
+      socket.dispose();
+    }
   }
 
   // Future<void> _checkAndEmit({

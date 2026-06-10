@@ -33,6 +33,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+  app_tracking_transparency:
+    dependency: "direct main"
+    description:
+      name: app_tracking_transparency
+      sha256: "3a52669c0645ffd7efe9a460047616de3e3f2128338f9ec7cdb681628d36238e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.7"
+  appsflyer_sdk:
+    dependency: "direct main"
+    description:
+      name: appsflyer_sdk
+      sha256: "56ecd542e01b0335bd3388de7c13724d6d5848ba5a57ba9dfd87bf119282ae12"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.18.0"
   archive:
     dependency: transitive
     description:
@@ -2322,14 +2338,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.12.1"
-  tiktok_events_sdk:
-    dependency: "direct main"
-    description:
-      name: tiktok_events_sdk
-      sha256: b876ce0805665e93fe3cd8fe880e615bafe6f9822008ec62ef2ec310d2b5dae7
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.5"
   time:
     dependency: transitive
     description:
