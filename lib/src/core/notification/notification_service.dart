@@ -40,6 +40,7 @@ import '../widgets/parent_children_screen.dart';
 part 'navigation_types.dart';
 part 'notification_routes.dart';
 
+@pragma('vm:entry-point')
 Future<void> backgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   log('========= >>> backGroundMessage ${message.data}');

@@ -1,6 +1,4 @@
-
 import 'dart:io';
-
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -69,12 +67,22 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> _requestTrackingPermission()async{
+    final status = await AppTrackingTransparency.requestTrackingAuthorization();
+  }
+
   Future<void> _handleTrackingPermission()async{
     if(Platform.isIOS){
-      final status = await AppTrackingTransparency.requestTrackingAuthorization();
-      // switch(status){
-      //   case TrackingStatus.authorized:
-      // }
+      final currentStatus = await AppTrackingTransparency.trackingAuthorizationStatus;
+      switch(currentStatus){
+        case TrackingStatus.notDetermined:
+        case TrackingStatus.denied:
+          await _requestTrackingPermission();
+          break;
+
+        default:
+          break;
+      }
     }
   }
   @override

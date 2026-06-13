@@ -13,6 +13,7 @@ import 'firebase_options_dev.dart' as dev;
 import 'src/app.dart';
 import 'src/config/language/languages.dart';
 import 'src/config/res/config_imports.dart';
+import 'src/core/helpers/apps_flyer/apps_flyer_helper.dart';
 import 'src/core/helpers/helpers.dart';
 import 'src/core/helpers/nsfw_detector.dart';
 import 'src/core/local_db/objectbox_cache_service.dart';
@@ -102,11 +103,12 @@ void main() async {
       CacheStorage.init(),
       ObjectBoxCacheService.init(),
       ScreenUtil.ensureScreenSize(),
-      _initializeFirebaseApp()
     ],
   );
-  await Helpers.initZegoData();
+  await _initializeFirebaseApp();
   await fetchBaseUrl();
+  await Helpers.initZegoData();
+  await AppyFlyerHelper.init();
 
   try {
     await NsfwDetectorHelper.init();

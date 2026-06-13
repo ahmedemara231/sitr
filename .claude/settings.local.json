@@ -62,7 +62,10 @@
       "Read(//tmp/**)",
       "Read(//Users/aaita/.pub-cache/**)",
       "Bash(dart pub *)",
-      "Bash(~/.pub-cache/bin/flutterfire --version)"
+      "Bash(~/.pub-cache/bin/flutterfire --version)",
+      "Bash(nslookup dl.google.com)",
+      "Bash(ping -c 2 dl.google.com)",
+      "Bash(nslookup repo.maven.apache.org)"
     ],
     "deny": [],
     "ask": []
