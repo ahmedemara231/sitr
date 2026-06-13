@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../config/res/config_imports.dart';
+import '../../helpers/apps_flyer/apps_flyer_helper.dart';
 import '../../helpers/cache_service.dart';
 import '../../helpers/nsfw_detector.dart';
 import '../../local_db/objectbox_cache_service.dart';
@@ -28,6 +29,7 @@ class UserCubit extends Cubit<UserState> with UserUtils {
       _saveToken(token),
     ]);
     injector<NetworkService>().setToken(token);
+    AppyFlyerHelper.setCustomer();
     emit(state.copyWith(userModel: user, userStatus: UserStatus.loggedIn));
   }
 
@@ -61,7 +63,7 @@ class UserCubit extends Cubit<UserState> with UserUtils {
     log('userMap $userMap, token $token');
     if (token != null && userMap != null) {
       injector<NetworkService>().setToken(token);
-      // _initZego();
+      AppyFlyerHelper.setCustomer();
       emit(
         state.copyWith(
           userModel: UserModel.fromJson(userMap),

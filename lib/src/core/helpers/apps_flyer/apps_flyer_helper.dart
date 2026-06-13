@@ -39,8 +39,8 @@ class AppyFlyerHelper{
     );
   }
 
-  static void setUser(int userId){
-    _appsflyerSdk.setCustomerUserId(userId.toString());
+  static void setCustomer(){
+    _appsflyerSdk.setCustomerUserId(UserModel.currentUser?.id.toString()??'0');
   }
 
   static Future<void> logEvent(FlyerEvents event)async{
