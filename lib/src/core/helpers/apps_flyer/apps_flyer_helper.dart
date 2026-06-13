@@ -1,9 +1,6 @@
 import 'dart:developer';
-import 'dart:io';
-
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:flutter/foundation.dart';
-
 import '../../shared/models/user_models/user_model.dart';
 import 'events.dart';
 
