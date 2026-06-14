@@ -8,7 +8,7 @@ class GetChildProfileCubit extends GetUserModelCubit{
   GetChildProfileCubit(this.id);
 
   @override
-  Future<void> getProfile({required void Function(UserModel data) onSuccess})async {
+  Future<void> getProfile({void Function(UserModel data)? onSuccess})async {
     executeAsyncWithBaseModel(
         operation: () => baseCrudUseCase.call(
           CrudBaseParmas(
@@ -19,7 +19,7 @@ class GetChildProfileCubit extends GetUserModelCubit{
             toJson: (model) => model.toJson(),
           ),
         ),
-        onSuccess: (user) => onSuccess.call(user.data)
+        onSuccess: (user) => onSuccess?.call(user.data)
     );
   }
 

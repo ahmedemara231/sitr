@@ -352,7 +352,7 @@ class Messages {
               body: v['body'],
             ),
             sender: Sender(
-              id: v['sender_id'],
+              id: (v['sender_id']).toString(),
               name: v['name'],
               image: v['avatar'],
               isFromMe: v['is_sender'] ?? false,

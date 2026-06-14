@@ -13,7 +13,7 @@ class Message{
 }
 
 class Sender{
-  final int id;
+  final String id;
   final String name;
   final String image;
   final bool isFromMe;

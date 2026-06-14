@@ -5,7 +5,7 @@ import '../../../../core/shared/models/user_models/user_model.dart';
 
 class GetProfileCubit extends GetUserModelCubit{
   @override
-  Future<void> getProfile({required void Function(UserModel data) onSuccess})async {
+  Future<void> getProfile({void Function(UserModel data)? onSuccess})async {
     executeAsyncWithBaseModel(
       operation: () => baseCrudUseCase.call(
           CrudBaseParmas(
@@ -16,7 +16,7 @@ class GetProfileCubit extends GetUserModelCubit{
             toJson: (model) => model.toJson(),
           ),
       ),
-      onSuccess: (user) => onSuccess.call(user.data)
+      onSuccess: (user) => onSuccess?.call(user.data)
     );
   }
 

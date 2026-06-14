@@ -76,6 +76,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     code: code
                                 ),
                                 onSuccess: (user) async {
+                                  await AppyFlyerHelper.logEvent(FlyerEvents.register);
                                   user.completeRegistration!.manageNavigationBasedCompleteRegisterStatus(user);
                                 },
                               ),

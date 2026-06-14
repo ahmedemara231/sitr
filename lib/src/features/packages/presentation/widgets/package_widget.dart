@@ -5,6 +5,8 @@ import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/padding_extension.dart';
+import '../../../../core/helpers/apps_flyer/apps_flyer_helper.dart';
+import '../../../../core/helpers/apps_flyer/events.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/buttons/custom_app_buttons/default_button.dart';
@@ -103,6 +105,7 @@ class PackageWidget extends StatelessWidget {
                                                   ));
                                                   if(result == 'success'){
                                                     onSubscribe.call();
+                                                    await AppyFlyerHelper.logEvent(FlyerEvents.pay);
                                                     ChatSheetManager.show(
                                                         child: SuccessSheet(
                                                           isInAuth: isInAuth,

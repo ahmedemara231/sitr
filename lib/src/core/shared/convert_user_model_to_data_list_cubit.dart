@@ -5,5 +5,5 @@ import 'models/user_models/user_model.dart';
 abstract class GetUserModelCubit extends AsyncCubit<UserModel>{
   GetUserModelCubit() : super(IndividualUserModel.initial());
 
-  Future<void> getProfile({required void Function(UserModel data) onSuccess});
+  Future<void> getProfile({void Function(UserModel data) onSuccess});
 }

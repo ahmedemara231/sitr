@@ -277,7 +277,12 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                           UserCubit.instance.updateUser(data.data);
                           MessageUtils.showSnackBar(data.msg);
                           Go.back();
-                        },
+                          widget.cubit.getProfile(
+                              onSuccess: (userResult) {
+                                _onSuccess(userResult);
+                              }
+                          );
+                          },
                       ),
                     )),
                   )

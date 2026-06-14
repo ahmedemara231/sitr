@@ -16,7 +16,7 @@ class AppyFlyerHelper{
       // appInviteOneLink: oneLinkID, // Optional field
       // disableAdvertisingIdentifier: false, // Optional field
       // disableCollectASA: false, //Optional field
-      // manualStart: false,
+      manualStart: true, // required so startSDK() actually starts the SDK and fires onSuccess/onError
     ); // Optional field
 
     _appsflyerSdk = AppsflyerSdk(appsFlyerOptions);

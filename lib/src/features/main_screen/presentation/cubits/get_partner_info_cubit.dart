@@ -8,7 +8,7 @@ class GetPartnerInfoCubit extends GetUserModelCubit{
   GetPartnerInfoCubit(this.id);
 
   @override
-  Future<void> getProfile({void Function(UserModel data)? onSuccess}) async {
+  Future<void> getProfile({void Function(UserModel data)? onSuccess})async {
     await executeAsyncWithBaseModel(
         operation: () => baseCrudUseCase.call(
           CrudBaseParmas(

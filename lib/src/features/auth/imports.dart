@@ -14,6 +14,8 @@ import '../../core/extensions/object.dart';
 import '../../core/extensions/padding_extension.dart';
 import '../../core/extensions/sized_box_helper.dart';
 import '../../core/extensions/string_extension.dart';
+import '../../core/helpers/apps_flyer/apps_flyer_helper.dart';
+import '../../core/helpers/apps_flyer/events.dart';
 import '../../core/helpers/user_type_enum.dart';
 import '../../core/helpers/validators.dart';
 import '../../core/navigation/navigator.dart';

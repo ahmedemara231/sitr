@@ -1,3 +1,6 @@
 enum FlyerEvents{
-  launch,
+  // install,
+  // launch,
+  register,
+  pay
 }
