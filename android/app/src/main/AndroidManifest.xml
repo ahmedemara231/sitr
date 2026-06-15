@@ -131,7 +131,7 @@
             android:name=".MainActivity"
             android:showWhenLocked="true"
             android:turnScreenOn="true"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:exported="true"
             android:taskAffinity=""
             android:stateNotNeeded="false"
@@ -150,10 +150,21 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
+            <meta-data android:name="flutter_deeplinking_enabled" android:value="false" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https"
+                    android:host="str-sa.onelink.me"
+                    android:pathPrefix="/str" />
+            </intent-filter>
+
         </activity>
         <!-- image_cropper (uCrop) activity — required for cropping on Android -->
         <activity

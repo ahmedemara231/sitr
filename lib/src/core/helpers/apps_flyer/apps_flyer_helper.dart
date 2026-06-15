@@ -12,7 +12,6 @@ class AppyFlyerHelper{
 
   static Future<void> init()async{
     final AppsFlyerOptions appsFlyerOptions = AppsFlyerOptions(
-      // afDevKey: Platform.isAndroid? 'StWx8Em3WFohBgA9vtdoT9' : 'StWx8Em3WFohBgA9vtdoT9',
       afDevKey: 'StWx8Em3WFohBgA9vtdoT9',
       appId: '6756270317',
       showDebug: kDebugMode,
@@ -39,6 +38,7 @@ class AppyFlyerHelper{
       },
     );
     _isInitialized = true;
+    _handleDeepLinking();
   }
 
   static void setCustomer(){
@@ -62,6 +62,25 @@ class AppyFlyerHelper{
     } catch (e) {
       log("Error registering AppsFlyer uninstall token: $e");
     }
+  }
+
+  static void _handleDeepLinking(){
+    _appsflyerSdk.onDeepLinking((DeepLinkResult dp) {
+      switch (dp.status) {
+        case Status.FOUND:
+          log("deep link value: ${dp.deepLink?.deepLinkValue}");
+          break;
+        case Status.NOT_FOUND:
+          log("deep link not found");
+          break;
+        case Status.ERROR:
+          log("deep link error: ${dp.error}");
+          break;
+        case Status.PARSE_ERROR:
+          log("parsing error");
+          break;
+      }
+    });
   }
 
   static Future<void> logEvent(FlyerEvents event)async{
