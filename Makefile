@@ -17,6 +17,9 @@ run:
 apk:
 	flutter build apk --split-per-abi --flavor production
 
+ipa:
+	flutter build ipa --flavor production
+
 # Build iOS (for macOS users with Xcode)
 ios:
 	flutter build ios

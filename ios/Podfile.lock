@@ -1,8 +1,18 @@
 PODS:
+  - app_tracking_transparency (0.0.1):
+    - Flutter
   - AppCheckCore (11.2.0):
     - GoogleUtilities/Environment (~> 8.0)
     - GoogleUtilities/UserDefaults (~> 8.0)
     - PromisesObjC (~> 2.4)
+  - appsflyer_sdk (6.18.0):
+    - appsflyer_sdk/Core (= 6.18.0)
+  - appsflyer_sdk/Core (6.18.0):
+    - AppsFlyerFramework (= 6.18.0)
+    - Flutter
+  - AppsFlyerFramework (6.18.0):
+    - AppsFlyerFramework/Main (= 6.18.0)
+  - AppsFlyerFramework/Main (6.18.0)
   - audio_session (0.0.1):
     - Flutter
   - audioplayers_darwin (0.0.1):
@@ -254,9 +264,6 @@ PODS:
     - TensorFlowLiteSwift (= 2.12.0)
     - TensorFlowLiteSwift/CoreML (= 2.12.0)
     - TensorFlowLiteSwift/Metal (= 2.12.0)
-  - tiktok_events_sdk (1.1.4):
-    - Flutter
-    - TikTokBusinessSDK (~> 1.6.1)
   - TikTokBusinessSDK (1.6.1)
   - TOCropViewController (2.7.4)
   - url_launcher_ios (0.0.1):
@@ -293,6 +300,8 @@ PODS:
   - ZPNs (2.6.0)
 
 DEPENDENCIES:
+  - app_tracking_transparency (from `.symlinks/plugins/app_tracking_transparency/ios`)
+  - appsflyer_sdk (from `.symlinks/plugins/appsflyer_sdk/ios`)
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
   - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/darwin`)
   - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
@@ -330,7 +339,6 @@ DEPENDENCIES:
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sqflite_darwin (from `.symlinks/plugins/sqflite_darwin/darwin`)
   - tflite_flutter (from `.symlinks/plugins/tflite_flutter/ios`)
-  - tiktok_events_sdk (from `.symlinks/plugins/tiktok_events_sdk/ios`)
   - TikTokBusinessSDK
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - vibration (from `.symlinks/plugins/vibration/ios`)
@@ -347,6 +355,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - AppCheckCore
+    - AppsFlyerFramework
     - CryptoSwift
     - DKImagePickerController
     - DKPhotoGallery
@@ -385,6 +394,10 @@ SPEC REPOS:
     - ZPNs
 
 EXTERNAL SOURCES:
+  app_tracking_transparency:
+    :path: ".symlinks/plugins/app_tracking_transparency/ios"
+  appsflyer_sdk:
+    :path: ".symlinks/plugins/appsflyer_sdk/ios"
   audio_session:
     :path: ".symlinks/plugins/audio_session/ios"
   audioplayers_darwin:
@@ -459,8 +472,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite_darwin/darwin"
   tflite_flutter:
     :path: ".symlinks/plugins/tflite_flutter/ios"
-  tiktok_events_sdk:
-    :path: ".symlinks/plugins/tiktok_events_sdk/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
   vibration:
@@ -485,7 +496,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/zego_zpns/ios"
 
 SPEC CHECKSUMS:
+  app_tracking_transparency: 3d84f147f67ca82d3c15355c36b1fa6b66ca7c92
   AppCheckCore: cc8fd0a3a230ddd401f326489c99990b013f0c4f
+  appsflyer_sdk: 334ef01a9d1a1b1483ef092c729da0bbd2f115c3
+  AppsFlyerFramework: c1e1e4cd3b98ffdca2fe32b17ae93909e409b6ab
   audio_session: 9bb7f6c970f21241b19f5a3658097ae459681ba0
   audioplayers_darwin: 835ced6edd4c9fc8ebb0a7cc9e294a91d99917d5
   camera_avfoundation: 5675ca25298b6f81fa0a325188e7df62cc217741
@@ -553,7 +567,6 @@ SPEC CHECKSUMS:
   TensorFlowLiteC: 20785a69299185a379ba9852b6625f00afd7984a
   TensorFlowLiteSwift: 3a4928286e9e35bdd3e17970f48e53c80d25e793
   tflite_flutter: 64b192e11352fe36943ab6656e1d49207f1a5595
-  tiktok_events_sdk: f740cc45f8176665e62bd20026007a05c968aa6f
   TikTokBusinessSDK: 349bb1dea1f90d01f9b39418ebe7c8eb981c04af
   TOCropViewController: 80b8985ad794298fb69d3341de183f33d1853654
   url_launcher_ios: 7a95fa5b60cc718a708b8f2966718e93db0cef1b

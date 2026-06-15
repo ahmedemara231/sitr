@@ -84,45 +84,50 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
         child: Row(
           spacing: 10.w,
           children: [
-            InkWell(
-              onTap: () async{
-                if(_chatCont.text.isEmpty){
-                  return;
+            // Wrapping the send button in a TextFieldTapRegion makes Flutter treat
+            // it as part of the text field, so tapping it does NOT trigger the
+            // field's onTapOutside → the keyboard stays open while sending.
+            TextFieldTapRegion(
+              child: InkWell(
+                onTap: () async{
+                  if(_chatCont.text.isEmpty){
+                    return;
 
-                } else if(_formKey.currentState!.validate()){
-                  final bool hasBadWord = await SafeTextFilter.containsBadWord(text: _chatCont.text);
-                  if (hasBadWord) {
-                    _chatCont.text = SafeTextFilter.filterText(
-                      text: _chatCont.text,
-                      // هنستخدم partial عشان يبان إن في كلمة اتحذفت زي f**k
-                      // أو تستخدم custom لو عايز تكتب مكانها [مخالف]
-                      strategy: MaskStrategy.custom(replacement: '[${LocaleKeys.dissenter}]'),
-                    );
+                  } else if(_formKey.currentState!.validate()){
+                    final bool hasBadWord = await SafeTextFilter.containsBadWord(text: _chatCont.text);
+                    if (hasBadWord) {
+                      _chatCont.text = SafeTextFilter.filterText(
+                        text: _chatCont.text,
+                        // هنستخدم partial عشان يبان إن في كلمة اتحذفت زي f**k
+                        // أو تستخدم custom لو عايز تكتب مكانها [مخالف]
+                        strategy: MaskStrategy.custom(replacement: '[${LocaleKeys.dissenter}]'),
+                      );
 
-                    MessageUtils.showTopMsg(LocaleKeys.yourMessageHasBeenHiddenBecauseItContainedInappropriateLanguage);
-                    widget.onSend.call(context, _chatCont.text);
-                    _chatCont.clear();
-                  }else{
-                    widget.onSend.call(context, _chatCont.text);
-                    _chatCont.clear();
+                      MessageUtils.showTopMsg(LocaleKeys.yourMessageHasBeenHiddenBecauseItContainedInappropriateLanguage);
+                      widget.onSend.call(context, _chatCont.text);
+                      _chatCont.clear();
+                    }else{
+                      widget.onSend.call(context, _chatCont.text);
+                      _chatCont.clear();
+                    }
+                    _selectedImage.value = null;
                   }
-                  _selectedImage.value = null;
-                }
-              },
-              child: Container(
-                padding: EdgeInsets.all(10.sp),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12.r),
-                  color: Colors.white,
+                },
+                child: Container(
+                  padding: EdgeInsets.all(10.sp),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.r),
+                    color: Colors.white,
+                  ),
+                  child: const SvgPic(assetName: Assets.svgSend, color: AppColors.primary),
                 ),
-                child: const SvgPic(assetName: Assets.svgSend, color: AppColors.primary),
               ),
             ),
             Expanded(
               child: Form(
                 key: _formKey,
                 child: DefaultTextField(
-                  closeWhenTapOutSide: false,
+                  closeWhenTapOutSide: true,
                   validator: Validators.validateChatMessage,
                   controller: _chatCont,
                   inputType: TextInputType.multiline,

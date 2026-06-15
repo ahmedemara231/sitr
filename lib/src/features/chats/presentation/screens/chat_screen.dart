@@ -202,7 +202,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
       jsonToChatMessage: (json) => ChatMessages(
         message: Message(id: json['id'], type: json['type'], body: json['body']),
         sender: Sender(
-            id: json['sender_id'],
+            id: (json['sender_id']).toString(),
             name: json['sender_name'],
             image: json['avatar'],
             isFromMe: (json['sender_id'] == UserModel.currentUser?.id)
