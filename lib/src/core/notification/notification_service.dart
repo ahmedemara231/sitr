@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
+import '../helpers/apps_flyer/apps_flyer_helper.dart';
 import '../../features/auth/imports.dart';
 import '../../features/chats/data/models/chat_model.dart';
 import '../../features/chats/data/models/message_params_model.dart';
@@ -383,6 +384,7 @@ class NotificationService {
       final token = await FirebaseMessaging.instance.getToken();
       deviceToken = token ?? '1234';
       log('Firebase Fcm token : ${token.toString()}');
+      await AppyFlyerHelper.enableUninstallMeasurement();
     } on Exception {
       return;
     }

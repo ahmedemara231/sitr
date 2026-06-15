@@ -1,11 +1,15 @@
 import 'dart:developer';
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import '../../shared/models/user_models/user_model.dart';
 import 'events.dart';
 
 class AppyFlyerHelper{
   static late final AppsflyerSdk _appsflyerSdk;
+  static bool _isInitialized = false;
+  static bool _uninstallListenerAttached = false;
+
   static Future<void> init()async{
     final AppsFlyerOptions appsFlyerOptions = AppsFlyerOptions(
       // afDevKey: Platform.isAndroid? 'StWx8Em3WFohBgA9vtdoT9' : 'StWx8Em3WFohBgA9vtdoT9',
@@ -34,10 +38,30 @@ class AppyFlyerHelper{
         log("Error initializing AppsFlyer SDK: Code $errorCode - $errorMessage");
       },
     );
+    _isInitialized = true;
   }
 
   static void setCustomer(){
     _appsflyerSdk.setCustomerUserId(UserModel.currentUser?.id.toString()??'0');
+  }
+
+  static Future<void> enableUninstallMeasurement()async{
+    await _registerUninstallToken();
+    if (_uninstallListenerAttached) return;
+    _uninstallListenerAttached = true;
+    FirebaseMessaging.instance.onTokenRefresh.listen((_) => _registerUninstallToken());
+  }
+
+  static Future<void> _registerUninstallToken()async{
+    if (!_isInitialized) return;
+    try {
+      final String? token = await FirebaseMessaging.instance.getToken();
+      if (token == null || token.isEmpty) return;
+      _appsflyerSdk.updateServerUninstallToken(token);
+      log("AppsFlyer uninstall token registered.");
+    } catch (e) {
+      log("Error registering AppsFlyer uninstall token: $e");
+    }
   }
 
   static Future<void> logEvent(FlyerEvents event)async{
