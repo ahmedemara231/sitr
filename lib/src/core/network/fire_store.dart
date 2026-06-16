@@ -10,7 +10,9 @@ class FireStoreService{
 
   FireStoreService._internal();
   static FireStoreService? _instance;
-  static FireStoreService get instance => _instance ?? FireStoreService._internal();
+  static FireStoreService get instance => _instance ??= FireStoreService._internal();
+
+  static bool get isInitialized => _instance != null;
 
   Future<void> storeRequest(NetworkRequest request)async{
     _fireStoreMainCollection
@@ -67,12 +69,11 @@ class FireStoreService{
 
   bool isServiceEnabled = true;
 
-  void enableService() => isServiceEnabled = true;
-
-  void disableService() {
-    isServiceEnabled = false;
-    _dispose();
+  void enableService() {
+    FireStoreService.instance;
   }
 
-  void _dispose() => _instance = null;
+  void disableService() {
+    _instance = null;
+  }
 }

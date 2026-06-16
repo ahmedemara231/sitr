@@ -82,7 +82,7 @@ class DioService implements NetworkService {
         await updateBaseUrl();
       }
       await networkRequest.prepareRequestData();
-      if(FireStoreService.instance.isServiceEnabled){
+      if(FireStoreService.isInitialized){
         FireStoreService.instance.storeRequest(networkRequest);
       }
       final response = await _dio.request(networkRequest.path,
@@ -100,7 +100,7 @@ class DioService implements NetworkService {
               headers: networkRequest.headers
           ));
 
-      if(FireStoreService.instance.isServiceEnabled){
+      if(FireStoreService.isInitialized){
         FireStoreService.instance.storeResponse(
             path: networkRequest.path,
             response: response.data
