@@ -1,5 +1,6 @@
 import '../../../../../features/auth/models/kinship.dart';
 import '../../title_value_shape.dart';
+import '../individual/individual_user_model.dart';
 import '../user_model.dart';
 
 class ParentModel extends UserModel {
@@ -45,7 +46,7 @@ class ParentModel extends UserModel {
       views: json['views'],
       hasActivePackage: json['has_active_package'],
       isNotify: json['is_notify'],
-      canChat: json['can_chat'],
+      canChat: CanChat.fromJson(json['can_chat']),
       hasChatWith: json['has_chat_with'],
       isParentMatch: json['is_parent_match'],
       id: json['id'],
@@ -94,7 +95,7 @@ class ParentModel extends UserModel {
     int? numOfChildren,
     int? maleChildrenNum,
     int? femaleChildrenNum,
-    bool? canChat,
+    CanChat? canChat,
     bool? hasChatWith,
     bool? isParentMatch,
 

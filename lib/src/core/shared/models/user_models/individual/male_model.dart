@@ -60,7 +60,7 @@ class MaleModel extends IndividualUserModel {
       childParentInfo: (json['parent_info'] as Object?).isNull? null :
       ChildParentInfo.fromJson(json['parent_info']),
 
-      canChat: json['can_chat'],
+      canChat: CanChat.fromJson(json['can_chat']),
       hasChatWith: json['has_chat_with'],
       isParentMatch: json['is_parent_match'],
       id: json['id'],
@@ -127,7 +127,7 @@ class MaleModel extends IndividualUserModel {
 
   @override
   MaleModel copyWith({
-    bool? canChat,
+    CanChat? canChat,
     bool? hasChatWith,
     bool? isParentMatch,
     bool? hasActivePackage,

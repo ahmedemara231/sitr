@@ -588,6 +588,18 @@
       <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/tiktok_events_sdk/example/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/tiktok_events_sdk/example/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/tiktok_events_sdk/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/app_tracking_transparency/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/app_tracking_transparency/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/app_tracking_transparency/build" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/app_tracking_transparency/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/app_tracking_transparency/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/app_tracking_transparency/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/appsflyer_sdk/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/appsflyer_sdk/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/appsflyer_sdk/build" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/appsflyer_sdk/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/appsflyer_sdk/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/appsflyer_sdk/example/build" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Dart SDK" level="project" />

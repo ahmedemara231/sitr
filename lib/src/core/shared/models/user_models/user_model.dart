@@ -28,7 +28,7 @@ class UserModel {
   final String? completeRegistration;
   final String? token;
   final bool? isNotify;
-  final bool? canChat;
+  final CanChat? canChat;
   final bool? hasChatWith;
   final bool? isParentMatch;
   final int? views;

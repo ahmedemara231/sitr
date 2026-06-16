@@ -186,7 +186,7 @@ class IndividualUserModel extends UserModel {
   @override
   Map<String, dynamic> toJson() {
     return super.toJson()..addAll({
-      'can_chat' : canChat,
+      'can_chat' : canChat?.toJson(),
       'has_chat_with' : hasChatWith,
       'is_parent_match' : isParentMatch,
       'nick_name': nickName,
@@ -281,7 +281,7 @@ class IndividualUserModel extends UserModel {
 
   @override
   IndividualUserModel copyWith({
-    bool? canChat,
+    CanChat? canChat,
     bool? hasChatWith,
     bool? isParentMatch,
     bool? hasActivePackage,
@@ -375,5 +375,61 @@ class ChildParentInfo{
       id: json['id'],
       name: json['name'],
       avatar: json['avatar']
+  );
+}
+
+/// Reason why a user is or isn't allowed to start a chat.
+enum ChatReason {
+  chatWithYourself('chat_with_yourself'),
+  blockedByMe('blocked_by_me'),
+  accountInactive('account_inactive'),
+  notApprovedByAdmin('not_approved_by_admin'),
+  blockedByUser('blocked_by_user'),
+  targetAccountInactive('target_account_inactive'),
+  targetNotApprovedByAdmin('target_not_approved_by_admin'),
+  parentCannotChatWithChild('parent_cannot_chat_with_child'),
+  childCannotChatWithParent('child_cannot_chat_with_parent'),
+  sameGender('same_gender'),
+  activeMatchWithOther('active_match_with_other'),
+  parentApprovalRequired('parent_approval_required');
+
+  final String value;
+  const ChatReason(this.value);
+
+  static ChatReason? fromValue(String? value) {
+    if (value.isNull) return null;
+    for (final ChatReason reason in ChatReason.values) {
+      if (reason.value == value) return reason;
+    }
+    return null;
+  }
+}
+
+class CanChat {
+  final bool canChat;
+  final ChatReason? reason;
+
+  const CanChat({required this.canChat, this.reason});
+
+  factory CanChat.initial() => const CanChat(canChat: false);
+
+  factory CanChat.fromJson(dynamic json) {
+    if (json == null) return CanChat.initial();
+    // Legacy shape: API/cache used to return a plain bool.
+    if (json is bool) return CanChat(canChat: json);
+    return CanChat(
+      canChat: json['can_chat'] ?? false,
+      reason: ChatReason.fromValue(json['reason']),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'can_chat': canChat,
+    'reason': reason?.value,
+  };
+
+  CanChat copyWith({bool? canChat, ChatReason? reason}) => CanChat(
+    canChat: canChat ?? this.canChat,
+    reason: reason ?? this.reason,
   );
 }

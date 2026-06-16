@@ -65,7 +65,8 @@
       "Bash(~/.pub-cache/bin/flutterfire --version)",
       "Bash(nslookup dl.google.com)",
       "Bash(ping -c 2 dl.google.com)",
-      "Bash(nslookup repo.maven.apache.org)"
+      "Bash(nslookup repo.maven.apache.org)",
+      "Bash(dart analyze *)"
     ],
     "deny": [],
     "ask": []

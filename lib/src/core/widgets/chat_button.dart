@@ -26,7 +26,7 @@ class ChatButton extends StatelessWidget {
           //   ),
           //   receiverName: user.name ?? '',
           // )) : Future(() => null),
-          asyncCall: (context) => (user.canChat!) ?
+          asyncCall: (context) => (user.canChat?.canChat ?? false) ?
               context.read<CheckChatEligibilityCubit>().checkEligibility(
                     requestModel: RequestModel(
                         receiverId: user.id.toString(),
@@ -40,7 +40,7 @@ class ChatButton extends StatelessWidget {
                       receiverName: user.name ?? '',
                     )),
               ) : Future(() => null),
-          buttonColor: user.canChat??false ? null : Colors.grey[300],
+          buttonColor: (user.canChat?.canChat ?? false) ? null : Colors.grey[300],
           title: LocaleKeys.startChat,
         ),
       ),

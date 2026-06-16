@@ -76,7 +76,7 @@ class FemaleModel extends IndividualUserModel {
 
   factory FemaleModel.fromJson(Map<String, dynamic> json) {
     return FemaleModel(
-        canChat: json['can_chat'],
+        canChat: CanChat.fromJson(json['can_chat']),
         hasActivePackage: json['has_active_package']??false,
 
         hasChatWith: json['has_chat_with'],
@@ -258,7 +258,7 @@ class FemaleModel extends IndividualUserModel {
     TitleValueShape? hijab,
     bool? acceptsPolygamy,
     bool? hasActivePackage,
-    bool? canChat,
+    CanChat? canChat,
     bool? hasChatWith,
     bool? isParentMatch,
     String? preferredResidenceAfterMarriage,
