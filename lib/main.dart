@@ -24,10 +24,20 @@ import 'src/core/navigation/page_router/imports_page_router_builder.dart';
 import 'src/core/helpers/cache_service.dart';
 import 'src/core/network/backend_configuation.dart';
 import 'src/core/network/dio_service.dart';
+import 'src/core/network/fire_store.dart';
 import 'src/core/shared/functions/setup_service_locators.dart';
 import 'src/core/shared/bloc_observer.dart';
 import 'src/core/widgets/custom_messages.dart';
 import 'src/core/widgets/exeption_view.dart';
+
+void _changeFireStoreAvailability(bool enable){
+  if(enable){
+    FireStoreService.instance.enableService();
+
+  }else{
+    FireStoreService.instance.disableService();
+  }
+}
 
 Future<bool> fetchBaseUrl() async {
   try {
@@ -41,6 +51,10 @@ Future<bool> fetchBaseUrl() async {
     );
 
     await remoteConfig.fetchAndActivate();
+
+    final bool fireStoreAvailabilityVal = remoteConfig.getBool(SecureLocalVariableKeys.fireStoreAvailabilityKey);
+    _changeFireStoreAvailability(fireStoreAvailabilityVal);
+    log('the fire store availability is $fireStoreAvailabilityVal');
 
     final String prodBaseUrl = remoteConfig.getString(SecureLocalVariableKeys.baseUrlKey);
     final String devBaseUrl = remoteConfig.getString(SecureLocalVariableKeys.devBaseUrlKey);

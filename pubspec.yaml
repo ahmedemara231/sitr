@@ -1,6 +1,6 @@
 name: flutter_base
 description: flutter_base_Project.
-version: 1.0.5+2
+version: 1.0.6+1
 publish_to: "none"
 
 environment:
@@ -20,6 +20,7 @@ dependencies:
   firebase_messaging: ^16.1.0
   flutter_local_notifications: ^19.4.0
   firebase_remote_config: ^6.2.0
+  cloud_firestore: ^6.5.0
 
   #--------------------- Localization & Internationalization -----------------------
   intl: 0.20.2

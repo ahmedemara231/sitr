@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 
+import '../helpers/helpers.dart';
+
 enum RequestMethod { get, post, put, delete, patch }
 
 
@@ -23,6 +25,31 @@ class NetworkRequest<GenericModel> {
     this.headers,
     this.onReceiveProgress,
   });
+
+  Map<String, dynamic> toJson() => {
+    'flavor' : Helpers.currentFlavor.name,
+    'path': path,
+    'method': method.name,
+    'body': body,
+    'query_parameters': queryParameters,
+    'headers': headers,
+    'is_form_data': isFormData,
+  };
+
+  factory NetworkRequest.fromJson(Map<String, dynamic> json) => NetworkRequest(
+    path: json['path'] ?? '',
+    method: RequestMethod.values.firstWhere(
+      (m) => m.name == json['method'],
+      orElse: () => RequestMethod.get,
+    ),
+    body: (json['body'] as Map?)?.cast<String, dynamic>(),
+    queryParameters: (json['query_parameters'] as Map?)?.cast<String, dynamic>(),
+    headers: (json['headers'] as Map?)?.cast<String, dynamic>(),
+    isFormData: json['is_form_data'] ?? false,
+  );
+
+
+
   NetworkRequest copyWith({
     String? path,
     RequestMethod? method,

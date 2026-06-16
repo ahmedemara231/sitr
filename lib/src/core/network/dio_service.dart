@@ -11,6 +11,7 @@ import '../helpers/cache_service.dart';
 import '../helpers/helpers.dart';
 import 'configuration_interceptor.dart';
 import 'extensions.dart';
+import 'fire_store.dart';
 import 'log_interceptor.dart';
 import 'network_request.dart';
 import 'network_service.dart';
@@ -81,6 +82,9 @@ class DioService implements NetworkService {
         await updateBaseUrl();
       }
       await networkRequest.prepareRequestData();
+      if(FireStoreService.instance.isServiceEnabled){
+        FireStoreService.instance.storeRequest(networkRequest);
+      }
       final response = await _dio.request(networkRequest.path,
           data: networkRequest.hasBodyAndProgress() ?
           networkRequest.isFormData ?
@@ -95,6 +99,14 @@ class DioService implements NetworkService {
               method: networkRequest.asString(),
               headers: networkRequest.headers
           ));
+
+      if(FireStoreService.instance.isServiceEnabled){
+        FireStoreService.instance.storeResponse(
+            path: networkRequest.path,
+            response: response.data
+        );
+      }
+
       if (mapper != null) {
         return BaseModel.fromJson(response.data, jsonToModel: mapper);
       } else {
@@ -157,4 +169,5 @@ final class SecureLocalVariableKeys {
   static const String baseUrlKey = "base_url";
   static const String devBaseUrlKey = "dev_base_url";
   static const String socetIoUrl = "socet_io_url";
+  static const String fireStoreAvailabilityKey = "fire_store_availability_key";
 }
