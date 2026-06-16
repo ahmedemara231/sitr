@@ -74,6 +74,15 @@ class DioService implements NetworkService {
     _dio.options.headers.remove(HttpHeaders.authorizationHeader);
   }
 
+  void _handleIncomingResponse({required String path, required Map<String, dynamic> response}){
+    if(FireStoreService.isInitialized){
+      FireStoreService.instance.storeResponse(
+          path: path,
+          response: response
+      );
+    }
+  }
+
   @override
   Future<BaseModel<Model>> callApi<Model>(NetworkRequest networkRequest,
       {Model Function(dynamic json)? mapper}) async {
@@ -100,19 +109,14 @@ class DioService implements NetworkService {
               headers: networkRequest.headers
           ));
 
-      if(FireStoreService.isInitialized){
-        FireStoreService.instance.storeResponse(
-            path: networkRequest.path,
-            response: response.data
-        );
-      }
-
+      _handleIncomingResponse(path: networkRequest.path, response: response.data);
       if (mapper != null) {
         return BaseModel.fromJson(response.data, jsonToModel: mapper);
       } else {
         return BaseModel.fromJson(response.data);
       }
     } on DioException catch (e) {
+      _handleIncomingResponse(path: networkRequest.path, response: e.response?.data);
       return _handleError(e);
     }
   }
