@@ -34,6 +34,7 @@ import '../shared/models/user_models/user_model.dart';
 import '../shared/user_cubit/user_cubit.dart';
 import 'app_text.dart' show AppText;
 import 'buttons/default_button.dart';
+import 'chat_availability_badge.dart';
 import 'chat_button.dart';
 import 'custom_messages.dart';
 import 'image_widgets/cached_image.dart';
@@ -65,6 +66,20 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatefulWidget {
 }
 
 class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewProfileWidget<T>> {
+
+  Widget _getAvailabilityStatus(){
+    if(widget._type.isPartnerProfile){
+      if(!user.canChat!.canChat && ChatReason.fromValue(user.canChat!.reason?.value).isActiveMatchWithOther) {
+        return const ChatAvailabilityBadge.notAvailable();
+
+      } else {
+        return const ChatAvailabilityBadge.available();
+      }
+    }else{
+      return const SizedBox.shrink();
+    }
+  }
+
   late List<PartnerInfoModel> partnerInfo = [];
   late IndividualUserModel user = IndividualUserModel.initial();
   void _onSuccess(UserModel userResult){
@@ -207,7 +222,7 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                               AppText(user.childParentInfo?.name??''),
                             ],
                           ),
-                        )
+                        ),
                       ],
                     )
                   else
@@ -221,11 +236,12 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                             fontSize: 10.sp,
                             color: AppColors.primary,
                             fontWeight: FontWeight.bold,
-                          )
+                          ),
                       ],
                     ),
 
                   AppText((state.data as IndividualUserModel).bio??'', textAlign: TextAlign.center),
+                  _getAvailabilityStatus(),
                 ],
               ).paddingAll(12.r),
             ),

@@ -398,11 +398,23 @@ enum ChatReason {
 
   static ChatReason? fromValue(String? value) {
     if (value.isNull) return null;
-    for (final ChatReason reason in ChatReason.values) {
-      if (reason.value == value) return reason;
-    }
-    return null;
+    return ChatReason.values.firstWhere((e) => e.name == value);
   }
+}
+
+extension ChatReasonExtension on ChatReason? {
+  bool get isChatWithYourself => this == ChatReason.chatWithYourself;
+  bool get isBlockedByMe => this == ChatReason.blockedByMe;
+  bool get isAccountInactive => this == ChatReason.accountInactive;
+  bool get isNotApprovedByAdmin => this == ChatReason.notApprovedByAdmin;
+  bool get isBlockedByUser => this == ChatReason.blockedByUser;
+  bool get isTargetAccountInactive => this == ChatReason.targetAccountInactive;
+  bool get isTargetNotApprovedByAdmin => this == ChatReason.targetNotApprovedByAdmin;
+  bool get isParentCannotChatWithChild => this == ChatReason.parentCannotChatWithChild;
+  bool get isChildCannotChatWithParent => this == ChatReason.childCannotChatWithParent;
+  bool get isSameGender => this == ChatReason.sameGender;
+  bool get isActiveMatchWithOther => this == ChatReason.activeMatchWithOther;
+  bool get isParentApprovalRequired => this == ChatReason.parentApprovalRequired;
 }
 
 class CanChat {

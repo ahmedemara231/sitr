@@ -1063,4 +1063,10 @@ abstract class LocaleKeys {
   static const String _yourMessageHasBeenHiddenBecauseItContainedInappropriateLanguage = 'your_message_has_been_hidden_because_it_contained_inappropriate_language';
   static String get yourMessageHasBeenHiddenBecauseItContainedInappropriateLanguage => _yourMessageHasBeenHiddenBecauseItContainedInappropriateLanguage.tr();
 
+  static const String _availableToChat = 'available_to_chat';
+  static String get availableToChat => _availableToChat.tr();
+
+  static const String _notAvailableToChat = 'not_available_to_chat';
+  static String get notAvailableToChat => _notAvailableToChat.tr();
+
 }

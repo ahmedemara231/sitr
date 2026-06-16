@@ -364,5 +364,8 @@
   "This image has sensitive content please rechoose another image" : "هذه الصورة تحتوي علي محتوي غير لائق من فضلك قم باختيار صورة اخري",
   "No messages exists yet" : "لا يوجد رسائل الي الان",
   "Dissenter" : "مخالف",
-  "Your message has been hidden because it contained inappropriate language" : "تم اخفاء رسالتك لاحوائها علي كلام غير لائق"
+  "Your message has been hidden because it contained inappropriate language" : "تم اخفاء رسالتك لاحوائها علي كلام غير لائق",
+  "_____________________________________ChatAvailability___________________________________" : "",
+  "availableToChat #$ Available to chat" : "متاح للتواصل",
+  "notAvailableToChat #$ Not available to chat" : "غير متاح للتواصل"
 }
