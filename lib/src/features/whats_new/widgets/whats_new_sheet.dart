@@ -14,14 +14,14 @@ class WhatsNewSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBottomSheet.small(
       btnTitle: LocaleKeys.whatsNewGotIt,
-      asyncCall: (context) async => Go.back(),
+      asyncCall: (context) => Go.back(),
       upperWidget: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: 12.h,
         children: [
           AppText(
             LocaleKeys.whatsNewTitle,
-            fontSize: 20.sp,
+            fontSize: 12.sp,
             fontWeight: FontWeight.bold,
           ),
           ...items.map(

@@ -16,8 +16,10 @@ import '../../core/notification/inactivity_notification_service.dart';
 import '../../core/notification/notification_service.dart';
 import '../../core/shared/models/user_models/user_model.dart';
 import '../../core/widgets/app_text.dart';
+import '../../core/widgets/default_bottom_sheet.dart';
 import '../../core/widgets/icon_widget.dart';
 import '../whats_new/whats_new_service.dart';
+import '../whats_new/widgets/whats_new_sheet.dart';
 import 'cubits/get_notification_count.dart';
 import 'cubits/home_cubit/home_cubit.dart';
 
@@ -91,6 +93,8 @@ class _HomeScreenState extends State<HomeScreen> {
     _initApp();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       WhatsNewService.showIfNeeded(upgrader: upgrader);
+      // showDefaultBottomSheet(child: const WhatsNewSheet(items: ['1,2,3,4,5,6,7,8']));
+
     });
     super.initState();
   }
