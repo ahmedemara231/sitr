@@ -1,42 +1,34 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:upgrader/upgrader.dart';
 
-import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../../core/helpers/cache_service.dart';
 import '../../core/widgets/default_bottom_sheet.dart';
 import 'widgets/whats_new_sheet.dart';
 
-/// Shows a "What's New" sheet once, the first time the app is opened after
-/// updating to a new version — never on a fresh install.
-///
-/// Detection is version-based: the last version the user saw the sheet for is
-/// stored in [CacheStorage] and compared against the installed version from
-/// [PackageInfo]. A mismatch means the user just updated.
-///
-/// Content is sourced from the store's release notes (via [Upgrader]) when the
-/// user is on the latest store version, and falls back to the bundled
-/// changelog ([_itemsFor]) when the store has nothing (offline, or the Play
-/// Store scrape returns null).
 class WhatsNewService {
   static const Duration _storeLookupTimeout = Duration(seconds: 5);
 
-  /// Bundled changelog bullets per app version, used as the fallback when the
-  /// store release notes are unavailable. Add a `case` each release whose value
-  /// matches the `version:` in `pubspec.yaml` (the part before `+`).
-  ///
-  /// Built at call time (not a `const` map) so the `LocaleKeys` getters resolve
-  /// in the current locale.
+  // Upper bound so a malformed/missing translation can never loop forever.
+  static const int _maxChangelogItems = 20;
+
+  // Bundled changelog fallback. Notes live in `lang.json` under the
+  // `whatsNewV<version>ItemN` convention (e.g. `whatsNewV107Item1`), which the
+  // generator turns into the runtime key `whats_new_v_1_0_7_item_1`. We rebuild
+  // that key from the version and read items until one is missing, so adding
+  // notes for a new release needs only translation entries — no code change.
   static List<String> _itemsFor(String version) {
-    switch (version) {
-      case '1.0.7':
-        return [
-          LocaleKeys.whatsNewV107Item1,
-          LocaleKeys.whatsNewV107Item2,
-        ];
-      default:
-        return const [];
+    final String prefix = 'whats_new_v_${version.replaceAll('.', '_')}_item_';
+    final List<String> items = [];
+    for (int i = 1; i <= _maxChangelogItems; i++) {
+      final String key = '$prefix$i';
+      final String value = key.tr();
+      // easy_localization returns the key unchanged when it has no translation.
+      if (value == key) break;
+      items.add(value);
     }
+    return items;
   }
 
   static Future<void> showIfNeeded({required Upgrader upgrader}) async {
@@ -94,8 +86,6 @@ class WhatsNewService {
     }
   }
 
-  /// Store release notes are a single free-text blob. Split into bullet lines
-  /// and strip any leading bullet marker so the sheet doesn't double-bullet.
   static List<String> _splitNotes(String? notes) {
     if (notes == null || notes.trim().isEmpty) return const [];
     return notes

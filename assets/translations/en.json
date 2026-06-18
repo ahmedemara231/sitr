@@ -359,5 +359,9 @@
   "dissenter": "Dissenter",
   "your_message_has_been_hidden_because_it_contained_inappropriate_language": "Your message has been hidden because it contained inappropriate language",
   "available_to_chat": "Available to chat",
-  "not_available_to_chat": "Not available to chat"
+  "not_available_to_chat": "Not available to chat",
+  "whats_new_title": "What's New",
+  "whats_new_got_it": "Got it",
+  "whats_new_v_1_0_7_item_1": "Improved chat experience and faster messaging",
+  "whats_new_v_1_0_7_item_2": "Performance improvements and bug fixes"
 }

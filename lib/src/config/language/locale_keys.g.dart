@@ -1069,4 +1069,16 @@ abstract class LocaleKeys {
   static const String _notAvailableToChat = 'not_available_to_chat';
   static String get notAvailableToChat => _notAvailableToChat.tr();
 
+  static const String _whatsNewTitle = 'whats_new_title';
+  static String get whatsNewTitle => _whatsNewTitle.tr();
+
+  static const String _whatsNewGotIt = 'whats_new_got_it';
+  static String get whatsNewGotIt => _whatsNewGotIt.tr();
+
+  static const String _whatsNewV107Item1 = 'whats_new_v_1_0_7_item_1';
+  static String get whatsNewV107Item1 => _whatsNewV107Item1.tr();
+
+  static const String _whatsNewV107Item2 = 'whats_new_v_1_0_7_item_2';
+  static String get whatsNewV107Item2 => _whatsNewV107Item2.tr();
+
 }

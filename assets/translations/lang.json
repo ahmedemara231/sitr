@@ -367,5 +367,10 @@
   "Your message has been hidden because it contained inappropriate language" : "تم اخفاء رسالتك لاحوائها علي كلام غير لائق",
   "_____________________________________ChatAvailability___________________________________" : "",
   "availableToChat #$ Available to chat" : "متاح للتواصل",
-  "notAvailableToChat #$ Not available to chat" : "غير متاح للتواصل"
+  "notAvailableToChat #$ Not available to chat" : "غير متاح للتواصل",
+  "_____________________________________WhatsNew___________________________________" : "",
+  "whatsNewTitle #$ What's New" : "ما الجديد",
+  "whatsNewGotIt #$ Got it" : "حسنًا",
+  "whatsNewV107Item1 #$ Improved chat experience and faster messaging" : "تحسين تجربة المحادثة وسرعة الرسائل",
+  "whatsNewV107Item2 #$ Performance improvements and bug fixes" : "تحسينات في الأداء وإصلاح الأخطاء"
 }

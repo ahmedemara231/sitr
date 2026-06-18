@@ -53,6 +53,7 @@ class ConstantManager {
 class CacheConstant{
   static const String onBoardingSubmission = "onBoardingSubmission";
   static const String isLoggedIn = "isLoggedIn";
+  static const String lastSeenWhatsNewVersion = "lastSeenWhatsNewVersion";
 }
 
 class Styles{

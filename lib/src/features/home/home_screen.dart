@@ -17,6 +17,7 @@ import '../../core/notification/notification_service.dart';
 import '../../core/shared/models/user_models/user_model.dart';
 import '../../core/widgets/app_text.dart';
 import '../../core/widgets/icon_widget.dart';
+import '../whats_new/whats_new_service.dart';
 import 'cubits/get_notification_count.dart';
 import 'cubits/home_cubit/home_cubit.dart';
 
@@ -88,6 +89,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     _initApp();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      WhatsNewService.showIfNeeded(upgrader: upgrader);
+    });
     super.initState();
   }
   late final upgrader = Upgrader(
@@ -168,21 +172,21 @@ class _HomeScreenState extends State<HomeScreen> {
                             if(index != 0 && index != 4){
                               if(UserModel.isAuthenticated){
                                 cubit.changeBottomNavIndex(index);
-      
+
                               }else{
                                 Helpers.showUnauthenticatedSheet();
                               }
                             }else{
                               cubit.changeBottomNavIndex(index);
                             }
-      
+
                             if(index == 1){
                               context.read<GetNotificationCountCubit>().reset();
-      
+
                             }else if(index == 2){
                               context.read<GetChatsNotificationCountCubit>().reset();
                             }
-      
+
                             return;
                           },
                           items: [
@@ -253,12 +257,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       start: (cubit.currentIndex == 0
                           ? 10.w
                           : cubit.currentIndex == 1
-                              ? 80.w
-                              : cubit.currentIndex == 2
-                                  ? 152.w
-                                  : cubit.currentIndex == 3
-                                      ? 228.w
-                                      : 298.w),
+                          ? 80.w
+                          : cubit.currentIndex == 2
+                          ? 152.w
+                          : cubit.currentIndex == 3
+                          ? 228.w
+                          : 298.w),
                       child: Container(
                         width: (MediaQuery.of(context).size.width / 5) - 15.w,
                         height: 3.w,
