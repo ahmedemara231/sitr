@@ -20,6 +20,9 @@ apk:
 ipa:
 	flutter build ipa --flavor production
 
+appbundle:
+	flutter build appbundle --flavor production
+
 # Build iOS (for macOS users with Xcode)
 ios:
 	flutter build ios
