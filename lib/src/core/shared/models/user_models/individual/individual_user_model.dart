@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../features/auth/models/dowry.dart';
 import '../../../../extensions/object.dart';
 import '../../../../extensions/string_extension.dart';
@@ -391,14 +392,18 @@ enum ChatReason {
   childCannotChatWithParent('child_cannot_chat_with_parent'),
   sameGender('same_gender'),
   activeMatchWithOther('active_match_with_other'),
-  parentApprovalRequired('parent_approval_required');
+  parentApprovalRequired('parent_approval_required'),
+  hasProblem('has_problem');
 
   final String value;
   const ChatReason(this.value);
 
   static ChatReason? fromValue(String? value) {
     if (value.isNull) return null;
-    return ChatReason.values.firstWhere((e) => e.name == value);
+    return ChatReason.values.firstWhere(
+            (e) => e.value == value,
+        orElse: () => ChatReason.hasProblem
+    );
   }
 }
 
@@ -415,6 +420,39 @@ extension ChatReasonExtension on ChatReason? {
   bool get isSameGender => this == ChatReason.sameGender;
   bool get isActiveMatchWithOther => this == ChatReason.activeMatchWithOther;
   bool get isParentApprovalRequired => this == ChatReason.parentApprovalRequired;
+
+  /// Localized message describing the chat reason.
+  String get getReason {
+    switch (this) {
+      case ChatReason.chatWithYourself:
+        return LocaleKeys.chatReasonChatWithYourself;
+      case ChatReason.blockedByMe:
+        return LocaleKeys.chatReasonBlockedByMe;
+      case ChatReason.accountInactive:
+        return LocaleKeys.chatReasonAccountInactive;
+      case ChatReason.notApprovedByAdmin:
+        return LocaleKeys.chatReasonNotApprovedByAdmin;
+      case ChatReason.blockedByUser:
+        return LocaleKeys.chatReasonBlockedByUser;
+      case ChatReason.targetAccountInactive:
+        return LocaleKeys.chatReasonTargetAccountInactive;
+      case ChatReason.targetNotApprovedByAdmin:
+        return LocaleKeys.chatReasonTargetNotApprovedByAdmin;
+      case ChatReason.parentCannotChatWithChild:
+        return LocaleKeys.chatReasonParentCannotChatWithChild;
+      case ChatReason.childCannotChatWithParent:
+        return LocaleKeys.chatReasonChildCannotChatWithParent;
+      case ChatReason.sameGender:
+        return LocaleKeys.chatReasonSameGender;
+      case ChatReason.activeMatchWithOther:
+        return LocaleKeys.chatReasonActiveMatchWithOther;
+      case ChatReason.parentApprovalRequired:
+        return LocaleKeys.chatReasonParentApprovalRequired;
+      case ChatReason.hasProblem:
+      case null:
+        return LocaleKeys.chatReasonHasProblem;
+    }
+  }
 }
 
 class CanChat {

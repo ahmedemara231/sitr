@@ -39,6 +39,7 @@ import 'chat_button.dart';
 import 'custom_messages.dart';
 import 'image_widgets/cached_image.dart';
 import 'scaffolds/center_card_scaffold.dart';
+import 'unavailability_reason_card.dart';
 import 'sheets/bloc_success.dart';
 import 'sheets/report_cheet.dart';
 
@@ -67,14 +68,17 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatefulWidget {
 
 class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewProfileWidget<T>> {
 
+  bool get _isNotAvailableToChat =>
+      widget._type.isPartnerProfile &&
+      !user.canChat!.canChat;
+
+  ChatReason? get _chatReason => ChatReason.fromValue(user.canChat!.reason?.value);
+
   Widget _getAvailabilityStatus(){
     if(widget._type.isPartnerProfile){
-      if(!user.canChat!.canChat && ChatReason.fromValue(user.canChat!.reason?.value).isActiveMatchWithOther) {
-        return const ChatAvailabilityBadge.notAvailable();
-
-      } else {
-        return const ChatAvailabilityBadge.available();
-      }
+      return _isNotAvailableToChat ?
+      const ChatAvailabilityBadge.notAvailable() :
+      const ChatAvailabilityBadge.available();
     }else{
       return const SizedBox.shrink();
     }
@@ -127,18 +131,50 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
   }
 
   double _calcCenterCardPadding(String bio){
-    final textPainter = TextPainter(
-      text: TextSpan(text: bio, style: const TextStyle()),
+    // Width text can occupy inside the floating center card
+    // (screen minus the card's outer horizontal margins + paddings).
+    final double contentWidth = context.width - 50;
+
+    final double bioHeight = _measureTextHeight(text: bio, maxWidth: contentWidth);
+
+    double total = 24.r + 30.sp + 10.h + bioHeight;
+
+    if(_isNotAvailableToChat){
+      total += 10.h + _unavailabilityCardHeight(contentWidth);
+    }
+
+    log('center card padding is $total');
+    return total;
+  }
+
+  double _unavailabilityCardHeight(double contentWidth){
+    // The card adds 16.w of horizontal padding on each side.
+    final double innerWidth = contentWidth - 32.w;
+    final double titleHeight = _measureTextHeight(
+      text: LocaleKeys.unavailabilityReason,
+      maxWidth: innerWidth,
+      fontSize: 12.sp,
+    );
+    final double bodyHeight = _measureTextHeight(
+      text: _chatReason.getReason,
+      maxWidth: innerWidth,
+      fontSize: 10.sp,
+    );
+    return 28.h + titleHeight + 8.h + bodyHeight;
+  }
+
+  double _measureTextHeight({
+    required String text,
+    required double maxWidth,
+    double fontSize = 14,
+  }){
+    final TextPainter textPainter = TextPainter(
+      text: TextSpan(text: text, style: TextStyle(fontSize: fontSize)),
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.center,
       maxLines: null,
-    )..layout(maxWidth: context.width - 50);
-
-    log('bio height is ${textPainter.height}');
-
-    // 24.r = top + bottom card padding, 30.sp = name/header row height, 10.h = spacing
-    final double base = 24.r + 30.sp + 10.h;
-    return base + textPainter.height;
+    )..layout(maxWidth: maxWidth);
+    return textPainter.height;
   }
 
   @override
@@ -242,6 +278,7 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
 
                   AppText((state.data as IndividualUserModel).bio??'', textAlign: TextAlign.center),
                   _getAvailabilityStatus(),
+                  if(_isNotAvailableToChat) UnavailabilityReasonCard(reason: _chatReason),
                 ],
               ).paddingAll(12.r),
             ),

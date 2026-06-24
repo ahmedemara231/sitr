@@ -1069,6 +1069,12 @@ abstract class LocaleKeys {
   static const String _notAvailableToChat = 'not_available_to_chat';
   static String get notAvailableToChat => _notAvailableToChat.tr();
 
+  static const String _unavailabilityReason = 'unavailability_reason';
+  static String get unavailabilityReason => _unavailabilityReason.tr();
+
+  static const String _unavailabilityReasonBody = 'unavailability_reason_body';
+  static String get unavailabilityReasonBody => _unavailabilityReasonBody.tr();
+
   static const String _whatsNewTitle = 'whats_new_title';
   static String get whatsNewTitle => _whatsNewTitle.tr();
 
@@ -1080,5 +1086,44 @@ abstract class LocaleKeys {
 
   static const String _whatsNewV107Item2 = 'whats_new_v_1_0_7_item_2';
   static String get whatsNewV107Item2 => _whatsNewV107Item2.tr();
+
+  static const String _chatReasonChatWithYourself = 'chat_reason_chat_with_yourself';
+  static String get chatReasonChatWithYourself => _chatReasonChatWithYourself.tr();
+
+  static const String _chatReasonBlockedByMe = 'chat_reason_blocked_by_me';
+  static String get chatReasonBlockedByMe => _chatReasonBlockedByMe.tr();
+
+  static const String _chatReasonAccountInactive = 'chat_reason_account_inactive';
+  static String get chatReasonAccountInactive => _chatReasonAccountInactive.tr();
+
+  static const String _chatReasonNotApprovedByAdmin = 'chat_reason_not_approved_by_admin';
+  static String get chatReasonNotApprovedByAdmin => _chatReasonNotApprovedByAdmin.tr();
+
+  static const String _chatReasonBlockedByUser = 'chat_reason_blocked_by_user';
+  static String get chatReasonBlockedByUser => _chatReasonBlockedByUser.tr();
+
+  static const String _chatReasonTargetAccountInactive = 'chat_reason_target_account_inactive';
+  static String get chatReasonTargetAccountInactive => _chatReasonTargetAccountInactive.tr();
+
+  static const String _chatReasonTargetNotApprovedByAdmin = 'chat_reason_target_not_approved_by_admin';
+  static String get chatReasonTargetNotApprovedByAdmin => _chatReasonTargetNotApprovedByAdmin.tr();
+
+  static const String _chatReasonParentCannotChatWithChild = 'chat_reason_parent_cannot_chat_with_child';
+  static String get chatReasonParentCannotChatWithChild => _chatReasonParentCannotChatWithChild.tr();
+
+  static const String _chatReasonChildCannotChatWithParent = 'chat_reason_child_cannot_chat_with_parent';
+  static String get chatReasonChildCannotChatWithParent => _chatReasonChildCannotChatWithParent.tr();
+
+  static const String _chatReasonSameGender = 'chat_reason_same_gender';
+  static String get chatReasonSameGender => _chatReasonSameGender.tr();
+
+  static const String _chatReasonActiveMatchWithOther = 'chat_reason_active_match_with_other';
+  static String get chatReasonActiveMatchWithOther => _chatReasonActiveMatchWithOther.tr();
+
+  static const String _chatReasonParentApprovalRequired = 'chat_reason_parent_approval_required';
+  static String get chatReasonParentApprovalRequired => _chatReasonParentApprovalRequired.tr();
+
+  static const String _chatReasonHasProblem = 'chat_reason_has_problem';
+  static String get chatReasonHasProblem => _chatReasonHasProblem.tr();
 
 }
