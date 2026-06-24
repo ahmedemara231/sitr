@@ -1,5 +1,5 @@
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'network_request.dart';
 
 class FireStoreService{
@@ -14,9 +14,10 @@ class FireStoreService{
 
   static bool get isInitialized => _instance != null;
 
+  String _docId(String path) => path.replaceAll("/", "-");
   Future<void> storeRequest(NetworkRequest request)async{
     _fireStoreMainCollection
-        .doc(request.path)
+        .doc(_docId(request.path))
         .collection(_requestCollection)
         .add(request.toJson());
   }
@@ -26,14 +27,14 @@ class FireStoreService{
     required Map<String, dynamic> response,
   })async{
     _fireStoreMainCollection
-        .doc(path)
+        .doc(_docId(path))
         .collection(_responseCollection)
-        .add(response);
+        .add(jsonDecode(jsonEncode(response).replaceAll("/", "-")));
   }
 
   Future<List<NetworkRequest>?> getRequestData<T>(String path)async{
     final requests = await _fireStoreMainCollection
-        .doc(path)
+        .doc(_docId(path))
         .collection(_requestCollection)
         .get();
 
@@ -51,7 +52,7 @@ class FireStoreService{
     required T Function(Map<String, dynamic> data) mapper
   })async{
     final responses = await _fireStoreMainCollection
-        .doc(path)
+        .doc(_docId(path))
         .collection(_responseCollection)
         .get();
 
@@ -65,7 +66,7 @@ class FireStoreService{
   }
 
   Future<void> clear(String path)async =>
-      await _fireStoreMainCollection.doc(path).delete();
+      await _fireStoreMainCollection.doc(_docId(path)).delete();
 
   bool isServiceEnabled = true;
 

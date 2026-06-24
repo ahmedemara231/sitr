@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/pagify.dart';
-import 'package:safe_text/safe_text.dart';
 import '../../../../../../generated/assets.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/extensions/object.dart';
 import '../../../../../core/extensions/padding_extension.dart';
 import '../../../../../core/helpers/helpers.dart';
+import '../../../../../core/helpers/safe_text_helper.dart';
 import '../../../../../core/helpers/validators.dart';
 import '../../../../../core/navigation/navigator.dart';
 import '../../../../../core/widgets/chat_builder/chat_message.dart';
@@ -94,14 +94,9 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                     return;
 
                   } else if(_formKey.currentState!.validate()){
-                    final bool hasBadWord = await SafeTextFilter.containsBadWord(text: _chatCont.text);
+                    final bool hasBadWord = await SafeTextHelper.containsBadWord(_chatCont.text);
                     if (hasBadWord) {
-                      _chatCont.text = SafeTextFilter.filterText(
-                        text: _chatCont.text,
-                        // هنستخدم partial عشان يبان إن في كلمة اتحذفت زي f**k
-                        // أو تستخدم custom لو عايز تكتب مكانها [مخالف]
-                        strategy: MaskStrategy.custom(replacement: '[${LocaleKeys.dissenter}]'),
-                      );
+                      _chatCont.text = SafeTextHelper.filterText(_chatCont.text);
 
                       MessageUtils.showTopMsg(LocaleKeys.yourMessageHasBeenHiddenBecauseItContainedInappropriateLanguage);
                       widget.onSend.call(context, _chatCont.text);
