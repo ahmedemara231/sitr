@@ -17,7 +17,7 @@ import '../../../../core/widgets/image_widgets/cached_image.dart';
 import '../../../../core/widgets/parent_children.dart';
 import '../../../../core/widgets/scaffolds/center_card_scaffold.dart';
 import '../../../../core/widgets/sheets/bloc_success.dart';
-import '../../../../core/widgets/sheets/report_cheet.dart';
+import '../../../../core/widgets/sheets/report_sheet.dart';
 import '../../../chats/data/chat_sheet_manager.dart';
 import '../../data/models/partner_info_model.dart';
 import '../cubits/get_partner_info_cubit.dart';

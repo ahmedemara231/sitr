@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../generated/assets.dart' show Assets;
 import '../../../config/language/locale_keys.g.dart';
 import '../../../config/res/config_imports.dart';
+import '../../extensions/padding_extension.dart';
 import '../../helpers/validators.dart';
 import '../../navigation/navigator.dart';
 import '../../shared/report_cubit.dart';
@@ -66,7 +67,7 @@ class _ReportSheetState extends State<ReportSheet> {
               AppText(LocaleKeys.areYouSureToReportThisUser, fontSize: 18.sp,)
             ],
           )
-      ),
+      ).paddingBottom(MediaQuery.of(context).viewInsets.bottom),
     );
   }
 }

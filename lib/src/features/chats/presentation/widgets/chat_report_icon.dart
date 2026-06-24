@@ -5,7 +5,7 @@ import '../../../../../generated/assets.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/widgets/app_text.dart';
-import '../../../../core/widgets/sheets/report_cheet.dart';
+import '../../../../core/widgets/sheets/report_sheet.dart';
 import '../../../../core/widgets/svg_pic.dart';
 import '../../data/chat_sheet_manager.dart';
 
@@ -21,7 +21,7 @@ class ChatReportIcon extends StatelessWidget {
         onTap: () => ChatSheetManager.show(
           child: ReportSheet(
             id: id,
-          ).paddingBottom(MediaQuery.of(context).viewPadding.bottom),
+          ),
         ),
         child: FittedBox(
           child: Row(
