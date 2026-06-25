@@ -125,8 +125,8 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
       PartnerInfoModel(leading: Assets.svgHospital, title: LocaleKeys.diseasesIfExists, subTitle: user.healthConditions),
       PartnerInfoModel(leading: Assets.svgTranslation, title: LocaleKeys.inChatYouPrefer, subTitle: user.chatLang?.toLang().toFullTitle()),
 
-      if(widget._type.isProfile)
-        PartnerInfoModel(leading: Assets.svgProfilePhone, title: LocaleKeys.phoneNumber, subTitle: user.phone),
+      // if(widget._type.isProfile)
+      //   PartnerInfoModel(leading: Assets.svgProfilePhone, title: LocaleKeys.phoneNumber, subTitle: user.phone),
     ];
   }
 
@@ -143,7 +143,6 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
       total += 10.h + _unavailabilityCardHeight(contentWidth);
     }
 
-    log('center card padding is $total');
     return total;
   }
 

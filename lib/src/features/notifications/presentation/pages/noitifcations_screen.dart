@@ -92,6 +92,7 @@ class _NotificationBodyState extends State<NotificationBody> {
 
   @override
   void dispose() {
+
     _socketHelper.disconnect();
     controller.dispose();
     super.dispose();
