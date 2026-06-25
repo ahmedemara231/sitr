@@ -129,7 +129,7 @@ class _NotificationBodyState extends State<NotificationBody> {
                     ),
                   );
                 },
-              ) : const SizedBox.shrink(),
+              ).paddingAll(3.r) : const SizedBox.shrink(),
           ),
         ],
         body: AppPagify<NotificationModel>(
