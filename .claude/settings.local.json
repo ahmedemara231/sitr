@@ -66,7 +66,12 @@
       "Bash(nslookup dl.google.com)",
       "Bash(ping -c 2 dl.google.com)",
       "Bash(nslookup repo.maven.apache.org)",
-      "Bash(dart analyze *)"
+      "Bash(dart analyze *)",
+      "Bash(curl -s 'https://itunes.apple.com/lookup?bundleId=com.aait.flutter.sitr')",
+      "Bash(curl -s 'https://itunes.apple.com/lookup?id=6756270317')",
+      "Bash(curl -s 'https://itunes.apple.com/lookup?bundleId=com.aait.flutter.sitr&country=sa')",
+      "Bash(curl -s 'https://play.google.com/store/apps/details?id=com.aait.flutter.sitr&hl=en&gl=US')",
+      "Bash(curl -s 'https://play.google.com/store/apps/details?id=com.aait.flutter.sitr&hl=ar&gl=SA')"
     ],
     "deny": [],
     "ask": []

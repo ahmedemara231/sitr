@@ -123,8 +123,6 @@ void main() async {
   await fetchBaseUrl();
   await Helpers.initZegoData();
   await AppyFlyerHelper.init();
-  // final data = await FireStoreService.instance.getRequestData('count-notifications');
-  // log('message::: ${data?.first.path}');
   try {
     await NsfwDetectorHelper.init();
   } on Exception catch (e) {
