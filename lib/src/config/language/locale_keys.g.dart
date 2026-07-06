@@ -613,6 +613,30 @@ abstract class LocaleKeys {
   static const String _deletingWillRemoveAllYourData = 'deleting_will_remove_all_your_data';
   static String get deletingWillRemoveAllYourData => _deletingWillRemoveAllYourData.tr();
 
+  static const String _whyAreYouDeletingYourAccount = 'why_are_you_deleting_your_account';
+  static String get whyAreYouDeletingYourAccount => _whyAreYouDeletingYourAccount.tr();
+
+  static const String _chooseDeleteAccountReasonHint = 'choose_delete_account_reason_hint';
+  static String get chooseDeleteAccountReasonHint => _chooseDeleteAccountReasonHint.tr();
+
+  static const String _continueToDeleteAccount = 'continue_to_delete_account';
+  static String get continueToDeleteAccount => _continueToDeleteAccount.tr();
+
+  static const String _writeReasonHere = 'write_reason_here';
+  static String get writeReasonHere => _writeReasonHere.tr();
+
+  static const String _irreversibleDeleteAccountWarning = 'irreversible_delete_account_warning';
+  static String get irreversibleDeleteAccountWarning => _irreversibleDeleteAccountWarning.tr();
+
+  static const String _unableToLoadDeleteAccountReasons = 'unable_to_load_delete_account_reasons';
+  static String get unableToLoadDeleteAccountReasons => _unableToLoadDeleteAccountReasons.tr();
+
+  static const String _noDeleteAccountReasonsFound = 'no_delete_account_reasons_found';
+  static String get noDeleteAccountReasonsFound => _noDeleteAccountReasonsFound.tr();
+
+  static const String _tryAgain = 'try_again';
+  static String get tryAgain => _tryAgain.tr();
+
   static const String _messageText = 'message_text';
   static String get messageText => _messageText.tr();
 

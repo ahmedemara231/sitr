@@ -15,14 +15,13 @@ import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/custom_messages.dart';
 import '../../../../../core/widgets/lang_icon.dart';
 import '../../../../../core/widgets/scaffolds/app_scaffold.dart';
-import '../../../../../core/widgets/sheets/delete_sheet.dart';
 import '../../../../auth/imports.dart';
 import '../../cubit/edit_profile.dart';
 import '../../../../otp/presentation/otp.dart';
 import '../../cubit/change_phone_manager.dart';
-import '../../cubit/delete_account.dart';
 import '../../widgets/more_item.dart';
 import '../../widgets/change_phone_sheet_body.dart';
+import '../../widgets/delete_account_reason_sheet.dart';
 import '../edit_parent_profile_screen.dart';
 import '../more_screen.dart';
 
@@ -83,20 +82,13 @@ class SettingScreen extends StatelessWidget {
 
   static void _openDeleteAccount() {
     ChatSheetManager.show(
-      child: BlocProvider(
-        create: (context) => DeleteAccountCubit(),
-        child: DeleteSheet(
-          asyncCall: (context) => context.read<DeleteAccountCubit>().deleteAccount(
-                onSuccess: (msg) async {
-                  await UserCubit.instance.logout();
-                  Go.back();
-                  MessageUtils.showSnackBar(msg);
-                  Go.offAll(const LoginScreen());
-                },
-              ),
-          title: LocaleKeys.areYouSureYouWantToDeleteYourAccount,
-          secondTitle: LocaleKeys.ifDeletedAllDataWillBeDeleted,
-        ),
+      child: DeleteAccountReasonSheet(
+        onSuccess: (msg) async {
+          await UserCubit.instance.logout();
+          Go.back();
+          MessageUtils.showSnackBar(msg);
+          Go.offAll(const LoginScreen());
+        },
       ),
     );
   }
