@@ -8,7 +8,9 @@ import '../../helpers/cache_service.dart';
 import '../../helpers/nsfw_detector.dart';
 import '../../local_db/objectbox_cache_service.dart';
 import '../../helpers/helpers.dart';
+import '../../network/api_endpoints.dart';
 import '../../network/log_interceptor.dart';
+import '../../network/network_request.dart';
 import '../../network/network_service.dart';
 import '../models/user_models/user_model.dart';
 part 'user_state.dart';
@@ -52,6 +54,17 @@ class UserCubit extends Cubit<UserState> with UserUtils {
   Future<void> updateUser(UserModel user) async {
     await _saveUser(user);
     emit(state.copyWith(userModel: user));
+  }
+
+  Future<void> refreshProfile() async {
+    final response = await injector<NetworkService>().callApi<UserModel>(
+      NetworkRequest(
+        method: RequestMethod.get,
+        path: ApiConstants.profile,
+      ),
+      mapper: (json) => UserModel.fromJson(json),
+    );
+    await updateUser(response.data);
   }
 
   Future<bool> init() async {

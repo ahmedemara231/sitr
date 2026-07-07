@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
+import 'sheets/promotion_plans_sheet.dart';
 
 class PromotionBadge extends StatelessWidget {
   static const double height = 50;
@@ -15,81 +17,92 @@ class PromotionBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final VoidCallback effectiveOnTap =
+        onTap ?? () => showPromotionPlansSheet(context);
+
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: Container(
-        height: height.h,
-        width: double.infinity,
-        decoration: BoxDecoration(
+      child: Material(
+        color: AppColors.transparent,
+        borderRadius: BorderRadius.circular(28.r),
+        child: InkWell(
+          onTap: effectiveOnTap,
           borderRadius: BorderRadius.circular(28.r),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFFA66D09).withValues(alpha: 0.45),
-              blurRadius: 20.r,
-              offset: Offset(0, 4.h),
-            ),
-            BoxShadow(
-              color: const Color(0xFFFFD166).withValues(alpha: 0.30),
-              blurRadius: 6.r,
-            ),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(28.r),
-          child: DecoratedBox(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                stops: [0, 0.55, 1],
-                colors: [
-                  Color(0xFFC89020),
-                  Color(0xFFA66D09),
-                  Color(0xFF7A4E07),
-                ],
-              ),
-            ),
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                const DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.centerRight,
-                      end: Alignment.centerLeft,
-                      stops: [0.30, 0.50, 0.70],
-                      colors: [
-                        Colors.transparent,
-                        Color(0x1FFFFFFF),
-                        Colors.transparent,
-                      ],
-                    ),
-                  ),
+          child: Container(
+            height: height.h,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(28.r),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.promotionBadgeShadow.withValues(alpha: 0.45),
+                  blurRadius: 20.r,
+                  offset: Offset(0, 4.h),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 16.w,
-                    vertical: 10.h,
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Row(
-                          children: [
-                            const _PromotionCrownIcon(),
-                            SizedBox(width: 8.w),
-                            const Expanded(
-                              child: _PromotionTextBlock(),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 8.w),
-                      _PromotionActionPill(onTap: onTap),
+                BoxShadow(
+                  color: AppColors.promotionBadgeGlow.withValues(alpha: 0.30),
+                  blurRadius: 6.r,
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(28.r),
+              child: DecoratedBox(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    stops: [0, 0.55, 1],
+                    colors: [
+                      AppColors.promotionBadgeGradientStart,
+                      AppColors.promotionBadgeGradientMiddle,
+                      AppColors.promotionBadgeGradientEnd,
                     ],
                   ),
                 ),
-              ],
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    const DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.centerRight,
+                          end: Alignment.centerLeft,
+                          stops: [0.30, 0.50, 0.70],
+                          colors: [
+                            AppColors.transparent,
+                            AppColors.promotionBadgeSheen,
+                            AppColors.transparent,
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 10.h,
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Row(
+                              children: [
+                                const _PromotionCrownIcon(),
+                                SizedBox(width: 8.w),
+                                const Expanded(
+                                  child: _PromotionTextBlock(),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 8.w),
+                          const _PromotionActionPill(),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         ),
@@ -132,7 +145,7 @@ class _PromotionTextBlock extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'ترقِّ ملفك الشخصي',
+          LocaleKeys.promotionBadgeTitle,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
@@ -144,11 +157,11 @@ class _PromotionTextBlock extends StatelessWidget {
           ),
         ),
         Text(
-          'احصل على مميزات حصرية ✨',
+          LocaleKeys.promotionBadgeSubtitle,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
-            color: const Color(0xD9FFFFFF),
+            color: AppColors.promotionBadgeSubtitle,
             fontFamily: ConstantManager.fontFamily,
             fontSize: 11.sp,
             height: 1.1,
@@ -160,15 +173,11 @@ class _PromotionTextBlock extends StatelessWidget {
 }
 
 class _PromotionActionPill extends StatelessWidget {
-  final VoidCallback? onTap;
-
-  const _PromotionActionPill({
-    this.onTap,
-  });
+  const _PromotionActionPill();
 
   @override
   Widget build(BuildContext context) {
-    final Widget pill = Container(
+    return Container(
       padding: EdgeInsets.symmetric(
         horizontal: 12.w,
         vertical: 5.h,
@@ -184,7 +193,7 @@ class _PromotionActionPill extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            'ابدأ الآن',
+            LocaleKeys.promotionBadgeAction,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
@@ -202,19 +211,6 @@ class _PromotionActionPill extends StatelessWidget {
             size: 14.sp,
           ),
         ],
-      ),
-    );
-
-    if (onTap == null) {
-      return pill;
-    }
-
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(40.r),
-        child: pill,
       ),
     );
   }
@@ -246,7 +242,7 @@ class _CrownPainter extends CustomPainter {
     canvas.drawPath(crownPath, strokePaint);
 
     final Paint dotPaint = Paint()
-      ..color = const Color(0xFFFFD166)
+      ..color = AppColors.promotionBadgeGlow
       ..style = PaintingStyle.fill;
 
     canvas

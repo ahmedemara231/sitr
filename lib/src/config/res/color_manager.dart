@@ -28,6 +28,14 @@ abstract class AppColors {
   static const Color transparent = Color(0x00000000);
   static const Color blackShadow = Color(0xFF000000);
 
+  static const Color promotionBadgeShadow = Color(0xFFA66D09);
+  static const Color promotionBadgeGlow = Color(0xFFFFD166);
+  static const Color promotionBadgeGradientStart = Color(0xFFC89020);
+  static const Color promotionBadgeGradientMiddle = Color(0xFFA66D09);
+  static const Color promotionBadgeGradientEnd = Color(0xFF7A4E07);
+  static const Color promotionBadgeSheen = Color(0x1FFFFFFF);
+  static const Color promotionBadgeSubtitle = Color(0xD9FFFFFF);
+
   static const Color deleteAccountReasonBorder = Color(0xFFE2DDD6);
   static const Color deleteAccountReasonText = Color(0xFF1A1208);
   static const Color deleteAccountReasonTitle = Color(0xFF2E2416);

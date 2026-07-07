@@ -73,8 +73,11 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
 
   ChatReason? get _chatReason => ChatReason.fromValue(user.canChat!.reason?.value);
 
+  // bool get _shouldShowPromotionBadge =>
+  //     widget._type.isProfile && (UserModel.currentUser?.isPromoted ?? false);
+
   bool get _shouldShowPromotionBadge =>
-      widget._type.isProfile && (UserModel.currentUser?.isPromoted ?? false);
+      widget._type.isProfile;
 
   Widget _getAvailabilityStatus(){
     if(widget._type.isPartnerProfile){

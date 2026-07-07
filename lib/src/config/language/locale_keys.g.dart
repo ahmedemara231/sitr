@@ -1150,4 +1150,82 @@ abstract class LocaleKeys {
   static const String _chatReasonHasProblem = 'chat_reason_has_problem';
   static String get chatReasonHasProblem => _chatReasonHasProblem.tr();
 
+  static const String _promotionBadgeTitle = 'promotion_badge_title';
+  static String get promotionBadgeTitle => _promotionBadgeTitle.tr();
+
+  static const String _promotionBadgeSubtitle = 'promotion_badge_subtitle';
+  static String get promotionBadgeSubtitle => _promotionBadgeSubtitle.tr();
+
+  static const String _promotionBadgeAction = 'promotion_badge_action';
+  static String get promotionBadgeAction => _promotionBadgeAction.tr();
+
+  static const String _promotionSheetTitle = 'promotion_sheet_title';
+  static String get promotionSheetTitle => _promotionSheetTitle.tr();
+
+  static const String _promotionSheetSubtitle = 'promotion_sheet_subtitle';
+  static String get promotionSheetSubtitle => _promotionSheetSubtitle.tr();
+
+  static const String _promotionSheetLoading = 'promotion_sheet_loading';
+  static String get promotionSheetLoading => _promotionSheetLoading.tr();
+
+  static const String _promotionPlanCurrency = 'promotion_plan_currency';
+  static String get promotionPlanCurrency => _promotionPlanCurrency.tr();
+
+  static const String _promotionPlanMonthlyDuration = 'promotion_plan_monthly_duration';
+  static String get promotionPlanMonthlyDuration => _promotionPlanMonthlyDuration.tr();
+
+  static const String _promotionPlanMonthlyPer = 'promotion_plan_monthly_per';
+  static String get promotionPlanMonthlyPer => _promotionPlanMonthlyPer.tr();
+
+  static const String _promotionPlanMonthlyDescription = 'promotion_plan_monthly_description';
+  static String get promotionPlanMonthlyDescription => _promotionPlanMonthlyDescription.tr();
+
+  static const String _promotionPlanQuarterlyDuration = 'promotion_plan_quarterly_duration';
+  static String get promotionPlanQuarterlyDuration => _promotionPlanQuarterlyDuration.tr();
+
+  static const String _promotionPlanQuarterlyPer = 'promotion_plan_quarterly_per';
+  static String get promotionPlanQuarterlyPer => _promotionPlanQuarterlyPer.tr();
+
+  static const String _promotionPlanQuarterlyDescription = 'promotion_plan_quarterly_description';
+  static String get promotionPlanQuarterlyDescription => _promotionPlanQuarterlyDescription.tr();
+
+  static const String _promotionPlanMostRequested = 'promotion_plan_most_requested';
+  static String get promotionPlanMostRequested => _promotionPlanMostRequested.tr();
+
+  static const String _promotionPlanAnnualDuration = 'promotion_plan_annual_duration';
+  static String get promotionPlanAnnualDuration => _promotionPlanAnnualDuration.tr();
+
+  static const String _promotionPlanAnnualPer = 'promotion_plan_annual_per';
+  static String get promotionPlanAnnualPer => _promotionPlanAnnualPer.tr();
+
+  static const String _promotionPlanAnnualDescription = 'promotion_plan_annual_description';
+  static String get promotionPlanAnnualDescription => _promotionPlanAnnualDescription.tr();
+
+  static const String _promotionPlanBestValue = 'promotion_plan_best_value';
+  static String get promotionPlanBestValue => _promotionPlanBestValue.tr();
+
+  static const String _promotionSheetFeatureIntro = 'promotion_sheet_feature_intro';
+  static String get promotionSheetFeatureIntro => _promotionSheetFeatureIntro.tr();
+
+  static const String _promotionFeatureSearchPriority = 'promotion_feature_search_priority';
+  static String get promotionFeatureSearchPriority => _promotionFeatureSearchPriority.tr();
+
+  static const String _promotionFeatureUnlimitedMessages = 'promotion_feature_unlimited_messages';
+  static String get promotionFeatureUnlimitedMessages => _promotionFeatureUnlimitedMessages.tr();
+
+  static const String _promotionFeatureProfileVisitors = 'promotion_feature_profile_visitors';
+  static String get promotionFeatureProfileVisitors => _promotionFeatureProfileVisitors.tr();
+
+  static const String _promotionFeatureGoldenVerification = 'promotion_feature_golden_verification';
+  static String get promotionFeatureGoldenVerification => _promotionFeatureGoldenVerification.tr();
+
+  static const String _promotionSheetSubscribePrefix = 'promotion_sheet_subscribe_prefix';
+  static String get promotionSheetSubscribePrefix => _promotionSheetSubscribePrefix.tr();
+
+  static const String _promotionSheetSubscribedSuccess = 'promotion_sheet_subscribed_success';
+  static String get promotionSheetSubscribedSuccess => _promotionSheetSubscribedSuccess.tr();
+
+  static const String _promotionSheetCancelAnytime = 'promotion_sheet_cancel_anytime';
+  static String get promotionSheetCancelAnytime => _promotionSheetCancelAnytime.tr();
+
 }
