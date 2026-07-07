@@ -7,11 +7,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import '../../../../core/extensions/object.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/extensions/sized_box_helper.dart';
+import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/widgets/app_text.dart';
-import '../../../../core/widgets/buttons/default_button.dart';
+import '../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../core/widgets/text_fields/default_text_field.dart';
 import '../cubit/delete_account.dart';
 
@@ -51,13 +53,6 @@ class _DeleteAccountReasonSheetBody extends StatefulWidget {
 class _DeleteAccountReasonSheetBodyState
     extends State<_DeleteAccountReasonSheetBody>
     with SingleTickerProviderStateMixin {
-  static const Color _border = Color(0xFFE2DDD6);
-  static const Color _text = Color(0xFF1A1208);
-  static const Color _muted = Color(0xFF666666);
-  static const Color _subtle = Color(0xFF9E9590);
-  static const Color _cardBackground = Color(0xFFFDFCFB);
-  static const Color _disabledBackground = Color(0xFFEDE8E2);
-
   DeleteAccountReason? _selectedReason;
   late final TextEditingController _reasonController;
   late final AnimationController _pulseController;
@@ -115,7 +110,7 @@ class _DeleteAccountReasonSheetBodyState
                 textAlign: TextAlign.center,
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w800,
-                color: _text,
+                color: AppColors.deleteAccountReasonText,
                 height: 1.45,
               ).paddingSymmetric(horizontal: 20.w),
               8.szH,
@@ -123,43 +118,28 @@ class _DeleteAccountReasonSheetBodyState
                 LocaleKeys.chooseDeleteAccountReasonHint,
                 textAlign: TextAlign.center,
                 fontSize: 13.sp,
-                color: _muted,
+                color: AppColors.deleteAccountReasonMuted,
                 height: 1.65,
               ).paddingSymmetric(horizontal: 24.w),
               20.szH,
               BlocBuilder<DeleteAccountReasonsCubit,
                   AsyncState<List<DeleteAccountReason>>>(
-                builder: (context, state) {
-                  if (state.isLoading && state.data.isEmpty) {
-                    return const _ReasonsLoading();
-                  }
-
-                  if (state.isError && state.data.isEmpty) {
-                    return _ReasonsError(
-                      onRetry: () => context
-                          .read<DeleteAccountReasonsCubit>()
-                          .getReasons(),
-                    );
-                  }
-
-                  if (state.data.isEmpty) {
-                    return const _ReasonsEmpty();
-                  }
-
-                  return Column(
+                builder: (context, state) => StatusBuilder(
+                  data: state,
+                  onSuccess: (reasons, context) => Column(
                     children: [
                       ...List.generate(
-                        state.data.length,
+                        reasons.length,
                         (index) {
-                          final reason = state.data[index];
+                          final reason = reasons[index];
                           return _ReasonCard(
                             reason: reason,
                             icon: _iconForIndex(index, reason),
                             selected: _selectedReason?.id == reason.id,
                             onTap: () => _selectReason(reason),
                           ).paddingOnly(
-                              bottom:
-                                  index == state.data.length - 1 ? 0 : 10.h);
+                            bottom: index == reasons.length - 1 ? 0 : 10.h,
+                          );
                         },
                       ),
                       if (_selectedReason?.isOther == true)
@@ -170,63 +150,58 @@ class _DeleteAccountReasonSheetBodyState
                           minLines: 2,
                           maxLines: 3,
                           borderRadius: 14.r,
-                          borderColor: _border,
-                          fillColor: _cardBackground,
+                          borderColor: AppColors.deleteAccountReasonBorder,
+                          fillColor:
+                              AppColors.deleteAccountReasonCardBackground,
                           contentPadding: EdgeInsets.symmetric(
-                              horizontal: 14.w, vertical: 12.h),
+                            horizontal: 14.w,
+                            vertical: 12.h,
+                          ),
                           style: TextStyle(
-                            color: _text,
+                            color: AppColors.deleteAccountReasonText,
                             fontSize: 13.sp,
                             height: 1.6,
                           ),
                         ).paddingOnly(top: 10.h),
                     ],
-                  );
-                },
+                  ),
+                ),
               ).paddingSymmetric(horizontal: 2.w),
               18.szH,
               BlocBuilder<DeleteAccountCubit, AsyncState<dynamic>>(
                 builder: (context, state) {
-                  final bool canDelete =
-                      _selectedReason != null && !state.isLoading;
+                  final bool canDelete = _selectedReason.isNotNull;
                   return Column(
                     children: [
-                      DefaultButton(
+                      AppLoadingButton(
                         height: 48.h,
                         width: double.infinity,
-                        borderRadius: BorderRadius.circular(16.r),
-                        color:
-                            canDelete ? AppColors.primary : _disabledBackground,
-                        onTap: canDelete ? () => _deleteAccount(context) : null,
-                        customChild: state.isLoading
-                            ? SizedBox.square(
-                                dimension: 20.r,
-                                child: const CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 2.2,
-                                ),
-                              )
-                            : AppText(
-                                LocaleKeys.continueToDeleteAccount,
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.w700,
-                                color: canDelete
-                                    ? Colors.white
-                                    : const Color(0xFFB0A89E),
-                              ),
+                        borderRadius: 16.r,
+                        buttonColor: canDelete
+                            ? AppColors.primary
+                            : AppColors.deleteAccountReasonDisabledBackground,
+                        textColor: canDelete
+                            ? AppColors.white
+                            : AppColors.deleteAccountReasonDisabledText,
+                        title: LocaleKeys.continueToDeleteAccount,
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.w700,
+                        enabled: canDelete,
+                        asyncCall: _deleteAccount,
                       ),
                       10.szH,
-                      DefaultButton(
+                      AppLoadingButton(
                         height: 48.h,
                         width: double.infinity,
-                        borderRadius: BorderRadius.circular(16.r),
-                        color: Colors.white,
-                        borderColor: _border,
-                        textColor: _muted,
+                        borderRadius: 16.r,
+                        buttonColor: AppColors.white,
+                        borderColor: AppColors.deleteAccountReasonBorder,
+                        textColor: AppColors.deleteAccountReasonMuted,
                         title: LocaleKeys.back,
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w600,
-                        onTap: state.isLoading ? null : () => Go.back(),
+                        enabled: !state.isLoading,
+                        asyncCall: (context) async => Go.back(),
                       ),
                     ],
                   );
@@ -234,9 +209,13 @@ class _DeleteAccountReasonSheetBodyState
               ),
               14.szH,
               AppText.withIcon(
-                icon: Icon(Icons.info_outline, size: 12.r, color: _subtle),
+                icon: Icon(
+                  Icons.info_outline,
+                  size: 12.r,
+                  color: AppColors.deleteAccountReasonSubtle,
+                ),
                 text: LocaleKeys.irreversibleDeleteAccountWarning,
-                color: _subtle,
+                color: AppColors.deleteAccountReasonSubtle,
                 fontSize: 11.5.sp,
                 textAlign: TextAlign.center,
                 height: 1.4,
@@ -327,19 +306,19 @@ class _ReasonCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: selected
               ? AppColors.primary.withValues(alpha: .05)
-              : _DeleteAccountReasonSheetBodyState._cardBackground,
+              : AppColors.deleteAccountReasonCardBackground,
           borderRadius: BorderRadius.circular(16.r),
           border: Border.all(
             color: selected
                 ? AppColors.primary
-                : _DeleteAccountReasonSheetBodyState._border,
+                : AppColors.deleteAccountReasonBorder,
             width: 1.5,
           ),
           boxShadow: [
             BoxShadow(
               color: selected
                   ? AppColors.primary.withValues(alpha: .10)
-                  : Colors.black.withValues(alpha: .04),
+                  : AppColors.blackShadow.withValues(alpha: .04),
               blurRadius: selected ? 16 : 4,
               offset: const Offset(0, 1),
             ),
@@ -358,8 +337,8 @@ class _ReasonCard extends StatelessWidget {
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w600,
                     color: selected
-                        ? _DeleteAccountReasonSheetBodyState._text
-                        : const Color(0xFF2E2416),
+                        ? AppColors.deleteAccountReasonText
+                        : AppColors.deleteAccountReasonTitle,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -368,7 +347,7 @@ class _ReasonCard extends StatelessWidget {
                     AppText(
                       reason.description!,
                       fontSize: 11.5.sp,
-                      color: _DeleteAccountReasonSheetBodyState._muted,
+                      color: AppColors.deleteAccountReasonMuted,
                       height: 1.4,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -425,9 +404,11 @@ class _ReasonRadio extends StatelessWidget {
         shape: BoxShape.circle,
         color: selected
             ? AppColors.primary.withValues(alpha: .08)
-            : Colors.transparent,
+            : AppColors.transparent,
         border: Border.all(
-          color: selected ? AppColors.primary : const Color(0xFFC8C0B6),
+          color: selected
+              ? AppColors.primary
+              : AppColors.deleteAccountReasonRadioBorder,
           width: 2,
         ),
       ),
@@ -443,64 +424,5 @@ class _ReasonRadio extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class _ReasonsLoading extends StatelessWidget {
-  const _ReasonsLoading();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 36.h),
-      child: const Center(
-        child: CircularProgressIndicator(color: AppColors.primary),
-      ),
-    );
-  }
-}
-
-class _ReasonsError extends StatelessWidget {
-  final VoidCallback onRetry;
-
-  const _ReasonsError({
-    required this.onRetry,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        AppText(
-          LocaleKeys.unableToLoadDeleteAccountReasons,
-          color: _DeleteAccountReasonSheetBodyState._muted,
-          fontSize: 13.sp,
-          textAlign: TextAlign.center,
-        ),
-        12.szH,
-        DefaultButton(
-          height: 40.h,
-          width: 150.w,
-          borderRadius: BorderRadius.circular(12.r),
-          title: LocaleKeys.tryAgain,
-          fontSize: 13.sp,
-          onTap: onRetry,
-        ),
-      ],
-    ).paddingSymmetric(vertical: 20.h);
-  }
-}
-
-class _ReasonsEmpty extends StatelessWidget {
-  const _ReasonsEmpty();
-
-  @override
-  Widget build(BuildContext context) {
-    return AppText(
-      LocaleKeys.noDeleteAccountReasonsFound,
-      color: _DeleteAccountReasonSheetBodyState._muted,
-      fontSize: 13.sp,
-      textAlign: TextAlign.center,
-    ).paddingSymmetric(vertical: 30.h);
   }
 }

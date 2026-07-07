@@ -25,6 +25,18 @@ abstract class AppColors {
   static const Color whiteScaffoldBackground = Color(0xffFCFCFC);
   static const Color yellow = Color(0xffFDB022);
   static const Color offWhite = Color(0xffFFFAF1);
+  static const Color transparent = Color(0x00000000);
+  static const Color blackShadow = Color(0xFF000000);
+
+  static const Color deleteAccountReasonBorder = Color(0xFFE2DDD6);
+  static const Color deleteAccountReasonText = Color(0xFF1A1208);
+  static const Color deleteAccountReasonTitle = Color(0xFF2E2416);
+  static const Color deleteAccountReasonMuted = Color(0xFF666666);
+  static const Color deleteAccountReasonSubtle = Color(0xFF9E9590);
+  static const Color deleteAccountReasonCardBackground = Color(0xFFFDFCFB);
+  static const Color deleteAccountReasonDisabledBackground = Color(0xFFEDE8E2);
+  static const Color deleteAccountReasonDisabledText = Color(0xFFB0A89E);
+  static const Color deleteAccountReasonRadioBorder = Color(0xFFC8C0B6);
 
   static const Color grey = Color(0xFF5B5B5B);
   static const Color shadow = Color(0xFF5B5B5B);

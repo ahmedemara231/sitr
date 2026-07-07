@@ -13,8 +13,11 @@ class LoadingButton extends StatelessWidget {
   final double contentGap;
   final Widget loadingWidget;
   final Widget idleWidget;
+  final Color? borderColor;
+  final bool enabled;
 
-  LoadingButton({super.key,
+  const LoadingButton({
+    super.key,
     required this.call,
     this.btnColor = AppColors.primary,
     this.height = 40,
@@ -22,43 +25,47 @@ class LoadingButton extends StatelessWidget {
     this.width = double.infinity,
     this.contentGap = 12,
     this.idleWidget = const AppText('Confirm'),
+    this.borderColor,
+    this.enabled = true,
     required this.loadingWidget,
   });
 
-  void _changeState(EasyButtonState state){
-    _easyButtonState = state;
-  }
-
-  EasyButtonState _easyButtonState = EasyButtonState.idle;
-
-  Future<void> asyncCall(BuildContext context)async{
-    try {
-      _changeState(EasyButtonState.loading);
-      await call(context);
-      _changeState(EasyButtonState.idle);
-
-    } finally {
-      _changeState(EasyButtonState.idle);
-    }
+  Future<void> asyncCall(BuildContext context) async {
+    await call(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return EasyButton(
-        state: _easyButtonState,
-        buttonColor: btnColor,
+    final button = EasyButton(
+        type: borderColor == null
+            ? EasyButtonType.elevated
+            : EasyButtonType.outlined,
+        state: EasyButtonState.idle,
+        buttonColor: borderColor ?? btnColor,
         borderRadius: borderRadius,
         contentGap: contentGap,
         height: height,
         width: width,
         useWidthAnimation: true,
         useEqualLoadingStateWidgetDimension: true,
-        onPressed: () async=> await asyncCall(context),
+        onPressed: enabled ? () async => await asyncCall(context) : null,
         idleStateWidget: idleWidget,
-        loadingStateWidget: SizedBox.square(
-            dimension: 20,
-            child: loadingWidget
-        )
+        loadingStateWidget:
+            SizedBox.square(dimension: 20, child: loadingWidget));
+
+    final styledButton = borderColor == null
+        ? button
+        : DecoratedBox(
+            decoration: BoxDecoration(
+              color: btnColor,
+              borderRadius: BorderRadius.circular(borderRadius),
+            ),
+            child: button,
+          );
+
+    return IgnorePointer(
+      ignoring: !enabled,
+      child: styledButton,
     );
   }
 }

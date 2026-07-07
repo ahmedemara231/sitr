@@ -15,7 +15,9 @@ class AppLoadingButton extends StatelessWidget {
   final double? fontSize;
   final Color? textColor;
   final Color? buttonColor;
+  final Color? borderColor;
   final FontWeight? fontWeight;
+  final bool enabled;
 
   const AppLoadingButton({
     super.key,
@@ -27,7 +29,9 @@ class AppLoadingButton extends StatelessWidget {
     this.fontSize,
     this.textColor,
     this.buttonColor,
+    this.borderColor,
     this.fontWeight,
+    this.enabled = true,
   });
 
   @override
@@ -37,22 +41,23 @@ class AppLoadingButton extends StatelessWidget {
       height: height ?? 45.h,
       width: width ?? double.infinity,
       btnColor: buttonColor ?? AppColors.primary,
+      borderColor: borderColor,
+      enabled: enabled,
       loadingWidget: const CircularProgressIndicator(
-        color: Colors.white,
+        color: AppColors.white,
       ).paddingAll(3.r),
       idleWidget: FittedBox(
         child: AppText(
           title,
           fontSize: fontSize ?? 14.sp,
           fontWeight: fontWeight ?? FontWeight.bold,
-          color: textColor ?? Colors.white,
+          color: textColor ?? AppColors.white,
         ),
       ),
       call: (BuildContext context) async => await asyncCall.call(context),
     );
   }
 }
-
 
 // import 'package:flutter/material.dart';
 // import 'package:flutter_screenutil/flutter_screenutil.dart';
