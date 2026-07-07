@@ -11,6 +11,7 @@ import 'parent/parent_model.dart';
 
 class UserModel {
   final bool hasActivePackage;
+  final bool isPromoted;
   final int? id;
   final String? name;
   final int? parentId;
@@ -35,6 +36,7 @@ class UserModel {
 
   const UserModel({
     this.hasActivePackage = false,
+    this.isPromoted = false,
     this.id,
     this.name,
     this.parentId,
@@ -59,68 +61,67 @@ class UserModel {
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
-    final bool isParent = json['type']['value'].toString().toUserType().isParent;
+    final bool isParent =
+        json['type']['value'].toString().toUserType().isParent;
 
-    if(isParent){
+    if (isParent) {
       return ParentModel.fromJson(json);
-
-    }else {
+    } else {
       return IndividualUserModel.fromJson(json);
     }
   }
 
-  static bool get isMale{
+  static bool get isMale {
     return currentUser is MaleModel;
   }
 
-  static bool get isFemale{
+  static bool get isFemale {
     return currentUser is FemaleModel;
   }
 
-  static bool get isParent{
+  static bool get isParent {
     return currentUser is ParentModel;
   }
 
-  static bool get isIndividual{
+  static bool get isIndividual {
     return currentUser is! ParentModel;
   }
 
-  static bool get isAuthenticated{
+  static bool get isAuthenticated {
     return currentUser.isNotNull;
   }
 
   static UserModel? get currentUser {
-    final res = (CacheStorage.read('user', isDecoded: true) as Object?).isNotNull;
-    if(res){
-      return UserModel.fromJson(
-          CacheStorage.read('user', isDecoded: true)
-      );
+    final res =
+        (CacheStorage.read('user', isDecoded: true) as Object?).isNotNull;
+    if (res) {
+      return UserModel.fromJson(CacheStorage.read('user', isDecoded: true));
     }
 
     return null;
   }
 
-
   factory UserModel.initial() => const UserModel(
-    id: 0,
-    name: '',
-    parentId: null,
-    type: null,
-    gender: null,
-    avatar: null,
-    phone: '',
-    countryCode: '',
-    fullPhone: '',
-    identityNumber: '',
-    age: 0,
-    isActive: false,
-    isBlocked: false,
-    adminApprovalStatus: null,
-    completeRegistration: '',
-    token: '',
-    isNotify: false,
-    hasActivePackage: false
-  );
+        id: 0,
+        name: '',
+        parentId: null,
+        type: null,
+        gender: null,
+        avatar: null,
+        phone: '',
+        countryCode: '',
+        fullPhone: '',
+        identityNumber: '',
+        age: 0,
+        isActive: false,
+        isBlocked: false,
+        adminApprovalStatus: null,
+        completeRegistration: '',
+        token: '',
+        isNotify: false,
+        hasActivePackage: false,
+        isPromoted: false,
+      );
 
   Map<String, dynamic> toJson() {
     return {
@@ -134,7 +135,8 @@ class UserModel {
       'country_code': countryCode,
       'full_phone': fullPhone,
       'identity_number': identityNumber,
-      'has_active_package' : hasActivePackage,
+      'has_active_package': hasActivePackage,
+      'is_promoted': isPromoted,
       'age': age,
       'is_active': isActive,
       'is_blocked': isBlocked,
@@ -163,7 +165,8 @@ class UserModel {
     String? completeRegistration,
     String? token,
     bool? isNotify,
-    bool? hasActivePackage
+    bool? hasActivePackage,
+    bool? isPromoted,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -183,6 +186,7 @@ class UserModel {
       completeRegistration: completeRegistration ?? this.completeRegistration,
       token: token ?? this.token,
       hasActivePackage: hasActivePackage ?? this.hasActivePackage,
+      isPromoted: isPromoted ?? this.isPromoted,
       isNotify: isNotify ?? this.isNotify,
     );
   }
@@ -194,7 +198,6 @@ class UserModel {
   /// Utility: convert to raw JSON string
   String toRawJson() => json.encode(toJson());
 }
-
 
 class TypeValueShape {
   UserType? userType;
@@ -212,9 +215,9 @@ class TypeValueShape {
 
   GenderValueShape copyWith({
     TitleValueShape? titleValueShape,
-  }) => GenderValueShape(
-      titleValueShape: titleValueShape ?? this.titleValueShape
-  );
+  }) =>
+      GenderValueShape(
+          titleValueShape: titleValueShape ?? this.titleValueShape);
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -222,9 +225,7 @@ class TypeValueShape {
     map['title'] = titleValueShape?.title;
     return map;
   }
-
 }
-
 
 class GenderValueShape {
   UserGender? userGender;
@@ -242,9 +243,9 @@ class GenderValueShape {
 
   GenderValueShape copyWith({
     TitleValueShape? titleValueShape,
-  }) => GenderValueShape(
-      titleValueShape: titleValueShape ?? this.titleValueShape
-  );
+  }) =>
+      GenderValueShape(
+          titleValueShape: titleValueShape ?? this.titleValueShape);
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -252,7 +253,6 @@ class GenderValueShape {
     map['title'] = titleValueShape?.title;
     return map;
   }
-
 }
 
 class CityModel {
@@ -273,15 +273,18 @@ class CityModel {
   String? name;
   String? country;
   int? countryId;
-  CityModel copyWith({  int? id,
+  CityModel copyWith({
+    int? id,
     String? name,
     String? country,
     int? countryId,
-  }) => CityModel(  id: id ?? this.id,
-    name: name ?? this.name,
-    country: country ?? this.country,
-    countryId: countryId ?? this.countryId,
-  );
+  }) =>
+      CityModel(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        country: country ?? this.country,
+        countryId: countryId ?? this.countryId,
+      );
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
@@ -290,5 +293,4 @@ class CityModel {
     map['country_id'] = countryId;
     return map;
   }
-
 }

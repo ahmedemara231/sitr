@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,6 +36,7 @@ import 'chat_availability_badge.dart';
 import 'chat_button.dart';
 import 'custom_messages.dart';
 import 'image_widgets/cached_image.dart';
+import 'promotion_badge.dart';
 import 'scaffolds/center_card_scaffold.dart';
 import 'unavailability_reason_card.dart';
 import 'sheets/bloc_success.dart';
@@ -73,6 +72,9 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
       !user.canChat!.canChat;
 
   ChatReason? get _chatReason => ChatReason.fromValue(user.canChat!.reason?.value);
+
+  bool get _shouldShowPromotionBadge =>
+      widget._type.isProfile && (UserModel.currentUser?.isPromoted ?? false);
 
   Widget _getAvailabilityStatus(){
     if(widget._type.isPartnerProfile){
@@ -141,6 +143,10 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
 
     if(_isNotAvailableToChat){
       total += 10.h + _unavailabilityCardHeight(contentWidth);
+    }
+
+    if(_shouldShowPromotionBadge){
+      total += 10.h + PromotionBadge.height.h;
     }
 
     return total;
@@ -274,10 +280,11 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                           ),
                       ],
                     ),
-
                   AppText((state.data as IndividualUserModel).bio??'', textAlign: TextAlign.center),
                   _getAvailabilityStatus(),
                   if(_isNotAvailableToChat) UnavailabilityReasonCard(reason: _chatReason),
+                  if(_shouldShowPromotionBadge)
+                    const PromotionBadge(),
                 ],
               ).paddingAll(12.r),
             ),
