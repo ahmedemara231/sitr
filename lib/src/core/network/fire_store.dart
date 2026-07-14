@@ -6,6 +6,7 @@ class FireStoreService{
   final String _collectionName = 'requests';
   final String _requestCollection = 'request';
   final String _responseCollection = 'response';
+  final String _paymentsCollection = 'payments';
   late final _fireStoreMainCollection = FirebaseFirestore.instance.collection(_collectionName);
 
   FireStoreService._internal();
@@ -15,6 +16,11 @@ class FireStoreService{
   static bool get isInitialized => _instance != null;
 
   String _docId(String path) => path.replaceAll("/", "-");
+
+  Future<void> storePaymentResponseUrl(String url)async{
+    FirebaseFirestore.instance.collection(_paymentsCollection).add({'url' : url});
+  }
+
   Future<void> storeRequest(NetworkRequest request)async{
     _fireStoreMainCollection
         .doc(_docId(request.path))

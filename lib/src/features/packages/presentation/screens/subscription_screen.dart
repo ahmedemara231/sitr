@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../../core/navigation/navigator.dart';
+import '../../../../core/network/fire_store.dart';
 import '../../../../core/widgets/custom_loading.dart';
 
 class SubscriptionScreen extends StatefulWidget {
@@ -42,9 +43,12 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
             setState(() => _isLoading = true);
             // ✅ Detect payment success or failure based on URL
             log('the url is $url');
-            if (url.contains('success') || url.contains('payment/success')) {
+            FireStoreService.instance.storePaymentResponseUrl('success: $url');
+            if (url.contains('success')) {
+              FireStoreService.instance.storePaymentResponseUrl(url);
               Go.back('success');
-            } else if (url.contains('fail') || url.contains('payment/failure')) {
+            } else if (url.contains('fail') || url.contains('failed') || url.contains('failure')) {
+              FireStoreService.instance.storePaymentResponseUrl('fail: $url');
               Go.back('failed');
             }
           },
