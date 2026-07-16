@@ -9,6 +9,7 @@ import '../../../../../core/extensions/sized_box_helper.dart';
 import '../../../../../core/navigation/navigator.dart';
 import '../../../../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../../../../core/shared/models/user_models/user_model.dart';
+import '../../../../../core/widgets/sheets/delete_sheet.dart';
 import '../../../../chats/data/chat_sheet_manager.dart';
 import '../../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../../core/widgets/app_text.dart';
@@ -16,6 +17,7 @@ import '../../../../../core/widgets/custom_messages.dart';
 import '../../../../../core/widgets/lang_icon.dart';
 import '../../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../auth/imports.dart';
+import '../../cubit/delete_account.dart';
 import '../../cubit/edit_profile.dart';
 import '../../../../otp/presentation/otp.dart';
 import '../../cubit/change_phone_manager.dart';
@@ -92,6 +94,27 @@ class SettingScreen extends StatelessWidget {
       ),
     );
   }
+
+  // static void _openDeleteAccount() {
+  //   ChatSheetManager.show(
+  //     child: BlocProvider(
+  //       create: (context) => DeleteAccountCubit(),
+  //       child: DeleteSheet(
+  //         asyncCall: (context) => context.read<DeleteAccountCubit>().deleteAccount(
+  //           onSuccess: (msg) async {
+  //             await UserCubit.instance.logout();
+  //             Go.back();
+  //             MessageUtils.showSnackBar(msg);
+  //             Go.offAll(const LoginScreen());
+  //           },
+  //         ),
+  //         title: LocaleKeys.areYouSureYouWantToDeleteYourAccount,
+  //         secondTitle: LocaleKeys.ifDeletedAllDataWillBeDeleted,
+  //       ),
+  //     ),
+  //   );
+  // }
+
 
   @override
   Widget build(BuildContext context) {

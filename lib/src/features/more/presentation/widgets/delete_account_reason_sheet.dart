@@ -7,7 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
-import '../../../../core/extensions/object.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/extensions/sized_box_helper.dart';
 import '../../../../core/helpers/status_builder.dart';
@@ -57,6 +56,20 @@ class _DeleteAccountReasonSheetBodyState
   late final TextEditingController _reasonController;
   late final AnimationController _pulseController;
 
+  bool get _isCustomReasonSelected => _selectedReason?.isOther == true;
+
+  bool get _canDelete {
+    if (_selectedReason == null) return false;
+    if (!_isCustomReasonSelected) return true;
+    return _reasonController.text.trim().isNotEmpty;
+  }
+
+  DeleteAccountReason get _customReason => DeleteAccountReason(
+        id: -1,
+        title: LocaleKeys.writeReasonHere,
+        isOther: true,
+      );
+
   @override
   void initState() {
     super.initState();
@@ -77,15 +90,18 @@ class _DeleteAccountReasonSheetBodyState
   }
 
   void _selectReason(DeleteAccountReason reason) {
+    if (!reason.isOther) {
+      _reasonController.clear();
+    }
     setState(() => _selectedReason = reason);
   }
 
   Future<void> _deleteAccount(BuildContext context) async {
-    final reason = _selectedReason;
-    if (reason == null) return;
+    final DeleteAccountReason? reason = _selectedReason;
+    if (reason == null || !_canDelete) return;
 
     await context.read<DeleteAccountCubit>().deleteAccount(
-          reason: reason,
+          reason: reason.isOther ? null : reason,
           customReason: reason.isOther ? _reasonController.text : null,
           onSuccess: (msg) => widget.onSuccess(msg),
         );
@@ -129,26 +145,29 @@ class _DeleteAccountReasonSheetBodyState
                   onSuccess: (reasons, context) => Column(
                     children: [
                       ...List.generate(
-                        reasons.length,
+                        reasons.length + 1,
                         (index) {
-                          final reason = reasons[index];
+                          final bool isCustomReason = index == reasons.length;
+                          final DeleteAccountReason reason =
+                              isCustomReason ? _customReason : reasons[index];
                           return _ReasonCard(
                             reason: reason,
                             icon: _iconForIndex(index, reason),
                             selected: _selectedReason?.id == reason.id,
                             onTap: () => _selectReason(reason),
                           ).paddingOnly(
-                            bottom: index == reasons.length - 1 ? 0 : 10.h,
+                            bottom: index == reasons.length ? 0 : 10.h,
                           );
                         },
                       ),
-                      if (_selectedReason?.isOther == true)
+                      if (_isCustomReasonSelected)
                         DefaultTextField(
                           controller: _reasonController,
                           title: LocaleKeys.writeReasonHere,
                           inputType: TextInputType.multiline,
                           minLines: 2,
                           maxLines: 3,
+                          maxLength: 500,
                           borderRadius: 14.r,
                           borderColor: AppColors.deleteAccountReasonBorder,
                           fillColor:
@@ -162,6 +181,7 @@ class _DeleteAccountReasonSheetBodyState
                             fontSize: 13.sp,
                             height: 1.6,
                           ),
+                          onChanged: (_) => setState(() {}),
                         ).paddingOnly(top: 10.h),
                     ],
                   ),
@@ -170,23 +190,22 @@ class _DeleteAccountReasonSheetBodyState
               18.szH,
               BlocBuilder<DeleteAccountCubit, AsyncState<dynamic>>(
                 builder: (context, state) {
-                  final bool canDelete = _selectedReason.isNotNull;
                   return Column(
                     children: [
                       AppLoadingButton(
                         height: 48.h,
                         width: double.infinity,
                         borderRadius: 16.r,
-                        buttonColor: canDelete
+                        buttonColor: _canDelete
                             ? AppColors.primary
                             : AppColors.deleteAccountReasonDisabledBackground,
-                        textColor: canDelete
+                        textColor: _canDelete
                             ? AppColors.white
                             : AppColors.deleteAccountReasonDisabledText,
                         title: LocaleKeys.continueToDeleteAccount,
                         fontSize: 15.sp,
                         fontWeight: FontWeight.w700,
-                        enabled: canDelete,
+                        enabled: _canDelete,
                         asyncCall: _deleteAccount,
                       ),
                       10.szH,

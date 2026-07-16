@@ -69,7 +69,7 @@ class InactivityNotificationService {
     await _plugin.zonedSchedule(
       _notificationId,
       'اشتاقنا إليك!',
-      'لديك محادثات تنتظرك، تفضل بالدخول الآن',
+      'افتح التطبيق ولا تفوّت ما يهمك.',
       scheduledDate,
       details,
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,

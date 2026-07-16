@@ -77,7 +77,7 @@ class ApiConstants {
   static const String myPackage = 'my-package';
   static const String getWallet = 'show-wallet';
   static const String deleteAccount = 'delete-account';
-  static const String showDeleteAccReasons = 'show_delete_acc_reasons';
+  static const String showDeleteAccReasons = 'delete-account-reasons';
   static const String switchNotify = 'switch-notify';
   static const String sendCodeToOldPhone = 'old-phone-send-code';
   static const String checkCodeToOldPhone = 'old-phone-check-code';

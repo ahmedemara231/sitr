@@ -286,8 +286,8 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                   AppText((state.data as IndividualUserModel).bio??'', textAlign: TextAlign.center),
                   _getAvailabilityStatus(),
                   if(_isNotAvailableToChat) UnavailabilityReasonCard(reason: _chatReason),
-                  if(_shouldShowPromotionBadge)
-                    const PromotionBadge(),
+                  // if(_shouldShowPromotionBadge)
+                  //   const PromotionBadge(),
                 ],
               ).paddingAll(12.r),
             ),

@@ -18,23 +18,19 @@ class DeleteAccountReason {
 
   factory DeleteAccountReason.fromJson(Map<String, dynamic> json) {
     final String title =
-        _readString(json, ['title', 'name', 'reason', 'value', 'text']) ?? '';
+        _readString(json, ['text', 'title', 'name', 'reason', 'value']) ?? '';
     return DeleteAccountReason(
       id: _readInt(json['id'] ?? json['value']) ?? 0,
       title: title,
       description:
           _readString(json, ['description', 'desc', 'body', 'subtitle']),
-      isOther: json['is_other'] == true ||
-          json['type'] == 'other' ||
-          title.toLowerCase().contains('other') ||
-          title.contains('تاني') ||
-          title.contains('آخر'),
+      isOther: json['is_other'] == true || json['type'] == 'other',
     );
   }
 
   Map<String, dynamic> toJson() => {
         'id': id,
-        'title': title,
+        'text': title,
         'description': description,
         'is_other': isOther,
       };
@@ -90,7 +86,7 @@ class DeleteAccountReasonsCubit extends AsyncCubit<List<DeleteAccountReason>> {
         .map((reason) => DeleteAccountReason.fromJson(
               Map<String, dynamic>.from(reason),
             ))
-        .where((reason) => reason.title.isNotEmpty)
+        .where((reason) => reason.id > 0 && reason.title.isNotEmpty)
         .toList();
   }
 }
@@ -106,13 +102,15 @@ class DeleteAccountCubit extends AsyncCubit<dynamic> {
     final String? reasonText =
         customReason?.trim().isEmpty == true ? null : customReason?.trim();
     await executeAsyncWithBaseModel(
-        operation: () async => await baseCrudUseCase.call(CrudBaseParmas(
+        operation: () => baseCrudUseCase.call(CrudBaseParmas(
                 api: ApiConstants.deleteAccount,
                 httpRequestType: HttpRequestType.post,
                 body: {
                   'device_id': NotificationService.deviceToken,
-                  if (reason != null) 'reason_id': reason.id,
-                  if (reasonText != null) 'reason': reasonText,
+                  if (reasonText != null)
+                    'reason': reasonText
+                  else if (reason != null)
+                    'reason_id': reason.id,
                 })),
         onSuccess: (data) => onSuccess.call(data.msg));
   }
