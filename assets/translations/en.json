@@ -170,6 +170,8 @@
   "settings": "Settings",
   "profile": "Profile",
   "notifications": "Notifications",
+  "inactivity_notification_title": "We missed you",
+  "inactivity_notification_body": "Open the app and dont miss what matters",
   "delete_account": "Delete account",
   "my_package": "My package",
   "renew_package": "Renew package",

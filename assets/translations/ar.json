@@ -170,6 +170,8 @@
   "settings": "الاعدادات",
   "profile": "الملف الشخصي",
   "notifications": "الاشعارات",
+  "inactivity_notification_title": "اشتاقنا إليك!",
+  "inactivity_notification_body": "افتح التطبيق ولا تفوّت ما يهمك.",
   "delete_account": "حذف الحساب",
   "my_package": "باقتي",
   "renew_package": "تجديد الباقة",

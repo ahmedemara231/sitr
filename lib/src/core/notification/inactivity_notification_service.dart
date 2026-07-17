@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import '../../config/language/locale_keys.g.dart';
 
 class InactivityNotificationService {
   static const int _notificationId = 9001;
@@ -17,7 +18,8 @@ class InactivityNotificationService {
     if (_initialized) return;
     tz.initializeTimeZones();
 
-    const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const androidSettings =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
     const iosSettings = DarwinInitializationSettings();
     await _plugin.initialize(
       const InitializationSettings(android: androidSettings, iOS: iosSettings),
@@ -64,12 +66,13 @@ class InactivityNotificationService {
       presentSound: true,
     );
 
-    const details = NotificationDetails(android: androidDetails, iOS: iosDetails);
+    const details =
+        NotificationDetails(android: androidDetails, iOS: iosDetails);
 
     await _plugin.zonedSchedule(
       _notificationId,
-      'اشتاقنا إليك!',
-      'افتح التطبيق ولا تفوّت ما يهمك.',
+      LocaleKeys.inactivityNotificationTitle,
+      LocaleKeys.inactivityNotificationBody,
       scheduledDate,
       details,
       androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,

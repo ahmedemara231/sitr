@@ -511,6 +511,12 @@ abstract class LocaleKeys {
   static const String _notifications = 'notifications';
   static String get notifications => _notifications.tr();
 
+  static const String _inactivityNotificationTitle = 'inactivity_notification_title';
+  static String get inactivityNotificationTitle => _inactivityNotificationTitle.tr();
+
+  static const String _inactivityNotificationBody = 'inactivity_notification_body';
+  static String get inactivityNotificationBody => _inactivityNotificationBody.tr();
+
   static const String _deleteAccount = 'delete_account';
   static String get deleteAccount => _deleteAccount.tr();
 

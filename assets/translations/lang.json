@@ -175,6 +175,8 @@
     "Settings" : "الاعدادات",
     "Profile" : "الملف الشخصي",
     "Notifications" : "الاشعارات",
+    "inactivityNotificationTitle #$ We missed you": "اشتاقنا إليك!",
+    "inactivityNotificationBody #$ Open the app and dont miss what matters": "افتح التطبيق ولا تفوّت ما يهمك.",
     "Delete account" : "حذف الحساب",
     "My package" : "باقتي",
     "Renew package" : "تجديد الباقة",
