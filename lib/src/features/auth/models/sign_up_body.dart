@@ -169,7 +169,8 @@ class ParentSignUp extends SignUpBody {
         'email': email,
         'num_of_children': childrenNumber,
         'relation_id': kinship,
-        'type': 'parent'
+        'type': 'parent',
+        'age' : 50
       });
   }
 }

@@ -101,7 +101,7 @@ After receiving `link`, the app opens `SubscriptionScreen(initialUrl: link)`. Wh
 - `code` (`string`, recommended): stable backend identifier such as `monthly`, `quarterly`, `annual`.
 - `duration` (`string`, required): visible plan duration.
 - `price` (`number`, required): visible price.
-- `currency` (`string`, required): visible currency label.
+- `currency` (`string`, required): vaisible currency label.
 - `period` (`string`, required): billing cadence without the leading slash; the app renders `/ {period}`.
 - `description` (`string`, required): plan helper text.
 - `badge` (`string|null`): optional badge label.

@@ -13,7 +13,8 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
   final int? maleNum;
   final int? femaleNum;
 
-  final Future<void> Function(BuildContext context, IndividualUserModel user) onClick;
+  final Future<void> Function(BuildContext context, IndividualUserModel user)
+      onClick;
 
   const EnterMaleOrFemaleOrChildDataScreen.showAll({
     super.key,
@@ -37,190 +38,40 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
     this.showConditionsAndTerms = false,
     this.showAlreadyHaveAccount = false,
     required this.userType,
-  }) : _withParent = false, maleNum = null, femaleNum = null;
+  })  : _withParent = false,
+        maleNum = null,
+        femaleNum = null;
 
   @override
   Widget build(BuildContext context) {
-    return scaffoldType == ScaffoldType.appScaffold?
-    AppScaffold(
-        appBarTitle: LocaleKeys.profile,
-        body: _EnterMaleOrFemaleOrChildDataBody(
-          maleNum: maleNum,
-          femaleNum: femaleNum,
-          userType: userType,
-          withParent: _withParent,
-          showGenderSelection: showGenderSelection,
-          initialValue: initialValue,
-          showAlreadyHaveAccount: showAlreadyHaveAccount,
-          showConditionsAndTerms: showConditionsAndTerms,
-          onClick: onClick,
-        )
-    ) :
-    CenterCardScaffold(
-        upperWidget: const SignUpUpperWidget(),
-        bodyColor: AppColors.white,
-        body: _EnterMaleOrFemaleOrChildDataBody(
-          maleNum: maleNum,
-          femaleNum: femaleNum,
-          withParent: _withParent,
-          showGenderSelection: showGenderSelection,
-          userType: userType,
-          initialValue: initialValue,
-          showAlreadyHaveAccount: showAlreadyHaveAccount,
-          showConditionsAndTerms: showConditionsAndTerms,
-          onClick: onClick,
-        )
-    );
-  }
-}
-
-class _EnterMaleOrFemaleOrChildDataBody extends StatefulWidget {
-  final UserGender? userType;
-  final IndividualUserModel? initialValue;
-  final bool withParent;
-  final bool showGenderSelection;
-  final bool showConditionsAndTerms;
-  final bool showAlreadyHaveAccount;
-  final int? maleNum;
-  final int? femaleNum;
-  final Future<void> Function(BuildContext context, IndividualUserModel user) onClick;
-
-  const _EnterMaleOrFemaleOrChildDataBody({
-    required this.withParent,
-    this.initialValue,
-    required this.userType,
-    required this.showGenderSelection,
-    required this.onClick,
-    required this.maleNum,
-    required this.femaleNum,
-    this.showConditionsAndTerms = false,
-    this.showAlreadyHaveAccount = false,
-  });
-
-  @override
-  State<_EnterMaleOrFemaleOrChildDataBody> createState() => _EnterMaleOrFemaleOrChildDataBodyState();
-}
-
-class _EnterMaleOrFemaleOrChildDataBodyState extends State<_EnterMaleOrFemaleOrChildDataBody> {
-
-  late final ValueNotifier<UserGender> _mainType;
-
-  void _init() {
-    _mainType = ValueNotifier(
-        widget.userType ??
-            widget.initialValue?.gender?.userGender ??
-            UserGender.male
-    );
-    _assignToInitial();
-  }
-
-  late IndividualUserModel sharedFormFieldModel;
-  void _assignToInitialValueOr(IndividualUserModel model){
-    if(widget.initialValue.isNotNull){
-      sharedFormFieldModel = widget.initialValue!;
-
-    }else{
-      sharedFormFieldModel = model;
-    }
-  }
-  void _assignToInitial(){
-    if(_mainType.value.isMale){
-      _assignToInitialValueOr(MaleModel.initial());
-
-    }else if(_mainType.value.isFemale){
-      _assignToInitialValueOr(FemaleModel.initial());
-
-    }else{
-      _assignToInitialValueOr(IndividualUserModel.initial());
-    }
-  }
-
-
-  @override
-  void initState() {
-    _init();
-    super.initState();
-  }
-  void _listenToData(IndividualUserModel updatedModel) => sharedFormFieldModel = updatedModel;
-
-  final _formKey = GlobalKey<FormState>();
-  @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => CompleteProfileCubit()),
-        BlocProvider(create: (context) => AddChildCubit()),
-        BlocProvider(create: (context) => EditProfileCubit()),
-        BlocProvider(create: (context) => PersonalDataCubit()),
-      ],
-
-      child: Form(
-        key: _formKey,
-        child: Column(
-          spacing: 10.h,
-          children: [
-            if(widget.showGenderSelection)
-              ChooseGenderWidget(
-                // titles: (element) => element.translate,
-                // titles: (element) => '${element.translate}  ${element.isFemale? AuthData.childrenNumber.value.getFemaleNumber : AuthData.childrenNumber.value.getMaleNumber}',
-                titles: (element) => '${element.translate}  ${element.isFemale? widget.femaleNum : widget.maleNum}',
-                canChoose: true,
-                onSelectGender: (selectedGender) => _mainType.value = selectedGender,
-                genders: const [
-                  UserGender.male,
-                  UserGender.female,
-                ],
-              ),
-
-            if(widget.withParent)
-              SelectImageWidget(
-                initialValue: widget.initialValue?.avatar,
-                onSelectImage: (img){
-                  _listenToData(sharedFormFieldModel.copyWith(avatar: img));
-                },
-              ),
-
-            ValueListenableBuilder(
-              valueListenable: _mainType,
-              builder: (context, type, child) {
-                _assignToInitial();
-                if(type.isFemale){
-                  return FemaleFields(
-                      withParent: widget.withParent,
-                      initialValue: widget.initialValue,
-                      onChangeFemaleData: (data) =>
-                          _listenToData(sharedFormFieldModel.merge(data))
-                  );
-
-                }else if (type.isMale){
-                  return MaleFields(
-                      initialValue: widget.initialValue,
-                      withParent: widget.withParent,
-                      onChangeMaleData: (data) => _listenToData(sharedFormFieldModel.merge(data))
-                  );
-
-                }else{
-                  return const SizedBox.shrink();
-                }
-              }
-            ),
-
-            if(widget.showConditionsAndTerms)
-              const ConditionsTermsAcceptance(),
-
-            AppLoadingButton(
-              height: 45.h,
-              borderRadius: ConstantManager.buttonBorderRadiusNumber,
-              title: LocaleKeys.confirm,
-                asyncCall: (ctx) async => _formKey.currentState!.validate()?
-                widget.onClick.call(ctx, sharedFormFieldModel) : null
-            ),
-
-            if (widget.showAlreadyHaveAccount)
-              const AlreadyHaveAccWidget()
-          ],
-        ),
-      ),
-    );
+    return scaffoldType == ScaffoldType.appScaffold
+        ? AppScaffold(
+      isScrollable: true,
+            appBarTitle: LocaleKeys.profile,
+            body: _EnterMaleOrFemaleOrChildDataBody(
+              maleNum: maleNum,
+              femaleNum: femaleNum,
+              userType: userType,
+              withParent: _withParent,
+              showGenderSelection: showGenderSelection,
+              initialValue: initialValue,
+              showAlreadyHaveAccount: showAlreadyHaveAccount,
+              showConditionsAndTerms: showConditionsAndTerms,
+              onClick: onClick,
+            ))
+        : CenterCardScaffold(
+            upperWidget: const SignUpUpperWidget(),
+            bodyColor: AppColors.white,
+            body: _EnterMaleOrFemaleOrChildDataBody(
+              maleNum: maleNum,
+              femaleNum: femaleNum,
+              withParent: _withParent,
+              showGenderSelection: showGenderSelection,
+              userType: userType,
+              initialValue: initialValue,
+              showAlreadyHaveAccount: showAlreadyHaveAccount,
+              showConditionsAndTerms: showConditionsAndTerms,
+              onClick: onClick,
+            ));
   }
 }
