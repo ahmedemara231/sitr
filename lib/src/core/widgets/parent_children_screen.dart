@@ -9,6 +9,7 @@ import '../../features/main_screen/data/models/home_model.dart';
 import '../../features/main_screen/presentation/screens/partner_details.dart';
 import '../extensions/num.dart';
 import '../extensions/padding_extension.dart';
+import '../extensions/widget_extension.dart';
 import '../navigation/navigator.dart';
 import '../shared/models/user_models/parent/parent_model.dart';
 import '../shared/models/user_models/user_model.dart';
@@ -31,19 +32,31 @@ class ParentChildrenView extends StatelessWidget {
       ),
       bottomBar: AppDefaultButton.withBackGroundColor(
           title: LocaleKeys.addAnotherChild,
-          onTap: () => Go.to(BlocProvider(
-            create: (context) => AddChildCubit(),
-            child: EnterMaleOrFemaleOrChildDataScreen.showAll(
-                scaffoldType: ScaffoldType.appScaffold,
-                maleNum: (UserModel.currentUser as ParentModel).maleChildrenNum,
-                femaleNum: (UserModel.currentUser as ParentModel).femaleChildrenNum,
-                onClick: (context, user) async => await context.read<AddChildCubit>().addChild(
-                    body: user,
-                    cancelOnTap: () => 3.pop()
-                ),
-            ),
-          ),)
+          onTap: () async{
+            await Go.to(BlocProvider(
+              create: (context) => AddChildCubit(),
+              child: EnterMaleOrFemaleOrChildDataScreen.showAll(
+                  scaffoldType: ScaffoldType.appScaffold,
+                  maleNum: (UserModel.currentUser as ParentModel).maleChildrenNum,
+                  femaleNum: (UserModel.currentUser as ParentModel).femaleChildrenNum,
+                  onClick: (context, user) async {
+                    await context.read<AddChildCubit>().addChild(
+                        body: user,
+                        cancelOnTap: () => 2.pop()
+                    );
+
+                    cont.refresh();
+                  }
+              ),
+            ),);
+
+            cont.refresh();
+          }
       ).paddingAll(12.r),
+    ).withPullRefresher(
+        onRefresh: (){
+          cont.refresh();
+        }
     );
   }
 }
