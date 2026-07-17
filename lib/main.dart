@@ -27,7 +27,6 @@ import 'src/core/network/dio_service.dart';
 import 'src/core/network/fire_store.dart';
 import 'src/core/shared/functions/setup_service_locators.dart';
 import 'src/core/shared/bloc_observer.dart';
-import 'src/core/widgets/custom_messages.dart';
 import 'src/core/widgets/exeption_view.dart';
 
 void _changeFireStoreAvailability(bool enable){
@@ -88,11 +87,7 @@ Future<bool> fetchBaseUrl() async {
   }
 }
 
-
 Future<void> _initializeFirebaseApp() async {
-  // Determine which Firebase options to use based on the flavor.
-  // Fall back to production when the flavor is missing (e.g. launched from
-  // Xcode without --flavor) so initialization never hard-crashes the launch.
   final firebaseOptions = switch (appFlavor) {
     'dev' => dev.DefaultFirebaseOptions.currentPlatform,
     'production' => production.DefaultFirebaseOptions.currentPlatform,
@@ -123,11 +118,7 @@ void main() async {
   await fetchBaseUrl();
   await Helpers.initZegoData();
   await AppyFlyerHelper.init();
-  try {
-    await NsfwDetectorHelper.init();
-  } on Exception catch (e) {
-    MessageUtils.showTopMsg(e.toString());
-  }
+  await NsfwDetectorHelper.init();
 
   SystemChrome.setPreferredOrientations(
     [
@@ -161,8 +152,6 @@ void _initSentry()async{
   await SentryFlutter.init(
           (options) {
         options.dsn = 'https://cb95fd92d19a9f57924ae8dba99d9df4@o4508946921291776.ingest.us.sentry.io/4510555526070272';
-        // Adds request headers and IP for users, for more info visit:
-        // https://docs.sentry.io/platforms/dart/guides/flutter/data-management/data-collected/
         options.sendDefaultPii = true;
       },
       appRunner: () => runApp(

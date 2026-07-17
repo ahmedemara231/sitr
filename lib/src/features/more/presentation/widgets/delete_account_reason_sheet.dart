@@ -104,7 +104,7 @@ class _DeleteAccountReasonSheetBodyState
           reason: reason.isOther ? null : reason,
           customReason: reason.isOther ? _reasonController.text : null,
           onSuccess: (msg) => widget.onSuccess(msg),
-        );
+    );
   }
 
   @override
@@ -143,6 +143,7 @@ class _DeleteAccountReasonSheetBodyState
                 builder: (context, state) => StatusBuilder(
                   data: state,
                   onSuccess: (reasons, context) => Column(
+                    spacing: 10.h,
                     children: [
                       ...List.generate(
                         reasons.length + 1,
@@ -155,8 +156,6 @@ class _DeleteAccountReasonSheetBodyState
                             icon: _iconForIndex(index, reason),
                             selected: _selectedReason?.id == reason.id,
                             onTap: () => _selectReason(reason),
-                          ).paddingOnly(
-                            bottom: index == reasons.length ? 0 : 10.h,
                           );
                         },
                       ),
@@ -182,7 +181,7 @@ class _DeleteAccountReasonSheetBodyState
                             height: 1.6,
                           ),
                           onChanged: (_) => setState(() {}),
-                        ).paddingOnly(top: 10.h),
+                        )
                     ],
                   ),
                 ),
@@ -243,7 +242,7 @@ class _DeleteAccountReasonSheetBodyState
           ),
         ),
       ),
-    );
+    ).paddingBottom(MediaQuery.of(context).viewInsets.bottom);
   }
 
   IconData _iconForIndex(int index, DeleteAccountReason reason) {

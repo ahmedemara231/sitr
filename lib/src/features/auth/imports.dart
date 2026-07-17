@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
+import '../../core/base_crud/code/domain/usecases/pagination_response.dart';
 import '../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../core/extensions/context_extension.dart';
 import '../../core/extensions/enum.dart';
@@ -22,11 +23,11 @@ import '../../core/navigation/navigator.dart';
 import '../../core/shared/models/user_models/individual/female_model.dart';
 import '../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../core/shared/models/user_models/individual/male_model.dart';
+import '../../core/widgets/app_text.dart';
 import '../../core/widgets/app_dropinity.dart';
 import '../../core/widgets/app_logo_widget.dart';
 import '../../core/widgets/buttons/app_loading_button.dart';
 import '../../core/widgets/buttons/default_button.dart';
-import '../../core/widgets/choose_from_options.dart';
 import '../../core/widgets/custom_messages.dart';
 import '../../core/widgets/lang_icon.dart';
 import '../../core/widgets/scaffolds/app_scaffold.dart';
@@ -59,8 +60,12 @@ import 'presentation/widgets/sign_up/sign_up_upper_widget.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 
-
 part 'presentation/screens/sign_up.dart';
 part 'presentation/screens/login.dart';
 part 'presentation/screens/enter_male_female_child_data.dart';
+part 'presentation/widgets/sign_up/sign_up_account_type.dart';
+part 'presentation/widgets/sign_up/sign_up_fields_step.dart';
 part 'presentation/widgets/sign_up/sign_up_fields.dart';
+part 'presentation/widgets/sign_up/sign_up_gender_option.dart';
+part 'presentation/widgets/sign_up/sign_up_gender_radio.dart';
+part 'presentation/widgets/sign_up/sign_up_gender_step.dart';

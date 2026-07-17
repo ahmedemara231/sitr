@@ -8,16 +8,92 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  SignUpBody signUpBody = SignUpBody.initial();
-  final formKey = GlobalKey<FormState>();
-  final ValueNotifier<(UserType, UserGender)> userTypeAndGender =
-      ValueNotifier((UserType.individual, UserGender.male));
+  late final PageController _pageController;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final ValueNotifier<_SignUpAccountType?> _accountType =
+      ValueNotifier<_SignUpAccountType?>(null);
 
-  void _init(String val){
-    final UserGender gender = val.toUserGender();
-    final UserType type = gender.isMale || gender.isFemale?
-    UserType.individual : UserType.parent;
-    userTypeAndGender.value = (type, gender);
+  SignUpBody _signUpBody = SignUpBody.initial();
+  int _currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    _accountType.dispose();
+    super.dispose();
+  }
+
+  double _pageHeight(BuildContext context) =>
+      _currentPage == 0 ? 340.h : context.height * .72;
+
+  void _selectAccountType(_SignUpAccountType accountType) {
+    _accountType.value = accountType;
+    _signUpBody = SignUpBody.fromSelectedGender(accountType.gender);
+  }
+
+  Future<void> _goToFieldsPage() async {
+    if (_accountType.value == null) {
+      MessageUtils.showSnackBar(LocaleKeys.pleaseEnterTheGender);
+      return;
+    }
+
+    context.hideKeyboard();
+    await _pageController.animateToPage(
+      1,
+      duration: const Duration(milliseconds: 250),
+      curve: Curves.easeOut,
+    );
+  }
+
+  Future<void> _goToGenderPage() async {
+    context.hideKeyboard();
+    await _pageController.animateToPage(
+      0,
+      duration: const Duration(milliseconds: 250),
+      curve: Curves.easeOut,
+    );
+  }
+
+  Future<void> _submitSignUp(BuildContext ctx) async {
+    if (!(_formKey.currentState?.validate() ?? false)) {
+      return;
+    }
+
+    await ctx.read<SignUpCubit>().signUp(
+          _signUpBody,
+          onSuccess: _onSignUpSuccess,
+        );
+  }
+
+  void _onSignUpSuccess(BaseModel<dynamic> data) {
+    MessageUtils.showSnackBar(data.msg);
+    Go.to(
+      BlocProvider(
+        create: (context) => OtpCubit(),
+        child: OtpScreen(
+          title: LocaleKeys.activationCode,
+          phone: _signUpBody.phone,
+          onConfirmCode: (ctx, code) => ctx.read<OtpCubit>().sendOtp(
+                type: OtpType.afterRegister,
+                body: OtpBody(
+                  phone: _signUpBody.phone,
+                  code: code,
+                ),
+                onSuccess: (user) async {
+                  await AppyFlyerHelper.logEvent(FlyerEvents.register);
+                  user.completeRegistration!
+                      .manageNavigationBasedCompleteRegisterStatus(user);
+                },
+              ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -25,72 +101,59 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return BlocProvider(
       create: (context) => SignUpCubit(),
       child: CenterCardScaffold(
-          upperWidget: const SignUpUpperWidget(),
-          bodyColor: AppColors.white,
-          body: Column(
+        upperWidget: const SignUpUpperWidget(),
+        bodyColor: AppColors.white,
+        body: BlocBuilder<SignUpCubit, AsyncState>(
+          builder: (context, state) => Column(
             spacing: 10.h,
             children: [
-              BlocBuilder<SignUpCubit, AsyncState>(
-                builder: (context, state) => ChooseFromOptionsWidget(
-                  height: 50.h,
-                  canChoose: !state.isLoading,
-                  fontSize: 12.sp,
-                  onSelectOption: (val) => _init(val),
-                  titles: [
-                    LocaleKeys.male,
-                    LocaleKeys.female,
-                    LocaleKeys.parent,
-                  ],
-                )
-              ),
-              10.szH,
-
-              ValueListenableBuilder<(UserType, UserGender)>(
-                valueListenable: userTypeAndGender,
-                builder: (context, value, child) => Form(
-                  key: formKey,
-                  child: SignUpFields(
-                    type: userTypeAndGender.value.$1,
-                      gender: userTypeAndGender.value.$2,
-                      onFinish: (data) async => signUpBody = data,
+              AnimatedSize(
+                duration: const Duration(milliseconds: 250),
+                curve: Curves.easeOut,
+                child: SizedBox(
+                  height: _pageHeight(context),
+                  child: PageView(
+                    controller: _pageController,
+                    physics: const NeverScrollableScrollPhysics(),
+                    onPageChanged: (int page) =>
+                        setState(() => _currentPage = page),
+                    children: [
+                      SingleChildScrollView(
+                        child: ValueListenableBuilder<_SignUpAccountType?>(
+                          valueListenable: _accountType,
+                          builder: (context, accountType, child) =>
+                              _SignUpGenderStep(
+                            selectedAccountType: accountType,
+                            canChoose: !state.isLoading,
+                            onAccountTypeSelected: _selectAccountType,
+                            onContinuePressed: _goToFieldsPage,
+                          ),
+                        ),
+                      ),
+                      SingleChildScrollView(
+                        child: ValueListenableBuilder<_SignUpAccountType?>(
+                          valueListenable: _accountType,
+                          builder: (context, accountType, child) =>
+                              _SignUpFieldsStep(
+                            accountType: accountType,
+                            formKey: _formKey,
+                            canSubmit: !state.isLoading,
+                            onBackPressed: _goToGenderPage,
+                            onSubmitPressed: _submitSignUp,
+                            onSignUpBodyChanged: (SignUpBody body) =>
+                                _signUpBody = body,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                )
+                ),
               ),
-
-              AppLoadingButton(
-                asyncCall: (ctx) async {
-                  if(formKey.currentState?.validate() ?? false){
-                    await ctx.read<SignUpCubit>().signUp(
-                        signUpBody,
-                        onSuccess: (data) {
-                          MessageUtils.showSnackBar(data.msg);
-                          Go.to(BlocProvider(
-                            create: (context) => OtpCubit(),
-                            child: OtpScreen(
-                              title: LocaleKeys.activationCode,
-                              phone: signUpBody.phone,
-                              onConfirmCode: (ctx, code) => ctx.read<OtpCubit>().sendOtp(
-                                type: OtpType.afterRegister,
-                                body: OtpBody(
-                                    phone: signUpBody.phone,
-                                    code: code
-                                ),
-                                onSuccess: (user) async {
-                                  await AppyFlyerHelper.logEvent(FlyerEvents.register);
-                                  user.completeRegistration!.manageNavigationBasedCompleteRegisterStatus(user);
-                                },
-                              ),
-                            ),
-                          ));
-                        }
-                    );
-                  }
-                },
-                title: LocaleKeys.confirm,
-              ),
-              const AlreadyHaveAccWidget()
+              const AlreadyHaveAccWidget(),
             ],
-          )),
+          ),
+        ),
+      ),
     );
   }
 }
