@@ -880,6 +880,9 @@ abstract class LocaleKeys {
   static const String _wantToContactWithYou = 'want_to_contact_with_you';
   static String get wantToContactWithYou => _wantToContactWithYou.tr();
 
+  static const String _isTryingToContactYou = 'is_trying_to_contact_you';
+  static String get isTryingToContactYou => _isTryingToContactYou.tr();
+
   static const String _partnerWantsTo = 'partner_wants_to';
   static String get partnerWantsTo => _partnerWantsTo.tr();
 
@@ -975,6 +978,9 @@ abstract class LocaleKeys {
 
   static const String _aVideoCallRequestWasSuccessfullySent = 'a_video_call_request_was_successfully_sent';
   static String get aVideoCallRequestWasSuccessfullySent => _aVideoCallRequestWasSuccessfullySent.tr();
+
+  static const String _aChatRequestWasSuccessfullySent = 'a_chat_request_was_successfully_sent';
+  static String get aChatRequestWasSuccessfullySent => _aChatRequestWasSuccessfullySent.tr();
 
   static const String _reminder = 'reminder';
   static String get reminder => _reminder.tr();
@@ -1152,6 +1158,9 @@ abstract class LocaleKeys {
 
   static const String _chatReasonParentApprovalRequired = 'chat_reason_parent_approval_required';
   static String get chatReasonParentApprovalRequired => _chatReasonParentApprovalRequired.tr();
+
+  static const String _chatReasonChatRequestSent = 'chat_reason_chat_request_sent';
+  static String get chatReasonChatRequestSent => _chatReasonChatRequestSent.tr();
 
   static const String _chatReasonHasProblem = 'chat_reason_has_problem';
   static String get chatReasonHasProblem => _chatReasonHasProblem.tr();

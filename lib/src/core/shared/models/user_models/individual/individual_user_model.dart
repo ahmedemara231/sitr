@@ -467,6 +467,7 @@ enum ChatReason {
   sameGender('same_gender'),
   activeMatchWithOther('active_match_with_other'),
   parentApprovalRequired('parent_approval_required'),
+  chatRequestSent('chat_request_sent'),
   hasProblem('has_problem');
 
   final String value;
@@ -496,6 +497,7 @@ extension ChatReasonExtension on ChatReason? {
   bool get isActiveMatchWithOther => this == ChatReason.activeMatchWithOther;
   bool get isParentApprovalRequired =>
       this == ChatReason.parentApprovalRequired;
+  bool get isChatRequestSent => this == ChatReason.chatRequestSent;
 
   /// Localized message describing the chat reason.
   String get getReason {
@@ -524,6 +526,8 @@ extension ChatReasonExtension on ChatReason? {
         return LocaleKeys.chatReasonActiveMatchWithOther;
       case ChatReason.parentApprovalRequired:
         return LocaleKeys.chatReasonParentApprovalRequired;
+      case ChatReason.chatRequestSent:
+        return LocaleKeys.chatReasonChatRequestSent;
       case ChatReason.hasProblem:
       case null:
         return LocaleKeys.chatReasonHasProblem;
