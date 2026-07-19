@@ -425,5 +425,6 @@
   "promotionFeatureGoldenVerification #$ Golden verification badge" : "شارة التحقق الذهبية",
   "promotionSheetSubscribePrefix #$ Subscribe to package" : "اشترك في باقة",
   "promotionSheetSubscribedSuccess #$ Subscribed successfully" : "تم الاشتراك بنجاح",
-  "promotionSheetCancelAnytime #$ You can cancel anytime" : "يمكنك إلغاء الاشتراك في أي وقت"
+  "promotionSheetCancelAnytime #$ You can cancel anytime" : "يمكنك إلغاء الاشتراك في أي وقت",
+  "Send Chat Request" : "ارسال طلب محادثة"
 }

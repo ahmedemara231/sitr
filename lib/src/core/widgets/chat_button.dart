@@ -41,7 +41,7 @@ class ChatButton extends StatelessWidget {
                     )),
               ) : Future(() => null),
           buttonColor: (user.canChat?.canChat ?? false) ? null : Colors.grey[300],
-          title: LocaleKeys.startChat,
+          title: LocaleKeys.sendChatRequest,
         ),
       ),
     );

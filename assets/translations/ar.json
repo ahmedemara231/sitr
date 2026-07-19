@@ -414,5 +414,6 @@
   "promotion_feature_golden_verification": "شارة التحقق الذهبية",
   "promotion_sheet_subscribe_prefix": "اشترك في باقة",
   "promotion_sheet_subscribed_success": "تم الاشتراك بنجاح",
-  "promotion_sheet_cancel_anytime": "يمكنك إلغاء الاشتراك في أي وقت"
+  "promotion_sheet_cancel_anytime": "يمكنك إلغاء الاشتراك في أي وقت",
+  "send_chat_request": "ارسال طلب محادثة"
 }

@@ -1234,4 +1234,7 @@ abstract class LocaleKeys {
   static const String _promotionSheetCancelAnytime = 'promotion_sheet_cancel_anytime';
   static String get promotionSheetCancelAnytime => _promotionSheetCancelAnytime.tr();
 
+  static const String _sendChatRequest = 'send_chat_request';
+  static String get sendChatRequest => _sendChatRequest.tr();
+
 }

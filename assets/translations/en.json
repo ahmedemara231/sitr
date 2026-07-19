@@ -414,5 +414,6 @@
   "promotion_feature_golden_verification": "Golden verification badge",
   "promotion_sheet_subscribe_prefix": "Subscribe to package",
   "promotion_sheet_subscribed_success": "Subscribed successfully",
-  "promotion_sheet_cancel_anytime": "You can cancel anytime"
+  "promotion_sheet_cancel_anytime": "You can cancel anytime",
+  "send_chat_request": "Send Chat Request"
 }
