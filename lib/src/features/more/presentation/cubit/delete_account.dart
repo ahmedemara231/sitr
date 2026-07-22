@@ -19,7 +19,7 @@ class DeleteAccountSafety {
     final Map<String, dynamic> safety =
         Map<String, dynamic>.from(json['is_safe'] as Map? ?? {});
     return DeleteAccountSafety(
-      value: safety['value'] == true,
+      value: safety['value'],
       reason: safety['reason']?.toString(),
     );
   }
