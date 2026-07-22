@@ -1,3 +1,5 @@
+import com.android.build.api.dsl.LibraryExtension
+
 allprojects {
     repositories {
         google()
@@ -14,6 +16,17 @@ rootProject.layout.buildDirectory.value(newBuildDir)
 subprojects {
     val newSubprojectBuildDir: Directory = newBuildDir.dir(project.name)
     project.layout.buildDirectory.value(newSubprojectBuildDir)
+
+    if (project.name == "tflite_flutter") {
+        afterEvaluate {
+            extensions.configure<LibraryExtension> {
+                compileOptions {
+                    sourceCompatibility = JavaVersion.VERSION_17
+                    targetCompatibility = JavaVersion.VERSION_17
+                }
+            }
+        }
+    }
 }
 subprojects {
     project.evaluationDependsOn(":app")
