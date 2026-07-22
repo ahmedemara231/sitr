@@ -23,8 +23,6 @@ class ApiConstants {
   static const String aucationDetails = 'Auction/GetById/';
   static const String movableDetails = 'Movables/GetById/';
 
-
-
   // auth
   static const String login = 'login';
   static const String logout = 'sign-out';
@@ -58,7 +56,8 @@ class ApiConstants {
   static const String cities = 'cities';
   static const String getPartnerInfo = 'opportunity-profile/';
   static const String profilePromotionPlans = 'profile-promotion-plans';
-  static const String profilePromotionSubscribtion = 'profile_promotion_subscribtion';
+  static const String profilePromotionSubscribtion =
+      'profile_promotion_subscribtion';
 
   // Settings/Data
   static const String maritalStatuses = 'marital-status';
@@ -77,6 +76,7 @@ class ApiConstants {
   static const String myPackage = 'my-package';
   static const String getWallet = 'show-wallet';
   static const String deleteAccount = 'delete-account';
+  static const String deleteSafety = 'delete_safety';
   static const String showDeleteAccReasons = 'delete-account-reasons';
   static const String switchNotify = 'switch-notify';
   static const String sendCodeToOldPhone = 'old-phone-send-code';
@@ -102,12 +102,11 @@ class ApiConstants {
   static const String sendMsg = 'send-message/';
   static const String filter = 'filter';
 
-
-
   static const String startChat = 'start-chat';
   static const String appStages = 'app-stages';
   static const String parentExchangeNumbers = 'parent-exchange-numbers';
-  static const String parentIndividualConversation = 'parent-individual-conversation';
+  static const String parentIndividualConversation =
+      'parent-individual-conversation';
   static const String uploadImage = 'upload-room-file/';
   static const String matchTipPageSeen = 'match-tip-page-seen';
   static const String finishChat = 'finish-chat';
@@ -116,8 +115,10 @@ class ApiConstants {
   // Chat
   // ============================== Tips ==============================
   static const String chattingStageTips = 'chatting-stage-tips';
-  static const String shariaComplaintMeetingTerms = 'sharia-complaint-meeting-terms';
-  static const String shariaComplaintMeetingTips = 'sharia-complaint-meeting-tips';
+  static const String shariaComplaintMeetingTerms =
+      'sharia-complaint-meeting-terms';
+  static const String shariaComplaintMeetingTips =
+      'sharia-complaint-meeting-tips';
   static const String istikharaTips = 'istikhara-tips';
   static const String informParentsTips = 'inform-parents';
   static const String engagementTips = 'engagement-tips';
@@ -133,7 +134,6 @@ class ApiConstants {
   static const String parentMeetingRequest = 'parent_meeting_request';
   static const String forceReject = 'force-reject-match';
 
-
   static const String istikharaReminder = 'istikhara-reminder';
   static const String istikharaDua = 'istikhara-dua';
 
@@ -147,5 +147,4 @@ class ApiConstants {
 // ============================== acceptance ==============================
   static const String acceptRequest = 'accept-request/';
   static const String rejectRequest = 'reject-request/';
-
 }

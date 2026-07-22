@@ -214,6 +214,8 @@
   "irreversible_delete_account_warning": "This action cannot be undone after confirmation",
   "unable_to_load_delete_account_reasons": "Unable to load delete account reasons",
   "no_delete_account_reasons_found": "No reasons are available right now",
+  "cannot_delete_account_with_balance": "Your account cannot be deleted while your wallet has a balance.",
+  "cannot_delete_account_with_live_chat": "Your account cannot be deleted while you have an active chat.",
   "try_again": "Try again",
   "contact_us": "Contact us",
   "message_text": "Message text",

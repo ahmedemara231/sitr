@@ -3,6 +3,44 @@ import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubi
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/notification/notification_service.dart';
 
+class DeleteAccountSafety {
+  final bool value;
+  final String? reason;
+
+  const DeleteAccountSafety({
+    required this.value,
+    required this.reason,
+  });
+
+  factory DeleteAccountSafety.initial() =>
+      const DeleteAccountSafety(value: false, reason: null);
+
+  factory DeleteAccountSafety.fromJson(Map<String, dynamic> json) {
+    final Map<String, dynamic> safety =
+        Map<String, dynamic>.from(json['is_safe'] as Map? ?? {});
+    return DeleteAccountSafety(
+      value: safety['value'] == true,
+      reason: safety['reason']?.toString(),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'is_safe': {
+          'value': value,
+          'reason': reason,
+        },
+      };
+
+  DeleteAccountSafety copyWith({
+    bool? value,
+    String? reason,
+  }) =>
+      DeleteAccountSafety(
+        value: value ?? this.value,
+        reason: reason ?? this.reason,
+      );
+}
+
 class DeleteAccountReason {
   final int id;
   final String title;
@@ -94,7 +132,40 @@ class DeleteAccountReasonsCubit extends AsyncCubit<List<DeleteAccountReason>> {
 class DeleteAccountCubit extends AsyncCubit<dynamic> {
   DeleteAccountCubit() : super(null);
 
-  Future<void> deleteAccount({
+  Future<void> checkSafetyAndDeleteAccount({
+    required void Function(String msg) onSuccess,
+    required void Function(String reason) onUnsafe,
+    DeleteAccountReason? reason,
+    String? customReason,
+  }) async {
+    DeleteAccountSafety? safety;
+    await executeAsyncWithBaseModel(
+      operation: () => baseCrudUseCase.call<DeleteAccountSafety>(
+        CrudBaseParmas<DeleteAccountSafety>(
+          api: ApiConstants.deleteSafety,
+          httpRequestType: HttpRequestType.get,
+          mapper: (json) => DeleteAccountSafety.fromJson(
+            Map<String, dynamic>.from(json as Map),
+          ),
+        ),
+      ),
+      onSuccess: (data) => safety = data.data,
+    );
+
+    if (safety == null) return;
+    if (!safety!.value) {
+      onUnsafe(safety!.reason ?? '');
+      return;
+    }
+
+    await _deleteAccount(
+      onSuccess: onSuccess,
+      reason: reason,
+      customReason: customReason,
+    );
+  }
+
+  Future<void> _deleteAccount({
     required void Function(String msg) onSuccess,
     DeleteAccountReason? reason,
     String? customReason,

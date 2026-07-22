@@ -6,7 +6,7 @@
       <GradleProjectSettings>
         <option name="testRunner" value="CHOOSE_PER_TEST" />
         <option name="externalProjectPath" value="$USER_HOME$/Downloads/flutter_setups/flutter4/packages/flutter_tools/gradle" />
-        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="gradleJvm" value="jbr-21" />
         <option name="modules">
           <set>
             <option value="$USER_HOME$/Downloads/flutter_setups/flutter4/packages/flutter_tools/gradle" />

@@ -214,6 +214,8 @@
   "irreversible_delete_account_warning": "لا يمكن التراجع عن هذه العملية بعد التأكيد",
   "unable_to_load_delete_account_reasons": "تعذّر تحميل أسباب حذف الحساب",
   "no_delete_account_reasons_found": "لا توجد أسباب متاحة حاليًا",
+  "cannot_delete_account_with_balance": "لا يمكن حذف حسابك بينما تحتوي محفظتك على رصيد.",
+  "cannot_delete_account_with_live_chat": "لا يمكن حذف حسابك أثناء وجود محادثة نشطة.",
   "try_again": "حاول مرة أخرى",
   "contact_us": "تواصل معنا",
   "message_text": "نص الرسالة",

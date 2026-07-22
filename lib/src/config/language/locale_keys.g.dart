@@ -640,6 +640,12 @@ abstract class LocaleKeys {
   static const String _noDeleteAccountReasonsFound = 'no_delete_account_reasons_found';
   static String get noDeleteAccountReasonsFound => _noDeleteAccountReasonsFound.tr();
 
+  static const String _cannotDeleteAccountWithBalance = 'cannot_delete_account_with_balance';
+  static String get cannotDeleteAccountWithBalance => _cannotDeleteAccountWithBalance.tr();
+
+  static const String _cannotDeleteAccountWithLiveChat = 'cannot_delete_account_with_live_chat';
+  static String get cannotDeleteAccountWithLiveChat => _cannotDeleteAccountWithLiveChat.tr();
+
   static const String _tryAgain = 'try_again';
   static String get tryAgain => _tryAgain.tr();
 

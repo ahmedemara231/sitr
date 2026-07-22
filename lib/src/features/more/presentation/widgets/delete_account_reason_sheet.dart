@@ -13,6 +13,7 @@ import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/buttons/app_loading_button.dart';
+import '../../../../core/widgets/custom_messages.dart';
 import '../../../../core/widgets/text_fields/default_text_field.dart';
 import '../cubit/delete_account.dart';
 
@@ -100,11 +101,25 @@ class _DeleteAccountReasonSheetBodyState
     final DeleteAccountReason? reason = _selectedReason;
     if (reason == null || !_canDelete) return;
 
-    await context.read<DeleteAccountCubit>().deleteAccount(
+    await context.read<DeleteAccountCubit>().checkSafetyAndDeleteAccount(
           reason: reason.isOther ? null : reason,
           customReason: reason.isOther ? _reasonController.text : null,
           onSuccess: (msg) => widget.onSuccess(msg),
-    );
+          onUnsafe: (reason) => MessageUtils.showSnackBar(
+            _unsafeReasonMessage(reason),
+          ),
+        );
+  }
+
+  String _unsafeReasonMessage(String reason) {
+    switch (reason) {
+      case 'has_balance':
+        return LocaleKeys.cannotDeleteAccountWithBalance;
+      case 'has_live_chat':
+        return LocaleKeys.cannotDeleteAccountWithLiveChat;
+      default:
+        return reason;
+    }
   }
 
   @override
