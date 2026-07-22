@@ -1165,6 +1165,9 @@ abstract class LocaleKeys {
   static const String _chatReasonHasProblem = 'chat_reason_has_problem';
   static String get chatReasonHasProblem => _chatReasonHasProblem.tr();
 
+  static const String _partnerDeletedAccount = 'partner_deleted_account';
+  static String get partnerDeletedAccount => _partnerDeletedAccount.tr();
+
   static const String _promotionBadgeTitle = 'promotion_badge_title';
   static String get promotionBadgeTitle => _promotionBadgeTitle.tr();
 

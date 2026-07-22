@@ -44,6 +44,19 @@ class _ChatScreenBody extends StatefulWidget {
 
 class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObserver {
 
+  bool _isPartnerDeletedAccount(ChatModel model) {
+    final List<Members> members = model.room?.members ?? [];
+    final int? receiverId = int.tryParse(widget.requestModel.receiverId);
+
+    for (final Members member in members) {
+      if (member.id == receiverId) {
+        return member.isPartnerDeletedAccount;
+      }
+    }
+
+    return members.isNotEmpty && members.first.isPartnerDeletedAccount;
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
@@ -76,8 +89,9 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
     final stage = userRequest.stage!.value!.getCurrentStageAsStagesEnum;
     final userRequestEnum = userRequest.userRequestStatus!.getUserRequestStatusAsEnum;
     final int timer = model.matchRequest?.timer ?? 0;
+    final bool isPartnerDeletedAccount = _isPartnerDeletedAccount(model);
 
-    if(stage.isNewChat && userRequestEnum.isPending){
+    if(stage.isNewChat && userRequestEnum.isPending && !isPartnerDeletedAccount){
       return AcceptOrRejectFirstStageWidget(
         onAccept: (context) async => ChatActions.executeReq(
           context: context,
@@ -98,17 +112,15 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
             }
         ),
       );
-    }else if(!stage.isNewChat && timer.isEqualZero){
-      return Card(
-        color: Colors.white,
-        child: Center(
-            child: AppText(
-              LocaleKeys.unableToContinueChattingRightNow,
-              color: Colors.red,
-              fontWeight: FontWeight.w500,
-            ).paddingAll(20.sp)
-        ),
-      ).paddingAll(12.sp);
+    }else if(isPartnerDeletedAccount || (!stage.isNewChat && timer.isEqualZero)){
+      return ChatUnavailableIndicator(
+        message: isPartnerDeletedAccount
+            ? LocaleKeys.partnerDeletedAccount
+            : LocaleKeys.unableToContinueChattingRightNow,
+        icon: isPartnerDeletedAccount
+            ? Assets.svgBlockUser
+            : Assets.svgClock,
+      );
     }
 
     return ChatBottomBar(
@@ -183,6 +195,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
 
   void _initSocket() async {
     final String storedSocketUrl = await SecureStorage.read(SecureLocalVariableKeys.socetIoUrl) ?? '';
+    if (!mounted) return;
     socketType = ClientIOImpl(
       onConnect: (d) {
         log('socket connected');
@@ -232,8 +245,10 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
   void _handleInitialState()async{
     _chatController = PagifyController<ChatMessages>();
     await _startChat();
-    await SafeTextHelper.init();
-    _initSocket();
+    if(!context.read<ChatCubit>().currentRoom!.members!.first.isPartnerDeletedAccount){
+      await SafeTextHelper.init();
+      _initSocket();
+    }
   }
 
   @override
@@ -305,7 +320,8 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
             builder: (context, state) => ChatStatusBuilder(
               data: state,
               onSuccess: (data, context) =>
-              !data.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum.isNewChat &&
+              !_isPartnerDeletedAccount(data) &&
+                  !data.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum.isNewChat &&
                   data.matchRequest!.timer.isNotEqualZero?
               ValueListenableBuilder(
                   valueListenable: ZegoService.isConnected,
@@ -325,7 +341,8 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
             builder: (context, state) => ChatStatusBuilder(
                 data: state,
                 onSuccess: (data, context) {
-                  if(data.matchRequest!.timer.isNotEqualZero){
+                  if(!_isPartnerDeletedAccount(data) &&
+                      data.matchRequest!.timer.isNotEqualZero){
                     final callStatus = context.read<ChatCubit>().matchRequest?.callStatus;
                     if(((callStatus == 'free_available') || (callStatus == 'paid_available'))){
                       return ValueListenableBuilder(

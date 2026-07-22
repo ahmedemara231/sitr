@@ -246,8 +246,9 @@ class Room {
     final Map<String, dynamic> data = {};
     data['id'] = id;
     data['timer'] = timer;
-    if (members != null)
+    if (members != null) {
       data['members'] = members!.map((v) => v.toJson()).toList();
+    }
     if (messages != null) data['messages'] = messages!.toJson();
     data['last_message_body'] = lastMessageBody;
     data['last_message_created_dt'] = lastMessageCreatedDt;
@@ -283,21 +284,32 @@ class Members {
   final String? name;
   final String? image;
   final UserType? userType;
+  final bool isPartnerDeletedAccount;
 
-  Members({this.id, this.type, this.name, this.image, this.userType});
+  Members({
+    this.id,
+    this.type,
+    this.name,
+    this.image,
+    this.userType,
+    this.isPartnerDeletedAccount = false,
+  });
 
   Members.initial()
       : id = 0,
         type = '',
         name = '',
         image = '',
-        userType = UserType.values.first;
+        userType = UserType.values.first,
+        isPartnerDeletedAccount = false;
 
   Members.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         type = json['type'],
         name = json['name'],
         userType = (json['user_type'] as String?)?.toUserType(),
+        isPartnerDeletedAccount =
+            json['is_partner_deleted_account'] ?? true,
         image = json['image'];
 
   Map<String, dynamic> toJson() {
@@ -307,6 +319,7 @@ class Members {
     data['name'] = name;
     data['image'] = image;
     data['user_type'] = userType?.name;
+    data['is_partner_deleted_account'] = isPartnerDeletedAccount;
     return data;
   }
 
@@ -315,12 +328,17 @@ class Members {
     String? type,
     String? name,
     String? image,
+    UserType? userType,
+    bool? isPartnerDeletedAccount,
   }) {
     return Members(
       id: id ?? this.id,
       type: type ?? this.type,
       name: name ?? this.name,
       image: image ?? this.image,
+      userType: userType ?? this.userType,
+      isPartnerDeletedAccount:
+          isPartnerDeletedAccount ?? this.isPartnerDeletedAccount,
     );
   }
 }

@@ -402,6 +402,7 @@
   "chatReasonParentApprovalRequired #$ Parent approval is required to start this chat" : "يتطلب بدء هذه المحادثة موافقة ولي الأمر",
   "chatReasonChatRequestSent #$ Chat request sent" : "تم إرسال طلب المحادثة",
   "chatReasonHasProblem #$ Unable to start the chat right now" : "لا يمكن بدء المحادثة في الوقت الحالي",
+  "partnerDeletedAccount #$ This partner has deleted their account, so chatting is no longer available" : "قام الشريك بحذف حسابه، لذلك لم تعد المحادثة متاحة",
   "_____________________________________PromotionBadge___________________________________" : "",
   "promotionBadgeTitle #$ Upgrade your profile" : "ترقِّ ملفك الشخصي",
   "promotionBadgeSubtitle #$ Get exclusive benefits" : "احصل على مميزات حصرية ✨",

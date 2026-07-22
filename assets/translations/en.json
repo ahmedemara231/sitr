@@ -392,6 +392,7 @@
   "chat_reason_parent_approval_required": "Parent approval is required to start this chat",
   "chat_reason_chat_request_sent": "Chat request sent",
   "chat_reason_has_problem": "Unable to start the chat right now",
+  "partner_deleted_account": "This partner has deleted their account, so chatting is no longer available",
   "promotion_badge_title": "Upgrade your profile",
   "promotion_badge_subtitle": "Get exclusive benefits",
   "promotion_badge_action": "Start now",

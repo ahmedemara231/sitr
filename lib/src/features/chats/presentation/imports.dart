@@ -12,7 +12,6 @@ import '../../../config/res/config_imports.dart';
 import '../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../core/extensions/num.dart';
 import '../../../core/extensions/object.dart';
-import '../../../core/extensions/padding_extension.dart';
 import '../../../core/extensions/string_extension.dart';
 import '../../../core/helpers/cache_service.dart';
 import '../../../core/helpers/helpers.dart';
@@ -48,5 +47,6 @@ import 'widgets/chat/bottom_bar.dart';
 import 'widgets/chat/chat_view.dart';
 import 'widgets/chat/upper_view.dart';
 import 'widgets/chat_status_builder.dart';
+import 'widgets/chat_unavailable_indicator.dart';
 
 part '../presentation/screens/chat_screen.dart';
