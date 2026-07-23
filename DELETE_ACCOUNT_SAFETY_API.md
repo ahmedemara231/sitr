@@ -14,7 +14,7 @@ Authentication is required. The endpoint must not delete or mutate the user acco
 
 ## Safe response
 
-When the user has no wallet balance and no active/live chat:
+When the user has no active package and no active/live chat:
 
 ```json
 {
@@ -31,7 +31,7 @@ When the user has no wallet balance and no active/live chat:
 
 ## Unsafe responses
 
-When the user has wallet balance:
+When the user has an active package:
 
 ```json
 {
@@ -40,7 +40,7 @@ When the user has wallet balance:
   "data": {
     "is_safe": {
       "value": false,
-      "reason": "has_balance"
+      "reason": "has_active_package"
     }
   }
 }
@@ -66,9 +66,14 @@ When the user has an active/live chat:
 | Field | Type | Required | Allowed values |
 |---|---|---|---|
 | `data.is_safe.value` | boolean | Yes | `true`, `false` |
-| `data.is_safe.reason` | string/null | Yes | `null` when safe; `has_balance` or `has_live_chat` when unsafe |
+| `data.is_safe.reason` | string/null | Yes | `null` when safe; `has_active_package` or `has_live_chat` when unsafe |
 
-The API must return a JSON boolean for `value`, not `1`, `0`, or a string. When both unsafe conditions apply, return the higher-priority reason according to backend business rules and keep the value within the allowed enum above.
+When `value` is `false`, `reason` must contain exactly one of these two values:
+
+- `has_active_package`: the user has an active package.
+- `has_live_chat`: the user has an active/live chat.
+
+The API must return a JSON boolean for `value`, not `1`, `0`, or a string. Do not return any other reason value. When both unsafe conditions apply, return one of the two allowed reasons according to backend business priority.
 
 ## Mobile behavior
 

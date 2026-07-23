@@ -2,93 +2,8 @@ import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/notification/notification_service.dart';
-
-class DeleteAccountSafety {
-  final bool value;
-  final String? reason;
-
-  const DeleteAccountSafety({
-    required this.value,
-    required this.reason,
-  });
-
-  factory DeleteAccountSafety.initial() =>
-      const DeleteAccountSafety(value: false, reason: null);
-
-  factory DeleteAccountSafety.fromJson(Map<String, dynamic> json) {
-    final Map<String, dynamic> safety =
-        Map<String, dynamic>.from(json['is_safe'] as Map? ?? {});
-    return DeleteAccountSafety(
-      value: safety['value'],
-      reason: safety['reason']?.toString(),
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        'is_safe': {
-          'value': value,
-          'reason': reason,
-        },
-      };
-
-  DeleteAccountSafety copyWith({
-    bool? value,
-    String? reason,
-  }) =>
-      DeleteAccountSafety(
-        value: value ?? this.value,
-        reason: reason ?? this.reason,
-      );
-}
-
-class DeleteAccountReason {
-  final int id;
-  final String title;
-  final String? description;
-  final bool isOther;
-
-  const DeleteAccountReason({
-    required this.id,
-    required this.title,
-    this.description,
-    this.isOther = false,
-  });
-
-  factory DeleteAccountReason.fromJson(Map<String, dynamic> json) {
-    final String title =
-        _readString(json, ['text', 'title', 'name', 'reason', 'value']) ?? '';
-    return DeleteAccountReason(
-      id: _readInt(json['id'] ?? json['value']) ?? 0,
-      title: title,
-      description:
-          _readString(json, ['description', 'desc', 'body', 'subtitle']),
-      isOther: json['is_other'] == true || json['type'] == 'other',
-    );
-  }
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'text': title,
-        'description': description,
-        'is_other': isOther,
-      };
-
-  static int? _readInt(dynamic value) {
-    if (value is int) return value;
-    if (value is num) return value.toInt();
-    return int.tryParse(value?.toString() ?? '');
-  }
-
-  static String? _readString(Map<String, dynamic> json, List<String> keys) {
-    for (final key in keys) {
-      final value = json[key];
-      if (value != null && value.toString().trim().isNotEmpty) {
-        return value.toString();
-      }
-    }
-    return null;
-  }
-}
+import '../models/delete_account_reason.dart';
+import '../models/delete_account_safety.dart';
 
 class DeleteAccountReasonsCubit extends AsyncCubit<List<DeleteAccountReason>> {
   DeleteAccountReasonsCubit() : super([]);
@@ -111,10 +26,7 @@ class DeleteAccountReasonsCubit extends AsyncCubit<List<DeleteAccountReason>> {
       list = json;
     } else if (json is Map) {
       final map = Map<String, dynamic>.from(json);
-      list = map['reasons'] ??
-          map['delete_account_reasons'] ??
-          map['delete_acc_reasons'] ??
-          map['data'];
+      list = map['data'];
     } else {
       list = [];
     }

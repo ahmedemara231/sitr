@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="633184ef-a69c-472f-a6e1-00950ff558bb" name="Changes" comment="Implement account deletion safety preflight check and update project infrastructure&#10;&#10;- **Features - Account Management**:&#10;    - Implement a preflight safety check in the account deletion flow to prevent users from deleting accounts with active wallet balances or ongoing live chats.&#10;    - Update `DeleteAccountReasonSheet` to perform the safety verification before proceeding and display localized snackbar messages when deletion is blocked.&#10;    - Introduce the `DeleteAccountSafety` model to parse safety status and restriction reasons (`has_balance`, `has_live_chat`) from the backend.&#10;&#10;- **Logic &amp; State Management**:&#10;    - Refactor `DeleteAccountCubit` to include `checkSafetyAndDeleteAccount`, which coordinates the safety API call and conditional account deletion.&#10;    - Add the `deleteSafety` endpoint to `ApiConstants` and generate corresponding keys in `locale_keys.g.dart`.&#10;&#10;- **Documentation**:&#10;    - Create `DELETE_ACCOUNT_SAFETY_API.md` to define the technical contract, expected JSON responses, and mobile behavior for the account deletion preflight endpoint.&#10;&#10;- **Localization**:&#10;    - Add new translation strings in Arabic and English for account deletion blockers: `cannot_delete_account_with_balance` and `cannot_delete_account_with_live_chat`.&#10;&#10;- **Tools &amp; Infrastructure**:&#10;    - Update IDE configurations and library paths to synchronize with Flutter 3.44 and Dart SDK 3.10.&#10;    - Renamed run configurations from `main_dev.dart` to `dev` and `production` for improved clarity.&#10;    - Update `pubspec.lock` with minor version bumps for core packages including `meta`, `matcher`, and `material_color_utilities`.&#10;    - Add Flutter migrator flags (`android.builtInKotlin`, `android.newDsl`) to `gradle.properties`.&#10;    - Synchronize `.idea/workspace.xml` with updated task history and file references.">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DELETE_ACCOUNT_SAFETY_API.md" beforeDir="false" afterPath="$PROJECT_DIR$/DELETE_ACCOUNT_SAFETY_API.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/cubit/delete_account.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/cubit/delete_account.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/src/features/more/presentation/widgets/delete_account_reason_sheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/src/features/more/presentation/widgets/delete_account_reason_sheet.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +87,7 @@
     "io.flutter.reload.alreadyRun": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/aaita/Desktop/apps/crud_sitr/sitr/assets/svg",
-    "settings.editor.selected.configurable": "flutter.settings",
+    "settings.editor.selected.configurable": "preferences.keymap",
     "show.migrate.to.gradle.popup": "false"
   }
 }]]></component>
@@ -199,7 +205,15 @@
       <option name="project" value="LOCAL" />
       <updated>1784732175792</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Implement account deletion safety preflight check and update project infrastructure&#10;&#10;- **Features - Account Management**:&#10;    - Implement a preflight safety check in the account deletion flow to prevent users from deleting accounts with active wallet balances or ongoing live chats.&#10;    - Update `DeleteAccountReasonSheet` to perform the safety verification before proceeding and display localized snackbar messages when deletion is blocked.&#10;    - Introduce the `DeleteAccountSafety` model to parse safety status and restriction reasons (`has_balance`, `has_live_chat`) from the backend.&#10;&#10;- **Logic &amp; State Management**:&#10;    - Refactor `DeleteAccountCubit` to include `checkSafetyAndDeleteAccount`, which coordinates the safety API call and conditional account deletion.&#10;    - Add the `deleteSafety` endpoint to `ApiConstants` and generate corresponding keys in `locale_keys.g.dart`.&#10;&#10;- **Documentation**:&#10;    - Create `DELETE_ACCOUNT_SAFETY_API.md` to define the technical contract, expected JSON responses, and mobile behavior for the account deletion preflight endpoint.&#10;&#10;- **Localization**:&#10;    - Add new translation strings in Arabic and English for account deletion blockers: `cannot_delete_account_with_balance` and `cannot_delete_account_with_live_chat`.&#10;&#10;- **Tools &amp; Infrastructure**:&#10;    - Update IDE configurations and library paths to synchronize with Flutter 3.44 and Dart SDK 3.10.&#10;    - Renamed run configurations from `main_dev.dart` to `dev` and `production` for improved clarity.&#10;    - Update `pubspec.lock` with minor version bumps for core packages including `meta`, `matcher`, and `material_color_utilities`.&#10;    - Add Flutter migrator flags (`android.builtInKotlin`, `android.newDsl`) to `gradle.properties`.&#10;    - Synchronize `.idea/workspace.xml` with updated task history and file references.">
+      <option name="closed" value="true" />
+      <created>1784732351476</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1784732351476</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
