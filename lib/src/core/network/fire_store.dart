@@ -11,7 +11,6 @@ class FireStoreService{
     'device_type' : Helpers.getDeviceType(),
     'device_id' : NotificationService.deviceToken,
     'flavor' : Helpers.currentFlavor.name,
-    'is_debug' : kDebugMode
   };
 
   final String _collectionName = 'requests';
