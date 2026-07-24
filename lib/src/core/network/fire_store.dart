@@ -1,8 +1,20 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
+import '../helpers/helpers.dart';
+import '../notification/notification_service.dart';
 import 'network_request.dart';
 
 class FireStoreService{
+  final Map<String, dynamic> _additionalData = {
+    'time' : DateFormat('EEEE, dd MMMM yyyy - hh:mm a', 'en_US').format(DateTime.now()),
+    'device_type' : Helpers.getDeviceType(),
+    'device_id' : NotificationService.deviceToken,
+    'flavor' : Helpers.currentFlavor.name,
+    'is_debug' : kDebugMode
+  };
+
   final String _collectionName = 'requests';
   final String _requestCollection = 'request';
   final String _responseCollection = 'response';
@@ -18,14 +30,14 @@ class FireStoreService{
   String _docId(String path) => path.replaceAll("/", "-");
 
   Future<void> storePaymentResponseUrl(String url)async{
-    FirebaseFirestore.instance.collection(_paymentsCollection).add({'url' : url});
+    FirebaseFirestore.instance.collection(_paymentsCollection).add({'url' : url}..addAll(_additionalData));
   }
 
   Future<void> storeRequest(NetworkRequest request)async{
     _fireStoreMainCollection
         .doc(_docId(request.path))
         .collection(_requestCollection)
-        .add(request.toJson());
+        .add(request.toJson()..addAll(_additionalData));
   }
 
   Future<void> storeResponse({

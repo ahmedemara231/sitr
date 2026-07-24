@@ -1,10 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../helpers/helpers.dart';
-
 enum RequestMethod { get, post, put, delete, patch }
-
-
 class NetworkRequest<GenericModel> {
   final String path;
   final RequestMethod method;
@@ -27,7 +23,6 @@ class NetworkRequest<GenericModel> {
   });
 
   Map<String, dynamic> toJson() => {
-    'flavor' : Helpers.currentFlavor.name,
     'path': path,
     'method': method.name,
     'body': body,
