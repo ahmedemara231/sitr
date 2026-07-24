@@ -1,14 +1,13 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:intl/intl.dart';
 import '../helpers/helpers.dart';
 import '../notification/notification_service.dart';
 import 'network_request.dart';
 
 class FireStoreService{
   final Map<String, dynamic> _additionalData = {
-    'time' : DateFormat('EEEE, dd MMMM yyyy - hh:mm a', 'en_US').format(DateTime.now()),
+    'time' : Helpers.formatedDataTime,
     'device_type' : Helpers.getDeviceType(),
     'device_id' : NotificationService.deviceToken,
     'flavor' : Helpers.currentFlavor.name,
