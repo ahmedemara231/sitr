@@ -84,3 +84,6 @@ fingerPrint:
 
 kill:
 	killall -9 dart
+
+simulator:
+    open -a Simulator

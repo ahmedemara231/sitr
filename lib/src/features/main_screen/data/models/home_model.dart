@@ -149,6 +149,7 @@ class Opportunity extends OpportunityModel {
   num? weight;
   TitleValueShape? martialStatus;
   String? nickName;
+  bool isPromoted;
 
   Opportunity({
     super.id,
@@ -164,6 +165,7 @@ class Opportunity extends OpportunityModel {
     this.weight,
     this.hijab,
     this.skin,
+    this.isPromoted = false,
   });
 
   factory Opportunity.fromJson(dynamic json) {
@@ -183,6 +185,7 @@ class Opportunity extends OpportunityModel {
       nickName: json['nick_name'],
       hijab: json['hijab'] != null ? TitleValueShape.fromJson(json['hijab']) : null,
       skin: json['skin_color'] != null ? TitleValueShape.fromJson(json['skin_color']) : null,
+      isPromoted: json['is_promoted'] ?? false,
     );
   }
 
@@ -200,6 +203,7 @@ class Opportunity extends OpportunityModel {
     String? nickName,
     TitleValueShape? hijab,
     TitleValueShape? skin,
+    bool? isPromoted,
   }) =>
       Opportunity(
         id: id ?? this.id,
@@ -215,6 +219,7 @@ class Opportunity extends OpportunityModel {
         weight: weight ?? this.weight,
         hijab: hijab ?? this.hijab,
         skin: skin ?? this.skin,
+        isPromoted: isPromoted ?? this.isPromoted,
       );
 
   @override
@@ -233,6 +238,7 @@ class Opportunity extends OpportunityModel {
     if (city != null) map['city'] = city;
     if (height != null) map['height'] = height;
     if (weight != null) map['weight'] = weight;
+    map['is_promoted'] = isPromoted;
     return map;
   }
 }
@@ -240,6 +246,7 @@ class Opportunity extends OpportunityModel {
 class Parent extends OpportunityModel {
   Relation? relation;
   int? numOfChildren;
+  bool isPromoted;
 
   Parent({
     super.id,
@@ -249,6 +256,7 @@ class Parent extends OpportunityModel {
     super.gender,
     this.relation,
     this.numOfChildren,
+    this.isPromoted = false,
   });
 
   factory Parent.fromJson(dynamic json) {
@@ -260,6 +268,7 @@ class Parent extends OpportunityModel {
       gender: json['gender'] != null ? GenderValueShape.fromJson(json['gender']) : null,
       relation: json['relation'] != null ? Relation.fromJson(json['relation']) : null,
       numOfChildren: json['num_of_children'],
+      isPromoted: json['is_promoted'] ?? false,
     );
   }
 
@@ -271,6 +280,7 @@ class Parent extends OpportunityModel {
     GenderValueShape? gender,
     Relation? relation,
     int? numOfChildren,
+    bool? isPromoted,
   }) =>
       Parent(
         id: id ?? this.id,
@@ -280,6 +290,7 @@ class Parent extends OpportunityModel {
         gender: gender ?? this.gender,
         relation: relation ?? this.relation,
         numOfChildren: numOfChildren ?? this.numOfChildren,
+        isPromoted: isPromoted ?? this.isPromoted,
       );
 
   @override
@@ -292,6 +303,7 @@ class Parent extends OpportunityModel {
     if (gender != null) map['gender'] = gender!.toJson();
     if (relation != null) map['relation'] = relation!.toJson();
     if (numOfChildren != null) map['num_of_children'] = numOfChildren;
+    map['is_promoted'] = isPromoted;
     return map;
   }
 }

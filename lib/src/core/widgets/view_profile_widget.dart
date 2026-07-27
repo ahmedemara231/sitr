@@ -36,6 +36,7 @@ import 'chat_availability_badge.dart';
 import 'chat_button.dart';
 import 'custom_messages.dart';
 import 'image_widgets/cached_image.dart';
+import 'premium_user_badge.dart';
 import 'promotion_badge.dart';
 import 'scaffolds/center_card_scaffold.dart';
 import 'unavailability_reason_card.dart';
@@ -73,11 +74,8 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
 
   ChatReason? get _chatReason => ChatReason.fromValue(user.canChat!.reason?.value);
 
-  // bool get _shouldShowPromotionBadge =>
-  //     widget._type.isProfile && (UserModel.currentUser?.isPromoted ?? false);
-
   bool get _shouldShowPromotionBadge =>
-      widget._type.isProfile;
+      widget._type.isProfile && !user.isPromoted;
 
   Widget _getAvailabilityStatus(){
     if(widget._type.isPartnerProfile){
@@ -251,8 +249,13 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                   if(user.childParentInfo.isNotNull)
                     Row(
                       children: [
-                        AppText((state.data as IndividualUserModel).nickName??'', fontWeight: FontWeight.bold),
-                        const Spacer(),
+                        Expanded(
+                          child: PremiumUserName(
+                            name: (state.data as IndividualUserModel).nickName ?? '',
+                            isPremium: state.data.isPromoted,
+                          ),
+                        ),
+                        8.szW,
                         InkWell(
                           onTap: () => Go.to(ParentDetailsScreen(id: user.childParentInfo?.id ?? 0)),
 
@@ -273,7 +276,10 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        AppText((state.data as IndividualUserModel).nickName??'', fontWeight: FontWeight.bold),
+                        PremiumUserName(
+                          name: (state.data as IndividualUserModel).nickName ?? '',
+                          isPremium: state.data.isPromoted,
+                        ),
                         if(widget._type.isProfile)
                           AppText(
                             '${LocaleKeys.numberOfProfileVisits} : ${state.data.views}',
@@ -286,8 +292,8 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                   AppText((state.data as IndividualUserModel).bio??'', textAlign: TextAlign.center),
                   _getAvailabilityStatus(),
                   if(_isNotAvailableToChat) UnavailabilityReasonCard(reason: _chatReason),
-                  // if(_shouldShowPromotionBadge)
-                  //   const PromotionBadge(),
+                  if(_shouldShowPromotionBadge)
+                    const PromotionBadge(),
                 ],
               ).paddingAll(12.r),
             ),

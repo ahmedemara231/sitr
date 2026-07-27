@@ -15,6 +15,7 @@ import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/image_widgets/cached_image.dart';
 import '../../../../core/widgets/parent_children_screen.dart';
+import '../../../../core/widgets/premium_user_badge.dart';
 import '../../../../core/widgets/scaffolds/center_card_scaffold.dart';
 import '../../../main_screen/data/models/partner_info_model.dart';
 import '../../../main_screen/presentation/widgets/partner_info/info_widget.dart';
@@ -87,10 +88,10 @@ class _ParentProfileState extends State<ParentProfile> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AppText(
-                        data.name ?? '',
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.bold
+                    PremiumUserName(
+                      name: data.name ?? '',
+                      isPremium: data.isPromoted,
+                      fontSize: 20.sp,
                     ),
 
                     AppText(
@@ -98,7 +99,7 @@ class _ParentProfileState extends State<ParentProfile> {
                       fontSize: 10.sp,
                       color: AppColors.primary,
                       fontWeight: FontWeight.bold,
-                    )
+                    ),
                   ],
                 ).paddingSymmetric(horizontal: 12.w),
               ),

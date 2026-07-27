@@ -38,8 +38,8 @@ class ChatUnavailableIndicator extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              width: 40.r,
-              height: 40.r,
+              width: 25.r,
+              height: 25.r,
               decoration: BoxDecoration(
                 color: AppColors.error.withValues(alpha: 0.08),
                 shape: BoxShape.circle,

@@ -1174,6 +1174,9 @@ abstract class LocaleKeys {
   static const String _partnerDeletedAccount = 'partner_deleted_account';
   static String get partnerDeletedAccount => _partnerDeletedAccount.tr();
 
+  static const String _premiumUser = 'premium_user';
+  static String get premiumUser => _premiumUser.tr();
+
   static const String _promotionBadgeTitle = 'promotion_badge_title';
   static String get promotionBadgeTitle => _promotionBadgeTitle.tr();
 

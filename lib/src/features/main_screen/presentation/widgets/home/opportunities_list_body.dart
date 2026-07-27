@@ -55,6 +55,7 @@ class OpportunitiesListBody extends StatelessWidget {
                                 name: element.name ?? '',
                                 kinship: element.relation?.name ?? '',
                                 childrenNumber: element.numOfChildren ?? 0,
+                                isPromoted: element.isPromoted,
                               )
                             : PartnerCard.individual(opportunity: element as Opportunity)
                                 .paddingBottom(16.h),

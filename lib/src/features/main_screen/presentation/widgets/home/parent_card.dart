@@ -5,6 +5,7 @@ import '../../../../../../generated/assets.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/extensions/sized_box_helper.dart';
+import '../../../../../core/widgets/premium_user_badge.dart';
 import '../../../../../core/widgets/svg_pic.dart';
 import 'home_image.dart';
 
@@ -13,12 +14,14 @@ class ParentCard extends StatelessWidget {
   final String name;
   final String kinship;
   final int childrenNumber;
+  final bool isPromoted;
 
   const ParentCard({super.key,
     required this.parentImage,
     required this.name,
     required this.kinship,
     required this.childrenNumber,
+    required this.isPromoted,
   });
 
   @override
@@ -29,7 +32,7 @@ class ParentCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: AppColors.blackShadow.withValues(alpha: 0.08),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -47,14 +50,9 @@ class ParentCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  name,
-                  style: const TextStyle(
-                    fontFamily: ConstantManager.fontFamily,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF212121),
-                  ),
+                PremiumUserName(
+                  name: name,
+                  isPremium: isPromoted,
                 ),
 
                 10.szH,

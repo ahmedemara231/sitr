@@ -30,11 +30,39 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 
 flutter_ios_podfile_setup
 
+def ensure_zego_express_engine_framework
+  zego_ios_path = File.expand_path(
+    File.join('.symlinks', 'plugins', 'zego_express_engine', 'ios'),
+    __dir__,
+  )
+  zego_framework_info_path = File.join(
+    zego_ios_path,
+    'libs',
+    'ZegoExpressEngine.xcframework',
+    'Info.plist',
+  )
+  return if File.exist?(zego_framework_info_path)
+
+  zego_download_script_path = File.join(zego_ios_path, 'download.sh')
+  return unless File.exist?(zego_download_script_path)
+
+  Pod::UI.puts 'Downloading the ZEGO Express Engine native iOS framework...'
+  download_succeeded = system('/bin/sh', zego_download_script_path)
+  return if download_succeeded && File.exist?(zego_framework_info_path)
+
+  raise <<~ERROR
+    Failed to download ZegoExpressEngine.xcframework.
+    Check the network connection, then run `pod install` again.
+  ERROR
+end
+
 target 'Runner' do
   use_frameworks!
   pod 'TikTokBusinessSDK'
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+  ensure_zego_express_engine_framework
+
   target 'RunnerTests' do
     inherit! :search_paths
   end

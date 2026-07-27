@@ -5,6 +5,7 @@ import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/extensions/sized_box_helper.dart';
 import '../../../../../core/helpers/user_type_enum.dart';
+import '../../../../../core/widgets/premium_user_badge.dart';
 import '../../../../../core/widgets/svg_pic.dart';
 import '../../../data/models/home_model.dart';
 import 'home_image.dart';
@@ -32,7 +33,7 @@ class PartnerCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: AppColors.blackShadow.withValues(alpha: 0.08),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -50,14 +51,9 @@ class PartnerCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  opportunity.name ?? '',
-                  style: const TextStyle(
-                    fontFamily: ConstantManager.fontFamily,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF212121),
-                  ),
+                PremiumUserName(
+                  name: opportunity.name ?? '',
+                  isPremium: opportunity.isPromoted,
                 ),
 
                 10.szH,

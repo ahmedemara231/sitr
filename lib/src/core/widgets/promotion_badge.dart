@@ -8,25 +8,19 @@ import 'sheets/promotion_plans_sheet.dart';
 class PromotionBadge extends StatelessWidget {
   static const double height = 50;
 
-  final VoidCallback? onTap;
-
   const PromotionBadge({
     super.key,
-    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    final VoidCallback effectiveOnTap =
-        onTap ?? () => showPromotionPlansSheet(context);
-
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Material(
         color: AppColors.transparent,
         borderRadius: BorderRadius.circular(28.r),
         child: InkWell(
-          onTap: effectiveOnTap,
+          onTap: () => showPromotionPlansSheet(context),
           borderRadius: BorderRadius.circular(28.r),
           child: Container(
             height: height.h,

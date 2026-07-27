@@ -404,6 +404,7 @@
   "chatReasonHasProblem #$ Unable to start the chat right now" : "لا يمكن بدء المحادثة في الوقت الحالي",
   "partnerDeletedAccount #$ This partner has deleted their account, so chatting is no longer available" : "قام الشريك بحذف حسابه، لذلك لم تعد المحادثة متاحة",
   "_____________________________________PromotionBadge___________________________________" : "",
+  "premiumUser #$ Premium user" : "عضو مميز",
   "promotionBadgeTitle #$ Upgrade your profile" : "ترقِّ ملفك الشخصي",
   "promotionBadgeSubtitle #$ Get exclusive benefits" : "احصل على مميزات حصرية ✨",
   "promotionBadgeAction #$ Start now" : "ابدأ الآن",
