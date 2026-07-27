@@ -293,7 +293,13 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                   _getAvailabilityStatus(),
                   if(_isNotAvailableToChat) UnavailabilityReasonCard(reason: _chatReason),
                   if(_shouldShowPromotionBadge)
-                    const PromotionBadge(),
+                    PromotionBadge(
+                      onSuccess: () => widget.cubit.getProfile(
+                        onSuccess: (userResult) {
+                          _onSuccess(userResult);
+                        },
+                      ),
+                    ),
                 ],
               ).paddingAll(12.r),
             ),

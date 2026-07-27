@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,7 +22,12 @@ import 'promotion_plans_states.dart';
 import 'promotion_sheet_chrome.dart';
 
 class PromotionPlansSheetBody extends StatefulWidget {
-  const PromotionPlansSheetBody({super.key});
+  final FutureOr<void> Function()? onSuccess;
+
+  const PromotionPlansSheetBody({
+    super.key,
+    this.onSuccess,
+  });
 
   @override
   State<PromotionPlansSheetBody> createState() =>
@@ -53,10 +60,11 @@ class _PromotionPlansSheetBodyState extends State<PromotionPlansSheetBody> {
 
     if (result == 'success') {
       await UserCubit.instance.refreshProfile();
+      await widget.onSuccess?.call();
       if (!mounted) return;
 
       setState(() => _isSubscribed = true);
-      Navigator.of(context).pop();
+      Go.back();
       await Future<void>.delayed(const Duration(milliseconds: 250));
       await showDefaultBottomSheet(
         child: SuccessSheet(

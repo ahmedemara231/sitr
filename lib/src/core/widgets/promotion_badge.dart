@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -8,8 +10,11 @@ import 'sheets/promotion_plans_sheet.dart';
 class PromotionBadge extends StatelessWidget {
   static const double height = 50;
 
+  final FutureOr<void> Function()? onSuccess;
+
   const PromotionBadge({
     super.key,
+    this.onSuccess,
   });
 
   @override
@@ -20,7 +25,7 @@ class PromotionBadge extends StatelessWidget {
         color: AppColors.transparent,
         borderRadius: BorderRadius.circular(28.r),
         child: InkWell(
-          onTap: () => showPromotionPlansSheet(context),
+          onTap: () => showPromotionPlansSheet(onSuccess: onSuccess),
           borderRadius: BorderRadius.circular(28.r),
           child: Container(
             height: height.h,
