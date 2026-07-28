@@ -20,6 +20,7 @@ class FilterModel {
   final double? weight;
   final double? height;
 
+  factory FilterModel.initial() => FilterModel();
   FilterModel({
     this.maritalStatus,
     this.age,

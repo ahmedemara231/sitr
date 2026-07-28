@@ -13,7 +13,9 @@ import '../../../../core/widgets/view_profile_widget.dart';
 import '../../../chats/data/models/request_model.dart';
 import '../../../chats/presentation/imports.dart';
 import '../../../home/home_screen.dart';
+import '../../../main_screen/data/models/filter_model.dart';
 import '../../../main_screen/presentation/cubits/get_partner_info_cubit.dart';
+import '../../../main_screen/presentation/screens/filter_result.dart';
 import '../../data/message_requests_data.dart';
 import '../../data/models/message_request_model.dart';
 import '../widgets/connection_requests_empty_view.dart';
@@ -42,7 +44,7 @@ class _ConnectionRequestsScreenState extends State<ConnectionRequestsScreen> {
     super.dispose();
   }
 
-  void _onExploreProfilesPressed() {}
+  void _onExploreProfilesPressed() => Go.to(FilterResultScreen(filterModel: FilterModel.initial()));
 
   void _viewProfile(MessageRequestModel request) {
     Go.to(
