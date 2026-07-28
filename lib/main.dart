@@ -82,7 +82,7 @@ Future<bool> fetchBaseUrl() async {
 
     return true;
   } catch (e) {
-    log('the error is $e');
+    log('the firebase error is $e');
     return false;
   }
 }
