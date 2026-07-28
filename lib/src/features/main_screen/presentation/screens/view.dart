@@ -160,10 +160,8 @@ class _MainViewBodyState extends State<MainViewBody> {
           ),
           headerContent: Column(
             children: [
-              if (!isPromoted) ...[
-                const PromotionBadge(),
-                SizedBox(height: 16.h),
-              ],
+              isPromoted ? const PromotedBadge() : const PromotionBadge(),
+              SizedBox(height: 16.h),
               StatusBuilder(
                 data: state,
                 onSuccess: (data, context) => Column(

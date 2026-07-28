@@ -33,54 +33,91 @@ class PromotionBadge extends StatelessWidget {
           transition: TransitionType.slide,
         ),
         borderRadius: BorderRadius.circular(10.r),
-        child: Ink(
-          height: height.h,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: AppColors.primary,
-            borderRadius: BorderRadius.circular(10.r),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.blackShadow.withValues(alpha: 0.06),
-                blurRadius: 24.r,
-                offset: Offset(0, 4.h),
-              ),
-            ],
+        child: const _PromotionBadgeSurface(
+          textBlock: _PromotionTextBlock(),
+          trailing: _PromotionActionPill(),
+        ),
+      ),
+    );
+  }
+}
+
+class PromotedBadge extends StatelessWidget {
+  const PromotedBadge({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: LocaleKeys.promotedBadgeTitle,
+      excludeSemantics: true,
+      child: const Material(
+        color: AppColors.transparent,
+        child: _PromotionBadgeSurface(
+          textBlock: _PromotedTextBlock(),
+          trailing: _PromotedStatusPill(),
+        ),
+      ),
+    );
+  }
+}
+
+class _PromotionBadgeSurface extends StatelessWidget {
+  final Widget textBlock;
+  final Widget trailing;
+
+  const _PromotionBadgeSurface({
+    required this.textBlock,
+    required this.trailing,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Ink(
+      height: PromotionBadge.height.h,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: AppColors.primary,
+        borderRadius: BorderRadius.circular(10.r),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.blackShadow.withValues(alpha: 0.06),
+            blurRadius: 24.r,
+            offset: Offset(0, 4.h),
           ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10.r),
-            child: Stack(
-              children: [
-                PositionedDirectional(
-                  top: -34.h,
-                  end: -18.w,
-                  child: const _PromotionDecorationCircle(dimension: 108),
-                ),
-                PositionedDirectional(
-                  bottom: -42.h,
-                  start: 92.w,
-                  child: const _PromotionDecorationCircle(dimension: 82),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(
-                    14.w,
-                    12.h,
-                    12.w,
-                    12.h,
-                  ),
-                  child: Row(
-                    children: [
-                      const _PromotionIcon(),
-                      SizedBox(width: 10.w),
-                      const Expanded(child: _PromotionTextBlock()),
-                      SizedBox(width: 8.w),
-                      const _PromotionActionPill(),
-                    ],
-                  ),
-                ),
-              ],
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10.r),
+        child: Stack(
+          children: [
+            PositionedDirectional(
+              top: -34.h,
+              end: -18.w,
+              child: const _PromotionDecorationCircle(dimension: 108),
             ),
-          ),
+            PositionedDirectional(
+              bottom: -42.h,
+              start: 92.w,
+              child: const _PromotionDecorationCircle(dimension: 82),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(
+                14.w,
+                12.h,
+                12.w,
+                12.h,
+              ),
+              child: Row(
+                children: [
+                  const _PromotionIcon(),
+                  SizedBox(width: 10.w),
+                  Expanded(child: textBlock),
+                  SizedBox(width: 8.w),
+                  trailing,
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -198,6 +235,75 @@ class _PromotionActionPill extends StatelessWidget {
             color: AppColors.primary,
             width: 11.sp,
             height: 11.sp,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PromotedTextBlock extends StatelessWidget {
+  const _PromotedTextBlock();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        AppText(
+          LocaleKeys.promotedBadgeTitle,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          color: AppColors.white,
+          fontSize: 15.sp,
+          fontWeight: FontWeight.bold,
+          height: 1.2,
+        ),
+        SizedBox(height: 4.h),
+        AppText(
+          LocaleKeys.promotedBadgeSubtitle,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          color: AppColors.promotionBadgeSubtitle,
+          fontSize: 11.sp,
+          fontWeight: FontWeight.w500,
+          height: 1.25,
+        ),
+      ],
+    );
+  }
+}
+
+class _PromotedStatusPill extends StatelessWidget {
+  const _PromotedStatusPill();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsetsDirectional.fromSTEB(8.w, 7.h, 10.w, 7.h),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(50.r),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IconWidget(
+            icon: Icons.verified_rounded,
+            color: AppColors.primary,
+            width: 13.sp,
+            height: 13.sp,
+          ),
+          SizedBox(width: 4.w),
+          AppText(
+            LocaleKeys.promotedBadgeStatus,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            color: AppColors.primary,
+            fontSize: 11.sp,
+            fontWeight: FontWeight.bold,
+            height: 1,
           ),
         ],
       ),

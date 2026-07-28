@@ -1186,6 +1186,15 @@ abstract class LocaleKeys {
   static const String _promotionBadgeAction = 'promotion_badge_action';
   static String get promotionBadgeAction => _promotionBadgeAction.tr();
 
+  static const String _promotedBadgeTitle = 'promoted_badge_title';
+  static String get promotedBadgeTitle => _promotedBadgeTitle.tr();
+
+  static const String _promotedBadgeSubtitle = 'promoted_badge_subtitle';
+  static String get promotedBadgeSubtitle => _promotedBadgeSubtitle.tr();
+
+  static const String _promotedBadgeStatus = 'promoted_badge_status';
+  static String get promotedBadgeStatus => _promotedBadgeStatus.tr();
+
   static const String _promotionSheetTitle = 'promotion_sheet_title';
   static String get promotionSheetTitle => _promotionSheetTitle.tr();
 
