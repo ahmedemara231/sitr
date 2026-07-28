@@ -428,6 +428,7 @@
   "promotion_reminder_later": "Maybe later",
   "promotion_subscriptions": "Promotion subscriptions",
   "send_chat_request": "Send Chat Request",
+  "the_user_do_not_has_active_package_subscription": "The user do not has active package subscription",
   "connection_requests": "Connection requests",
   "requests": "Requests",
   "no_connection_requests": "No connection requests yet",

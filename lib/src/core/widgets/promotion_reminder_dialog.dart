@@ -23,7 +23,7 @@ class PromotionReminderDialog extends StatelessWidget {
 
   List<String> get _features => [
         LocaleKeys.promotionFeatureSearchPriority,
-        LocaleKeys.promotionFeatureProfileVisitors,
+        // LocaleKeys.promotionFeatureProfileVisitors,
         LocaleKeys.promotionFeatureGoldenVerification,
       ];
 

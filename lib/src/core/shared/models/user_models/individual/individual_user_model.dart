@@ -468,6 +468,7 @@ enum ChatReason {
   activeMatchWithOther('active_match_with_other'),
   parentApprovalRequired('parent_approval_required'),
   chatRequestSent('chat_request_sent'),
+  noActivePackages('no_active_package'),
   hasProblem('has_problem');
 
   final String value;
@@ -528,6 +529,8 @@ extension ChatReasonExtension on ChatReason? {
         return LocaleKeys.chatReasonParentApprovalRequired;
       case ChatReason.chatRequestSent:
         return LocaleKeys.chatReasonChatRequestSent;
+      case ChatReason.noActivePackages:
+        return LocaleKeys.theUserDoNotHasActivePackageSubscription;
       case ChatReason.hasProblem:
       case null:
         return LocaleKeys.chatReasonHasProblem;

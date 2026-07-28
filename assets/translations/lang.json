@@ -439,6 +439,7 @@
   "promotionReminderLater #$ Maybe later" : "ربما لاحقاً",
   "promotionSubscriptions #$ Promotion subscriptions" : "اشتراكات الترويج",
   "Send Chat Request" : "ارسال طلب محادثة",
+  "The user do not has active package subscription" : "هذا المستخدم لا يملك اشتراك باقة نشط",
   "_____________________________________ConnectionRequests___________________________________" : "",
   "connectionRequests #$ Connection requests" : "طلبات التواصل",
   "requests #$ Requests" : "الطلبات",

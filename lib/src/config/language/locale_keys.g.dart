@@ -1273,6 +1273,9 @@ abstract class LocaleKeys {
   static const String _sendChatRequest = 'send_chat_request';
   static String get sendChatRequest => _sendChatRequest.tr();
 
+  static const String _theUserDoNotHasActivePackageSubscription = 'the_user_do_not_has_active_package_subscription';
+  static String get theUserDoNotHasActivePackageSubscription => _theUserDoNotHasActivePackageSubscription.tr();
+
   static const String _connectionRequests = 'connection_requests';
   static String get connectionRequests => _connectionRequests.tr();
 
