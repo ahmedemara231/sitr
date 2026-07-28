@@ -25,6 +25,7 @@ class PackagesTabBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(50.r),
       ),
       child: Row(
+        spacing: 5.w,
         children: [
           Expanded(
             child: _PackagesTab(
