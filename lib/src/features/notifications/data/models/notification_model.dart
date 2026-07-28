@@ -1,120 +1,109 @@
-enum ButtonsState {
-  show,
-  accepted,
-  none,
-  rejected;
+import 'package:equatable/equatable.dart';
 
-  static ButtonsState fromString(String? value) {
-    switch (value) {
-      case 'accepted':
-        return ButtonsState.accepted;
+class NotificationModel extends Equatable {
+  final String id;
+  final String type;
+  final String title;
+  final String body;
+  final Map<String, dynamic>? data;
+  final String createdAt;
 
-      case 'rejected':
-        return ButtonsState.rejected;
-
-      case 'pending':
-        return ButtonsState.show;
-
-      default:
-        return ButtonsState.none;
-    }
-  }
-}
-
-extension Check on ButtonsState{
-  bool get isAccepted => this == ButtonsState.accepted;
-  bool get isRejected => this == ButtonsState.rejected;
-  bool get isShow => this == ButtonsState.show;
-  bool get isNone => this == ButtonsState.none;
-}
-
-class NotificationModel {
-  String id;
-  String type;
-  String title;
-  String body;
-  Map<String, dynamic>? data;
-  String createdAt;
-  ButtonsState? buttonsState;
-
-  NotificationModel({
+  const NotificationModel({
     required this.id,
     required this.type,
     required this.title,
     required this.body,
     required this.data,
     required this.createdAt,
-    this.buttonsState,
   });
 
-  // factory NotificationModel.fromRemoteMessage(RemoteMessage message) {
-  //   final json = message.data['data'];
-  //   final dataMap = json["data"] as Map<String, dynamic>?;
-  //   return NotificationModel(
-  //     id: json["id"],
-  //     type: json["type"],
-  //     createdAt: json["created_at"],
-  //     title: json["title"],
-  //     body: Languages.currentIsArabic?
-  //     json["body_ar"] : json["body_en"],
-  //     data: dataMap,
-  //     buttonsState: (dataMap?['show_accept_reject_buttons'] == true) ?
-  //     ButtonsState.show : null,
-  //   );
-  // }
+  factory NotificationModel.initial() => const NotificationModel(
+        id: '',
+        type: '',
+        title: '',
+        body: '',
+        data: null,
+        createdAt: '',
+      );
 
   factory NotificationModel.fromJson(Map<String, dynamic> json) {
-    final dataMap = json["data"] as Map<String, dynamic>?;
     return NotificationModel(
-      id: json["id"],
-      type: json["type"],
-      title: json["title"],
-      body: json["body"],
-      createdAt: json["created_at"],
-      data: dataMap,
-      buttonsState: ButtonsState.fromString(dataMap?['show_accept_reject_buttons']),
+      id: json['id']?.toString() ?? '',
+      type: json['type'] ?? '',
+      title: json['title'] ?? '',
+      body: json['body'] ?? '',
+      createdAt: json['created_at'] ?? '',
+      data: json['data'] == null
+          ? null
+          : Map<String, dynamic>.from(json['data'] as Map),
     );
   }
 
-  NotificationModel copyWith({ButtonsState? buttonsState}) {
+  NotificationModel copyWith({
+    String? id,
+    String? type,
+    String? title,
+    String? body,
+    Map<String, dynamic>? data,
+    String? createdAt,
+  }) {
     return NotificationModel(
-      id: id,
-      type: type,
-      title: title,
-      body: body,
-      data: data,
-      createdAt: createdAt,
-      buttonsState: buttonsState ?? this.buttonsState,
+      id: id ?? this.id,
+      type: type ?? this.type,
+      title: title ?? this.title,
+      body: body ?? this.body,
+      data: data ?? this.data,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "type": type,
-    "title": title,
-    "body": body,
-    "data": data,
-    "created_at": createdAt,
-  };
+        'id': id,
+        'type': type,
+        'title': title,
+        'body': body,
+        'data': data,
+        'created_at': createdAt,
+      };
+
+  @override
+  List<Object?> get props => [id, type, title, body, data, createdAt];
 }
 
-class NotificationData {
-  String type;
-  int clientId;
+class NotificationData extends Equatable {
+  final String type;
+  final int clientId;
 
-  NotificationData({
+  const NotificationData({
     required this.type,
     required this.clientId,
   });
 
-  factory NotificationData.fromJson(Map<String, dynamic> json) =>
-      NotificationData(
-        type: json["type"],
-        clientId: json["client_id"]??0,
-      );
+  factory NotificationData.initial() =>
+      const NotificationData(type: '', clientId: 0);
+
+  factory NotificationData.fromJson(Map<String, dynamic> json) {
+    return NotificationData(
+      type: json['type'] ?? '',
+      clientId: json['client_id'] ?? 0,
+    );
+  }
+
+  NotificationData copyWith({
+    String? type,
+    int? clientId,
+  }) {
+    return NotificationData(
+      type: type ?? this.type,
+      clientId: clientId ?? this.clientId,
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    "type": type,
-    "client_id": clientId,
-  };
+        'type': type,
+        'client_id': clientId,
+      };
+
+  @override
+  List<Object?> get props => [type, clientId];
 }

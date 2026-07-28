@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../features/promotions/data/models/promotion_plans_model.dart';
+import '../../app_text.dart';
+import '../../icon_widget.dart';
 
 class PromotionPlansContent extends StatelessWidget {
   final PromotionPlansModel data;
@@ -32,7 +34,7 @@ class PromotionPlansContent extends StatelessWidget {
     );
 
     return SingleChildScrollView(
-      padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+      padding: EdgeInsetsDirectional.fromSTEB(16.w, 16.h, 16.w, 16.h),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -64,17 +66,14 @@ class PromotionPlansContent extends StatelessWidget {
             isDone: isSubscribed,
             onTap: () => onSubscribe(selectedPlan),
           ),
-          SizedBox(height: 8.h),
-          Text(
-            LocaleKeys.promotionSheetCancelAnytime,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: const Color(0xFFBBBBBB),
-              fontFamily: ConstantManager.fontFamily,
-              fontSize: 10.sp,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+          // SizedBox(height: 8.h),
+          // AppText(
+          //   LocaleKeys.promotionSheetCancelAnytime,
+          //   textAlign: TextAlign.center,
+          //   color: AppColors.hintText,
+          //   fontSize: 10.sp,
+          //   fontWeight: FontWeight.w500,
+          // ),
         ],
       ),
     );
@@ -107,7 +106,7 @@ class PromotionPlanCard extends StatelessWidget {
               width: double.infinity,
               padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
               decoration: BoxDecoration(
-                color: isActive ? null : const Color(0xFFFAFAF8),
+                color: isActive ? null : AppColors.whiteScaffoldBackground,
                 gradient: isActive
                     ? LinearGradient(
                         begin: Alignment.topRight,
@@ -125,7 +124,7 @@ class PromotionPlanCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(18.r),
                 border: Border.all(
                   width: 2.r,
-                  color: isActive ? AppColors.primary : const Color(0xFFEDE8E0),
+                  color: isActive ? AppColors.primary : AppColors.border,
                 ),
               ),
               child: Row(
@@ -134,30 +133,23 @@ class PromotionPlanCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        AppText(
                           plan.duration,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: isActive
-                                ? AppColors.primary
-                                : AppColors.darkGray,
-                            fontFamily: ConstantManager.fontFamily,
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          color:
+                              isActive ? AppColors.primary : AppColors.darkGray,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
                         ),
                         SizedBox(height: 3.h),
-                        Text(
+                        AppText(
                           plan.description,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            color: const Color(0xFF888888),
-                            fontFamily: ConstantManager.fontFamily,
-                            fontSize: 11.sp,
-                            height: 1.35,
-                          ),
+                          color: AppColors.mediumGray,
+                          fontSize: 11.sp,
+                          height: 1.35,
                         ),
                       ],
                     ),
@@ -172,9 +164,9 @@ class PromotionPlanCard extends StatelessWidget {
           ),
         ),
         if (plan.badge != null)
-          Positioned(
+          PositionedDirectional(
             top: -10.h,
-            left: 14.w,
+            end: 14.w,
             child: PromotionPlanBadge(
               text: plan.badge!,
               isHighlight: plan.isHighlighted,
@@ -207,37 +199,28 @@ class PromotionPlanPrice extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.baseline,
           textBaseline: TextBaseline.alphabetic,
           children: [
-            Text(
+            AppText(
               plan.priceText,
-              style: TextStyle(
-                color: color,
-                fontFamily: ConstantManager.fontFamily,
-                fontSize: 22.sp,
-                fontWeight: FontWeight.w800,
-                height: 1,
-              ),
+              color: color,
+              fontSize: 22.sp,
+              fontWeight: FontWeight.w800,
+              height: 1,
             ),
             SizedBox(width: 3.w),
-            Text(
+            AppText(
               plan.currency,
-              style: TextStyle(
-                color: isActive ? AppColors.primary : const Color(0xFF888888),
-                fontFamily: ConstantManager.fontFamily,
-                fontSize: 12.sp,
-              ),
+              color: isActive ? AppColors.primary : AppColors.mediumGray,
+              fontSize: 12.sp,
             ),
           ],
         ),
         SizedBox(height: 2.h),
-        Text(
+        AppText(
           '/ ${plan.period}',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            color: const Color(0xFFAAAAAA),
-            fontFamily: ConstantManager.fontFamily,
-            fontSize: 10.sp,
-          ),
+          color: AppColors.hintText,
+          fontSize: 10.sp,
         ),
       ],
     );
@@ -260,7 +243,7 @@ class PromotionPlanSelector extends StatelessWidget {
         child: DecoratedBox(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            border: Border.all(color: const Color(0xFFE0D8D0)),
+            border: Border.all(color: AppColors.border),
           ),
         ),
       );
@@ -280,10 +263,11 @@ class PromotionPlanSelector extends StatelessWidget {
           ],
         ),
       ),
-      child: Icon(
-        Icons.check_rounded,
+      child: IconWidget(
+        icon: Icons.check_rounded,
         color: AppColors.white,
-        size: 13.sp,
+        width: 13.sp,
+        height: 13.sp,
       ),
     );
   }
@@ -304,7 +288,7 @@ class PromotionPlanBadge extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 2.h),
       decoration: BoxDecoration(
-        color: isHighlight ? null : const Color(0xFF5C3D0E),
+        color: isHighlight ? null : AppColors.darkGoldenRod,
         gradient: isHighlight
             ? const LinearGradient(
                 begin: Alignment.centerRight,
@@ -324,14 +308,11 @@ class PromotionPlanBadge extends StatelessWidget {
           ),
         ],
       ),
-      child: Text(
+      child: AppText(
         text,
-        style: TextStyle(
-          color: AppColors.white,
-          fontFamily: ConstantManager.fontFamily,
-          fontSize: 10.sp,
-          fontWeight: FontWeight.bold,
-        ),
+        color: AppColors.white,
+        fontSize: 10.sp,
+        fontWeight: FontWeight.bold,
       ),
     );
   }
@@ -350,14 +331,11 @@ class PromotionFeaturesList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
+        AppText(
           '${LocaleKeys.promotionSheetFeatureIntro}:',
           textAlign: TextAlign.start,
-          style: TextStyle(
-            color: const Color(0xFF888888),
-            fontFamily: ConstantManager.fontFamily,
-            fontSize: 12.sp,
-          ),
+          color: AppColors.mediumGray,
+          fontSize: 12.sp,
         ),
         SizedBox(height: 8.h),
         ...features.map(
@@ -368,14 +346,11 @@ class PromotionFeaturesList extends StatelessWidget {
                 const PromotionCheckIcon(),
                 SizedBox(width: 8.w),
                 Expanded(
-                  child: Text(
+                  child: AppText(
                     feature.title,
                     textAlign: TextAlign.start,
-                    style: TextStyle(
-                      color: AppColors.darkGray,
-                      fontFamily: ConstantManager.fontFamily,
-                      fontSize: 12.sp,
-                    ),
+                    color: AppColors.darkGray,
+                    fontSize: 12.sp,
                   ),
                 ),
               ],
@@ -399,10 +374,11 @@ class PromotionCheckIcon extends StatelessWidget {
         shape: BoxShape.circle,
         color: AppColors.primary.withValues(alpha: 0.15),
       ),
-      child: Icon(
-        Icons.check_rounded,
+      child: IconWidget(
+        icon: Icons.check_rounded,
         color: AppColors.primary,
-        size: 11.sp,
+        width: 11.sp,
+        height: 11.sp,
       ),
     );
   }
@@ -436,7 +412,7 @@ class PromotionSubscribeButton extends StatelessWidget {
           height: 52.h,
           width: double.infinity,
           decoration: BoxDecoration(
-            color: isDone ? const Color(0xFF2E7D32) : null,
+            color: isDone ? AppColors.main : null,
             gradient: isDone
                 ? null
                 : const LinearGradient(
@@ -474,15 +450,12 @@ class PromotionSubscribeButton extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 16.w),
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
-                        child: Text(
+                        child: AppText(
                           buttonText,
                           maxLines: 1,
-                          style: TextStyle(
-                            color: AppColors.white,
-                            fontFamily: ConstantManager.fontFamily,
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          color: AppColors.white,
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),

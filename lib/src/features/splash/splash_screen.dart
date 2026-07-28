@@ -25,12 +25,12 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
   }
 
-  void _manipulateSplashData()async{
+  void _manipulateSplashData() async {
     await Helpers.getCurrentFlavor;
     await NotificationService().saveFcmToken();
     await Future.delayed(const Duration(seconds: 2));
     final result = await CacheStorage.read(CacheConstant.onBoardingSubmission);
-    switch(result){
+    switch (result) {
       case true:
         _manipulateLoginState();
         break;
@@ -41,12 +41,17 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  Future<void> _manipulateLoginState()async{
-    final result =  (await CacheStorage.read('user', isDecoded: true) as Object?).isNotNull;
-    switch(result){
+  Future<void> _manipulateLoginState() async {
+    final result =
+        (await CacheStorage.read('user', isDecoded: true) as Object?).isNotNull;
+    switch (result) {
       case true:
         await UserCubit.instance.init();
-        Go.offAll(const HomeScreen());
+        final bool showPromotionReminder =
+            await UserCubit.instance.registerPromotionReminderAppLaunch();
+        Go.offAll(
+          HomeScreen(showPromotionReminder: showPromotionReminder),
+        );
         break;
 
       default:
@@ -58,8 +63,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-        backgroundColor: AppColors.splash,
-        body: SplashLogo()
-    );
+        backgroundColor: AppColors.splash, body: SplashLogo());
   }
 }

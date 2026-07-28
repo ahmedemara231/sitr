@@ -1,7 +1,6 @@
 part of 'notification_service.dart';
 
 class NotificationRoutes {
-
   static void navigateByType(Map<String, dynamic> data) {
     final String type = data['type'];
     log('the type is ${data['type']}');
@@ -13,7 +12,8 @@ class NotificationRoutes {
 
 extension GetNotificationTypeById on String {
   NotificationType get getType {
-    return NotificationType.values.firstWhere((element) => element.type == this);
+    return NotificationType.values
+        .firstWhere((element) => element.type == this);
   }
 }
 
@@ -31,6 +31,7 @@ class WalletNavigation implements NotificationNavigation {
     Go.toOrOff(const WalletScreen());
   }
 }
+
 class NoNavigation implements NotificationNavigation {
   const NoNavigation();
 
@@ -88,9 +89,9 @@ class ComplaintNavigation implements NotificationNavigation {
   @override
   void navigate({required Map<String, dynamic> data}) {
     Go.toOrOff(ComplaintDetailsScreen(
-        complaintId: (data['complaint_id']) is String?
-        int.parse(data['complaint_id']) : data['complaint_id']
-    ));
+        complaintId: (data['complaint_id']) is String
+            ? int.parse(data['complaint_id'])
+            : data['complaint_id']));
   }
 }
 
@@ -108,33 +109,29 @@ class UserProfileNavigation implements NotificationNavigation {
 }
 
 // ----------------- Match Requests / Chat -----------------
-String _getUserName(Map<String, dynamic> data) => data['user_name'] ?? data['sender_name'];
-String _getUserId(Map<String, dynamic> data) => (data['user_id'] ?? data['sender_id']).toString();
+String _getUserName(Map<String, dynamic> data) =>
+    data['user_name'] ?? data['sender_name'];
+String _getUserId(Map<String, dynamic> data) =>
+    (data['user_id'] ?? data['sender_id']).toString();
+
 class MatchRequestNavigation implements NotificationNavigation {
   const MatchRequestNavigation();
 
   @override
   void navigate({required Map<String, dynamic> data}) {
     final chatType = (data['chat_status'] as String).getChatType;
-    if(chatType.isCurrent){
-      Go.toOrOff(
-          ChatScreen(
-              requestModel: RequestModel(
-                  receiverId: (_getUserId(data)).toString(),
-                  fromHome: 0.toString()
-              ),
-              receiverName: _getUserName(data)
-          )
-      );
-
-    }else{
+    if (chatType.isCurrent) {
+      Go.toOrOff(ChatScreen(
+          requestModel: RequestModel(
+              receiverId: (_getUserId(data)).toString(),
+              fromHome: 0.toString()),
+          receiverName: _getUserName(data)));
+    } else {
       Go.toOrOff(PreviousChatScreen(
           chatType: (data['chat_status'] as String).getChatType,
           requestModel: RequestModel(
               receiverId: (_getUserId(data)).toString(),
-              fromHome: 0.toString()
-          )
-      ));
+              fromHome: 0.toString())));
     }
   }
 }
@@ -145,6 +142,15 @@ class NotificationsNavigation implements NotificationNavigation {
   @override
   void navigate({required Map<String, dynamic> data}) {
     return;
+  }
+}
+
+class MessageRequestsNavigation implements NotificationNavigation {
+  const MessageRequestsNavigation();
+
+  @override
+  void navigate({required Map<String, dynamic> data}) {
+    Go.offAll(const HomeScreen(initialIndex: 3));
   }
 }
 
@@ -172,12 +178,8 @@ class SetrCodeNavigation implements NotificationNavigation {
   const SetrCodeNavigation();
 
   @override
-  void navigate({required Map<String, dynamic> data}) {
-    // TODO: Navigate to Setr code screen or renewal page
-    final codeId = data['code_id'];
-  }
+  void navigate({required Map<String, dynamic> data}) {}
 }
-
 
 // ----------------- Blocking -----------------
 class LoginNavigation implements NotificationNavigation {
@@ -211,16 +213,13 @@ class AdminActionWithChild implements NotificationNavigation {
   }
 }
 
-
 void _routeToProfile({
   required UserType type,
   required String userId,
-}){
-  if(type!.isParent){
+}) {
+  if (type.isParent) {
     Go.toOrOff(ParentDetailsScreen(id: int.parse(userId)));
-  }else{
-    Go.toOrOff(
-        IndividualDetailsScreen.opportunity(id: int.parse(userId))
-    );
+  } else {
+    Go.toOrOff(IndividualDetailsScreen.opportunity(id: int.parse(userId)));
   }
 }

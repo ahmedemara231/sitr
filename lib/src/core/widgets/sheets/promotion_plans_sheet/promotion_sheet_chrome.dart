@@ -3,6 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
+import '../../../navigation/navigator.dart';
+import '../../app_text.dart';
+import '../../icon_widget.dart';
 
 class PromotionSheetHandle extends StatelessWidget {
   const PromotionSheetHandle({super.key});
@@ -15,7 +18,7 @@ class PromotionSheetHandle extends StatelessWidget {
         width: 36.w,
         height: 4.h,
         decoration: BoxDecoration(
-          color: const Color(0xFFE0D8D0),
+          color: AppColors.border,
           borderRadius: BorderRadius.circular(20.r),
         ),
       ),
@@ -24,7 +27,12 @@ class PromotionSheetHandle extends StatelessWidget {
 }
 
 class PromotionSheetHeader extends StatelessWidget {
-  const PromotionSheetHeader({super.key});
+  final bool showCloseButton;
+
+  const PromotionSheetHeader({
+    super.key,
+    this.showCloseButton = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +49,7 @@ class PromotionSheetHeader extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.fromLTRB(20.w, 10.h, 20.w, 16.h),
+        padding: EdgeInsetsDirectional.fromSTEB(20.w, 10.h, 20.w, 16.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -52,35 +60,28 @@ class PromotionSheetHeader extends StatelessWidget {
                     children: [
                       const PromotionSheetCrownIcon(),
                       SizedBox(width: 8.w),
-                      Text(
+                      AppText(
                         LocaleKeys.promotionSheetTitle,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: AppColors.white,
-                          fontFamily: ConstantManager.fontFamily,
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        color: AppColors.white,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
                       ),
                     ],
                   ),
                 ),
-                PromotionSheetCloseButton(
-                  onTap: () => Navigator.of(context).pop(),
-                ),
+                if (showCloseButton)
+                  const PromotionSheetCloseButton(onTap: Go.back),
               ],
             ),
             SizedBox(height: 6.h),
-            Text(
+            AppText(
               LocaleKeys.promotionSheetSubtitle,
               textAlign: TextAlign.start,
-              style: TextStyle(
-                color: AppColors.white.withValues(alpha: 0.80),
-                fontFamily: ConstantManager.fontFamily,
-                fontSize: 12.sp,
-                height: 1.5,
-              ),
+              color: AppColors.white.withValues(alpha: 0.80),
+              fontSize: 12.sp,
+              height: 1.5,
             ),
           ],
         ),
@@ -107,10 +108,11 @@ class PromotionSheetCloseButton extends StatelessWidget {
         onTap: onTap,
         child: SizedBox.square(
           dimension: 28.r,
-          child: Icon(
-            Icons.close_rounded,
+          child: IconWidget(
+            icon: Icons.close_rounded,
             color: AppColors.white,
-            size: 16.sp,
+            width: 16.sp,
+            height: 16.sp,
           ),
         ),
       ),

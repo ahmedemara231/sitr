@@ -22,6 +22,7 @@ class AppPagify<T> extends StatefulWidget {
   final Widget Function(BuildContext context, List<T> data, int index, T element) itemBuilder;
   final PagifyController<T> pagifyController;
   final FutureOr<void> Function(PagifyAsyncCallStatus)? onUpdateStatus;
+  final Widget? emptyWidget;
   final bool shrinkWrap;
 
   /// Optional — provide all three together to enable offline cache support.
@@ -37,6 +38,7 @@ class AppPagify<T> extends StatefulWidget {
     this.scrollController,
     this.rankingType = Ranking.listView,
     this.onUpdateStatus,
+    this.emptyWidget,
     this.shrinkWrap = true,
     this.cacheKey,
     this.cacheToJson,
@@ -76,14 +78,15 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
           physics: widget.physics,
           onUpdateStatus: widget.onUpdateStatus,
           shrinkWrap: widget.shrinkWrap,
-          emptyListView: Center(
-            child: Column(
-              children: [
-                Lottie.asset(Assets.dataEmptyBox),
-                AppText(LocaleKeys.notFound)
-              ],
-            ),
-          ),
+          emptyListView: widget.emptyWidget ??
+              Center(
+                child: Column(
+                  children: [
+                    Lottie.asset(Assets.dataEmptyBox),
+                    AppText(LocaleKeys.notFound)
+                  ],
+                ),
+              ),
           controller: widget.pagifyController,
           asyncCall: widget.asyncCall,
           loadingBuilder: CustomLoading.showLoadingView(),
@@ -129,12 +132,13 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
               AppText(LocaleKeys.notFound)
             ],
           ),
-          emptyListView: Column(
-            children: [
-              Lottie.asset(Assets.dataEmptyBox),
-              AppText(LocaleKeys.notFound)
-            ],
-          ),
+          emptyListView: widget.emptyWidget ??
+              Column(
+                children: [
+                  Lottie.asset(Assets.dataEmptyBox),
+                  AppText(LocaleKeys.notFound)
+                ],
+              ),
           loadingBuilder: CustomLoading.showLoadingView(),
           mapper: (data) => PagifyData(
               data: data.$1,

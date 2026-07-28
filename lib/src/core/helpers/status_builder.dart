@@ -10,20 +10,35 @@ class StatusBuilder<T> extends StatelessWidget {
   final Widget Function()? onFail;
   final Widget Function()? onLoading;
   final Size? errorWidgetSize;
+  final Widget? emptyWidget;
 
-  const StatusBuilder(
-      {super.key,
-        required this.data,
-        required this.onSuccess,
-        this.onFail,
-        this.onLoading,
-        this.errorWidgetSize,
-      });
+  const StatusBuilder({
+    super.key,
+    required this.data,
+    required this.onSuccess,
+    this.onFail,
+    this.onLoading,
+    this.errorWidgetSize,
+    this.emptyWidget,
+  });
+
+  bool get _isDataEmpty {
+    final Object? value = data.data;
+    if (value is Iterable) return value.isEmpty;
+    if (value is Map) return value.isEmpty;
+    if (value is String) return value.isEmpty;
+    return false;
+  }
+
+  Widget _buildSuccess(BuildContext context) {
+    if (_isDataEmpty && emptyWidget != null) return emptyWidget!;
+    return onSuccess(data.data, context);
+  }
 
   @override
   Widget build(BuildContext context) {
     return data.status.when(onSuccess: () {
-      return onSuccess(data.data, context);
+      return _buildSuccess(context);
     }, onLoading: () {
       return onLoading?.call() ??
           Center(child: CustomLoading.showLoadingView());
@@ -32,11 +47,9 @@ class StatusBuilder<T> extends StatelessWidget {
       //   return onSuccess(data.data, context);
       // }
       return onFail?.call() ?? ExceptionView(size: errorWidgetSize);
-    },
-      onInitial: () {
-        return onSuccess(data.data, context);
-      }
-    );
+    }, onInitial: () {
+      return _buildSuccess(context);
+    });
   }
 }
 

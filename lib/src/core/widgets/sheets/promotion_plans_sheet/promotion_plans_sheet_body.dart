@@ -23,11 +23,17 @@ import 'promotion_sheet_chrome.dart';
 
 class PromotionPlansSheetBody extends StatefulWidget {
   final FutureOr<void> Function()? onSuccess;
+  final bool _isSheet;
 
   const PromotionPlansSheetBody({
     super.key,
     this.onSuccess,
-  });
+  }) : _isSheet = true;
+
+  const PromotionPlansSheetBody.screen({
+    super.key,
+    this.onSuccess,
+  }) : _isSheet = false;
 
   @override
   State<PromotionPlansSheetBody> createState() =>
@@ -37,6 +43,12 @@ class PromotionPlansSheetBody extends StatefulWidget {
 class _PromotionPlansSheetBodyState extends State<PromotionPlansSheetBody> {
   int? _selectedPlanId;
   bool _isSubscribed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<PromotionPlansCubit>().getPromotionPlans();
+  }
 
   Future<void> _subscribe(
     BuildContext sheetContext,
@@ -64,8 +76,10 @@ class _PromotionPlansSheetBodyState extends State<PromotionPlansSheetBody> {
       if (!mounted) return;
 
       setState(() => _isSubscribed = true);
-      Go.back();
-      await Future<void>.delayed(const Duration(milliseconds: 250));
+      if (widget._isSheet) {
+        Go.back();
+        await Future<void>.delayed(const Duration(milliseconds: 250));
+      }
       await showDefaultBottomSheet(
         child: SuccessSheet(
           isInAuth: false,
@@ -81,72 +95,99 @@ class _PromotionPlansSheetBodyState extends State<PromotionPlansSheetBody> {
 
   @override
   Widget build(BuildContext context) {
-    final double maxSheetHeight = MediaQuery.sizeOf(context).height * 0.86;
-
     return Directionality(
       textDirection: TextDirection.rtl,
       child: SafeArea(
         top: false,
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: maxSheetHeight),
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(28.r),
-              ),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(28.r),
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const PromotionSheetHandle(),
-                  const PromotionSheetHeader(),
-                  Flexible(
-                    child: BlocBuilder<PromotionPlansCubit,
-                        AsyncState<PromotionPlansModel>>(
-                      builder: (context, state) {
-                        final PromotionPlansModel data = state.data;
-                        if ((state.isLoading || state.isInitial) &&
-                            data.plans.isEmpty) {
-                          return const PromotionPlansLoading();
-                        }
+        child: widget._isSheet ? _buildSheet(context) : _buildScreen(context),
+      ),
+    );
+  }
 
-                        if (data.plans.isEmpty) {
-                          return PromotionPlansError(
-                            message: state.msg,
-                            onRetry: () => context
-                                .read<PromotionPlansCubit>()
-                                .getPromotionPlans(),
-                          );
-                        }
+  Widget _buildSheet(BuildContext context) {
+    final double maxSheetHeight = MediaQuery.sizeOf(context).height * 0.86;
 
-                        return BlocBuilder<PromotionSubscriptionCubit,
-                            AsyncState<PromotionSubscriptionModel>>(
-                          builder: (context, subscriptionState) =>
-                              PromotionPlansContent(
-                            data: data,
-                            selectedPlanId: _selectedPlanId,
-                            isSubscribing: subscriptionState.isLoading,
-                            isSubscribed: _isSubscribed,
-                            onPlanSelected: (plan) {
-                              setState(() => _selectedPlanId = plan.id);
-                            },
-                            onSubscribe: (plan) => _subscribe(context, plan),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxHeight: maxSheetHeight),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(28.r),
+          ),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(28.r),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const PromotionSheetHandle(),
+              const PromotionSheetHeader(),
+              Flexible(child: _buildPlans()),
+            ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildScreen(BuildContext context) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(12.r),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.blackShadow.withValues(alpha: 0.06),
+            blurRadius: 24.r,
+            offset: Offset(0, 3.h),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12.r),
+        child: Column(
+          children: [
+            const PromotionSheetHeader(showCloseButton: false),
+            Expanded(child: _buildPlans()),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPlans() {
+    return BlocBuilder<PromotionPlansCubit, AsyncState<PromotionPlansModel>>(
+      builder: (context, state) {
+        final PromotionPlansModel data = state.data;
+        if ((state.isLoading || state.isInitial) && data.plans.isEmpty) {
+          return const PromotionPlansLoading();
+        }
+
+        if (data.plans.isEmpty) {
+          return PromotionPlansError(
+            message: state.msg,
+            onRetry: () =>
+                context.read<PromotionPlansCubit>().getPromotionPlans(),
+          );
+        }
+
+        return BlocBuilder<PromotionSubscriptionCubit,
+            AsyncState<PromotionSubscriptionModel>>(
+          builder: (context, subscriptionState) => PromotionPlansContent(
+            data: data,
+            selectedPlanId: _selectedPlanId,
+            isSubscribing: subscriptionState.isLoading,
+            isSubscribed: _isSubscribed,
+            onPlanSelected: (plan) {
+              setState(() => _selectedPlanId = plan.id);
+            },
+            onSubscribe: (plan) => _subscribe(context, plan),
+          ),
+        );
+      },
     );
   }
 }

@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' show log;
 import 'dart:io';
@@ -10,14 +9,11 @@ import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../helpers/apps_flyer/apps_flyer_helper.dart';
 import '../../features/auth/imports.dart';
-import '../../features/chats/data/models/chat_model.dart';
-import '../../features/chats/data/models/message_params_model.dart';
 import '../../features/chats/data/models/request_model.dart';
-import '../../features/chats/data/socket_events.dart';
-import '../../features/chats/enums.dart';
 import '../../features/chats/presentation/cubits/get_chats_cubit.dart';
 import '../../features/chats/presentation/imports.dart';
 import '../../features/chats/presentation/screens/previous_chat_screen.dart';
+import '../../features/home/home_screen.dart';
 import '../../features/main_screen/presentation/screens/parent_details.dart';
 import '../../features/main_screen/presentation/screens/partner_details.dart';
 import '../../features/more/presentation/screens/complaint_and_suggestion/complaint_details_screen.dart';
@@ -25,17 +21,13 @@ import '../../features/more/presentation/screens/contact_us/contact_us_chat_scre
 import '../../features/more/presentation/screens/my_packages.dart';
 import '../../features/more/presentation/screens/profile.dart';
 import '../../features/more/presentation/screens/wallet/wallet_screen.dart';
-import '../extensions/object.dart';
 import '../extensions/string_extension.dart';
-import '../helpers/cache_service.dart';
 import '../helpers/user_type_enum.dart';
 import '../navigation/navigator.dart';
 import '../network/api_endpoints.dart';
-import '../network/dio_service.dart';
 import '../network/network_request.dart';
 import '../network/network_service.dart';
 import '../shared/user_cubit/user_cubit.dart';
-import '../socket_service/client_io.dart';
 import '../widgets/parent_children_screen.dart';
 
 part 'navigation_types.dart';
@@ -53,59 +45,6 @@ void onDidReceiveBackgroundNotificationResponse(NotificationResponse response) {
   handleNotificationAction(response);
 }
 
-Future<void> _emitUpdateChatEvent({
-  required int roomId,
-  required int matchRequestId,
-  required int receiverId,
-}) async {
-  final completer = Completer<void>();
-  late final SocketHelper socket;
-  final String storedSocketUrl = await SecureStorage.read(SecureLocalVariableKeys.socetIoUrl) ?? '';
-  socket = ClientIOImpl(
-    onConnect: (d) {
-      log('notification action socket connected');
-      socket.emitEvent(
-        event: SocketEvents.updateChat,
-        data: {
-          'room_id': roomId,
-          'match_request_id': matchRequestId,
-          'receiver_id': receiverId,
-        },
-      );
-      Future.delayed(const Duration(milliseconds: 500), () {
-        socket.disconnect();
-        if (!completer.isCompleted) completer.complete();
-      });
-    },
-    onDisconnect: (d) => log('notification action socket disconnected'),
-    extraParams: MessageParamsModel().toJson(),
-    url: storedSocketUrl,
-    roomId: 0,
-    jsonToChatMessage: (_) => throw UnimplementedError(),
-    onReceiveMessage: (_) {},
-    events: EasyChatEvents(
-      messageEvents: MessageEvents(
-        receiveMsgEvent: SocketEvents.receivedMsg,
-        sendMsgEvent: SocketEvents.sendMsg,
-      ),
-      chatEvents: ChatEvents(
-        enterChatEvent: SocketEvents.enterChat,
-        exitChatEvent: SocketEvents.exitChat,
-      ),
-      otherEvents: [],
-    ),
-  )..initSocket()..initConfig()..connect();
-
-  // Wait for emit + disconnect, with a timeout so we don't hang forever
-  await completer.future.timeout(
-    const Duration(seconds: 5),
-    onTimeout: () {
-      log('notification action socket timed out');
-      try { socket.disconnect(); } catch (_) {}
-    },
-  );
-}
-
 Future<void> handleNotificationAction(NotificationResponse? payload) async {
   log('handleNotificationAction called with actionId: ${payload?.actionId}');
   if (payload?.actionId == null || payload!.actionId!.isEmpty) {
@@ -116,7 +55,8 @@ Future<void> handleNotificationAction(NotificationResponse? payload) async {
   final decodedPayload = json.decode(payload.payload ?? '{}');
   log('handleNotificationAction decoded payload: $decodedPayload');
 
-  final messageData = (decodedPayload['data'] as Map<String, dynamic>?) ?? (decodedPayload as Map<String, dynamic>?);
+  final messageData = (decodedPayload['data'] as Map<String, dynamic>?) ??
+      (decodedPayload as Map<String, dynamic>?);
   log('handleNotificationAction decodedPayload keys: ${decodedPayload.keys}');
   log('handleNotificationAction messageData: $messageData');
   if (messageData == null) {
@@ -124,26 +64,26 @@ Future<void> handleNotificationAction(NotificationResponse? payload) async {
     return;
   }
 
-  final userRequest = messageData['user_request'] as String?;
-  final matchRequestId =
-      (messageData['match_request_id'] ?? messageData['match_request'])
-          ?.toString();
-  final senderId =
-      (messageData['sender'] ?? messageData['user_id'] ?? messageData['sender_id'])
-          ?.toString();
-  log('handleNotificationAction: userRequest=$userRequest');
-  log('handleNotificationAction: matchRequestId=$matchRequestId');
+  final String? messageRequestId =
+      messageData['message_request_id']?.toString();
+  final senderId = (messageData['sender'] ??
+          messageData['user_id'] ??
+          messageData['sender_id'])
+      ?.toString();
+  log('handleNotificationAction: messageRequestId=$messageRequestId');
   log('handleNotificationAction: senderId=$senderId');
-  if (userRequest == null || matchRequestId == null || senderId == null) {
-    log('handleNotificationAction: missing required fields → userRequest=$userRequest, matchRequestId=$matchRequestId, senderId=$senderId');
+  if (messageRequestId == null || senderId == null) {
+    log(
+      'handleNotificationAction: missing required message request fields',
+    );
     return;
   }
 
   final String path;
   if (payload.actionId == NotificationService.acceptChat) {
-    path = ApiConstants.acceptRequest + userRequest;
+    path = ApiConstants.acceptMessageRequest;
   } else if (payload.actionId == NotificationService.rejectChat) {
-    path = ApiConstants.rejectRequest + userRequest;
+    path = ApiConstants.rejectMessageRequest;
   } else {
     log('handleNotificationAction: unknown actionId ${payload.actionId}, returning');
     return;
@@ -152,28 +92,18 @@ Future<void> handleNotificationAction(NotificationResponse? payload) async {
   log('handleNotificationAction: calling API with path=$path');
   try {
     final networkService = injector<NetworkService>();
-    final response = await networkService.callApi<ChatModel>(
+    await networkService.callApi<bool>(
       NetworkRequest(
         path: path,
         method: RequestMethod.post,
         body: {
-          'receiver_id': senderId,
-          'from_home': '0',
-          'match_request_id': matchRequestId,
+          'message_request_id': messageRequestId,
+          'sender_id': senderId,
         },
       ),
-      mapper: (json) => ChatModel.fromJson(json),
+      mapper: (_) => true,
     );
     log('handleNotificationAction: API call succeeded');
-
-    final roomId = response.data.room?.id ?? 0;
-    final responseMatchRequestId = response.data.matchRequest?.id ?? 0;
-    final receiverId = int.tryParse(senderId) ?? 0;
-    await _emitUpdateChatEvent(
-      roomId: roomId,
-      matchRequestId: responseMatchRequestId,
-      receiverId: receiverId,
-    );
   } catch (e) {
     log('handleNotificationAction: API call failed with error: $e');
   }
@@ -227,13 +157,15 @@ class NotificationService {
     log('the remote msg is ${message.data}');
     log('the remote msg is ${message.notification?.toMap()}');
     final bool hasActions = _shouldShowActions(message);
-    final DarwinNotificationDetails iOSPlatformChannelSpecifics = DarwinNotificationDetails(
-            presentAlert: true,
-            presentBadge: true,
-            presentSound: true,
-            categoryIdentifier: hasActions ? _chatActionsCategoryId : '',
-        );
-    final AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
+    final DarwinNotificationDetails iOSPlatformChannelSpecifics =
+        DarwinNotificationDetails(
+      presentAlert: true,
+      presentBadge: true,
+      presentSound: true,
+      categoryIdentifier: hasActions ? _chatActionsCategoryId : '',
+    );
+    final AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
       _channel.id,
       _channel.name,
       channelDescription: ConstantManager.appName,
@@ -246,16 +178,11 @@ class NotificationService {
     );
     final notificationDetails = NotificationDetails(
         android: androidPlatformChannelSpecifics,
-        iOS: iOSPlatformChannelSpecifics
-    );
+        iOS: iOSPlatformChannelSpecifics);
     final notification = message.notification;
-    await _flutterLocalNotificationsPlugin.show(
-        notification.hashCode,
-        notification?.title ?? '',
-        notification?.body,
-        notificationDetails,
-        payload: json.encode(message.toMap())
-    );
+    await _flutterLocalNotificationsPlugin.show(notification.hashCode,
+        notification?.title ?? '', notification?.body, notificationDetails,
+        payload: json.encode(message.toMap()));
   }
 
   Future<void> _initLocalNotification() async {
@@ -294,69 +221,43 @@ class NotificationService {
       android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS,
     );
-    await _flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onDidReceiveNotificationResponse: (NotificationResponse? payload) {
-          final bool isActionButton =
-              payload?.actionId != null && payload!.actionId!.isNotEmpty;
-          _handleActions(payload);
-          if (!isActionButton) {
-            _handleNotificationsTap(
-                RemoteMessage.fromMap(json.decode(payload!.payload ?? '')));
-          }
-        },
-        onDidReceiveBackgroundNotificationResponse: onDidReceiveBackgroundNotificationResponse,
+    await _flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: (NotificationResponse? payload) {
+        final bool isActionButton =
+            payload?.actionId != null && payload!.actionId!.isNotEmpty;
+        _handleActions(payload);
+        if (!isActionButton) {
+          _handleNotificationsTap(
+              RemoteMessage.fromMap(json.decode(payload!.payload ?? '')));
+        }
+      },
+      onDidReceiveBackgroundNotificationResponse:
+          onDidReceiveBackgroundNotificationResponse,
     );
   }
 
-  (UserRequestStatus, ChatStages) _getChatData(RemoteMessage message){
-    final UserRequestStatus status = ((message.data['user_request_status'] ?? '') as String).getUserRequestStatusAsEnum;
-    final ChatStages stage = ((message.data['stage'] ?? '') as String).getCurrentStageAsStagesEnum;
-    return (status, stage);
-  }
-
-  bool _convertToActionsData(RemoteMessage message){
-    final data = _getChatData(message);
-    return data.isNotNull;
-  }
-
   bool _shouldShowActions(RemoteMessage message) {
-    try {
-      return _convertToActionsData(message);
-
-    } on Exception {
-      return false;
-    }
+    final String? requestId = message.data['message_request_id']?.toString();
+    final String status =
+        message.data['message_request_status']?.toString() ?? 'pending';
+    return requestId != null && status == 'pending';
   }
 
-  List<AndroidNotificationAction> _tryingToMakeActions(RemoteMessage message){
-    final data = _getChatData(message);
-    log('the data is ${data.$2}');
-    log('the data is ${data.$1}');
-    log('the data is ${data.$2.isNewChat && data.$1.isPending}');
-    if(data.$2.isNewChat && data.$1.isPending){
-      return [
-        AndroidNotificationAction(
-          acceptChat,
-          LocaleKeys.accept,
-          showsUserInterface: true,
-        ),
-        AndroidNotificationAction(
-          rejectChat,
-          LocaleKeys.refused,
-          showsUserInterface: true,
-        ),
-      ];
-
-    }else{
-      return [];
-    }
-  }
-  List<AndroidNotificationAction> _getActions(RemoteMessage message){
-    try {
-      return _tryingToMakeActions(message);
-    } on Exception{
-      return [];
-    }
+  List<AndroidNotificationAction> _getActions(RemoteMessage message) {
+    if (!_shouldShowActions(message)) return [];
+    return [
+      AndroidNotificationAction(
+        acceptChat,
+        LocaleKeys.accept,
+        showsUserInterface: true,
+      ),
+      AndroidNotificationAction(
+        rejectChat,
+        LocaleKeys.refused,
+        showsUserInterface: true,
+      ),
+    ];
   }
 
   Future<void> _handleActions(NotificationResponse? payload) async {
@@ -423,15 +324,14 @@ class NotificationService {
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
       _showNotification(event);
       final type = (event.data['type'] as String).getType;
-      if(type.isAccountDeletedByAdmin || type.isBlock
+      if (type.isAccountDeletedByAdmin || type.isBlock
           // type.isParentIndividualApprovalRejected ||
           // type.isMatchRejectedWhenTimerEnded
-      ){
+          ) {
         NotificationRoutes.navigateByType(event.data);
       }
     });
   }
-
 }
 
 class NotificationNavigator {

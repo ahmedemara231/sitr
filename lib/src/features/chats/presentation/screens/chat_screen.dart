@@ -4,7 +4,8 @@ class ChatScreen extends StatelessWidget {
   final RequestModel requestModel;
   final String receiverName;
 
-  const ChatScreen({super.key,
+  const ChatScreen({
+    super.key,
     required this.requestModel,
     required this.receiverName,
   });
@@ -18,14 +19,14 @@ class ChatScreen extends StatelessWidget {
           BlocProvider(create: (context) => FinishChatCubit()),
           BlocProvider(create: (context) => EndVideoCallCubit()),
           BlocProvider(
-            create: (context) => NotificationCubit(injector<ChatNotificationService>()),
+            create: (context) =>
+                NotificationCubit(injector<ChatNotificationService>()),
           ),
         ],
         child: _ChatScreenBody(
           requestModel: requestModel,
           receiverName: receiverName,
-        )
-    );
+        ));
   }
 }
 
@@ -42,8 +43,8 @@ class _ChatScreenBody extends StatefulWidget {
   State<_ChatScreenBody> createState() => _ChatScreenBodyState();
 }
 
-class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObserver {
-
+class _ChatScreenBodyState extends State<_ChatScreenBody>
+    with WidgetsBindingObserver {
   bool _isPartnerDeletedAccount(ChatModel model) {
     final List<Members> members = model.room?.members ?? [];
     final int? receiverId = int.tryParse(widget.requestModel.receiverId);
@@ -77,86 +78,55 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
     });
   }
 
-  void _fireShouldUpdate(){
+  void _fireShouldUpdate() {
     context.read<SocketCubit>().fireShouldUpdate(
-      roomId: context.read<ChatCubit>().currentRoom!.id!,
-      matchRequestId: context.read<ChatCubit>().matchRequest!.id!,
-      receiverId: int.parse(widget.requestModel.receiverId),
-    );
+          roomId: context.read<ChatCubit>().currentRoom!.id!,
+          matchRequestId: context.read<ChatCubit>().matchRequest!.id!,
+          receiverId: int.parse(widget.requestModel.receiverId),
+        );
   }
-  Widget _initBottomBar(ChatModel model){
-    final userRequest = model.matchRequest!;
-    final stage = userRequest.stage!.value!.getCurrentStageAsStagesEnum;
-    final userRequestEnum = userRequest.userRequestStatus!.getUserRequestStatusAsEnum;
+
+  Widget _initBottomBar(ChatModel model) {
+    final stage = model.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum;
     final int timer = model.matchRequest?.timer ?? 0;
     final bool isPartnerDeletedAccount = _isPartnerDeletedAccount(model);
 
-    if(stage.isNewChat && userRequestEnum.isPending && !isPartnerDeletedAccount){
-      return AcceptOrRejectFirstStageWidget(
-        onAccept: (context) async => ChatActions.executeReq(
-          context: context,
-          requestModel: widget.requestModel,
-          path: ApiConstants.acceptRequest+context.read<ChatCubit>().userRequest!,
-          onSuccess: (chatModel) {
-            _fireShouldUpdate();
-          }
-        ),
-
-        onReject: (context)async => ChatActions.executeReq(
-            requestModel: widget.requestModel,
-            context: context,
-            path: ApiConstants.rejectAll,
-            onSuccess: (chatModel) {
-              _fireShouldUpdate();
-              Go.offAll(const HomeScreen());
-            }
-        ),
-      );
-    }else if(isPartnerDeletedAccount || (!stage.isNewChat && timer.isEqualZero)){
+    if (isPartnerDeletedAccount || (!stage.isNewChat && timer.isEqualZero)) {
       return ChatUnavailableIndicator(
         message: isPartnerDeletedAccount
             ? LocaleKeys.partnerDeletedAccount
             : LocaleKeys.unableToContinueChattingRightNow,
-        icon: isPartnerDeletedAccount
-            ? Assets.svgBlockUser
-            : Assets.svgClock,
+        icon: isPartnerDeletedAccount ? Assets.svgBlockUser : Assets.svgClock,
       );
     }
 
     return ChatBottomBar(
         controller: _chatController,
-        onUpload: (url){
-          socketType.sendMessage(
-              {
-                'room_id' : model.room?.id,
-                'body' : url.split("/").last,
-                'type' : 'image'
-              }
-          );
+        onUpload: (url) {
+          socketType.sendMessage({
+            'room_id': model.room?.id,
+            'body': url.split("/").last,
+            'type': 'image'
+          });
         },
-        onSend: (context, msg) => socketType.sendMessage(
-            {
-              'room_id' : model.room?.id,
+        onSend: (context, msg) => socketType.sendMessage({
+              'room_id': model.room?.id,
               'body': msg,
-              'type' : 'text',
-            }
-        )
-    );
+              'type': 'text',
+            }));
   }
 
-
-  Future<void> _startChat({bool update = false})async{
+  Future<void> _startChat({bool update = false}) async {
     await context.read<ChatCubit>().startChat(
-      requestModel: RequestModel(
-          receiverId: widget.requestModel.receiverId,
-          fromHome: update? 0.toString() : 1.toString()
-      ),
-      context: context,
-    );
+          requestModel: RequestModel(
+              receiverId: widget.requestModel.receiverId,
+              fromHome: update ? 0.toString() : 1.toString()),
+          context: context,
+        );
   }
 
-  Future<void> _showBased(RemoteMessage notification)async{
-    if((notification.data['action'] as Object?).isNotNull){
+  Future<void> _showBased(RemoteMessage notification) async {
+    if ((notification.data['action'] as Object?).isNotNull) {
       // _startChat();
     }
   }
@@ -165,7 +135,8 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
 
   void _listenForCallStart(String callStatus) {
     _callStartedSubscription?.cancel();
-    _callStartedSubscription = ZegoUIKit().getUserJoinStream().listen((joinedUsers) async{
+    _callStartedSubscription =
+        ZegoUIKit().getUserJoinStream().listen((joinedUsers) async {
       if (joinedUsers.isNotEmpty) {
         if (callStatus == 'free_available') {
           await _makeVideoReq();
@@ -187,14 +158,15 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
     final roomId = chatCubit.currentRoom?.id;
     if (timer.isNotNull && roomId.isNotNull) {
       context.read<SocketCubit>().updateTimer(
-        timer: timer!,
-        roomId: roomId!,
-      );
+            timer: timer!,
+            roomId: roomId!,
+          );
     }
   }
 
   void _initSocket() async {
-    final String storedSocketUrl = await SecureStorage.read(SecureLocalVariableKeys.socetIoUrl) ?? '';
+    final String storedSocketUrl =
+        await SecureStorage.read(SecureLocalVariableKeys.socetIoUrl) ?? '';
     if (!mounted) return;
     socketType = ClientIOImpl(
       onConnect: (d) {
@@ -205,7 +177,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
       onReconnect: (d) => log('socket reconnected'),
       onReceiveAnyEvent: (e, d) {
         log((e == SocketEvents.updateChat).toString());
-        if(e == SocketEvents.updateChat){
+        if (e == SocketEvents.updateChat) {
           _startChat(update: true);
         }
         log('event is received $e $d');
@@ -213,39 +185,45 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
       extraParams: MessageParamsModel().toJson(),
       url: storedSocketUrl,
       jsonToChatMessage: (json) => ChatMessages(
-        message: Message(id: json['id'], type: json['type'], body: json['body']),
+        message:
+            Message(id: json['id'], type: json['type'], body: json['body']),
         sender: Sender(
             id: (json['sender_id']).toString(),
             name: json['sender_name'],
             image: json['avatar'],
-            isFromMe: (json['sender_id'] == UserModel.currentUser?.id)
-        ),
+            isFromMe: (json['sender_id'] == UserModel.currentUser?.id)),
         time: json['created_dt'],
       ),
       onReceiveMessage: (msg) {
-          _chatController.addItem(msg);
-          _chatController.moveToMaxBottom();
-        },
+        _chatController.addItem(msg);
+        _chatController.moveToMaxBottom();
+      },
       events: EasyChatEvents(
           messageEvents: MessageEvents(
               receiveMsgEvent: SocketEvents.receivedMsg,
-              sendMsgEvent: SocketEvents.sendMsg
-          ),
+              sendMsgEvent: SocketEvents.sendMsg),
           chatEvents: ChatEvents(
               enterChatEvent: SocketEvents.enterChat,
-              exitChatEvent: SocketEvents.exitChat
-          ),
-          otherEvents: []
-        ),
-        roomId: context.read<ChatCubit>().currentRoom?.id ?? 0,
-    )..initSocket()..initConfig()..connect();
+              exitChatEvent: SocketEvents.exitChat),
+          otherEvents: []),
+      roomId: context.read<ChatCubit>().currentRoom?.id ?? 0,
+    )
+      ..initSocket()
+      ..initConfig()
+      ..connect();
     context.read<SocketCubit>().setSocket(socketType);
   }
 
-  void _handleInitialState()async{
+  void _handleInitialState() async {
     _chatController = PagifyController<ChatMessages>();
     await _startChat();
-    if(!context.read<ChatCubit>().currentRoom!.members!.first.isPartnerDeletedAccount){
+    if (!mounted) return;
+    if (!context
+        .read<ChatCubit>()
+        .currentRoom!
+        .members!
+        .first
+        .isPartnerDeletedAccount) {
       await SafeTextHelper.init();
       _initSocket();
     }
@@ -267,38 +245,38 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
     super.dispose();
   }
 
-  Future<void> _makeVideoReq()async{
+  Future<void> _makeVideoReq() async {
     await context.read<ChatCubit>().executeRequest(
         requestModel: widget.requestModel,
-        path: ApiConstants.matchRequestAnd+ApiConstants.videoCallRequest,
+        path: ApiConstants.matchRequestAnd + ApiConstants.videoCallRequest,
         onSuccess: (data) {
           _fireShouldUpdate();
-          MessageUtils.showSnackBar(LocaleKeys.aVideoCallRequestWasSuccessfullySent);
-        }
-    );
+          MessageUtils.showSnackBar(
+              LocaleKeys.aVideoCallRequestWasSuccessfullySent);
+        });
   }
 
-  Future <void> _endVideoCall()async{
-    await context.read<EndVideoCallCubit>().endVideoCall( // برنها وانا فالكول
-        ChatsData.data!.matchRequest!.id.toString(),
-    );
+  Future<void> _endVideoCall() async {
+    await context.read<EndVideoCallCubit>().endVideoCall(
+          // برنها وانا فالكول
+          ChatsData.data!.matchRequest!.id.toString(),
+        );
     _fireShouldUpdate();
   }
 
-  void _markAsRead()async{
+  void _markAsRead() async {
     final roomId = context.read<ChatCubit>().currentRoom?.id;
     await ChatsData.markRead(roomId!);
   }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [
         BlocListener<NotificationCubit, NotificationState>(
-          listener: (context, state) async =>
-              _showBased(state.notification!),
+          listener: (context, state) async => _showBased(state.notification!),
         ),
       ],
-
       child: PopScope(
         canPop: false,
         onPopInvokedWithResult: (didPop, result) async {
@@ -307,98 +285,111 @@ class _ChatScreenBodyState extends State<_ChatScreenBody> with WidgetsBindingObs
           Go.back();
         },
         child: AppScaffold(
-        resizeToAvoidBottomInset: true,
-        customTitle: BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
-          builder: (context, state) => ChatStatusBuilder(
-              data: state,
-              onSuccess: (data, context) => AppText(LocaleKeys.chat, fontWeight: FontWeight.bold, fontSize: 16.sp, color: Colors.black,)),
-        ),
-        isScrollable: false,
-        onBack: () => _markAsRead(),
-        actions: [
-          BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
-            builder: (context, state) => ChatStatusBuilder(
-              data: state,
-              onSuccess: (data, context) =>
-              !_isPartnerDeletedAccount(data) &&
-                  !data.matchRequest!.stage!.value!.getCurrentStageAsStagesEnum.isNewChat &&
-                  data.matchRequest!.timer.isNotEqualZero?
-              ValueListenableBuilder(
-                  valueListenable: ZegoService.isConnected,
-                  builder: (context, isConnected, child) => isConnected?
-                  Helpers.zegoService!.zegoButton(
-                    context: context,
-                    isVideoCall: false,
-                    icon: const SvgPic(assetName: Assets.svgPhoneIcon),
-                    invites: [
-                      ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName),
-                    ],
-                  ) : CustomLoading.showLoadingView()
-              ) : const SizedBox.shrink(),
-            ),
-          ),
-          BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
+          resizeToAvoidBottomInset: true,
+          customTitle: BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
             builder: (context, state) => ChatStatusBuilder(
                 data: state,
-                onSuccess: (data, context) {
-                  if(!_isPartnerDeletedAccount(data) &&
-                      data.matchRequest!.timer.isNotEqualZero){
-                    final callStatus = context.read<ChatCubit>().matchRequest?.callStatus;
-                    if(((callStatus == 'free_available') || (callStatus == 'paid_available'))){
-                      return ValueListenableBuilder(
-                          valueListenable: ZegoService.isConnected,
-                          builder: (context, isConnected, child) => isConnected? Helpers.zegoService!.zegoButton( // المحانية موجودة
-                              context: context,
-                              isVideoCall: true,
-                              icon: const SvgPic(assetName: Assets.svgVideoCall),
-                              invites: [
-                                ZegoUIKitUser(id: widget.requestModel.receiverId.toString(), name: widget.receiverName),
-                              ],
-                              onPressed: () => _listenForCallStart(callStatus ?? '')
-                          ) : const SizedBox.shrink()
-                      );
-
-                    }else if(callStatus == 'free_used'){
-                      return InkWell(
-                          onTap: () => _makeVideoReq(),
-                          child: const Icon(Icons.videocam, color: AppColors.primary)
-                      );
-
-                    }else if(callStatus == 'completed'){ // المحانية خلصت
-                      return const SvgPic(assetName: Assets.svgVideoCall, color: Colors.grey);
-
-                    }
-                  }
-
-                  // not available
-                  return const SizedBox.shrink();
-                }
-
-
-            ),
+                onSuccess: (data, context) => AppText(
+                      LocaleKeys.chat,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.sp,
+                      color: Colors.black,
+                    )),
           ),
-        ],
-        body: Column(
-          children: [
-            ChatUpperWidget.withTimer(requestId: widget.requestModel.receiverId),
-            Expanded(
-                child: ChatView(
-                  requestModel: widget.requestModel,
-                  chatController: _chatController,
-                )
+          isScrollable: false,
+          onBack: () => _markAsRead(),
+          actions: [
+            BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
+              builder: (context, state) => ChatStatusBuilder(
+                data: state,
+                onSuccess: (data, context) => !_isPartnerDeletedAccount(data) &&
+                        !data.matchRequest!.stage!.value!
+                            .getCurrentStageAsStagesEnum.isNewChat &&
+                        data.matchRequest!.timer.isNotEqualZero
+                    ? ValueListenableBuilder(
+                        valueListenable: ZegoService.isConnected,
+                        builder: (context, isConnected, child) => isConnected
+                            ? Helpers.zegoService!.zegoButton(
+                                context: context,
+                                isVideoCall: false,
+                                icon: const SvgPic(
+                                    assetName: Assets.svgPhoneIcon),
+                                invites: [
+                                  ZegoUIKitUser(
+                                      id: widget.requestModel.receiverId
+                                          .toString(),
+                                      name: widget.receiverName),
+                                ],
+                              )
+                            : CustomLoading.showLoadingView())
+                    : const SizedBox.shrink(),
+              ),
+            ),
+            BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
+              builder: (context, state) => ChatStatusBuilder(
+                  data: state,
+                  onSuccess: (data, context) {
+                    if (!_isPartnerDeletedAccount(data) &&
+                        data.matchRequest!.timer.isNotEqualZero) {
+                      final callStatus =
+                          context.read<ChatCubit>().matchRequest?.callStatus;
+                      if (((callStatus == 'free_available') ||
+                          (callStatus == 'paid_available'))) {
+                        return ValueListenableBuilder(
+                            valueListenable: ZegoService.isConnected,
+                            builder: (context, isConnected, child) =>
+                                isConnected
+                                    ? Helpers.zegoService!.zegoButton(
+                                        // المحانية موجودة
+                                        context: context,
+                                        isVideoCall: true,
+                                        icon: const SvgPic(
+                                            assetName: Assets.svgVideoCall),
+                                        invites: [
+                                          ZegoUIKitUser(
+                                              id: widget.requestModel.receiverId
+                                                  .toString(),
+                                              name: widget.receiverName),
+                                        ],
+                                        onPressed: () => _listenForCallStart(
+                                            callStatus ?? ''))
+                                    : const SizedBox.shrink());
+                      } else if (callStatus == 'free_used') {
+                        return InkWell(
+                            onTap: () => _makeVideoReq(),
+                            child: const Icon(Icons.videocam,
+                                color: AppColors.primary));
+                      } else if (callStatus == 'completed') {
+                        // المحانية خلصت
+                        return const SvgPic(
+                            assetName: Assets.svgVideoCall, color: Colors.grey);
+                      }
+                    }
+
+                    // not available
+                    return const SizedBox.shrink();
+                  }),
             ),
           ],
+          body: Column(
+            children: [
+              ChatUpperWidget.withTimer(
+                  requestId: widget.requestModel.receiverId),
+              Expanded(
+                  child: ChatView(
+                requestModel: widget.requestModel,
+                chatController: _chatController,
+              )),
+            ],
+          ),
+          bottomBar: BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
+              builder: (context, state) => IntrinsicHeight(
+                    child: ChatStatusBuilder(
+                      data: state,
+                      onSuccess: (data, context) => _initBottomBar(state.data),
+                    ),
+                  )),
         ),
-        bottomBar: BlocBuilder<ChatCubit, AsyncState<ChatModel>>(
-            builder: (context, state) =>
-                IntrinsicHeight(
-                  child: ChatStatusBuilder(
-                    data: state,
-                    onSuccess: (data, context) => _initBottomBar(state.data),
-                  ),
-                )
-        ),
-      ),
       ),
     );
   }

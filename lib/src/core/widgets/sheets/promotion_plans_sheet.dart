@@ -14,7 +14,7 @@ Future<void> showPromotionPlansSheet({
     child: MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => PromotionPlansCubit()..getPromotionPlans(),
+          create: (_) => PromotionPlansCubit(),
         ),
         BlocProvider(
           create: (_) => PromotionSubscriptionCubit(),

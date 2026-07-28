@@ -15,16 +15,23 @@ import '../../core/helpers/lancher_helper.dart';
 import '../../core/notification/inactivity_notification_service.dart';
 import '../../core/notification/notification_service.dart';
 import '../../core/shared/models/user_models/user_model.dart';
+import '../../core/shared/user_cubit/user_cubit.dart';
 import '../../core/widgets/app_text.dart';
-import '../../core/widgets/default_bottom_sheet.dart';
 import '../../core/widgets/icon_widget.dart';
+import '../../core/widgets/promotion_reminder_dialog.dart';
 import '../whats_new/whats_new_service.dart';
-import '../whats_new/widgets/whats_new_sheet.dart';
 import 'cubits/get_notification_count.dart';
 import 'cubits/home_cubit/home_cubit.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final int initialIndex;
+  final bool showPromotionReminder;
+
+  const HomeScreen({
+    super.key,
+    this.initialIndex = 0,
+    this.showPromotionReminder = false,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -34,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _initApp() async {
     await _handleNotifications();
     await _handleTrackingPermission();
-    if(UserModel.isAuthenticated){
+    if (UserModel.isAuthenticated) {
       await Helpers.initZegoService();
     }
     // _checkForUpdates();
@@ -51,33 +58,34 @@ class _HomeScreenState extends State<HomeScreen> {
     await injector<NotificationService>().setupNotifications();
   }
 
-  Future<void> _checkForUpdates()async{
+  Future<void> _checkForUpdates() async {
     bool makeAnotherCheck = true;
     final shorebirdCodePush = ShorebirdUpdater();
-    while(makeAnotherCheck){
+    while (makeAnotherCheck) {
       final status = await shorebirdCodePush.checkForUpdate();
       final isUpdateAvailable = status == UpdateStatus.outdated;
       final isRestartNeeded = status == UpdateStatus.restartRequired;
 
-      if(isUpdateAvailable){
+      if (isUpdateAvailable) {
         await shorebirdCodePush.update();
-      }else if(isRestartNeeded){
+      } else if (isRestartNeeded) {
         Helpers.showRestartSheet();
         makeAnotherCheck = false;
-      }else{
+      } else {
         makeAnotherCheck = false;
       }
     }
   }
 
-  Future<void> _requestTrackingPermission()async{
-    final status = await AppTrackingTransparency.requestTrackingAuthorization();
+  Future<void> _requestTrackingPermission() async {
+    await AppTrackingTransparency.requestTrackingAuthorization();
   }
 
-  Future<void> _handleTrackingPermission()async{
-    if(Platform.isIOS){
-      final currentStatus = await AppTrackingTransparency.trackingAuthorizationStatus;
-      switch(currentStatus){
+  Future<void> _handleTrackingPermission() async {
+    if (Platform.isIOS) {
+      final currentStatus =
+          await AppTrackingTransparency.trackingAuthorizationStatus;
+      switch (currentStatus) {
         case TrackingStatus.notDetermined:
         case TrackingStatus.denied:
           await _requestTrackingPermission();
@@ -88,16 +96,22 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }
   }
+
   @override
   void initState() {
     _initApp();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      WhatsNewService.showIfNeeded(upgrader: upgrader);
-      // showDefaultBottomSheet(child: const WhatsNewSheet(items: ['1,2,3,4,5,6,7,8']));
-
-    });
+    WidgetsBinding.instance.addPostFrameCallback((_) => _showLaunchDialogs());
     super.initState();
   }
+
+  Future<void> _showLaunchDialogs() async {
+    await WhatsNewService.showIfNeeded(upgrader: upgrader);
+    if (!mounted || !widget.showPromotionReminder) return;
+
+    await showPromotionReminderDialog();
+    await UserCubit.instance.resetPromotionReminderLaunchCount();
+  }
+
   late final upgrader = Upgrader(
     // debugDisplayAlways: kDebugMode,
     debugLogging: true,
@@ -114,27 +128,41 @@ class _HomeScreenState extends State<HomeScreen> {
     return UpgradeAlert(
       upgrader: upgrader,
       shouldPopScope: () => true,
-      dialogStyle: Platform.isIOS?
-      UpgradeDialogStyle.cupertino :
-      UpgradeDialogStyle.material,
+      dialogStyle: Platform.isIOS
+          ? UpgradeDialogStyle.cupertino
+          : UpgradeDialogStyle.material,
       onUpdate: () {
-        if(Platform.isIOS){
-          LauncherHelper.launchURL(url: 'https://apps.apple.com/us/app/%D8%B3%D8%AA%D8%B1/id6756270317');
-
-        }else{
-          LauncherHelper.launchURL(url: 'https://play.google.com/store/apps/details?id=com.aait.flutter.sitr');
+        if (Platform.isIOS) {
+          LauncherHelper.launchURL(
+              url:
+                  'https://apps.apple.com/us/app/%D8%B3%D8%AA%D8%B1/id6756270317');
+        } else {
+          LauncherHelper.launchURL(
+              url:
+                  'https://play.google.com/store/apps/details?id=com.aait.flutter.sitr');
         }
         return true;
       },
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => HomeCubit()),
-          BlocProvider(create: (context) => GetNotificationCountCubit()..getNotificationCount()..startNotificationInterceptor()),
-          BlocProvider(create: (context) => GetChatsNotificationCountCubit()..getChatNotificationCount()..startNotificationInterceptor()),
+          BlocProvider(
+            create: (context) => HomeCubit(currentIndex: widget.initialIndex),
+          ),
+          BlocProvider(
+              create: (context) => GetNotificationCountCubit()
+                ..getNotificationCount()
+                ..startNotificationInterceptor()),
+          BlocProvider(
+              create: (context) => GetChatsNotificationCountCubit()
+                ..getChatNotificationCount()
+                ..startNotificationInterceptor()),
         ],
         child: BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
-            final cubit = context.read<HomeCubit>();
+            final HomeCubit cubit = context.read<HomeCubit>();
+            final int tabsCount = cubit.screens.length;
+            final double tabWidth =
+                MediaQuery.sizeOf(context).width / tabsCount;
             return Scaffold(
               backgroundColor: AppColors.whiteScaffoldBackground,
               body: SafeArea(child: cubit.screens[cubit.currentIndex]),
@@ -152,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       decoration: BoxDecoration(
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.25),
+                            color: Colors.black.withValues(alpha: 0.25),
                             blurRadius: 12,
                             offset: const Offset(0, -1),
                           ),
@@ -171,25 +199,26 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           unselectedLabelStyle: TextStyle(
                             fontSize: 13.sp,
-                            fontWeight: FontWeight.w500,),
+                            fontWeight: FontWeight.w500,
+                          ),
                           currentIndex: cubit.currentIndex,
                           onTap: (index) {
-                            if(index != 0 && index != 4){
-                              if(UserModel.isAuthenticated){
+                            if (index != 0 && index != tabsCount - 1) {
+                              if (UserModel.isAuthenticated) {
                                 cubit.changeBottomNavIndex(index);
-
-                              }else{
+                              } else {
                                 Helpers.showUnauthenticatedSheet();
                               }
-                            }else{
+                            } else {
                               cubit.changeBottomNavIndex(index);
                             }
 
-                            if(index == 1){
+                            if (index == 1) {
                               context.read<GetNotificationCountCubit>().reset();
-
-                            }else if(index == 2){
-                              context.read<GetChatsNotificationCountCubit>().reset();
+                            } else if (index == 2) {
+                              context
+                                  .read<GetChatsNotificationCountCubit>()
+                                  .reset();
                             }
 
                             return;
@@ -205,11 +234,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               label: LocaleKeys.home,
                             ),
                             BottomNavigationBarItem(
-                              icon: BlocBuilder<GetNotificationCountCubit, AsyncState<int>>(
+                              icon: BlocBuilder<GetNotificationCountCubit,
+                                  AsyncState<int>>(
                                 builder: (context, state) => Badge(
                                   backgroundColor: AppColors.primary,
                                   label: AppText(state.data.toString()),
-                                  isLabelVisible: state.data <= 0 ? false : true,
+                                  isLabelVisible:
+                                      state.data <= 0 ? false : true,
                                   child: IconWidget(
                                     icon: Assets.svgNotificationIcon,
                                     color: cubit.currentIndex == 1
@@ -221,11 +252,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               label: LocaleKeys.notifications,
                             ),
                             BottomNavigationBarItem(
-                              icon: BlocBuilder<GetChatsNotificationCountCubit, AsyncState<int>>(
+                              icon: BlocBuilder<GetChatsNotificationCountCubit,
+                                  AsyncState<int>>(
                                 builder: (context, state) => Badge(
                                   backgroundColor: AppColors.primary,
                                   label: AppText(state.data.toString()),
-                                  isLabelVisible: state.data <= 0 ? false : true,
+                                  isLabelVisible:
+                                      state.data <= 0 ? false : true,
                                   child: IconWidget(
                                     icon: Assets.svgChatsIcon,
                                     color: cubit.currentIndex == 2
@@ -238,8 +271,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             BottomNavigationBarItem(
                               icon: IconWidget(
-                                icon: Assets.svgPackageIcon,
+                                icon: Icons.person_add_alt_1_outlined,
                                 color: cubit.currentIndex == 3
+                                    ? AppColors.primary
+                                    : AppColors.unSelectedLabelColor,
+                              ),
+                              label: LocaleKeys.requests,
+                            ),
+                            BottomNavigationBarItem(
+                              icon: IconWidget(
+                                icon: Assets.svgPackageIcon,
+                                color: cubit.currentIndex == 4
                                     ? AppColors.primary
                                     : null,
                               ),
@@ -248,7 +290,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             BottomNavigationBarItem(
                               icon: IconWidget(
                                 icon: Assets.svgMoreIcon,
-                                color: cubit.currentIndex == 4
+                                color: cubit.currentIndex == 5
                                     ? AppColors.primary
                                     : null,
                               ),
@@ -259,17 +301,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     PositionedDirectional(
-                      start: (cubit.currentIndex == 0
-                          ? 10.w
-                          : cubit.currentIndex == 1
-                          ? 80.w
-                          : cubit.currentIndex == 2
-                          ? 152.w
-                          : cubit.currentIndex == 3
-                          ? 228.w
-                          : 298.w),
+                      start: (tabWidth * cubit.currentIndex) + 7.5.w,
                       child: Container(
-                        width: (MediaQuery.of(context).size.width / 5) - 15.w,
+                        width: tabWidth - 15.w,
                         height: 3.w,
                         color: AppColors.primary,
                       ),

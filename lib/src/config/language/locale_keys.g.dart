@@ -1255,7 +1255,40 @@ abstract class LocaleKeys {
   static const String _promotionSheetCancelAnytime = 'promotion_sheet_cancel_anytime';
   static String get promotionSheetCancelAnytime => _promotionSheetCancelAnytime.tr();
 
+  static const String _promotionReminderTitle = 'promotion_reminder_title';
+  static String get promotionReminderTitle => _promotionReminderTitle.tr();
+
+  static const String _promotionReminderSubtitle = 'promotion_reminder_subtitle';
+  static String get promotionReminderSubtitle => _promotionReminderSubtitle.tr();
+
+  static const String _promotionReminderAction = 'promotion_reminder_action';
+  static String get promotionReminderAction => _promotionReminderAction.tr();
+
+  static const String _promotionReminderLater = 'promotion_reminder_later';
+  static String get promotionReminderLater => _promotionReminderLater.tr();
+
+  static const String _promotionSubscriptions = 'promotion_subscriptions';
+  static String get promotionSubscriptions => _promotionSubscriptions.tr();
+
   static const String _sendChatRequest = 'send_chat_request';
   static String get sendChatRequest => _sendChatRequest.tr();
+
+  static const String _connectionRequests = 'connection_requests';
+  static String get connectionRequests => _connectionRequests.tr();
+
+  static const String _requests = 'requests';
+  static String get requests => _requests.tr();
+
+  static const String _noConnectionRequests = 'no_connection_requests';
+  static String get noConnectionRequests => _noConnectionRequests.tr();
+
+  static const String _connectionRequestsEmptyDescription = 'connection_requests_empty_description';
+  static String get connectionRequestsEmptyDescription => _connectionRequestsEmptyDescription.tr();
+
+  static const String _exploreProfiles = 'explore_profiles';
+  static String get exploreProfiles => _exploreProfiles.tr();
+
+  static const String _messageRequestAcceptBlocked = 'message_request_accept_blocked';
+  static String get messageRequestAcceptBlocked => _messageRequestAcceptBlocked.tr();
 
 }

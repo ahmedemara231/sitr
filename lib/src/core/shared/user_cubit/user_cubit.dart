@@ -18,6 +18,9 @@ part 'user_utils.dart';
 
 const String _userKey = 'user';
 const String _tokenKey = 'token';
+const String _promotionReminderLaunchCountKey =
+    'promotion_reminder_launch_count';
+const int _promotionReminderLaunchInterval = 3;
 
 class UserCubit extends Cubit<UserState> with UserUtils {
   UserCubit() : super(UserState.initial());
@@ -53,6 +56,9 @@ class UserCubit extends Cubit<UserState> with UserUtils {
 
   Future<void> updateUser(UserModel user) async {
     await _saveUser(user);
+    if (user.isPromoted) {
+      await CacheStorage.delete(_getPromotionReminderKey(user));
+    }
     emit(state.copyWith(userModel: user));
   }
 
@@ -87,6 +93,28 @@ class UserCubit extends Cubit<UserState> with UserUtils {
     }
     return false;
   }
+
+  Future<bool> registerPromotionReminderAppLaunch() async {
+    if (user.isPromoted) {
+      await resetPromotionReminderLaunchCount();
+      return false;
+    }
+
+    final String cacheKey = _getPromotionReminderKey(user);
+    final int currentCount = CacheStorage.read(cacheKey) as int? ?? 0;
+    final int updatedCount = currentCount >= _promotionReminderLaunchInterval
+        ? _promotionReminderLaunchInterval
+        : currentCount + 1;
+    await CacheStorage.write(cacheKey, updatedCount);
+    return updatedCount >= _promotionReminderLaunchInterval;
+  }
+
+  Future<void> resetPromotionReminderLaunchCount() async {
+    await CacheStorage.delete(_getPromotionReminderKey(user));
+  }
+
+  String _getPromotionReminderKey(UserModel userModel) =>
+      '${_promotionReminderLaunchCountKey}_${userModel.id ?? 0}';
 
   void _clearUser() {
     injector<NetworkService>().removeToken();

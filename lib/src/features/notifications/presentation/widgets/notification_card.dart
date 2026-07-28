@@ -1,37 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../generated/assets.dart';
-import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
-import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/notification/notification_service.dart';
-import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/svg_pic.dart';
-import '../../../chats/data/models/request_model.dart';
-import '../../../chats/presentation/cubits/start_chat.dart';
-import '../../../chats/presentation/widgets/accept_or_reject_first_stage.dart';
 import '../../data/models/notification_model.dart';
 
-class NotificationCard extends StatefulWidget {
+class NotificationCard extends StatelessWidget {
   final NotificationModel notificationModel;
   final Future<void> Function(String id) onDelete;
-  final void Function({required int roomId, required int matchRequestId, required int receiverId})? onFireShouldUpdate;
 
-  const NotificationCard({super.key,
+  const NotificationCard({
+    super.key,
     required this.onDelete,
     required this.notificationModel,
-    this.onFireShouldUpdate,
   });
 
-  @override
-  State<NotificationCard> createState() => _NotificationCardState();
-}
-
-class _NotificationCardState extends State<NotificationCard> {
   // Design tokens mapped from the React/Tailwind card.
   static const Color _amber50 = Color(0xFFFFFBEB); // bg-amber-50
   static const Color _amber200 = Color(0xFFFDE68A); // border-amber-200
@@ -42,30 +29,6 @@ class _NotificationCardState extends State<NotificationCard> {
   static const Color _gray50 = Color(0xFFF9FAFB); // bottom divider
   static const Color _red500 = Color(0xFFEF4444); // delete icon
 
-  late final ValueNotifier<ButtonsState?> _buttonsState;
-
-  @override
-  void initState() {
-    super.initState();
-    _buttonsState = ValueNotifier(widget.notificationModel.buttonsState);
-  }
-
-  @override
-  void dispose() {
-    _buttonsState.dispose();
-    super.dispose();
-  }
-
-  Container _stateContainer(ButtonsState state) {
-    return Container(
-      decoration: BoxDecoration(
-        color: state.isAccepted ? Colors.green.withOpacity(.4) : Colors.red.withOpacity(.4),
-        borderRadius: BorderRadius.circular(7.r),
-      ),
-      child: Center(child: AppText(state.isAccepted ? LocaleKeys.accepted : LocaleKeys.rejected).paddingAll(10.r)),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -73,8 +36,8 @@ class _NotificationCardState extends State<NotificationCard> {
       child: InkWell(
         borderRadius: BorderRadius.circular(16.r),
         onTap: () {
-          widget.notificationModel.type.getType.navigation
-              .navigate(data: widget.notificationModel.data!);
+          notificationModel.type.getType.navigation
+              .navigate(data: notificationModel.data!);
         },
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
@@ -84,7 +47,7 @@ class _NotificationCardState extends State<NotificationCard> {
             border: Border.all(color: _gray100),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(.04),
+                color: Colors.black.withValues(alpha: .04),
                 blurRadius: 6,
                 offset: const Offset(0, 2),
               ),
@@ -120,7 +83,7 @@ class _NotificationCardState extends State<NotificationCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         AppText(
-                          widget.notificationModel.title,
+                          notificationModel.title,
                           fontSize: 12.sp,
                           fontWeight: FontWeight.bold,
                           color: _gray900,
@@ -128,7 +91,7 @@ class _NotificationCardState extends State<NotificationCard> {
                         ),
                         SizedBox(height: 4.h),
                         AppText(
-                          widget.notificationModel.body,
+                          notificationModel.body,
                           fontSize: 10.sp,
                           color: _gray700,
                           height: 1.5,
@@ -139,61 +102,6 @@ class _NotificationCardState extends State<NotificationCard> {
                     ),
                   ),
                 ],
-              ),
-
-              // Accept / reject (first stage) state
-              ValueListenableBuilder<ButtonsState?>(
-                valueListenable: _buttonsState,
-                builder: (context, state, _) {
-                  if (state!.isAccepted || state.isRejected) {
-                    return _stateContainer(state).paddingOnly(top: 12.h);
-                  } else if (state.isShow) {
-                    return BlocProvider(
-                      create: (_) => ChatCubit(),
-                      child: Builder(
-                        builder: (context) {
-                          final data = widget.notificationModel.data!;
-                          final matchRequestId = data['match_request_id'].toString();
-                          final requestModel = RequestModel(
-                            receiverId: data['sender_id'].toString(),
-                            fromHome: 0.toString(),
-                          );
-
-                          return AcceptOrRejectFirstStageWidget(
-                            showTitle: false,
-                            onAccept: (ctx) async {
-                              await ctx.read<ChatCubit>().executeRequestDirect(
-                                requestModel: requestModel,
-                                path: ApiConstants.acceptRequest + ApiConstants.userMoveToNextRequest,
-                                matchRequestId: matchRequestId,
-                                onSuccess: (chatModel) {
-                                  _buttonsState.value = ButtonsState.accepted;
-                                  widget.onFireShouldUpdate?.call(
-                                    roomId: chatModel.room?.id ?? 0,
-                                    matchRequestId: chatModel.matchRequest?.id ?? 0,
-                                    receiverId: chatModel.room!.members!.first.id!,
-                                  );
-                                },
-                              );
-                            },
-                            onReject: (ctx) async {
-                              await ctx.read<ChatCubit>().executeRequestDirect(
-                                requestModel: requestModel,
-                                path: ApiConstants.rejectAll,
-                                matchRequestId: matchRequestId,
-                                onSuccess: (chatModel) {
-                                  _buttonsState.value = ButtonsState.rejected;
-                                },
-                              );
-                            },
-                          ).paddingOnly(top: 12.h);
-                        },
-                      ),
-                    );
-                  }
-
-                  return const SizedBox.shrink();
-                },
               ),
 
               // Bottom row: time + delete
@@ -208,7 +116,8 @@ class _NotificationCardState extends State<NotificationCard> {
                       children: [
                         InkWell(
                           borderRadius: BorderRadius.circular(20.r),
-                          onTap: () async => widget.onDelete.call(widget.notificationModel.id),
+                          onTap: () async =>
+                              onDelete.call(notificationModel.id),
                           child: SvgPic(
                             assetName: Assets.svgTrashIcon,
                             color: _red500,
@@ -216,7 +125,7 @@ class _NotificationCardState extends State<NotificationCard> {
                           ),
                         ),
                         AppText(
-                          widget.notificationModel.createdAt,
+                          notificationModel.createdAt,
                           fontSize: 11.sp,
                           color: _gray400,
                         ),

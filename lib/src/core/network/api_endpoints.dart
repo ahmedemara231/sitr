@@ -97,6 +97,10 @@ class ApiConstants {
   static const String completedChats = 'chats/completed'; // مكتملة
   static const String rejectedChats = 'chats/rejected'; // مرفوضة
   static const String currentChats = 'chats/current'; // محادثاتي
+  static const String messageRequests = 'message_requests';
+  static const String sendMessageRequest = 'send_message_request';
+  static const String acceptMessageRequest = 'accept_message_request';
+  static const String rejectMessageRequest = 'reject_message_request';
   static const String report = 'user-reports';
   static const String updateChildProfile = 'update-child-profile/';
   static const String sendMsg = 'send-message/';

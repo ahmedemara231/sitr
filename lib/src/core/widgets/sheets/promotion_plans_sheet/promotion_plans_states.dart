@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../extensions/sized_box_helper.dart';
+import '../../app_text.dart';
+import '../../icon_widget.dart';
 
 class PromotionPlansLoading extends StatelessWidget {
   const PromotionPlansLoading({super.key});
@@ -23,14 +25,11 @@ class PromotionPlansLoading extends StatelessWidget {
             ),
           ),
           14.szH,
-          Text(
+          AppText(
             '${LocaleKeys.promotionSheetLoading}...',
-            style: TextStyle(
-              color: AppColors.mediumGray,
-              fontFamily: ConstantManager.fontFamily,
-              fontSize: 13.sp,
-              fontWeight: FontWeight.w600,
-            ),
+            color: AppColors.mediumGray,
+            fontSize: 13.sp,
+            fontWeight: FontWeight.w600,
           ),
         ],
       ),
@@ -58,38 +57,34 @@ class PromotionPlansError extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                Icons.error_outline_rounded,
+              IconWidget(
+                icon: Icons.error_outline_rounded,
                 color: AppColors.primary,
-                size: 30.sp,
+                width: 30.sp,
+                height: 30.sp,
               ),
               SizedBox(height: 10.h),
-              Text(
+              AppText(
                 message ?? LocaleKeys.checkInternet,
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: AppColors.mediumGray,
-                  fontFamily: ConstantManager.fontFamily,
-                  fontSize: 13.sp,
-                  height: 1.5,
-                ),
+                color: AppColors.mediumGray,
+                fontSize: 13.sp,
+                height: 1.5,
               ),
               SizedBox(height: 14.h),
               TextButton.icon(
                 onPressed: onRetry,
-                icon: Icon(
-                  Icons.refresh_rounded,
+                icon: IconWidget(
+                  icon: Icons.refresh_rounded,
                   color: AppColors.primary,
-                  size: 18.sp,
+                  width: 18.sp,
+                  height: 18.sp,
                 ),
-                label: Text(
+                label: AppText(
                   LocaleKeys.tryAgain,
-                  style: TextStyle(
-                    color: AppColors.primary,
-                    fontFamily: ConstantManager.fontFamily,
-                    fontSize: 13.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  color: AppColors.primary,
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ],

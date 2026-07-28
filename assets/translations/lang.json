@@ -219,6 +219,8 @@
     "irreversibleDeleteAccountWarning #$ This action cannot be undone after confirmation" : "لا يمكن التراجع عن هذه العملية بعد التأكيد",
     "unableToLoadDeleteAccountReasons #$ Unable to load delete account reasons" : "تعذّر تحميل أسباب حذف الحساب",
     "noDeleteAccountReasonsFound #$ No reasons are available right now" : "لا توجد أسباب متاحة حاليًا",
+    "cannotDeleteAccountWithBalance #$ Your account cannot be deleted while your wallet has a balance." : "لا يمكن حذف حسابك بينما تحتوي محفظتك على رصيد.",
+    "cannotDeleteAccountWithLiveChat #$ Your account cannot be deleted while you have an active chat." : "لا يمكن حذف حسابك أثناء وجود محادثة نشطة.",
     "tryAgain #$ Try again" : "حاول مرة أخرى",
     "Contact us" : "تواصل معنا",
     "Message text" : "نص الرسالة",
@@ -431,5 +433,17 @@
   "promotionSheetSubscribePrefix #$ Subscribe to package" : "اشترك في باقة",
   "promotionSheetSubscribedSuccess #$ Subscribed successfully" : "تم الاشتراك بنجاح",
   "promotionSheetCancelAnytime #$ You can cancel anytime" : "يمكنك إلغاء الاشتراك في أي وقت",
-  "Send Chat Request" : "ارسال طلب محادثة"
+  "promotionReminderTitle #$ Make your profile stand out" : "خلّ ملفك يبرز",
+  "promotionReminderSubtitle #$ Promote your profile to appear first and increase your chances of finding the right match" : "روّج ملفك للظهور أولاً وزِد فرصك في الوصول إلى الشريك المناسب",
+  "promotionReminderAction #$ View promotion plans" : "عرض باقات الترويج",
+  "promotionReminderLater #$ Maybe later" : "ربما لاحقاً",
+  "promotionSubscriptions #$ Promotion subscriptions" : "اشتراكات الترويج",
+  "Send Chat Request" : "ارسال طلب محادثة",
+  "_____________________________________ConnectionRequests___________________________________" : "",
+  "connectionRequests #$ Connection requests" : "طلبات التواصل",
+  "requests #$ Requests" : "الطلبات",
+  "noConnectionRequests #$ No connection requests yet" : "لا توجد طلبات تواصل حالياً",
+  "connectionRequestsEmptyDescription #$ New requests will appear here as soon as they arrive." : "ستظهر الطلبات الجديدة هنا بمجرد وصولها.",
+  "exploreProfiles #$ Explore profiles" : "استكشاف الملفات",
+  "messageRequestAcceptBlocked #$ Finish your current chat before accepting another request" : "أنهِ المحادثة الحالية قبل الموافقة على طلب آخر"
 }

@@ -5,10 +5,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
-import 'sheets/promotion_plans_sheet.dart';
+import '../../features/packages/presentation/packages_screen.dart';
+import '../../../generated/assets.dart';
+import '../navigation/Constants/imports_constants.dart';
+import '../navigation/navigator.dart';
+import 'app_text.dart';
+import 'icon_widget.dart';
 
 class PromotionBadge extends StatelessWidget {
-  static const double height = 50;
+  static const double height = 86;
 
   final FutureOr<void> Function()? onSuccess;
 
@@ -19,89 +24,61 @@ class PromotionBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Material(
-        color: AppColors.transparent,
-        borderRadius: BorderRadius.circular(28.r),
-        child: InkWell(
-          onTap: () => showPromotionPlansSheet(onSuccess: onSuccess),
-          borderRadius: BorderRadius.circular(28.r),
-          child: Container(
-            height: height.h,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(28.r),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.promotionBadgeShadow.withValues(alpha: 0.45),
-                  blurRadius: 20.r,
-                  offset: Offset(0, 4.h),
+    return Material(
+      color: AppColors.transparent,
+      borderRadius: BorderRadius.circular(10.r),
+      child: InkWell(
+        onTap: () => Go.to(
+          PackagesScreen.promotion(onSuccess: onSuccess),
+          transition: TransitionType.slide,
+        ),
+        borderRadius: BorderRadius.circular(10.r),
+        child: Ink(
+          height: height.h,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: AppColors.primary,
+            borderRadius: BorderRadius.circular(10.r),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.blackShadow.withValues(alpha: 0.06),
+                blurRadius: 24.r,
+                offset: Offset(0, 4.h),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10.r),
+            child: Stack(
+              children: [
+                PositionedDirectional(
+                  top: -34.h,
+                  end: -18.w,
+                  child: const _PromotionDecorationCircle(dimension: 108),
                 ),
-                BoxShadow(
-                  color: AppColors.promotionBadgeGlow.withValues(alpha: 0.30),
-                  blurRadius: 6.r,
+                PositionedDirectional(
+                  bottom: -42.h,
+                  start: 92.w,
+                  child: const _PromotionDecorationCircle(dimension: 82),
                 ),
-              ],
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(28.r),
-              child: DecoratedBox(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    stops: [0, 0.55, 1],
-                    colors: [
-                      AppColors.promotionBadgeGradientStart,
-                      AppColors.promotionBadgeGradientMiddle,
-                      AppColors.promotionBadgeGradientEnd,
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(
+                    14.w,
+                    12.h,
+                    12.w,
+                    12.h,
+                  ),
+                  child: Row(
+                    children: [
+                      const _PromotionIcon(),
+                      SizedBox(width: 10.w),
+                      const Expanded(child: _PromotionTextBlock()),
+                      SizedBox(width: 8.w),
+                      const _PromotionActionPill(),
                     ],
                   ),
                 ),
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    const DecoratedBox(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.centerRight,
-                          end: Alignment.centerLeft,
-                          stops: [0.30, 0.50, 0.70],
-                          colors: [
-                            AppColors.transparent,
-                            AppColors.promotionBadgeSheen,
-                            AppColors.transparent,
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16.w,
-                        vertical: 10.h,
-                      ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Row(
-                              children: [
-                                const _PromotionCrownIcon(),
-                                SizedBox(width: 8.w),
-                                const Expanded(
-                                  child: _PromotionTextBlock(),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(width: 8.w),
-                          const _PromotionActionPill(),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              ],
             ),
           ),
         ),
@@ -110,24 +87,49 @@ class PromotionBadge extends StatelessWidget {
   }
 }
 
-class _PromotionCrownIcon extends StatelessWidget {
-  const _PromotionCrownIcon();
+class _PromotionDecorationCircle extends StatelessWidget {
+  final double dimension;
+
+  const _PromotionDecorationCircle({required this.dimension});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 28.r,
-      width: 28.r,
+      width: dimension.r,
+      height: dimension.r,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: AppColors.white.withValues(alpha: 0.15),
+        color: AppColors.white.withValues(alpha: 0.07),
+      ),
+    );
+  }
+}
+
+class _PromotionIcon extends StatelessWidget {
+  const _PromotionIcon();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 48.r,
+      height: 48.r,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: AppColors.white.withValues(alpha: 0.16),
       ),
       alignment: Alignment.center,
-      child: SizedBox(
-        width: 16.w,
-        height: 14.h,
-        child: CustomPaint(
-          painter: _CrownPainter(),
+      child: Container(
+        width: 36.r,
+        height: 36.r,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: AppColors.white,
+        ),
+        alignment: Alignment.center,
+        child: IconWidget(
+          icon: Assets.svgPackagesScreenImage,
+          width: 23.w,
+          height: 25.h,
         ),
       ),
     );
@@ -143,28 +145,24 @@ class _PromotionTextBlock extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        AppText(
           LocaleKeys.promotionBadgeTitle,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            color: AppColors.white,
-            fontFamily: ConstantManager.fontFamily,
-            fontSize: 13.sp,
-            fontWeight: FontWeight.bold,
-            height: 1.1,
-          ),
+          color: AppColors.white,
+          fontSize: 15.sp,
+          fontWeight: FontWeight.bold,
+          height: 1.2,
         ),
-        Text(
+        SizedBox(height: 4.h),
+        AppText(
           LocaleKeys.promotionBadgeSubtitle,
-          maxLines: 1,
+          maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            color: AppColors.promotionBadgeSubtitle,
-            fontFamily: ConstantManager.fontFamily,
-            fontSize: 11.sp,
-            height: 1.1,
-          ),
+          color: AppColors.promotionBadgeSubtitle,
+          fontSize: 11.sp,
+          fontWeight: FontWeight.w500,
+          height: 1.25,
         ),
       ],
     );
@@ -177,81 +175,32 @@ class _PromotionActionPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 12.w,
-        vertical: 5.h,
-      ),
+      padding: EdgeInsetsDirectional.fromSTEB(10.w, 7.h, 8.w, 7.h),
       decoration: BoxDecoration(
-        color: AppColors.white.withValues(alpha: 0.20),
-        borderRadius: BorderRadius.circular(40.r),
-        border: Border.all(
-          color: AppColors.white.withValues(alpha: 0.30),
-        ),
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(50.r),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
+          AppText(
             LocaleKeys.promotionBadgeAction,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: AppColors.white,
-              fontFamily: ConstantManager.fontFamily,
-              fontSize: 11.sp,
-              fontWeight: FontWeight.bold,
-              height: 1,
-            ),
+            color: AppColors.primary,
+            fontSize: 11.sp,
+            fontWeight: FontWeight.bold,
+            height: 1,
           ),
-          SizedBox(width: 4.w),
-          Icon(
-            Icons.chevron_left_rounded,
-            color: AppColors.white,
-            size: 14.sp,
+          SizedBox(width: 3.w),
+          IconWidget(
+            icon: Icons.arrow_forward_ios_rounded,
+            color: AppColors.primary,
+            width: 11.sp,
+            height: 11.sp,
           ),
         ],
       ),
     );
   }
-}
-
-class _CrownPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    canvas.save();
-    canvas.scale(size.width / 24, size.height / 20);
-
-    final Paint strokePaint = Paint()
-      ..color = AppColors.white
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2
-      ..strokeCap = StrokeCap.round
-      ..strokeJoin = StrokeJoin.round;
-
-    final Path crownPath = Path()
-      ..moveTo(2, 18)
-      ..lineTo(22, 18)
-      ..moveTo(3, 16)
-      ..relativeLineTo(3, -8)
-      ..relativeLineTo(6, 4)
-      ..relativeLineTo(4, -8)
-      ..relativeLineTo(4, 8)
-      ..relativeLineTo(3, 8);
-
-    canvas.drawPath(crownPath, strokePaint);
-
-    final Paint dotPaint = Paint()
-      ..color = AppColors.promotionBadgeGlow
-      ..style = PaintingStyle.fill;
-
-    canvas
-      ..drawCircle(const Offset(3, 8), 2, dotPaint)
-      ..drawCircle(const Offset(12, 4), 2, dotPaint)
-      ..drawCircle(const Offset(21, 8), 2, dotPaint);
-
-    canvas.restore();
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

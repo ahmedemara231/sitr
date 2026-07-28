@@ -7,7 +7,9 @@ import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/string_extension.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
+import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../core/widgets/image_widgets/custom_image_slider.dart';
+import '../../../../core/widgets/promotion_badge.dart';
 import '../../../../core/widgets/scaffolds/center_card_scaffold.dart';
 import '../../../../core/widgets/choose_from_options.dart';
 import '../../data/models/home_model.dart';
@@ -88,7 +90,8 @@ class MainViewBody extends StatefulWidget {
 }
 
 class _MainViewBodyState extends State<MainViewBody> {
-  late final ScrollController _scrollController = ScrollController()..addListener(_onScroll);
+  late final ScrollController _scrollController = ScrollController()
+    ..addListener(_onScroll);
 
   ValueNotifier<String> get firstSelection => widget.firstSelection;
   ValueNotifier<String> get secondSelection => widget.secondSelection;
@@ -96,7 +99,8 @@ class _MainViewBodyState extends State<MainViewBody> {
   List<String> get _opportunitiesTitles => widget.opportunitiesTitles;
 
   void _onScroll() {
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
       final cubit = context.read<GetOpportunitiesCubit>();
       if (cubit.canLoadMore) {
         cubit.loadMoreOpportunities(type: secondSelection.value.toUserGender());
@@ -132,6 +136,10 @@ class _MainViewBodyState extends State<MainViewBody> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isPromoted = context.select(
+      (UserCubit cubit) => cubit.user.isPromoted,
+    );
+
     return BlocProvider(
       create: (context) => MainViewCubit()..getHomeData(),
       child: BlocBuilder<MainViewCubit, AsyncState<HomeModel>>(
@@ -146,39 +154,57 @@ class _MainViewBodyState extends State<MainViewBody> {
             data: state,
             onSuccess: (data, context) => ImageSlider(
               height: context.height / 5,
-              images: state.data.banners?.map((e) => e.image ?? '').toList() ?? [],
+              images:
+                  state.data.banners?.map((e) => e.image ?? '').toList() ?? [],
             ),
           ),
-          headerContent: StatusBuilder(
-            data: state,
-            onSuccess: (data, context) => Column(
-              children: [
-                ChooseFromOptionsWidget(
-                  onSelectOption: (selectedOption) => firstSelection.value = selectedOption,
-                  fontSize: 14.sp,
-                  childPadding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 12.w),
-                  titles: _partnersOrConsultants,
-                ),
-                ValueListenableBuilder(
-                  valueListenable: firstSelection,
-                  builder: (context, value, child) => value == _partnersOrConsultants.first
-                      ? ChooseFromOptionsWidget(
-                          fontWeight: FontWeight.w500,
-                          onSelectOption: (selectedOption) => secondSelection.value = selectedOption,
-                          childPadding: EdgeInsets.symmetric(vertical: 12.h),
-                          titles: _opportunitiesTitles,
-                          fontSize: 14.sp,
-                        )
-                      : const SizedBox.shrink(),
-                ),
+          headerContent: Column(
+            children: [
+              if (!isPromoted) ...[
+                const PromotionBadge(),
+                SizedBox(height: 16.h),
               ],
-            ),
+              StatusBuilder(
+                data: state,
+                onSuccess: (data, context) => Column(
+                  children: [
+                    ChooseFromOptionsWidget(
+                      onSelectOption: (selectedOption) =>
+                          firstSelection.value = selectedOption,
+                      fontSize: 14.sp,
+                      childPadding: EdgeInsets.symmetric(
+                        vertical: 16.h,
+                        horizontal: 12.w,
+                      ),
+                      titles: _partnersOrConsultants,
+                    ),
+                    ValueListenableBuilder(
+                      valueListenable: firstSelection,
+                      builder: (context, value, child) =>
+                          value == _partnersOrConsultants.first
+                              ? ChooseFromOptionsWidget(
+                                  fontWeight: FontWeight.w500,
+                                  onSelectOption: (selectedOption) =>
+                                      secondSelection.value = selectedOption,
+                                  childPadding:
+                                      EdgeInsets.symmetric(vertical: 12.h),
+                                  titles: _opportunitiesTitles,
+                                  fontSize: 14.sp,
+                                )
+                              : const SizedBox.shrink(),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
           bodyBuilder: (context) => ValueListenableBuilder(
             valueListenable: firstSelection,
-            builder: (context, value, child) => value == _partnersOrConsultants.first
-                ? OpportunitiesListBody(secondSelection: secondSelection)
-                : ConsultantsListBody(consultants: state.data.marriageConsultants),
+            builder: (context, value, child) =>
+                value == _partnersOrConsultants.first
+                    ? OpportunitiesListBody(secondSelection: secondSelection)
+                    : ConsultantsListBody(
+                        consultants: state.data.marriageConsultants),
           ),
         ),
       ),

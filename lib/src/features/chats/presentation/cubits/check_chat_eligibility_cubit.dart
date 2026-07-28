@@ -5,7 +5,6 @@ import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubi
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../../../core/widgets/custom_messages.dart';
-import '../../data/models/chat_model.dart';
 import '../../data/models/request_model.dart';
 
 class CheckChatEligibilityCubit extends AsyncCubit<CanChat> {
@@ -14,7 +13,7 @@ class CheckChatEligibilityCubit extends AsyncCubit<CanChat> {
 
   Future<void> checkEligibility({
     required RequestModel requestModel,
-    required FutureOr<void> Function(ChatModel chatModel) onEligible,
+    required FutureOr<void> Function() onRequestSent,
   }) async {
     await executeAsyncWithBaseModel(
       operation: () => baseCrudUseCase.call<CanChat>(
@@ -25,41 +24,38 @@ class CheckChatEligibilityCubit extends AsyncCubit<CanChat> {
           mapper: (json) => CanChat.fromJson(json),
         ),
       ),
-      onSuccess: (data) async {
-        if (!data.data.canChat) return;
-        final ChatModel? chatModel = await _startChat(requestModel);
-        if (chatModel != null) await onEligible(chatModel);
-      },
+    );
+    if (state.isError || !state.data.canChat) return;
+    await _sendMessageRequest(
+      requestModel: requestModel,
+      onRequestSent: onRequestSent,
     );
   }
 
-  Future<ChatModel?> _startChat(RequestModel requestModel) async {
-    final result = await baseCrudUseCase.call<ChatModel>(
-      CrudBaseParmas<ChatModel>(
-        api: ApiConstants.startChat,
+  Future<void> _sendMessageRequest({
+    required RequestModel requestModel,
+    required FutureOr<void> Function() onRequestSent,
+  }) async {
+    setLoading();
+    final result = await baseCrudUseCase.call<CanChat>(
+      CrudBaseParmas<CanChat>(
+        api: ApiConstants.sendMessageRequest,
         httpRequestType: HttpRequestType.post,
-        cacheKey: 'chat_${requestModel.receiverId}',
-        body: requestModel.toJson(),
-        mapper: (json) => ChatModel.fromJson(json),
-        toJson: (model) => model.toJson(),
+        body: requestModel.toMessageRequestJson(),
+        mapper: (json) => CanChat.fromJson(json),
       ),
     );
 
-    ChatModel? chatModel;
-    result.when(
-      (success) => chatModel = success.data,
-      (failure) {
-        MessageUtils.showTopMsg(failure.message);
-        setError(errorMessage: failure.message);
-      },
-    );
-    return chatModel;
-  }
+    final failure = result.tryGetError();
+    if (failure != null) {
+      MessageUtils.showTopMsg(failure.message);
+      setError(errorMessage: failure.message);
+      return;
+    }
 
-  void markChatRequestSent() => updateData(
-        const CanChat(
-          canChat: false,
-          reason: ChatReason.chatRequestSent,
-        ),
-      );
+    final success = result.tryGetSuccess();
+    if (success == null) return;
+    setSuccess(success);
+    await onRequestSent();
+  }
 }

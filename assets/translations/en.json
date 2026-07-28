@@ -422,5 +422,16 @@
   "promotion_sheet_subscribe_prefix": "Subscribe to package",
   "promotion_sheet_subscribed_success": "Subscribed successfully",
   "promotion_sheet_cancel_anytime": "You can cancel anytime",
-  "send_chat_request": "Send Chat Request"
+  "promotion_reminder_title": "Make your profile stand out",
+  "promotion_reminder_subtitle": "Promote your profile to appear first and increase your chances of finding the right match",
+  "promotion_reminder_action": "View promotion plans",
+  "promotion_reminder_later": "Maybe later",
+  "promotion_subscriptions": "Promotion subscriptions",
+  "send_chat_request": "Send Chat Request",
+  "connection_requests": "Connection requests",
+  "requests": "Requests",
+  "no_connection_requests": "No connection requests yet",
+  "connection_requests_empty_description": "New requests will appear here as soon as they arrive.",
+  "explore_profiles": "Explore profiles",
+  "message_request_accept_blocked": "Finish your current chat before accepting another request"
 }

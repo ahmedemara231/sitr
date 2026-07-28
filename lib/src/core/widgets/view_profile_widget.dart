@@ -37,15 +37,14 @@ import 'chat_button.dart';
 import 'custom_messages.dart';
 import 'image_widgets/cached_image.dart';
 import 'premium_user_badge.dart';
-import 'promotion_badge.dart';
 import 'scaffolds/center_card_scaffold.dart';
 import 'unavailability_reason_card.dart';
 import 'sheets/bloc_success.dart';
 import 'sheets/report_sheet.dart';
 
-enum ProfileType{profile, partnerProfile}
+enum ProfileType { profile, partnerProfile }
 
-extension TypeCheck on ProfileType{
+extension TypeCheck on ProfileType {
   bool get isProfile => this == ProfileType.profile;
   bool get isPartnerProfile => this == ProfileType.partnerProfile;
 }
@@ -54,11 +53,13 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatefulWidget {
   final ProfileType _type;
   final T cubit;
 
-  const ViewProfileWidget.profile({super.key,
+  const ViewProfileWidget.profile({
+    super.key,
     required this.cubit,
   }) : _type = ProfileType.profile;
 
-  const ViewProfileWidget.viewPartner({super.key,
+  const ViewProfileWidget.viewPartner({
+    super.key,
     required this.cubit,
   }) : _type = ProfileType.partnerProfile;
 
@@ -66,94 +67,153 @@ class ViewProfileWidget<T extends GetUserModelCubit> extends StatefulWidget {
   State<ViewProfileWidget<T>> createState() => _ViewProfileWidgetState<T>();
 }
 
-class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewProfileWidget<T>> {
-
+class _ViewProfileWidgetState<T extends GetUserModelCubit>
+    extends State<ViewProfileWidget<T>> {
   bool get _isNotAvailableToChat =>
-      widget._type.isPartnerProfile &&
-      !user.canChat!.canChat;
+      widget._type.isPartnerProfile && !user.canChat!.canChat;
 
-  ChatReason? get _chatReason => ChatReason.fromValue(user.canChat!.reason?.value);
+  ChatReason? get _chatReason =>
+      ChatReason.fromValue(user.canChat!.reason?.value);
 
-  bool get _shouldShowPromotionBadge =>
-      widget._type.isProfile && !user.isPromoted;
-
-  Widget _getAvailabilityStatus(){
-    if(widget._type.isPartnerProfile){
-      return _isNotAvailableToChat ?
-      const ChatAvailabilityBadge.notAvailable() :
-      const ChatAvailabilityBadge.available();
-    }else{
+  Widget _getAvailabilityStatus() {
+    if (widget._type.isPartnerProfile) {
+      return _isNotAvailableToChat
+          ? const ChatAvailabilityBadge.notAvailable()
+          : const ChatAvailabilityBadge.available();
+    } else {
       return const SizedBox.shrink();
     }
   }
 
   late List<PartnerInfoModel> partnerInfo = [];
   late IndividualUserModel user = IndividualUserModel.initial();
-  void _onSuccess(UserModel userResult){
+  void _onSuccess(UserModel userResult) {
     user = userResult as IndividualUserModel;
     partnerInfo = [
-      PartnerInfoModel(leading: Assets.svgLocation, title: LocaleKeys.city, subTitle: user.cityId?.name),
-      PartnerInfoModel(leading: Assets.svgRecycing, title: LocaleKeys.age, subTitle: '${user.age} ${LocaleKeys.years}'),
+      PartnerInfoModel(
+          leading: Assets.svgLocation,
+          title: LocaleKeys.city,
+          subTitle: user.cityId?.name),
+      PartnerInfoModel(
+          leading: Assets.svgRecycing,
+          title: LocaleKeys.age,
+          subTitle: '${user.age} ${LocaleKeys.years}'),
 
-      PartnerInfoModel(leading: Assets.svgTallIcon, title: LocaleKeys.tall, subTitle: '${user.height} ${LocaleKeys.centimeter}'),
-      PartnerInfoModel(leading: Assets.svgWeight, title: LocaleKeys.weight, subTitle: '${user.weight} ${LocaleKeys.kg}'),
+      PartnerInfoModel(
+          leading: Assets.svgTallIcon,
+          title: LocaleKeys.tall,
+          subTitle: '${user.height} ${LocaleKeys.centimeter}'),
+      PartnerInfoModel(
+          leading: Assets.svgWeight,
+          title: LocaleKeys.weight,
+          subTitle: '${user.weight} ${LocaleKeys.kg}'),
 
-      PartnerInfoModel(leading: Assets.svgParentIcon, title: LocaleKeys.skinColor, subTitle: user.skinColor?.title),
-      PartnerInfoModel(leading: Assets.svgMartialStatus, title: LocaleKeys.maritalStatus, subTitle: user.maritalStatus?.title),
+      PartnerInfoModel(
+          leading: Assets.svgParentIcon,
+          title: LocaleKeys.skinColor,
+          subTitle: user.skinColor?.title),
+      PartnerInfoModel(
+          leading: Assets.svgMartialStatus,
+          title: LocaleKeys.maritalStatus,
+          subTitle: user.maritalStatus?.title),
 
-      PartnerInfoModel(leading: Assets.svgEducationalQualification, title: LocaleKeys.educationalQualification, subTitle: user.educationLevel),
-      PartnerInfoModel(leading: Assets.svgJob, title: LocaleKeys.currentJob, subTitle: user.currentJob),
+      PartnerInfoModel(
+          leading: Assets.svgEducationalQualification,
+          title: LocaleKeys.educationalQualification,
+          subTitle: user.educationLevel),
+      PartnerInfoModel(
+          leading: Assets.svgJob,
+          title: LocaleKeys.currentJob,
+          subTitle: user.currentJob),
 
-      PartnerInfoModel(leading: Assets.svgParentChildren, title: LocaleKeys.childrenExists, subTitle: user.hasChildren?.toNormalLang()),
-      PartnerInfoModel(leading: Assets.svgParentChildren, title: LocaleKeys.childrenNumber, subTitle: '${user.numOfChildren} ${LocaleKeys.children}'),
+      PartnerInfoModel(
+          leading: Assets.svgParentChildren,
+          title: LocaleKeys.childrenExists,
+          subTitle: user.hasChildren?.toNormalLang()),
+      PartnerInfoModel(
+          leading: Assets.svgParentChildren,
+          title: LocaleKeys.childrenNumber,
+          subTitle: '${user.numOfChildren} ${LocaleKeys.children}'),
 
-      PartnerInfoModel(leading: Assets.svgParentChildren, title: LocaleKeys.nursery, subTitle: user.childCustody?.title),
-      PartnerInfoModel(leading: Assets.svgRecycing, title: LocaleKeys.wantToHaveChildren, subTitle: user.wantChildren?.toNormalLang()),
+      PartnerInfoModel(
+          leading: Assets.svgParentChildren,
+          title: LocaleKeys.nursery,
+          subTitle: user.childCustody?.title),
+      PartnerInfoModel(
+          leading: Assets.svgRecycing,
+          title: LocaleKeys.wantToHaveChildren,
+          subTitle: user.wantChildren?.toNormalLang()),
 
-      PartnerInfoModel(leading: Assets.svgRecycing, title: LocaleKeys.dowry, subTitle: '${LocaleKeys.from} ${user.dowry?.from} ${LocaleKeys.to} ${user.dowry?.to}'),
-      PartnerInfoModel(leading: Assets.svgRecycing, title: LocaleKeys.typeOfWeddingParty, subTitle: user.weddingType?.title),
+      PartnerInfoModel(
+          leading: Assets.svgRecycing,
+          title: LocaleKeys.dowry,
+          subTitle:
+              '${LocaleKeys.from} ${user.dowry?.from} ${LocaleKeys.to} ${user.dowry?.to}'),
+      PartnerInfoModel(
+          leading: Assets.svgRecycing,
+          title: LocaleKeys.typeOfWeddingParty,
+          subTitle: user.weddingType?.title),
 
-      PartnerInfoModel(leading: Assets.svgPrey, title: LocaleKeys.areYouPray, subTitle: user.isPrayer?.toNormalLang()),
-      PartnerInfoModel(leading: Assets.svgSmoke, title: LocaleKeys.areYouSmoke, subTitle: user.isSmoker?.toNormalLang()),
+      PartnerInfoModel(
+          leading: Assets.svgPrey,
+          title: LocaleKeys.areYouPray,
+          subTitle: user.isPrayer?.toNormalLang()),
+      PartnerInfoModel(
+          leading: Assets.svgSmoke,
+          title: LocaleKeys.areYouSmoke,
+          subTitle: user.isSmoker?.toNormalLang()),
 
-      if(userResult.gender?.userGender?.isFemale?? false)
-        ...[
-          PartnerInfoModel(leading: Assets.svgParentChildren, title: LocaleKeys.doYouAcceptPolygamy, subTitle: (user as FemaleModel).acceptsPolygamy?.toNormalLang()),
-          PartnerInfoModel(leading: Assets.svgHijab, title: LocaleKeys.areYouWaringHijab, subTitle: (user as FemaleModel).hijab?.title),
+      if (userResult.gender?.userGender?.isFemale ?? false) ...[
+        PartnerInfoModel(
+            leading: Assets.svgParentChildren,
+            title: LocaleKeys.doYouAcceptPolygamy,
+            subTitle: (user as FemaleModel).acceptsPolygamy?.toNormalLang()),
+        PartnerInfoModel(
+            leading: Assets.svgHijab,
+            title: LocaleKeys.areYouWaringHijab,
+            subTitle: (user as FemaleModel).hijab?.title),
+        PartnerInfoModel(
+            leading: Assets.svgHome,
+            title: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage,
+            subTitle: (user as FemaleModel).preferredResidenceAfterMarriage),
+      ],
+      PartnerInfoModel(
+          leading: Assets.svgTribe,
+          title: LocaleKeys.doYouBelongToATribe,
+          subTitle: user.tribeAffiliation?.toNormalLang()),
 
-          PartnerInfoModel(leading: Assets.svgHome, title: LocaleKeys.whereDoYouAcceptToLiveAfterMarriage, subTitle: (user as FemaleModel).preferredResidenceAfterMarriage),
-        ],
-      PartnerInfoModel(leading: Assets.svgTribe, title: LocaleKeys.doYouBelongToATribe, subTitle: user.tribeAffiliation?.toNormalLang()),
-
-      PartnerInfoModel(leading: Assets.svgHospital, title: LocaleKeys.diseasesIfExists, subTitle: user.healthConditions),
-      PartnerInfoModel(leading: Assets.svgTranslation, title: LocaleKeys.inChatYouPrefer, subTitle: user.chatLang?.toLang().toFullTitle()),
+      PartnerInfoModel(
+          leading: Assets.svgHospital,
+          title: LocaleKeys.diseasesIfExists,
+          subTitle: user.healthConditions),
+      PartnerInfoModel(
+          leading: Assets.svgTranslation,
+          title: LocaleKeys.inChatYouPrefer,
+          subTitle: user.chatLang?.toLang().toFullTitle()),
 
       // if(widget._type.isProfile)
       //   PartnerInfoModel(leading: Assets.svgProfilePhone, title: LocaleKeys.phoneNumber, subTitle: user.phone),
     ];
   }
 
-  double _calcCenterCardPadding(String bio){
+  double _calcCenterCardPadding(String bio) {
     // Width text can occupy inside the floating center card
     // (screen minus the card's outer horizontal margins + paddings).
     final double contentWidth = context.width - 50;
 
-    final double bioHeight = _measureTextHeight(text: bio, maxWidth: contentWidth);
+    final double bioHeight =
+        _measureTextHeight(text: bio, maxWidth: contentWidth);
 
     double total = 24.r + 30.sp + 10.h + bioHeight;
 
-    if(_isNotAvailableToChat){
+    if (_isNotAvailableToChat) {
       total += 10.h + _unavailabilityCardHeight(contentWidth);
-    }
-
-    if(_shouldShowPromotionBadge){
-      total += 10.h + PromotionBadge.height.h;
     }
 
     return total;
   }
 
-  double _unavailabilityCardHeight(double contentWidth){
+  double _unavailabilityCardHeight(double contentWidth) {
     // The card adds 16.w of horizontal padding on each side.
     final double innerWidth = contentWidth - 32.w;
     final double titleHeight = _measureTextHeight(
@@ -173,7 +233,7 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
     required String text,
     required double maxWidth,
     double fontSize = 14,
-  }){
+  }) {
     final TextPainter textPainter = TextPainter(
       text: TextSpan(text: text, style: TextStyle(fontSize: fontSize)),
       textDirection: TextDirection.ltr,
@@ -186,11 +246,10 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => widget.cubit..getProfile(
-          onSuccess: (userResult) {
-            _onSuccess(userResult);
-          }
-      ),
+      create: (context) => widget.cubit
+        ..getProfile(onSuccess: (userResult) {
+          _onSuccess(userResult);
+        }),
       child: BlocBuilder<T, AsyncState<UserModel>>(
         builder: (context, state) => CenterCardScaffold.withCenteredCard(
           upperWidget: StatusBuilder(
@@ -202,8 +261,8 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                   data: state,
                   onSuccess: (data, context) => CachedImage(
                       height: 200.h,
-                      url: state.data.avatar ?? '', fit: BoxFit.fill
-                  ),
+                      url: state.data.avatar ?? '',
+                      fit: BoxFit.fill),
                 ),
                 Container(
                   width: context.width,
@@ -212,11 +271,9 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                       gradient: LinearGradient(
                           begin: Alignment.bottomCenter,
                           end: Alignment.topCenter,
-                          colors: [Colors.black38, Colors.black26])
-                  ),
+                          colors: [Colors.black38, Colors.black26])),
                 ),
-
-                if(widget._type.isProfile)
+                if (widget._type.isProfile)
                   const ProfileAppBarActions.withBackButtonOnly()
                 else
                   ProfileAppBarActions(
@@ -230,13 +287,13 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                     onReport: (context) => ChatSheetManager.show(
                       child: ReportSheet(
                         id: state.data.id!,
-                      ).paddingBottom(MediaQuery.of(context).viewPadding.bottom),
+                      ).paddingBottom(
+                          MediaQuery.of(context).viewPadding.bottom),
                     ),
                   ),
               ],
             ),
           ),
-
           cardTopPadding: 150.h,
           centerCardBody: StatusBuilder(
             data: state,
@@ -246,27 +303,30 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                 crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 10.h,
                 children: [
-                  if(user.childParentInfo.isNotNull)
+                  if (user.childParentInfo.isNotNull)
                     Row(
                       children: [
                         Expanded(
                           child: PremiumUserName(
-                            name: (state.data as IndividualUserModel).nickName ?? '',
+                            name:
+                                (state.data as IndividualUserModel).nickName ??
+                                    '',
                             isPremium: state.data.isPromoted,
                           ),
                         ),
                         8.szW,
                         InkWell(
-                          onTap: () => Go.to(ParentDetailsScreen(id: user.childParentInfo?.id ?? 0)),
-
+                          onTap: () => Go.to(ParentDetailsScreen(
+                              id: user.childParentInfo?.id ?? 0)),
                           child: Row(
                             children: [
                               CircleAvatar(
                                 radius: 15.sp,
-                                backgroundImage: NetworkImage(state.data.avatar??''),
+                                backgroundImage:
+                                    NetworkImage(state.data.avatar ?? ''),
                               ),
                               10.szW,
-                              AppText(user.childParentInfo?.name??''),
+                              AppText(user.childParentInfo?.name ?? ''),
                             ],
                           ),
                         ),
@@ -277,10 +337,11 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         PremiumUserName(
-                          name: (state.data as IndividualUserModel).nickName ?? '',
+                          name: (state.data as IndividualUserModel).nickName ??
+                              '',
                           isPremium: state.data.isPromoted,
                         ),
-                        if(widget._type.isProfile)
+                        if (widget._type.isProfile)
                           AppText(
                             '${LocaleKeys.numberOfProfileVisits} : ${state.data.views}',
                             fontSize: 10.sp,
@@ -289,25 +350,20 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                           ),
                       ],
                     ),
-                  AppText((state.data as IndividualUserModel).bio??'', textAlign: TextAlign.center),
+                  AppText((state.data as IndividualUserModel).bio ?? '',
+                      textAlign: TextAlign.center),
                   _getAvailabilityStatus(),
-                  if(_isNotAvailableToChat) UnavailabilityReasonCard(reason: _chatReason),
-                  if(_shouldShowPromotionBadge)
-                    PromotionBadge(
-                      onSuccess: () => widget.cubit.getProfile(
-                        onSuccess: (userResult) {
-                          _onSuccess(userResult);
-                        },
-                      ),
-                    ),
+                  if (_isNotAvailableToChat)
+                    UnavailabilityReasonCard(reason: _chatReason),
                 ],
               ).paddingAll(12.r),
             ),
           ),
-
           bodyColor: AppColors.whiteGreyColorProMax,
-          bodyTopPadding: state.isLoading? 0 :
-          _calcCenterCardPadding((state.data as IndividualUserModel).bio ?? ''),
+          bodyTopPadding: state.isLoading
+              ? 0
+              : _calcCenterCardPadding(
+                  (state.data as IndividualUserModel).bio ?? ''),
           body: StatusBuilder(
             data: state,
             onSuccess: (data, context) => Column(
@@ -322,56 +378,50 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit> extends State<ViewPro
                   crossAxisSpacing: 10.w,
                   // childAspectRatio: 2.5,
                   itemCount: partnerInfo.length,
-                  itemBuilder: (BuildContext context, int index) => InfoWidget(
-                      partnerInfoModel: partnerInfo[index]
-                  ),
+                  itemBuilder: (BuildContext context, int index) =>
+                      InfoWidget(partnerInfoModel: partnerInfo[index]),
                 ),
-
                 InfoWidget(
                     partnerInfoModel: PartnerInfoModel(
                         leading: Assets.svgRecycing,
                         title: LocaleKeys.thingsIAbsolutelyDoNotAcceptOrWant,
-                        subTitle: user.prohibitedThings
-                    )
-                ),
-                if(widget._type.isPartnerProfile)
+                        subTitle: user.prohibitedThings)),
+                if (widget._type.isPartnerProfile)
                   ChatButton(user: state.data)
-                else if(widget._type.isProfile)
+                else if (widget._type.isProfile)
                   DefaultButton(
                     borderRadius: BorderRadius.circular(40.r),
                     title: LocaleKeys.editProfile,
-                    onTap: () => Go.to(EnterMaleOrFemaleOrChildDataScreen.showAll(
+                    onTap: () =>
+                        Go.to(EnterMaleOrFemaleOrChildDataScreen.showAll(
                       scaffoldType: ScaffoldType.appScaffold,
                       userType: UserModel.currentUser?.gender?.userGender,
                       showGenderSelection: false,
-                      initialValue: UserModel.currentUser as IndividualUserModel,
-                      onClick: (context, user) => context.read<EditProfileCubit>().editProfile(
-                        body: user,
-                        onSuccess: (data) {
-                          UserCubit.instance.updateUser(data.data);
-                          MessageUtils.showSnackBar(data.msg);
-                          Go.back();
-                          widget.cubit.getProfile(
-                              onSuccess: (userResult) {
+                      initialValue:
+                          UserModel.currentUser as IndividualUserModel,
+                      onClick: (context, user) => context
+                          .read<EditProfileCubit>()
+                          .editProfile(
+                            body: user,
+                            onSuccess: (data) {
+                              UserCubit.instance.updateUser(data.data);
+                              MessageUtils.showSnackBar(data.msg);
+                              Go.back();
+                              widget.cubit.getProfile(onSuccess: (userResult) {
                                 _onSuccess(userResult);
-                              }
-                          );
-                          },
-                      ),
+                              });
+                            },
+                          ),
                     )),
                   )
               ],
             ),
           ),
-        ).withPullRefresher(
-            onRefresh: (){
-              widget.cubit.getProfile(
-                  onSuccess: (userResult) {
-                    _onSuccess(userResult);
-                  }
-              );
-            }
-        ),
+        ).withPullRefresher(onRefresh: () {
+          widget.cubit.getProfile(onSuccess: (userResult) {
+            _onSuccess(userResult);
+          });
+        }),
       ),
     );
   }

@@ -422,5 +422,16 @@
   "promotion_sheet_subscribe_prefix": "اشترك في باقة",
   "promotion_sheet_subscribed_success": "تم الاشتراك بنجاح",
   "promotion_sheet_cancel_anytime": "يمكنك إلغاء الاشتراك في أي وقت",
-  "send_chat_request": "ارسال طلب محادثة"
+  "promotion_reminder_title": "خلّ ملفك يبرز",
+  "promotion_reminder_subtitle": "روّج ملفك للظهور أولاً وزِد فرصك في الوصول إلى الشريك المناسب",
+  "promotion_reminder_action": "عرض باقات الترويج",
+  "promotion_reminder_later": "ربما لاحقاً",
+  "promotion_subscriptions": "اشتراكات الترويج",
+  "send_chat_request": "ارسال طلب محادثة",
+  "connection_requests": "طلبات التواصل",
+  "requests": "الطلبات",
+  "no_connection_requests": "لا توجد طلبات تواصل حالياً",
+  "connection_requests_empty_description": "ستظهر الطلبات الجديدة هنا بمجرد وصولها.",
+  "explore_profiles": "استكشاف الملفات",
+  "message_request_accept_blocked": "أنهِ المحادثة الحالية قبل الموافقة على طلب آخر"
 }
