@@ -68,8 +68,7 @@ class ApiConstants {
   static const String chatLanguages = 'chat-languages';
   static const String religiousCommitments = 'religious-commitment';
   static const String getNotifications = 'notifications';
-  static const String getNotificationsCount = 'count-notifications';
-  static const String countUnreadMessages = 'count-unread-messages';
+  static const String appBadgeCounts = 'app-badge-counts';
   static const String deleteNotification = 'delete-notification/';
   static const String deleteAllNotification = 'delete-notifications';
   static const String profile = 'profile';

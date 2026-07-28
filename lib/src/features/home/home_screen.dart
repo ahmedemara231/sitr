@@ -20,8 +20,9 @@ import '../../core/widgets/app_text.dart';
 import '../../core/widgets/icon_widget.dart';
 import '../../core/widgets/promotion_reminder_dialog.dart';
 import '../whats_new/whats_new_service.dart';
-import 'cubits/get_notification_count.dart';
+import 'cubits/app_badge_counts_cubit.dart';
 import 'cubits/home_cubit/home_cubit.dart';
+import 'data/models/app_badge_counts_model.dart';
 
 class HomeScreen extends StatefulWidget {
   final int initialIndex;
@@ -149,13 +150,10 @@ class _HomeScreenState extends State<HomeScreen> {
             create: (context) => HomeCubit(currentIndex: widget.initialIndex),
           ),
           BlocProvider(
-              create: (context) => GetNotificationCountCubit()
-                ..getNotificationCount()
-                ..startNotificationInterceptor()),
-          BlocProvider(
-              create: (context) => GetChatsNotificationCountCubit()
-                ..getChatNotificationCount()
-                ..startNotificationInterceptor()),
+            create: (context) => AppBadgeCountsCubit()
+              ..loadCounts()
+              ..startNotificationInterceptor(),
+          ),
         ],
         child: BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
@@ -214,11 +212,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             }
 
                             if (index == 1) {
-                              context.read<GetNotificationCountCubit>().reset();
+                              context
+                                  .read<AppBadgeCountsCubit>()
+                                  .clearNotificationsCount();
                             } else if (index == 2) {
                               context
-                                  .read<GetChatsNotificationCountCubit>()
-                                  .reset();
+                                  .read<AppBadgeCountsCubit>()
+                                  .clearUnreadMessagesCount();
                             }
 
                             return;
@@ -234,47 +234,41 @@ class _HomeScreenState extends State<HomeScreen> {
                               label: LocaleKeys.home,
                             ),
                             BottomNavigationBarItem(
-                              icon: BlocBuilder<GetNotificationCountCubit,
-                                  AsyncState<int>>(
-                                builder: (context, state) => Badge(
-                                  backgroundColor: AppColors.primary,
-                                  label: AppText(state.data.toString()),
-                                  isLabelVisible:
-                                      state.data <= 0 ? false : true,
-                                  child: IconWidget(
-                                    icon: Assets.svgNotificationIcon,
-                                    color: cubit.currentIndex == 1
-                                        ? AppColors.primary
-                                        : null,
-                                  ),
+                              icon: _AppBadgeIcon(
+                                countSelector: (counts) =>
+                                    counts.notificationsCount,
+                                child: IconWidget(
+                                  icon: Assets.svgNotificationIcon,
+                                  color: cubit.currentIndex == 1
+                                      ? AppColors.primary
+                                      : null,
                                 ),
                               ),
                               label: LocaleKeys.notifications,
                             ),
                             BottomNavigationBarItem(
-                              icon: BlocBuilder<GetChatsNotificationCountCubit,
-                                  AsyncState<int>>(
-                                builder: (context, state) => Badge(
-                                  backgroundColor: AppColors.primary,
-                                  label: AppText(state.data.toString()),
-                                  isLabelVisible:
-                                      state.data <= 0 ? false : true,
-                                  child: IconWidget(
-                                    icon: Assets.svgChatsIcon,
-                                    color: cubit.currentIndex == 2
-                                        ? AppColors.primary
-                                        : null,
-                                  ),
+                              icon: _AppBadgeIcon(
+                                countSelector: (counts) =>
+                                    counts.unreadMessagesCount,
+                                child: IconWidget(
+                                  icon: Assets.svgChatsIcon,
+                                  color: cubit.currentIndex == 2
+                                      ? AppColors.primary
+                                      : null,
                                 ),
                               ),
                               label: LocaleKeys.chats,
                             ),
                             BottomNavigationBarItem(
-                              icon: IconWidget(
-                                icon: Icons.person_add_alt_1_outlined,
-                                color: cubit.currentIndex == 3
-                                    ? AppColors.primary
-                                    : AppColors.unSelectedLabelColor,
+                              icon: _AppBadgeIcon(
+                                countSelector: (counts) =>
+                                    counts.messageRequestsCount,
+                                child: IconWidget(
+                                  icon: Icons.person_add_alt_1_outlined,
+                                  color: cubit.currentIndex == 3
+                                      ? AppColors.primary
+                                      : AppColors.unSelectedLabelColor,
+                                ),
                               ),
                               label: LocaleKeys.requests,
                             ),
@@ -314,6 +308,30 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class _AppBadgeIcon extends StatelessWidget {
+  final int Function(AppBadgeCountsModel counts) countSelector;
+  final Widget child;
+
+  const _AppBadgeIcon({
+    required this.countSelector,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocSelector<AppBadgeCountsCubit, AsyncState<AppBadgeCountsModel>,
+        int>(
+      selector: (state) => countSelector(state.data),
+      builder: (context, count) => Badge(
+        backgroundColor: AppColors.primary,
+        label: AppText(count.toString()),
+        isLabelVisible: count > 0,
+        child: child,
       ),
     );
   }
