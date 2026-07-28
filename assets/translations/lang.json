@@ -449,5 +449,9 @@
   "noConnectionRequests #$ No connection requests yet" : "لا توجد طلبات تواصل حالياً",
   "connectionRequestsEmptyDescription #$ New requests will appear here as soon as they arrive." : "ستظهر الطلبات الجديدة هنا بمجرد وصولها.",
   "exploreProfiles #$ Explore profiles" : "استكشاف الملفات",
-  "messageRequestAcceptBlocked #$ Finish your current chat before accepting another request" : "أنهِ المحادثة الحالية قبل الموافقة على طلب آخر"
+  "messageRequestAcceptBlocked #$ Finish your current chat before accepting another request" : "أنهِ المحادثة الحالية قبل الموافقة على طلب آخر",
+  "confirmConnectionRequestRejection #$ Confirm rejection" : "تأكيد الرفض",
+  "confirmRejectConnectionRequestMessage #$ Are you sure you want to reject the connection request from" : "هل أنت متأكد من رغبتك في رفض طلب التواصل من",
+  "confirmRejectConnectionRequestAction #$ Yes, reject" : "نعم، رفض",
+  "keepConnectionRequest #$ Go back" : "تراجع"
 }

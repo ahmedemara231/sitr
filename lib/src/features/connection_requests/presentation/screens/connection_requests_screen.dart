@@ -12,7 +12,6 @@ import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../../core/widgets/view_profile_widget.dart';
 import '../../../chats/data/models/request_model.dart';
 import '../../../chats/presentation/imports.dart';
-import '../../../home/home_screen.dart';
 import '../../../main_screen/data/models/filter_model.dart';
 import '../../../main_screen/presentation/cubits/get_partner_info_cubit.dart';
 import '../../../main_screen/presentation/screens/filter_result.dart';
@@ -20,6 +19,7 @@ import '../../data/message_requests_data.dart';
 import '../../data/models/message_request_model.dart';
 import '../widgets/connection_requests_empty_view.dart';
 import '../widgets/message_request_card.dart';
+import '../widgets/reject_message_request_sheet.dart';
 
 class ConnectionRequestsScreen extends StatefulWidget {
   const ConnectionRequestsScreen({super.key});
@@ -44,7 +44,8 @@ class _ConnectionRequestsScreenState extends State<ConnectionRequestsScreen> {
     super.dispose();
   }
 
-  void _onExploreProfilesPressed() => Go.to(FilterResultScreen(filterModel: FilterModel.initial()));
+  void _onExploreProfilesPressed() =>
+      Go.to(FilterResultScreen(filterModel: FilterModel.initial()));
 
   void _viewProfile(MessageRequestModel request) {
     Go.to(
@@ -63,7 +64,7 @@ class _ConnectionRequestsScreenState extends State<ConnectionRequestsScreen> {
     }
     if (!mounted) return;
     _controller.removeWhere((item) => item.id == request.id);
-    Go.off(
+    Go.to(
       ChatScreen(
         requestModel: RequestModel(
           receiverId: request.sender.id.toString(),
@@ -74,16 +75,16 @@ class _ConnectionRequestsScreenState extends State<ConnectionRequestsScreen> {
     );
   }
 
-  Future<void> _rejectMessageRequest(MessageRequestModel request) async {
+  Future<bool> _rejectMessageRequest(MessageRequestModel request) async {
     final result = await MessageRequestsData.rejectMessageRequest(request);
     final failure = result.tryGetError();
     if (failure != null) {
       MessageUtils.showTopMsg(failure.message);
-      return;
+      return false;
     }
-    if (!mounted) return;
+    if (!mounted) return false;
     _controller.removeWhere((item) => item.id == request.id);
-    Go.offAll(const HomeScreen());
+    return true;
   }
 
   @override
@@ -104,7 +105,10 @@ class _ConnectionRequestsScreenState extends State<ConnectionRequestsScreen> {
             request: request,
             onProfilePressed: () => _viewProfile(request),
             onAcceptPressed: () => _acceptMessageRequest(request),
-            onRejectPressed: () => _rejectMessageRequest(request),
+            onRejectPressed: () => showRejectMessageRequestSheet(
+              senderName: request.sender.displayName,
+              onRejectConfirmed: () => _rejectMessageRequest(request),
+            ),
           ).paddingOnly(
             left: 16.w,
             right: 16.w,

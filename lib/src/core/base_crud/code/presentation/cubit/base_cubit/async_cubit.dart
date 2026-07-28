@@ -28,13 +28,16 @@ abstract class AsyncCubit<T> extends Cubit<AsyncState<T>> {
 
   void setSuccess(BaseModel<T> data) {
     emit(state.success(data: data.data, msg: data.msg));
-    if(data.key == 'fromCache'){
-      MessageUtils.showTopMsg(data.msg);
+    if (data.key == 'fromCache') {
+      Messages.showToast(msg: data.msg, status: BaseStatus.error);
     }
   }
 
   void setError({String? errorMessage, bool showToast = false}) {
     emit(state.error(errorMessage: errorMessage));
+    if (showToast && errorMessage != null) {
+      Messages.showToast(msg: errorMessage, status: BaseStatus.error);
+    }
   }
 
   void reset() {
@@ -78,29 +81,22 @@ abstract class AsyncCubit<T> extends Cubit<AsyncState<T>> {
     Function(String msg)? onError,
     bool withInternetInterceptor = false,
   }) async {
-    if(withInternetInterceptor){
+    if (withInternetInterceptor) {
       await _basicOperationWithInternetInterceptor(
-          operation: operation,
-          successEmitter: onSuccess,
-          onError: onError
-      );
-
-    }else{
+          operation: operation, successEmitter: onSuccess, onError: onError);
+    } else {
       await _basicOperation(
-          operation: operation,
-          successEmitter: onSuccess,
-          onError: onError
-      );
+          operation: operation, successEmitter: onSuccess, onError: onError);
     }
   }
 
   bool _firstRequest = true;
-  FutureOr<void> _checkIsFirstTime(bool val, {required FutureOr<void> Function() onNotFirstTime}) async{
-    if(_firstRequest){
+  FutureOr<void> _checkIsFirstTime(bool val,
+      {required FutureOr<void> Function() onNotFirstTime}) async {
+    if (_firstRequest) {
       _firstRequest = false;
       return;
-
-    }else{
+    } else {
       await onNotFirstTime.call();
     }
   }
@@ -110,29 +106,28 @@ abstract class AsyncCubit<T> extends Cubit<AsyncState<T>> {
     required Future<Result<BaseModel<T>, Failure>> Function() operation,
     Function(BaseModel<T>)? successEmitter,
     Function(String msg)? onError,
-  })async{
+  }) async {
     await _basicOperation(
-        operation: operation,
-        successEmitter: successEmitter,
-        onError: onError
-    );
+        operation: operation, successEmitter: successEmitter, onError: onError);
 
-    _streamSubscription = _connectivity.onConnectivityChanged.listen((status)async{
-      if(status.contains(ConnectivityResult.none)){
-        if(state.data.isNull || (state.data is List && (state.data as List).isEmpty)){
+    _streamSubscription =
+        _connectivity.onConnectivityChanged.listen((status) async {
+      if (status.contains(ConnectivityResult.none)) {
+        if (state.data.isNull ||
+            (state.data is List && (state.data as List).isEmpty)) {
           emit(state.error(errorMessage: LocaleKeys.checkInternet));
-
-        }else{
-          MessageUtils.showTopMsg(LocaleKeys.checkInternet);
+        } else {
+          Messages.showToast(
+            msg: LocaleKeys.checkInternet,
+            status: BaseStatus.error,
+          );
         }
-
-      }else{
-        MessageUtils.showTopMsg(LocaleKeys.theInternetConnectionIsRestored);
+      } else {
+        Messages.showToast(msg: LocaleKeys.theInternetConnectionIsRestored);
         await _basicOperation(
             operation: operation,
             successEmitter: successEmitter,
-            onError: onError
-        );
+            onError: onError);
         // if(state.data.isNull || (state.data is List && (state.data as List).isEmpty)){
         //   await _basicOperation(
         //       operation: operation,
@@ -171,16 +166,19 @@ abstract class AsyncCubit<T> extends Cubit<AsyncState<T>> {
     required Future<Result<BaseModel<T>, Failure>> Function() operation,
     required Function(BaseModel<T>)? successEmitter,
     required Function(String msg)? onError,
-  })async{
+  }) async {
     setLoading();
     final result = await operation();
     result.when(
-          (success) {
+      (success) {
         setSuccess(success);
         successEmitter?.call(success);
       },
-          (failure) {
-        MessageUtils.showTopMsg(failure.message);
+      (failure) {
+        Messages.showToast(
+          msg: failure.message,
+          status: BaseStatus.error,
+        );
         setError(errorMessage: failure.message);
         onError?.call(failure.message);
       },

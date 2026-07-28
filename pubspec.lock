@@ -1725,6 +1725,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
+  pausable_timer:
+    dependency: transitive
+    description:
+      name: pausable_timer
+      sha256: "6ef1a95441ec3439de6fb63f39a011b67e693198e7dae14e20675c3c00e86074"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0+3"
   permission_handler:
     dependency: "direct main"
     description:
@@ -2378,14 +2386,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.10.1"
-  top_snackbar_flutter:
+  toastification:
     dependency: "direct main"
     description:
-      name: top_snackbar_flutter
-      sha256: ad3f93062450e8c7db97b271d405c180536408cc2be4380a59da7022eb1d750c
+      name: toastification
+      sha256: "66c96678e3dece8ba24de3ea31634bd65a80aaecb8105f9bafe946e5f0d7590a"
       url: "https://pub.dev"
     source: hosted
-    version: "3.3.0"
+    version: "3.2.0"
   typed_data:
     dependency: transitive
     description:
@@ -2772,4 +2780,4 @@ packages:
     version: "2.8.0"
 sdks:
   dart: ">=3.10.0-0 <4.0.0"
-  flutter: ">=3.35.0"
+  flutter: ">=3.38.0"

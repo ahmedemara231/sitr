@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:toastification/toastification.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'config/res/config_imports.dart';
 import 'core/navigation/navigator.dart';
@@ -47,30 +48,33 @@ class _SatrState extends State<Satr> with WidgetsBindingObserver {
       builder: (ctx, child) {
         return BlocProvider(
           create: (context) => injector<UserCubit>(),
-          child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: ConstantManager.projectName,
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
-            navigatorKey: Go.navigatorKey,
-            builder: (context, child) {
-              return Overlay(
-                initialEntries: [
-                  OverlayEntry(builder: (context) => Stack(
-                    children: [
-                      child!,
-                      ZegoUIKitPrebuiltCallMiniOverlayPage(
-                          contextQuery: () => Go.context
-                      ),
-                    ],
-                  )),
-                ],
-              );
-            },
-            // home: const ContactUsChatScreen(),
-            home: const ZegoUIKitPrebuiltCallMiniPopScope(child: SplashScreen()),
-            navigatorObservers: [AppNavigationObserver.instance],
+          child: ToastificationWrapper(
+            child: MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: ConstantManager.projectName,
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+              navigatorKey: Go.navigatorKey,
+              builder: (context, child) {
+                return Overlay(
+                  initialEntries: [
+                    OverlayEntry(
+                        builder: (context) => Stack(
+                              children: [
+                                child!,
+                                ZegoUIKitPrebuiltCallMiniOverlayPage(
+                                    contextQuery: () => Go.context),
+                              ],
+                            )),
+                  ],
+                );
+              },
+              // home: const ContactUsChatScreen(),
+              home: const ZegoUIKitPrebuiltCallMiniPopScope(
+                  child: SplashScreen()),
+              navigatorObservers: [AppNavigationObserver.instance],
+            ),
           ),
         );
       },
