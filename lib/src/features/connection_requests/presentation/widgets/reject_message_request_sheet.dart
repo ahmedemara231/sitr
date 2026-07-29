@@ -34,8 +34,7 @@ class RejectMessageRequestSheet extends StatelessWidget {
   });
 
   Future<void> _confirmRejection() async {
-    final bool didReject = await onRejectConfirmed();
-    if (didReject) Go.back();
+    await onRejectConfirmed();
   }
 
   @override

@@ -4,6 +4,7 @@ import 'package:pagify/pagify.dart';
 
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
+import '../../../../core/extensions/object.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/extensions/widget_extension.dart';
 import '../../../../core/navigation/navigator.dart';
@@ -80,12 +81,13 @@ class _ConnectionRequestsScreenState extends State<ConnectionRequestsScreen> {
   Future<bool> _rejectMessageRequest(MessageRequestModel request) async {
     final result = await MessageRequestsData.rejectMessageRequest(request);
     final failure = result.tryGetError();
-    if (failure != null) {
-      MessageUtils.showTopMsg(failure.message);
+    if (failure.isNotNull) {
+      MessageUtils.showTopMsg(failure!.message);
       return false;
     }
     if (!mounted) return false;
     _controller.removeWhere((item) => item.id == request.id);
+    Go.back();
     return true;
   }
 

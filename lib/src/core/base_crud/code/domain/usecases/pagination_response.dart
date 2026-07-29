@@ -14,8 +14,9 @@ class BaseModel<T> {
     return BaseModel<T>(
       key: json['key'],
       msg: json['msg'],
-      data: (json['data'] as Object?).isNotNull? jsonToModel.isNotNull?
-      jsonToModel!(json['data']) : json['data'] : {},
+      data: jsonToModel.isNotNull?
+      jsonToModel!(json['data']) :
+      json['data'],
     );
   }
 }
