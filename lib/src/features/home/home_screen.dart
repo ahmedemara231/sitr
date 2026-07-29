@@ -219,6 +219,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               context
                                   .read<AppBadgeCountsCubit>()
                                   .clearUnreadMessagesCount();
+                            } else if (index == 3) {
+                              context
+                                  .read<AppBadgeCountsCubit>()
+                                  .clearUnreadMessageRequestsCount();
                             }
 
                             return;
@@ -326,8 +330,7 @@ class _AppBadgeIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<AppBadgeCountsCubit, AsyncState<AppBadgeCountsModel>,
-        int>(
+    return BlocSelector<AppBadgeCountsCubit, AsyncState<AppBadgeCountsModel>, int>(
       selector: (state) => countSelector(state.data),
       builder: (context, count) => Badge(
         backgroundColor: AppColors.primary,

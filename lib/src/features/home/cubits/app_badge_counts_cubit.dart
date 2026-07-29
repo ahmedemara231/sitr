@@ -20,9 +20,7 @@ class AppBadgeCountsCubit extends AsyncCubit<AppBadgeCountsModel> {
         CrudBaseParmas<AppBadgeCountsModel>(
           api: ApiConstants.appBadgeCounts,
           httpRequestType: HttpRequestType.get,
-          mapper: (json) => AppBadgeCountsModel.fromJson(
-            Map<String, dynamic>.from(json as Map),
-          ),
+          mapper: (json) => AppBadgeCountsModel.fromJson(json),
         ),
       ),
     );
@@ -42,6 +40,10 @@ class AppBadgeCountsCubit extends AsyncCubit<AppBadgeCountsModel> {
 
   void clearUnreadMessagesCount() {
     updateData(state.data.copyWith(unreadMessagesCount: 0));
+  }
+
+  void clearUnreadMessageRequestsCount() {
+    updateData(state.data.copyWith(messageRequestsCount: 0));
   }
 
   void _onNotificationReceived(RemoteMessage message) {

@@ -17,7 +17,6 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit({this.currentIndex = 0}) : super(HomeStateInitial());
   void changeBottomNavIndex(int index) {
     currentIndex = index;
-    log(currentIndex.toString());
     emit(ChangeBottomNavIndex());
   }
 

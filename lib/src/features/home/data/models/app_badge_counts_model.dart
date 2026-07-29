@@ -12,9 +12,9 @@ class AppBadgeCountsModel extends Equatable {
   });
 
   const AppBadgeCountsModel.initial()
-      : notificationsCount = 0,
-        unreadMessagesCount = 0,
-        messageRequestsCount = 0;
+      : notificationsCount = 1,
+        unreadMessagesCount = 1,
+        messageRequestsCount = 1;
 
   factory AppBadgeCountsModel.fromJson(Map<String, dynamic> json) {
     return AppBadgeCountsModel(

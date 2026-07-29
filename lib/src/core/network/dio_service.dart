@@ -116,7 +116,10 @@ class DioService implements NetworkService {
         return BaseModel.fromJson(response.data);
       }
     } on DioException catch (e) {
-      _handleIncomingResponse(path: networkRequest.path, response: e.response?.data);
+      _handleIncomingResponse(
+          path: networkRequest.path,
+          response: e.response?.data ?? {}
+      );
       return _handleError(e);
     }
   }
