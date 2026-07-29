@@ -264,7 +264,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 countSelector: (counts) =>
                                     counts.messageRequestsCount,
                                 child: IconWidget(
-                                  icon: Icons.person_add_alt_1_outlined,
+                                  icon: cubit.currentIndex == 3
+                                      ? Icons.people_alt_rounded
+                                      : Icons.people_alt_outlined,
                                   color: cubit.currentIndex == 3
                                       ? AppColors.primary
                                       : AppColors.unSelectedLabelColor,
