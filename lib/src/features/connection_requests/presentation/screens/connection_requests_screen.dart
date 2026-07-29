@@ -109,11 +109,7 @@ class _ConnectionRequestsScreenState extends State<ConnectionRequestsScreen> {
               senderName: request.sender.displayName,
               onRejectConfirmed: () => _rejectMessageRequest(request),
             ),
-          ).paddingOnly(
-            left: 16.w,
-            right: 16.w,
-            bottom: 12.h,
-          );
+          ).paddingBottom(16.h);
         },
       ).withPullRefresher(
         onRefresh: () => _controller.refresh(),

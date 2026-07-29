@@ -437,6 +437,8 @@
   "no_connection_requests": "No connection requests yet",
   "connection_requests_empty_description": "New requests will appear here as soon as they arrive.",
   "explore_profiles": "Explore profiles",
+  "accept_connection_request": "Accept",
+  "ignore_connection_request": "Ignore",
   "message_request_accept_blocked": "Finish your current chat before accepting another request",
   "confirm_connection_request_rejection": "Confirm rejection",
   "confirm_reject_connection_request_message": "Are you sure you want to reject the connection request from",

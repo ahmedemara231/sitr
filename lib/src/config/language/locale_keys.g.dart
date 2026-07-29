@@ -1300,6 +1300,12 @@ abstract class LocaleKeys {
   static const String _exploreProfiles = 'explore_profiles';
   static String get exploreProfiles => _exploreProfiles.tr();
 
+  static const String _acceptConnectionRequest = 'accept_connection_request';
+  static String get acceptConnectionRequest => _acceptConnectionRequest.tr();
+
+  static const String _ignoreConnectionRequest = 'ignore_connection_request';
+  static String get ignoreConnectionRequest => _ignoreConnectionRequest.tr();
+
   static const String _messageRequestAcceptBlocked = 'message_request_accept_blocked';
   static String get messageRequestAcceptBlocked => _messageRequestAcceptBlocked.tr();
 

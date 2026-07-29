@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
+import '../../../../core/extensions/sized_box_helper.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../core/widgets/image_widgets/cached_image.dart';
@@ -29,55 +30,51 @@ class MessageRequestCard extends StatelessWidget {
 
     return Material(
       color: AppColors.white,
-      borderRadius: BorderRadius.circular(16.r),
+      borderRadius: BorderRadius.circular(12.r),
       child: InkWell(
         onTap: onProfilePressed,
-        borderRadius: BorderRadius.circular(16.r),
+        borderRadius: BorderRadius.circular(12.r),
         child: Container(
           padding: EdgeInsets.all(16.r),
           decoration: BoxDecoration(
-            border: Border.all(color: AppColors.border),
-            borderRadius: BorderRadius.circular(16.r),
+            border: Border.all(
+              color: AppColors.border.withValues(alpha: 0.2),
+            ),
+            borderRadius: BorderRadius.circular(12.r),
             boxShadow: [
               BoxShadow(
                 color: AppColors.blackShadow.withValues(alpha: 0.06),
-                blurRadius: 10.r,
-                offset: Offset(0, 2.h),
+                blurRadius: 64.r,
+                offset: Offset(0, 3.h),
               ),
             ],
           ),
           child: Column(
             children: [
-              _RequestUserDetails(sender: sender),
-              SizedBox(height: 16.h),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    child: AppLoadingButton(
-                      asyncCall: (_) => onAcceptPressed(),
-                      title: LocaleKeys.accept,
-                      height: 42.h,
-                      enabled: request.canAccept,
-                      buttonColor: request.canAccept
-                          ? AppColors.primary
-                          : AppColors.whiteGrey,
+                    child: _RequestUserDetails(
+                      sender: sender,
+                      canAccept: request.canAccept,
+                      onAcceptPressed: onAcceptPressed,
+                      onRejectPressed: onRejectPressed,
                     ),
                   ),
-                  SizedBox(width: 12.w),
-                  Expanded(
-                    child: AppLoadingButton(
-                      asyncCall: (_) => onRejectPressed(),
-                      title: LocaleKeys.refused,
-                      height: 42.h,
-                      buttonColor: AppColors.white,
-                      borderColor: AppColors.error,
-                      textColor: AppColors.error,
-                    ),
+                  16.szW,
+                  CachedImage(
+                    url: sender.avatar.isEmpty
+                        ? ConstantManager.defaultAvatar
+                        : sender.avatar,
+                    width: 64.w,
+                    height: 64.w,
+                    borderRadius: BorderRadius.circular(8.r),
                   ),
                 ],
               ),
               if (!request.canAccept) ...[
-                SizedBox(height: 10.h),
+                10.szH,
                 AppText(
                   LocaleKeys.messageRequestAcceptBlocked,
                   fontSize: 11.sp,
@@ -95,43 +92,64 @@ class MessageRequestCard extends StatelessWidget {
 
 class _RequestUserDetails extends StatelessWidget {
   final MessageRequestUserModel sender;
+  final bool canAccept;
+  final Future<void> Function() onAcceptPressed;
+  final Future<void> Function() onRejectPressed;
 
-  const _RequestUserDetails({required this.sender});
+  const _RequestUserDetails({
+    required this.sender,
+    required this.canAccept,
+    required this.onAcceptPressed,
+    required this.onRejectPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CachedImage(
-          url: sender.avatar.isEmpty
-              ? ConstantManager.defaultAvatar
-              : sender.avatar,
-          width: 64.w,
-          height: 64.w,
-          boxShape: BoxShape.circle,
+        PremiumUserName(
+          name: sender.displayName,
+          isPremium: sender.isPromoted,
+          fontSize: 14.sp,
         ),
-        SizedBox(width: 14.w),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              PremiumUserName(
-                name: sender.displayName,
-                isPremium: sender.isPromoted,
-              ),
-              SizedBox(height: 8.h),
-              AppText(
-                _details,
-                fontSize: 13.sp,
-                color: AppColors.secondary,
-              ),
-            ],
-          ),
+        4.szH,
+        AppText(
+          _details,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          fontSize: 10.sp,
+          color: AppColors.darkGay,
         ),
-        Icon(
-          Icons.arrow_forward_ios_rounded,
-          size: 16.sp,
-          color: AppColors.primary,
+        12.szH,
+        Row(
+          children: [
+            AppLoadingButton(
+              asyncCall: (_) => onAcceptPressed(),
+              title: LocaleKeys.acceptConnectionRequest,
+              width: 72.w,
+              height: 32.h,
+              borderRadius: 50.r,
+              enabled: canAccept,
+              buttonColor: canAccept ? AppColors.primary : AppColors.whiteGrey,
+              textColor:
+                  canAccept ? AppColors.white : AppColors.unSelectedLabelColor,
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w500,
+            ),
+            8.szW,
+            AppLoadingButton(
+              asyncCall: (_) => onRejectPressed(),
+              title: LocaleKeys.ignoreConnectionRequest,
+              width: 72.w,
+              height: 32.h,
+              borderRadius: 50.r,
+              buttonColor: AppColors.whiteGrey,
+              textColor: AppColors.unSelectedLabelColor,
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w500,
+            ),
+          ],
         ),
       ],
     );
