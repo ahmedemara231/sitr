@@ -28,76 +28,150 @@ class MessageRequestCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final MessageRequestUserModel sender = request.sender;
 
-    return Material(
-      color: AppColors.white,
-      borderRadius: BorderRadius.circular(12.r),
-      child: InkWell(
-        onTap: onProfilePressed,
+    return Container(
+      padding: EdgeInsets.all(16.r),
+      decoration: BoxDecoration(
+        color: AppColors.white,
         borderRadius: BorderRadius.circular(12.r),
-        child: Container(
-          padding: EdgeInsets.all(16.r),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: AppColors.border.withValues(alpha: 0.2),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.blackShadow.withValues(alpha: 0.06),
+            blurRadius: 64.r,
+            offset: Offset(0, 3.h),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Material(
+            color: AppColors.transparent,
+            child: InkWell(
+              onTap: onProfilePressed,
+              borderRadius: BorderRadius.circular(8.r),
+              child: _RequestUserSummary(sender: sender),
             ),
-            borderRadius: BorderRadius.circular(12.r),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.blackShadow.withValues(alpha: 0.06),
-                blurRadius: 64.r,
-                offset: Offset(0, 3.h),
-              ),
-            ],
           ),
-          child: Column(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: _RequestUserDetails(
-                      sender: sender,
-                      canAccept: request.canAccept,
-                      onAcceptPressed: onAcceptPressed,
-                      onRejectPressed: onRejectPressed,
-                    ),
-                  ),
-                  16.szW,
-                  CachedImage(
-                    url: sender.avatar.isEmpty
-                        ? ConstantManager.defaultAvatar
-                        : sender.avatar,
-                    width: 64.w,
-                    height: 64.w,
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                ],
-              ),
-              if (!request.canAccept) ...[
-                10.szH,
-                AppText(
-                  LocaleKeys.messageRequestAcceptBlocked,
-                  fontSize: 11.sp,
-                  color: AppColors.error,
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ],
+          16.szH,
+          _RequestActions(
+            canAccept: request.canAccept,
+            onAcceptPressed: onAcceptPressed,
+            onRejectPressed: onRejectPressed,
           ),
-        ),
+          if (!request.canAccept) ...[
+            10.szH,
+            AppText(
+              LocaleKeys.messageRequestAcceptBlocked,
+              fontSize: 11.sp,
+              color: AppColors.error,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ],
       ),
     );
   }
 }
 
-class _RequestUserDetails extends StatelessWidget {
+class _RequestUserSummary extends StatelessWidget {
   final MessageRequestUserModel sender;
+
+  const _RequestUserSummary({required this.sender});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CachedImage(
+          url: sender.avatar.isEmpty
+              ? ConstantManager.defaultAvatar
+              : sender.avatar,
+          width: 64.w,
+          height: 64.w,
+          fit: BoxFit.cover,
+          borderRadius: BorderRadius.circular(8.r),
+        ),
+        16.szW,
+        Expanded(
+          child: SizedBox(
+            height: 64.h,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                PremiumUserName(name: sender.displayName, isPremium: sender.isPromoted),
+
+                4.szH,
+                _RequestMetadata(
+                  age: sender.age,
+                  city: sender.city,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _RequestMetadata extends StatelessWidget {
+  final int age;
+  final String city;
+
+  const _RequestMetadata({
+    required this.age,
+    required this.city,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final bool hasAge = age > 0;
+    final bool hasCity = city.isNotEmpty;
+
+    return Row(
+      children: [
+        if (hasAge)
+          AppText(
+            '$age ${LocaleKeys.connectionRequestYearsOld}',
+            color: AppColors.darkGay,
+            fontSize: 10.sp,
+            height: 1.4,
+          ),
+        if (hasAge && hasCity) ...[
+          8.szW,
+          Container(
+            width: 4.r,
+            height: 4.r,
+            decoration: const BoxDecoration(
+              color: AppColors.border,
+              shape: BoxShape.circle,
+            ),
+          ),
+          8.szW,
+        ],
+        if (hasCity)
+          Flexible(
+            child: AppText(
+              city,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              color: AppColors.darkGay,
+              fontSize: 10.sp,
+              height: 1.4,
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class _RequestActions extends StatelessWidget {
   final bool canAccept;
   final Future<void> Function() onAcceptPressed;
   final Future<void> Function() onRejectPressed;
 
-  const _RequestUserDetails({
-    required this.sender,
+  const _RequestActions({
     required this.canAccept,
     required this.onAcceptPressed,
     required this.onRejectPressed,
@@ -105,61 +179,37 @@ class _RequestUserDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
       children: [
-        PremiumUserName(
-          name: sender.displayName,
-          isPremium: sender.isPromoted,
-          fontSize: 14.sp,
+        Expanded(
+          child: AppLoadingButton(
+            asyncCall: (_) => onAcceptPressed(),
+            title: LocaleKeys.acceptConnectionRequest,
+            height: 40.h,
+            borderRadius: 50.r,
+            enabled: canAccept,
+            buttonColor: canAccept ? AppColors.primary : AppColors.whiteGrey,
+            textColor:
+                canAccept ? AppColors.white : AppColors.unSelectedLabelColor,
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w500,
+          ),
         ),
-        4.szH,
-        AppText(
-          _details,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          fontSize: 10.sp,
-          color: AppColors.darkGay,
-        ),
-        12.szH,
-        Row(
-          children: [
-            AppLoadingButton(
-              asyncCall: (_) => onAcceptPressed(),
-              title: LocaleKeys.acceptConnectionRequest,
-              width: 72.w,
-              height: 32.h,
-              borderRadius: 50.r,
-              enabled: canAccept,
-              buttonColor: canAccept ? AppColors.primary : AppColors.whiteGrey,
-              textColor:
-                  canAccept ? AppColors.white : AppColors.unSelectedLabelColor,
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w500,
-            ),
-            8.szW,
-            AppLoadingButton(
-              asyncCall: (_) => onRejectPressed(),
-              title: LocaleKeys.ignoreConnectionRequest,
-              width: 72.w,
-              height: 32.h,
-              borderRadius: 50.r,
-              buttonColor: AppColors.whiteGrey,
-              textColor: AppColors.unSelectedLabelColor,
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w500,
-            ),
-          ],
+        12.szW,
+        Expanded(
+          child: AppLoadingButton(
+            asyncCall: (_) => onRejectPressed(),
+            title: LocaleKeys.rejectConnectionRequest,
+            height: 40.h,
+            borderRadius: 50.r,
+            buttonColor: AppColors.white,
+            borderColor: AppColors.border,
+            textColor: AppColors.textBlack,
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ],
     );
-  }
-
-  String get _details {
-    final List<String> details = [
-      if (sender.city.isNotEmpty) sender.city,
-      if (sender.age > 0) '${sender.age} ${LocaleKeys.years}',
-    ];
-    return details.join(' • ');
   }
 }

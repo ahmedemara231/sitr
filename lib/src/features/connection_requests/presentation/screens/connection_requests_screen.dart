@@ -3,9 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagify/pagify.dart';
 
 import '../../../../config/language/locale_keys.g.dart';
+import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/extensions/widget_extension.dart';
 import '../../../../core/navigation/navigator.dart';
+import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/app_pagify.dart';
 import '../../../../core/widgets/custom_messages.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
@@ -91,7 +93,14 @@ class _ConnectionRequestsScreenState extends State<ConnectionRequestsScreen> {
   Widget build(BuildContext context) {
     return AppScaffold(
       isScrollable: false,
-      appBarTitle: LocaleKeys.connectionRequests,
+      appBarHeight: 54.h,
+      scaffoldBackgroundColor: AppColors.whiteScaffoldBackground,
+      customTitle: AppText(
+        LocaleKeys.connectionRequests,
+        color: AppColors.primaryDark,
+        fontSize: 18.sp,
+        fontWeight: FontWeight.bold,
+      ),
       body: AppPagify<MessageRequestModel>(
         pagifyController: _controller,
         asyncCall: (_, page) => MessageRequestsData.getMessageRequests(page),
@@ -111,9 +120,9 @@ class _ConnectionRequestsScreenState extends State<ConnectionRequestsScreen> {
             ),
           ).paddingBottom(16.h);
         },
-      ).withPullRefresher(
-        onRefresh: () => _controller.refresh(),
-      ),
+      ).paddingTop(6.h).withPullRefresher(
+            onRefresh: () => _controller.refresh(),
+          ),
     );
   }
 }

@@ -1303,8 +1303,14 @@ abstract class LocaleKeys {
   static const String _acceptConnectionRequest = 'accept_connection_request';
   static String get acceptConnectionRequest => _acceptConnectionRequest.tr();
 
-  static const String _ignoreConnectionRequest = 'ignore_connection_request';
-  static String get ignoreConnectionRequest => _ignoreConnectionRequest.tr();
+  static const String _rejectConnectionRequest = 'reject_connection_request';
+  static String get rejectConnectionRequest => _rejectConnectionRequest.tr();
+
+  static const String _promotedConnectionRequest = 'promoted_connection_request';
+  static String get promotedConnectionRequest => _promotedConnectionRequest.tr();
+
+  static const String _connectionRequestYearsOld = 'connection_request_years_old';
+  static String get connectionRequestYearsOld => _connectionRequestYearsOld.tr();
 
   static const String _messageRequestAcceptBlocked = 'message_request_accept_blocked';
   static String get messageRequestAcceptBlocked => _messageRequestAcceptBlocked.tr();

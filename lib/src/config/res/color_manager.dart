@@ -4,6 +4,7 @@ abstract class AppColors {
   static const Color main = Color(0xFF1B8354);
   static const Color splash = Color(0xFFA96D02);
   static const Color primary = Color(0xFFA66D09);
+  static const Color primaryDark = Color(0xFF805200);
   static const Color darkGoldenRod = Color(0xFFB47200);
   static const Color secondary = Color(0xFF666666);
   static const Color pink = Color(0xFFFE8F83);
