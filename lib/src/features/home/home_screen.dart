@@ -45,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (UserModel.isAuthenticated) {
       await Helpers.initZegoService();
     }
+    WidgetsBinding.instance.addPostFrameCallback((_) => _showLaunchDialogs());
     // _checkForUpdates();
   }
 
@@ -101,16 +102,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     _initApp();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _showLaunchDialogs());
     super.initState();
   }
 
   Future<void> _showLaunchDialogs() async {
-    await WhatsNewService.showIfNeeded(upgrader: upgrader);
-    if (!mounted || !widget.showPromotionReminder) return;
+    if (widget.showPromotionReminder){
+      await showPremiumUpgradeCardDialog();
+      await UserCubit.instance.resetPromotionReminderLaunchCount();
+    }
 
-    await showPremiumUpgradeCardDialog();
-    await UserCubit.instance.resetPromotionReminderLaunchCount();
+    await WhatsNewService.showIfNeeded(upgrader: upgrader);
   }
 
   late final upgrader = Upgrader(
