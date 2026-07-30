@@ -18,9 +18,8 @@ part 'user_utils.dart';
 
 const String _userKey = 'user';
 const String _tokenKey = 'token';
-const String _promotionReminderLaunchCountKey =
-    'promotion_reminder_launch_count';
-const int _promotionReminderLaunchInterval = 3;
+const String _promotionReminderLaunchCountKey = 'promotion_reminder_launch_count';
+const int _promotionReminderLaunchInterval = 1;
 
 class UserCubit extends Cubit<UserState> with UserUtils {
   UserCubit() : super(UserState.initial());

@@ -1,11 +1,13 @@
 import '../../../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/network/api_endpoints.dart';
 
 class ChargeWalletCubit extends AsyncCubit<String>{
   ChargeWalletCubit() : super('');
 
   Future<void> chargeWallet(String amount, int brandId, {required void Function(String url) onSuccess})async{
+    if (FeatureFlags.removeWallet) return;
     await executeAsyncWithBaseModel(
       operation: () async => await baseCrudUseCase.call(
           CrudBaseParmas(

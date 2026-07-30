@@ -1,4 +1,5 @@
 import '../../../../config/language/locale_keys.g.dart';
+import '../../../../config/res/config_imports.dart';
 
 enum DeleteAccountUnsafeReason {
   hasActivePackage('has_active_package'),
@@ -19,7 +20,9 @@ extension DeleteAccountUnsafeReasonMessage on DeleteAccountUnsafeReason {
   String get message {
     switch (this) {
       case DeleteAccountUnsafeReason.hasActivePackage:
-        return LocaleKeys.cannotDeleteAccountWithBalance;
+        return FeatureFlags.removeWallet
+            ? LocaleKeys.cannotDeleteAccountWithActivePackage
+            : LocaleKeys.cannotDeleteAccountWithBalance;
       case DeleteAccountUnsafeReason.hasLiveChat:
         return LocaleKeys.cannotDeleteAccountWithLiveChat;
     }

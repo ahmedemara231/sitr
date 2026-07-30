@@ -16,7 +16,7 @@ import '../../../core/widgets/not_contain_data.dart';
 import '../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../core/widgets/sheets/payment_sheet.dart';
 import '../../../core/widgets/sheets/promotion_plans_sheet/promotion_plans_sheet_body.dart';
-import '../../promotions/presentation/cubits/promotion_plans_cubit.dart';
+import '../../promotions/presentation/cubits/promotion_data_cubit.dart';
 import '../../promotions/presentation/cubits/promotion_subscription_cubit.dart';
 import '../data/packages_data.dart';
 import '../models/package.dart';
@@ -96,7 +96,7 @@ class _PackagesScreenState extends State<PackagesScreen> {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => PromotionPlansCubit()),
+        BlocProvider(create: (_) => PromotionDataCubit()),
         BlocProvider(create: (_) => PromotionSubscriptionCubit()),
       ],
       child: AppScaffold(

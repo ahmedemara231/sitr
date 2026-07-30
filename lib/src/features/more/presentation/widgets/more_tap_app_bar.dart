@@ -35,11 +35,13 @@ class MoreTabAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.locale;
+    final bool showWallet =
+        UserModel.isAuthenticated && FeatureFlags.isWalletAvailable;
     return SizedBox(
-      height: UserModel.isAuthenticated? 250.h : 100.h,
+      height: showWallet ? 250.h : 100.h,
       child: Stack(
         children: [
-          if(UserModel.isAuthenticated)
+          if(showWallet)
             Positioned(
               top: 115.h,
               child: MultiBlocProvider(

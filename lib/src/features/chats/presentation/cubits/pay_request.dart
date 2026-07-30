@@ -1,5 +1,6 @@
 import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import '../../../../config/res/config_imports.dart';
 
 class PayRequestCubit extends AsyncCubit<String>{
   PayRequestCubit() : super('');
@@ -11,6 +12,7 @@ class PayRequestCubit extends AsyncCubit<String>{
     int? brandId,
     required Function(String? url) onSuccess,
 })async{
+    if (FeatureFlags.removeWallet && paymentMethod == 'wallet') return;
     await executeAsyncWithBaseModel(
         operation: () => baseCrudUseCase.call(
           CrudBaseParmas(

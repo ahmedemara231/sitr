@@ -3,12 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
+import '../../../../features/promotions/data/models/promotion_data_model.dart';
 import '../../../../features/promotions/data/models/promotion_plans_model.dart';
 import '../../app_text.dart';
 import '../../icon_widget.dart';
 
 class PromotionPlansContent extends StatelessWidget {
   final PromotionPlansModel data;
+  final PromotionSheetDataModel content;
   final int? selectedPlanId;
   final bool isSubscribing;
   final bool isSubscribed;
@@ -18,6 +20,7 @@ class PromotionPlansContent extends StatelessWidget {
   const PromotionPlansContent({
     super.key,
     required this.data,
+    required this.content,
     required this.selectedPlanId,
     required this.isSubscribing,
     required this.isSubscribed,
@@ -57,23 +60,38 @@ class PromotionPlansContent extends StatelessWidget {
                 .toList(),
           ),
           SizedBox(height: 2.h),
-          PromotionFeaturesList(features: data.features),
+          PromotionFeaturesList(
+            title: _contentOrFallback(
+              content.featureIntro,
+              LocaleKeys.promotionSheetFeatureIntro,
+            ),
+            features: data.features,
+          ),
           SizedBox(height: 18.h),
           PromotionSubscribeButton(
-            title:
-                '${LocaleKeys.promotionSheetSubscribePrefix} ${selectedPlan.duration} - ${selectedPlan.priceText} ${selectedPlan.currency}',
+            title: _buildSubscribeButtonText(
+              content: content,
+              plan: selectedPlan,
+            ),
+            successTitle: _contentOrFallback(
+              content.subscribedSuccessText,
+              LocaleKeys.promotionSheetSubscribedSuccess,
+            ),
             isLoading: isSubscribing,
             isDone: isSubscribed,
             onTap: () => onSubscribe(selectedPlan),
           ),
-          // SizedBox(height: 8.h),
-          // AppText(
-          //   LocaleKeys.promotionSheetCancelAnytime,
-          //   textAlign: TextAlign.center,
-          //   color: AppColors.hintText,
-          //   fontSize: 10.sp,
-          //   fontWeight: FontWeight.w500,
-          // ),
+          SizedBox(height: 8.h),
+          AppText(
+            _contentOrFallback(
+              content.cancelAnytimeText,
+              LocaleKeys.promotionSheetCancelAnytime,
+            ),
+            textAlign: TextAlign.center,
+            color: AppColors.hintText,
+            fontSize: 10.sp,
+            fontWeight: FontWeight.w500,
+          ),
         ],
       ),
     );
@@ -319,10 +337,12 @@ class PromotionPlanBadge extends StatelessWidget {
 }
 
 class PromotionFeaturesList extends StatelessWidget {
+  final String title;
   final List<PromotionFeatureModel> features;
 
   const PromotionFeaturesList({
     super.key,
+    required this.title,
     required this.features,
   });
 
@@ -332,7 +352,7 @@ class PromotionFeaturesList extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         AppText(
-          '${LocaleKeys.promotionSheetFeatureIntro}:',
+          '$title:',
           textAlign: TextAlign.start,
           color: AppColors.mediumGray,
           fontSize: 12.sp,
@@ -386,6 +406,7 @@ class PromotionCheckIcon extends StatelessWidget {
 
 class PromotionSubscribeButton extends StatelessWidget {
   final String title;
+  final String successTitle;
   final bool isLoading;
   final bool isDone;
   final VoidCallback onTap;
@@ -393,6 +414,7 @@ class PromotionSubscribeButton extends StatelessWidget {
   const PromotionSubscribeButton({
     super.key,
     required this.title,
+    required this.successTitle,
     required this.isLoading,
     required this.isDone,
     required this.onTap,
@@ -400,8 +422,7 @@ class PromotionSubscribeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String buttonText =
-        isDone ? LocaleKeys.promotionSheetSubscribedSuccess : title;
+    final String buttonText = isDone ? successTitle : title;
 
     return Material(
       color: AppColors.transparent,
@@ -466,3 +487,20 @@ class PromotionSubscribeButton extends StatelessWidget {
     );
   }
 }
+
+String _buildSubscribeButtonText({
+  required PromotionSheetDataModel content,
+  required PromotionPlanModel plan,
+}) {
+  final String fallback = '${LocaleKeys.promotionSheetSubscribePrefix} '
+      '${plan.duration} - ${plan.priceText} ${plan.currency}';
+  if (content.subscribeButtonTemplate.trim().isEmpty) return fallback;
+
+  return content.subscribeButtonTemplate
+      .replaceAll('{duration}', plan.duration)
+      .replaceAll('{price}', plan.priceText)
+      .replaceAll('{currency}', plan.currency);
+}
+
+String _contentOrFallback(String content, String fallback) =>
+    content.trim().isEmpty ? fallback : content;

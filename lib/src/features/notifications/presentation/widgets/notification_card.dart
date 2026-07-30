@@ -31,6 +31,10 @@ class NotificationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (FeatureFlags.removeWallet &&
+        notificationModel.type == NotificationType.walletCharged.type) {
+      return const SizedBox.shrink();
+    }
     return Directionality(
       textDirection: TextDirection.rtl,
       child: InkWell(

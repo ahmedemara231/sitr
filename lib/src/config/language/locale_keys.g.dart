@@ -643,6 +643,9 @@ abstract class LocaleKeys {
   static const String _cannotDeleteAccountWithBalance = 'cannot_delete_account_with_balance';
   static String get cannotDeleteAccountWithBalance => _cannotDeleteAccountWithBalance.tr();
 
+  static const String _cannotDeleteAccountWithActivePackage = 'cannot_delete_account_with_active_package';
+  static String get cannotDeleteAccountWithActivePackage => _cannotDeleteAccountWithActivePackage.tr();
+
   static const String _cannotDeleteAccountWithLiveChat = 'cannot_delete_account_with_live_chat';
   static String get cannotDeleteAccountWithLiveChat => _cannotDeleteAccountWithLiveChat.tr();
 
@@ -1185,6 +1188,15 @@ abstract class LocaleKeys {
 
   static const String _promotionBadgeAction = 'promotion_badge_action';
   static String get promotionBadgeAction => _promotionBadgeAction.tr();
+
+  static const String _premiumUpgradeCardSubtitle = 'premium_upgrade_card_subtitle';
+  static String get premiumUpgradeCardSubtitle => _premiumUpgradeCardSubtitle.tr();
+
+  static const String _premiumUpgradeCardVerification = 'premium_upgrade_card_verification';
+  static String get premiumUpgradeCardVerification => _premiumUpgradeCardVerification.tr();
+
+  static const String _premiumUpgradeCardSpeed = 'premium_upgrade_card_speed';
+  static String get premiumUpgradeCardSpeed => _premiumUpgradeCardSpeed.tr();
 
   static const String _promotedBadgeTitle = 'promoted_badge_title';
   static String get promotedBadgeTitle => _promotedBadgeTitle.tr();

@@ -6,9 +6,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../../features/packages/presentation/packages_screen.dart';
+import '../../features/promotions/data/models/promotion_data_model.dart';
 import '../../../generated/assets.dart';
+import '../helpers/helpers.dart';
 import '../navigation/Constants/imports_constants.dart';
 import '../navigation/navigator.dart';
+import '../shared/models/user_models/user_model.dart';
 import 'app_text.dart';
 import 'icon_widget.dart';
 
@@ -16,10 +19,12 @@ class PromotionBadge extends StatelessWidget {
   static const double height = 86;
 
   final FutureOr<void> Function()? onSuccess;
+  final PromotionBadgeDataModel data;
 
   const PromotionBadge({
     super.key,
     this.onSuccess,
+    this.data = const PromotionBadgeDataModel.initial(),
   });
 
   @override
@@ -28,14 +33,14 @@ class PromotionBadge extends StatelessWidget {
       color: AppColors.transparent,
       borderRadius: BorderRadius.circular(10.r),
       child: InkWell(
-        onTap: () => Go.to(
+        onTap: () => UserModel.isAuthenticated? Go.to(
           PackagesScreen.promotion(onSuccess: onSuccess),
           transition: TransitionType.slide,
-        ),
+        ) : Helpers.showUnauthenticatedSheet(),
         borderRadius: BorderRadius.circular(10.r),
-        child: const _PromotionBadgeSurface(
-          textBlock: _PromotionTextBlock(),
-          trailing: _PromotionActionPill(),
+        child: _PromotionBadgeSurface(
+          textBlock: _PromotionTextBlock(data: data),
+          trailing: _PromotionActionPill(data: data),
         ),
       ),
     );
@@ -43,18 +48,23 @@ class PromotionBadge extends StatelessWidget {
 }
 
 class PromotedBadge extends StatelessWidget {
-  const PromotedBadge({super.key});
+  final PromotionBadgeDataModel data;
+
+  const PromotedBadge({
+    super.key,
+    this.data = const PromotionBadgeDataModel.initial(),
+  });
 
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      label: LocaleKeys.promotedBadgeTitle,
+      label: _contentOrFallback(data.title, LocaleKeys.promotedBadgeTitle),
       excludeSemantics: true,
-      child: const Material(
+      child: Material(
         color: AppColors.transparent,
         child: _PromotionBadgeSurface(
-          textBlock: _PromotedTextBlock(),
-          trailing: _PromotedStatusPill(),
+          textBlock: _PromotedTextBlock(data: data),
+          trailing: _PromotedStatusPill(data: data),
         ),
       ),
     );
@@ -174,7 +184,9 @@ class _PromotionIcon extends StatelessWidget {
 }
 
 class _PromotionTextBlock extends StatelessWidget {
-  const _PromotionTextBlock();
+  final PromotionBadgeDataModel data;
+
+  const _PromotionTextBlock({required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -183,7 +195,7 @@ class _PromotionTextBlock extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         AppText(
-          LocaleKeys.promotionBadgeTitle,
+          _contentOrFallback(data.title, LocaleKeys.promotionBadgeTitle),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           color: AppColors.white,
@@ -193,7 +205,7 @@ class _PromotionTextBlock extends StatelessWidget {
         ),
         SizedBox(height: 4.h),
         AppText(
-          LocaleKeys.promotionBadgeSubtitle,
+          _contentOrFallback(data.subtitle, LocaleKeys.promotionBadgeSubtitle),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           color: AppColors.promotionBadgeSubtitle,
@@ -207,7 +219,9 @@ class _PromotionTextBlock extends StatelessWidget {
 }
 
 class _PromotionActionPill extends StatelessWidget {
-  const _PromotionActionPill();
+  final PromotionBadgeDataModel data;
+
+  const _PromotionActionPill({required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -221,7 +235,10 @@ class _PromotionActionPill extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           AppText(
-            LocaleKeys.promotionBadgeAction,
+            _contentOrFallback(
+              data.actionText,
+              LocaleKeys.promotionBadgeAction,
+            ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             color: AppColors.primary,
@@ -243,7 +260,9 @@ class _PromotionActionPill extends StatelessWidget {
 }
 
 class _PromotedTextBlock extends StatelessWidget {
-  const _PromotedTextBlock();
+  final PromotionBadgeDataModel data;
+
+  const _PromotedTextBlock({required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -252,7 +271,7 @@ class _PromotedTextBlock extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         AppText(
-          LocaleKeys.promotedBadgeTitle,
+          _contentOrFallback(data.title, LocaleKeys.promotedBadgeTitle),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           color: AppColors.white,
@@ -262,7 +281,7 @@ class _PromotedTextBlock extends StatelessWidget {
         ),
         SizedBox(height: 4.h),
         AppText(
-          LocaleKeys.promotedBadgeSubtitle,
+          _contentOrFallback(data.subtitle, LocaleKeys.promotedBadgeSubtitle),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           color: AppColors.promotionBadgeSubtitle,
@@ -276,7 +295,9 @@ class _PromotedTextBlock extends StatelessWidget {
 }
 
 class _PromotedStatusPill extends StatelessWidget {
-  const _PromotedStatusPill();
+  final PromotionBadgeDataModel data;
+
+  const _PromotedStatusPill({required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -297,7 +318,10 @@ class _PromotedStatusPill extends StatelessWidget {
           ),
           SizedBox(width: 4.w),
           AppText(
-            LocaleKeys.promotedBadgeStatus,
+            _contentOrFallback(
+              data.actionText,
+              LocaleKeys.promotedBadgeStatus,
+            ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             color: AppColors.primary,
@@ -310,3 +334,6 @@ class _PromotedStatusPill extends StatelessWidget {
     );
   }
 }
+
+String _contentOrFallback(String content, String fallback) =>
+    content.trim().isEmpty ? fallback : content;

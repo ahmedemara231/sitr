@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
+import '../../../../features/promotions/data/models/promotion_data_model.dart';
 import '../../../navigation/navigator.dart';
 import '../../app_text.dart';
 import '../../icon_widget.dart';
@@ -28,9 +29,11 @@ class PromotionSheetHandle extends StatelessWidget {
 
 class PromotionSheetHeader extends StatelessWidget {
   final bool showCloseButton;
+  final PromotionSheetDataModel data;
 
   const PromotionSheetHeader({
     super.key,
+    required this.data,
     this.showCloseButton = true,
   });
 
@@ -61,7 +64,10 @@ class PromotionSheetHeader extends StatelessWidget {
                       const PromotionSheetCrownIcon(),
                       SizedBox(width: 8.w),
                       AppText(
-                        LocaleKeys.promotionSheetTitle,
+                        _contentOrFallback(
+                          data.title,
+                          LocaleKeys.promotionSheetTitle,
+                        ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         color: AppColors.white,
@@ -77,7 +83,10 @@ class PromotionSheetHeader extends StatelessWidget {
             ),
             SizedBox(height: 6.h),
             AppText(
-              LocaleKeys.promotionSheetSubtitle,
+              _contentOrFallback(
+                data.subtitle,
+                LocaleKeys.promotionSheetSubtitle,
+              ),
               textAlign: TextAlign.start,
               color: AppColors.white.withValues(alpha: 0.80),
               fontSize: 12.sp,
@@ -184,3 +193,6 @@ class PromotionSheetCrownPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
+
+String _contentOrFallback(String content, String fallback) =>
+    content.trim().isEmpty ? fallback : content;

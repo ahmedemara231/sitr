@@ -20,6 +20,11 @@ class NotificationsData{
       mapper: (json) => (
           (json['notifications']['data'] as List)
               .map((e) => NotificationModel.fromJson(e))
+              .where(
+                (notification) =>
+                    FeatureFlags.isWalletAvailable ||
+                    notification.type != 'wallet_charged',
+              )
               .toList(),
           PaginationData(
               perPage: json['notifications']['pagination']['per_page'],

@@ -154,6 +154,7 @@ class NotificationService {
   static const String _chatActionsCategoryId = 'chat_actions_category';
 
   void _showNotification(RemoteMessage message) async {
+    if (_shouldHideWalletNotification(message)) return;
     log('the remote msg is ${message.data}');
     log('the remote msg is ${message.notification?.toMap()}');
     final bool hasActions = _shouldShowActions(message);
@@ -184,6 +185,10 @@ class NotificationService {
         notification?.title ?? '', notification?.body, notificationDetails,
         payload: json.encode(message.toMap()));
   }
+
+  bool _shouldHideWalletNotification(RemoteMessage message) =>
+      FeatureFlags.removeWallet &&
+      message.data['type'] == NotificationType.walletCharged.type;
 
   Future<void> _initLocalNotification() async {
     const AndroidInitializationSettings initializationSettingsAndroid =

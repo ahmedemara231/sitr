@@ -56,10 +56,11 @@ class CacheConstant{
   static const String lastSeenWhatsNewVersion = "lastSeenWhatsNewVersion";
 }
 
-class Styles{
-  static TextStyle bold16 = TextStyle(
-    fontSize: 16.sp,
-    fontWeight: FontWeight.bold,
-    fontFamily: ConstantManager.fontFamily
-  );
+final class FeatureFlags {
+  static bool _removeWallet = false;
+
+  static bool get removeWallet => _removeWallet;
+  static bool get isWalletAvailable => !_removeWallet;
+
+  static void setRemoveWallet(bool value) => _removeWallet = value;
 }

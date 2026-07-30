@@ -1,11 +1,13 @@
 import '../../../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import '../../../../../config/res/config_imports.dart';
 import '../../../../../core/network/api_endpoints.dart';
 
 class FetchWalletCubit extends AsyncCubit<num>{
   FetchWalletCubit() : super(0);
 
   Future<void> fetchWallet()async{
+      if (FeatureFlags.removeWallet) return;
       await executeAsyncWithBaseModel(
           operation: () async => await baseCrudUseCase.call<num>(
               CrudBaseParmas(

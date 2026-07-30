@@ -13,6 +13,8 @@ import '../../../../core/widgets/promotion_badge.dart';
 import '../../../../core/widgets/scaffolds/center_card_scaffold.dart';
 import '../../../../core/widgets/choose_from_options.dart';
 import '../../data/models/home_model.dart';
+import '../../../promotions/data/models/promotion_data_model.dart';
+import '../../../promotions/presentation/cubits/promotion_data_cubit.dart';
 import '../cubits/get_opportunities_cubit.dart';
 import '../cubits/home_cubit.dart';
 import '../widgets/home/consultants_list_body.dart';
@@ -55,12 +57,11 @@ class _MainViewState extends State<MainView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => GetOpportunitiesCubit()
-        ..getOpportunities(
-          type: secondSelection.value.toUserGender(),
-          page: 1,
-        ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => GetOpportunitiesCubit()),
+        BlocProvider(create: (context) => PromotionDataCubit()),
+      ],
       child: MainViewBody(
         firstSelection: firstSelection,
         secondSelection: secondSelection,
@@ -113,6 +114,13 @@ class _MainViewBodyState extends State<MainViewBody> {
     super.initState();
     firstSelection.addListener(_firstSelectionListener);
     secondSelection.addListener(_secondSelectionListener);
+    context.read<GetOpportunitiesCubit>().getOpportunities(
+          type: secondSelection.value.toUserGender(),
+          page: 1,
+    );
+    if(UserModel.isAuthenticated){
+      context.read<PromotionDataCubit>().getPromotionData();
+    }
   }
 
   @override
@@ -139,6 +147,8 @@ class _MainViewBodyState extends State<MainViewBody> {
     final bool isPromoted = context.select(
       (UserCubit cubit) => cubit.user.isPromoted,
     );
+    final PromotionDataModel promotionData =
+        context.watch<PromotionDataCubit>().state.data;
 
     return BlocProvider(
       create: (context) => MainViewCubit()..getHomeData(),
@@ -160,7 +170,9 @@ class _MainViewBodyState extends State<MainViewBody> {
           ),
           headerContent: Column(
             children: [
-              isPromoted ? const PromotedBadge() : const PromotionBadge(),
+              isPromoted
+                  ? PromotedBadge(data: promotionData.promotedBadge)
+                  : PromotionBadge(data: promotionData.promotionBadge),
               SizedBox(height: 16.h),
               StatusBuilder(
                 data: state,

@@ -3,6 +3,10 @@ part of 'notification_service.dart';
 class NotificationRoutes {
   static void navigateByType(Map<String, dynamic> data) {
     final String type = data['type'];
+    if (FeatureFlags.removeWallet &&
+        type == NotificationType.walletCharged.type) {
+      return;
+    }
     log('the type is ${data['type']}');
     final NotificationType notificationType = type.getType;
     log('the type is $notificationType');
@@ -28,6 +32,7 @@ class WalletNavigation implements NotificationNavigation {
 
   @override
   void navigate({required Map<String, dynamic> data}) {
+    if (FeatureFlags.removeWallet) return;
     Go.toOrOff(const WalletScreen());
   }
 }

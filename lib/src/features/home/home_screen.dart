@@ -18,11 +18,11 @@ import '../../core/shared/models/user_models/user_model.dart';
 import '../../core/shared/user_cubit/user_cubit.dart';
 import '../../core/widgets/app_text.dart';
 import '../../core/widgets/icon_widget.dart';
-import '../../core/widgets/promotion_reminder_dialog.dart';
 import '../whats_new/whats_new_service.dart';
 import 'cubits/app_badge_counts_cubit.dart';
 import 'cubits/home_cubit/home_cubit.dart';
 import 'data/models/app_badge_counts_model.dart';
+import 'widgets/premium_upgrade_card_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
   final int initialIndex;
@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
     await WhatsNewService.showIfNeeded(upgrader: upgrader);
     if (!mounted || !widget.showPromotionReminder) return;
 
-    await showPromotionReminderDialog();
+    await showPremiumUpgradeCardDialog();
     await UserCubit.instance.resetPromotionReminderLaunchCount();
   }
 

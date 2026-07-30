@@ -7,9 +7,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../features/packages/presentation/screens/subscription_screen.dart';
+import '../../../../features/promotions/data/models/promotion_data_model.dart';
 import '../../../../features/promotions/data/models/promotion_plans_model.dart';
 import '../../../../features/promotions/data/models/promotion_subscription_model.dart';
-import '../../../../features/promotions/presentation/cubits/promotion_plans_cubit.dart';
+import '../../../../features/promotions/presentation/cubits/promotion_data_cubit.dart';
 import '../../../../features/promotions/presentation/cubits/promotion_subscription_cubit.dart';
 import '../../../base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../navigation/navigator.dart';
@@ -47,7 +48,7 @@ class _PromotionPlansSheetBodyState extends State<PromotionPlansSheetBody> {
   @override
   void initState() {
     super.initState();
-    context.read<PromotionPlansCubit>().getPromotionPlans();
+    context.read<PromotionDataCubit>().getPromotionData();
   }
 
   Future<void> _subscribe(
@@ -95,16 +96,24 @@ class _PromotionPlansSheetBodyState extends State<PromotionPlansSheetBody> {
 
   @override
   Widget build(BuildContext context) {
+    final PromotionSheetDataModel promotionSheet =
+        context.watch<PromotionDataCubit>().state.data.promotionSheet;
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: SafeArea(
         top: false,
-        child: widget._isSheet ? _buildSheet(context) : _buildScreen(context),
+        child: widget._isSheet
+            ? _buildSheet(context, promotionSheet)
+            : _buildScreen(context, promotionSheet),
       ),
     );
   }
 
-  Widget _buildSheet(BuildContext context) {
+  Widget _buildSheet(
+    BuildContext context,
+    PromotionSheetDataModel promotionSheet,
+  ) {
     final double maxSheetHeight = MediaQuery.sizeOf(context).height * 0.86;
 
     return ConstrainedBox(
@@ -124,7 +133,7 @@ class _PromotionPlansSheetBodyState extends State<PromotionPlansSheetBody> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const PromotionSheetHandle(),
-              const PromotionSheetHeader(),
+              PromotionSheetHeader(data: promotionSheet),
               Flexible(child: _buildPlans()),
             ],
           ),
@@ -133,7 +142,10 @@ class _PromotionPlansSheetBodyState extends State<PromotionPlansSheetBody> {
     );
   }
 
-  Widget _buildScreen(BuildContext context) {
+  Widget _buildScreen(
+    BuildContext context,
+    PromotionSheetDataModel promotionSheet,
+  ) {
     return DecoratedBox(
       decoration: BoxDecoration(
         color: AppColors.white,
@@ -150,7 +162,10 @@ class _PromotionPlansSheetBodyState extends State<PromotionPlansSheetBody> {
         borderRadius: BorderRadius.circular(12.r),
         child: Column(
           children: [
-            const PromotionSheetHeader(showCloseButton: false),
+            PromotionSheetHeader(
+              data: promotionSheet,
+              showCloseButton: false,
+            ),
             Expanded(child: _buildPlans()),
           ],
         ),
@@ -159,9 +174,11 @@ class _PromotionPlansSheetBodyState extends State<PromotionPlansSheetBody> {
   }
 
   Widget _buildPlans() {
-    return BlocBuilder<PromotionPlansCubit, AsyncState<PromotionPlansModel>>(
+    return BlocBuilder<PromotionDataCubit, AsyncState<PromotionDataModel>>(
       builder: (context, state) {
-        final PromotionPlansModel data = state.data;
+        final PromotionSheetDataModel promotionSheet =
+            state.data.promotionSheet;
+        final PromotionPlansModel data = promotionSheet.plansData;
         if ((state.isLoading || state.isInitial) && data.plans.isEmpty) {
           return const PromotionPlansLoading();
         }
@@ -170,7 +187,7 @@ class _PromotionPlansSheetBodyState extends State<PromotionPlansSheetBody> {
           return PromotionPlansError(
             message: state.msg,
             onRetry: () =>
-                context.read<PromotionPlansCubit>().getPromotionPlans(),
+                context.read<PromotionDataCubit>().getPromotionData(),
           );
         }
 
@@ -178,6 +195,7 @@ class _PromotionPlansSheetBodyState extends State<PromotionPlansSheetBody> {
             AsyncState<PromotionSubscriptionModel>>(
           builder: (context, subscriptionState) => PromotionPlansContent(
             data: data,
+            content: promotionSheet,
             selectedPlanId: _selectedPlanId,
             isSubscribing: subscriptionState.isLoading,
             isSubscribed: _isSubscribed,

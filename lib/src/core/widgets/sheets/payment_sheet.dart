@@ -21,16 +21,19 @@ class PaymentSheet extends StatefulWidget {
 }
 
 class _PaymentSheetState extends State<PaymentSheet> {
-  int currentIndex = 0;
-  PaymentMethod paymentMethod = PaymentMethod.online;
+  int _currentIndex = 0;
+
   void _changeIndex(int newIndex){
-    setState(() => currentIndex = newIndex);
-    paymentMethod = newIndex.getPaymentMethod;
+    setState(() => _currentIndex = newIndex);
   }
 
   @override
   Widget build(BuildContext context) {
-    final methods = widget.paymentMethods ?? PaymentMethod.values;
+    final List<PaymentMethod> methods = PaymentMethod.availableMethods(
+      methods: widget.paymentMethods,
+    );
+    final int selectedIndex =
+        _currentIndex < methods.length ? _currentIndex : 0;
     return Column(
       spacing: 12.h,
       children: [
@@ -46,8 +49,8 @@ class _PaymentSheetState extends State<PaymentSheet> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12.r),
                     border: Border.all(
-                        width: currentIndex == index? 1 : .2,
-                        color: currentIndex == index ?
+                        width: selectedIndex == index? 1 : .2,
+                        color: selectedIndex == index ?
                         AppColors.primary : Colors.grey
                     )
                 ),
@@ -60,10 +63,12 @@ class _PaymentSheetState extends State<PaymentSheet> {
             ),
           ),
         ),
-        AppLoadingButton(
-          asyncCall: (context)async => await widget.onPay.call(context, paymentMethod),
-          title: LocaleKeys.pay,
-        ),
+        if(methods.isNotEmpty)
+          AppLoadingButton(
+            asyncCall: (context) async =>
+                await widget.onPay.call(context, methods[selectedIndex]),
+            title: LocaleKeys.pay,
+          ),
       ],
     );
   }
@@ -93,18 +98,17 @@ enum PaymentMethod {
   final int id;
   final String image;
   const PaymentMethod(this.id, this.image);
-}
 
-extension GetPayMethod on int{
-  PaymentMethod get getPaymentMethod{
-    switch(this){
-      case 0:
-        return PaymentMethod.online;
-
-      default:
-        return PaymentMethod.wallet;
-    }
-  }
+  static List<PaymentMethod> availableMethods({
+    List<PaymentMethod>? methods,
+  }) =>
+      (methods ?? PaymentMethod.values)
+          .where(
+            (method) =>
+                FeatureFlags.isWalletAvailable ||
+                method != PaymentMethod.wallet,
+          )
+          .toList();
 }
 
 extension GetPayMethodAsString on PaymentMethod{

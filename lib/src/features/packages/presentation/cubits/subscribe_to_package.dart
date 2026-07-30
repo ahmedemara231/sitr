@@ -1,5 +1,6 @@
 import '../../../../core/base_crud/code/domain/base_domain_imports.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import '../../../../config/res/config_imports.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/widgets/sheets/payment_sheet.dart';
 import '../../models/package.dart';
@@ -15,7 +16,10 @@ class PackagesManagerCubit extends AsyncCubit<String>{
     void Function(String url)? onSuccess,
     final int? brandId,
   })async{
-    setLoading();
+    if (FeatureFlags.removeWallet &&
+        paymentMethod == PaymentMethod.wallet) {
+      return;
+    }
     await executeAsyncWithBaseModel(
         operation: () async => await baseCrudUseCase.call(
             CrudBaseParmas(

@@ -48,8 +48,18 @@ Future<bool> fetchBaseUrl() async {
         minimumFetchInterval: Duration.zero,
       ),
     );
+    await remoteConfig.setDefaults(
+      const <String, dynamic>{
+        SecureLocalVariableKeys.removeWallet: false,
+      },
+    );
 
     await remoteConfig.fetchAndActivate();
+
+    final bool removeWallet =
+        remoteConfig.getBool(SecureLocalVariableKeys.removeWallet);
+    FeatureFlags.setRemoveWallet(removeWallet);
+    log('remove wallet is $removeWallet');
 
     final bool fireStoreAvailabilityVal = remoteConfig.getBool(SecureLocalVariableKeys.fireStoreAvailabilityKey);
     _changeFireStoreAvailability(fireStoreAvailabilityVal);
