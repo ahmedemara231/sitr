@@ -47,6 +47,7 @@ class FemaleModel extends IndividualUserModel {
     super.cityId,
     super.hasActivePackage,
     super.isPromoted,
+    super.hasChatRequestFrom,
     super.educationLevel,
     super.isPrayer,
     super.healthConditions,
@@ -77,6 +78,7 @@ class FemaleModel extends IndividualUserModel {
       canChat: CanChat.fromJson(json['can_chat']),
       hasActivePackage: json['has_active_package'] ?? false,
       isPromoted: json['is_promoted'] ?? false,
+      hasChatRequestFrom: json['has_chat_request_from'] ?? false,
 
       hasChatWith: json['has_chat_with'],
       isParentMatch: json['is_parent_match'],
@@ -208,6 +210,10 @@ class FemaleModel extends IndividualUserModel {
       isPromoted: _mergeHelper(
           otherFemaleModelValue: otherModel.isPromoted,
           currentValue: isPromoted),
+      hasChatRequestFrom: _mergeHelper(
+        otherFemaleModelValue: otherModel.hasChatRequestFrom,
+        currentValue: hasChatRequestFrom,
+      ),
       // guardianName: _mergeHelper(otherFemaleModelValue: (otherModel as FemaleModel).guardianName, currentValue: guardianName),
       // guardianPhone: _mergeHelper(otherFemaleModelValue: otherModel.guardianPhone, currentValue: guardianPhone),
       hijab: _mergeHelper(
@@ -346,6 +352,7 @@ class FemaleModel extends IndividualUserModel {
       bool? acceptsPolygamy,
       bool? hasActivePackage,
       bool? isPromoted,
+      bool? hasChatRequestFrom,
       CanChat? canChat,
       bool? hasChatWith,
       bool? isParentMatch,
@@ -396,6 +403,7 @@ class FemaleModel extends IndividualUserModel {
     return FemaleModel(
       hasActivePackage: hasActivePackage ?? this.hasActivePackage,
       isPromoted: isPromoted ?? this.isPromoted,
+      hasChatRequestFrom: hasChatRequestFrom ?? this.hasChatRequestFrom,
       canChat: canChat ?? this.canChat,
       hasChatWith: hasChatWith ?? this.hasChatWith,
       isParentMatch: isParentMatch ?? this.isParentMatch,

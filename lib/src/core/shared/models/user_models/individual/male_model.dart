@@ -9,6 +9,7 @@ class MaleModel extends IndividualUserModel {
     super.id,
     super.hasActivePackage,
     super.isPromoted,
+    super.hasChatRequestFrom,
     super.name,
     super.parentId,
     super.type,
@@ -63,6 +64,7 @@ class MaleModel extends IndividualUserModel {
           : ChildParentInfo.fromJson(json['parent_info']),
       canChat: CanChat.fromJson(json['can_chat']),
       isPromoted: json['is_promoted'] ?? false,
+      hasChatRequestFrom: json['has_chat_request_from'] ?? false,
       hasChatWith: json['has_chat_with'],
       isParentMatch: json['is_parent_match'],
       id: json['id'],
@@ -134,6 +136,7 @@ class MaleModel extends IndividualUserModel {
       bool? isParentMatch,
       bool? hasActivePackage,
       bool? isPromoted,
+      bool? hasChatRequestFrom,
       String? nickName,
       bool? isNotify,
       TitleValueShape? maritalStatus,
@@ -177,6 +180,7 @@ class MaleModel extends IndividualUserModel {
     return MaleModel(
       hasActivePackage: hasActivePackage ?? this.hasActivePackage,
       isPromoted: isPromoted ?? this.isPromoted,
+      hasChatRequestFrom: hasChatRequestFrom ?? this.hasChatRequestFrom,
       canChat: canChat ?? this.canChat,
       hasChatWith: hasChatWith ?? this.hasChatWith,
       isParentMatch: isParentMatch ?? this.isParentMatch,
@@ -236,6 +240,10 @@ class MaleModel extends IndividualUserModel {
           currentValue: isParentMatch),
       isPromoted: _mergeHelper(
           otherMaleModelValue: otherModel.isPromoted, currentValue: isPromoted),
+      hasChatRequestFrom: _mergeHelper(
+        otherMaleModelValue: otherModel.hasChatRequestFrom,
+        currentValue: hasChatRequestFrom,
+      ),
       id: _mergeHelper(otherMaleModelValue: otherModel.id, currentValue: id),
       name: _mergeHelper(
           otherMaleModelValue: otherModel.name, currentValue: name),

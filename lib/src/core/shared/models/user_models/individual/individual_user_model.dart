@@ -40,6 +40,7 @@ class IndividualUserModel extends UserModel {
     super.id,
     super.hasActivePackage,
     super.isPromoted,
+    super.hasChatRequestFrom,
     super.name,
     super.parentId,
     super.type,
@@ -229,6 +230,10 @@ class IndividualUserModel extends UserModel {
           currentValue: isParentMatch),
       isPromoted: _mergeHelper(
           otherMaleModelValue: otherModel.isPromoted, currentValue: isPromoted),
+      hasChatRequestFrom: _mergeHelper(
+        otherMaleModelValue: otherModel.hasChatRequestFrom,
+        currentValue: hasChatRequestFrom,
+      ),
       id: _mergeHelper(otherMaleModelValue: otherModel.id, currentValue: id),
       name: _mergeHelper(
           otherMaleModelValue: otherModel.name, currentValue: name),
@@ -348,6 +353,7 @@ class IndividualUserModel extends UserModel {
           bool? isParentMatch,
           bool? hasActivePackage,
           bool? isPromoted,
+          bool? hasChatRequestFrom,
           String? nickName,
           bool? isNotify,
           TitleValueShape? maritalStatus,
@@ -395,6 +401,8 @@ class IndividualUserModel extends UserModel {
         isParentMatch: isParentMatch ?? this.isParentMatch,
         hasActivePackage: hasActivePackage ?? this.hasActivePackage,
         isPromoted: isPromoted ?? this.isPromoted,
+        hasChatRequestFrom:
+            hasChatRequestFrom ?? this.hasChatRequestFrom,
         name: name ?? this.name,
         parentId: parentId ?? this.parentId,
         type: type ?? this.type,

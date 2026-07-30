@@ -23,6 +23,7 @@ abstract class AppColors {
   static const Color buttonText = Color(0xffFFFFFF);
   static const Color error = Color(0xFFD92D20);
   static const Color errorContainer = Color(0xFFFFDAD6);
+  static const Color connectionRequestAccept = Color(0xFF8BC34A);
   static const Color scaffoldBackground = Color(0xffF7F4F3);
   static const Color whiteScaffoldBackground = Color(0xffFCFCFC);
   static const Color yellow = Color(0xffFDB022);

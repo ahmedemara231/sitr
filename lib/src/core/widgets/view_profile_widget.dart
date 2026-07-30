@@ -7,6 +7,10 @@ import '../../config/language/languages.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../../features/auth/imports.dart';
+import '../../features/chats/data/models/request_model.dart';
+import '../../features/chats/presentation/imports.dart';
+import '../../features/connection_requests/data/message_requests_data.dart';
+import '../../features/connection_requests/presentation/widgets/reject_message_request_sheet.dart';
 import '../../features/main_screen/data/models/partner_info_model.dart';
 import '../../features/main_screen/presentation/screens/parent_details.dart';
 import '../../features/main_screen/presentation/widgets/app_bar_actions.dart';
@@ -37,6 +41,7 @@ import 'chat_button.dart';
 import 'custom_messages.dart';
 import 'image_widgets/cached_image.dart';
 import 'premium_user_badge.dart';
+import 'request_actions.dart';
 import 'scaffolds/center_card_scaffold.dart';
 import 'unavailability_reason_card.dart';
 import 'sheets/bloc_success.dart';
@@ -87,6 +92,67 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit>
 
   late List<PartnerInfoModel> partnerInfo = [];
   late IndividualUserModel user = IndividualUserModel.initial();
+
+  String _getDisplayName(UserModel profileUser) {
+    final IndividualUserModel individualUser =
+        profileUser as IndividualUserModel;
+    final String nickName = individualUser.nickName?.trim() ?? '';
+    return nickName.isNotEmpty ? nickName : profileUser.name ?? '';
+  }
+
+  Future<void> _acceptMessageRequest(UserModel profileUser) async {
+    final int senderId = profileUser.id ?? 0;
+    if (senderId == 0) return;
+
+    final result = await MessageRequestsData.acceptMessageRequestFromSender(
+      senderId: senderId,
+    );
+    final failure = result.tryGetError();
+    if (failure != null) {
+      MessageUtils.showTopMsg(failure.message);
+      return;
+    }
+    if (!mounted) return;
+
+    Go.to(
+      ChatScreen(
+        requestModel: RequestModel(
+          receiverId: senderId.toString(),
+          fromHome: 0.toString(),
+        ),
+        receiverName: _getDisplayName(profileUser),
+      ),
+    );
+  }
+
+  Future<bool> _rejectMessageRequest(UserModel profileUser) async {
+    final int senderId = profileUser.id ?? 0;
+    if (senderId == 0) return false;
+
+    final result = await MessageRequestsData.rejectMessageRequestFromSender(
+      senderId: senderId,
+    );
+    final failure = result.tryGetError();
+    if (failure != null) {
+      MessageUtils.showTopMsg(failure.message);
+      return false;
+    }
+    if (!mounted) return false;
+
+    Go.back();
+    await widget.cubit.getProfile(onSuccess: _onSuccess);
+    return true;
+  }
+
+  Future<void> _showRejectMessageRequestSheet(
+    UserModel profileUser,
+  ) async {
+    await showRejectMessageRequestSheet(
+      senderName: _getDisplayName(profileUser),
+      onRejectConfirmed: () => _rejectMessageRequest(profileUser),
+    );
+  }
+
   void _onSuccess(UserModel userResult) {
     user = userResult as IndividualUserModel;
     partnerInfo = [
@@ -386,8 +452,18 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit>
                         leading: Assets.svgRecycing,
                         title: LocaleKeys.thingsIAbsolutelyDoNotAcceptOrWant,
                         subTitle: user.prohibitedThings)),
+
                 if (widget._type.isPartnerProfile)
-                  ChatButton(user: state.data)
+                  if(state.data.hasChatRequestFrom)
+                    RequestActions(
+                    canAccept: true,
+                    onAcceptPressed: () => _acceptMessageRequest(state.data),
+                    onRejectPressed: () =>
+                        _showRejectMessageRequestSheet(state.data),
+                  )
+                  else
+                    ChatButton(user: state.data)
+
                 else if (widget._type.isProfile)
                   DefaultButton(
                     borderRadius: BorderRadius.circular(40.r),
@@ -413,7 +489,7 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit>
                             },
                           ),
                     )),
-                  )
+                  ),
               ],
             ),
           ),

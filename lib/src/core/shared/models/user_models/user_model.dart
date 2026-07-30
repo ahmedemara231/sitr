@@ -12,6 +12,7 @@ import 'parent/parent_model.dart';
 class UserModel {
   final bool hasActivePackage;
   final bool isPromoted;
+  final bool hasChatRequestFrom;
   final int? id;
   final String? name;
   final int? parentId;
@@ -37,6 +38,7 @@ class UserModel {
   const UserModel({
     this.hasActivePackage = false,
     this.isPromoted = false,
+    this.hasChatRequestFrom = false,
     this.id,
     this.name,
     this.parentId,
@@ -121,6 +123,7 @@ class UserModel {
         isNotify: false,
         hasActivePackage: false,
         isPromoted: false,
+        hasChatRequestFrom: false,
       );
 
   Map<String, dynamic> toJson() {
@@ -137,6 +140,7 @@ class UserModel {
       'identity_number': identityNumber,
       'has_active_package': hasActivePackage,
       'is_promoted': isPromoted,
+      'has_chat_request_from': hasChatRequestFrom,
       'age': age,
       'is_active': isActive,
       'is_blocked': isBlocked,
@@ -167,6 +171,7 @@ class UserModel {
     bool? isNotify,
     bool? hasActivePackage,
     bool? isPromoted,
+    bool? hasChatRequestFrom,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -187,6 +192,7 @@ class UserModel {
       token: token ?? this.token,
       hasActivePackage: hasActivePackage ?? this.hasActivePackage,
       isPromoted: isPromoted ?? this.isPromoted,
+      hasChatRequestFrom: hasChatRequestFrom ?? this.hasChatRequestFrom,
       isNotify: isNotify ?? this.isNotify,
     );
   }

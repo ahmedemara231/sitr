@@ -50,13 +50,26 @@ class MessageRequestsData {
 
   static Future<Result<BaseModel<ChatModel>, Failure>> acceptMessageRequest(
     MessageRequestModel request,
-  ) async {
+  ) =>
+      acceptMessageRequestFromSender(
+        senderId: request.sender.id,
+        messageRequestId: request.id,
+      );
+
+  static Future<Result<BaseModel<ChatModel>, Failure>>
+      acceptMessageRequestFromSender({
+    required int senderId,
+    int? messageRequestId,
+  }) async {
     return injector<NetworkService>()
         .callApi<ChatModel>(
           NetworkRequest(
             method: RequestMethod.post,
             path: ApiConstants.acceptMessageRequest,
-            body: _actionBody(request),
+            body: _actionBody(
+              senderId: senderId,
+              messageRequestId: messageRequestId,
+            ),
           ),
           mapper: (json) => ChatModel.fromJson(json),
         )
@@ -65,22 +78,39 @@ class MessageRequestsData {
 
   static Future<Result<BaseModel<bool>, Failure>> rejectMessageRequest(
     MessageRequestModel request,
-  ) async {
+  ) =>
+      rejectMessageRequestFromSender(
+        senderId: request.sender.id,
+        messageRequestId: request.id,
+      );
+
+  static Future<Result<BaseModel<bool>, Failure>>
+      rejectMessageRequestFromSender({
+    required int senderId,
+    int? messageRequestId,
+  }) async {
     return injector<NetworkService>()
         .callApi<bool>(
           NetworkRequest(
             method: RequestMethod.post,
             path: ApiConstants.rejectMessageRequest,
-            body: _actionBody(request),
+            body: _actionBody(
+              senderId: senderId,
+              messageRequestId: messageRequestId,
+            ),
           ),
           mapper: (_) => true,
         )
         .handleCallbackWithFailure();
   }
 
-  static Map<String, dynamic> _actionBody(MessageRequestModel request) => {
-        'message_request_id': request.id,
-        'sender_id': request.sender.id,
+  static Map<String, dynamic> _actionBody({
+    required int senderId,
+    int? messageRequestId,
+  }) =>
+      {
+        if (messageRequestId != null) 'message_request_id': messageRequestId,
+        'sender_id': senderId,
       };
 
   static int _toInt(dynamic value, {required int fallback}) {

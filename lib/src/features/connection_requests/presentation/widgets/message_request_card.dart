@@ -5,9 +5,9 @@ import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/sized_box_helper.dart';
 import '../../../../core/widgets/app_text.dart';
-import '../../../../core/widgets/buttons/app_loading_button.dart';
 import '../../../../core/widgets/image_widgets/cached_image.dart';
 import '../../../../core/widgets/premium_user_badge.dart';
+import '../../../../core/widgets/request_actions.dart';
 import '../../data/models/message_request_model.dart';
 
 class MessageRequestCard extends StatelessWidget {
@@ -52,7 +52,7 @@ class MessageRequestCard extends StatelessWidget {
             ),
           ),
           16.szH,
-          _RequestActions(
+          RequestActions(
             canAccept: request.canAccept,
             onAcceptPressed: onAcceptPressed,
             onRejectPressed: onRejectPressed,
@@ -99,8 +99,8 @@ class _RequestUserSummary extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                PremiumUserName(name: sender.displayName, isPremium: sender.isPromoted),
-
+                PremiumUserName(
+                    name: sender.displayName, isPremium: sender.isPromoted),
                 4.szH,
                 _RequestMetadata(
                   age: sender.age,
@@ -161,53 +161,6 @@ class _RequestMetadata extends StatelessWidget {
               height: 1.4,
             ),
           ),
-      ],
-    );
-  }
-}
-
-class _RequestActions extends StatelessWidget {
-  final bool canAccept;
-  final Future<void> Function() onAcceptPressed;
-  final Future<void> Function() onRejectPressed;
-
-  const _RequestActions({
-    required this.canAccept,
-    required this.onAcceptPressed,
-    required this.onRejectPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: AppLoadingButton(
-            asyncCall: (_) => onAcceptPressed(),
-            title: LocaleKeys.acceptConnectionRequest,
-            height: 40.h,
-            borderRadius: 50.r,
-            enabled: canAccept,
-            buttonColor: canAccept ? Colors.lightGreen : AppColors.whiteGrey,
-            textColor: canAccept ? AppColors.white : AppColors.unSelectedLabelColor,
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        12.szW,
-        Expanded(
-          child: AppLoadingButton(
-            asyncCall: (_) => onRejectPressed(),
-            title: LocaleKeys.rejectConnectionRequest,
-            height: 40.h,
-            borderRadius: 50.r,
-            buttonColor: AppColors.error,
-            borderColor: AppColors.border,
-            textColor: AppColors.white,
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
       ],
     );
   }
