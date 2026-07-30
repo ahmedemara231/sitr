@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../../features/packages/presentation/packages_screen.dart';
+import '../../features/promotions/data/models/promotion_data_model.dart';
+import '../../features/promotions/presentation/widgets/promotion_data_builder.dart';
 import '../../../generated/assets.dart';
 import '../navigation/Constants/imports_constants.dart';
 import '../navigation/navigator.dart';
@@ -21,11 +23,18 @@ Future<void> showPromotionReminderDialog() async {
 class PromotionReminderDialog extends StatelessWidget {
   const PromotionReminderDialog({super.key});
 
-  List<String> get _features => [
-        LocaleKeys.promotionFeatureSearchPriority,
-        // LocaleKeys.promotionFeatureProfileVisitors,
-        LocaleKeys.promotionFeatureGoldenVerification,
-      ];
+  List<String> _getFeatures(PromotionDataModel data) {
+    final List<String> features = data.promotionSheet.plansData.features
+        .map((feature) => feature.title)
+        .where((title) => title.trim().isNotEmpty)
+        .toList();
+    if (features.isNotEmpty) return features;
+
+    return [
+      LocaleKeys.promotionFeatureSearchPriority,
+      LocaleKeys.promotionFeatureGoldenVerification,
+    ];
+  }
 
   void _openPromotionPlans() {
     Go.back();
@@ -37,51 +46,79 @@ class PromotionReminderDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      insetPadding: EdgeInsets.symmetric(horizontal: 16.w),
-      backgroundColor: AppColors.transparent,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12.r),
-        child: DecoratedBox(
-          decoration: const BoxDecoration(color: AppColors.white),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const _PromotionReminderHeader(),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(
-                  20.w,
-                  18.h,
-                  20.w,
-                  16.h,
-                ),
+    return PromotionDataBuilder(
+      builder: (context, status, data) {
+        final PromotionBadgeDataModel badge = data.promotionBadge;
+        final List<String> features = _getFeatures(data);
+
+        return Dialog(
+          insetPadding: EdgeInsets.symmetric(horizontal: 16.w),
+          backgroundColor: AppColors.transparent,
+          child: SingleChildScrollView(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12.r),
+              child: DecoratedBox(
+                decoration: const BoxDecoration(color: AppColors.white),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    ..._features.map(
-                      (feature) => Padding(
-                        padding: EdgeInsets.only(bottom: 10.h),
-                        child: _PromotionReminderFeature(title: feature),
+                    _PromotionReminderHeader(
+                      title: _contentOrFallback(
+                        badge.title,
+                        LocaleKeys.promotionReminderTitle,
+                      ),
+                      subtitle: _contentOrFallback(
+                        badge.subtitle,
+                        LocaleKeys.promotionReminderSubtitle,
                       ),
                     ),
-                    SizedBox(height: 6.h),
-                    _PromotionReminderPrimaryButton(
-                      onTap: _openPromotionPlans,
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                        20.w,
+                        18.h,
+                        20.w,
+                        16.h,
+                      ),
+                      child: Column(
+                        children: [
+                          ...features.map(
+                            (feature) => Padding(
+                              padding: EdgeInsets.only(bottom: 10.h),
+                              child: _PromotionReminderFeature(title: feature),
+                            ),
+                          ),
+                          SizedBox(height: 6.h),
+                          _PromotionReminderPrimaryButton(
+                            title: _contentOrFallback(
+                              badge.actionText,
+                              LocaleKeys.promotionReminderAction,
+                            ),
+                            onTap: _openPromotionPlans,
+                          ),
+                          SizedBox(height: 6.h),
+                          const _PromotionReminderLaterButton(onTap: Go.back),
+                        ],
+                      ),
                     ),
-                    SizedBox(height: 6.h),
-                    const _PromotionReminderLaterButton(onTap: Go.back),
                   ],
                 ),
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
 
 class _PromotionReminderHeader extends StatelessWidget {
-  const _PromotionReminderHeader();
+  final String title;
+  final String subtitle;
+
+  const _PromotionReminderHeader({
+    required this.title,
+    required this.subtitle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +170,7 @@ class _PromotionReminderHeader extends StatelessWidget {
               ),
               SizedBox(height: 12.h),
               AppText(
-                LocaleKeys.promotionReminderTitle,
+                title,
                 color: AppColors.white,
                 fontSize: 18.sp,
                 fontWeight: FontWeight.bold,
@@ -141,7 +178,7 @@ class _PromotionReminderHeader extends StatelessWidget {
               ),
               SizedBox(height: 6.h),
               AppText(
-                LocaleKeys.promotionReminderSubtitle,
+                subtitle,
                 color: AppColors.promotionBadgeSubtitle,
                 fontSize: 12.sp,
                 fontWeight: FontWeight.w500,
@@ -221,9 +258,13 @@ class _PromotionReminderFeature extends StatelessWidget {
 }
 
 class _PromotionReminderPrimaryButton extends StatelessWidget {
+  final String title;
   final VoidCallback onTap;
 
-  const _PromotionReminderPrimaryButton({required this.onTap});
+  const _PromotionReminderPrimaryButton({
+    required this.title,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -238,7 +279,7 @@ class _PromotionReminderPrimaryButton extends StatelessWidget {
           height: 54.h,
           child: Center(
             child: AppText(
-              LocaleKeys.promotionReminderAction,
+              title,
               color: AppColors.white,
               fontSize: 14.sp,
               fontWeight: FontWeight.bold,
@@ -249,6 +290,9 @@ class _PromotionReminderPrimaryButton extends StatelessWidget {
     );
   }
 }
+
+String _contentOrFallback(String content, String fallback) =>
+    content.trim().isEmpty ? fallback : content;
 
 class _PromotionReminderLaterButton extends StatelessWidget {
   final VoidCallback onTap;

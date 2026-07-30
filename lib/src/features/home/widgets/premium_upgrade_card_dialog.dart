@@ -8,9 +8,14 @@ import '../../../config/language/locale_keys.g.dart';
 import '../../../config/res/config_imports.dart';
 import '../../../core/navigation/Constants/imports_constants.dart';
 import '../../../core/navigation/navigator.dart';
+import '../../../core/shared/base_state.dart';
 import '../../../core/widgets/app_text.dart';
+import '../../../core/widgets/custom_loading.dart';
 import '../../../core/widgets/icon_widget.dart';
 import '../../packages/presentation/packages_screen.dart';
+import '../../promotions/data/models/promotion_data_model.dart';
+import '../../promotions/data/models/promotion_plans_model.dart';
+import '../../promotions/presentation/widgets/promotion_data_builder.dart';
 
 Future<void> showPremiumUpgradeCardDialog() async {
   await showDialog<void>(
@@ -23,6 +28,27 @@ Future<void> showPremiumUpgradeCardDialog() async {
 class PremiumUpgradeCardDialog extends StatelessWidget {
   const PremiumUpgradeCardDialog({super.key});
 
+  List<PromotionFeatureModel> _getFeatures(PromotionDataModel data) {
+    final List<PromotionFeatureModel> features =
+        data.promotionSheet.plansData.features;
+    if (features.isNotEmpty) return features;
+
+    return [
+      PromotionFeatureModel(
+        id: 0,
+        code: 'golden_verification',
+        title: LocaleKeys.premiumUpgradeCardVerification,
+        sortOrder: 1,
+      ),
+      PromotionFeatureModel(
+        id: 0,
+        code: 'speed',
+        title: LocaleKeys.premiumUpgradeCardSpeed,
+        sortOrder: 2,
+      ),
+    ];
+  }
+
   void _openPromotionPlans() {
     Go.back();
     Go.to(
@@ -33,85 +59,109 @@ class PremiumUpgradeCardDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      elevation: 0,
-      insetPadding: EdgeInsets.symmetric(horizontal: 16.w),
-      backgroundColor: AppColors.transparent,
-      child: Semantics(
-        container: true,
-        label: LocaleKeys.promotionBadgeTitle,
-        child: Container(
-          width: double.infinity,
-          clipBehavior: Clip.antiAlias,
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              begin: AlignmentDirectional.topStart,
-              end: AlignmentDirectional.bottomEnd,
-              colors: [
-                AppColors.promotionBadgeGradientStart,
-                AppColors.primary,
-                AppColors.promotionBadgeGradientEnd,
-              ],
-            ),
-            borderRadius: BorderRadius.circular(12.r),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.promotionBadgeShadow.withValues(alpha: 0.2),
-                blurRadius: 30.r,
-                offset: Offset(0, 8.h),
-              ),
-            ],
-          ),
-          child: Stack(
-            children: [
-              PositionedDirectional(
-                top: -48.h,
-                end: -48.w,
-                child: const _PremiumAtmosphericCircle(
-                  dimension: 192,
-                  color: AppColors.darkGoldenRod,
-                  opacity: 0.3,
-                  blurRadius: 24,
+    return PromotionDataBuilder(
+      builder: (context, status, data) {
+        final PromotionBadgeDataModel badge = data.promotionBadge;
+        final String title = _contentOrFallback(
+          badge.title,
+          LocaleKeys.promotionBadgeTitle,
+        );
+
+        return Dialog(
+          elevation: 0,
+          insetPadding: EdgeInsets.symmetric(horizontal: 16.w),
+          backgroundColor: AppColors.transparent,
+          child: status.isLoading? CustomLoading.showLoadingView() :
+          SingleChildScrollView(
+            child: Semantics(
+              container: true,
+              label: title,
+              child: Container(
+                width: double.infinity,
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    begin: AlignmentDirectional.topStart,
+                    end: AlignmentDirectional.bottomEnd,
+                    colors: [
+                      AppColors.promotionBadgeGradientStart,
+                      AppColors.primary,
+                      AppColors.promotionBadgeGradientEnd,
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(12.r),
+                  boxShadow: [
+                    BoxShadow(
+                      color:
+                          AppColors.promotionBadgeShadow.withValues(alpha: 0.2),
+                      blurRadius: 30.r,
+                      offset: Offset(0, 8.h),
+                    ),
+                  ],
                 ),
-              ),
-              PositionedDirectional(
-                bottom: -32.h,
-                start: -32.w,
-                child: const _PremiumAtmosphericCircle(
-                  dimension: 128,
-                  color: AppColors.promotionBadgeGradientStart,
-                  opacity: 0.4,
-                  blurRadius: 18,
-                ),
-              ),
-              PositionedDirectional(
-                top: 16.h,
-                end: 16.w,
-                child: const _PremiumDashedRing(),
-              ),
-              const Positioned.fill(child: _PremiumShimmer()),
-              Padding(
-                padding: EdgeInsets.all(24.r),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Stack(
                   children: [
-                    const _PremiumBadgeIcon(),
-                    SizedBox(height: 16.h),
-                    const _PremiumCardCopy(),
-                    SizedBox(height: 24.h),
-                    const _PremiumBenefits(),
-                    SizedBox(height: 24.h),
-                    _PremiumActionButton(
-                      onActionPressed: _openPromotionPlans,
+                    PositionedDirectional(
+                      top: -48.h,
+                      end: -48.w,
+                      child: const _PremiumAtmosphericCircle(
+                        dimension: 192,
+                        color: AppColors.darkGoldenRod,
+                        opacity: 0.3,
+                        blurRadius: 24,
+                      ),
+                    ),
+                    PositionedDirectional(
+                      bottom: -32.h,
+                      start: -32.w,
+                      child: const _PremiumAtmosphericCircle(
+                        dimension: 128,
+                        color: AppColors.promotionBadgeGradientStart,
+                        opacity: 0.4,
+                        blurRadius: 18,
+                      ),
+                    ),
+                    PositionedDirectional(
+                      top: 16.h,
+                      end: 16.w,
+                      child: const _PremiumDashedRing(),
+                    ),
+                    const Positioned.fill(child: _PremiumShimmer()),
+                    Padding(
+                      padding: EdgeInsets.all(24.r),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const _PremiumBadgeIcon(),
+                          SizedBox(height: 16.h),
+                          _PremiumCardCopy(
+                            title: title,
+                            subtitle: _contentOrFallback(
+                              badge.subtitle,
+                              LocaleKeys.premiumUpgradeCardSubtitle,
+                            ),
+                          ),
+                          SizedBox(height: 24.h),
+                          _PremiumBenefits(features: _getFeatures(data)),
+                          SizedBox(height: 24.h),
+                          _PremiumActionButton(
+                            title: _contentOrFallback(
+                              badge.actionText,
+                              LocaleKeys.promotionBadgeAction,
+                            ),
+                            onActionPressed: _openPromotionPlans,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
@@ -143,7 +193,13 @@ class _PremiumBadgeIcon extends StatelessWidget {
 }
 
 class _PremiumCardCopy extends StatelessWidget {
-  const _PremiumCardCopy();
+  final String title;
+  final String subtitle;
+
+  const _PremiumCardCopy({
+    required this.title,
+    required this.subtitle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +207,7 @@ class _PremiumCardCopy extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         AppText(
-          LocaleKeys.promotionBadgeTitle,
+          title,
           color: AppColors.white,
           fontSize: 20.sp,
           fontWeight: FontWeight.bold,
@@ -159,7 +215,7 @@ class _PremiumCardCopy extends StatelessWidget {
         ),
         SizedBox(height: 8.h),
         AppText(
-          LocaleKeys.premiumUpgradeCardSubtitle,
+          subtitle,
           color: AppColors.promotionBadgeSubtitle,
           fontSize: 14.sp,
           fontWeight: FontWeight.w500,
@@ -171,26 +227,48 @@ class _PremiumCardCopy extends StatelessWidget {
 }
 
 class _PremiumBenefits extends StatelessWidget {
-  const _PremiumBenefits();
+  final List<PromotionFeatureModel> features;
+
+  const _PremiumBenefits({
+    required this.features,
+  });
+
+  IconData _getFeatureIcon(String code) {
+    final String normalizedCode = code.toLowerCase();
+    if (normalizedCode.contains('verif') || normalizedCode.contains('golden')) {
+      return Icons.verified_outlined;
+    }
+    if (normalizedCode.contains('message') || normalizedCode.contains('chat')) {
+      return Icons.chat_bubble_outline_rounded;
+    }
+    if (normalizedCode.contains('visitor') || normalizedCode.contains('view')) {
+      return Icons.visibility_outlined;
+    }
+    return Icons.bolt_rounded;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: _PremiumBenefitTile(
-            icon: Icons.verified_outlined,
-            title: LocaleKeys.premiumUpgradeCardVerification,
-          ),
-        ),
-        SizedBox(width: 8.w),
-        Expanded(
-          child: _PremiumBenefitTile(
-            icon: Icons.bolt_rounded,
-            title: LocaleKeys.premiumUpgradeCardSpeed,
-          ),
-        ),
-      ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final double tileWidth = (constraints.maxWidth - 8.w) / 2;
+
+        return Wrap(
+          spacing: 8.w,
+          runSpacing: 8.h,
+          children: features
+              .map(
+                (feature) => SizedBox(
+                  width: tileWidth,
+                  child: _PremiumBenefitTile(
+                    icon: _getFeatureIcon(feature.code),
+                    title: feature.title,
+                  ),
+                ),
+              )
+              .toList(),
+        );
+      },
     );
   }
 }
@@ -242,9 +320,11 @@ class _PremiumBenefitTile extends StatelessWidget {
 }
 
 class _PremiumActionButton extends StatelessWidget {
+  final String title;
   final void Function() onActionPressed;
 
   const _PremiumActionButton({
+    required this.title,
     required this.onActionPressed,
   });
 
@@ -274,7 +354,7 @@ class _PremiumActionButton extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               AppText(
-                LocaleKeys.promotionBadgeAction,
+                title,
                 color: AppColors.textBlack,
                 fontSize: 18.sp,
                 fontWeight: FontWeight.bold,
@@ -293,6 +373,9 @@ class _PremiumActionButton extends StatelessWidget {
     );
   }
 }
+
+String _contentOrFallback(String content, String fallback) =>
+    content.trim().isEmpty ? fallback : content;
 
 class _PremiumAtmosphericCircle extends StatelessWidget {
   final double dimension;
