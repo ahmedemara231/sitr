@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../../core/widgets/app_text.dart';
+import '../../../../../core/widgets/promotion_badge.dart';
+import '../../../../promotions/data/models/promotion_data_model.dart';
+import '../../../../promotions/presentation/cubits/promotion_data_cubit.dart';
 import 'filter_icon.dart';
 
 class HomeWelcomeHeader extends StatelessWidget {
@@ -19,12 +23,18 @@ class HomeWelcomeHeader extends StatelessWidget {
             spacing: 5.h,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AppText(LocaleKeys.welcome, fontSize: 12.sp),
-              AppText(
-                UserCubit.instance.user.name ?? '',
-                fontWeight: FontWeight.bold,
-                fontSize: 16.sp,
+              Row(
+                spacing: 7.w,
+                children: [
+                  AppText(LocaleKeys.welcome, fontSize: 12.sp),
+                  AppText(
+                    UserCubit.instance.user.name ?? '',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.sp,
+                  ),
+                ],
               ),
+              const PromotionShowingHandler(),
             ],
           ),
           const Spacer(),
@@ -32,5 +42,24 @@ class HomeWelcomeHeader extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class PromotionShowingHandler extends StatelessWidget {
+  const PromotionShowingHandler({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final bool isPromoted = context.select(
+      (UserCubit cubit) => cubit.user.isPromoted,
+    );
+    final PromotionDataModel promotionData =
+        context.watch<PromotionDataCubit>().state.data;
+
+    if (isPromoted) {
+      return PromotedBadge(data: promotionData.promotedBadge);
+    }
+
+    return PromotionBadge(data: promotionData.promotionBadge);
   }
 }

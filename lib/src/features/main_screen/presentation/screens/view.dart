@@ -155,8 +155,8 @@ class _MainViewBodyState extends State<MainViewBody> {
       child: BlocBuilder<MainViewCubit, AsyncState<HomeModel>>(
         builder: (context, state) => SliverCenterCardScaffold(
           scrollController: _scrollController,
-          bodyTopPadding: 120,
-          cardTopPadding: 100,
+          bodyTopPadding: 120.h,
+          cardTopPadding: 120.h,
           upperWidget: const HomeWelcomeHeader(),
           bodyColor: Colors.white,
           upperWidgetPadding: const EdgeInsets.all(20),
@@ -170,9 +170,9 @@ class _MainViewBodyState extends State<MainViewBody> {
           ),
           headerContent: Column(
             children: [
-              isPromoted
-                  ? PromotedBadge(data: promotionData.promotedBadge)
-                  : PromotionBadge(data: promotionData.promotionBadge),
+              // isPromoted
+              //     ? PromotedBadge(data: promotionData.promotedBadge)
+              //     : PromotionBadge(data: promotionData.promotionBadge),
               SizedBox(height: 16.h),
               StatusBuilder(
                 data: state,
