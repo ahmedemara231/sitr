@@ -1,4 +1,56 @@
-class PromotionPlansModel {
+import 'package:equatable/equatable.dart';
+
+class PromotionPlansPageModel extends Equatable {
+  final PromotionPlansModel data;
+  final PromotionPaginationModel pagination;
+
+  const PromotionPlansPageModel({
+    required this.data,
+    required this.pagination,
+  });
+
+  factory PromotionPlansPageModel.initial() => PromotionPlansPageModel(
+        data: PromotionPlansModel.initial(),
+        pagination: const PromotionPaginationModel.initial(),
+      );
+
+  factory PromotionPlansPageModel.fromJson(dynamic json) {
+    final Map<String, dynamic> map = _asMap(json);
+    final Map<String, dynamic> plansContainer = _asMap(map['plans']);
+
+    return PromotionPlansPageModel(
+      data: PromotionPlansModel.fromJson({
+        'plans': plansContainer['data'],
+        'features': map['features'],
+      }),
+      pagination: PromotionPaginationModel.fromJson(
+        plansContainer['pagination'],
+      ),
+    );
+  }
+
+  PromotionPlansPageModel copyWith({
+    PromotionPlansModel? data,
+    PromotionPaginationModel? pagination,
+  }) =>
+      PromotionPlansPageModel(
+        data: data ?? this.data,
+        pagination: pagination ?? this.pagination,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'plans': {
+          'data': data.plans.map((plan) => plan.toJson()).toList(),
+          'pagination': pagination.toJson(),
+        },
+        'features': data.features.map((feature) => feature.toJson()).toList(),
+      };
+
+  @override
+  List<Object?> get props => [data, pagination];
+}
+
+class PromotionPlansModel extends Equatable {
   final List<PromotionPlanModel> plans;
   final List<PromotionFeatureModel> features;
 
@@ -14,25 +66,18 @@ class PromotionPlansModel {
 
   factory PromotionPlansModel.fromJson(dynamic json) {
     final Map<String, dynamic> map = _asMap(json);
-    final List<dynamic> plansJson =
-        _readList(map, ['plans', 'promotion_plans', 'packages']);
-    final List<dynamic> featuresJson =
-        _readList(map, ['features', 'promotion_features', 'benefits']);
-    final List<PromotionPlanModel> plans = plansJson
-        .map(PromotionPlanModel.fromDynamic)
+    final List<PromotionPlanModel> plans = _asList(map['plans'])
+        .map(PromotionPlanModel.fromJson)
         .where((plan) => plan.duration.isNotEmpty)
         .toList()
       ..sort((a, b) => a.sortOrder.compareTo(b.sortOrder));
-    final List<PromotionFeatureModel> features = featuresJson
-        .map(PromotionFeatureModel.fromDynamic)
+    final List<PromotionFeatureModel> features = _asList(map['features'])
+        .map(PromotionFeatureModel.fromJson)
         .where((feature) => feature.title.isNotEmpty)
         .toList()
       ..sort((a, b) => a.sortOrder.compareTo(b.sortOrder));
 
-    return PromotionPlansModel(
-      plans: plans,
-      features: features,
-    );
+    return PromotionPlansModel(plans: plans, features: features);
   }
 
   PromotionPlanModel get defaultPlan => plans.firstWhere(
@@ -43,13 +88,25 @@ class PromotionPlansModel {
         ),
       );
 
+  PromotionPlansModel copyWith({
+    List<PromotionPlanModel>? plans,
+    List<PromotionFeatureModel>? features,
+  }) =>
+      PromotionPlansModel(
+        plans: plans ?? this.plans,
+        features: features ?? this.features,
+      );
+
   Map<String, dynamic> toJson() => {
         'plans': plans.map((plan) => plan.toJson()).toList(),
         'features': features.map((feature) => feature.toJson()).toList(),
       };
+
+  @override
+  List<Object?> get props => [plans, features];
 }
 
-class PromotionPlanModel {
+class PromotionPlanModel extends Equatable {
   final int id;
   final String code;
   final String duration;
@@ -76,35 +133,69 @@ class PromotionPlanModel {
     this.sortOrder = 0,
   });
 
-  factory PromotionPlanModel.fromDynamic(dynamic json) =>
-      PromotionPlanModel.fromJson(_asMap(json));
+  const PromotionPlanModel.initial()
+      : id = 0,
+        code = '',
+        duration = '',
+        price = 0,
+        currency = '',
+        period = '',
+        description = '',
+        badge = null,
+        isHighlighted = false,
+        isDefault = false,
+        sortOrder = 0;
 
-  factory PromotionPlanModel.fromJson(Map<String, dynamic> json) {
+  factory PromotionPlanModel.fromJson(dynamic json) {
+    final Map<String, dynamic> map = _asMap(json);
+
     return PromotionPlanModel(
-      id: _readInt(json['id'] ?? json['plan_id'] ?? json['package_id']),
-      code: _readString(json, ['code', 'slug', 'key']),
-      duration: _readString(json, ['duration', 'title', 'name']),
-      price: _readNum(json['price'] ?? json['amount']),
-      currency: _readString(json, ['currency']),
-      period: _readString(json, ['period', 'per', 'billing_period']),
-      description: _readString(json, ['description', 'desc', 'subtitle']),
-      badge: _readNullableString(json, ['badge', 'label', 'tag']),
-      isHighlighted: _readBool(
-        json['is_highlighted'] ?? json['highlight'] ?? json['is_popular'],
-      ),
-      isDefault: _readBool(
-        json['is_default'] ?? json['default'] ?? json['selected_by_default'],
-      ),
-      sortOrder: _readInt(json['sort_order'] ?? json['order']),
+      id: _readInt(map['id']),
+      code: map['code']?.toString() ?? '',
+      duration: map['duration']?.toString() ?? '',
+      price: _readNum(map['price']),
+      currency: map['currency']?.toString() ?? '',
+      period: map['period']?.toString() ?? '',
+      description: map['description']?.toString() ?? '',
+      badge: _readNullableString(map['badge']),
+      isHighlighted: _readBool(map['is_highlighted']),
+      isDefault: _readBool(map['is_default']),
+      sortOrder: _readInt(map['sort_order']),
     );
   }
 
   String get priceText {
-    if (price % 1 == 0) {
-      return price.toInt().toString();
-    }
+    if (price % 1 == 0) return price.toInt().toString();
     return price.toString();
   }
+
+  PromotionPlanModel copyWith({
+    int? id,
+    String? code,
+    String? duration,
+    num? price,
+    String? currency,
+    String? period,
+    String? description,
+    String? badge,
+    bool clearBadge = false,
+    bool? isHighlighted,
+    bool? isDefault,
+    int? sortOrder,
+  }) =>
+      PromotionPlanModel(
+        id: id ?? this.id,
+        code: code ?? this.code,
+        duration: duration ?? this.duration,
+        price: price ?? this.price,
+        currency: currency ?? this.currency,
+        period: period ?? this.period,
+        description: description ?? this.description,
+        badge: clearBadge ? null : badge ?? this.badge,
+        isHighlighted: isHighlighted ?? this.isHighlighted,
+        isDefault: isDefault ?? this.isDefault,
+        sortOrder: sortOrder ?? this.sortOrder,
+      );
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -119,9 +210,24 @@ class PromotionPlanModel {
         'is_default': isDefault,
         'sort_order': sortOrder,
       };
+
+  @override
+  List<Object?> get props => [
+        id,
+        code,
+        duration,
+        price,
+        currency,
+        period,
+        description,
+        badge,
+        isHighlighted,
+        isDefault,
+        sortOrder,
+      ];
 }
 
-class PromotionFeatureModel {
+class PromotionFeatureModel extends Equatable {
   final int id;
   final String code;
   final String title;
@@ -134,21 +240,38 @@ class PromotionFeatureModel {
     this.sortOrder = 0,
   });
 
-  factory PromotionFeatureModel.fromDynamic(dynamic json) {
+  const PromotionFeatureModel.initial()
+      : id = 0,
+        code = '',
+        title = '',
+        sortOrder = 0;
+
+  factory PromotionFeatureModel.fromJson(dynamic json) {
     if (json is String) {
       return PromotionFeatureModel(id: 0, code: '', title: json);
     }
-    return PromotionFeatureModel.fromJson(_asMap(json));
-  }
+    final Map<String, dynamic> map = _asMap(json);
 
-  factory PromotionFeatureModel.fromJson(Map<String, dynamic> json) {
     return PromotionFeatureModel(
-      id: _readInt(json['id'] ?? json['feature_id']),
-      code: _readString(json, ['code', 'slug', 'key']),
-      title: _readString(json, ['title', 'name', 'description']),
-      sortOrder: _readInt(json['sort_order'] ?? json['order']),
+      id: _readInt(map['id']),
+      code: map['code']?.toString() ?? '',
+      title: map['title']?.toString() ?? '',
+      sortOrder: _readInt(map['sort_order']),
     );
   }
+
+  PromotionFeatureModel copyWith({
+    int? id,
+    String? code,
+    String? title,
+    int? sortOrder,
+  }) =>
+      PromotionFeatureModel(
+        id: id ?? this.id,
+        code: code ?? this.code,
+        title: title ?? this.title,
+        sortOrder: sortOrder ?? this.sortOrder,
+      );
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -156,6 +279,98 @@ class PromotionFeatureModel {
         'title': title,
         'sort_order': sortOrder,
       };
+
+  @override
+  List<Object?> get props => [id, code, title, sortOrder];
+}
+
+class PromotionPaginationModel extends Equatable {
+  final int totalItems;
+  final int countItems;
+  final int perPage;
+  final int totalPages;
+  final int currentPage;
+  final String? nextPageUrl;
+  final String? previousPageUrl;
+
+  const PromotionPaginationModel({
+    required this.totalItems,
+    required this.countItems,
+    required this.perPage,
+    required this.totalPages,
+    required this.currentPage,
+    required this.nextPageUrl,
+    required this.previousPageUrl,
+  });
+
+  const PromotionPaginationModel.initial()
+      : totalItems = 0,
+        countItems = 0,
+        perPage = 0,
+        totalPages = 0,
+        currentPage = 0,
+        nextPageUrl = null,
+        previousPageUrl = null;
+
+  factory PromotionPaginationModel.fromJson(dynamic json) {
+    final Map<String, dynamic> map = _asMap(json);
+
+    return PromotionPaginationModel(
+      totalItems: _readInt(map['total_items']),
+      countItems: _readInt(map['count_items']),
+      perPage: _readInt(map['per_page']),
+      totalPages: _readInt(map['total_pages']),
+      currentPage: _readInt(map['current_page']),
+      nextPageUrl: _readNullableString(map['next_page_url']),
+      previousPageUrl: _readNullableString(
+        map['prev_page_url'] ?? map['perv_page_url'],
+      ),
+    );
+  }
+
+  PromotionPaginationModel copyWith({
+    int? totalItems,
+    int? countItems,
+    int? perPage,
+    int? totalPages,
+    int? currentPage,
+    String? nextPageUrl,
+    bool clearNextPageUrl = false,
+    String? previousPageUrl,
+    bool clearPreviousPageUrl = false,
+  }) =>
+      PromotionPaginationModel(
+        totalItems: totalItems ?? this.totalItems,
+        countItems: countItems ?? this.countItems,
+        perPage: perPage ?? this.perPage,
+        totalPages: totalPages ?? this.totalPages,
+        currentPage: currentPage ?? this.currentPage,
+        nextPageUrl: clearNextPageUrl ? null : nextPageUrl ?? this.nextPageUrl,
+        previousPageUrl: clearPreviousPageUrl
+            ? null
+            : previousPageUrl ?? this.previousPageUrl,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'total_items': totalItems,
+        'count_items': countItems,
+        'per_page': perPage,
+        'total_pages': totalPages,
+        'current_page': currentPage,
+        'next_page_url': nextPageUrl,
+        'prev_page_url': previousPageUrl,
+      };
+
+  @override
+  List<Object?> get props => [
+        totalItems,
+        countItems,
+        perPage,
+        totalPages,
+        currentPage,
+        nextPageUrl,
+        previousPageUrl,
+      ];
 }
 
 Map<String, dynamic> _asMap(dynamic json) {
@@ -164,26 +379,11 @@ Map<String, dynamic> _asMap(dynamic json) {
   return {};
 }
 
-List<dynamic> _readList(Map<String, dynamic> json, List<String> keys) {
-  for (final key in keys) {
-    final dynamic value = json[key];
-    if (value is List) return value;
-  }
-  return [];
-}
+List<dynamic> _asList(dynamic json) => json is List ? json : [];
 
-String _readString(Map<String, dynamic> json, List<String> keys) {
-  return _readNullableString(json, keys) ?? '';
-}
-
-String? _readNullableString(Map<String, dynamic> json, List<String> keys) {
-  for (final key in keys) {
-    final dynamic value = json[key];
-    if (value != null && value.toString().trim().isNotEmpty) {
-      return value.toString();
-    }
-  }
-  return null;
+String? _readNullableString(dynamic value) {
+  final String normalized = value?.toString().trim() ?? '';
+  return normalized.isEmpty ? null : normalized;
 }
 
 int _readInt(dynamic value) {

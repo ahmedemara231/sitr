@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
-import '../../../../features/promotions/data/models/promotion_data_model.dart';
+import '../../../../features/promotions/data/models/promotion_sheet_model.dart';
 import '../../../navigation/navigator.dart';
 import '../../app_text.dart';
 import '../../icon_widget.dart';

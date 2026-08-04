@@ -5,8 +5,8 @@ import '../../../../../config/language/locale_keys.g.dart';
 import '../../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../../core/widgets/app_text.dart';
 import '../../../../../core/widgets/promotion_badge.dart';
-import '../../../../promotions/data/models/promotion_data_model.dart';
-import '../../../../promotions/presentation/cubits/promotion_data_cubit.dart';
+import '../../../../promotions/data/models/promotion_badge_model.dart';
+import '../../../../promotions/presentation/cubits/promotion_badge_cubit.dart';
 import 'filter_icon.dart';
 
 class HomeWelcomeHeader extends StatelessWidget {
@@ -53,13 +53,13 @@ class PromotionShowingHandler extends StatelessWidget {
     final bool isPromoted = context.select(
       (UserCubit cubit) => cubit.user.isPromoted,
     );
-    final PromotionDataModel promotionData =
-        context.watch<PromotionDataCubit>().state.data;
+    final PromotionBadgeDataModel promotionBadge =
+        context.watch<PromotionBadgeCubit>().state.data;
 
     if (isPromoted) {
-      return PromotedBadge(data: promotionData.promotedBadge);
+      return PromotedBadge(data: promotionBadge);
     }
 
-    return PromotionBadge(data: promotionData.promotionBadge);
+    return PromotionBadge(data: promotionBadge);
   }
 }

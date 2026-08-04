@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_base/src/core/widgets/sheets/promotion_plans/promotion_plans_content.dart';
-import 'package:flutter_base/src/features/promotions/data/models/promotion_data_model.dart';
 import 'package:flutter_base/src/features/promotions/data/models/promotion_plans_model.dart';
+import 'package:flutter_base/src/features/promotions/data/models/promotion_sheet_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -49,7 +49,6 @@ void main() {
       subscribeButtonTemplate: 'اشترك في {duration} مقابل {price} {currency}',
       subscribedSuccessText: 'تم الاشتراك',
       cancelAnytimeText: 'يمكنك الإلغاء في أي وقت',
-      plansData: plans,
     );
 
     await tester.pumpWidget(

@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../../features/packages/presentation/packages_screen.dart';
-import '../../features/promotions/data/models/promotion_data_model.dart';
+import '../../features/promotions/data/models/promotion_badge_model.dart';
 import '../helpers/helpers.dart';
 import '../navigation/Constants/imports_constants.dart';
 import '../navigation/navigator.dart';
@@ -35,9 +35,9 @@ class PromotionBadge extends StatelessWidget {
       child: InkWell(
         onTap: () => UserModel.isAuthenticated
             ? Go.to(
-          PackagesScreen.promotion(onSuccess: onSuccess),
-          transition: TransitionType.slide,
-        )
+                PackagesScreen.promotion(onSuccess: onSuccess),
+                transition: TransitionType.slide,
+              )
             : Helpers.showUnauthenticatedSheet(),
         borderRadius: BorderRadius.circular(26.r),
         child: _PromotionBadgeSurface(

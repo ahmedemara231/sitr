@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../config/res/config_imports.dart';
-import '../../../../features/promotions/data/models/promotion_data_model.dart';
 import '../../../../features/promotions/data/models/promotion_plans_model.dart';
+import '../../../../features/promotions/data/models/promotion_sheet_model.dart';
 import '../../app_text.dart';
 import 'promotion_features_list.dart';
 import 'promotion_plan_card.dart';
@@ -49,41 +49,77 @@ class PromotionPlansContent extends StatelessWidget {
             selectedPlanId: currentPlanId,
             onPlanSelected: onPlanSelected,
           ),
-          SizedBox(height: 2.h),
-          PromotionFeaturesList(
-            title: _contentOrFallback(
-              content.featureIntro,
-              () => LocaleKeys.promotionSheetFeatureIntro,
-            ),
+          PromotionPlansFooter(
             features: data.features,
-          ),
-          SizedBox(height: 18.h),
-          PromotionSubscribeButton(
-            title: _buildSubscribeButtonText(
-              content: content,
-              plan: selectedPlan,
-            ),
-            successTitle: _contentOrFallback(
-              content.subscribedSuccessText,
-              () => LocaleKeys.promotionSheetSubscribedSuccess,
-            ),
-            isLoading: isSubscribing,
-            isDone: isSubscribed,
-            onTap: () => onSubscribe(selectedPlan),
-          ),
-          SizedBox(height: 8.h),
-          AppText(
-            _contentOrFallback(
-              content.cancelAnytimeText,
-              () => LocaleKeys.promotionSheetCancelAnytime,
-            ),
-            textAlign: TextAlign.center,
-            color: AppColors.hintText,
-            fontSize: 10.sp,
-            fontWeight: FontWeight.w500,
+            content: content,
+            selectedPlan: selectedPlan,
+            isSubscribing: isSubscribing,
+            isSubscribed: isSubscribed,
+            onSubscribe: onSubscribe,
           ),
         ],
       ),
+    );
+  }
+}
+
+class PromotionPlansFooter extends StatelessWidget {
+  final List<PromotionFeatureModel> features;
+  final PromotionSheetDataModel content;
+  final PromotionPlanModel selectedPlan;
+  final bool isSubscribing;
+  final bool isSubscribed;
+  final ValueChanged<PromotionPlanModel> onSubscribe;
+
+  const PromotionPlansFooter({
+    required this.features,
+    required this.content,
+    required this.selectedPlan,
+    required this.isSubscribing,
+    required this.isSubscribed,
+    required this.onSubscribe,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        SizedBox(height: 2.h),
+        PromotionFeaturesList(
+          title: _contentOrFallback(
+            content.featureIntro,
+            () => LocaleKeys.promotionSheetFeatureIntro,
+          ),
+          features: features,
+        ),
+        SizedBox(height: 18.h),
+        PromotionSubscribeButton(
+          title: _buildSubscribeButtonText(
+            content: content,
+            plan: selectedPlan,
+          ),
+          successTitle: _contentOrFallback(
+            content.subscribedSuccessText,
+            () => LocaleKeys.promotionSheetSubscribedSuccess,
+          ),
+          isLoading: isSubscribing,
+          isDone: isSubscribed,
+          onTap: () => onSubscribe(selectedPlan),
+        ),
+        SizedBox(height: 8.h),
+        AppText(
+          _contentOrFallback(
+            content.cancelAnytimeText,
+            () => LocaleKeys.promotionSheetCancelAnytime,
+          ),
+          textAlign: TextAlign.center,
+          color: AppColors.hintText,
+          fontSize: 10.sp,
+          fontWeight: FontWeight.w500,
+        ),
+      ],
     );
   }
 }

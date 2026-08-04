@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../../features/packages/presentation/packages_screen.dart';
-import '../../features/promotions/data/models/promotion_data_model.dart';
-import '../../features/promotions/presentation/widgets/promotion_data_builder.dart';
+import '../../features/promotions/data/models/promotion_sheet_model.dart';
+import '../../features/promotions/presentation/widgets/promotion_sheet_builder.dart';
 import '../../../generated/assets.dart';
 import '../navigation/Constants/imports_constants.dart';
 import '../navigation/navigator.dart';
@@ -23,17 +23,21 @@ Future<void> showPromotionReminderDialog() async {
 class PromotionReminderDialog extends StatelessWidget {
   const PromotionReminderDialog({super.key});
 
-  List<String> _getFeatures(PromotionDataModel data) {
-    final List<String> features = data.promotionSheet.plansData.features
-        .map((feature) => feature.title)
-        .where((title) => title.trim().isNotEmpty)
-        .toList();
-    if (features.isNotEmpty) return features;
+  List<String> _getFeatures(PromotionSheetDataModel data) {
+    if (data.featureIntro.trim().isNotEmpty) return [data.featureIntro];
 
     return [
       LocaleKeys.promotionFeatureSearchPriority,
       LocaleKeys.promotionFeatureGoldenVerification,
     ];
+  }
+
+  String _getActionText(PromotionSheetDataModel data) {
+    final String template = data.subscribeButtonTemplate.trim();
+    if (template.isEmpty || template.contains('{')) {
+      return LocaleKeys.promotionReminderAction;
+    }
+    return template;
   }
 
   void _openPromotionPlans() {
@@ -46,9 +50,8 @@ class PromotionReminderDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PromotionDataBuilder(
+    return PromotionSheetBuilder(
       builder: (context, status, data) {
-        final PromotionBadgeDataModel badge = data.promotionBadge;
         final List<String> features = _getFeatures(data);
 
         return Dialog(
@@ -64,11 +67,11 @@ class PromotionReminderDialog extends StatelessWidget {
                   children: [
                     _PromotionReminderHeader(
                       title: _contentOrFallback(
-                        badge.title,
+                        data.title,
                         LocaleKeys.promotionReminderTitle,
                       ),
                       subtitle: _contentOrFallback(
-                        badge.subtitle,
+                        data.subtitle,
                         LocaleKeys.promotionReminderSubtitle,
                       ),
                     ),
@@ -89,10 +92,7 @@ class PromotionReminderDialog extends StatelessWidget {
                           ),
                           SizedBox(height: 6.h),
                           _PromotionReminderPrimaryButton(
-                            title: _contentOrFallback(
-                              badge.actionText,
-                              LocaleKeys.promotionReminderAction,
-                            ),
+                            title: _getActionText(data),
                             onTap: _openPromotionPlans,
                           ),
                           SizedBox(height: 6.h),

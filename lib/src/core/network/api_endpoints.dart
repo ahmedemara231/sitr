@@ -55,7 +55,10 @@ class ApiConstants {
   static const String relations = 'relations';
   static const String cities = 'cities';
   static const String getPartnerInfo = 'opportunity-profile/';
-  static const String promotionData = 'promotion_data';
+  static const String promotionBadge = 'promotion_badge';
+  static const String promotedBadge = 'promoted_badge';
+  static const String promotionSheet = 'promotion_sheet';
+  static const String promotionPlans = 'promotion_plans';
   static const String profilePromotionSubscribtion =
       'profile_promotion_subscribtion';
 

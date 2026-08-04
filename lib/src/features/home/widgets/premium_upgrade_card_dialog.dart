@@ -13,9 +13,8 @@ import '../../../core/widgets/app_text.dart';
 import '../../../core/widgets/custom_loading.dart';
 import '../../../core/widgets/icon_widget.dart';
 import '../../packages/presentation/packages_screen.dart';
-import '../../promotions/data/models/promotion_data_model.dart';
 import '../../promotions/data/models/promotion_plans_model.dart';
-import '../../promotions/presentation/widgets/promotion_data_builder.dart';
+import '../../promotions/presentation/widgets/promotion_badge_builder.dart';
 
 Future<void> showPremiumUpgradeCardDialog() async {
   await showDialog<void>(
@@ -28,26 +27,20 @@ Future<void> showPremiumUpgradeCardDialog() async {
 class PremiumUpgradeCardDialog extends StatelessWidget {
   const PremiumUpgradeCardDialog({super.key});
 
-  List<PromotionFeatureModel> _getFeatures(PromotionDataModel data) {
-    final List<PromotionFeatureModel> features =
-        data.promotionSheet.plansData.features;
-    if (features.isNotEmpty) return features;
-
-    return [
-      PromotionFeatureModel(
-        id: 0,
-        code: 'golden_verification',
-        title: LocaleKeys.premiumUpgradeCardVerification,
-        sortOrder: 1,
-      ),
-      PromotionFeatureModel(
-        id: 0,
-        code: 'speed',
-        title: LocaleKeys.premiumUpgradeCardSpeed,
-        sortOrder: 2,
-      ),
-    ];
-  }
+  List<PromotionFeatureModel> get _features => [
+        PromotionFeatureModel(
+          id: 0,
+          code: 'golden_verification',
+          title: LocaleKeys.premiumUpgradeCardVerification,
+          sortOrder: 1,
+        ),
+        PromotionFeatureModel(
+          id: 0,
+          code: 'speed',
+          title: LocaleKeys.premiumUpgradeCardSpeed,
+          sortOrder: 2,
+        ),
+      ];
 
   void _openPromotionPlans() {
     Go.back();
@@ -59,11 +52,11 @@ class PremiumUpgradeCardDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PromotionDataBuilder(
+    return PromotionBadgeBuilder(
+      isPromoted: false,
       builder: (context, status, data) {
-        final PromotionBadgeDataModel badge = data.promotionBadge;
         final String title = _contentOrFallback(
-          badge.title,
+          data.title,
           LocaleKeys.promotionBadgeTitle,
         );
 
@@ -71,95 +64,96 @@ class PremiumUpgradeCardDialog extends StatelessWidget {
           elevation: 0,
           insetPadding: EdgeInsets.symmetric(horizontal: 16.w),
           backgroundColor: AppColors.transparent,
-          child: status.isLoading? CustomLoading.showLoadingView() :
-          SingleChildScrollView(
-            child: Semantics(
-              container: true,
-              label: title,
-              child: Container(
-                width: double.infinity,
-                clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    begin: AlignmentDirectional.topStart,
-                    end: AlignmentDirectional.bottomEnd,
-                    colors: [
-                      AppColors.promotionBadgeGradientStart,
-                      AppColors.primary,
-                      AppColors.promotionBadgeGradientEnd,
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(12.r),
-                  boxShadow: [
-                    BoxShadow(
-                      color:
-                          AppColors.promotionBadgeShadow.withValues(alpha: 0.2),
-                      blurRadius: 30.r,
-                      offset: Offset(0, 8.h),
-                    ),
-                  ],
-                ),
-                child: Stack(
-                  children: [
-                    PositionedDirectional(
-                      top: -48.h,
-                      end: -48.w,
-                      child: const _PremiumAtmosphericCircle(
-                        dimension: 192,
-                        color: AppColors.darkGoldenRod,
-                        opacity: 0.3,
-                        blurRadius: 24,
+          child: status.isLoading
+              ? CustomLoading.showLoadingView()
+              : SingleChildScrollView(
+                  child: Semantics(
+                    container: true,
+                    label: title,
+                    child: Container(
+                      width: double.infinity,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          begin: AlignmentDirectional.topStart,
+                          end: AlignmentDirectional.bottomEnd,
+                          colors: [
+                            AppColors.promotionBadgeGradientStart,
+                            AppColors.primary,
+                            AppColors.promotionBadgeGradientEnd,
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(12.r),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.promotionBadgeShadow
+                                .withValues(alpha: 0.2),
+                            blurRadius: 30.r,
+                            offset: Offset(0, 8.h),
+                          ),
+                        ],
                       ),
-                    ),
-                    PositionedDirectional(
-                      bottom: -32.h,
-                      start: -32.w,
-                      child: const _PremiumAtmosphericCircle(
-                        dimension: 128,
-                        color: AppColors.promotionBadgeGradientStart,
-                        opacity: 0.4,
-                        blurRadius: 18,
-                      ),
-                    ),
-                    PositionedDirectional(
-                      top: 16.h,
-                      end: 16.w,
-                      child: const _PremiumDashedRing(),
-                    ),
-                    const Positioned.fill(child: _PremiumShimmer()),
-                    Padding(
-                      padding: EdgeInsets.all(24.r),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Stack(
                         children: [
-                          const _PremiumBadgeIcon(),
-                          SizedBox(height: 16.h),
-                          _PremiumCardCopy(
-                            title: title,
-                            subtitle: _contentOrFallback(
-                              badge.subtitle,
-                              LocaleKeys.premiumUpgradeCardSubtitle,
+                          PositionedDirectional(
+                            top: -48.h,
+                            end: -48.w,
+                            child: const _PremiumAtmosphericCircle(
+                              dimension: 192,
+                              color: AppColors.darkGoldenRod,
+                              opacity: 0.3,
+                              blurRadius: 24,
                             ),
                           ),
-                          SizedBox(height: 24.h),
-                          _PremiumBenefits(features: _getFeatures(data)),
-                          SizedBox(height: 24.h),
-                          _PremiumActionButton(
-                            title: _contentOrFallback(
-                              badge.actionText,
-                              LocaleKeys.promotionBadgeAction,
+                          PositionedDirectional(
+                            bottom: -32.h,
+                            start: -32.w,
+                            child: const _PremiumAtmosphericCircle(
+                              dimension: 128,
+                              color: AppColors.promotionBadgeGradientStart,
+                              opacity: 0.4,
+                              blurRadius: 18,
                             ),
-                            onActionPressed: _openPromotionPlans,
+                          ),
+                          PositionedDirectional(
+                            top: 16.h,
+                            end: 16.w,
+                            child: const _PremiumDashedRing(),
+                          ),
+                          const Positioned.fill(child: _PremiumShimmer()),
+                          Padding(
+                            padding: EdgeInsets.all(24.r),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const _PremiumBadgeIcon(),
+                                SizedBox(height: 16.h),
+                                _PremiumCardCopy(
+                                  title: title,
+                                  subtitle: _contentOrFallback(
+                                    data.subtitle,
+                                    LocaleKeys.premiumUpgradeCardSubtitle,
+                                  ),
+                                ),
+                                SizedBox(height: 24.h),
+                                _PremiumBenefits(features: _features),
+                                SizedBox(height: 24.h),
+                                _PremiumActionButton(
+                                  title: _contentOrFallback(
+                                    data.actionText,
+                                    LocaleKeys.promotionBadgeAction,
+                                  ),
+                                  onActionPressed: _openPromotionPlans,
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-          ),
         );
       },
     );
