@@ -10,6 +10,8 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   late final PageController _pageController;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final FirstValidationErrorFieldKeys _validationFieldKeys =
+      FirstValidationErrorFieldKeys();
   final ValueNotifier<_SignUpAccountType?> _accountType =
       ValueNotifier<_SignUpAccountType?>(null);
 
@@ -39,7 +41,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Future<void> _goToFieldsPage() async {
     if (_accountType.value == null) {
-      MessageUtils.showSnackBar(LocaleKeys.pleaseEnterTheGender);
+      MessageUtils.show(
+        LocaleKeys.pleaseEnterTheGender,
+        state: MsgState.info,
+      );
       return;
     }
 
@@ -61,10 +66,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   Future<void> _submitSignUp(BuildContext ctx) async {
-    if (!(_formKey.currentState?.validate() ?? false)) {
-      return;
-    }
-
     await ctx.read<SignUpCubit>().signUp(
           _signUpBody,
           onSuccess: _onSignUpSuccess,
@@ -72,7 +73,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void _onSignUpSuccess(BaseModel<dynamic> data) {
-    MessageUtils.showSnackBar(data.msg);
+    MessageUtils.show(data.msg, state: MsgState.success);
     Go.to(
       BlocProvider(
         create: (context) => OtpCubit(),
@@ -137,6 +138,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               _SignUpFieldsStep(
                             accountType: accountType,
                             formKey: _formKey,
+                            validationFieldKeys: _validationFieldKeys,
+                            validationFields: () =>
+                                _signUpBody.firstValidationErrorFields(
+                              _validationFieldKeys,
+                            ),
                             canSubmit: !state.isLoading,
                             onBackPressed: _goToGenderPage,
                             onSubmitPressed: _submitSignUp,

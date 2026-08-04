@@ -29,6 +29,7 @@ import '../../core/widgets/app_logo_widget.dart';
 import '../../core/widgets/buttons/app_loading_button.dart';
 import '../../core/widgets/buttons/default_button.dart';
 import '../../core/widgets/custom_messages.dart';
+import '../../core/widgets/first_validation_error_form.dart';
 import '../../core/widgets/lang_icon.dart';
 import '../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../core/widgets/scaffolds/center_card_scaffold.dart';
@@ -55,6 +56,7 @@ import 'presentation/widgets/sign_up/already_have_acc.dart';
 import 'presentation/widgets/sign_up/conditions_terms_acceptance.dart';
 import 'presentation/widgets/sign_up/female_fields.dart';
 import 'presentation/widgets/sign_up/image_widget.dart';
+import 'presentation/widgets/sign_up/individual_validation_field.dart';
 import 'presentation/widgets/sign_up/male_fields.dart';
 import 'presentation/widgets/sign_up/sign_up_upper_widget.dart';
 

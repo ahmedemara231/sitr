@@ -41,7 +41,10 @@ class SettingScreen extends StatelessWidget {
                   body: user,
                   onSuccess: (data) {
                     UserCubit.instance.updateUser(data.data);
-                    MessageUtils.showSnackBar(data.msg);
+                    MessageUtils.show(
+                      data.msg,
+                      state: MsgState.success,
+                    );
                     Go.back();
                   },
                 ),
@@ -88,7 +91,7 @@ class SettingScreen extends StatelessWidget {
         onSuccess: (msg) async {
           await UserCubit.instance.logout();
           Go.back();
-          MessageUtils.showSnackBar(msg);
+          MessageUtils.show(msg, state: MsgState.success);
           Go.offAll(const LoginScreen());
         },
       ),

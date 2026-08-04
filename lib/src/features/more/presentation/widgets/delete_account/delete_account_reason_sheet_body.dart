@@ -83,8 +83,9 @@ class _DeleteAccountReasonSheetBodyState
           reason: reason.isOther ? null : reason,
           customReason: reason.isOther ? _reasonController.text : null,
           onSuccess: (msg) => widget.onSuccess(msg),
-          onUnsafe: (reason) => MessageUtils.showTopMsg(
+          onUnsafe: (reason) => MessageUtils.show(
             DeleteAccountUnsafeReason.fromValue(reason).message,
+            state: MsgState.info,
           ),
         );
   }

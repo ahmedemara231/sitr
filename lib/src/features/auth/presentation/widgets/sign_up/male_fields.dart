@@ -7,11 +7,14 @@ import '../../../../../core/helpers/validators.dart';
 import '../../../../../core/shared/models/user_models/individual/individual_user_model.dart';
 import '../../../../../core/shared/models/user_models/individual/male_model.dart';
 import '../../../../../core/shared/models/user_models/user_model.dart';
+import '../../../../../core/widgets/first_validation_error_form.dart';
 import '../shared/text_field.dart';
+import 'individual_validation_field.dart';
 import 'shared_form_fields.dart';
 
 class MaleFields extends StatefulWidget {
   final bool withParent;
+  final FirstValidationErrorFieldKeys validationFieldKeys;
   final IndividualUserModel? initialValue;
   final void Function(IndividualUserModel data) onChangeMaleData;
 
@@ -19,6 +22,7 @@ class MaleFields extends StatefulWidget {
     super.key,
     this.initialValue,
     required this.withParent,
+    required this.validationFieldKeys,
     required this.onChangeMaleData,
   });
 
@@ -38,10 +42,8 @@ class _MaleFieldsState extends State<MaleFields> {
   void _init() {
     maleFields = MaleModel.initial();
     _listenToData(maleFields.copyWith(
-        gender: GenderValueShape(userGender: UserGender.male)
-    ));
+        gender: GenderValueShape(userGender: UserGender.male)));
   }
-
 
   @override
   void initState() {
@@ -73,6 +75,7 @@ class _MaleFieldsState extends State<MaleFields> {
     switch (widget.withParent) {
       case false:
         return SharedFormFields<MaleModel>(
+          validationFieldKeys: widget.validationFieldKeys,
           initialValue: widget.initialValue,
           restorationId: UserGender.male.name,
           onChanged: (data) =>
@@ -81,27 +84,32 @@ class _MaleFieldsState extends State<MaleFields> {
 
       default:
         return SharedFormFields<MaleModel>(
-          restorationId: UserGender.male.name,
-          initialValue: widget.initialValue,
-          onChanged: (data) =>
-              _listenToData(asMaleModel.merge(data.copyWith())),
-          onInitData: (List<Widget> children) => children
-            ..insertAll(
-              0,
-              [
+            validationFieldKeys: widget.validationFieldKeys,
+            restorationId: UserGender.male.name,
+            initialValue: widget.initialValue,
+            onChanged: (data) =>
+                _listenToData(asMaleModel.merge(data.copyWith())),
+            onInitData: (List<Widget> children) => children
+              ..insertAll(0, [
                 SignUpTextField(
-                upperTitle: LocaleKeys.name,
-                title: LocaleKeys.pleaseEnterName,
-                controller: _nameCont,
-                onChanged: (val) =>
-                    _listenToData(asMaleModel.copyWith(name: _nameCont.text)),
-                validator: (v) => Validators.validateName(v, fieldTitle: LocaleKeys.name.tr()),
-              ),
-              ]
-            )
-            ..insert(
-              2,
+                  key: widget.validationFieldKeys.get(
+                    IndividualValidationField.name,
+                  ),
+                  upperTitle: LocaleKeys.name,
+                  title: LocaleKeys.pleaseEnterName,
+                  controller: _nameCont,
+                  onChanged: (val) =>
+                      _listenToData(asMaleModel.copyWith(name: _nameCont.text)),
+                  validator: (v) => Validators.validateName(v,
+                      fieldTitle: LocaleKeys.name.tr()),
+                ),
+              ])
+              ..insert(
+                2,
                 SignUpTextField(
+                  key: widget.validationFieldKeys.get(
+                    IndividualValidationField.phone,
+                  ),
                   upperTitle: LocaleKeys.phoneNumber,
                   title: LocaleKeys.pleaseEnterTheNumber,
                   controller: _phoneCont,
@@ -110,31 +118,31 @@ class _MaleFieldsState extends State<MaleFields> {
                       asMaleModel.copyWith(phone: _phoneCont.text)),
                   validator: Validators.validatePhone,
                 ),
-            )
-            ..insertAll(
-                7,
-                [
-              // SignUpTextField(
-              //   upperTitle: LocaleKeys.identifyNumber,
-              //   title: LocaleKeys.pleaseEnterTheNumber,
-              //   controller: _identifyNumberCont,
-              //   inputType: TextInputType.number,
-              //   onChanged: (val) => _listenToData(asMaleModel.copyWith(
-              //       identityNumber: _identifyNumberCont.text)),
-              //   validator: (v) => Validators.validateIdentityNumber(v, fieldTitle: LocaleKeys.identifyNumber.tr()),
-              // ),
-              SignUpTextField(
-                upperTitle: LocaleKeys.age,
-                title: LocaleKeys.pleaseEnterYourAge,
-                inputType: TextInputType.number,
-                controller: _ageCont,
-                onChanged: (val) => _listenToData(
-                    asMaleModel.copyWith(age: int.tryParse(_ageCont.text))),
-                validator: (v) => Validators.validateAge(v, fieldTitle: LocaleKeys.age.tr(), isRequired: true),
-              ),
-            ]
-            )
-        );
+              )
+              ..insertAll(7, [
+                // SignUpTextField(
+                //   upperTitle: LocaleKeys.identifyNumber,
+                //   title: LocaleKeys.pleaseEnterTheNumber,
+                //   controller: _identifyNumberCont,
+                //   inputType: TextInputType.number,
+                //   onChanged: (val) => _listenToData(asMaleModel.copyWith(
+                //       identityNumber: _identifyNumberCont.text)),
+                //   validator: (v) => Validators.validateIdentityNumber(v, fieldTitle: LocaleKeys.identifyNumber.tr()),
+                // ),
+                SignUpTextField(
+                  key: widget.validationFieldKeys.get(
+                    IndividualValidationField.age,
+                  ),
+                  upperTitle: LocaleKeys.age,
+                  title: LocaleKeys.pleaseEnterYourAge,
+                  inputType: TextInputType.number,
+                  controller: _ageCont,
+                  onChanged: (val) => _listenToData(
+                      asMaleModel.copyWith(age: int.tryParse(_ageCont.text))),
+                  validator: (v) => Validators.validateAge(v,
+                      fieldTitle: LocaleKeys.age.tr(), isRequired: true),
+                ),
+              ]));
     }
   }
 }

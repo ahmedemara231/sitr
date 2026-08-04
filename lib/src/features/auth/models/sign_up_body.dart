@@ -1,6 +1,9 @@
 import 'dart:io';
 
+import '../../../config/language/locale_keys.g.dart';
 import '../../../core/helpers/user_type_enum.dart';
+import '../../../core/helpers/validators.dart';
+import '../../../core/widgets/first_validation_error_form.dart';
 import 'auth_body_static_data.dart';
 
 class SignUpBody {
@@ -63,6 +66,25 @@ class SignUpBody {
 
     return ParentSignUp.initial();
   }
+
+  List<FirstValidationErrorField> firstValidationErrorFields(
+    FirstValidationErrorFieldKeys fieldKeys,
+  ) {
+    return <FirstValidationErrorField>[
+      FirstValidationErrorField(
+        fieldKey: fieldKeys.get(SignUpValidationField.name),
+        title: LocaleKeys.name,
+        value: name,
+        validator: Validators.validateEmpty,
+      ),
+      FirstValidationErrorField(
+        fieldKey: fieldKeys.get(SignUpValidationField.phone),
+        title: LocaleKeys.phoneNumber,
+        value: phone,
+        validator: Validators.validatePhone,
+      ),
+    ];
+  }
 }
 
 class MaleAndFemaleSignUp extends SignUpBody {
@@ -108,6 +130,21 @@ class MaleAndFemaleSignUp extends SignUpBody {
   @override
   Map<String, dynamic> toJson() {
     return super.toJson()..addAll({'age': age, 'type': 'individual'});
+  }
+
+  @override
+  List<FirstValidationErrorField> firstValidationErrorFields(
+    FirstValidationErrorFieldKeys fieldKeys,
+  ) {
+    return super.firstValidationErrorFields(fieldKeys)
+      ..add(
+        FirstValidationErrorField(
+          fieldKey: fieldKeys.get(SignUpValidationField.age),
+          title: LocaleKeys.age,
+          value: age,
+          validator: Validators.validateAge,
+        ),
+      );
   }
 }
 
@@ -170,7 +207,43 @@ class ParentSignUp extends SignUpBody {
         'num_of_children': childrenNumber,
         'relation_id': kinship,
         'type': 'parent',
-        'age' : 50
+        'age': 50,
       });
   }
+
+  @override
+  List<FirstValidationErrorField> firstValidationErrorFields(
+    FirstValidationErrorFieldKeys fieldKeys,
+  ) {
+    final List<FirstValidationErrorField> fields =
+        super.firstValidationErrorFields(fieldKeys);
+
+    fields.insert(
+      2,
+      FirstValidationErrorField(
+        fieldKey: fieldKeys.get(SignUpValidationField.email),
+        title: LocaleKeys.email,
+        value: email,
+        validator: Validators.validateEmail,
+      ),
+    );
+    fields.add(
+      FirstValidationErrorField(
+        fieldKey: fieldKeys.get(SignUpValidationField.childrenNumber),
+        title: LocaleKeys.childrenNumber,
+        value: childrenNumber,
+        validator: Validators.validateEmpty,
+      ),
+    );
+
+    return fields;
+  }
+}
+
+abstract class SignUpValidationField {
+  static const String name = 'sign_up_name';
+  static const String phone = 'sign_up_phone';
+  static const String email = 'sign_up_email';
+  static const String age = 'sign_up_age';
+  static const String childrenNumber = 'sign_up_children_number';
 }

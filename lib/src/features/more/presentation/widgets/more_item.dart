@@ -67,8 +67,14 @@ class _SwitchIcon extends StatelessWidget {
         permissionManagerModel: PermissionModel(
             permissions: [Permission.notification],
             onGranted: (p) async => await context.read<ChangeNotifyCubit>().changeNotify(),
-            onDenied: (p) => MessageUtils.showSnackBar(LocaleKeys.canNotOpenNotificationsEnableFromSetting),
-            onDeniedForever: (p) => MessageUtils.showSnackBar(LocaleKeys.canNotOpenNotificationsEnableFromSetting)
+            onDenied: (p) => MessageUtils.show(
+              LocaleKeys.canNotOpenNotificationsEnableFromSetting,
+              state: MsgState.info,
+            ),
+            onDeniedForever: (p) => MessageUtils.show(
+              LocaleKeys.canNotOpenNotificationsEnableFromSetting,
+              state: MsgState.info,
+            ),
         )
     );
   }

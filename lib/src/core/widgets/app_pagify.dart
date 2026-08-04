@@ -98,7 +98,8 @@ class _AppPagifyState<T> extends State<AppPagify<T>> {
               )
           ),
           errorBuilder: (e) => const ExceptionView(),
-          onError: (c, page, e) => MessageUtils.showTopMsg(e.msg),
+          onError: (c, page, e) =>
+              MessageUtils.show(e.msg, state: MsgState.error),
           errorMapper: PagifyErrorMapper(
               errorWhenDio: (e) {
                 final String? msg = e.response?.data['msg'];

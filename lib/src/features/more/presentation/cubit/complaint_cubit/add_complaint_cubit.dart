@@ -22,7 +22,7 @@ class AddComplaintCubit extends AsyncCubit<bool> {
         mapper: (data) => true,
       )),
       onSuccess: (data) {
-        MessageUtils.showSnackBar(data.msg);
+        MessageUtils.show(data.msg, state: MsgState.success);
         2.pop();
       },
     );

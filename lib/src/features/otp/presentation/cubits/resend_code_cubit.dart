@@ -17,7 +17,8 @@ class ResendCodeCubit extends AsyncCubit{
           ),
         ),
       
-      onSuccess: (data) => MessageUtils.showSnackBar(data.msg)
+      onSuccess: (data) =>
+          MessageUtils.show(data.msg, state: MsgState.success),
     );
   }
 }

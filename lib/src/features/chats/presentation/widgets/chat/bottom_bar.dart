@@ -14,7 +14,8 @@ import '../../../../../core/helpers/safe_text_helper.dart';
 import '../../../../../core/helpers/validators.dart';
 import '../../../../../core/navigation/navigator.dart';
 import '../../../../../core/widgets/chat_builder/chat_message.dart';
-import '../../../../../core/widgets/custom_messages.dart' show MessageUtils;
+import '../../../../../core/widgets/custom_messages.dart'
+    show MessageUtils, MsgState;
 import '../../../../../core/widgets/svg_pic.dart';
 import '../../../../../core/widgets/text_fields/default_text_field.dart';
 import '../../cubits/start_chat.dart';
@@ -98,7 +99,10 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                     if (hasBadWord) {
                       _chatCont.text = SafeTextHelper.filterText(_chatCont.text);
 
-                      MessageUtils.showTopMsg(LocaleKeys.yourMessageHasBeenHiddenBecauseItContainedInappropriateLanguage);
+                      MessageUtils.show(
+                        LocaleKeys.yourMessageHasBeenHiddenBecauseItContainedInappropriateLanguage,
+                        state: MsgState.info,
+                      );
                       widget.onSend.call(context, _chatCont.text);
                       _chatCont.clear();
                     }else{
@@ -138,7 +142,10 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                           _selectedImage.value = result;
 
                         }else{
-                          MessageUtils.showSnackBar(LocaleKeys.youCanNotSendMoreThan2ImagesInChat);
+                          MessageUtils.show(
+                            LocaleKeys.youCanNotSendMoreThan2ImagesInChat,
+                            state: MsgState.info,
+                          );
                         }
                       },
                       icon: const Icon(Icons.camera_alt_sharp, color: AppColors.primary)
@@ -152,4 +159,3 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
     );
   }
 }
-

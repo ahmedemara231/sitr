@@ -39,9 +39,10 @@ class Validators {
 
   static String? validateName(String? value, {String? fieldTitle}) {
     if (value == null || value.trim().isEmpty) {
-      return fieldTitle == null
-          ? LocaleKeys.fillField.tr(context: Go.context)
-          : '${LocaleKeys.filedValidation.tr()} $fieldTitle';
+      return fieldTitle == null ?
+      LocaleKeys.fillField :
+      '${LocaleKeys.filedValidation} $fieldTitle';
+
     } else if (value.length > 50) {
       return fieldTitle != null
           ? '$fieldTitle ${LocaleKeys.filedValidation.tr()}'

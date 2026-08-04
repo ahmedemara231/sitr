@@ -354,20 +354,26 @@ class Helpers {
                             if(isSafe){
                               image = File(croppedImage.path);
                             }else{
-                              MessageUtils.showSnackBar(
-                                  LocaleKeys.thisImageHasSensitiveContentPleaseRechooseAnotherImage);
+                              MessageUtils.show(
+                                LocaleKeys.thisImageHasSensitiveContentPleaseRechooseAnotherImage,
+                                state: MsgState.info,
+                              );
                             }
                           }
                         }
                         Go.back();
                       },
                       onDenied: (permission) {
-                        MessageUtils.showSnackBar(
-                            LocaleKeys.unableToAccessPhotosPleaseOpenIt);
+                        MessageUtils.show(
+                          LocaleKeys.unableToAccessPhotosPleaseOpenIt,
+                          state: MsgState.info,
+                        );
                       },
                       onDeniedForever: (permission) {
-                        MessageUtils.showSnackBar(
-                            LocaleKeys.unableToAccessPhotosPleaseOpenIt);
+                        MessageUtils.show(
+                          LocaleKeys.unableToAccessPhotosPleaseOpenIt,
+                          state: MsgState.info,
+                        );
                         openAppSettings();
                       },
                       onLimited: (permission) async {
@@ -380,8 +386,10 @@ class Helpers {
                             if(isSafe){
                               image = File(croppedImage.path);
                             }else{
-                              MessageUtils.showSnackBar(
-                                  LocaleKeys.thisImageHasSensitiveContentPleaseRechooseAnotherImage);
+                              MessageUtils.show(
+                                LocaleKeys.thisImageHasSensitiveContentPleaseRechooseAnotherImage,
+                                state: MsgState.info,
+                              );
                             }
                           }
                         }
@@ -406,20 +414,26 @@ class Helpers {
                             if(isSafe){
                               image = File(croppedImage.path);
                             }else{
-                              MessageUtils.showSnackBar(
-                                  LocaleKeys.thisImageHasSensitiveContentPleaseRechooseAnotherImage);
+                              MessageUtils.show(
+                                LocaleKeys.thisImageHasSensitiveContentPleaseRechooseAnotherImage,
+                                state: MsgState.info,
+                              );
                             }
                           }
                         }
                         Go.back();
                       },
                       onDenied: (permission) {
-                        MessageUtils.showSnackBar(
-                            LocaleKeys.unableToAccessCameraPleaseOpenIt);
+                        MessageUtils.show(
+                          LocaleKeys.unableToAccessCameraPleaseOpenIt,
+                          state: MsgState.info,
+                        );
                       },
                       onDeniedForever: (permission) {
-                        MessageUtils.showSnackBar(
-                            LocaleKeys.unableToAccessCameraPleaseOpenIt);
+                        MessageUtils.show(
+                          LocaleKeys.unableToAccessCameraPleaseOpenIt,
+                          state: MsgState.info,
+                        );
                         openAppSettings();
                       },
                     );

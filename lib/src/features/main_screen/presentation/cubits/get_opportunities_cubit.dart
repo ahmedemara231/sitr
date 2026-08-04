@@ -81,7 +81,7 @@ class GetOpportunitiesCubit extends Cubit<OpportunitiesState> {
         final previousItems = isFirstPage ? <OpportunityModel>[] : state.data.$1;
         emit(state.success(data: ([...previousItems, ...success.data.$1], success.data.$2)));
         if (success.key == 'fromCache') {
-          MessageUtils.showTopMsg(success.msg);
+          MessageUtils.show(success.msg, state: MsgState.info);
         }
       },
       (failure) {
@@ -89,7 +89,7 @@ class GetOpportunitiesCubit extends Cubit<OpportunitiesState> {
           emit(state.error(errorMessage: failure.message));
         } else {
           // emit(state.success(data: state.data));
-          MessageUtils.showTopMsg(failure.message);
+          MessageUtils.show(failure.message, state: MsgState.error);
         }
       },
     );

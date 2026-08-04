@@ -62,7 +62,7 @@ class _ConnectionRequestsScreenState extends State<ConnectionRequestsScreen> {
     final result = await MessageRequestsData.acceptMessageRequest(request);
     final failure = result.tryGetError();
     if (failure != null) {
-      MessageUtils.showTopMsg(failure.message);
+      MessageUtils.show(failure.message, state: MsgState.error);
       return;
     }
     if (!mounted) return;
@@ -82,7 +82,7 @@ class _ConnectionRequestsScreenState extends State<ConnectionRequestsScreen> {
     final result = await MessageRequestsData.rejectMessageRequest(request);
     final failure = result.tryGetError();
     if (failure.isNotNull) {
-      MessageUtils.showTopMsg(failure!.message);
+      MessageUtils.show(failure!.message, state: MsgState.error);
       return false;
     }
     if (!mounted) return false;

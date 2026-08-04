@@ -208,7 +208,10 @@ class ClientIOImpl extends SocketHelper{
       );
 
     }else{
-      MessageUtils.showSnackBar(LocaleKeys.waitingForConnection);
+      MessageUtils.show(
+        LocaleKeys.waitingForConnection,
+        state: MsgState.info,
+      );
       // throw Exception('the socket is not connected');
     }
   }

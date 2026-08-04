@@ -192,7 +192,10 @@ class MoreTabAppBar extends StatelessWidget {
                                         onSuccess: (msg) async{
                                           await UserCubit.instance.logout();
                                           Go.back(); // Close the bottom sheet first
-                                          MessageUtils.showSnackBar(msg);
+                                          MessageUtils.show(
+                                            msg,
+                                            state: MsgState.success,
+                                          );
                                           Go.offAll(const LoginScreen());
                                         }
                                     ),

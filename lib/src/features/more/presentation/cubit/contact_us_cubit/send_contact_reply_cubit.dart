@@ -19,7 +19,7 @@ class SendContactReplyCubit extends AsyncCubit<bool> {
         mapper: (data) => true,
       )),
       onSuccess: (data) {
-        MessageUtils.showSnackBar(data.msg);
+        MessageUtils.show(data.msg, state: MsgState.success);
         onSuccess?.call();
       },
     );

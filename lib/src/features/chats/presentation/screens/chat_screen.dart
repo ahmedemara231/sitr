@@ -251,8 +251,10 @@ class _ChatScreenBodyState extends State<_ChatScreenBody>
         path: ApiConstants.matchRequestAnd + ApiConstants.videoCallRequest,
         onSuccess: (data) {
           _fireShouldUpdate();
-          MessageUtils.showSnackBar(
-              LocaleKeys.aVideoCallRequestWasSuccessfullySent);
+          MessageUtils.show(
+            LocaleKeys.aVideoCallRequestWasSuccessfullySent,
+            state: MsgState.success,
+          );
         });
   }
 

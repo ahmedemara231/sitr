@@ -44,7 +44,10 @@ class _ChooseGenderWidgetState extends State<ChooseGenderWidget> {
                   widget.onSelectGender(widget.genders[index]);
 
                 }else{
-                  MessageUtils.showSnackBar(LocaleKeys.waitUntilTheCurrentSignUpCompleted);
+                  MessageUtils.show(
+                    LocaleKeys.waitUntilTheCurrentSignUpCompleted,
+                    state: MsgState.info,
+                  );
                 }},
             ).paddingSymmetric(horizontal: 10.w),
           )

@@ -54,7 +54,10 @@ class _ChooseFromOptionsWidgetState extends State<ChooseFromOptionsWidget> {
                 setState(() => option = selectedOption);
 
               }else{
-                MessageUtils.showSnackBar(LocaleKeys.youCanNotChooseNow);
+                MessageUtils.show(
+                  LocaleKeys.youCanNotChooseNow,
+                  state: MsgState.info,
+                );
               }
             },
             child: AnimatedContainer(

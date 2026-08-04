@@ -41,8 +41,9 @@ class ChatButton extends StatelessWidget {
             asyncCall: (context) async {
               await context.read<CheckChatEligibilityCubit>().checkEligibility(
                     requestModel: _requestModel,
-                    onRequestSent: () => MessageUtils.showSnackBar(
+                    onRequestSent: () => MessageUtils.show(
                       LocaleKeys.aChatRequestWasSuccessfullySent,
+                      state: MsgState.success,
                     ),
                   );
             },

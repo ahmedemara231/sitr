@@ -193,9 +193,9 @@ enum MsgState { success, error, info }
 /// Compatibility layer for existing call sites while they migrate to
 /// [Messages.showToast].
 class MessageUtils {
-  static ToastificationItem showTopMsg(
+  static ToastificationItem show(
     String msg, {
-    MsgState state = MsgState.error,
+    MsgState state = MsgState.info,
   }) {
     return Messages.showToast(
       msg: msg,
@@ -205,9 +205,5 @@ class MessageUtils {
         MsgState.info => BaseStatus.initial,
       },
     );
-  }
-
-  static ToastificationItem showSnackBar(String message) {
-    return Messages.showToast(msg: message);
   }
 }

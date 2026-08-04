@@ -81,7 +81,10 @@ class PackageWidget extends StatelessWidget {
                             title: type == ScreenType.subscription?
                             LocaleKeys.subscribeToPackage : LocaleKeys.renewPackage,
                             onTap: () => package.hasActivePackage?
-                            MessageUtils.showSnackBar(LocaleKeys.youHaveActivePackageNow) :
+                            MessageUtils.show(
+                              LocaleKeys.youHaveActivePackageNow,
+                              state: MsgState.info,
+                            ) :
                             ChatSheetManager.show(
                                 child: BlocProvider(
                                   create: (context) => PackagesManagerCubit(),

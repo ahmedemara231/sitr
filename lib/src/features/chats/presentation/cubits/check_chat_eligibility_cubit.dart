@@ -48,7 +48,7 @@ class CheckChatEligibilityCubit extends AsyncCubit<CanChat> {
 
     final failure = result.tryGetError();
     if (failure != null) {
-      MessageUtils.showTopMsg(failure.message);
+      MessageUtils.show(failure.message, state: MsgState.error);
       setError(errorMessage: failure.message);
       return;
     }

@@ -235,13 +235,16 @@ class _InputBar extends StatelessWidget {
   }
 
   void _warnNoTarget() {
-    MessageUtils.showSnackBar(LocaleKeys.pleaseSelectMessageToReply);
+    MessageUtils.show(
+      LocaleKeys.pleaseSelectMessageToReply,
+      state: MsgState.info,
+    );
   }
 
   Future<void> _handleSend(BuildContext context, int parentId) async {
     final String text = controller.text.trim();
     if (text.isEmpty) {
-      MessageUtils.showSnackBar(LocaleKeys.fillField);
+      MessageUtils.show(LocaleKeys.fillField, state: MsgState.info);
       return;
     }
     context.hideKeyboard();

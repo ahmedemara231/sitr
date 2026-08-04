@@ -3,11 +3,13 @@ part of '../../../imports.dart';
 class SignUpFields extends StatefulWidget {
   final UserGender gender;
   final UserType type;
+  final FirstValidationErrorFieldKeys validationFieldKeys;
   final Future<void> Function(SignUpBody body) onFinish;
   const SignUpFields({
     super.key,
     required this.gender,
     required this.type,
+    required this.validationFieldKeys,
     required this.onFinish,
   });
 
@@ -129,10 +131,18 @@ class _SignUpFieldsState extends State<SignUpFields> {
     } else {
       signUpBody = MaleAndFemaleSignUp.initial().copyWith(
         image: _getImageBasedGender,
-        name: _getContBasedUserType(whenMale: _maleNameCont, whenFemale: _femaleNameCont).text,
-        phone: _getContBasedUserType(whenMale: _malePhoneCont, whenFemale: _femalePhoneCont).text,
-        age: _getContBasedUserType(whenMale: _maleAgeCont, whenFemale: _femaleAgeCont).text,
-        code: _getContBasedUserType(whenMale: _maleCodeCont, whenFemale: _femaleCodeCont).text,
+        name: _getContBasedUserType(
+                whenMale: _maleNameCont, whenFemale: _femaleNameCont)
+            .text,
+        phone: _getContBasedUserType(
+                whenMale: _malePhoneCont, whenFemale: _femalePhoneCont)
+            .text,
+        age: _getContBasedUserType(
+                whenMale: _maleAgeCont, whenFemale: _femaleAgeCont)
+            .text,
+        code: _getContBasedUserType(
+                whenMale: _maleCodeCont, whenFemale: _femaleCodeCont)
+            .text,
         // identityNumber: _getContBasedUserType(
         //         whenMale: _maleIdentifyNumberCont,
         //         whenFemale: _femaleIdentifyNumberCont)
@@ -151,7 +161,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
     required TextEditingController whenFemale,
     TextEditingController? whenParent,
   }) {
-    if(widget.type.isIndividual){
+    if (widget.type.isIndividual) {
       switch (widget.gender) {
         case UserGender.male:
           return whenMale;
@@ -162,10 +172,9 @@ class _SignUpFieldsState extends State<SignUpFields> {
         default:
           return TextEditingController();
       }
-    }else if(widget.type.isParent){
+    } else if (widget.type.isParent) {
       return whenParent ?? TextEditingController();
-
-    }else{
+    } else {
       return TextEditingController();
     }
   }
@@ -181,9 +190,10 @@ class _SignUpFieldsState extends State<SignUpFields> {
       spacing: 12.h,
       children: [
         SelectImageWidget(
-            onSelectImage: (img) => _listenToData(signUpBody.copyWith(image: img))
-        ),
+            onSelectImage: (img) =>
+                _listenToData(signUpBody.copyWith(image: img))),
         SignUpTextField(
+          key: widget.validationFieldKeys.get(SignUpValidationField.name),
           validator: Validators.validateEmpty,
           upperTitle: LocaleKeys.name,
           title: LocaleKeys.pleaseEnterYourName,
@@ -200,6 +210,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
           // validator: Validators.validateEmpty,
         ),
         SignUpTextField(
+          key: widget.validationFieldKeys.get(SignUpValidationField.phone),
           validator: Validators.validatePhone,
           upperTitle: LocaleKeys.phoneNumber,
           maxLength: 10,
@@ -220,6 +231,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
         Visibility(
           visible: widget.type.isParent,
           child: SignUpTextField(
+            key: widget.validationFieldKeys.get(SignUpValidationField.email),
             validator: Validators.validateEmail,
             upperTitle: LocaleKeys.email,
             title: LocaleKeys.pleaseEnterTheEmail,
@@ -233,6 +245,7 @@ class _SignUpFieldsState extends State<SignUpFields> {
         Visibility(
           visible: widget.type.isIndividual,
           child: SignUpTextField(
+            key: widget.validationFieldKeys.get(SignUpValidationField.age),
             validator: Validators.validateAge,
             upperTitle: LocaleKeys.age,
             title: LocaleKeys.pleaseEnterYourAge,
@@ -282,6 +295,9 @@ class _SignUpFieldsState extends State<SignUpFields> {
             cacheFromJson: (json) => Kinship.fromJson(json),
           ),
           SignUpTextField(
+            key: widget.validationFieldKeys.get(
+              SignUpValidationField.childrenNumber,
+            ),
             validator: Validators.validateEmpty,
             upperTitle: LocaleKeys.childrenNumber,
             title: LocaleKeys.pleaseEnterTheNumber,

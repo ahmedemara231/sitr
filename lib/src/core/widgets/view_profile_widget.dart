@@ -109,7 +109,7 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit>
     );
     final failure = result.tryGetError();
     if (failure != null) {
-      MessageUtils.showTopMsg(failure.message);
+      MessageUtils.show(failure.message, state: MsgState.error);
       return;
     }
     if (!mounted) return;
@@ -134,7 +134,7 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit>
     );
     final failure = result.tryGetError();
     if (failure != null) {
-      MessageUtils.showTopMsg(failure.message);
+      MessageUtils.show(failure.message, state: MsgState.error);
       return false;
     }
     if (!mounted) return false;
@@ -481,7 +481,10 @@ class _ViewProfileWidgetState<T extends GetUserModelCubit>
                             body: user,
                             onSuccess: (data) {
                               UserCubit.instance.updateUser(data.data);
-                              MessageUtils.showSnackBar(data.msg);
+                              MessageUtils.show(
+                                data.msg,
+                                state: MsgState.success,
+                              );
                               Go.back();
                               widget.cubit.getProfile(onSuccess: (userResult) {
                                 _onSuccess(userResult);

@@ -37,7 +37,7 @@ class BlocManagerSheet extends StatelessWidget {
               await context.read<UnBlockUserCubit>().unblockUser(
                 userId: id,
                 onSuccess: (msg){
-                  MessageUtils.showSnackBar(msg);
+                  MessageUtils.show(msg, state: MsgState.success);
                 }
               );
 
@@ -45,7 +45,7 @@ class BlocManagerSheet extends StatelessWidget {
               await context.read<BlockUserCubit>().block(
                   id: id,
                   onSuccess: (msg){
-                    MessageUtils.showSnackBar(msg);
+                    MessageUtils.show(msg, state: MsgState.success);
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       Go.offAll(const HomeScreen());
                     });

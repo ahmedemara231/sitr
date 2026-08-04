@@ -28,7 +28,7 @@ class ContactUsCubit extends AsyncCubit<bool> {
             },
             mapper: (data) => true)),
         onSuccess: (data) {
-          MessageUtils.showSnackBar(data.msg);
+          MessageUtils.show(data.msg, state: MsgState.success);
           Go.off(const ContactUsChatScreen());
         });
   }

@@ -85,7 +85,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     if(formKey.currentState!.validate()){
                       await ctx.read<LoginCubit>().login(
                         LoginBody(phone: _phoneCont.text),
-                        onSuccess: (msg) => MessageUtils.showSnackBar(msg)
+                        onSuccess: (msg) =>
+                            MessageUtils.show(msg, state: MsgState.success),
                       );
                     }
                   },

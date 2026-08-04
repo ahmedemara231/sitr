@@ -89,7 +89,10 @@ class _ParentChildrenState extends State<ParentChildren> {
                             user,
                           onSuccess: (data) {
                              2.pop();
-                              MessageUtils.showSnackBar(data.msg);
+                              MessageUtils.show(
+                                data.msg,
+                                state: MsgState.success,
+                              );
                           }
                         ),
                     ),
@@ -103,7 +106,10 @@ class _ParentChildrenState extends State<ParentChildren> {
                               id: element.id??0,
                               onSuccess: (msg) {
                                 Go.back();
-                                MessageUtils.showSnackBar(msg);
+                                MessageUtils.show(
+                                  msg,
+                                  state: MsgState.success,
+                                );
                                 childrenCont.refresh();
                               }
                           ),

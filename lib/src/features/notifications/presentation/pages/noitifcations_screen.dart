@@ -98,7 +98,10 @@ class _NotificationBodyState extends State<NotificationBody> {
           if (result.isSuccess()) {
             _controller.clear();
             Go.back();
-            MessageUtils.showSnackBar(result.getOrThrow().msg);
+            MessageUtils.show(
+              result.getOrThrow().msg,
+              state: MsgState.success,
+            );
           }
         },
         title: LocaleKeys.areYouSureToDeleteAllNotifications,
@@ -114,7 +117,10 @@ class _NotificationBodyState extends State<NotificationBody> {
           if (result.isSuccess()) {
             _controller.removeWhere((item) => item.id == id);
             Go.back();
-            MessageUtils.showSnackBar(result.getOrThrow().msg);
+            MessageUtils.show(
+              result.getOrThrow().msg,
+              state: MsgState.success,
+            );
           }
         },
         title: LocaleKeys.areYouSureToDeleteThisNotification,
