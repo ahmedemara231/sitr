@@ -19,6 +19,7 @@ import '../../core/shared/user_cubit/user_cubit.dart';
 import '../../core/widgets/app_text.dart';
 import '../../core/widgets/icon_widget.dart';
 import '../whats_new/whats_new_service.dart';
+import '../whats_new/widgets/upgrader_dialog.dart';
 import 'cubits/app_badge_counts_cubit.dart';
 import 'cubits/home_cubit/home_cubit.dart';
 import 'data/models/app_badge_counts_model.dart';
@@ -128,23 +129,18 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     context.locale;
-    return UpgradeAlert(
+    return AppUpgradeAlert(
       upgrader: upgrader,
-      shouldPopScope: () => true,
-      dialogStyle: Platform.isIOS
-          ? UpgradeDialogStyle.cupertino
-          : UpgradeDialogStyle.material,
-      onUpdate: () {
+      onUpdatePressed: () async {
         if (Platform.isIOS) {
-          LauncherHelper.launchURL(
+          await LauncherHelper.launchURL(
               url:
                   'https://apps.apple.com/us/app/%D8%B3%D8%AA%D8%B1/id6756270317');
         } else {
-          LauncherHelper.launchURL(
+          await LauncherHelper.launchURL(
               url:
                   'https://play.google.com/store/apps/details?id=com.aait.flutter.sitr');
         }
-        return true;
       },
       child: MultiBlocProvider(
         providers: [

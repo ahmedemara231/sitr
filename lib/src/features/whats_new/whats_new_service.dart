@@ -4,7 +4,6 @@ import 'package:upgrader/upgrader.dart';
 
 import '../../config/res/config_imports.dart';
 import '../../core/helpers/cache_service.dart';
-import '../../core/widgets/default_bottom_sheet.dart';
 import 'widgets/whats_new_sheet.dart';
 
 class WhatsNewService {
@@ -60,7 +59,7 @@ class WhatsNewService {
     final List<String> items = await _resolveItems(upgrader, currentVersion);
     if (items.isEmpty) return;
 
-    await showDefaultBottomSheet(child: WhatsNewSheet(items: items));
+    await showWhatsNewSheet(items: items, version: currentVersion);
   }
 
   static Future<List<String>> _resolveItems(

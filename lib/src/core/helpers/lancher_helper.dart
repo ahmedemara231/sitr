@@ -7,7 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../config/language/locale_keys.g.dart';
 
 class LauncherHelper {
-  static void launchURL({required String url}) async {
+  static Future<void> launchURL({required String url}) async {
     if (!url.toString().startsWith('https')) {
       url = 'https://$url';
     }
