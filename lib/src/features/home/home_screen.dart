@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -116,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   late final upgrader = Upgrader(
-    debugDisplayAlways: true,
+    debugDisplayAlways: kDebugMode,
     minAppVersion: RemoteConfigValues.minAppVersion.isEmpty ?
     null : RemoteConfigValues.minAppVersion,
     debugLogging: true,

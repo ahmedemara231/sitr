@@ -123,20 +123,6 @@ class _SheetChrome extends StatelessWidget {
               borderRadius: BorderRadius.circular(50.r),
             ),
           ),
-          PositionedDirectional(
-            top: 4.h,
-            end: 8.w,
-            child: IconButton(
-              tooltip: LocaleKeys.close,
-              onPressed: Go.back,
-              visualDensity: VisualDensity.compact,
-              icon: Icon(
-                Icons.close_rounded,
-                size: 22.r,
-                color: const Color(0xFFAAAAAA),
-              ),
-            ),
-          ),
         ],
       ),
     );
