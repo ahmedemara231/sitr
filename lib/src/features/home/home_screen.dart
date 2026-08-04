@@ -28,12 +28,10 @@ import 'widgets/premium_upgrade_card_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
   final int initialIndex;
-  final bool showPromotionReminder;
 
   const HomeScreen({
     super.key,
     this.initialIndex = 0,
-    this.showPromotionReminder = false,
   });
 
   @override
@@ -108,7 +106,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _showLaunchDialogs() async {
-    if (widget.showPromotionReminder){
+    final bool showPromotionReminder = await UserCubit.instance.registerPromotionReminderAppLaunch();
+    if (showPromotionReminder){
       await showPremiumUpgradeCardDialog();
       await UserCubit.instance.resetPromotionReminderLaunchCount();
     }

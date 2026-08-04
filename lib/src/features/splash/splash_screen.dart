@@ -47,11 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
     switch (result) {
       case true:
         await UserCubit.instance.init();
-        final bool showPromotionReminder =
-            await UserCubit.instance.registerPromotionReminderAppLaunch();
-        Go.offAll(
-          HomeScreen(showPromotionReminder: showPromotionReminder),
-        );
+        Go.offAll(const HomeScreen());
         break;
 
       default:

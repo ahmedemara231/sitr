@@ -220,14 +220,6 @@ class _FeaturesList extends StatelessWidget {
     ),
   ];
 
-  List<String> get _titles => [
-        LocaleKeys.whatsNewFasterExperience,
-        LocaleKeys.whatsNewClearerDesign,
-        LocaleKeys.whatsNewImprovementsAndFixes,
-        LocaleKeys.whatsNewSmarterNotifications,
-        LocaleKeys.whatsNewBetterPrivacy,
-      ];
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -238,8 +230,7 @@ class _FeaturesList extends StatelessWidget {
                 bottom: entry.$1 == items.length - 1 ? 0 : 16.h,
               ),
               child: _FeatureItem(
-                title: entry.$1 < _titles.length ? _titles[entry.$1] : entry.$2,
-                description: entry.$1 < _titles.length ? entry.$2 : null,
+                title: entry.$2,
                 visual: _visuals[entry.$1 % _visuals.length],
               ),
             ),
@@ -251,12 +242,10 @@ class _FeaturesList extends StatelessWidget {
 
 class _FeatureItem extends StatelessWidget {
   final String title;
-  final String? description;
   final _FeatureVisual visual;
 
   const _FeatureItem({
     required this.title,
-    required this.description,
     required this.visual,
   });
 
@@ -281,26 +270,12 @@ class _FeatureItem extends StatelessWidget {
         ),
         SizedBox(width: 12.w),
         Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppText(
-                title,
-                color: AppColors.textBlack,
-                fontSize: 14.sp,
-                fontWeight: FontWeight.bold,
-                height: 1.4,
-              ),
-              if (description != null) ...[
-                SizedBox(height: 2.h),
-                AppText(
-                  description!,
-                  color: AppColors.darkGay,
-                  fontSize: 13.sp,
-                  height: 1.6,
-                ),
-              ],
-            ],
+          child: AppText(
+            title,
+            color: AppColors.textBlack,
+            fontSize: 14.sp,
+            fontWeight: FontWeight.bold,
+            height: 1.4,
           ),
         ),
       ],
