@@ -4,7 +4,7 @@ import '../../../../config/res/config_imports.dart';
 import '../../../../core/network/api_endpoints.dart';
 import '../../../../core/widgets/sheets/payment_sheet.dart';
 import '../../models/package.dart';
-import '../packages_screen.dart';
+import '../models/package_screen_type.dart';
 
 class PackagesManagerCubit extends AsyncCubit<String>{
   PackagesManagerCubit() : super('');

@@ -7,28 +7,18 @@ import 'package:pagify/pagify.dart';
 
 import '../../../config/language/locale_keys.g.dart';
 import '../../../config/res/config_imports.dart';
-import '../../../core/extensions/widget_extension.dart';
 import '../../../core/helpers/user_type_enum.dart';
-import '../../../core/shared/models/user_models/user_model.dart';
-import '../../../core/widgets/app_pagify.dart';
-import '../../../core/widgets/app_text.dart';
-import '../../../core/widgets/not_contain_data.dart';
 import '../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../../core/widgets/sheets/payment_sheet.dart';
-import '../../../core/widgets/sheets/promotion_plans_sheet/promotion_plans_sheet_body.dart';
+import '../../../core/widgets/sheets/promotion_plans/promotion_plans_body.dart';
 import '../../promotions/presentation/cubits/promotion_data_cubit.dart';
 import '../../promotions/presentation/cubits/promotion_subscription_cubit.dart';
-import '../data/packages_data.dart';
 import '../models/package.dart';
-import 'widgets/package_widget.dart';
+import 'models/package_screen_type.dart';
+import 'widgets/packages_body.dart';
 import 'widgets/packages_tab_bar.dart';
 
-enum ScreenType { subscription, renew }
-
-extension ScreenTypeCheck on ScreenType {
-  bool get isSubscription => this == ScreenType.subscription;
-  bool get isRenew => this == ScreenType.renew;
-}
+export 'models/package_screen_type.dart';
 
 class PackagesScreen extends StatefulWidget {
   final ScreenType type;
@@ -114,8 +104,8 @@ class _PackagesScreenState extends State<PackagesScreen> {
               child: IndexedStack(
                 index: _currentTabIndex,
                 children: [
-                  _buildPackagesBody(),
-                  PromotionPlansSheetBody.screen(onSuccess: widget.onSuccess),
+                  _packagesBody,
+                  PromotionPlansBody(onSuccess: widget.onSuccess),
                 ],
               ),
             ),
@@ -129,47 +119,17 @@ class _PackagesScreenState extends State<PackagesScreen> {
     return AppScaffold(
       isScrollable: false,
       appBarTitle: LocaleKeys.packages,
-      body: _buildPackagesBody(),
+      body: _packagesBody,
     );
   }
 
-  Widget _buildPackagesBody() {
-    if (UserModel.currentUser?.type?.userType?.isChild ?? false) {
-      return const NotContainData();
-    }
-
-    return Column(
-      children: [
-        if (widget.isInAuth)
-          AppText(
-            LocaleKeys
-                .inOrderToRegisterOtherDataYouMustSubscribeToOneOfTheAvailablePackages,
-            textAlign: TextAlign.center,
-          ),
-        Expanded(
-          child: AppPagify<Package>(
-            asyncCall: (ctx, page) => PackagesData.getPackages(
-              page: page,
-              userType: widget.userType,
-            ),
-            cacheKey: 'packages_${widget.userType?.name ?? 'all'}',
-            cacheToJson: (item) => item.toJson(),
-            cacheFromJson: (json) => Package.fromJson(json),
-            itemBuilder: (ctx, data, index, element) => PackageWidget(
-              type: widget.type,
-              paymentMethods: widget.paymentMethods,
-              isInAuth: widget.isInAuth,
-              package: element,
-              onSubscribe: () => _controller.refresh(),
-            ),
-            pagifyController: _controller,
-          ).withPullRefresher(
-            onRefresh: () => _controller.refresh(),
-          ),
-        ),
-      ],
-    );
-  }
+  Widget get _packagesBody => PackagesBody(
+        controller: _controller,
+        type: widget.type,
+        userType: widget.userType,
+        isInAuth: widget.isInAuth,
+        paymentMethods: widget.paymentMethods,
+      );
 
   void _changeTab(int index) {
     if (_currentTabIndex == index) return;
