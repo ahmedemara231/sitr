@@ -178,4 +178,5 @@ final class SecureLocalVariableKeys {
   static const String socetIoUrl = "socet_io_url";
   static const String fireStoreAvailabilityKey = "fire_store_availability_key";
   static const String removeWallet = 'removeWallet';
+  static const String minAppVersionKey = 'min_app_version';
 }

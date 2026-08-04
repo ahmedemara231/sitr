@@ -63,3 +63,11 @@ final class FeatureFlags {
 
   static void setRemoveWallet(bool value) => _removeWallet = value;
 }
+
+final class RemoteConfigValues {
+  static String _minAppVersion = '';
+
+  static String get minAppVersion => _minAppVersion;
+
+  static void setMinAppVersion(String value) => _minAppVersion = value;
+}

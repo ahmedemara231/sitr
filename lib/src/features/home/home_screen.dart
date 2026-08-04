@@ -115,7 +115,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   late final upgrader = Upgrader(
-    // debugDisplayAlways: kDebugMode,
+    minAppVersion: RemoteConfigValues.minAppVersion.isEmpty ?
+    null : RemoteConfigValues.minAppVersion,
     debugLogging: true,
     durationUntilAlertAgain: Duration.zero,
     storeController: UpgraderStoreController(
