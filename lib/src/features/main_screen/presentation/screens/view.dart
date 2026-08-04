@@ -5,15 +5,13 @@ import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../../../core/extensions/context_extension.dart';
 import '../../../../core/extensions/string_extension.dart';
+import '../../../../core/extensions/widget_extension.dart';
 import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
-import '../../../../core/shared/user_cubit/user_cubit.dart';
 import '../../../../core/widgets/image_widgets/custom_image_slider.dart';
-import '../../../../core/widgets/promotion_badge.dart';
 import '../../../../core/widgets/scaffolds/center_card_scaffold.dart';
 import '../../../../core/widgets/choose_from_options.dart';
 import '../../data/models/home_model.dart';
-import '../../../promotions/data/models/promotion_data_model.dart';
 import '../../../promotions/presentation/cubits/promotion_data_cubit.dart';
 import '../cubits/get_opportunities_cubit.dart';
 import '../cubits/home_cubit.dart';
@@ -38,13 +36,12 @@ class _MainViewState extends State<MainView> {
       ];
 
   List<String> get opportunitiesTitles {
-    if (UserModel.isParent) {
-      return [LocaleKeys.male, LocaleKeys.female, LocaleKeys.parents];
-    } else if (UserModel.isMale) {
+    if (UserModel.isMale) {
       return [LocaleKeys.female, LocaleKeys.parents];
     } else if (UserModel.isFemale) {
       return [LocaleKeys.male, LocaleKeys.parents];
     }
+
     return [LocaleKeys.male, LocaleKeys.female, LocaleKeys.parents];
   }
 
@@ -61,6 +58,7 @@ class _MainViewState extends State<MainView> {
       providers: [
         BlocProvider(create: (context) => GetOpportunitiesCubit()),
         BlocProvider(create: (context) => PromotionDataCubit()),
+        BlocProvider(create: (context) => MainViewCubit()),
       ],
       child: MainViewBody(
         firstSelection: firstSelection,
@@ -109,18 +107,21 @@ class _MainViewBodyState extends State<MainViewBody> {
     }
   }
 
+  Future<void> _fetchHome()async{
+    context.read<MainViewCubit>().getHomeData();
+    context.read<PromotionDataCubit>().getPromotionData();
+    context.read<GetOpportunitiesCubit>().getOpportunities(
+      type: secondSelection.value.toUserGender(),
+      page: 1,
+    );
+  }
+
   @override
   void initState() {
     super.initState();
     firstSelection.addListener(_firstSelectionListener);
     secondSelection.addListener(_secondSelectionListener);
-    context.read<GetOpportunitiesCubit>().getOpportunities(
-          type: secondSelection.value.toUserGender(),
-          page: 1,
-    );
-    if(UserModel.isAuthenticated){
-      context.read<PromotionDataCubit>().getPromotionData();
-    }
+    _fetchHome();
   }
 
   @override
@@ -137,86 +138,74 @@ class _MainViewBodyState extends State<MainViewBody> {
 
   void _secondSelectionListener() {
     context.read<GetOpportunitiesCubit>().getOpportunities(
-          type: secondSelection.value.toUserGender(),
-          page: 1,
-        );
+      type: secondSelection.value.toUserGender(),
+      page: 1,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final bool isPromoted = context.select(
-      (UserCubit cubit) => cubit.user.isPromoted,
-    );
-    final PromotionDataModel promotionData =
-        context.watch<PromotionDataCubit>().state.data;
-
-    return BlocProvider(
-      create: (context) => MainViewCubit()..getHomeData(),
-      child: BlocBuilder<MainViewCubit, AsyncState<HomeModel>>(
-        builder: (context, state) => SliverCenterCardScaffold(
-          scrollController: _scrollController,
-          bodyTopPadding: 120.h,
-          cardTopPadding: 120.h,
-          upperWidget: const HomeWelcomeHeader(),
-          bodyColor: Colors.white,
-          upperWidgetPadding: const EdgeInsets.all(20),
-          centerCardBody: StatusBuilder(
-            data: state,
-            onSuccess: (data, context) => ImageSlider(
-              height: context.height / 5,
-              images:
-                  state.data.banners?.map((e) => e.image ?? '').toList() ?? [],
-            ),
-          ),
-          headerContent: Column(
-            children: [
-              // isPromoted
-              //     ? PromotedBadge(data: promotionData.promotedBadge)
-              //     : PromotionBadge(data: promotionData.promotionBadge),
-              SizedBox(height: 16.h),
-              StatusBuilder(
-                data: state,
-                onSuccess: (data, context) => Column(
-                  children: [
-                    ChooseFromOptionsWidget(
-                      onSelectOption: (selectedOption) =>
-                          firstSelection.value = selectedOption,
-                      fontSize: 14.sp,
-                      childPadding: EdgeInsets.symmetric(
-                        vertical: 16.h,
-                        horizontal: 12.w,
-                      ),
-                      titles: _partnersOrConsultants,
-                    ),
-                    ValueListenableBuilder(
-                      valueListenable: firstSelection,
-                      builder: (context, value, child) =>
-                          value == _partnersOrConsultants.first
-                              ? ChooseFromOptionsWidget(
-                                  fontWeight: FontWeight.w500,
-                                  onSelectOption: (selectedOption) =>
-                                      secondSelection.value = selectedOption,
-                                  childPadding:
-                                      EdgeInsets.symmetric(vertical: 12.h),
-                                  titles: _opportunitiesTitles,
-                                  fontSize: 14.sp,
-                                )
-                              : const SizedBox.shrink(),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          bodyBuilder: (context) => ValueListenableBuilder(
-            valueListenable: firstSelection,
-            builder: (context, value, child) =>
-                value == _partnersOrConsultants.first
-                    ? OpportunitiesListBody(secondSelection: secondSelection)
-                    : ConsultantsListBody(
-                        consultants: state.data.marriageConsultants),
+    return BlocBuilder<MainViewCubit, AsyncState<HomeModel>>(
+      builder: (context, state) => SliverCenterCardScaffold(
+        scrollController: _scrollController,
+        bodyTopPadding: 120.h,
+        cardTopPadding: 120.h,
+        upperWidget: const HomeWelcomeHeader(),
+        bodyColor: Colors.white,
+        upperWidgetPadding: const EdgeInsets.all(20),
+        centerCardBody: StatusBuilder(
+          data: state,
+          onSuccess: (data, context) => ImageSlider(
+            height: context.height / 5,
+            images: state.data.banners?.map((e) => e.image ?? '').toList() ?? [],
           ),
         ),
+        headerContent: Column(
+          children: [
+            SizedBox(height: 16.h),
+            StatusBuilder(
+              data: state,
+              onSuccess: (data, context) => Column(
+                children: [
+                  ChooseFromOptionsWidget(
+                    onSelectOption: (selectedOption) =>
+                        firstSelection.value = selectedOption,
+                    fontSize: 14.sp,
+                    childPadding: EdgeInsets.symmetric(
+                      vertical: 16.h,
+                      horizontal: 12.w,
+                    ),
+                    titles: _partnersOrConsultants,
+                  ),
+                  ValueListenableBuilder(
+                    valueListenable: firstSelection,
+                    builder: (context, value, child) =>
+                        value == _partnersOrConsultants.first
+                            ? ChooseFromOptionsWidget(
+                                fontWeight: FontWeight.w500,
+                                onSelectOption: (selectedOption) =>
+                                    secondSelection.value = selectedOption,
+                                childPadding:
+                                    EdgeInsets.symmetric(vertical: 12.h),
+                                titles: _opportunitiesTitles,
+                                fontSize: 14.sp,
+                              )
+                            : const SizedBox.shrink(),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        bodyBuilder: (context) => ValueListenableBuilder(
+          valueListenable: firstSelection,
+          builder: (context, value, child) =>
+              value == _partnersOrConsultants.first ?
+              OpportunitiesListBody(secondSelection: secondSelection) :
+              ConsultantsListBody(consultants: state.data.marriageConsultants),
+        ),
+      ).withPullRefresher(
+        onRefresh: () => _fetchHome(),
       ),
     );
   }

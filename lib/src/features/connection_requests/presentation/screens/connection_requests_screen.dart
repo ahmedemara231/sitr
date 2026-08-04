@@ -123,8 +123,8 @@ class _ConnectionRequestsScreenState extends State<ConnectionRequestsScreen> {
           ).paddingBottom(16.h);
         },
       ).paddingTop(6.h).withPullRefresher(
-            onRefresh: () => _controller.refresh(),
-          ),
+        onRefresh: () => _controller.refresh(),
+      ),
     );
   }
 }

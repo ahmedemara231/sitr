@@ -195,10 +195,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           selectedLabelStyle: TextStyle(
                             fontSize: 13.sp,
                             fontWeight: FontWeight.w500,
+                            fontFamily: ConstantManager.fontFamily
                           ),
                           unselectedLabelStyle: TextStyle(
                             fontSize: 13.sp,
                             fontWeight: FontWeight.w500,
+                              fontFamily: ConstantManager.fontFamily
                           ),
                           currentIndex: cubit.currentIndex,
                           onTap: (index) {
