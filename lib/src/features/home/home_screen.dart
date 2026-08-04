@@ -116,6 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   late final upgrader = Upgrader(
+    debugDisplayAlways: true,
     minAppVersion: RemoteConfigValues.minAppVersion.isEmpty ?
     null : RemoteConfigValues.minAppVersion,
     debugLogging: true,
