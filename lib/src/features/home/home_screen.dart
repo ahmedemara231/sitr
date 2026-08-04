@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shorebird_code_push/shorebird_code_push.dart';
 import 'package:upgrader/upgrader.dart';
 import '../../../generated/assets.dart';
+import '../../config/language/languages.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
 import '../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
@@ -116,6 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   late final upgrader = Upgrader(
+    languageCode: Languages.currentLanguage.languageCode,
     debugDisplayAlways: kDebugMode,
     minAppVersion: RemoteConfigValues.minAppVersion.isEmpty ?
     null : RemoteConfigValues.minAppVersion,
