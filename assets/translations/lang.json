@@ -37,6 +37,8 @@
 
     "_____________________________________Login___________________________________": "",
     "Login" : "تسجيل الدخول",
+    "visitorLoginTitle #$ Sign in to continue": "سجّل الدخول للمتابعة",
+    "visitorLoginDescription #$ Sign in to access all app features securely": "سجّل دخولك للاستفادة من جميع مزايا التطبيق بأمان",
     "Phone Number" : "رقم الجوال",
     "Sign in as visitor" : "الدخول كزائر",
     "Please Enter Your Mobile Number To Register Or Skip To Register And View Some Application Data" : "من فضلك قم بادخال رقم الجوال للتسجيل او عمل تخطي للتسجيل والاطلاع علي بعض بيانات التطبيق",

@@ -5,7 +5,9 @@ import 'package:pagify/pagify.dart';
 import '../../../../config/language/locale_keys.g.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/extensions/widget_extension.dart';
+import '../../../../core/helpers/helpers.dart';
 import '../../../../core/navigation/navigator.dart';
+import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../../core/widgets/app_pagify.dart';
 import '../../../../core/widgets/scaffolds/app_scaffold.dart';
 import '../../data/home_data.dart';
@@ -52,7 +54,13 @@ class _FilterResultScreenState extends State<FilterResultScreen> {
             onTap: () => Go.to(IndividualDetailsScreen.opportunity(
               id: opportunity.id ?? 0,
             )),
-            child: PartnerCard.individual(opportunity: opportunity).paddingBottom(10.h),
+            child: InkWell(
+                onTap: () => UserModel.isAuthenticated
+                    ? Go.to(
+                      IndividualDetailsScreen.opportunity(id: opportunity.id ?? 0),
+                )
+                    : Helpers.showUnauthenticatedSheet(),
+                child: PartnerCard.individual(opportunity: opportunity).paddingBottom(10.h)),
         )).withPullRefresher(
           onRefresh: () => _controller.refresh(),
         ),

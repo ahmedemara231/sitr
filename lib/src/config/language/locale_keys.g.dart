@@ -109,6 +109,12 @@ abstract class LocaleKeys {
   static const String _login = 'login';
   static String get login => _login.tr();
 
+  static const String _visitorLoginTitle = 'visitor_login_title';
+  static String get visitorLoginTitle => _visitorLoginTitle.tr();
+
+  static const String _visitorLoginDescription = 'visitor_login_description';
+  static String get visitorLoginDescription => _visitorLoginDescription.tr();
+
   static const String _phoneNumber = 'phone_number';
   static String get phoneNumber => _phoneNumber.tr();
 
