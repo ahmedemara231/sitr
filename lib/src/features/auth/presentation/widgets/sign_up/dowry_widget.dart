@@ -51,12 +51,12 @@ class _DowryWidgetState extends State<DowryWidget> {
         ValidationHost<Dowry>(
           onSaved: (d){},
           validator: (dowry) {
-            // final num min = num.tryParse(dowry!.from) ?? 0;
-            // final num max = num.tryParse(dowry.to) ?? 0;
-            //
-            // if(min >= max){
-            //   return LocaleKeys.theMinDowryCanNotBeGreaterThanMax;
-            // }
+            final num min = num.tryParse(dowry!.from) ?? 0;
+            final num max = num.tryParse(dowry.to) ?? 0;
+
+            if(min >= max){
+              return LocaleKeys.theMinDowryCanNotBeGreaterThanMax;
+            }
 
             return null;
           },

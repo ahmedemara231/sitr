@@ -42,16 +42,17 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
         NavigationDelegate(
           onPageStarted: (url) {
             setState(() => _isLoading = true);
-            // ✅ Detect payment success or failure based on URL
             log('the url is $url');
             if(FireStoreService.isInitialized && kReleaseMode){
               FireStoreService.instance.storePaymentResponseUrl('success: $url');
             }
+
             if (url.contains('success')) {
               if(FireStoreService.isInitialized && kReleaseMode){
                 FireStoreService.instance.storePaymentResponseUrl(url);
               }
               Go.back('success');
+
             } else if (url.contains('fail') || url.contains('failed') || url.contains('failure')) {
               if(FireStoreService.isInitialized && kReleaseMode){
                 FireStoreService.instance.storePaymentResponseUrl('failed: $url');

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,7 +66,8 @@ class PackageWidget extends StatelessWidget {
   ) async {
     switch (paymentMethod) {
       case PaymentMethod.online:
-        await _showPaymentBrands(context);
+        await _payOnline(context);
+        // await _showPaymentBrands(context);
         return;
       case PaymentMethod.wallet:
         await _payWithWallet(context);
@@ -73,22 +75,21 @@ class PackageWidget extends StatelessWidget {
     }
   }
 
-  Future<void> _showPaymentBrands(BuildContext context) async {
-    final PackagesManagerCubit cubit = context.read<PackagesManagerCubit>();
+  // Future<void> _showPaymentBrands(BuildContext context) async {
+  //   final PackagesManagerCubit cubit = context.read<PackagesManagerCubit>();
+  //
+  //   await ChatSheetManager.show(
+  //     child: BlocProvider.value(
+  //       value: cubit,
+  //       child: ShowBrandsSheet(onPay: _payOnline),
+  //     ),
+  //   );
+  // }
 
-    await ChatSheetManager.show(
-      child: BlocProvider.value(
-        value: cubit,
-        child: ShowBrandsSheet(onPay: _payOnline),
-      ),
-    );
-  }
-
-  Future<void> _payOnline(BuildContext context, int brandId) async {
+  Future<void> _payOnline(BuildContext context) async {
     await context.read<PackagesManagerCubit>().subscribeOrRenewPackage(
           package: package,
           type: type,
-          brandId: brandId,
           paymentMethod: PaymentMethod.online,
           onSuccess: (String url) => unawaited(_openOnlinePayment(url)),
         );
@@ -101,9 +102,11 @@ class PackageWidget extends StatelessWidget {
         title: LocaleKeys.pay,
       ),
     );
-    if (result != 'success') return;
 
-    await _handlePaymentSuccess(shouldTrackPayment: true);
+    log('the payment result is $result');
+    if (result == 'success'){
+      await _handlePaymentSuccess(shouldTrackPayment: true);
+    }
   }
 
   Future<void> _payWithWallet(BuildContext context) async {

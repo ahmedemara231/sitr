@@ -781,6 +781,9 @@ abstract class LocaleKeys {
   static const String _areYouSureToLogout = 'are_you_sure_to_logout';
   static String get areYouSureToLogout => _areYouSureToLogout.tr();
 
+  static const String _logout = 'logout';
+  static String get logout => _logout.tr();
+
   static const String _pleaseAcceptTheConditionsAndTerms = 'please_accept_the_conditions_and_terms';
   static String get pleaseAcceptTheConditionsAndTerms => _pleaseAcceptTheConditionsAndTerms.tr();
 

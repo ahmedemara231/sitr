@@ -32,6 +32,9 @@ abstract class AppColors {
   static const Color blackShadow = Color(0xFF000000);
   static const Color surfaceContainerLow = Color(0xFFFEF1E6);
   static const Color primaryFixedDim = Color(0xFFFFB957);
+  static const Color successTint = Color(0xFFF6F0E6);
+  static const Color brandLight = Color(0xFFFDF4E7);
+  static const Color brandFaint = Color(0xFFFAE8C8);
 
   static const Color promotionBadgeShadow = Color(0xFFA66D09);
   static const Color promotionBadgeGlow = Color(0xFFFFD166);

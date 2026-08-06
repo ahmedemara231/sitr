@@ -88,8 +88,8 @@ class AppyFlyerHelper{
       'id' : UserModel.currentUser?.id,
       'name' : UserModel.currentUser?.name,
       'phone' : UserModel.currentUser?.phone,
-      'gender' : UserModel.currentUser?.gender,
-      'type' : UserModel.currentUser?.type,
+      'gender' : UserModel.currentUser?.gender?.userGender?.name,
+      'type' : UserModel.currentUser?.type?.userType?.name,
     });
   }
 }

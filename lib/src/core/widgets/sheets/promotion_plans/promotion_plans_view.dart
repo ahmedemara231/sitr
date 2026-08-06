@@ -21,8 +21,7 @@ import '../../app_pagify.dart';
 import '../../app_text.dart';
 import '../../default_bottom_sheet.dart';
 import '../success_sheet.dart';
-import 'promotion_plan_card.dart';
-import 'promotion_plans_content.dart';
+import 'promotion_plan_item.dart';
 
 class PromotionPlansView extends StatefulWidget {
   final FutureOr<void> Function()? onSuccess;
@@ -116,55 +115,6 @@ class _PromotionPlansViewState extends State<PromotionPlansView> {
     setState(() => _selectedPlanId = plan.id);
   }
 
-  Widget _buildPlanItem({
-    required List<PromotionPlanModel> plans,
-    required int index,
-    required PromotionPlanModel plan,
-    required PromotionSheetDataModel content,
-    required bool isSubscribing,
-  }) {
-    final PromotionPlansModel plansData = PromotionPlansModel(
-      plans: plans,
-      features: _features,
-    );
-    final int currentPlanId = _selectedPlanId ?? plansData.defaultPlan.id;
-    final PromotionPlanModel selectedPlan = plans.firstWhere(
-      (PromotionPlanModel item) => item.id == currentPlanId,
-      orElse: () => plansData.defaultPlan,
-    );
-    final bool isLastPlan = index == plans.length - 1;
-
-    return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(
-        16.w,
-        plan.badge == null ? 6.h : 16.h,
-        16.w,
-        isLastPlan ? 16.h : 6.h,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          PromotionPlanCard(
-            plan: plan,
-            isActive: currentPlanId == plan.id,
-            onTap: () => _selectPlan(plan),
-          ),
-          if (isLastPlan) ...[
-            SizedBox(height: 12.h),
-            PromotionPlansFooter(
-              features: _features,
-              content: content,
-              selectedPlan: selectedPlan,
-              isSubscribing: isSubscribing,
-              isSubscribed: _isSubscribed,
-              onSubscribe: _subscribe,
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final PromotionSheetDataModel content =
@@ -177,12 +127,17 @@ class _PromotionPlansViewState extends State<PromotionPlansView> {
       cacheKey: 'promotion_plans_${Languages.currentLanguage.languageCode}',
       cacheToJson: (plan) => plan.toJson(),
       cacheFromJson: PromotionPlanModel.fromJson,
-      itemBuilder: (_, plans, index, plan) => _buildPlanItem(
+      itemBuilder: (_, plans, index, plan) => PromotionPlanItem(
         plans: plans,
+        features: _features,
         index: index,
         plan: plan,
         content: content,
+        selectedPlanId: _selectedPlanId,
         isSubscribing: isSubscribing,
+        isSubscribed: _isSubscribed,
+        onPlanSelected: _selectPlan,
+        onSubscribe: _subscribe,
       ),
       pagifyController: _plansController,
       shrinkWrap: false,

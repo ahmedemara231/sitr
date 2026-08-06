@@ -14,18 +14,15 @@ import '../../../../core/helpers/status_builder.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/shared/models/user_models/user_model.dart';
 import '../../../chats/data/chat_sheet_manager.dart';
-import '../../../../core/shared/user_cubit/user_cubit.dart';
-import '../../../../core/widgets/app_bottom_sheet.dart';
 import '../../../../core/widgets/app_text.dart';
-import '../../../../core/widgets/custom_messages.dart';
 import '../../../../core/widgets/riyal_price_text.dart';
-import '../../../auth/imports.dart';
 import '../cubit/logout_cubit.dart';
 import '../cubit/wallet_cubit/charge_wallet_cubit.dart';
 import '../cubit/wallet_cubit/fetch_wallet_cubit.dart';
 import '../screens/setting/setting_screen.dart';
 import '../screens/wallet/wallet_screen.dart';
 import '../widgets/custom_icon_inside_container.dart';
+import 'logout_sheet.dart';
 
 class MoreTabAppBar extends StatelessWidget {
   const MoreTabAppBar({
@@ -186,30 +183,7 @@ class MoreTabAppBar extends StatelessWidget {
                           ChatSheetManager.show(
                               child: BlocProvider(
                                 create: (context) => LogoutCubit(),
-                                child: AppBottomSheet.large(
-                                    cancelBackgroundColor: AppColors.cancelColor,
-                                    asyncCall: (context) => context.read<LogoutCubit>().logout(
-                                        onSuccess: (msg) async{
-                                          await UserCubit.instance.logout();
-                                          Go.back(); // Close the bottom sheet first
-                                          MessageUtils.show(
-                                            msg,
-                                            state: MsgState.success,
-                                          );
-                                          Go.offAll(const LoginScreen());
-                                        }
-                                    ),
-                                    btnTitle: LocaleKeys.confirm,
-                                    upperWidget: Column(
-                                      children: [
-                                        SizedBox.square(
-                                            dimension: 200.sp,
-                                            child: Image.asset(Assets.imagesLogoutImage)
-                                        ),
-                                        AppText(LocaleKeys.areYouSureToLogout, fontWeight: FontWeight.w500),
-                                      ],
-                                    )
-                                ),
+                                child: const LogoutSheet(),
                               )
                           );
 
