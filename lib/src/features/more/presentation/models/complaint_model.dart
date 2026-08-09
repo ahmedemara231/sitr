@@ -21,7 +21,7 @@ class ComplaintModel extends Equatable {
       number: json["num"],
       status: json["status"] == null ? null : Status.fromJson(json["status"]),
       image: json["image"],
-      createdAt: json["created_at"].toString() ?? "",
+      createdAt: json["created_at"].toString(),
     );
   }
 

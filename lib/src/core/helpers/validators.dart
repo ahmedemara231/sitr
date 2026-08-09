@@ -12,11 +12,11 @@ class Validators {
       return null;
     }
 
-    if(!emptyRegex.hasMatch(value!)){
+    if(!emptyRegex.hasMatch(value)){
       return LocaleKeys.fillField;
     }
 
-    if(value.isNull || !regex.hasMatch(value!)) {
+    if(value.isNull || !regex.hasMatch(value)) {
       return LocaleKeys.onlyLettersAllowed;
     }
 

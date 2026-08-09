@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import '../helpers/helpers.dart';
 import '../notification/notification_service.dart';
 import 'network_request.dart';
