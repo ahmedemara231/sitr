@@ -44,7 +44,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
             setState(() => _isLoading = true);
             log('the url is $url');
             if(FireStoreService.isInitialized && kReleaseMode){
-              FireStoreService.instance.storePaymentResponseUrl('success: $url');
+              FireStoreService.instance.storePaymentResponseUrl('init: $url');
             }
 
             if (url.contains('success')) {
