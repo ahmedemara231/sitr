@@ -6,6 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'firebase_options.dart' as production;
@@ -177,7 +178,7 @@ void _initSentry()async{
           startLocale: Languages.arabic.locale,
           // startLocale: Languages.getDeviceLocaleFromPlatform().locale,
           fallbackLocale: const Locale('ar'),
-          child: const Satr(),
+          child: Phoenix(child: const Satr()),
         ),
       )
   );

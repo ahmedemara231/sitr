@@ -472,5 +472,6 @@
   "confirm_connection_request_rejection": "Confirm rejection",
   "confirm_reject_connection_request_message": "Are you sure you want to reject the connection request from",
   "confirm_reject_connection_request_action": "Yes, reject",
-  "keep_connection_request": "Go back"
+  "keep_connection_request": "Go back",
+  "announcement": "Announcement"
 }

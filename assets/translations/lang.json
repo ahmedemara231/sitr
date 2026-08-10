@@ -484,5 +484,6 @@
   "confirmConnectionRequestRejection #$ Confirm rejection" : "تأكيد الرفض",
   "confirmRejectConnectionRequestMessage #$ Are you sure you want to reject the connection request from" : "هل أنت متأكد من رغبتك في رفض طلب التواصل من",
   "confirmRejectConnectionRequestAction #$ Yes, reject" : "نعم، رفض",
-  "keepConnectionRequest #$ Go back" : "تراجع"
+  "keepConnectionRequest #$ Go back" : "تراجع",
+  "announcement #$ Announcement" : "إعلان"
 }

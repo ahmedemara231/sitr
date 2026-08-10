@@ -14,12 +14,15 @@ import '../../config/res/config_imports.dart';
 import '../../core/base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
 import '../../core/helpers/helpers.dart';
 import '../../core/helpers/lancher_helper.dart';
+import '../../core/navigation/navigator.dart';
 import '../../core/notification/inactivity_notification_service.dart';
 import '../../core/notification/notification_service.dart';
 import '../../core/shared/models/user_models/user_model.dart';
 import '../../core/shared/user_cubit/user_cubit.dart';
 import '../../core/widgets/app_text.dart';
 import '../../core/widgets/icon_widget.dart';
+import '../../core/widgets/sheets/announcement_sheet.dart';
+import '../packages/presentation/packages_screen.dart';
 import '../whats_new/whats_new_service.dart';
 import '../whats_new/widgets/upgrader_dialog.dart';
 import 'cubits/app_badge_counts_cubit.dart';
@@ -43,10 +46,15 @@ class _HomeScreenState extends State<HomeScreen> {
   void _initApp() async {
     await _handleNotifications();
     await _handleTrackingPermission();
-    if (UserModel.isAuthenticated) {
+
+    if(UserModel.isAuthenticated){
       await Helpers.initZegoService();
+      WidgetsBinding.instance.addPostFrameCallback((_) => _showLaunchDialogs());
+      WidgetsBinding.instance.addPostFrameCallback((_) => showAnnouncementSheet(
+          actionTitle: LocaleKeys.subscribe,
+          onActionPressed: () => Go.off(const PackagesScreen.subscription())
+      ));
     }
-    WidgetsBinding.instance.addPostFrameCallback((_) => _showLaunchDialogs());
     // _checkForUpdates();
   }
 
@@ -72,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (isUpdateAvailable) {
         await shorebirdCodePush.update();
       } else if (isRestartNeeded) {
-        Helpers.showRestartSheet();
+        WidgetsBinding.instance.addPostFrameCallback((_) => Helpers.showRestartSheet());
         makeAnotherCheck = false;
       } else {
         makeAnotherCheck = false;

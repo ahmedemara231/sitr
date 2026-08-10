@@ -6,17 +6,14 @@ import '../../../config/res/config_imports.dart';
 import '../../../core/navigation/navigator.dart';
 import '../../../core/widgets/app_text.dart';
 import '../../../core/widgets/buttons/default_button.dart';
+import '../../../core/widgets/default_bottom_sheet.dart';
 
 Future<void> showWhatsNewSheet({
   required List<String> items,
   required String version,
 }) async {
-  await showModalBottomSheet<void>(
-    context: Go.context,
-    isScrollControlled: true,
-    backgroundColor: AppColors.transparent,
-    barrierColor: AppColors.blackShadow.withValues(alpha: 0.45),
-    builder: (_) => WhatsNewSheet(items: items, version: version),
+  await showDefaultBottomSheet(
+    child: WhatsNewSheet(items: items, version: version),
   );
 }
 

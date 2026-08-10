@@ -1408,4 +1408,7 @@ abstract class LocaleKeys {
   static const String _keepConnectionRequest = 'keep_connection_request';
   static String get keepConnectionRequest => _keepConnectionRequest.tr();
 
+  static const String _announcement = 'announcement';
+  static String get announcement => _announcement.tr();
+
 }
