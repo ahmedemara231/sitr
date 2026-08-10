@@ -87,3 +87,6 @@ kill:
 
 simulator:
     open -a Simulator
+
+lastChange:
+    git show --name-only --format="" HEAD
