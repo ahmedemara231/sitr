@@ -130,7 +130,7 @@ class _VisitorLoginIllustration extends StatelessWidget {
               ],
             ),
             child: IconWidget(
-              icon: Assets.svgUser,
+              icon: Assets.assets.svg.user.path,
               width: 34.r,
               height: 34.r,
             ),

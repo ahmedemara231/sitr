@@ -48,8 +48,8 @@ class _EditProfileImageWidgetState extends State<EditProfileImageWidget> {
               shape: BoxShape.circle,
               color: AppColors.primary
             ),
-            child: const SvgPic(
-              assetName: Assets.svgCamera,
+            child: SvgPic(
+              assetName: Assets.assets.svg.camera.path,
               color: Colors.white
             ).paddingAll(5.sp),
           ),

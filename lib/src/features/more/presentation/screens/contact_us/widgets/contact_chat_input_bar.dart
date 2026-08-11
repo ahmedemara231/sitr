@@ -50,7 +50,7 @@ class ContactChatInputBar extends StatelessWidget {
                   ],
                 ),
                 child: SvgPic(
-                  assetName: Assets.svgSend,
+                  assetName: Assets.assets.svg.send.path,
                   color: AppColors.primary,
                   size: 16.r,
                 ).paddingAll(14.r),

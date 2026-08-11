@@ -65,20 +65,20 @@ class PartnerCard extends StatelessWidget {
                         if(opportunity.gender?.userGender?.isFemale?? false)
                           _buildStatItem(
                             value: opportunity.hijab?.title ?? '',
-                            icon: Assets.svgHijab,
+                            icon: Assets.assets.svg.hijab.path,
                             color: const Color(0xFFF57C00),
                             backgroundColor: const Color(0xFFFFF3E0),
                           )else
                             _buildStatItem(
                               value: opportunity.skin?.title ?? '',
-                              icon: Assets.svgParentIcon,
+                              icon: Assets.assets.svg.parentIcon.path,
                               color: const Color(0xFFF57C00),
                               backgroundColor: const Color(0xFFFFF3E0),
                             )
                       else
                         _buildStatItem(
                           value: opportunity.city?? '',
-                          icon: Assets.svgLocation,
+                          icon: Assets.assets.svg.location.path,
                           color: const Color(0xFFF57C00),
                           backgroundColor: const Color(0xFFFFF3E0),
                         ),
@@ -86,7 +86,7 @@ class PartnerCard extends StatelessWidget {
                       const SizedBox(width: 24),
                       _buildStatItem(
                         value: '${opportunity.weight} ${LocaleKeys.kg}',
-                        icon: Assets.svgWeight,
+                        icon: Assets.assets.svg.weight.path,
                         color: const Color(0xFF9C27B0),
                         backgroundColor: const Color(0xFFF3E5F5),
                       ),
@@ -103,21 +103,21 @@ class PartnerCard extends StatelessWidget {
                       if(!_withParent)
                       _buildStatItem(
                         value: opportunity.martialStatus?.title ?? '',
-                        icon: Assets.svgMartialStatus,
+                        icon: Assets.assets.svg.martialStatus.path,
                         color: const Color(0xFFF57C00),
                         backgroundColor: const Color(0xFFFFF3E0),
                       ),
 
                       _buildStatItem(
                         value: '${opportunity.age} ${LocaleKeys.years}',
-                        icon: Assets.svgAgeIcon,
+                        icon: Assets.assets.svg.ageIcon.path,
                         color: const Color(0xFF1976D2),
                         backgroundColor: const Color(0xFFE3F2FD),
                       ),
 
                       _buildStatItem(
                         value: '${opportunity.height} ${LocaleKeys.centimeter}',
-                        icon: Assets.svgTallIcon,
+                        icon: Assets.assets.svg.tallIcon.path,
                         color: const Color(0xFF616161),
                         backgroundColor: const Color(0xFFF5F5F5),
                       ),

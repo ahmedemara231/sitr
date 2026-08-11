@@ -37,7 +37,7 @@ class PackageArtwork extends StatelessWidget {
         bgColor: AppColors.transparent,
         borderColor: AppColors.transparent,
         placeHolder: SvgPic(
-          assetName: Assets.svgPackagesScreenImage,
+          assetName: Assets.assets.svg.packagesScreenImage.path,
           size: 44.r,
         ),
       ),

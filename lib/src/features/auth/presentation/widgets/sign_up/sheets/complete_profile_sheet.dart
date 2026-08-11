@@ -20,7 +20,7 @@ class CompleteProfileSheet extends StatelessWidget {
         upperWidget: Column(
           spacing: 12.h,
           children: [
-            Lottie.asset(Assets.successDone),
+            Lottie.asset(Assets.assets.lottie.success.done.path),
             AppText(LocaleKeys.yourRequestHasBeenSentSuccessfully, fontSize: 16.sp, fontWeight: FontWeight.w500),
             AppText(LocaleKeys.yourRequestWillBeReviewedByManagers, fontSize: 12.sp, color: Colors.black54),
           ],

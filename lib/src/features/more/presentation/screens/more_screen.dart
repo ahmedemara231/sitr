@@ -30,31 +30,31 @@ class MoreScreen extends StatelessWidget {
       if(UserModel.isAuthenticated)
         ...[
           MorItemModel(
-            icon: Assets.svgUser,
+            icon: Assets.assets.svg.user.path,
             label: LocaleKeys.profile,
             onTap: () => Go.to(const ProfileScreen()),
           ),
           // MorItemModel(
-          //   icon: Assets.svgChatsIcon,
+          //   icon: Assets.assets.svg.chatsIcon.path,
           //   label: LocaleKeys.chats,
           //   onTap: () => Go.to(const ChatsScreen()),
           // ),
 
           MorItemModel(
-            icon: Assets.svgPackageIcon,
+            icon: Assets.assets.svg.packageIconSvg.path,
             label: LocaleKeys.myPackage,
             onTap: () => Go.to(const MyPackagesScreen()),
           ),
         ],
       if(UserModel.isAuthenticated && UserModel.isParent)
         MorItemModel(
-          icon: Assets.svgMoreChildren,
+          icon: Assets.assets.svg.moreChildren.path,
           label: LocaleKeys.addedChildren,
           onTap: () => Go.to(const ParentChildrenView()),
         ),
 
       MorItemModel(
-        icon: Assets.svgSuccessPartnerIcon,
+        icon: Assets.assets.svg.successPartnerIcon.path,
         label: LocaleKeys.successPartners,
         onTap: () {
           Go.to(const SuccessPartnersScreen());
@@ -63,19 +63,19 @@ class MoreScreen extends StatelessWidget {
       if(UserModel.isAuthenticated)
         ...[
           MorItemModel(
-            icon: Assets.svgBlockUser,
+            icon: Assets.assets.svg.blockUser.path,
             label: LocaleKeys.blockedCustomers,
             onTap: () {
               Go.to(const BlockedUserScreen());
             },
           ),
           MorItemModel(
-            icon: Assets.svgContactUsIcon,
+            icon: Assets.assets.svg.contactUsIcon.path,
             label: LocaleKeys.contactUs,
             onTap: () => Go.to(const ContactUsChatScreen()),
           ),
           MorItemModel(
-            icon: Assets.svgComplaintIcon,
+            icon: Assets.assets.svg.complaintIcon.path,
             label: LocaleKeys.complaintsAndSuggestions,
             onTap: () {
               Go.to(const ComplaintsAndSuggestionsScreen());
@@ -83,7 +83,7 @@ class MoreScreen extends StatelessWidget {
           ),
         ],
       MorItemModel(
-        icon: Assets.svgAboutIcon,
+        icon: Assets.assets.svg.aboutIcon.path,
         label: LocaleKeys.aboutUs,
         onTap: () {
           Go.to(const TermsAndConditionAndAboutUs(
@@ -91,7 +91,7 @@ class MoreScreen extends StatelessWidget {
         },
       ),
       MorItemModel(
-        icon: Assets.svgTermsAndConditionIcon,
+        icon: Assets.assets.svg.termsAndConditionIcon.path,
         label: LocaleKeys.termsAndConditions,
         onTap: () {
           Go.to(const TermsAndConditionAndAboutUs(

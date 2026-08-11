@@ -47,8 +47,8 @@ final ConsultantModel consultantModel ;
                     11.szH,
                     Row(
                       children: [
-                        const IconWidget(
-                          icon: Assets.svgPhoneIcon,
+                        IconWidget(
+                          icon: Assets.assets.svg.phoneIcon.path,
                         ),
                         5.szW,
                         GestureDetector(

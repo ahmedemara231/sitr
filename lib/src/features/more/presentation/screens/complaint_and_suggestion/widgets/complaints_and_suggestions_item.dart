@@ -44,7 +44,7 @@ final ComplaintModel complaintModel;
                 ),
                 SizedBox.square(
                     dimension: 40.sp,
-                    child: const SvgPic(assetName: Assets.svgAppLogo)),
+                    child: SvgPic(assetName: Assets.assets.svg.appLogo.path)),
               ],
             ),
             11.szW,
@@ -61,7 +61,7 @@ final ComplaintModel complaintModel;
                   11.szH,
                   Row(
                     children: [
-                      const SvgPic(assetName: Assets.svgCalendar),
+                      SvgPic(assetName: Assets.assets.svg.calendar.path),
                       5.szW,
                        AppText(
                         complaintModel.createdAt??'',

@@ -118,7 +118,7 @@ class _LogoutIcon extends StatelessWidget {
             ),
           ),
           IconWidget(
-            icon: Assets.svgLogOutIcon,
+            icon: Assets.assets.svg.logOutIcon.path,
             color: AppColors.primary,
             width: 28.sp,
             height: 28.sp,

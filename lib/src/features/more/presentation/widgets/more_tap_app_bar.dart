@@ -92,8 +92,8 @@ class MoreTabAppBar extends StatelessWidget {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              const CustomIconInsideContainer(
-                                icon: Assets.svgWallet,
+                              CustomIconInsideContainer(
+                                icon: Assets.assets.svg.wallet.path,
                               ),
                               10.szW,
                               Column(
@@ -172,8 +172,8 @@ class MoreTabAppBar extends StatelessWidget {
                         onTap: () {
                           Go.to(const SettingScreen());
                         },
-                        child: const CustomIconInsideContainer(
-                          icon: Assets.svgSettingIcon,
+                        child: CustomIconInsideContainer(
+                          icon: Assets.assets.svg.settingIcon.path,
                         ),
                       ),
                     8.szW,
@@ -191,8 +191,8 @@ class MoreTabAppBar extends StatelessWidget {
                           Helpers.showUnauthenticatedSheet();
                         }
                       },
-                      child: const CustomIconInsideContainer(
-                        icon: Assets.svgLogOutIcon,
+                      child: CustomIconInsideContainer(
+                        icon: Assets.assets.svg.logOutIcon.path,
                       ),
                     ),
                   ],

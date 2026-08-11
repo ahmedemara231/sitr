@@ -21,7 +21,7 @@ class FilterButton extends StatelessWidget {
           color: Colors.white,
           shape: BoxShape.circle,
         ),
-        child: const SvgPic(assetName: Assets.svgSortIcon).paddingAll(10.r),
+        child: SvgPic(assetName: Assets.assets.svg.sortIcon.path).paddingAll(10.r),
       ).paddingSymmetric(horizontal: 10.w),
     );
   }

@@ -29,7 +29,7 @@ class ChatReportIcon extends StatelessWidget {
             children: [
               SizedBox.square(
                 dimension: 20.w,
-                  child: const SvgPic(assetName: Assets.svgReport, color: Colors.red,)
+                  child: SvgPic(assetName: Assets.assets.svg.report.path, color: Colors.red,)
               ),
               AppText(LocaleKeys.report, fontSize: 10.sp, fontWeight: FontWeight.bold)
             ],

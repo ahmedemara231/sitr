@@ -30,8 +30,8 @@ class WalletScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SvgPic(
-                assetName: Assets.svgWalletScreenImage,
+              SvgPic(
+                assetName: Assets.assets.svg.walletScreenImage.path,
               ),
               44.szH,
               AppText(

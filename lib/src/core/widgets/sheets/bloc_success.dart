@@ -60,7 +60,7 @@ class BlocManagerSheet extends StatelessWidget {
           upperWidget: Column(
             spacing: 30.h,
             children: [
-              const SvgPic(assetName: Assets.svgForbidden),
+              SvgPic(assetName: Assets.assets.svg.forbidden.path),
 
               if(blocManager == BlocManager.unblock)
                 AppText(LocaleKeys.areYouSureYouWantToUnblock, fontSize: 18.sp,)

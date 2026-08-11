@@ -28,7 +28,7 @@ class LangIcon extends StatelessWidget {
             borderRadius: BorderRadius.circular(12.r),
             color: Colors.white
         ),
-        child: SvgPicture.asset(Assets.svgLangIcon).paddingAll(7.sp),
+        child: SvgPicture.asset(Assets.assets.svg.langIcon.path).paddingAll(7.sp),
       ),
     );
   }
@@ -65,8 +65,8 @@ class _SelectLangWidgetState extends State<SelectLangWidget> {
   Languages language = Languages.deviceLocale;
 
   final List<LangModel> languages = [
-    LangModel(langTitle: 'اللغة العربية', image: Assets.svgSAFlag, wholeLang: Languages.arabic),
-    LangModel(langTitle: 'English', image: Assets.svgUSAFlag, wholeLang: Languages.english),
+    LangModel(langTitle: 'اللغة العربية', image: Assets.assets.svg.sAFlag.path, wholeLang: Languages.arabic),
+    LangModel(langTitle: 'English', image: Assets.assets.svg.uSAFlag.path, wholeLang: Languages.english),
   ];
 
   @override

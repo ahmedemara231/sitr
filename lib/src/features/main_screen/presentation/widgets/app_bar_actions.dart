@@ -35,8 +35,8 @@ class ProfileAppBarActions extends StatelessWidget {
             IconButton(
                 onPressed: () => onBlock?.call(context),
                 icon: PartnerAppBarIcons(
-                    icon: const SvgPic(
-                        assetName: Assets.svgBlockUser,
+                    icon: SvgPic(
+                        assetName: Assets.assets.svg.blockUser.path,
                         color: Colors.white
                     ).paddingAll(10)
                 )

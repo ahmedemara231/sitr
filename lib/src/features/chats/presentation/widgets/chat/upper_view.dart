@@ -122,7 +122,7 @@ class ChatUpperWidget extends StatelessWidget {
                             upperWidget: Column(
                               spacing: 10.h,
                               children: [
-                                Image.asset(Assets.imagesAlert),
+                                Image.asset(Assets.assets.images.alert.path),
                                 AppText(LocaleKeys.areYouSureToEndChat),
                               ],
                             ),
@@ -134,7 +134,7 @@ class ChatUpperWidget extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         spacing: 5.w,
                         children: [
-                          SvgPic(assetName: Assets.svgEndChatIcon, size: 20.sp),
+                          SvgPic(assetName: Assets.assets.svg.endChatIcon.path, size: 20.sp),
                           AppText(
                             LocaleKeys.endChat,
                             color: AppColors.redColor,

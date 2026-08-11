@@ -74,7 +74,7 @@ class NotificationCard extends StatelessWidget {
                       border: Border.all(color: _amber200, width: 2),
                     ),
                     child: SvgPicture.asset(
-                      Assets.svgNotificationWidgetIcon,
+                      Assets.assets.svg.notificationWidgetIcon.path,
                       width: 22.w,
                       height: 22.w,
                     ),
@@ -123,7 +123,7 @@ class NotificationCard extends StatelessWidget {
                           onTap: () async =>
                               onDelete.call(notificationModel.id),
                           child: SvgPic(
-                            assetName: Assets.svgTrashIcon,
+                            assetName: Assets.assets.svg.trashIcon.path,
                             color: _red500,
                             size: 18.sp,
                           ),

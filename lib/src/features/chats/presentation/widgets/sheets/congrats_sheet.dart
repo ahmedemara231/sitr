@@ -21,7 +21,7 @@ class CongratsSheet extends StatelessWidget {
       child: Column(
         spacing: 10.h,
         children: [
-          Image.asset(Assets.imagesMarriageBalloons),
+          Image.asset(Assets.assets.images.marriageBalloons.path),
           AppText(LocaleKeys.congratulationsOnYourEngagementWeAskGodToBlessYourUnionAndGrantYouHappiness),
           AppDefaultButton.withBackGroundColor(
               title: LocaleKeys.back,
@@ -43,7 +43,7 @@ class RejectedChatSheet extends StatelessWidget {
     return Column(
       spacing: 10.h,
       children: [
-        Image.asset(Assets.imagesAlert),
+        Image.asset(Assets.assets.images.alert.path),
         AppText(LocaleKeys.rejected, fontWeight: FontWeight.bold),
         AppText(LocaleKeys.unableToContinueChattingRightNow),
         AppDefaultButton.withBackGroundColor(
@@ -67,7 +67,7 @@ class ParentIndividualCongratsSheet extends StatelessWidget {
     return Column(
       spacing: 10.h,
       children: [
-        Image.asset(Assets.imagesMarriageBalloons),
+        Image.asset(Assets.assets.images.marriageBalloons.path),
         AppText(LocaleKeys.congratulationsTheParentApprovedYouYouCanSeeHisChildrenFromNow),
         AppDefaultButton.withBackGroundColor(
             title: LocaleKeys.showParentChildren,

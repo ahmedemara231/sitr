@@ -30,7 +30,7 @@ class DeleteSheet extends StatelessWidget {
           children: [
             SizedBox.square(
                 dimension: 200.sp,
-                child: Image.asset(Assets.imagesDeleteIcon)
+                child: Image.asset(Assets.assets.images.deleteIcon.path)
             ),
             AppText(
               title,

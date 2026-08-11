@@ -63,7 +63,7 @@ class MarriageConsultantCard extends StatelessWidget {
                     // Row 1: Weight and Location
                     _buildStatItem(
                       value: phone,
-                      icon: Assets.svgConsultantPhone,
+                      icon: Assets.assets.svg.consultantPhone.path,
                       color: const Color(0xFFF57C00),
                       backgroundColor: const Color(0xFFFFF3E0),
                     ),

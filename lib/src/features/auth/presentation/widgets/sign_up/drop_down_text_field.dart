@@ -80,7 +80,7 @@ class _DropDownTextFieldState<T> extends State<DropDownTextField<T>> {
           DropdownButtonFormField<T>(
             initialValue: widget.initialValue,
             hint: AppText(widget.hint, color: Colors.grey),
-            icon: const SvgPic(assetName: Assets.svgArrowDown),
+            icon: SvgPic(assetName: Assets.assets.svg.arrowDown.path),
             decoration: InputDecoration(
               fillColor: AppColors.whiteGreyColorProMax,
               filled: true,
@@ -117,7 +117,7 @@ class _DropDownTextFieldState<T> extends State<DropDownTextField<T>> {
                     isExpanded: !value,
                     initialValue: widget.initialValue,
                     hint: AppText(widget.hint, color: Colors.grey),
-                    icon: const SvgPic(assetName: Assets.svgArrowDown),
+                    icon: SvgPic(assetName: Assets.assets.svg.arrowDown.path),
                     decoration: InputDecoration(
                       fillColor: AppColors.whiteGreyColorProMax,
                       filled: true,

@@ -46,7 +46,7 @@ class ConnectionRequestsHeader extends StatelessWidget {
           // PositionedDirectional(
           //   end: 16.w,
           //   child: IconWidget(
-          //     icon: Assets.svgAppLogo,
+          //     icon: Assets.assets.svg.appLogo.path,
           //     width: 50.w,
           //     height: 20.h,
           //   ),

@@ -53,7 +53,7 @@ class _ReportSheetState extends State<ReportSheet> {
           upperWidget: Column(
             spacing: 30.h,
             children: [
-              const SvgPic(assetName: Assets.svgReport),
+              SvgPic(assetName: Assets.assets.svg.report.path),
               Form(
                 key: _formKey,
                 child: DefaultTextField.withTitle(

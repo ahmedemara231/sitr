@@ -51,7 +51,7 @@ class MoreItem extends StatelessWidget {
                   dimension: 16,
                   child: moreItemModel.withSwitch?
                   const _SwitchIcon() :
-                  const IconWidget(icon: Assets.svgArrowLeftIcon)
+                  IconWidget(icon: Assets.assets.svg.arrowLeftIcon.path)
               )
             ],
           )),

@@ -44,7 +44,7 @@ class AddChildSheet extends StatelessWidget {
             upperWidget: Column(
               spacing: 12.h,
               children: [
-                Lottie.asset(Assets.successDone),
+                Lottie.asset(Assets.assets.lottie.success.done.path),
                 AppText(LocaleKeys.childDataHasBeenAddedSuccessfully, fontSize: 16.sp, fontWeight: FontWeight.w500),
                 AppText(LocaleKeys.doYouWantToAddAnotherChildOrSendARequestToTheAdministrationForReview, fontSize: 12.sp, color: Colors.black54),
               ],

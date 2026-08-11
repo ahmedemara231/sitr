@@ -68,7 +68,7 @@ class _ChatTimerWidgetState extends State<ChatTimerWidget> {
                   spacing: 5.w,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SvgPic(assetName: Assets.svgClock, size: 16.sp),
+                    SvgPic(assetName: Assets.assets.svg.clock.path, size: 16.sp),
                     AppText(time, fontSize: 16.sp, fontWeight: FontWeight.w500),
                   ],
                 )

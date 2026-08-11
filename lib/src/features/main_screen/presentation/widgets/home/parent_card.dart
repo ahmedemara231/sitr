@@ -59,13 +59,13 @@ class ParentCard extends StatelessWidget {
                 // Row 1: Weight and Location
                 _buildStatItem(
                   value: kinship,
-                  icon: Assets.svgParentIcon,
+                  icon: Assets.assets.svg.parentIcon.path,
                   color: const Color(0xFFF57C00),
                   backgroundColor: const Color(0xFFFFF3E0),
                 ),
                 _buildStatItem(
                   value: '$childrenNumber ${LocaleKeys.children}',
-                  icon: Assets.svgParentChildren,
+                  icon: Assets.assets.svg.parentChildren.path,
                   color: const Color(0xFFF57C00),
                   backgroundColor: const Color(0xFFFFF3E0),
                 ),

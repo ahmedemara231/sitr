@@ -54,8 +54,8 @@ class ChatImageViewerWidget extends StatelessWidget {
                       dimension: 30.sp,
                         child: CustomLoading.showLoadingView()),
                     data: state,
-                      onSuccess: (data, context) => const SvgPic(
-                          assetName: Assets.svgSend,
+                      onSuccess: (data, context) => SvgPic(
+                          assetName: Assets.assets.svg.send.path,
                           color: AppColors.primary
                       )
                   ),

@@ -92,12 +92,16 @@ class _PackageCard extends StatelessWidget {
 }
 
 enum PaymentMethod {
-  online(0, Assets.svgOnlinePayment),
-  wallet(1, Assets.svgWalletPay);
+  online(0),
+  wallet(1);
 
   final int id;
-  final String image;
-  const PaymentMethod(this.id, this.image);
+  const PaymentMethod(this.id);
+
+  String get image => switch (this) {
+    PaymentMethod.online => Assets.assets.svg.onlinePayment.path,
+    PaymentMethod.wallet => Assets.assets.svg.walletPay.path,
+  };
 
   static List<PaymentMethod> availableMethods({
     List<PaymentMethod>? methods,

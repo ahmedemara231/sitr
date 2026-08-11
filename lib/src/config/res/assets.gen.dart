@@ -480,6 +480,10 @@ class $AssetsLottieDataGen {
   LottieGenImage get emptyCart =>
       const LottieGenImage('assets/lottie/data/empty_cart.json');
 
+  /// File path: assets/lottie/data/incomplete_profile.json
+  LottieGenImage get incompleteProfile =>
+      const LottieGenImage('assets/lottie/data/incomplete_profile.json');
+
   /// File path: assets/lottie/data/no_data.json
   LottieGenImage get noData =>
       const LottieGenImage('assets/lottie/data/no_data.json');
@@ -494,7 +498,7 @@ class $AssetsLottieDataGen {
 
   /// List of all assets
   List<LottieGenImage> get values =>
-      [emptyBox, emptyCart, noData, notFound1, notFound2];
+      [emptyBox, emptyCart, incompleteProfile, noData, notFound1, notFound2];
 }
 
 class $AssetsLottieErrorGen {

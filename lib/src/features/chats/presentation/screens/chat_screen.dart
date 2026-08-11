@@ -96,7 +96,7 @@ class _ChatScreenBodyState extends State<_ChatScreenBody>
         message: isPartnerDeletedAccount
             ? LocaleKeys.partnerDeletedAccount
             : LocaleKeys.unableToContinueChattingRightNow,
-        icon: isPartnerDeletedAccount ? Assets.svgBlockUser : Assets.svgClock,
+        icon: isPartnerDeletedAccount ? Assets.assets.svg.blockUser.path : Assets.assets.svg.clock.path,
       );
     }
 
@@ -314,8 +314,8 @@ class _ChatScreenBodyState extends State<_ChatScreenBody>
                             ? Helpers.zegoService!.zegoButton(
                                 context: context,
                                 isVideoCall: false,
-                                icon: const SvgPic(
-                                    assetName: Assets.svgPhoneIcon),
+                                icon: SvgPic(
+                                    assetName: Assets.assets.svg.phoneIcon.path),
                                 invites: [
                                   ZegoUIKitUser(
                                       id: widget.requestModel.receiverId
@@ -345,8 +345,8 @@ class _ChatScreenBodyState extends State<_ChatScreenBody>
                                         // المحانية موجودة
                                         context: context,
                                         isVideoCall: true,
-                                        icon: const SvgPic(
-                                            assetName: Assets.svgVideoCall),
+                                        icon: SvgPic(
+                                            assetName: Assets.assets.svg.videoCall.path),
                                         invites: [
                                           ZegoUIKitUser(
                                               id: widget.requestModel.receiverId
@@ -363,8 +363,8 @@ class _ChatScreenBodyState extends State<_ChatScreenBody>
                                 color: AppColors.primary));
                       } else if (callStatus == 'completed') {
                         // المحانية خلصت
-                        return const SvgPic(
-                            assetName: Assets.svgVideoCall, color: Colors.grey);
+                        return SvgPic(
+                            assetName: Assets.assets.svg.videoCall.path, color: Colors.grey);
                       }
                     }
 

@@ -74,7 +74,7 @@ class _AddComplaintAndSuggestionState extends State<AddComplaintAndSuggestion> {
                           color: AppColors.grey,
                           fontSize: 12.sp,
                         ),
-                        const IconWidget(icon: Assets.svgCamera),
+                        IconWidget(icon: Assets.assets.svg.camera.path),
                       ],
                     ),
                   ),

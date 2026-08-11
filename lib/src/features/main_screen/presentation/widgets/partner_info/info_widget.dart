@@ -42,7 +42,7 @@ class _InfoWidgetIcon extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: [
-        const SvgPic(assetName: Assets.svgGreyBackground),
+        SvgPic(assetName: Assets.assets.svg.greyBackground.path),
         SvgPic(assetName: assetName),
       ],
     );

@@ -67,9 +67,11 @@ class Helpers {
 
   static void showRestartSheet()async{
     AppBottomSheet.large(
-        asyncCall: (context) async => await Phoenix.rebirth(context),
+        asyncCall: (context) async {
+          await Phoenix.rebirth(context);
+        },
         btnTitle: LocaleKeys.updateAvailableUpdateNow,
-        upperWidget: Lottie.asset(Assets.errorErrorView)
+        upperWidget: Lottie.asset(Assets.assets.lottie.error.errorView.path)
     );
   }
   static ZegoService? zegoService;

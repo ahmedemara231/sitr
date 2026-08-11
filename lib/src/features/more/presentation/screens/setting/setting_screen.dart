@@ -122,26 +122,26 @@ class SettingScreen extends StatelessWidget {
     context.locale;
     final List<MorItemModel> moreItemsList = [
       MorItemModel(
-        icon: Assets.svgUser,
+        icon: Assets.assets.svg.user.path,
         label: LocaleKeys.editProfile,
         onTap: () => _openProfileEdit(),
       ),
       MorItemModel(
-        icon: Assets.svgSettingPhone,
+        icon: Assets.assets.svg.settingPhone.path,
         label: LocaleKeys.changePhoneNumber,
         onTap: _openChangePhone,
       ),
       MorItemModel(
-        icon: Assets.svgLangIcon,
+        icon: Assets.assets.svg.langIcon.path,
         label: LocaleKeys.changeLanguage,
         onTap: () => ChatSheetManager.show(child: const LangSheet(withRequest: true)),
       ),
       MorItemModel.withSwitch(
-        icon: Assets.svgNotificationIcon,
+        icon: Assets.assets.svg.notificationIcon.path,
         label: LocaleKeys.notifications,
       ),
       MorItemModel(
-        icon: Assets.svgTrashIcon,
+        icon: Assets.assets.svg.trashIcon.path,
         label: LocaleKeys.deleteAccount,
         onTap: _openDeleteAccount,
       ),

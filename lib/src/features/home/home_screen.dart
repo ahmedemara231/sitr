@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onActionPressed: () => Go.off(const PackagesScreen.subscription())
       ));
     }
-    // _checkForUpdates();
+    _checkForUpdates();
   }
 
   Future<void> _handleNotifications() async {
@@ -70,6 +70,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _checkForUpdates() async {
+    // final String? currentVersion = await CacheStorage.read('currentVersion');
+    // final PackageInfo info = await PackageInfo.fromPlatform();
+    // if(currentVersion != info.version){
+    //   _update();
+    // }
+    _update();
+  }
+
+  Future<void> _update()async{
     bool makeAnotherCheck = true;
     final shorebirdCodePush = ShorebirdUpdater();
     while (makeAnotherCheck) {
@@ -241,7 +250,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           items: [
                             BottomNavigationBarItem(
                               icon: IconWidget(
-                                icon: Assets.svgHomeIcon,
+                                icon: Assets.assets.svg.homeIcon.path,
                                 color: cubit.currentIndex == 0
                                     ? AppColors.primary
                                     : null,
@@ -253,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 countSelector: (counts) =>
                                     counts.notificationsCount,
                                 child: IconWidget(
-                                  icon: Assets.svgNotificationIcon,
+                                  icon: Assets.assets.svg.notificationIcon.path,
                                   color: cubit.currentIndex == 1
                                       ? AppColors.primary
                                       : null,
@@ -266,7 +275,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 countSelector: (counts) =>
                                     counts.unreadMessagesCount,
                                 child: IconWidget(
-                                  icon: Assets.svgChatsIcon,
+                                  icon: Assets.assets.svg.chatsIcon.path,
                                   color: cubit.currentIndex == 2
                                       ? AppColors.primary
                                       : null,
@@ -291,7 +300,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             BottomNavigationBarItem(
                               icon: IconWidget(
-                                icon: Assets.svgPackageIcon,
+                                icon: Assets.assets.svg.packageIconSvg.path,
                                 color: cubit.currentIndex == 4
                                     ? AppColors.primary
                                     : null,
@@ -300,7 +309,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             BottomNavigationBarItem(
                               icon: IconWidget(
-                                icon: Assets.svgMoreIcon,
+                                icon: Assets.assets.svg.moreIcon.path,
                                 color: cubit.currentIndex == 5
                                     ? AppColors.primary
                                     : null,

@@ -177,8 +177,8 @@ class ParentDetailsScreen extends StatelessWidget {
                       Row(
                         spacing: 10.w,
                         children: [
-                          Expanded(child: InfoWidget(partnerInfoModel: PartnerInfoModel(leading: Assets.svgParentIcon, title: LocaleKeys.kinship, subTitle: (data as ParentModel).relation?.value))),
-                          Expanded(child: InfoWidget(partnerInfoModel: PartnerInfoModel(leading: Assets.svgParentChildren, title: LocaleKeys.childrenNumber, subTitle: data.numOfChildren.toString())))
+                          Expanded(child: InfoWidget(partnerInfoModel: PartnerInfoModel(leading: Assets.assets.svg.parentIcon.path, title: LocaleKeys.kinship, subTitle: (data as ParentModel).relation?.value))),
+                          Expanded(child: InfoWidget(partnerInfoModel: PartnerInfoModel(leading: Assets.assets.svg.parentChildren.path, title: LocaleKeys.childrenNumber, subTitle: data.numOfChildren.toString())))
                         ],
                       )
                     ],

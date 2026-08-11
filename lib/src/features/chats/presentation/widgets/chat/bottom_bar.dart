@@ -118,7 +118,7 @@ class _ChatBottomBarState extends State<ChatBottomBar> {
                     borderRadius: BorderRadius.circular(12.r),
                     color: Colors.white,
                   ),
-                  child: const SvgPic(assetName: Assets.svgSend, color: AppColors.primary),
+                  child: SvgPic(assetName: Assets.assets.svg.send.path, color: AppColors.primary),
                 ),
               ),
             ),

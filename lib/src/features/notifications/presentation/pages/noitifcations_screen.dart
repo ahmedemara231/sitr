@@ -61,7 +61,7 @@ class _NotificationBodyState extends State<NotificationBody> {
           builder: (context, show, child) {
             if (!show) return const SizedBox.shrink();
             return IconWidget(
-              icon: Assets.svgTrashIcon,
+              icon: Assets.assets.svg.trashIcon.path,
               onTap: _showDeleteAllSheet,
             ).paddingAll(3.r);
           },

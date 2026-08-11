@@ -34,10 +34,10 @@ class _ParentProfileState extends State<ParentProfile> {
   late List<PartnerInfoModel> partnerInfo = [];
   void _onSuccess(UserModel user){
     partnerInfo = [
-      PartnerInfoModel(leading: Assets.svgMartialStatus, title: LocaleKeys.kinship, subTitle: (user as ParentModel).relation?.value),
-      PartnerInfoModel(leading: Assets.svgParentChildren, title: LocaleKeys.childrenNumber, subTitle: user.numOfChildren.toString()),
-      PartnerInfoModel(leading: Assets.svgProfilePhone, title: LocaleKeys.phoneNumber, subTitle: user.phone),
-      PartnerInfoModel(leading: Assets.svgRecycing, title: LocaleKeys.gender, subTitle: user.gender?.titleValueShape?.title),
+      PartnerInfoModel(leading: Assets.assets.svg.martialStatus.path, title: LocaleKeys.kinship, subTitle: (user as ParentModel).relation?.value),
+      PartnerInfoModel(leading: Assets.assets.svg.parentChildren.path, title: LocaleKeys.childrenNumber, subTitle: user.numOfChildren.toString()),
+      PartnerInfoModel(leading: Assets.assets.svg.profilePhone.path, title: LocaleKeys.phoneNumber, subTitle: user.phone),
+      PartnerInfoModel(leading: Assets.assets.svg.recycing.path, title: LocaleKeys.gender, subTitle: user.gender?.titleValueShape?.title),
     ];
   }
 

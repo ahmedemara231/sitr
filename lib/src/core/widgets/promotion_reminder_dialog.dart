@@ -162,7 +162,7 @@ class _PromotionReminderHeader extends StatelessWidget {
                   ),
                   alignment: Alignment.center,
                   child: IconWidget(
-                    icon: Assets.svgPackagesScreenImage,
+                    icon: Assets.assets.svg.packagesScreenImage.path,
                     width: 28.w,
                     height: 31.h,
                   ),

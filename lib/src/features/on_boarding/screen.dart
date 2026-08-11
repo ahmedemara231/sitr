@@ -33,9 +33,9 @@ class _OnBoarding extends StatelessWidget {
   // final totalNumber = 3;
   final ValueNotifier<int> currentIndex = ValueNotifier(0);
   // final List<ScreenModel> screens = [
-  //   ScreenModel(backgroundImage: Assets.imagesBoardingFirst, firstText: 'firstText1', secondText: 'secondText1'),
-  //   ScreenModel(backgroundImage: Assets.imagesBoardingSecond, firstText: 'firstText2', secondText: 'secondText2'),
-  //   ScreenModel(backgroundImage: Assets.imagesBoardingThird, firstText: 'firstText3', secondText: 'secondText3', isLast: true),
+  //   ScreenModel(backgroundImage: Assets.assets.images.boardingFirst.path, firstText: 'firstText1', secondText: 'secondText1'),
+  //   ScreenModel(backgroundImage: Assets.assets.images.boardingSecond.path, firstText: 'firstText2', secondText: 'secondText2'),
+  //   ScreenModel(backgroundImage: Assets.assets.images.boardingThird.path, firstText: 'firstText3', secondText: 'secondText3', isLast: true),
   // ];
 
   @override

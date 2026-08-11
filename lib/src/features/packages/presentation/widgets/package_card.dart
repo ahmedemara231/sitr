@@ -27,8 +27,8 @@ class PackageCard extends StatelessWidget {
             leading: Stack(
               alignment: Alignment.center,
               children: [
-                SvgPicture.asset(Assets.svgPackagesScreenImageBackground),
-                SvgPicture.asset(Assets.svgPackagesScreenImage).paddingAll(7),
+                SvgPicture.asset(Assets.assets.svg.packagesScreenImageBackground.path),
+                SvgPicture.asset(Assets.assets.svg.packagesScreenImage.path).paddingAll(7),
               ],
             ),
             title: const AppText('باقة ذهبية', fontWeight: FontWeight.w500),

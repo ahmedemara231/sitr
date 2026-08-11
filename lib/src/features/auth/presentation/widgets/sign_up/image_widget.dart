@@ -55,7 +55,7 @@ class SelectImageWidget extends StatelessWidget {
                       ),
                       child: SizedBox.square(
                           dimension: 20.sp,
-                          child: const SvgPic(assetName: Assets.svgCamera, color: Colors.white)
+                          child: SvgPic(assetName: Assets.assets.svg.camera.path, color: Colors.white)
                       )
                   ),
                 ),
