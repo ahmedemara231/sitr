@@ -59,7 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       });
     }
-    _checkForUpdates();
+
+    // _checkForUpdates();
   }
 
   Future<void> _handleNotifications() async {
