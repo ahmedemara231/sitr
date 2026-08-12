@@ -7,6 +7,7 @@ import '../../../../config/res/config_imports.dart';
 import '../../../../core/extensions/object.dart';
 import '../../../../core/extensions/padding_extension.dart';
 import '../../../../core/extensions/widget_extension.dart';
+import '../../../../core/helpers/helpers.dart';
 import '../../../../core/navigation/navigator.dart';
 import '../../../../core/widgets/app_text.dart';
 import '../../../../core/widgets/app_pagify.dart';
@@ -78,6 +79,12 @@ class _ConnectionRequestsScreenState extends State<ConnectionRequestsScreen> {
     );
   }
 
+  Future<void> _onAcceptPressed(MessageRequestModel request) async {
+    await Helpers.checkChatAccessRequirements(
+      onAccessGranted: () => _acceptMessageRequest(request),
+    );
+  }
+
   Future<bool> _rejectMessageRequest(MessageRequestModel request) async {
     final result = await MessageRequestsData.rejectMessageRequest(request);
     final failure = result.tryGetError();
@@ -115,7 +122,7 @@ class _ConnectionRequestsScreenState extends State<ConnectionRequestsScreen> {
           return MessageRequestCard(
             request: request,
             onProfilePressed: () => _viewProfile(request),
-            onAcceptPressed: () => _acceptMessageRequest(request),
+            onAcceptPressed: () => _onAcceptPressed(request),
             onRejectPressed: () => showRejectMessageRequestSheet(
               senderName: request.sender.displayName,
               onRejectConfirmed: () => _rejectMessageRequest(request),
@@ -123,8 +130,8 @@ class _ConnectionRequestsScreenState extends State<ConnectionRequestsScreen> {
           ).paddingBottom(16.h);
         },
       ).paddingTop(6.h).withPullRefresher(
-        onRefresh: () => _controller.refresh(),
-      ),
+            onRefresh: () => _controller.refresh(),
+          ),
     );
   }
 }

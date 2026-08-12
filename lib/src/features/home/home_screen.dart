@@ -50,10 +50,14 @@ class _HomeScreenState extends State<HomeScreen> {
     if(UserModel.isAuthenticated){
       await Helpers.initZegoService();
       WidgetsBinding.instance.addPostFrameCallback((_) => _showLaunchDialogs());
-      WidgetsBinding.instance.addPostFrameCallback((_) => showAnnouncementSheet(
-          actionTitle: LocaleKeys.subscribe,
-          onActionPressed: () => Go.off(const PackagesScreen.subscription())
-      ));
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if(!UserModel.currentUser!.hasActivePackage){
+          showAnnouncementSheet(
+              actionTitle: LocaleKeys.subscribe,
+              onActionPressed: () => Go.off(const PackagesScreen.subscription())
+          );
+        }
+      });
     }
     _checkForUpdates();
   }

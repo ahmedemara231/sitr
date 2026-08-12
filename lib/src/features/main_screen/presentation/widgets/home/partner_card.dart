@@ -14,16 +14,11 @@ class PartnerCard extends StatelessWidget {
   final bool _withParent;
   final Opportunity opportunity;
 
-  const PartnerCard.individual({
-    super.key,
-    required this.opportunity
-  }) : _withParent = false;
+  const PartnerCard.individual({super.key, required this.opportunity})
+      : _withParent = false;
 
-  const PartnerCard.withParent({
-    super.key,
-    required this.opportunity
-  }) : _withParent = true;
-
+  const PartnerCard.withParent({super.key, required this.opportunity})
+      : _withParent = true;
 
   @override
   Widget build(BuildContext context) {
@@ -44,48 +39,50 @@ class PartnerCard extends StatelessWidget {
         children: [
           SizedBox.square(
               dimension: 65.sp,
-              child: HomeImage(url: opportunity.avatar ?? ConstantManager.defaultAvatar)
-          ),
+              child: HomeImage(
+                  url: opportunity.avatar ?? ConstantManager.defaultAvatar)),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 PremiumUserName(
-                  name: opportunity.name ?? '',
+                  name: _textOrNotSet(opportunity.name),
                   isPremium: opportunity.isPromoted,
                 ),
-
                 10.szH,
                 FittedBox(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      if(_withParent)
-                        if(opportunity.gender?.userGender?.isFemale?? false)
+                      if (_withParent)
+                        if (opportunity.gender?.userGender?.isFemale ?? false)
                           _buildStatItem(
-                            value: opportunity.hijab?.title ?? '',
+                            value: _textOrNotSet(opportunity.hijab?.title),
                             icon: Assets.assets.svg.hijab.path,
                             color: const Color(0xFFF57C00),
                             backgroundColor: const Color(0xFFFFF3E0),
-                          )else
-                            _buildStatItem(
-                              value: opportunity.skin?.title ?? '',
-                              icon: Assets.assets.svg.parentIcon.path,
-                              color: const Color(0xFFF57C00),
-                              backgroundColor: const Color(0xFFFFF3E0),
-                            )
+                          )
+                        else
+                          _buildStatItem(
+                            value: _textOrNotSet(opportunity.skin?.title),
+                            icon: Assets.assets.svg.parentIcon.path,
+                            color: const Color(0xFFF57C00),
+                            backgroundColor: const Color(0xFFFFF3E0),
+                          )
                       else
                         _buildStatItem(
-                          value: opportunity.city?? '',
+                          value: _textOrNotSet(opportunity.city),
                           icon: Assets.assets.svg.location.path,
                           color: const Color(0xFFF57C00),
                           backgroundColor: const Color(0xFFFFF3E0),
                         ),
-
                       const SizedBox(width: 24),
                       _buildStatItem(
-                        value: '${opportunity.weight} ${LocaleKeys.kg}',
+                        value: _measurementOrNotSet(
+                          value: opportunity.weight,
+                          unit: LocaleKeys.kg,
+                        ),
                         icon: Assets.assets.svg.weight.path,
                         color: const Color(0xFF9C27B0),
                         backgroundColor: const Color(0xFFF3E5F5),
@@ -94,29 +91,34 @@ class PartnerCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
-
                 FittedBox(
                   child: Row(
                     spacing: 24.w,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      if(!_withParent)
+                      if (!_withParent)
+                        _buildStatItem(
+                          value: _textOrNotSet(
+                            opportunity.martialStatus?.title,
+                          ),
+                          icon: Assets.assets.svg.martialStatus.path,
+                          color: const Color(0xFFF57C00),
+                          backgroundColor: const Color(0xFFFFF3E0),
+                        ),
                       _buildStatItem(
-                        value: opportunity.martialStatus?.title ?? '',
-                        icon: Assets.assets.svg.martialStatus.path,
-                        color: const Color(0xFFF57C00),
-                        backgroundColor: const Color(0xFFFFF3E0),
-                      ),
-
-                      _buildStatItem(
-                        value: '${opportunity.age} ${LocaleKeys.years}',
+                        value: _measurementOrNotSet(
+                          value: opportunity.age,
+                          unit: LocaleKeys.years,
+                        ),
                         icon: Assets.assets.svg.ageIcon.path,
                         color: const Color(0xFF1976D2),
                         backgroundColor: const Color(0xFFE3F2FD),
                       ),
-
                       _buildStatItem(
-                        value: '${opportunity.height} ${LocaleKeys.centimeter}',
+                        value: _measurementOrNotSet(
+                          value: opportunity.height,
+                          unit: LocaleKeys.centimeter,
+                        ),
                         icon: Assets.assets.svg.tallIcon.path,
                         color: const Color(0xFF616161),
                         backgroundColor: const Color(0xFFF5F5F5),
@@ -132,6 +134,19 @@ class PartnerCard extends StatelessWidget {
     );
   }
 
+  String _textOrNotSet(String? value) {
+    if (value == null || value.trim().isEmpty) return LocaleKeys.notSetYet;
+    return value;
+  }
+
+  String _measurementOrNotSet({
+    required num? value,
+    required String unit,
+  }) {
+    if (value == null) return LocaleKeys.notSetYet;
+    return '$value $unit';
+  }
+
   Widget _buildStatItem({
     required String value,
     required String icon,
@@ -144,17 +159,17 @@ class PartnerCard extends StatelessWidget {
         Container(
             width: 16.sp,
             height: 16.sp,
-          decoration: BoxDecoration(
-            color: backgroundColor,
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: SvgPic(assetName: icon)
-        ),
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: SvgPic(assetName: icon)),
         const SizedBox(width: 8),
         Text(
           value,
           style: const TextStyle(
             fontFamily: ConstantManager.fontFamily,
+            fontWeight: FontWeight.w500,
             fontSize: 14,
             color: Color(0xFF424242),
           ),

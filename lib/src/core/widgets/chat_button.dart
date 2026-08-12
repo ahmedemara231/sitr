@@ -5,6 +5,7 @@ import '../../config/language/locale_keys.g.dart';
 import '../../features/chats/data/models/request_model.dart';
 import '../../features/chats/presentation/cubits/check_chat_eligibility_cubit.dart';
 import '../base_crud/code/presentation/cubit/base_cubit/async_cubit.dart';
+import '../helpers/helpers.dart';
 import '../shared/models/user_models/individual/individual_user_model.dart';
 import '../shared/models/user_models/user_model.dart';
 import 'buttons/app_loading_button.dart';
@@ -39,13 +40,16 @@ class ChatButton extends StatelessWidget {
           final CanChat canChat = state.data;
           return AppLoadingButton(
             asyncCall: (context) async {
-              await context.read<CheckChatEligibilityCubit>().checkEligibility(
-                    requestModel: _requestModel,
-                    onRequestSent: () => MessageUtils.show(
-                      LocaleKeys.aChatRequestWasSuccessfullySent,
-                      state: MsgState.success,
-                    ),
-                  );
+              await Helpers.checkChatAccessRequirements(
+                onAccessGranted: () =>
+                    context.read<CheckChatEligibilityCubit>().checkEligibility(
+                          requestModel: _requestModel,
+                          onRequestSent: () => MessageUtils.show(
+                            LocaleKeys.aChatRequestWasSuccessfullySent,
+                            state: MsgState.success,
+                          ),
+                        ),
+              );
             },
             buttonColor: canChat.canChat ? null : Colors.grey[300],
             enabled: canChat.canChat,

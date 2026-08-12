@@ -1396,6 +1396,18 @@ abstract class LocaleKeys {
   static const String _messageRequestAcceptBlocked = 'message_request_accept_blocked';
   static String get messageRequestAcceptBlocked => _messageRequestAcceptBlocked.tr();
 
+  static const String _acceptChatRequestSubscriptionRequiredTitle = 'accept_chat_request_subscription_required_title';
+  static String get acceptChatRequestSubscriptionRequiredTitle => _acceptChatRequestSubscriptionRequiredTitle.tr();
+
+  static const String _acceptChatRequestSubscriptionRequiredDescription = 'accept_chat_request_subscription_required_description';
+  static String get acceptChatRequestSubscriptionRequiredDescription => _acceptChatRequestSubscriptionRequiredDescription.tr();
+
+  static const String _completeProfileRequiredTitle = 'complete_profile_required_title';
+  static String get completeProfileRequiredTitle => _completeProfileRequiredTitle.tr();
+
+  static const String _completeProfileRequiredDescription = 'complete_profile_required_description';
+  static String get completeProfileRequiredDescription => _completeProfileRequiredDescription.tr();
+
   static const String _confirmConnectionRequestRejection = 'confirm_connection_request_rejection';
   static String get confirmConnectionRequestRejection => _confirmConnectionRequestRejection.tr();
 

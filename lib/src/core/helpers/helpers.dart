@@ -19,13 +19,19 @@ import 'package:share_plus/share_plus.dart';
 import '../../config/language/languages.dart';
 import '../../config/language/locale_keys.g.dart';
 import '../../config/res/config_imports.dart';
+import '../../features/auth/presentation/enums/complete_register_status.dart';
 import '../../features/chats/data/chat_sheet_manager.dart';
 import '../extensions/padding_extension.dart';
+import '../extensions/string_extension.dart';
 import '../navigation/navigator.dart';
+import '../shared/models/user_models/user_model.dart';
 import '../shared/user_cubit/user_cubit.dart';
 import '../widgets/app_bottom_sheet.dart';
 import '../widgets/custom_loading.dart';
 import '../widgets/custom_messages.dart';
+import '../widgets/default_bottom_sheet.dart';
+import '../widgets/sheets/accept_chat_request_subscription_sheet.dart';
+import '../widgets/sheets/complete_profile_required_sheet.dart';
 import '../widgets/sheets/login_when_visitor.dart';
 import 'nsfw_detector.dart';
 import 'permission_handler/handler.dart';
@@ -39,6 +45,38 @@ extension Check on AppFlavor{
 
 
 class Helpers {
+  static Future<void> checkChatAccessRequirements({
+    required Future<void> Function() onAccessGranted,
+  }) async {
+    final UserModel? currentUser = UserModel.currentUser;
+    if (!(currentUser?.hasActivePackage ?? false)) {
+      await showDefaultBottomSheet(
+        child: const AcceptChatRequestSubscriptionSheet(),
+      );
+      return;
+    }
+
+    final bool hasCompletedProfile = currentUser!.completeRegistration ==
+        CompleteRegisterStatus.completed.status;
+    if (!hasCompletedProfile) {
+      await showDefaultBottomSheet(
+        child: CompleteProfileRequiredSheet(
+          onCompleteProfilePressed: () => _openCompleteProfile(currentUser),
+        ),
+      );
+      return;
+    }
+
+    await onAccessGranted.call();
+  }
+
+  static Future<void> _openCompleteProfile(UserModel user) async {
+    Go.back();
+    final String completeRegistration = user.completeRegistration ??
+        CompleteRegisterStatus.incomplete.status;
+    completeRegistration.manageNavigationBasedCompleteRegisterStatus(user);
+  }
+
   static String get formatedDataTime => DateFormat('EEEE, dd MMMM yyyy - hh:mm a', 'en_US').format(DateTime.now());
   static String get getBundleId{
     if(currentFlavor.isDev){
