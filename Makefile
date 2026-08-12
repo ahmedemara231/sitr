@@ -90,3 +90,9 @@ simulator:
 
 lastChange:
     git show --name-only --format="" HEAD
+
+patchAndroid:
+     shorebird patch --platforms=android --flavor=production
+
+patchIos:
+     shorebird patch --platforms=ios --flavor=production
