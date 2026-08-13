@@ -70,7 +70,6 @@ class _SatrState extends State<Satr> with WidgetsBindingObserver {
                   ],
                 );
               },
-              // home: const ContactUsChatScreen(),
               home: const ZegoUIKitPrebuiltCallMiniPopScope(
                   child: SplashScreen()),
               navigatorObservers: [AppNavigationObserver.instance],
