@@ -354,6 +354,7 @@ class IndividualUserModel extends UserModel {
           bool? hasActivePackage,
           bool? isPromoted,
           bool? hasChatRequestFrom,
+          ChildParentInfo? childParentInfo,
           String? nickName,
           bool? isNotify,
           TitleValueShape? maritalStatus,
@@ -393,7 +394,9 @@ class IndividualUserModel extends UserModel {
           bool? isBlocked,
           TitleValueShape? adminApprovalStatus,
           String? completeRegistration,
-          String? token}) =>
+          String? token,
+          bool clearNumOfChildren = false,
+          bool clearChildCustody = false}) =>
       IndividualUserModel(
         id: id ?? this.id,
         canChat: canChat ?? this.canChat,
@@ -401,8 +404,8 @@ class IndividualUserModel extends UserModel {
         isParentMatch: isParentMatch ?? this.isParentMatch,
         hasActivePackage: hasActivePackage ?? this.hasActivePackage,
         isPromoted: isPromoted ?? this.isPromoted,
-        hasChatRequestFrom:
-            hasChatRequestFrom ?? this.hasChatRequestFrom,
+        hasChatRequestFrom: hasChatRequestFrom ?? this.hasChatRequestFrom,
+        childParentInfo: childParentInfo ?? this.childParentInfo,
         name: name ?? this.name,
         parentId: parentId ?? this.parentId,
         type: type ?? this.type,
@@ -411,7 +414,7 @@ class IndividualUserModel extends UserModel {
         phone: phone ?? this.phone,
         countryCode: countryCode ?? this.countryCode,
         fullPhone: fullPhone ?? this.fullPhone,
-        identityNumber: identityNumber ?? identityNumber,
+        identityNumber: identityNumber ?? this.identityNumber,
         age: age ?? this.age,
         isActive: isActive ?? this.isActive,
         isBlocked: isBlocked ?? this.isBlocked,
@@ -425,8 +428,10 @@ class IndividualUserModel extends UserModel {
         currentJob: currentJob ?? this.currentJob,
         bio: bio ?? this.bio,
         hasChildren: hasChildren ?? this.hasChildren,
-        numOfChildren: numOfChildren ?? this.numOfChildren,
-        childCustody: childCustody ?? this.childCustody,
+        numOfChildren:
+            clearNumOfChildren ? null : numOfChildren ?? this.numOfChildren,
+        childCustody:
+            clearChildCustody ? null : childCustody ?? this.childCustody,
         wantChildren: wantChildren ?? this.wantChildren,
         prohibitedThings: prohibitedThings ?? this.prohibitedThings,
         dowry: dowry ?? this.dowry,

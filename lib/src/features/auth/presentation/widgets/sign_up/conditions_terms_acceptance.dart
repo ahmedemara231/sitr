@@ -11,9 +11,11 @@ import '../../../../more/presentation/screens/terms_andcondition_and_about_us/te
 
 class ConditionsTermsAcceptance extends StatefulWidget {
   final void Function(bool isAccepted) onAcceptanceChanged;
+  final bool initialValue;
 
   const ConditionsTermsAcceptance({
     required this.onAcceptanceChanged,
+    this.initialValue = false,
     super.key,
   });
 
@@ -23,7 +25,13 @@ class ConditionsTermsAcceptance extends StatefulWidget {
 }
 
 class _ConditionsTermsAcceptanceState extends State<ConditionsTermsAcceptance> {
-  bool _isAccepted = false;
+  late bool _isAccepted;
+
+  @override
+  void initState() {
+    super.initState();
+    _isAccepted = widget.initialValue;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +39,7 @@ class _ConditionsTermsAcceptanceState extends State<ConditionsTermsAcceptance> {
       onSaved: (value) {},
       validator: (value) =>
           _isAccepted ? null : LocaleKeys.pleaseAcceptTheConditionsAndTerms,
-      initialValue: false,
+      initialValue: widget.initialValue,
       builderWidget: (accepted) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

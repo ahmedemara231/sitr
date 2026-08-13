@@ -14,7 +14,9 @@ import 'custom_loading.dart';
 import 'svg_pic.dart';
 
 typedef AppDropinityLocal<Model> = AppDropinity<void, Model>;
-enum DropinityType{local, api}
+
+enum DropinityType { local, api }
+
 class AppDropinity<FullResponse, Model> extends StatefulWidget {
   final DropinityController? controller;
   final String? Function(Model?)? validator;
@@ -25,10 +27,12 @@ class AppDropinity<FullResponse, Model> extends StatefulWidget {
   final Model? initialValue;
   final List<Model>? values;
   final FutureOr<void> Function(Model value) onChanged;
-  final Future<FullResponse> Function(BuildContext context, int page)? asyncCall;
+  final Future<FullResponse> Function(BuildContext context, int page)?
+      asyncCall;
   final String Function(Model element) getLabel;
 
-  const AppDropinity({super.key,
+  const AppDropinity({
+    super.key,
     this.listHeight,
     this.controller,
     this.validator,
@@ -38,8 +42,11 @@ class AppDropinity<FullResponse, Model> extends StatefulWidget {
     required this.values,
     required this.getLabel,
     required this.onChanged,
-  }) : asyncCall = null, type = DropinityType.local,
-       cacheKey = null, cacheToJson = null, cacheFromJson = null;
+  })  : asyncCall = null,
+        type = DropinityType.local,
+        cacheKey = null,
+        cacheToJson = null,
+        cacheFromJson = null;
 
   final String? cacheKey;
   final Map<String, dynamic> Function(Model item)? cacheToJson;
@@ -59,14 +66,16 @@ class AppDropinity<FullResponse, Model> extends StatefulWidget {
     this.cacheKey,
     this.cacheToJson,
     this.cacheFromJson,
-}) : values = null, type = DropinityType.api;
+  })  : values = null,
+        type = DropinityType.api;
 
   @override
-  State<AppDropinity<FullResponse, Model>> createState() => _AppDropinityState<FullResponse, Model>();
+  State<AppDropinity<FullResponse, Model>> createState() =>
+      _AppDropinityState<FullResponse, Model>();
 }
 
-class _AppDropinityState<FullResponse, Model> extends State<AppDropinity<FullResponse,Model>> {
-
+class _AppDropinityState<FullResponse, Model>
+    extends State<AppDropinity<FullResponse, Model>> {
   late final DropinityController dropinityController;
 
   @override
@@ -81,35 +90,65 @@ class _AppDropinityState<FullResponse, Model> extends State<AppDropinity<FullRes
     super.dispose();
   }
 
+  Widget _buttonText(String text, {Color? color}) => Flexible(
+        flex: 100,
+        child: AppText(
+          text,
+          color: color,
+          fontSize: 12.sp,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      );
+
+  void _handleChanged(Model value) => widget.onChanged.call(value);
+
+  Widget _selectedButtonText(Model? value) {
+    if (value == null) {
+      return const SizedBox.shrink();
+    }
+    return _buttonText(widget.getLabel.call(value));
+  }
+
+  bool _matchesSearch(String? pattern, Model? value) {
+    if (value == null) {
+      return false;
+    }
+    return widget.getLabel.call(value).contains(pattern ?? '');
+  }
+
   @override
   Widget build(BuildContext context) {
-    switch(widget.type){
+    switch (widget.type) {
       case DropinityType.local:
         return Dropinity<void, Model>(
           controller: dropinityController,
           showNoDataAlert: false,
           autoValidateMode: AutovalidateMode.always,
           listHeight: widget.listHeight,
-          dropdownTitle: AppText(widget.title, fontWeight: FontWeight.bold, fontSize: 11.sp),
+          dropdownTitle: AppText(widget.title,
+              fontWeight: FontWeight.bold, fontSize: 11.sp),
           buttonData: ButtonData(
-              hint: AppText(widget.hint, color: Colors.grey, fontSize: 12.sp,),
+              hint: _buttonText(widget.hint, color: Colors.grey),
               initialValue: widget.initialValue,
               color: Colors.grey[50],
               buttonBorderRadius: ConstantManager.buttonBorderRadius,
-              selectedItemWidget: (e) => AppText(widget.getLabel.call(e!)),
-              collapsedListIcon: SvgPic(assetName: Assets.assets.svg.arrowDown.path)
-          ),
+              selectedItemWidget: _selectedButtonText,
+              collapsedListIcon: SvgPic(
+                assetName: Assets.assets.svg.arrowDown.path,
+                size: 24.r,
+              )),
           textFieldData: TextFieldData(
-            onSearch: (pattern, e) => widget.getLabel.call(e!).contains(pattern??''),
+            onSearch: _matchesSearch,
             suffixIcon: const Icon(Icons.search),
             title: LocaleKeys.search,
           ),
-          onChanged: widget.onChanged,
+          onChanged: _handleChanged,
           values: widget.values,
-          valuesData: ValuesData(itemBuilder: (context, i, e) => AppText(
-              widget.getLabel.call(e),
-              textAlign: TextAlign.start
-          ).paddingBottom(5.h)),
+          valuesData: ValuesData(
+              itemBuilder: (context, i, e) =>
+                  AppText(widget.getLabel.call(e), textAlign: TextAlign.start)
+                      .paddingBottom(5.h)),
         );
 
       default:
@@ -132,23 +171,24 @@ class _AppDropinityState<FullResponse, Model> extends State<AppDropinity<FullRes
           controller: dropinityController,
           listHeight: widget.listHeight,
           maintainState: false,
-          dropdownTitle: AppText(widget.title, fontWeight: FontWeight.bold, fontSize: 11.sp),
+          dropdownTitle: AppText(widget.title,
+              fontWeight: FontWeight.bold, fontSize: 11.sp),
           buttonData: ButtonData(
-              hint: AppText(widget.hint, color: Colors.grey, fontSize: 12.sp,),
+              hint: _buttonText(widget.hint, color: Colors.grey),
               initialValue: widget.initialValue,
               color: Colors.grey[50],
               buttonBorderRadius: ConstantManager.buttonBorderRadius,
-              selectedItemWidget: (e) => AppText(widget.getLabel.call(e!)),
-              collapsedListIcon: SvgPic(assetName: Assets.assets.svg.arrowDown.path)
-          ),
+              selectedItemWidget: _selectedButtonText,
+              collapsedListIcon: SvgPic(
+                assetName: Assets.assets.svg.arrowDown.path,
+                size: 24.r,
+              )),
           textFieldData: TextFieldData(
-            onSearch: (pattern, e) => widget.getLabel.call(e!).contains(pattern??''),
+            onSearch: _matchesSearch,
             suffixIcon: const Icon(Icons.search),
             title: LocaleKeys.search,
           ),
-          onChanged: (val) {
-            widget.onChanged.call(val);
-          },
+          onChanged: _handleChanged,
           pagifyData: DropinityPagifyData(
             cacheKey: hasCacheConfig ? widget.cacheKey : null,
             cacheToJson: hasCacheConfig ? widget.cacheToJson : null,
@@ -162,24 +202,21 @@ class _AppDropinityState<FullResponse, Model> extends State<AppDropinity<FullRes
                 paginationData: PaginationData(
                   totalPages: 1,
                   perPage: 10,
-                )
-            ),
-            errorMapper: PagifyErrorMapper(
-                errorWhenDio: (e) {
-                  final String? msg = e.response?.data['msg'];
-                  return PagifyApiRequestException(
-                    msg ?? 'network error occur',
-                    pagifyFailure: RequestFailureData(
-                      statusCode: e.response?.statusCode,
-                      statusMsg: e.response?.statusMessage,
-                    ),
-                  );
-                }
-            ),
+                )),
+            errorMapper: PagifyErrorMapper(errorWhenDio: (e) {
+              final String? msg = e.response?.data['msg'];
+              return PagifyApiRequestException(
+                msg ?? 'network error occur',
+                pagifyFailure: RequestFailureData(
+                  statusCode: e.response?.statusCode,
+                  statusMsg: e.response?.statusMessage,
+                ),
+              );
+            }),
             itemBuilder: (context, data, index, element) => AppText(
-                widget.getLabel.call(element),
-                textAlign: TextAlign.start
-            ).paddingBottom(5.h),
+                    widget.getLabel.call(element),
+                    textAlign: TextAlign.start)
+                .paddingBottom(5.h),
           ),
         );
     }

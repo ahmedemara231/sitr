@@ -2,45 +2,26 @@ part of '../../../imports.dart';
 
 class _ChildDataForm extends StatelessWidget {
   final GlobalKey<FormState> formKey;
-  final FirstValidationErrorFieldKeys validationFieldKeys;
   final FirstValidationErrorFieldsBuilder validationFields;
-  final ValueNotifier<UserGender> mainType;
-  final bool withParent;
-  final bool showInlineGenderSelection;
-  final bool showBackButton;
-  final bool showConditionsAndTerms;
-  final bool showAlreadyHaveAccount;
-  final IndividualUserModel? initialValue;
-  final int? maleNum;
-  final int? femaleNum;
-  final void Function(UserGender gender) onGenderSelected;
-  final void Function(File? img) onImageSelected;
-  final void Function(UserGender gender) onGenderFieldsResolved;
-  final void Function(IndividualUserModel data) onDataChanged;
-  final void Function(bool isAccepted) onTermsAcceptanceChanged;
+  final _ProfileFormStep step;
+  final Widget child;
+  final bool canGoBack;
+  final bool isFinalStep;
   final Future<void> Function() onBackPressed;
+  final Future<void> Function() onContinuePressed;
   final Future<void> Function(BuildContext context) onSubmitPressed;
 
   const _ChildDataForm({
+    super.key,
     required this.formKey,
-    required this.validationFieldKeys,
     required this.validationFields,
-    required this.mainType,
-    required this.withParent,
-    required this.showInlineGenderSelection,
-    required this.showConditionsAndTerms,
-    required this.showAlreadyHaveAccount,
-    required this.initialValue,
-    required this.maleNum,
-    required this.femaleNum,
-    required this.onGenderSelected,
-    required this.onImageSelected,
-    required this.onGenderFieldsResolved,
-    required this.onDataChanged,
-    required this.onTermsAcceptanceChanged,
+    required this.step,
+    required this.child,
+    required this.canGoBack,
+    required this.isFinalStep,
     required this.onBackPressed,
+    required this.onContinuePressed,
     required this.onSubmitPressed,
-    this.showBackButton = false,
   });
 
   @override
@@ -48,94 +29,24 @@ class _ChildDataForm extends StatelessWidget {
     return FirstValidationErrorForm(
       formKey: formKey,
       validationFields: validationFields,
-      onValid: () => onSubmitPressed(context),
-      builder: (context, submit) {
-        return Column(
-          spacing: 10.h,
-          children: [
-            if (showInlineGenderSelection)
-              ChooseGenderWidget(
-                titles: (element) =>
-                    '${element.translate}  ${element.isFemale ? femaleNum : maleNum}',
-                canChoose: true,
-                onSelectGender: onGenderSelected,
-                genders: const [
-                  UserGender.male,
-                  UserGender.female,
-                ],
-              ),
-            if (withParent)
-              SelectImageWidget(
-                initialValue: initialValue?.avatar,
-                onSelectImage: onImageSelected,
-              ),
-            ValueListenableBuilder(
-              valueListenable: mainType,
-              builder: (context, type, child) {
-                onGenderFieldsResolved(type);
-                if (type.isFemale) {
-                  return FemaleFields(
-                    validationFieldKeys: validationFieldKeys,
-                    withParent: withParent,
-                    initialValue: initialValue,
-                    onChangeFemaleData: onDataChanged,
-                  );
-                } else if (type.isMale) {
-                  return MaleFields(
-                    validationFieldKeys: validationFieldKeys,
-                    initialValue: initialValue,
-                    withParent: withParent,
-                    onChangeMaleData: onDataChanged,
-                  );
-                } else {
-                  return const SizedBox.shrink();
-                }
-              },
-            ),
-            if (showConditionsAndTerms)
-              ConditionsTermsAcceptance(
-                key: validationFieldKeys.get(
-                  IndividualValidationField.termsAcceptance,
-                ),
-                onAcceptanceChanged: onTermsAcceptanceChanged,
-              ),
-            if (showBackButton)
-              Row(
-                children: [
-                  Expanded(
-                    child: DefaultButton(
-                      title: LocaleKeys.back,
-                      borderRadius: BorderRadius.circular(10.r),
-                      height: 45.h,
-                      width: double.infinity,
-                      color: AppColors.white,
-                      borderColor: AppColors.primary,
-                      textColor: AppColors.primary,
-                      onTap: () async => await onBackPressed(),
-                    ),
-                  ),
-                  10.szW,
-                  Expanded(
-                    child: AppLoadingButton(
-                      height: 45.h,
-                      borderRadius: 10.r,
-                      title: LocaleKeys.confirm,
-                      asyncCall: (context) async => submit(),
-                    ),
-                  ),
-                ],
-              )
-            else
-              AppLoadingButton(
-                height: 45.h,
-                borderRadius: ConstantManager.buttonBorderRadiusNumber,
-                title: LocaleKeys.confirm,
-                asyncCall: (context) async => submit(),
-              ),
-            if (showAlreadyHaveAccount) const AlreadyHaveAccWidget()
-          ],
-        );
+      onValid: () async {
+        if (isFinalStep) {
+          await onSubmitPressed(context);
+          return;
+        }
+        await onContinuePressed();
       },
+      builder: (BuildContext context, Future<void> Function() submit) =>
+          _ProfileStepCard(
+        step: step,
+        actions: _ProfileStepActions(
+          canGoBack: canGoBack,
+          isFinalStep: isFinalStep,
+          onBackPressed: onBackPressed,
+          onContinuePressed: submit,
+        ),
+        child: child,
+      ),
     );
   }
 }

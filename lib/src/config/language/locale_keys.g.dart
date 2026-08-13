@@ -328,6 +328,36 @@ abstract class LocaleKeys {
   static const String _degreeOfCommitment = 'degree_of_commitment';
   static String get degreeOfCommitment => _degreeOfCommitment.tr();
 
+  static const String _mainInformation = 'main_information';
+  static String get mainInformation => _mainInformation.tr();
+
+  static const String _personalDetails = 'personal_details';
+  static String get personalDetails => _personalDetails.tr();
+
+  static const String _familyAndMarriage = 'family_and_marriage';
+  static String get familyAndMarriage => _familyAndMarriage.tr();
+
+  static const String _lifestyleAndHealth = 'lifestyle_and_health';
+  static String get lifestyleAndHealth => _lifestyleAndHealth.tr();
+
+  static const String _faithAndPreferences = 'faith_and_preferences';
+  static String get faithAndPreferences => _faithAndPreferences.tr();
+
+  static const String _completeProfileStepByStep = 'complete_profile_step_by_step';
+  static String get completeProfileStepByStep => _completeProfileStepByStep.tr();
+
+  static const String _changeGender = 'change_gender';
+  static String get changeGender => _changeGender.tr();
+
+  static const String _changeGenderWarning = 'change_gender_warning';
+  static String get changeGenderWarning => _changeGenderWarning.tr();
+
+  static const String _keepCurrentGender = 'keep_current_gender';
+  static String get keepCurrentGender => _keepCurrentGender.tr();
+
+  static const String _changeAndReset = 'change_and_reset';
+  static String get changeAndReset => _changeAndReset.tr();
+
   static const String _parentName = 'parent_name';
   static String get parentName => _parentName.tr();
 

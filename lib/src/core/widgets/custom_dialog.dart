@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../config/res/config_imports.dart';
 
-Future showCustomDialog(BuildContext context,
+Future<T?> showCustomDialog<T>(BuildContext context,
     {required Widget child,
     BorderRadiusGeometry? borderRadius,
     EdgeInsetsGeometry? padding,
     EdgeInsetsGeometry? margin,
     bool barrierDismissible = true,
     Color? color}) async {
-  showGeneralDialog(
+  return await showGeneralDialog<T>(
     context: context,
     barrierLabel: ConstantManager.emptyText,
     barrierDismissible: barrierDismissible,

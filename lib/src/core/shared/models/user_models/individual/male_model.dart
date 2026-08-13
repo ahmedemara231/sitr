@@ -137,6 +137,7 @@ class MaleModel extends IndividualUserModel {
       bool? hasActivePackage,
       bool? isPromoted,
       bool? hasChatRequestFrom,
+      ChildParentInfo? childParentInfo,
       String? nickName,
       bool? isNotify,
       TitleValueShape? maritalStatus,
@@ -176,11 +177,14 @@ class MaleModel extends IndividualUserModel {
       bool? isBlocked,
       TitleValueShape? adminApprovalStatus,
       String? completeRegistration,
-      String? token}) {
+      String? token,
+      bool clearNumOfChildren = false,
+      bool clearChildCustody = false}) {
     return MaleModel(
       hasActivePackage: hasActivePackage ?? this.hasActivePackage,
       isPromoted: isPromoted ?? this.isPromoted,
       hasChatRequestFrom: hasChatRequestFrom ?? this.hasChatRequestFrom,
+      childParentInfo: childParentInfo ?? this.childParentInfo,
       canChat: canChat ?? this.canChat,
       hasChatWith: hasChatWith ?? this.hasChatWith,
       isParentMatch: isParentMatch ?? this.isParentMatch,
@@ -193,7 +197,7 @@ class MaleModel extends IndividualUserModel {
       phone: phone ?? this.phone,
       countryCode: countryCode ?? this.countryCode,
       fullPhone: fullPhone ?? this.fullPhone,
-      identityNumber: identityNumber ?? identityNumber,
+      identityNumber: identityNumber ?? this.identityNumber,
       age: age ?? this.age,
       isActive: isActive ?? this.isActive,
       isBlocked: isBlocked ?? this.isBlocked,
@@ -207,8 +211,10 @@ class MaleModel extends IndividualUserModel {
       currentJob: currentJob ?? this.currentJob,
       bio: bio ?? this.bio,
       hasChildren: hasChildren ?? this.hasChildren,
-      numOfChildren: numOfChildren ?? this.numOfChildren,
-      childCustody: childCustody ?? this.childCustody,
+      numOfChildren:
+          clearNumOfChildren ? null : numOfChildren ?? this.numOfChildren,
+      childCustody:
+          clearChildCustody ? null : childCustody ?? this.childCustody,
       wantChildren: wantChildren ?? this.wantChildren,
       prohibitedThings: prohibitedThings ?? this.prohibitedThings,
       dowry: dowry ?? this.dowry,

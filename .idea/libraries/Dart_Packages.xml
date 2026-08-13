@@ -408,6 +408,13 @@
             </list>
           </value>
         </entry>
+        <entry key="easy_stepper">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/easy_stepper-1.2.0/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="easy_timer_count">
           <value>
             <list>
@@ -2184,6 +2191,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/easy_loading_button-0.4.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/easy_localization-3.0.8/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/easy_logger-0.0.2/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/easy_stepper-1.2.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/easy_timer_count-0.0.4/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/encrypt-5.0.3/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/equatable-2.0.8/lib" />

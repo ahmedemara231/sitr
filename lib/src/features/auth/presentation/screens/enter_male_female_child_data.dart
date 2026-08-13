@@ -46,7 +46,8 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return scaffoldType == ScaffoldType.appScaffold
         ? AppScaffold(
-      isScrollable: true,
+            isScrollable: true,
+            scaffoldBackgroundColor: AppColors.whiteScaffoldBackground,
             appBarTitle: LocaleKeys.profile,
             body: _EnterMaleOrFemaleOrChildDataBody(
               maleNum: maleNum,
@@ -58,7 +59,8 @@ class EnterMaleOrFemaleOrChildDataScreen extends StatelessWidget {
               showAlreadyHaveAccount: showAlreadyHaveAccount,
               showConditionsAndTerms: showConditionsAndTerms,
               onClick: onClick,
-            ))
+            ),
+          )
         : CenterCardScaffold(
             upperWidget: const SignUpUpperWidget(),
             bodyColor: AppColors.white,
