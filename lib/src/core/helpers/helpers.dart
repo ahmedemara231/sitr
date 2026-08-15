@@ -100,6 +100,8 @@ class Helpers {
       default:
         currentFlavor = AppFlavor.none;
     }
+
+    log('the current flavor is $currentFlavor');
   }
 
 

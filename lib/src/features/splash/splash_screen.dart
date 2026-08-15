@@ -4,6 +4,7 @@ import '../../core/extensions/object.dart';
 import '../../core/helpers/cache_service.dart';
 import '../../core/helpers/helpers.dart';
 import '../../core/navigation/navigator.dart';
+import '../../core/network/fire_store.dart';
 import '../../core/notification/notification_service.dart';
 import '../../core/shared/user_cubit/user_cubit.dart';
 import '../../core/widgets/splash_logo.dart';
@@ -22,6 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     _manipulateSplashData();
+    FireStoreService.instance.clearAll();
     super.initState();
   }
 
@@ -59,6 +61,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-        backgroundColor: AppColors.splash, body: SplashLogo());
+        backgroundColor: AppColors.splash,
+        body: SplashLogo()
+    );
   }
 }

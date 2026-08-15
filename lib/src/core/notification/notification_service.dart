@@ -287,11 +287,11 @@ class NotificationService {
 
   Future<void> saveFcmToken() async {
     try {
-      final token = await FirebaseMessaging.instance.getToken();
-      deviceToken = token ?? '1234';
-      log('Firebase Fcm token : ${token.toString()}');
+      deviceToken = await FirebaseMessaging.instance.getToken() ?? '1234';
+      log('Firebase Fcm token : ${deviceToken.toString()}');
       await AppyFlyerHelper.enableUninstallMeasurement();
-    } on Exception {
+    } on Exception catch(e){
+      log('the exception in FirebaseMessaging.instance.getToken is ${e.toString()}');
       return;
     }
   }

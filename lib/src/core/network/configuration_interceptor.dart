@@ -3,11 +3,20 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 import '../../config/language/languages.dart';
+import '../notification/notification_service.dart';
 import 'backend_configuation.dart';
 
 class ConfigurationInterceptor extends Interceptor {
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async{
+    int attempt = 1;
+    bool tryGetFcmToken = NotificationService.deviceToken == '1234';
+    while(tryGetFcmToken && attempt < 5){
+      await NotificationService().saveFcmToken();
+      tryGetFcmToken = NotificationService.deviceToken == '1234';
+      attempt ++;
+    }
+
     options.headers.addAll({
       HttpHeaders.acceptHeader: ContentType.json,
       Headers.contentTypeHeader: Headers.jsonContentType,

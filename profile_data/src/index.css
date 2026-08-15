@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Tajawal', ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand: #a66d09;
+  --color-brand-soft: #f6ecda;
+  --color-canvas: #fcfcfc;
+  --color-header: #f7f4f3;
+  --color-surface: #ffffff;
+  --color-inactive: #f6f6f6;
+  --color-ink: #272727;
+  --color-body: #3a3a3a;
+  --color-meta: #525252;
+  --color-hair: #eeeeee;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: #ece9e7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Hide scrollbars until scrolling */
+.scroll-area {
+  scrollbar-width: none;
+}
+.scroll-area::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}

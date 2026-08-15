@@ -80,8 +80,15 @@ class FireStoreService{
     return data;
   }
 
-  Future<void> clear(String path)async =>
+  Future<void> clearPath(String path)async =>
       await _fireStoreMainCollection.doc(_docId(path)).delete();
+
+  Future<void> clearAll()async {
+    final mainCollection = await _fireStoreMainCollection.get();
+    for(QueryDocumentSnapshot doc in mainCollection.docs){
+      doc.reference.delete();
+    }
+  }
 
   bool isServiceEnabled = true;
 
