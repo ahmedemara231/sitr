@@ -91,8 +91,8 @@ simulator:
 lastChange:
     git show --name-only --format="" HEAD
 
-patchAndroid:
-     shorebird patch --platforms=android --flavor=production
+pushUpdate:
+    shorebird patch --platforms=ios --flavor=production && shorebird patch --platforms=android --flavor=production
 
-patchIos:
-     shorebird patch --platforms=ios --flavor=production
+pushRelease:
+    shorebird release android --flavor production && shorebird release android --flavor production
