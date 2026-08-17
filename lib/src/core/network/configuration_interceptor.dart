@@ -7,8 +7,8 @@ import '../notification/notification_service.dart';
 import 'backend_configuation.dart';
 
 class ConfigurationInterceptor extends Interceptor {
-  @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async{
+
+  Future<void> _handleFcmToken()async{
     int attempt = 1;
     bool tryGetFcmToken = NotificationService.deviceToken == '1234';
     while(tryGetFcmToken && attempt < 5){
@@ -16,7 +16,11 @@ class ConfigurationInterceptor extends Interceptor {
       tryGetFcmToken = NotificationService.deviceToken == '1234';
       attempt ++;
     }
+  }
 
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async{
+    await _handleFcmToken();
     options.headers.addAll({
       HttpHeaders.acceptHeader: ContentType.json,
       Headers.contentTypeHeader: Headers.jsonContentType,
